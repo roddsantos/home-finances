@@ -1,0 +1,14 @@
+.creation-main {
+  height: auto;
+  padding: 80px 50px 40px;
+}
+
+.creation-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.creation-tab {
+  background-color: blueviolet;
+  color: blueviolet;
+}

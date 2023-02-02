@@ -1,0 +1,9 @@
+<div class="textfield-container" [ngStyle]="styleContainer">
+  <p class="textfield-label">{{ label }}</p>
+  <input
+    type="text"
+    [(ngModel)]="inputModel"
+    (ngModelChange)="inputModelChange.emit(inputModel)"
+    class="input-container"
+  />
+</div>

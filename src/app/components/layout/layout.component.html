@@ -1,0 +1,61 @@
+<mat-toolbar class="toolbar" color="secondary">
+  <mat-toolbar-row class="toolbar-row">
+    <div class="app-container" (click)="onHomeClick()">
+      <span class="app-title">homebills</span>
+    </div>
+    <div class="app-container" (click)="onManagementClick()">
+      <mat-icon
+        class="app-icon"
+        aria-hidden="false"
+        aria-label="Example home icon"
+        fontIcon="edit_square"
+      ></mat-icon>
+      <span class="app-title">gerenciamento</span>
+    </div>
+    <div class="app-container">
+      <mat-icon
+        class="app-icon"
+        aria-hidden="false"
+        aria-label="Example home icon"
+        fontIcon="calendar_month"
+      ></mat-icon>
+      <span class="app-title">mensal</span>
+    </div>
+    <div class="app-container">
+      <mat-icon
+        class="app-icon"
+        aria-hidden="false"
+        aria-label="Example home icon"
+        fontIcon="space_dashboard"
+      ></mat-icon>
+      <span class="app-title">dashboard</span>
+    </div>
+    <span class="example-spacer"></span>
+    <mat-icon
+      class="app-icon profile"
+      aria-hidden="false"
+      aria-label="Example home icon"
+      fontIcon="account_circle"
+      (click)="modal.toggle()"
+    ></mat-icon>
+  </mat-toolbar-row>
+  <app-modal #modal [styles]="styleModal">
+    <modal-profile
+      #profile
+      (submit)="onSubmit($event)"
+      (logoutClose)="onLogout()"
+    ></modal-profile>
+  </app-modal>
+  <!-- <div
+    class="modal-backdrop"
+    (click)="onProfileClick($event)"
+    [ngStyle]="{ display: toggle ? 'flex' : 'none' }"
+  >
+    <div
+      class="modal-profile"
+      [ngStyle]="{ display: toggle ? 'flex' : 'none' }"
+    >
+      OK
+    </div>
+  </div> -->
+</mat-toolbar>

@@ -1,0 +1,24 @@
+<li *ngFor="let typeBill of typeBills">
+  <div class="creation-item-list">
+    <div class="creation-item-text">
+      <p class="company-title">{{typeBill.name}}</p>
+      <p class="company-description">{{typeBill.description}}</p>
+    </div>
+    <mat-icon
+      class="icon-type"
+      aria-hidden="false"
+      aria-label="Example home icon"
+      fontIcon="{{typeBill.icon}}"
+    ></mat-icon>
+
+    <button class="icon-button" mat-icon-button aria-label="color label">
+      <mat-icon
+        class="icon-edit"
+        aria-hidden="false"
+        aria-label="Example home icon"
+        fontIcon="edit"
+      ></mat-icon>
+    </button>
+  </div>
+  <div class="company-divider"></div>
+</li>

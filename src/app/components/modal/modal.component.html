@@ -1,0 +1,10 @@
+<div [ngStyle]="{ display: open ? 'flex' : 'none' }">
+  <div class="modal-body" [ngStyle]="styles">
+    <ng-content></ng-content>
+  </div>
+  <div
+    class="modal-backdrop"
+    (click)="toggle()"
+    [ngStyle]="{ display: open ? 'flex' : 'none' }"
+  ></div>
+</div>

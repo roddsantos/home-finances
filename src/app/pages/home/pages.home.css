@@ -1,0 +1,36 @@
+.home-main {
+  height: 100vh;
+}
+
+.home-button {
+  width: 50%;
+  height: 200px;
+  background-color: blueviolet;
+  border-radius: 10px;
+}
+
+.home-button:hover {
+  background-color: rgb(30, 30, 30);
+  border: 2px solid blueviolet;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.home-button.one {
+  margin: auto 20px 20px auto;
+}
+.home-button.two {
+  margin: auto auto 20px 20px;
+}
+.home-button.three {
+  margin: 20px 20px auto auto;
+}
+.home-button.four {
+  margin: 20px auto auto 20px;
+}
+
+.home-container {
+  display: grid;
+  grid-template-rows: 50vh 50vh;
+  grid-template-columns: 50% 50%;
+}
