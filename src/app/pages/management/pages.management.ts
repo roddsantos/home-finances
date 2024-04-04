@@ -15,20 +15,30 @@ import { COMPANIES } from 'src/utils/data';
   encapsulation: ViewEncapsulation.None,
 })
 export class PageManagement implements OnInit {
-  genTab: any;
+  genTab: number;
   companies = COMPANIES;
   @ViewChildren('childTabs') childTabs: QueryList<MatTabGroup>;
+
+  styleButton: Object = {
+    marginLeft: "auto", 
+    display: "flex"
+  }
 
   ngOnInit() {
     this.genTab = 0;
   }
 
   onChangeTab(event: any) {
-    console.log('OKAYGE');
     this.genTab = event.index;
 
     this.childTabs.forEach((childTab) => {
       childTab.realignInkBar();
     });
+  }
+
+  openModal(tab: number) {
+    if(tab === 1) {
+      console.log("TESTE")
+    }
   }
 }

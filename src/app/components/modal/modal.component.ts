@@ -9,7 +9,9 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ModalComponent {
   open: Boolean = false;
+  @Input() header: String;
   @Input() styles: Object;
+  @Input() size: 'xl' | 'lg' | 'md' | 'sm' | 'xs';
 
   constructor() {}
   ngOnInit() {}

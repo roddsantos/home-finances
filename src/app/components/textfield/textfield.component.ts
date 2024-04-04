@@ -11,7 +11,7 @@ import { ModalProfile } from '../modal/profile/profile.modal';
 export class TextfieldComponent {
   @Input() label: String = '';
   @Input() inputModel: String = '';
-  @Input() styleContainer: Object;
+  @Input() styleContainer: CSSPropertyRule;
   @Output() inputModelChange = new EventEmitter<String>();
 
   constructor() {}

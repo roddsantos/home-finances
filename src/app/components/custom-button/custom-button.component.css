@@ -1,0 +1,13 @@
+.button-container {
+  display: flex;
+  flex-direction: row;
+  width: max-content;
+  padding: 10px 30px;
+  background-color: var(--secondary);
+  color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--primary);
+  }
+}

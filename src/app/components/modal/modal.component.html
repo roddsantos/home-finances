@@ -1,10 +1,10 @@
-<div [ngStyle]="{ display: open ? 'flex' : 'none' }">
-  <div class="modal-body" [ngStyle]="styles">
+<div [ngClass]="['modal-container', open ? '' : 'hidden', size]">
+  <h2 mat-dialog-title [ngClass]="'modal-header'">{{header}}</h2>
+  <div [ngClass]="'modal-body'" [ngStyle]="styles">
     <ng-content></ng-content>
   </div>
-  <div
-    class="modal-backdrop"
-    (click)="toggle()"
-    [ngStyle]="{ display: open ? 'flex' : 'none' }"
-  ></div>
 </div>
+<div
+  [ngClass]="['modal-backdrop', open ? '' : 'hidden']"
+  (click)="toggle()"
+></div>

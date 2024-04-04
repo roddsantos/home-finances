@@ -21,10 +21,6 @@ import { ModalComponent } from '../modal/modal.component';
 export class LayoutComponent implements AfterViewInit {
   toggle: Boolean = false;
   styleModal: Object = {
-    backgroundColor: 'black',
-    display: 'flex',
-    height: '250px',
-    top: 'calc(50vh - 125px)',
   };
   @ViewChild(ModalComponent) modal: any;
   @ViewChild(ModalProfile) profile: any;
@@ -52,6 +48,10 @@ export class LayoutComponent implements AfterViewInit {
   }
   onDashboardClick() {
     this.router.navigate(['dashboard']);
+  }
+  
+  toggleDarkMode() {
+    document.body.classList.toggle('dark-theme');
   }
 
   onSubmit(event: String) {

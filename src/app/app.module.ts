@@ -23,6 +23,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { TypeBillsManagementComponent } from './pages/management/type-bills/pages.management.type-bills';
+import {CustomButtonComponent} from './components/custom-button/custom-button.component';
 import { LoginStateService } from './services/services.login-state';
 // import { AppRoutingModule } from './app-routing/app-routing.module';
 
@@ -37,6 +38,7 @@ import { LoginStateService } from './services/services.login-state';
     ModalProfile,
     ModalComponent,
     TextfieldComponent,
+    CustomButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -57,6 +59,5 @@ import { LoginStateService } from './services/services.login-state';
   providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [ModalProfile],
 })
 export class AppModule {}

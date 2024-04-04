@@ -38,8 +38,15 @@
       fontIcon="account_circle"
       (click)="modal.toggle()"
     ></mat-icon>
+    <mat-icon
+      class="app-icon dark-mode"
+      aria-hidden="false"
+      aria-label="Example home icon"
+      fontIcon="dark_mode"
+      (click)="toggleDarkMode()"
+    ></mat-icon>
   </mat-toolbar-row>
-  <app-modal #modal [styles]="styleModal">
+  <app-modal #modal [styles]="styleModal" header="homebills" [size]="'xl'">
     <modal-profile
       #profile
       (submit)="onSubmit($event)"

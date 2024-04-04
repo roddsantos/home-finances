@@ -1,6 +1,8 @@
 <div class="creation-main">
+  <custom-button (onClick)="openModal(genTab)" [stylecontainer]="styleButton" title="novo" />
   <div class="creation-container">
     <mat-tab-group
+      class="creation-tabs"
       #childTabs
       [selectedIndex]="genTab"
       (selectedTabChange)="onChangeTab($event)"
