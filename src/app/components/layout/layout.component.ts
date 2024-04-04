@@ -12,28 +12,43 @@ import { AppService } from 'src/app/app.service';
 import { Subject, takeUntil } from 'rxjs';
 import { LocalStorageService } from 'src/app/services/services.local-storage';
 import { ModalComponent } from '../modal/modal.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
+  standalone: true,
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css'],
+  imports: [MatToolbarModule, MatIconModule]
 })
 export class LayoutComponent implements AfterViewInit {
   toggle: Boolean = false;
-  styleModal: Object = {
-  };
   @ViewChild(ModalComponent) modal: any;
   @ViewChild(ModalProfile) profile: any;
 
   constructor(
     private router: Router,
     private appService: AppService,
-    private storage: LocalStorageService
+    private storage: LocalStorageService,
+    public dialog: MatDialog
   ) {}
   ngOnInit() {}
 
+  openProfile(): void {
+    const dialogRef = this.dialog.open(ModalComponent, {
+      data: {
+        header: "perfil",
+        username: "a"
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
   onClose() {
-    console.log('HAHAHAHA');
     this.toggle = false;
   }
 
@@ -49,7 +64,7 @@ export class LayoutComponent implements AfterViewInit {
   onDashboardClick() {
     this.router.navigate(['dashboard']);
   }
-  
+
   toggleDarkMode() {
     document.body.classList.toggle('dark-theme');
   }

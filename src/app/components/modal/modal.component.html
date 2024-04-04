@@ -1,10 +1,23 @@
-<div [ngClass]="['modal-container', open ? '' : 'hidden', size]">
-  <h2 mat-dialog-title [ngClass]="'modal-header'">{{header}}</h2>
-  <div [ngClass]="'modal-body'" [ngStyle]="styles">
+<!-- <div class="['modal-container', size || 'md']"> -->
+  <h2 mat-dialog-title class="modal-header">
+    <p>{{data.header}}</p>
+    <mat-icon
+      class="app-icon close"
+      aria-hidden="false"
+      aria-label="Example home icon"
+      fontIcon="close"
+      (click)="toggle()"
+    ></mat-icon>
+  </h2>
+  <mat-dialog-content class="'modal-body'">
     <ng-content></ng-content>
-  </div>
-</div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+  </mat-dialog-actions>
+<!-- </div>
 <div
-  [ngClass]="['modal-backdrop', open ? '' : 'hidden']"
+class="['modal-backdrop', open ? '' : 'hidden']"
   (click)="toggle()"
-></div>
+></div> -->

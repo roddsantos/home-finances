@@ -36,7 +36,7 @@
       aria-hidden="false"
       aria-label="Example home icon"
       fontIcon="account_circle"
-      (click)="modal.toggle()"
+      (click)="openProfile()"
     ></mat-icon>
     <mat-icon
       class="app-icon dark-mode"
@@ -46,23 +46,11 @@
       (click)="toggleDarkMode()"
     ></mat-icon>
   </mat-toolbar-row>
-  <app-modal #modal [styles]="styleModal" header="homebills" [size]="'xl'">
+  <!-- <app-modal #modal header="perfil" [size]="'sm'">
     <modal-profile
       #profile
       (submit)="onSubmit($event)"
       (logoutClose)="onLogout()"
     ></modal-profile>
-  </app-modal>
-  <!-- <div
-    class="modal-backdrop"
-    (click)="onProfileClick($event)"
-    [ngStyle]="{ display: toggle ? 'flex' : 'none' }"
-  >
-    <div
-      class="modal-profile"
-      [ngStyle]="{ display: toggle ? 'flex' : 'none' }"
-    >
-      OK
-    </div>
-  </div> -->
+  </app-modal> -->
 </mat-toolbar>

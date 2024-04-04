@@ -1,18 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
 :root .dark-theme {
-    --primary: #8ea4d2ff;
-    --secondary: #6279b8ff;
-    --item-list: #49516fff;
-    --title: ##496f5dff;
-    --description: #4c9f70ff;
-    --background: rgb(30, 30, 30);
-  }
-  
-  :root {
-    --primary: #6665dd;
-    --secondary: #473bf0;
-    --item-list: lightsteelblue;
-    --title: #000500;
-    --description: #9b9ece;
-    --background: #eee;
-  }
+  --primary: #8ea4d2ff;
+  --secondary: #6279b8ff;
+  --item-list: #49516fff;
+  --title: ##496f5dff;
+  --description: #4c9f70ff;
+  --background: rgb(30, 30, 30);
+}
+
+:root {
+  --primary: #6665dd;
+  --secondary: #473bf0;
+  --item-list: lightsteelblue;
+  --title: #000500;
+  --description: #9b9ece;
+  --background: #eee;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 100vh;
+}

@@ -1,11 +1,9 @@
-<div class="profile-body">
-  <p class="text-label" [ngStyle]="styleTextLabel">{{"usuário conectado"}}</p>
-  <p class="text-name" [ngStyle]="styleTextName">{{name}}</p>
-  <textfield
-    [label]="'username'"
-    [(inputModel)]="username"
-    [styleContainer]="styleTextfield"
-  ></textfield>
+<div [ngClass]="'profile-body'">
+  <p [ngClass]="'text-label'" [ngStyle]="styleTextLabel">{{"usuário conectado"}}</p>
+  <mat-form-field>
+    <mat-label>username</mat-label>
+    <input matInput />
+  </mat-form-field>
   <div (click)="onSubmit()" class="button-container" [ngStyle]="isRounded">
     <p class="button-text">{{ textString }}</p>
   </div>

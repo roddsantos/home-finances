@@ -30,21 +30,17 @@ import { LoginStateService } from './services/services.login-state';
 @NgModule({
   declarations: [
     AppComponent,
-    LayoutComponent,
     PageHome,
     PageManagement,
     TypeBillsManagementComponent,
     ManagementCompaniesComponent,
     ModalProfile,
-    ModalComponent,
     TextfieldComponent,
     CustomButtonComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    MatToolbarModule,
-    MatIconModule,
     MatTabsModule,
     AppRoutingModule,
     ReactiveFormsModule,
@@ -55,6 +51,8 @@ import { LoginStateService } from './services/services.login-state';
     MatInputModule,
     FormsModule,
     CommonModule,
+    ModalComponent,
+    LayoutComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
