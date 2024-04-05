@@ -52,6 +52,7 @@
 }
 
 .modal-body {
+  min-height: 200px;
   border-radius: 10px;
   z-index: 3;
   width: 100%;

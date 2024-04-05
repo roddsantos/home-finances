@@ -1,4 +1,4 @@
-<!-- <div class="['modal-container', size || 'md']"> -->
+<div class="modal-container">
   <h2 mat-dialog-title class="modal-header">
     <p>{{data.header}}</p>
     <mat-icon
@@ -9,13 +9,14 @@
       (click)="toggle()"
     ></mat-icon>
   </h2>
-  <mat-dialog-content class="'modal-body'">
+  <div class="'modal-body'">
     <ng-content></ng-content>
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
-  </mat-dialog-actions>
+  </div>
+  <div >
+    <button mat-button (click)='dialogRef.close()'>Cancel</button>
+    <button mat-button (click)='dialogRef.close()' cdkFocusInitial>Install</button>
+  </div>
+</div>
 <!-- </div>
 <div
 class="['modal-backdrop', open ? '' : 'hidden']"

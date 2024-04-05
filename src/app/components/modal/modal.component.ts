@@ -4,18 +4,19 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angu
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ProfileDialogType } from 'src/app/types/modal';
+import { DIALOG_DATA, DialogModule, DialogRef } from '@angular/cdk/dialog';
 
 @Component({
   selector: 'modal-component',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css'],
   standalone: true,
-  imports: [MatIcon, MatDialogModule, MatButtonModule],
+  imports: [MatIcon, DialogModule, MatButtonModule],
 })
 export class ModalComponent {
   constructor(
-    public dialogRef: MatDialogRef<ModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ProfileDialogType,
+    public dialogRef: DialogRef,
+    @Inject(DIALOG_DATA) public data: ProfileDialogType,
   ) {}
   open: Boolean = false;
   @Input() header: String;
