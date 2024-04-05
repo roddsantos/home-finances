@@ -6,6 +6,8 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { LocalStorageService } from 'src/app/services/services.local-storage';
+import { ModalComponent } from '../modal.component';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
 
 export interface DialogData {
   username: string;
@@ -15,6 +17,8 @@ export interface DialogData {
   selector: 'modal-profile',
   templateUrl: './profile.modal.html',
   styleUrls: ['./profile.modal.css'],
+  standalone: true,
+  imports: [MatFormField, MatLabel, ModalComponent]
 })
 export class ModalProfile implements OnInit {
   username: String = '';

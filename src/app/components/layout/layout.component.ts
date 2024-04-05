@@ -5,6 +5,7 @@ import {
   ViewChild,
   AfterViewInit,
   Inject,
+  Input,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
@@ -27,7 +28,6 @@ import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
   imports: [MatToolbarModule, MatIconModule]
 })
 export class LayoutComponent implements AfterViewInit {
-  toggle: Boolean = false;
   @ViewChild(ModalComponent) modal: any;
   @ViewChild(ModalProfile) profile: any;
 
@@ -41,25 +41,19 @@ export class LayoutComponent implements AfterViewInit {
   ngOnInit() {}
 
   openProfile(): void {
-    // let overlayRef = this.overlay.create({
-    //   backdropClass: 'modal-backdrop',
-    // });
     const dialogRef = this.dialog.open<string>(ModalComponent, {
       width: '250px',
       data: {
         header: "perfil",
-        username: "a"
+        username: "a",
       },
-      hasBackdrop: true
+      hasBackdrop: true,
+      backdropClass: "modal-backdrop"
     });
 
     dialogRef.closed.subscribe(result => {
       console.log('The dialog was closed');
     });
-  }
-
-  onClose() {
-    this.toggle = false;
   }
 
   onHomeClick() {

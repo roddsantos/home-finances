@@ -34,9 +34,8 @@ import { LoginStateService } from './services/services.login-state';
     PageManagement,
     TypeBillsManagementComponent,
     ManagementCompaniesComponent,
-    ModalProfile,
     TextfieldComponent,
-    CustomButtonComponent
+    CustomButtonComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,8 +50,9 @@ import { LoginStateService } from './services/services.login-state';
     MatInputModule,
     FormsModule,
     CommonModule,
-    ModalComponent,
     LayoutComponent,
+    ModalComponent,
+    ModalProfile,
   ],
   providers: [],
   bootstrap: [AppComponent],

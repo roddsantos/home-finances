@@ -1,4 +1,16 @@
-<div [ngClass]="'profile-body'">
+<ng-template #customBody>
+  <div class="profile-body">
+    <mat-form-field>
+      <mat-label>username</mat-label>
+      <input matInput />
+    </mat-form-field>
+    <p>abc</p>
+  </div>
+</ng-template>
+
+<modal-component [bodyTemplate]="customBody"></modal-component>
+
+<!-- <div [ngClass]="'profile-body'">
   <p [ngClass]="'text-label'" [ngStyle]="styleTextLabel">{{"usuário conectado"}}</p>
   <mat-form-field>
     <mat-label>username</mat-label>
@@ -7,4 +19,4 @@
   <div (click)="onSubmit()" class="button-container" [ngStyle]="isRounded">
     <p class="button-text">{{ textString }}</p>
   </div>
-</div>
+</div> -->

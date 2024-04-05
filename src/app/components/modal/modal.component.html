@@ -6,17 +6,22 @@
       aria-hidden="false"
       aria-label="Example home icon"
       fontIcon="close"
-      (click)="toggle()"
+      (click)='dialogRef.close()'
     ></mat-icon>
   </h2>
-  <div class="'modal-body'">
-    <ng-content></ng-content>
+  <div class='modal-body'>
+    <ng-container *ngTemplateOutlet="bodyTemplate ? bodyTemplate : defaultBody">
+    </ng-container>
   </div>
   <div >
     <button mat-button (click)='dialogRef.close()'>Cancel</button>
     <button mat-button (click)='dialogRef.close()' cdkFocusInitial>Install</button>
   </div>
 </div>
+
+<ng-template #defaultBody>
+  <div>a</div>
+</ng-template>
 <!-- </div>
 <div
 class="['modal-backdrop', open ? '' : 'hidden']"
