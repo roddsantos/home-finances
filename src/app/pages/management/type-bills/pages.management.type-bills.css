@@ -1,25 +1,30 @@
-.creation-item-list {
+.type-item-list {
   display: flex;
   flex-direction: row;
   width: auto;
-  padding: 20px 50px;
+  padding: 10px 50px;
+  background-color: var(--item-list);
 }
 
-.creation-item-text {
-  flex-direction: column;
+.type-item-text {
+  display: flex;
+  flex-direction: row;
   padding: 0px;
+  width: 75%;
 }
 
-.company-title {
-  font: bold 22px Lucida Sans;
-  color: blueviolet;
-  margin: 0px;
+.type-title {
+  font: bold 22px Helvetica;
+  color: var(--secondary);
+  width: 50%;
+  margin: auto 10px auto 0px;
 }
 
-.company-description {
-  font: normal 14px Lucida Sans;
-  color: white;
-  margin: 10px 0px 0px;
+.type-description {
+  font: normal 14px Helvetica;
+  color: var(--primary);
+  margin: auto 0px;
+  width: 50%;
 }
 
 .icon-edit {

@@ -1,24 +1,46 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import {
+    Component,
+    OnInit,
+    Input,
+    Output,
+    EventEmitter,
+    Inject,
+    TemplateRef,
+    ViewChild,
+    ViewContainerRef,
+} from "@angular/core";
+import { Router } from "@angular/router";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MatIcon } from "@angular/material/icon";
+import { MatButtonModule } from "@angular/material/button";
+import { FooterModal, ProfileDialogType } from "src/app/types/modal";
+import { DIALOG_DATA, DialogModule, DialogRef } from "@angular/cdk/dialog";
+import { NgTemplateOutlet } from "@angular/common";
 
 @Component({
-  selector: 'app-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.css'],
+    selector: "modal-component",
+    templateUrl: "./modal.component.html",
+    styleUrls: ["./modal.component.css"],
+    standalone: true,
+    imports: [MatIcon, NgTemplateOutlet, MatButtonModule],
 })
 export class ModalComponent {
-  open: Boolean = false;
-  @Input() styles: Object;
+    constructor(public dialogRef: DialogRef, @Inject(DIALOG_DATA) public data: ProfileDialogType) {}
 
-  constructor() {}
-  ngOnInit() {}
+    @Input() bodyTemplate!: TemplateRef<any>;
+    @Input() footer: FooterModal;
+    @Output() actionSecondary = new EventEmitter<void>();
+    @Output() actionPrimary = new EventEmitter<Object>();
 
-  toggle() {
-    this.open = !this.open;
-  }
+    onPrimary() {
+        this.actionPrimary.emit();
+    }
 
-  close() {
-    this.open = false;
-  }
+    onSecondary() {
+        this.actionSecondary.emit();
+    }
+
+    onClose() {
+        this.dialogRef.close();
+    }
 }

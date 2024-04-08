@@ -1,0 +1,13 @@
+<h2 mat-dialog-title class="header-profile-modal">homebills</h2>
+<div class="profile-body">
+  <p class="text-label" [ngStyle]="styleTextLabel">{{"usuário conectado"}}</p>
+  <p class="text-name" [ngStyle]="styleTextName">{{name}}</p>
+  <textfield
+    [label]="'username'"
+    [(inputModel)]="username"
+    [styleContainer]="styleTextfield"
+  ></textfield>
+  <div (click)="onSubmit()" class="button-container" [ngStyle]="isRounded">
+    <p class="button-text">{{ textString }}</p>
+  </div>
+</div>

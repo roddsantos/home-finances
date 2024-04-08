@@ -1,13 +1,22 @@
-<h2 mat-dialog-title class="header-profile-modal">homebills</h2>
-<div class="profile-body">
-  <p class="text-label" [ngStyle]="styleTextLabel">{{"usuário conectado"}}</p>
-  <p class="text-name" [ngStyle]="styleTextName">{{name}}</p>
-  <textfield
-    [label]="'username'"
-    [(inputModel)]="username"
-    [styleContainer]="styleTextfield"
-  ></textfield>
-  <div (click)="onSubmit()" class="button-container" [ngStyle]="isRounded">
-    <p class="button-text">{{ textString }}</p>
-  </div>
-</div>
+<modal-component
+    [footer]="mode"
+    (actionPrimary)="user ? onCloseModal(): onProfileSubmit()"
+    (actionSecondary)="user ? onLogout() : onCloseModal()"
+    [bodyTemplate]="user ? loggedBody : profileBody"
+></modal-component>
+
+<ng-template #profileBody>
+    <div class="profile-body">
+        <mat-form-field appearance="outline">
+            <mat-label>username</mat-label>
+            <input matInput [(ngModel)]="username" />
+        </mat-form-field>
+    </div>
+</ng-template>
+
+<ng-template #loggedBody>
+    <div class="profile-body">
+        <p>usuário conectado:</p>
+        <p>{{user?.name}}</p>
+    </div>
+</ng-template>

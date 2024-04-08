@@ -1,74 +1,90 @@
-import { Component, Inject, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
-import { LocalStorageService } from 'src/app/services/services.local-storage';
+import { Component, Inject, OnInit, Output, EventEmitter, inject, ViewChild } from "@angular/core";
+import { Router } from "@angular/router";
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { LocalStorageService } from "src/app/services/services.local-storage";
+import { ModalComponent } from "../modal.component";
+import { MatFormField, MatFormFieldModule, MatLabel } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { AppService } from "src/app/app.service";
+import { FormsModule } from "@angular/forms";
+import { User } from "src/app/types/general";
+import { FooterModal } from "src/app/types/modal";
 
 export interface DialogData {
-  username: string;
+    username: string;
 }
 
 @Component({
-  selector: 'modal-profile',
-  templateUrl: './profile.modal.html',
-  styleUrls: ['./profile.modal.css'],
+    selector: "modal-profile",
+    templateUrl: "./profile.modal.html",
+    styleUrls: ["./profile.modal.css"],
+    standalone: true,
+    imports: [MatFormField, MatInputModule, MatLabel, ModalComponent, FormsModule],
 })
 export class ModalProfile implements OnInit {
-  username: String = '';
-  user: any = null;
-  hasUser: any;
-  textString: String;
-  @Output() submit = new EventEmitter<String>();
-  @Output() logoutClose = new EventEmitter<void>();
+    @ViewChild(ModalComponent) modalComponent: any;
+    username: String = "";
+    user: User | null = null;
+    hasUser: any;
+    textString: String;
+    mode: FooterModal = {
+        type: "submit",
+        submit: "login",
+        alert: "cancel",
+    };
 
-  styleTextLabel: any;
-  styleTextName: any;
-  styleTextfield: any;
-  isRounded: any;
+    @Output() submit = new EventEmitter<String>();
+    @Output() logoutClose = new EventEmitter<void>();
 
-  name: any;
+    private storage = inject(LocalStorageService);
+    private appService = inject(AppService);
 
-  constructor(private storage: LocalStorageService) {}
-
-  update() {
-    let userAux = this.storage.getUser();
-    let hasUserAux = this.storage.getHasUser();
-    if (userAux) {
-      this.user = userAux;
-      this.hasUser = hasUserAux;
+    update() {
+        let userAux = this.storage.getUser();
+        this.user = userAux || null;
+        this.mode = {
+            type: "submit",
+            submit: userAux ? "OK" : "login",
+            alert: userAux ? "logout" : "cancel",
+        };
     }
-    let styleAux = {
-      display: hasUserAux == 'true' ? 'flex' : 'none',
-    };
-    this.styleTextLabel = styleAux;
-    this.styleTextName = styleAux;
-    this.styleTextfield = {
-      width: '100%',
-      display: hasUserAux == 'true' ? 'none' : 'flex',
-    };
-    this.textString = hasUserAux == 'true' ? 'sair' : 'entrar';
-    this.name = this.user ? this.user?.name : '';
-    this.isRounded =
-      hasUserAux == 'true'
-        ? {
-            width: '116px',
-            height: '36px',
-            border: '1px solid blueviolet',
-            backgroundColor: 'black',
-          }
-        : {};
-  }
 
-  ngOnInit() {
-    this.update();
-  }
+    ngOnInit() {
+        this.update();
+    }
 
-  onSubmit() {
-    if (this.user || this.hasUser) {
-      this.logoutClose.emit();
-    } else this.submit.emit(this.username);
-  }
+    onProfileSubmit() {
+        this.appService.getUser(this.username).subscribe({
+            next: (data: any) => {
+                this.storage.setUser(data);
+                this.user = data;
+                this.mode = {
+                    type: "submit",
+                    submit: "OK",
+                    alert: "logout",
+                };
+            },
+            error: () => {
+                this.mode = {
+                    type: "submit",
+                    submit: "login",
+                    alert: "cancel",
+                };
+            },
+        });
+    }
+
+    onCloseModal() {
+        this.modalComponent.onClose();
+    }
+
+    onLogout() {
+        this.storage.removeUser();
+        this.user = null;
+        this.mode = {
+            type: "submit",
+            submit: "login",
+            alert: "cancel",
+        };
+    }
 }

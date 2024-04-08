@@ -23,26 +23,23 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { TypeBillsManagementComponent } from './pages/management/type-bills/pages.management.type-bills';
+import {CustomButtonComponent} from './components/custom-button/custom-button.component';
 import { LoginStateService } from './services/services.login-state';
 // import { AppRoutingModule } from './app-routing/app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LayoutComponent,
     PageHome,
     PageManagement,
     TypeBillsManagementComponent,
     ManagementCompaniesComponent,
-    ModalProfile,
-    ModalComponent,
     TextfieldComponent,
+    CustomButtonComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    MatToolbarModule,
-    MatIconModule,
     MatTabsModule,
     AppRoutingModule,
     ReactiveFormsModule,
@@ -53,10 +50,12 @@ import { LoginStateService } from './services/services.login-state';
     MatInputModule,
     FormsModule,
     CommonModule,
+    LayoutComponent,
+    ModalComponent,
+    ModalProfile,
   ],
   providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [ModalProfile],
 })
 export class AppModule {}
