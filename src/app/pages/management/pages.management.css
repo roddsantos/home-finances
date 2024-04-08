@@ -41,3 +41,7 @@
 .button-action {
     margin: auto 0px auto auto;
 }
+
+.button-container {
+    height: 60px;
+}

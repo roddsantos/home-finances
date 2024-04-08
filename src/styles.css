@@ -9,7 +9,11 @@
     --description: #4c9f70ff;
     --background: rgb(30, 30, 30);
 
-    --error: #8f0000;
+    --error: #e21111;
+    --warning: #e28e11;
+    --info: #1153e2;
+    --success: #11e26f;
+    --default: #474141;
 }
 
 :root {
@@ -21,6 +25,10 @@
     --background: #eee;
 
     --error: #8f0000;
+    --warning: #8f5d00;
+    --info: #00328f;
+    --success: #008f18;
+    --default: #474141;
 }
 
 * {
