@@ -1,13 +1,33 @@
-<h2 mat-dialog-title class="header-profile-modal">homebills</h2>
-<div class="profile-body">
-  <p class="text-label" [ngStyle]="styleTextLabel">{{"usuário conectado"}}</p>
-  <p class="text-name" [ngStyle]="styleTextName">{{name}}</p>
-  <textfield
-    [label]="'username'"
-    [(inputModel)]="username"
-    [styleContainer]="styleTextfield"
-  ></textfield>
-  <div (click)="onSubmit()" class="button-container" [ngStyle]="isRounded">
-    <p class="button-text">{{ textString }}</p>
-  </div>
-</div>
+<modal-component [footer]="mode" (actionPrimary)="onSubmit()" [bodyTemplate]="newBank"></modal-component>
+
+<ng-template #newBank>
+    <div class="new-bank-container">
+        <mat-form-field class="new-bank-field" appearance="outline">
+            <mat-label>name</mat-label>
+            <input maxlength="100" required matInput [formControl]="name" (blur)="updateNameErrorMessage()" />
+            @if (name.invalid) {
+            <mat-error>{{errorMessage.name}}</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field class="new-bank-field" appearance="outline">
+            <mat-label>description</mat-label>
+            <input maxlength="100" matInput [formControl]="description" (blur)="updateDescriptionErrorMessage()" />
+            @if (description.invalid) {
+            <mat-error>{{errorMessage.description}}</mat-error>
+            }
+        </mat-form-field>
+        <div class="savings-color">
+            <mat-form-field class="color-picker" appearance="outline">
+                <mat-label>color</mat-label>
+                <input matInput type="color" [(ngModel)]="color" />
+            </mat-form-field>
+            <mat-form-field class="savings-input" appearance="outline">
+                <mat-label>savings</mat-label>
+                <input matInput [formControl]="savings" (blur)="updateSavingsErrorMessage()" />
+                @if (savings.invalid) {
+                <mat-error>{{errorMessage.savings}}</mat-error>
+                }
+            </mat-form-field>
+        </div>
+    </div>
+</ng-template>

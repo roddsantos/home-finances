@@ -1,106 +1,95 @@
 .modal-container {
-  display: flex;
-  flex-direction: column;
-  background-color: var(--item-list);
-  position: absolute;
-  left: calc(50vw - 25vw);
-  top: 20vh;
-  min-height: 150px;
-  width: 50vw;
-  z-index: 3;
-  padding: 50px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--item-list);
+    position: absolute;
+    left: calc(50vw - 25vw);
+    top: 20vh;
+    min-height: 150px;
+    width: 50vw;
+    z-index: 3;
+    padding: 50px 20px 20px;
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
 
 .modal-container.xl {
-  left: calc(50vw - 40vw);
-  top: 20vh;
-  width: 80vw;
+    left: calc(50vw - 40vw);
+    top: 20vh;
+    width: 80vw;
 }
 
 .modal-container.lg {
-  left: calc(50vw - 32.5vw);
-  top: 20vh;
-  width: 65vw;
+    left: calc(50vw - 32.5vw);
+    top: 20vh;
+    width: 65vw;
 }
 
 .modal-container.sm {
-  left: calc(50vw - 17.5vw);
-  top: 20vh;
-  width: 35vw;
+    left: calc(50vw - 17.5vw);
+    top: 20vh;
+    width: 35vw;
 }
 
 .modal-container.xs {
-  left: calc(50vw - 10vw);
-  top: 20vh;
-  width: 20vw;
+    left: calc(50vw - 10vw);
+    top: 20vh;
+    width: 20vw;
 }
 
 .modal-backdrop {
-  position: absolute;
-  z-index: 2;
-  background-color: rgb(0, 0, 0, 0.5);
-  width: 100vw;
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
-  left: 0px;
-  top: 0px;
+    position: absolute;
+    z-index: 2;
+    background-color: rgb(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    left: 0px;
+    top: 0px;
 }
 
 .modal-body {
-  min-height: max-content;
-  border-radius: 10px;
-  z-index: 3;
-  width: 100%;
-  height: max-content;
+    min-height: max-content;
+    border-radius: 10px;
+    z-index: 3;
+    width: 100%;
+    height: max-content;
 }
 
 .modal-header {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 40px;
-  z-index: 3;
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  text-align: center;
-  padding: 0px 20px;
-  margin-top: -8px;
-  background-color: var(--description);
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 40px;
+    z-index: 3;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    text-align: center;
+    padding: 0px 20px;
+    margin-top: -8px;
+    background-color: var(--description);
 
-  & p {
-    color: var(--secondary);
-    margin: auto auto auto 0px;
-    font: bold 16px Roboto;
-  }
+    & p {
+        color: var(--secondary);
+        margin: auto auto auto 0px;
+        font: bold 16px Roboto;
+    }
 }
 
 .app-icon.close {
-  margin: auto -10px auto auto;
-  color: var(--secondary);
-  cursor: pointer;
+    margin: auto -10px auto auto;
+    color: var(--secondary);
+    cursor: pointer;
 }
 
 .modal-footer {
-  margin: 20px 0px 0px auto;
+    margin: 20px 0px 0px auto;
 }
 
-.modal-button-close {
-  &.mat-mdc-button:not(:disabled) {
-    background-color: transparent;
-    color: var(--title)
-  }
-}
-
-.modal-button-submit {
-  margin-left: 20px;
-  &.mat-mdc-button:not(:disabled) {
-    background-color: var(--primary);
-    color: var(--background)
-  }
+.add-margin-left {
+    margin-left: 20px;
 }

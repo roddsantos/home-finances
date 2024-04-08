@@ -33,11 +33,13 @@ export class ModalComponent {
     @Output() actionPrimary = new EventEmitter<Object>();
 
     onPrimary() {
-        this.actionPrimary.emit();
+        if (!this.actionPrimary.observed) this.dialogRef.close();
+        else this.actionPrimary.emit();
     }
 
     onSecondary() {
-        this.actionSecondary.emit();
+        if (!this.actionSecondary.observed) this.dialogRef.close();
+        else this.actionSecondary.emit();
     }
 
     onClose() {

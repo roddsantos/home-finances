@@ -2,45 +2,86 @@
 @import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 :root .dark-theme {
-  --primary: #8ea4d2ff;
-  --secondary: #6279b8ff;
-  --item-list: #49516fff;
-  --title: ##496f5dff;
-  --description: #4c9f70ff;
-  --background: rgb(30, 30, 30);
+    --primary: #8ea4d2ff;
+    --secondary: #6279b8ff;
+    --item-list: #49516fff;
+    --title: ##496f5dff;
+    --description: #4c9f70ff;
+    --background: rgb(30, 30, 30);
+
+    --error: #8f0000;
 }
 
 :root {
-  --primary: #6665dd;
-  --secondary: #473bf0;
-  --item-list: lightsteelblue;
-  --title: #000500;
-  --description: #9b9ece;
-  --background: #eee;
+    --primary: #6665dd;
+    --secondary: #473bf0;
+    --item-list: lightsteelblue;
+    --title: #000500;
+    --description: #9b9ece;
+    --background: #eee;
+
+    --error: #8f0000;
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Inter", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
 }
 
 body {
-  /* display: flex;
+    /* display: flex;
   flex-direction: column;
   position: relative; */
-  min-height: 100vh;
+    min-height: 100vh;
 }
 
 .modal-backdrop {
-  position: absolute;
-  z-index: 3;
-  background-color: rgb(0, 0, 0, 0.5);
-  width: 100vw;
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
-  left: 0px;
-  top: 0px;
+    position: absolute;
+    z-index: 3;
+    background-color: rgb(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    left: 0px;
+    top: 0px;
+}
+
+.mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-floating-label {
+    color: #8f0000 !important;
+}
+
+.mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+    border-color: #8f0000 !important;
+}
+
+.mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__notch {
+    border-color: #8f0000 !important;
+}
+
+.mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__leading {
+    border-color: #8f0000 !important;
+}
+
+.button-primary {
+    &.mat-mdc-button:not(:disabled) {
+        border-radius: 0px;
+        background-color: var(--secondary);
+        color: #ffffff !important;
+    }
+}
+
+.button-secondary {
+    &.mat-mdc-button:not(:disabled) {
+        border-radius: 0px;
+        background-color: transparent;
+        color: #000000 !important;
+    }
+}
+
+.mat-mdc-form-field-error {
+    color: #8f0000 !important;
+    caret-color: #8f0000 !important;
 }

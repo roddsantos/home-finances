@@ -1,1 +1,23 @@
+.new-bank-container {
+    display: flex;
+    flex-direction: column;
+}
 
+.color-picker {
+    width: 33%;
+}
+
+.savings-input {
+    width: 66%;
+}
+
+.savings-color {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.new-bank-field {
+    margin-bottom: 10px;
+}

@@ -1,9 +1,12 @@
-import { Component, OnInit, QueryList, ViewChildren, ViewEncapsulation } from "@angular/core";
+import { Component, inject, OnInit, QueryList, ViewChildren, ViewEncapsulation } from "@angular/core";
 import { MatTab, MatTabGroup, MatTabsModule } from "@angular/material/tabs";
 import { COMPANIES } from "src/utils/data";
 import { TypeBillsManagementComponent } from "./type-bills/pages.management.type-bills";
 import { ManagementCompaniesComponent } from "./companies/pages.management.companies";
 import { MatButton } from "@angular/material/button";
+import { ModalNewBank } from "src/app/components/modal/new-bank/new-bank.modal";
+import { Dialog } from "@angular/cdk/dialog";
+import { NgIf } from "@angular/common";
 
 @Component({
     selector: "page-management",
@@ -11,10 +14,13 @@ import { MatButton } from "@angular/material/button";
     styleUrls: ["./pages.management.css"],
     standalone: true,
     encapsulation: ViewEncapsulation.None,
-    imports: [MatTabsModule, TypeBillsManagementComponent, ManagementCompaniesComponent, MatButton],
+    imports: [MatTabsModule, TypeBillsManagementComponent, ManagementCompaniesComponent, MatButton, NgIf],
 })
 export class PageManagement implements OnInit {
+    public dialog = inject(Dialog);
+
     genTab: number;
+    nameTab: String[] = ["company", "bank", "", ""];
     companies = COMPANIES;
     @ViewChildren("childTabs") childTabs: QueryList<MatTabGroup>;
 
@@ -29,16 +35,20 @@ export class PageManagement implements OnInit {
 
     onChangeTab(event: any) {
         this.genTab = event.index;
-        console.log("TESTE", event);
 
         this.childTabs.forEach((childTab) => {
             childTab.realignInkBar();
         });
     }
 
-    openModal(tab: number) {
-        if (tab === 1) {
-            console.log("TESTE");
-        }
+    openModal(tab: number): void {
+        this.dialog.open<string>(ModalNewBank, {
+            width: "250px",
+            data: {
+                header: "new " + this.nameTab[this.genTab],
+            },
+            hasBackdrop: true,
+            backdropClass: "modal-backdrop",
+        });
     }
 }
