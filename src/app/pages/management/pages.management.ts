@@ -7,6 +7,7 @@ import { MatButton } from "@angular/material/button";
 import { ModalNewBank } from "src/app/components/modal/new-bank/new-bank.modal";
 import { Dialog } from "@angular/cdk/dialog";
 import { NgIf } from "@angular/common";
+import { ModalNewCompany } from "src/app/components/modal/new-company/new-company.modal";
 
 @Component({
     selector: "page-management",
@@ -41,8 +42,8 @@ export class PageManagement implements OnInit {
         });
     }
 
-    openModal(tab: number): void {
-        this.dialog.open<string>(ModalNewBank, {
+    openModal(): void {
+        this.dialog.open<string>(this.genTab === 0 ? ModalNewCompany : ModalNewBank, {
             width: "250px",
             data: {
                 header: "new " + this.nameTab[this.genTab],
