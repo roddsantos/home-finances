@@ -1,40 +1,43 @@
 .creation-main {
-  height: auto;
-  padding: 80px 50px 40px;
-  max-width: 1000px;
-  margin: 0px auto;
+    height: auto;
+    padding: 80px 50px 40px;
+    max-width: 1000px;
+    margin: 0px auto;
 }
 
 .creation-container {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .creation-tabs {
-  color: var(--background);
+    color: var(--background);
 }
 
 .creation-tab {
-  background-color: blueviolet;
-  color: blueviolet;
-  margin: 10px;
-  height: 100px;
+    background-color: blueviolet;
+    color: blueviolet;
+    margin: 10px;
+    height: 100px;
 }
 
 .mdc-tab {
-  min-height: 50px;
-  min-width: 25px !important;
-  padding: 5px;
-  background-color: transparent;
-  color: var(--description);
-  font-weight: 700;
-
+    min-height: 50px;
+    min-width: 25px !important;
+    padding: 5px;
+    background-color: transparent;
+    color: var(--description);
+    font-weight: 700;
 }
 
 .mdc-tab-indicator--active {
-  min-width: 25px !important;
-  padding: 5px;
-  background-color: var(--secondary);
-  color: var(--secondary);
-  font-weight: 700;
+    min-width: 25px !important;
+    padding: 5px;
+    background-color: var(--secondary);
+    color: var(--secondary);
+    font-weight: 700;
+}
+
+.button-action {
+    margin: auto 0px auto auto;
 }

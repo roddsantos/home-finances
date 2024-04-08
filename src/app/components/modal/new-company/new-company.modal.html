@@ -16,18 +16,9 @@
             <mat-error>{{errorMessage.description}}</mat-error>
             }
         </mat-form-field>
-        <div class="savings-color">
-            <mat-form-field class="color-picker" appearance="outline">
-                <mat-label>color</mat-label>
-                <input matInput type="color" [(ngModel)]="color" />
-            </mat-form-field>
-            <mat-form-field class="savings-input" appearance="outline">
-                <mat-label>savings</mat-label>
-                <input matInput [formControl]="savings" (blur)="updateSavingsErrorMessage()" />
-                @if (savings.invalid) {
-                <mat-error>{{errorMessage.savings}}</mat-error>
-                }
-            </mat-form-field>
-        </div>
+        <mat-form-field class="color-picker" appearance="outline">
+            <mat-label>color</mat-label>
+            <input matInput type="color" [(ngModel)]="color" />
+        </mat-form-field>
     </div>
 </ng-template>

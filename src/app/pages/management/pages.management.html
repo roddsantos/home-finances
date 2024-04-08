@@ -1,24 +1,22 @@
 <div class="creation-main">
-  <custom-button (onClick)="openModal(genTab)" [stylecontainer]="styleButton" title="novo" />
-  <div class="creation-container">
-    <mat-tab-group
-      class="creation-tabs"
-      #childTabs
-      [selectedIndex]="genTab"
-      (selectedTabChange)="onChangeTab($event)"
-    >
-      <mat-tab tabindex="0" class="creation-tab" label="empresas"
-        ><management-companies></management-companies
-      ></mat-tab>
-      <mat-tab tabindex="1" class="creation-tab" label="bancos">
-        Content 2
-      </mat-tab>
-      <mat-tab tabindex="2" class="creation-tab" label="tipos de despesas">
-        <management-type-bills></management-type-bills>
-      </mat-tab>
-      <mat-tab tabindex="3" class="creation-tab" label="outros">
-        Content 3
-      </mat-tab>
-    </mat-tab-group>
-  </div>
+    <button *ngIf="nameTab[genTab]" (click)="openModal()" mat-button class="button-primary">
+        {{"new " + nameTab[genTab]}}
+    </button>
+    <div class="creation-container">
+        <mat-tab-group
+            class="creation-tabs"
+            #childTabs
+            [selectedIndex]="genTab"
+            (selectedTabChange)="onChangeTab($event)"
+        >
+            <mat-tab tabindex="0" class="creation-tab" label="empresas"
+                ><management-companies></management-companies
+            ></mat-tab>
+            <mat-tab tabindex="1" class="creation-tab" label="bancos"> Content 2 </mat-tab>
+            <mat-tab tabindex="2" class="creation-tab" label="tipos de despesas">
+                <management-type-bills></management-type-bills>
+            </mat-tab>
+            <mat-tab tabindex="3" class="creation-tab" label="outros"> Content 3 </mat-tab>
+        </mat-tab-group>
+    </div>
 </div>
