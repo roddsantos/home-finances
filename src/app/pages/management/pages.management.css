@@ -38,3 +38,11 @@
   color: var(--secondary);
   font-weight: 700;
 }
+
+.button-action {
+  margin: auto 0px auto auto;
+  &.mat-mdc-button:not(:disabled) {
+    background-color: var(--primary);
+    color: var(--background)
+  }
+}
