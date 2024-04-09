@@ -5,7 +5,7 @@
     --primary: #8ea4d2ff;
     --secondary: #6279b8ff;
     --item-list: #49516fff;
-    --title: ##496f5dff;
+    --title: #496f5dff;
     --description: #4c9f70ff;
     --background: rgb(30, 30, 30);
 
@@ -57,19 +57,23 @@ body {
     top: 0px;
 }
 
-.mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-floating-label {
+.mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled)
+    .mdc-floating-label {
     color: #8f0000 !important;
 }
 
-.mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+.mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled)
+    .mdc-notched-outline__trailing {
     border-color: #8f0000 !important;
 }
 
-.mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__notch {
+.mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled)
+    .mdc-notched-outline__notch {
     border-color: #8f0000 !important;
 }
 
-.mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-notched-outline__leading {
+.mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled)
+    .mdc-notched-outline__leading {
     border-color: #8f0000 !important;
 }
 
@@ -92,4 +96,59 @@ body {
 .mat-mdc-form-field-error {
     color: #8f0000 !important;
     caret-color: #8f0000 !important;
+}
+
+.error {
+    &.mat-mdc-snack-bar-container {
+        .mdc-snackbar__surface {
+            background-color: var(--error);
+        }
+        .mdc-button__label {
+            color: white;
+        }
+    }
+}
+
+.warning {
+    &.mat-mdc-snack-bar-container {
+        .mdc-snackbar__surface {
+            background-color: var(--warning);
+        }
+        .mdc-button__label {
+            color: white;
+        }
+    }
+}
+
+.success {
+    &.mat-mdc-snack-bar-container {
+        .mdc-snackbar__surface {
+            background-color: var(--success);
+        }
+        .mdc-button__label {
+            color: white;
+        }
+    }
+}
+
+.info {
+    &.mat-mdc-snack-bar-container {
+        .mdc-snackbar__surface {
+            background-color: var(--info);
+        }
+        .mdc-button__label {
+            color: white;
+        }
+    }
+}
+
+&.default {
+    &.mat-mdc-snack-bar-container {
+        .mdc-snackbar__surface {
+            background-color: var(--default);
+        }
+        .mdc-button__label {
+            color: white;
+        }
+    }
 }

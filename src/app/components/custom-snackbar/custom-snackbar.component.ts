@@ -1,50 +1,52 @@
-import { Component, OnInit, Input, Output, EventEmitter, inject, Inject } from "@angular/core";
-import { CommonModule, NgClass } from "@angular/common";
-import { Router } from "@angular/router";
-import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import { ModalProfile } from "../modal/profile/profile.modal";
+import { Component, inject, Injectable } from "@angular/core";
+import { NgClass } from "@angular/common";
 import { SnackbarData, SnackbarVariant } from "src/app/types/components";
-import {
-    MAT_SNACK_BAR_DATA,
-    MatSnackBar,
-    MatSnackBarAction,
-    MatSnackBarActions,
-    MatSnackBarLabel,
-    MatSnackBarRef,
-} from "@angular/material/snack-bar";
-import { MatButtonModule } from "@angular/material/button";
+import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 
+@Injectable({
+    providedIn: "root",
+})
 @Component({
     selector: "custom-snackbar",
     templateUrl: "./custom-snackbar.component.html",
     styleUrls: ["./custom-snackbar.component.css"],
     standalone: true,
+    imports: [NgClass],
 })
 export class CustomSnackbarComponent {
     private _snackBar = inject(MatSnackBar);
 
+    snackData: SnackbarData = {
+        variant: "default",
+        message: "",
+        options: {},
+        actionLabel: "",
+        action: () => {},
+    };
+
     ngOnInit() {}
 
-    openSnackBar(message: string, variant?: SnackbarVariant, action?: () => void) {
-        this._snackBar.openFromComponent(CustomSnackbarComponent, {
-            data: {
-                message: message,
-                variant: variant,
-                action: action ? action() : () => {},
-            },
-            duration: 3000,
-        });
+    openSnackBar(
+        message: string,
+        variant?: SnackbarVariant,
+        actionLabel?: string,
+        action?: SnackbarData["action"],
+        options?: MatSnackBarConfig<any>
+    ) {
+        this.snackData = {
+            message,
+            variant,
+            action,
+        };
+        this._snackBar
+            .open(message, actionLabel, {
+                panelClass: ["snackbar-container", variant || "default"],
+                duration: 3000,
+                ...options,
+            })
+            .afterDismissed()
+            .subscribe(() => {
+                if (this.snackData.action) this.snackData.action();
+            });
     }
-}
-
-@Component({
-    selector: "custom-snackbar-template",
-    templateUrl: "custom-snackbar-template.component.html",
-    styleUrls: ["./custom-snackbar.component.css"],
-    standalone: true,
-    imports: [MatButtonModule, MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction, NgClass],
-})
-export class PizzaPartyAnnotatedComponent {
-    @Inject(MAT_SNACK_BAR_DATA) public data: SnackbarData;
-    snackBarRef = inject(MatSnackBarRef);
 }

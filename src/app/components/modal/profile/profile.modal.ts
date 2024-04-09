@@ -1,9 +1,14 @@
-import { Component, Inject, OnInit, Output, EventEmitter, inject, ViewChild } from "@angular/core";
-import { Router } from "@angular/router";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import {
+    Component,
+    OnInit,
+    Output,
+    EventEmitter,
+    inject,
+    ViewChild,
+} from "@angular/core";
 import { LocalStorageService } from "src/app/services/services.local-storage";
 import { ModalComponent } from "../modal.component";
-import { MatFormField, MatFormFieldModule, MatLabel } from "@angular/material/form-field";
+import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { AppService } from "src/app/app.service";
 import { FormsModule } from "@angular/forms";
@@ -60,6 +65,7 @@ export class ModalProfile implements OnInit {
             next: (data: any) => {
                 this.storage.setUser(data);
                 this.user = data;
+                this.snack.openSnackBar("login successful", "success");
                 this.mode = {
                     type: "submit",
                     submit: "OK",
@@ -67,7 +73,7 @@ export class ModalProfile implements OnInit {
                 };
             },
             error: () => {
-                this.snack.openSnackBar("Erro", "error");
+                this.snack.openSnackBar("login error, try again", "success");
                 this.mode = {
                     type: "submit",
                     submit: "login",
