@@ -1,14 +1,20 @@
-import { Component, Inject, OnInit, Output, EventEmitter, inject, ViewChild } from "@angular/core";
-import { Router } from "@angular/router";
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import {
+    Component,
+    OnInit,
+    Output,
+    EventEmitter,
+    inject,
+    ViewChild,
+} from "@angular/core";
 import { LocalStorageService } from "src/app/services/services.local-storage";
 import { ModalComponent } from "../modal.component";
-import { MatFormField, MatFormFieldModule, MatLabel } from "@angular/material/form-field";
+import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { AppService } from "src/app/app.service";
 import { FormsModule } from "@angular/forms";
 import { User } from "src/app/types/general";
 import { FooterModal } from "src/app/types/modal";
+import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 
 export interface DialogData {
     username: string;
@@ -38,6 +44,11 @@ export class ModalProfile implements OnInit {
 
     private storage = inject(LocalStorageService);
     private appService = inject(AppService);
+    private snack = inject(CustomSnackbarComponent);
+
+    ngOnInit() {
+        this.update();
+    }
 
     update() {
         let userAux = this.storage.getUser();
@@ -49,15 +60,12 @@ export class ModalProfile implements OnInit {
         };
     }
 
-    ngOnInit() {
-        this.update();
-    }
-
     onProfileSubmit() {
         this.appService.getUser(this.username).subscribe({
             next: (data: any) => {
                 this.storage.setUser(data);
                 this.user = data;
+                this.snack.openSnackBar("login successful", "success");
                 this.mode = {
                     type: "submit",
                     submit: "OK",
@@ -65,6 +73,7 @@ export class ModalProfile implements OnInit {
                 };
             },
             error: () => {
+                this.snack.openSnackBar("login error, try again", "success");
                 this.mode = {
                     type: "submit",
                     submit: "login",

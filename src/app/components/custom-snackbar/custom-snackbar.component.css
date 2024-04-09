@@ -1,0 +1,6 @@
+.snackbar-container {
+    display: flex;
+    flex-direction: row;
+    width: max-content;
+    padding: 10px 30px;
+}

@@ -1,7 +1,9 @@
 <div class="creation-main">
-    <button *ngIf="nameTab[genTab]" (click)="openModal()" mat-button class="button-primary">
-        {{"new " + nameTab[genTab]}}
-    </button>
+    <div class="button-container">
+        <button *ngIf="nameTab[genTab]" (click)="openModal()" mat-button class="button-primary">
+            {{"new " + nameTab[genTab]}}
+        </button>
+    </div>
     <div class="creation-container">
         <mat-tab-group
             class="creation-tabs"
