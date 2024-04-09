@@ -1,6 +1,11 @@
 <div class="creation-main">
     <div class="button-container">
-        <button *ngIf="nameTab[genTab]" (click)="openModal()" mat-button class="button-primary">
+        <button
+            *ngIf="nameTab[genTab]"
+            (click)="openModal()"
+            mat-button
+            class="button-primary"
+        >
             {{"new " + nameTab[genTab]}}
         </button>
     </div>
@@ -11,14 +16,19 @@
             [selectedIndex]="genTab"
             (selectedTabChange)="onChangeTab($event)"
         >
-            <mat-tab tabindex="0" class="creation-tab" label="empresas"
+            <mat-tab tabindex="0" class="creation-tab" label="companies"
                 ><management-companies></management-companies
             ></mat-tab>
-            <mat-tab tabindex="1" class="creation-tab" label="bancos"> Content 2 </mat-tab>
-            <mat-tab tabindex="2" class="creation-tab" label="tipos de despesas">
+            <mat-tab tabindex="1" class="creation-tab" label="banks"> Content 2 </mat-tab>
+            <mat-tab tabindex="2" class="creation-tab" label="bill types">
                 <management-type-bills></management-type-bills>
             </mat-tab>
-            <mat-tab tabindex="3" class="creation-tab" label="outros"> Content 3 </mat-tab>
+            <mat-tab tabindex="3" class="creation-tab" label="credit cards">
+                <feedback-container
+                    [variant]="'loading'"
+                    [info]="{title:  'no credit cards', actionLabel: 'reload', }"
+                ></feedback-container>
+            </mat-tab>
         </mat-tab-group>
     </div>
 </div>

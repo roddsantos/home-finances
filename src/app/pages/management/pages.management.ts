@@ -1,4 +1,11 @@
-import { Component, inject, OnInit, QueryList, ViewChildren, ViewEncapsulation } from "@angular/core";
+import {
+    Component,
+    inject,
+    OnInit,
+    QueryList,
+    ViewChildren,
+    ViewEncapsulation,
+} from "@angular/core";
 import { MatTab, MatTabGroup, MatTabsModule } from "@angular/material/tabs";
 import { COMPANIES } from "src/utils/data";
 import { TypeBillsManagementComponent } from "./type-bills/pages.management.type-bills";
@@ -8,6 +15,9 @@ import { ModalNewBank } from "src/app/components/modal/new-bank/new-bank.modal";
 import { Dialog } from "@angular/cdk/dialog";
 import { NgIf } from "@angular/common";
 import { ModalNewCompany } from "src/app/components/modal/new-company/new-company.modal";
+import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
+import { TypeBillsService } from "src/app/api/api.type-bills";
+import { LocalStorageService } from "src/app/services/services.local-storage";
 
 @Component({
     selector: "page-management",
@@ -15,7 +25,14 @@ import { ModalNewCompany } from "src/app/components/modal/new-company/new-compan
     styleUrls: ["./pages.management.css"],
     standalone: true,
     encapsulation: ViewEncapsulation.None,
-    imports: [MatTabsModule, TypeBillsManagementComponent, ManagementCompaniesComponent, MatButton, NgIf],
+    imports: [
+        MatTabsModule,
+        TypeBillsManagementComponent,
+        ManagementCompaniesComponent,
+        MatButton,
+        NgIf,
+        FeedbackContainerComponent,
+    ],
 })
 export class PageManagement implements OnInit {
     public dialog = inject(Dialog);
