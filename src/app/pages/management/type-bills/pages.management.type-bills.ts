@@ -34,8 +34,7 @@ export class TypeBillsManagementComponent {
     ngOnInit() {
         let str = localStorage.getItem("typeBills");
         if (str) {
-            let res = JSON.parse(str);
-            this.typeBills = res.data;
+            this.typeBills = JSON.parse(str);
         } else this.typeBills = [];
     }
 

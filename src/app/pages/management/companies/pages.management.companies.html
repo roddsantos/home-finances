@@ -1,13 +1,23 @@
-<li *ngFor="let company of companies">
-    <div class="creation-item-list">
-        <div class="company-item-text">
-            <p class="company-title">{{company.name}}</p>
-            <p class="company-description">{{company.description}}</p>
-        </div>
+<div class="tab-container">
+    <li *ngFor="let company of companies">
+        <div class="creation-item-list">
+            <div class="company-item-text">
+                <p class="company-title">{{company.name}}</p>
+                <p class="company-description">{{company.description}}</p>
+            </div>
 
-        <button class="icon-button" mat-icon-button aria-label="color label">
-            <mat-icon class="icon-edit" aria-hidden="false" aria-label="Example home icon" fontIcon="edit"></mat-icon>
-        </button>
-        <div class="company-color-container" [ngStyle]="{backgroundColor:company.color}"></div>
-    </div>
-</li>
+            <button class="icon-button" mat-icon-button aria-label="color label">
+                <mat-icon
+                    class="icon-edit"
+                    aria-hidden="false"
+                    aria-label="Example home icon"
+                    fontIcon="edit"
+                ></mat-icon>
+            </button>
+            <div
+                class="company-color-container"
+                [ngStyle]="{backgroundColor:company.color}"
+            ></div>
+        </div>
+    </li>
+</div>
