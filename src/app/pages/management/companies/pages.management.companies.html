@@ -1,5 +1,10 @@
 <div class="tab-container">
-    <li *ngFor="let company of companies">
+    <feedback-container
+        *ngIf="(compState.company$| async)?.length === 0"
+        [variant]="'empty'"
+        [info]="typeObject"
+    ></feedback-container>
+    <li *ngFor="let company of (compState.company$| async)">
         <div class="creation-item-list">
             <div class="company-item-text">
                 <p class="company-title">{{company.name}}</p>

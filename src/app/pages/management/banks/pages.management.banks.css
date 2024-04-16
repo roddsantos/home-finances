@@ -1,0 +1,65 @@
+.creation-item-list {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 10px 50px;
+    background-color: var(--item-list);
+}
+
+.bank-item-text {
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+    width: 100%;
+}
+
+.bank-title {
+    font: bold 22px Helvetica;
+    color: var(--secondary);
+    width: 50%;
+    margin: auto 10px auto 0px;
+}
+
+.bank-description {
+    font: normal 14px Helvetica;
+    color: var(--primary);
+    margin: auto 0px;
+    width: 50%;
+}
+
+.icon-edit {
+    height: auto;
+    width: auto;
+    color: var(--description);
+}
+
+.icon-color {
+    font-size: 20px;
+    height: auto;
+    margin: auto 20px auto auto;
+}
+
+.icon-button {
+    margin: auto 0px auto 20px;
+    border: 0px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+}
+
+.bank-divider {
+    width: 100%;
+    height: 1px;
+    background-color: blueviolet;
+}
+
+.bank-color-container {
+    height: 52px;
+    width: 7px;
+    position: absolute;
+    right: 3px;
+    margin-top: -6px;
+}

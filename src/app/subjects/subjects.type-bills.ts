@@ -14,9 +14,13 @@ export class TypeBillState {
 
     changeStatus(newStatus: ListStatus) {
         this._status$.next(newStatus);
+        if (newStatus !== "data") this._typeBill$.next([]);
     }
 
     setTypeBill(tb: TypeBill[]) {
+        if (tb.length === 0) this._status$.next("empty");
+        else this._status$.next("data");
+
         this._typeBill$.next(tb);
     }
 }

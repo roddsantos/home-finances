@@ -2,6 +2,7 @@ import { NgClass, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from "@angular
 import { Component, Input } from "@angular/core";
 import { MatButton } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { FeedbackInfo, FeedbackVariant } from "src/app/types/components";
 
 @Component({
@@ -17,6 +18,7 @@ import { FeedbackInfo, FeedbackVariant } from "src/app/types/components";
         NgSwitchDefault,
         NgClass,
         MatButton,
+        MatProgressSpinnerModule,
     ],
 })
 export class FeedbackContainerComponent {

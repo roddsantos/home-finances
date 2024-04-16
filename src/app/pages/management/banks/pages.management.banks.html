@@ -1,14 +1,14 @@
 <div class="tab-container">
     <feedback-container
-        *ngIf="(ccState.creditCards$ | async)?.length === 0"
+        *ngIf="(bankState.banks$ | async)?.length === 0"
         [variant]="'empty'"
         [info]="typeObject"
     ></feedback-container>
-    <li *ngFor="let creditCard of (ccState.creditCards$ | async)">
-        <div class="cc-item-list">
-            <div class="cc-item-text">
-                <p class="cc-title">{{creditCard.name}}</p>
-                <p class="cc-description">{{creditCard.description}}</p>
+    <li *ngFor="let bank of (bankState.banks$ | async)">
+        <div class="creation-item-list">
+            <div class="bank-item-text">
+                <p class="bank-title">{{bank.name}}</p>
+                <p class="bank-description">{{bank.description}}</p>
             </div>
 
             <button class="icon-button" mat-icon-button aria-label="color label">
@@ -19,6 +19,10 @@
                     fontIcon="edit"
                 ></mat-icon>
             </button>
+            <div
+                class="bank-color-container"
+                [ngStyle]="{backgroundColor:bank.color}"
+            ></div>
         </div>
     </li>
 </div>

@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, inject } from "@angular/core";
 import { LocalStorageService } from "./services/services.local-storage";
-import { UserState } from "./pages/subjects/subjects.user";
+import { UserState } from "src/app/subjects/subjects.user";
 
 @Component({
     selector: "app-root",

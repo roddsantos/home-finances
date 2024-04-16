@@ -1,5 +1,7 @@
 export type ListStatus = "data" | "empty" | "error" | "loading";
 
+export type ManagerTabs = "0" | "1" | "2" | "3";
+
 export type User = {
     id: string;
     name: string;
@@ -45,4 +47,13 @@ export type TypeBill = {
     updatedAt: string;
     createdAt: string;
     deletedAt: string | null;
+};
+
+export type Bank = {
+    id: string;
+    name: string;
+    description: string;
+    color: string;
+    savings: number;
+    userId: string;
 };

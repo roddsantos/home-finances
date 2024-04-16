@@ -9,8 +9,8 @@ import { CompanyObject } from "../types/services";
 export class ServiceCompany {
     constructor(private http: HttpClient) {}
 
-    getCompanies() {
-        return this.http.get(COMPANY);
+    getCompanies(userId: string) {
+        return this.http.get(COMPANY + `/${userId}`);
     }
 
     createCompany(data: CompanyObject) {
