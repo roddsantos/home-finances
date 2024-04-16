@@ -15,6 +15,7 @@ import { FormsModule } from "@angular/forms";
 import { User } from "src/app/types/general";
 import { FooterModal } from "src/app/types/modal";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
+import { ServiceUser } from "src/app/services/services.user";
 
 export interface DialogData {
     username: string;
@@ -28,23 +29,24 @@ export interface DialogData {
     imports: [MatFormField, MatInputModule, MatLabel, ModalComponent, FormsModule],
 })
 export class ModalProfile implements OnInit {
+    private storage = inject(LocalStorageService);
+    private userService = inject(ServiceUser);
+    private snack = inject(CustomSnackbarComponent);
+
     @ViewChild(ModalComponent) modalComponent: any;
-    username: String = "";
+
+    username: string = "";
     user: User | null = null;
     hasUser: any;
-    textString: String;
+    textString: string;
     mode: FooterModal = {
         type: "submit",
         submit: "login",
         alert: "cancel",
     };
 
-    @Output() submit = new EventEmitter<String>();
+    @Output() submit = new EventEmitter<string>();
     @Output() logoutClose = new EventEmitter<void>();
-
-    private storage = inject(LocalStorageService);
-    private appService = inject(AppService);
-    private snack = inject(CustomSnackbarComponent);
 
     ngOnInit() {
         this.update();
@@ -61,7 +63,7 @@ export class ModalProfile implements OnInit {
     }
 
     onProfileSubmit() {
-        this.appService.getUser(this.username).subscribe({
+        this.userService.getUser(this.username).subscribe({
             next: (data: any) => {
                 this.storage.setUser(data);
                 this.user = data;
