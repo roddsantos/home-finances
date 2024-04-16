@@ -1,9 +1,6 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { COMPANY, TYPEBILL, USER } from "src/utils/constants/services";
-import { Observable } from "rxjs";
-import { UserObject } from "../types/services";
-import { User } from "../types/general";
+import { HttpClient } from "@angular/common/http";
+import { TYPEBILL } from "src/utils/constants/services";
 
 @Injectable({
     providedIn: "root",

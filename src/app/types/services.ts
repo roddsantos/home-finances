@@ -47,3 +47,10 @@ export type BillObject = {
     creditCardId?: string;
     userId: string;
 };
+
+export type GetCreditCard = {
+    month?: string;
+    year?: number;
+    isClosed?: boolean;
+    userId: string;
+};

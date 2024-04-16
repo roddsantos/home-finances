@@ -1,4 +1,6 @@
-export const URL = process.env?.["URL_BACKEND"] || "http://localhost:4200";
+export const URL =
+    "http://ec2-54-94-128-41.sa-east-1.compute.amazonaws.com:4001" ||
+    "http://localhost:4200";
 
 export const COMPANY = URL + "/company";
 

@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
+import { User } from "../types/general";
 
 @Injectable({
     providedIn: "root",
@@ -15,7 +16,7 @@ export class LocalStorageService {
 
     getUser() {
         let user = localStorage.getItem("user");
-        return user ? JSON.parse(user) : null;
+        return user ? (JSON.parse(user) as User) : null;
     }
 
     getHasUser() {

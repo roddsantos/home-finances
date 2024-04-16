@@ -1,0 +1,57 @@
+.cc-item-list {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    padding: 10px 50px;
+    background-color: var(--item-list);
+}
+
+.cc-item-text {
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+    width: 75%;
+}
+
+.cc-title {
+    font: bold 22px Helvetica;
+    color: var(--secondary);
+    width: 50%;
+    margin: auto 10px auto 0px;
+}
+
+.cc-description {
+    font: normal 14px Helvetica;
+    color: var(--primary);
+    margin: auto 0px;
+    width: 50%;
+}
+
+.icon-edit {
+    font-size: 30px;
+    height: auto;
+    width: auto;
+    color: blueviolet;
+}
+
+.icon-cc {
+    font-size: 24px;
+    height: auto;
+    margin: auto 20px auto auto;
+    color: blueviolet;
+}
+
+.icon-button {
+    margin: auto 0px auto 20px;
+    cursor: pointer;
+    box-shadow: none;
+    background-color: transparent;
+    border: 0px;
+    border-radius: 50%;
+}
+
+.company-divider {
+    width: 100%;
+    height: 1px;
+    background-color: blueviolet;
+}

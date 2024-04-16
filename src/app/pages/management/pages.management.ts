@@ -6,8 +6,7 @@ import {
     ViewChildren,
     ViewEncapsulation,
 } from "@angular/core";
-import { MatTab, MatTabGroup, MatTabsModule } from "@angular/material/tabs";
-import { COMPANIES } from "src/utils/data";
+import { MatTabGroup, MatTabsModule } from "@angular/material/tabs";
 import { TypeBillsManagementComponent } from "./type-bills/pages.management.type-bills";
 import { ManagementCompaniesComponent } from "./companies/pages.management.companies";
 import { MatButton } from "@angular/material/button";
@@ -16,8 +15,7 @@ import { Dialog } from "@angular/cdk/dialog";
 import { NgIf } from "@angular/common";
 import { ModalNewCompany } from "src/app/components/modal/new-company/new-company.modal";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
-import { TypeBillsService } from "src/app/api/api.type-bills";
-import { LocalStorageService } from "src/app/services/services.local-storage";
+import { CreditCardsManagementComponent } from "./credit-cards/pages.management.credit-cards";
 
 @Component({
     selector: "page-management",
@@ -29,6 +27,7 @@ import { LocalStorageService } from "src/app/services/services.local-storage";
         MatTabsModule,
         TypeBillsManagementComponent,
         ManagementCompaniesComponent,
+        CreditCardsManagementComponent,
         MatButton,
         NgIf,
         FeedbackContainerComponent,
@@ -38,8 +37,7 @@ export class PageManagement implements OnInit {
     public dialog = inject(Dialog);
 
     genTab: number;
-    nameTab: String[] = ["company", "bank", "", ""];
-    companies = COMPANIES;
+    nameTab: String[] = ["company", "bank", "", "credit card"];
     @ViewChildren("childTabs") childTabs: QueryList<MatTabGroup>;
 
     styleButton: Object = {

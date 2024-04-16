@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { COMPANY, CREDIT_CARD } from "src/utils/constants/services";
-import { CreditCardObject } from "../types/services";
+import { CREDIT_CARD } from "src/utils/constants/services";
+import { CreditCardObject, GetCreditCard } from "../types/services";
 
 @Injectable({
     providedIn: "root",
@@ -9,8 +9,13 @@ import { CreditCardObject } from "../types/services";
 export class ServiceCreditCard {
     constructor(private http: HttpClient) {}
 
-    getCreditCards(userId: string) {
-        return this.http.get(CREDIT_CARD + `/${userId}`);
+    getCreditCards(data: GetCreditCard) {
+        const stringfyHeader = JSON.stringify(data);
+        return this.http.get(CREDIT_CARD, {
+            params: {
+                filters: stringfyHeader,
+            },
+        });
     }
 
     createCreditCard(data: CreditCardObject) {

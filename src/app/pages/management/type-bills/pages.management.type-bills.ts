@@ -1,13 +1,14 @@
 import { NgFor, NgIf } from "@angular/common";
-import { Component, inject, OnInit } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { MatButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
-import { TypeBillsService } from "src/app/api/api.type-bills";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { LocalStorageService } from "src/app/services/services.local-storage";
+import { ServiceTypeBill } from "src/app/services/services.type-bill";
 import { FeedbackInfo } from "src/app/types/components";
-import { COMPANIES } from "src/utils/data";
+import { TypeBillState } from "../../subjects/subjects.type-bills";
+import { TypeBill } from "src/app/types/general";
 
 @Component({
     selector: "management-type-bills",
@@ -17,11 +18,12 @@ import { COMPANIES } from "src/utils/data";
     imports: [MatIcon, MatButton, NgFor, NgIf, FeedbackContainerComponent],
 })
 export class TypeBillsManagementComponent {
-    public typebillApi = inject(TypeBillsService);
+    public typebillApi = inject(ServiceTypeBill);
+    public tbState = inject(TypeBillState);
     public storage = inject(LocalStorageService);
     private snack = inject(CustomSnackbarComponent);
 
-    typeBills: Array<any>;
+    typeBills: TypeBill[];
     loading: boolean = false;
 
     typeObject: FeedbackInfo = {
@@ -31,28 +33,26 @@ export class TypeBillsManagementComponent {
         loading: this.loading,
     };
 
+    getTypeBills() {
+        this.typebillApi.getTypeBills().subscribe({
+            next: (data) => {
+                this.tbState.setTypeBill(data as TypeBill[]);
+            },
+            error: () => {
+                this.tbState.changeStatus("error");
+                this.tbState.setTypeBill([]);
+            },
+        });
+        this.tbState.typeBill$.subscribe({ next: (data) => (this.typeBills = data) });
+        this.loading = false;
+    }
+
     ngOnInit() {
-        let str = localStorage.getItem("typeBills");
-        if (str) {
-            this.typeBills = JSON.parse(str);
-        } else this.typeBills = [];
+        this.getTypeBills();
     }
 
     onReload() {
         this.loading = true;
-        this.typebillApi.getTypeBills().subscribe({
-            next: (data) => {
-                if (data) {
-                    let res = JSON.stringify(data);
-                    this.storage.setTypeBills(res);
-                }
-            },
-            error: () => {
-                this.snack.openSnackBar("error fetching type bills", "error");
-            },
-            complete: () => {
-                this.loading = false;
-            },
-        });
+        this.getTypeBills();
     }
 }

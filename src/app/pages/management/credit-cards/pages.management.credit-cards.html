@@ -1,0 +1,24 @@
+<div class="tab-container">
+    <feedback-container
+        *ngIf="creditCards.length === 0"
+        [variant]="'empty'"
+        [info]="typeObject"
+    ></feedback-container>
+    <li *ngFor="let creditCard of creditCards">
+        <div class="cc-item-list">
+            <div class="cc-item-text">
+                <p class="cc-title">{{creditCard.name}}</p>
+                <p class="cc-description">{{creditCard.description}}</p>
+            </div>
+
+            <button class="icon-button" mat-icon-button aria-label="color label">
+                <mat-icon
+                    class="icon-edit"
+                    aria-hidden="false"
+                    aria-label="Example home icon"
+                    fontIcon="edit"
+                ></mat-icon>
+            </button>
+        </div>
+    </li>
+</div>
