@@ -23,26 +23,26 @@ export class TypeBillsManagementComponent {
     public storage = inject(LocalStorageService);
     private snack = inject(CustomSnackbarComponent);
 
-    loading: boolean = false;
-
     typeObject: FeedbackInfo = {
+        variant: "loading",
         title: "no type bills",
         actionLabel: "reload",
         action: () => this.onReload(),
-        loading: this.loading,
     };
 
     getTypeBills(reloaded?: boolean) {
         this.typebillApi.getTypeBills().subscribe({
             next: (data) => {
                 this.tbState.setTypeBill(data as TypeBill[]);
+                this.typeObject.variant =
+                    (data as TypeBill[]).length === 0 ? "empty" : "none";
             },
             error: () => {
                 if (reloaded) this.snack.openSnackBar("Error fetching banks", "error");
                 this.tbState.changeStatus("error");
+                this.typeObject.variant = "error";
             },
         });
-        this.loading = false;
     }
 
     ngOnInit() {
@@ -50,7 +50,7 @@ export class TypeBillsManagementComponent {
     }
 
     onReload() {
-        this.loading = true;
+        this.typeObject.variant = "loading";
         this.getTypeBills(true);
     }
 }

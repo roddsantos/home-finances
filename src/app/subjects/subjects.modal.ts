@@ -37,4 +37,45 @@ export class ModalState {
     changeActionSecondary(action: any) {
         this._actionSecondary$.next(action);
     }
+
+    onSubmitFooter(submit?: string, alert?: string): void {
+        this._footer$.next({
+            type: "submit",
+            submit,
+            alert,
+            disabled: false,
+        });
+    }
+
+    onAlertFooter(submit?: string, alert?: string): void {
+        this._footer$.next({
+            type: "alert",
+            submit,
+            alert,
+            disabled: false,
+        });
+    }
+
+    onNoFooter(submit?: string, alert?: string): void {
+        this._footer$.next({
+            type: "none",
+            submit,
+            alert,
+            disabled: false,
+        });
+    }
+
+    disableButton() {
+        this._footer$.next({
+            ...this._footer$.getValue(),
+            disabled: true,
+        });
+    }
+
+    enableButton() {
+        this._footer$.next({
+            ...this._footer$.getValue(),
+            disabled: false,
+        });
+    }
 }

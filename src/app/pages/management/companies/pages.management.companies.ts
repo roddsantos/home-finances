@@ -34,32 +34,34 @@ export class ManagementCompaniesComponent {
     private snack = inject(CustomSnackbarComponent);
 
     typeObject: FeedbackInfo = {
+        variant: "loading",
         title: "no companies",
         actionLabel: "reload",
         action: () => this.onReload(),
-        loading: true,
     };
 
     getCompanies(reloaded?: boolean) {
         this.userState.user$.pipe(mergeMap(() => this.compApi.getCompanies())).subscribe({
             next: (comps) => {
                 this.compState.setCompanies(comps as Company[]);
+                this.typeObject.variant =
+                    (comps as Company[]).length === 0 ? "empty" : "none";
             },
             error: () => {
                 if (reloaded) this.snack.openSnackBar("Error fetching banks", "error");
                 this.compState.changeStatus("error");
+                this.typeObject.variant = "error";
             },
         });
-        this.typeObject.loading = false;
     }
 
     ngOnInit() {
-        this.typeObject.loading = true;
+        this.typeObject.variant = "loading";
         this.getCompanies();
     }
 
     onReload() {
-        this.typeObject.loading = true;
+        this.typeObject.variant = "loading";
         this.getCompanies(true);
     }
 

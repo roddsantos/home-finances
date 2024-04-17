@@ -22,8 +22,8 @@ import { FeedbackInfo, FeedbackVariant } from "src/app/types/components";
     ],
 })
 export class FeedbackContainerComponent {
-    @Input() variant: FeedbackVariant = "none";
     @Input() info: FeedbackInfo = {
+        variant: "none",
         title: "",
         description: "",
         actionLabel: "",

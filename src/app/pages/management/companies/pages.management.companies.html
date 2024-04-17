@@ -1,7 +1,6 @@
 <div class="tab-container">
     <feedback-container
         *ngIf="(compState.company$| async)?.length === 0"
-        [variant]="'empty'"
         [info]="typeObject"
     ></feedback-container>
     <li

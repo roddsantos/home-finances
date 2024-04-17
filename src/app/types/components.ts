@@ -16,9 +16,9 @@ export type SnackbarData = {
 export type FeedbackVariant = "error" | "http" | "loading" | "empty" | "none";
 
 export type FeedbackInfo = {
+    variant: FeedbackVariant;
     title: string;
     description?: string;
     actionLabel?: string;
     action?: () => void;
-    loading?: boolean;
 };

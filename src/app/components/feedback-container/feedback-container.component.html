@@ -1,22 +1,20 @@
-<div [ngClass]="{ 'feedback-container': true, none: variant === 'none' }">
-    <div [ngSwitch]="variant">
+<div [ngClass]="{ 'feedback-container': true, none: info.variant === 'none' }">
+    <div [ngSwitch]="info.variant">
         <mat-icon *ngSwitchCase="'http'" fontIcon="wifi_off"></mat-icon>
         <mat-icon *ngSwitchCase="'empty'" fontIcon="playlist_remove"></mat-icon>
         <mat-icon *ngSwitchCase="'error'" fontIcon="error"></mat-icon>
-        <mat-icon *ngSwitchCase="'loading'" fontIcon="sync"></mat-icon>
+        <mat-spinner *ngSwitchCase="'loading'" fontIcon="sync"></mat-spinner>
         <div *ngSwitchDefault></div>
     </div>
     <h2 *ngIf="info.title">{{ info.title }}</h2>
     <p *ngIf="info.description">{{ info.description }}</p>
     <button
-        [disabled]="info.loading"
-        *ngIf="info.action"
+        *ngIf="info.action && info.variant !== 'loading'"
         mat-button
         class="button-primary"
         cdkFocusInitial
         (click)="info.action()"
     >
-        <mat-spinner class="spinner" *ngIf="info.loading"></mat-spinner>
-        <p *ngIf="!info.loading">{{ info.actionLabel }}</p>
+        <p>{{ info.actionLabel }}</p>
     </button>
 </div>

@@ -26,13 +26,11 @@ export class CreditCardsManagementComponent {
     public storage = inject(LocalStorageService);
     private snack = inject(CustomSnackbarComponent);
 
-    loading: boolean = false;
-
     typeObject: FeedbackInfo = {
+        variant: "loading",
         title: "no credit cards",
         actionLabel: "reload",
         action: () => this.onReload(),
-        loading: this.loading,
     };
 
     getCreditCards(reloaded?: boolean) {
@@ -47,23 +45,25 @@ export class CreditCardsManagementComponent {
             .subscribe({
                 next: (ccs) => {
                     this.ccState.setCreditCards(ccs as CreditCard[]);
+                    this.typeObject.variant =
+                        (ccs as CreditCard[]).length === 0 ? "empty" : "loading";
                 },
                 error: () => {
                     if (reloaded)
                         this.snack.openSnackBar("Error fetching banks", "error");
                     this.ccState.changeStatus("error");
+                    this.typeObject.variant = "error";
                 },
             });
-        this.loading = false;
     }
 
     ngOnInit() {
-        this.loading = true;
+        this.typeObject.variant = "loading";
         this.getCreditCards();
     }
 
     onReload() {
-        this.loading = true;
+        this.typeObject.variant = "loading";
         this.getCreditCards(true);
     }
 }

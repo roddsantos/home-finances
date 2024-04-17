@@ -1,7 +1,6 @@
 <div class="tab-container">
     <feedback-container
         *ngIf="(bankState.banks$ | async)?.length === 0"
-        [variant]="'empty'"
         [info]="typeObject"
     ></feedback-container>
     <li *ngFor="let bank of (bankState.banks$ | async)">
