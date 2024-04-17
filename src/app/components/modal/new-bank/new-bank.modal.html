@@ -1,17 +1,28 @@
-<modal-component [footer]="mode" (actionPrimary)="onSubmit()" [bodyTemplate]="newBank"></modal-component>
+<modal-component (actionPrimary)="onSubmit()" [bodyTemplate]="newBank"></modal-component>
 
 <ng-template #newBank>
     <div class="new-bank-container">
         <mat-form-field class="new-bank-field" appearance="outline">
             <mat-label>name</mat-label>
-            <input maxlength="100" required matInput [formControl]="name" (blur)="updateNameErrorMessage()" />
+            <input
+                maxlength="100"
+                required
+                matInput
+                [formControl]="name"
+                (blur)="updateNameErrorMessage()"
+            />
             @if (name.invalid) {
             <mat-error>{{errorMessage.name}}</mat-error>
             }
         </mat-form-field>
         <mat-form-field class="new-bank-field" appearance="outline">
             <mat-label>description</mat-label>
-            <input maxlength="100" matInput [formControl]="description" (blur)="updateDescriptionErrorMessage()" />
+            <input
+                maxlength="100"
+                matInput
+                [formControl]="description"
+                (blur)="updateDescriptionErrorMessage()"
+            />
             @if (description.invalid) {
             <mat-error>{{errorMessage.description}}</mat-error>
             }
@@ -23,7 +34,11 @@
             </mat-form-field>
             <mat-form-field class="savings-input" appearance="outline">
                 <mat-label>savings</mat-label>
-                <input matInput [formControl]="savings" (blur)="updateSavingsErrorMessage()" />
+                <input
+                    matInput
+                    [formControl]="savings"
+                    (blur)="updateSavingsErrorMessage()"
+                />
                 @if (savings.invalid) {
                 <mat-error>{{errorMessage.savings}}</mat-error>
                 }

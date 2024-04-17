@@ -16,7 +16,7 @@ export class UserState {
         this._status$.next(newStatus);
     }
 
-    setUser(u: User) {
+    setUser(u: User | null) {
         this._user$.next(u);
     }
 }

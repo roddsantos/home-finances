@@ -11,7 +11,6 @@ export class LocalStorageService {
     setUser(user: Object) {
         let str = JSON.stringify(user);
         localStorage.setItem("user", str);
-        localStorage.setItem("hasUser", "true");
     }
 
     getUser() {
@@ -19,14 +18,8 @@ export class LocalStorageService {
         return user ? (JSON.parse(user) as User) : null;
     }
 
-    getHasUser() {
-        let hasUser = localStorage.getItem("hasUser");
-        return hasUser;
-    }
-
     removeUser() {
         localStorage.removeItem("user");
-        localStorage.removeItem("hasUser");
     }
 
     setTypeBills(typeBills: string) {

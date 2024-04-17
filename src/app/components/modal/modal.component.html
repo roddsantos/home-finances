@@ -1,6 +1,6 @@
 <div class="modal-container">
     <h2 mat-dialog-title class="modal-header">
-        <p>{{ data.header }}</p>
+        <p>{{ modalState.header$ | async }}</p>
         <mat-icon
             class="app-icon close"
             aria-hidden="false"
@@ -13,26 +13,33 @@
         <ng-container *ngTemplateOutlet="bodyTemplate || defaultBody"> </ng-container>
         <ng-template #defaultBody></ng-template>
     </div>
-    <div class="modal-footer">
-        <ng-container *ngTemplateOutlet="footer.type === 'submit' ? submit : footer.type === 'none' ? none : alert">
-        </ng-container>
-        <ng-template #submit>
-            <button mat-button class="button-secondary" (click)="this.onSecondary()">
-                {{ footer.alert }}
-            </button>
-            <button
-                [disabled]="footer.disabled"
-                mat-button
-                class="button-primary add-margin-left"
-                (click)="this.onPrimary()"
-                cdkFocusInitial
-            >
-                {{ footer.submit }}
-            </button>
-        </ng-template>
-        <ng-template #alert>
-            <button mat-button class="modal-button-close" (click)="dialogRef.close()">{{ footer.alert }}</button>
-        </ng-template>
-        <ng-template #none> </ng-template>
+    <div class="modal-footer" [ngSwitch]="(modalState.footer$ | async)?.type">
+        <button
+            *ngSwitchCase="'submit'"
+            mat-button
+            class="button-secondary"
+            (click)="this.onSecondary()"
+        >
+            {{ (modalState.footer$ | async)?.alert }}
+        </button>
+        <button
+            *ngSwitchCase="'submit'"
+            [disabled]="(modalState.footer$ | async)?.disabled"
+            mat-button
+            class="button-primary add-margin-left"
+            (click)="this.onPrimary()"
+            cdkFocusInitial
+        >
+            {{ (modalState.footer$ | async)?.submit }}
+        </button>
+        <button
+            *ngSwitchCase="'alert'"
+            mat-button
+            class="modal-button-close"
+            (click)="dialogRef.close()"
+        >
+            {{ (modalState.footer$ | async)?.alert }}
+        </button>
+        <div *ngSwitchCase="'none'"></div>
     </div>
 </div>

@@ -1,8 +1,7 @@
 <modal-component
-    [footer]="mode"
-    (actionPrimary)="user ? onCloseModal(): onProfileSubmit()"
-    (actionSecondary)="user ? onLogout() : onCloseModal()"
-    [bodyTemplate]="user ? loggedBody : profileBody"
+    (actionPrimary)="onActionPrimary()"
+    (actionSecondary)="onActionSecondary()"
+    [bodyTemplate]="(userState.user$ | async) !== null ? loggedBody : profileBody"
 ></modal-component>
 
 <ng-template #profileBody>
@@ -17,6 +16,6 @@
 <ng-template #loggedBody>
     <div class="profile-body">
         <p>usuário conectado:</p>
-        <p>{{user?.name}}</p>
+        <p>{{(userState.user$ | async)?.name}}</p>
     </div>
 </ng-template>

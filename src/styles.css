@@ -70,6 +70,9 @@ body {
 .mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled)
     .mdc-notched-outline__notch {
     border-color: #8f0000 !important;
+    &.mdc-notched-outline__notch {
+        border-left: 0px !important;
+    }
 }
 
 .mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled)
@@ -82,6 +85,19 @@ body {
         border-radius: 0px;
         background-color: var(--secondary);
         color: #ffffff !important;
+    }
+    & p {
+        color: #ffffff !important;
+    }
+
+    &:disabled {
+        background-color: var(--item-list);
+        border-radius: 0px;
+    }
+
+    & .spinner {
+        width: 25px !important;
+        height: fit-content;
     }
 }
 

@@ -19,4 +19,15 @@ export class CompanyState {
     setCompanies(companies: Company[]) {
         this._companies$.next(companies);
     }
+
+    addCompany(company: Company, index?: number) {
+        let auxCompanies = [...this._companies$.getValue()];
+        const existingCompany = this._companies$
+            .getValue()
+            .find((c) => c.id === company.id);
+        if (existingCompany && index !== undefined) auxCompanies[index] = company;
+        else auxCompanies = [company, ...auxCompanies];
+
+        this._companies$.next(auxCompanies);
+    }
 }

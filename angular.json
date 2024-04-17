@@ -24,7 +24,7 @@
                         "tsConfig": "tsconfig.app.json",
                         "assets": ["src/favicon.ico", "src/assets"],
                         "styles": ["src/styles.css"],
-                        "scripts": ["src/app/pages/management/pages.management.js"]
+                        "scripts": []
                     },
                     "configurations": {
                         "production": {

@@ -8,7 +8,6 @@ export type CompanyObject = {
     name: string;
     description: string;
     color: string;
-    userId: string;
 };
 
 export type CreditCardObject = {

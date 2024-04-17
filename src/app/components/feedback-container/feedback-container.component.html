@@ -16,6 +16,7 @@
         cdkFocusInitial
         (click)="info.action()"
     >
-        {{ info.actionLabel }}
+        <mat-spinner class="spinner" *ngIf="info.loading"></mat-spinner>
+        <p *ngIf="!info.loading">{{ info.actionLabel }}</p>
     </button>
 </div>

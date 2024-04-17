@@ -4,7 +4,9 @@
         [variant]="'empty'"
         [info]="typeObject"
     ></feedback-container>
-    <li *ngFor="let company of (compState.company$| async)">
+    <li
+        *ngFor="let company of (compState.company$| async); index as i; trackBy: trackCompany"
+    >
         <div class="creation-item-list">
             <div class="company-item-text">
                 <p class="company-title">{{company.name}}</p>

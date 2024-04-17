@@ -1,12 +1,27 @@
-import { Component, Inject, OnInit, Output, EventEmitter } from "@angular/core";
-import { Router } from "@angular/router";
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { LocalStorageService } from "src/app/services/services.local-storage";
+import { CustomSnackbarComponent } from "./../../custom-snackbar/custom-snackbar.component";
+import {
+    Component,
+    OnInit,
+    Output,
+    EventEmitter,
+    inject,
+    ViewChild,
+} from "@angular/core";
 import { ModalComponent } from "../modal.component";
-import { FooterModal } from "src/app/types/modal";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
-import { FormControl, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
+import {
+    FormControl,
+    FormGroup,
+    FormsModule,
+    ReactiveFormsModule,
+    Validators,
+} from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
+import { ServiceCompany } from "src/app/services/services.company";
+import { ModalState } from "src/app/subjects/subjects.modal";
+import { CompanyState } from "src/app/subjects/subjects.company";
+import { Company } from "src/app/types/general";
+import { CompanyObject } from "src/app/types/services";
 
 export interface DialogData {
     username: string;
@@ -17,18 +32,48 @@ export interface DialogData {
     templateUrl: "./new-company.modal.html",
     styleUrls: ["./new-company.modal.css"],
     standalone: true,
-    imports: [ModalComponent, MatFormField, FormsModule, MatLabel, MatInputModule, FormsModule, ReactiveFormsModule],
+    imports: [
+        ModalComponent,
+        MatFormField,
+        FormsModule,
+        MatLabel,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
 })
 export class ModalNewCompany implements OnInit {
-    mode: FooterModal = {
-        type: "submit",
-        submit: "OK",
-        alert: "cancel",
-        disabled: true,
-    };
-    name = new FormControl("", [Validators.required, Validators.maxLength(100)]);
-    description = new FormControl("", [Validators.required, Validators.maxLength(100)]);
-    color: String = "";
+    public companyApi = inject(ServiceCompany);
+    public modalState = inject(ModalState);
+    public compState = inject(CompanyState);
+    public snack = inject(CustomSnackbarComponent);
+    @ViewChild(ModalComponent) modalComponent: any;
+
+    companyForm = new FormGroup({
+        name: new FormControl<string>("", {
+            validators: [Validators.required, Validators.maxLength(100)],
+            nonNullable: true,
+        }),
+        description: new FormControl<string>("", {
+            validators: [Validators.required, Validators.maxLength(100)],
+            nonNullable: true,
+        }),
+        color: new FormControl<string>("#000000", { nonNullable: true }),
+    });
+
+    constructor() {
+        this.companyForm.valueChanges.subscribe({
+            next: (data) => {
+                this.modalState.changeFooter({
+                    type: "submit",
+                    submit: "OK",
+                    alert: "cancel",
+                    disabled: !Boolean(data.description) || !Boolean(data.name),
+                });
+            },
+        });
+    }
+
     errorMessage = {
         name: "you must enter a name",
         description: "you must enter a description",
@@ -36,35 +81,41 @@ export class ModalNewCompany implements OnInit {
     @Output() submit = new EventEmitter<String>();
     @Output() onClose = new EventEmitter<void>();
 
-    constructor(private storage: LocalStorageService) {}
-
-    ngOnInit() {}
-
     onSubmit() {
-        if (this.name && this.color && this.description) {
-            console.log("ok", this.name, this.color, this.description);
+        if (!this.companyForm.invalid) {
+            this.companyApi
+                .createCompany({
+                    ...(this.companyForm.value as CompanyObject),
+                })
+                .subscribe({
+                    next: (data) => {
+                        this.compState.addCompany(data as Company);
+                        this.snack.openSnackBar(
+                            "company successfully created",
+                            "success"
+                        );
+                        this.modalComponent.onClose();
+                    },
+                });
         } else this.onClose.emit();
     }
 
+    ngOnInit() {
+        this.modalState.changeFooter({
+            type: "submit",
+            submit: "OK",
+            alert: "cancel",
+            disabled: true,
+        });
+        this.modalState.changeHeader("new company");
+    }
+
     updateButtonState() {
-        this.mode.disabled = Boolean(this.errorMessage.name) || Boolean(this.errorMessage.description);
-    }
-
-    updateNameErrorMessage() {
-        if (this.name.hasError("required")) {
-            this.errorMessage.name = "you must enter a name";
-        } else {
-            this.errorMessage.name = "";
-        }
-        this.updateButtonState();
-    }
-
-    updateDescriptionErrorMessage() {
-        if (this.description.hasError("required")) {
-            this.errorMessage.description = "you must enter a description";
-        } else {
-            this.errorMessage.description = "";
-        }
-        this.updateButtonState();
+        this.modalState.changeFooter({
+            type: "submit",
+            submit: "OK",
+            alert: "cancel",
+            disabled: false,
+        });
     }
 }

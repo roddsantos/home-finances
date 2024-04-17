@@ -5,17 +5,19 @@ import {
     EventEmitter,
     inject,
     ViewChild,
+    ChangeDetectionStrategy,
 } from "@angular/core";
 import { LocalStorageService } from "src/app/services/services.local-storage";
 import { ModalComponent } from "../modal.component";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
-import { AppService } from "src/app/app.service";
 import { FormsModule } from "@angular/forms";
 import { User } from "src/app/types/general";
-import { FooterModal } from "src/app/types/modal";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 import { ServiceUser } from "src/app/services/services.user";
+import { ModalState } from "src/app/subjects/subjects.modal";
+import { UserState } from "src/app/subjects/subjects.user";
+import { AsyncPipe } from "@angular/common";
 
 export interface DialogData {
     username: string;
@@ -26,61 +28,81 @@ export interface DialogData {
     templateUrl: "./profile.modal.html",
     styleUrls: ["./profile.modal.css"],
     standalone: true,
-    imports: [MatFormField, MatInputModule, MatLabel, ModalComponent, FormsModule],
+    imports: [
+        MatFormField,
+        MatInputModule,
+        MatLabel,
+        ModalComponent,
+        FormsModule,
+        AsyncPipe,
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalProfile implements OnInit {
     private storage = inject(LocalStorageService);
     private userService = inject(ServiceUser);
+    public modalState = inject(ModalState);
+    public userState = inject(UserState);
     private snack = inject(CustomSnackbarComponent);
 
     @ViewChild(ModalComponent) modalComponent: any;
 
     username: string = "";
-    user: User | null = null;
-    hasUser: any;
     textString: string;
-    mode: FooterModal = {
-        type: "submit",
-        submit: "login",
-        alert: "cancel",
-    };
 
     @Output() submit = new EventEmitter<string>();
     @Output() logoutClose = new EventEmitter<void>();
 
     ngOnInit() {
-        this.update();
+        this.userState.user$.subscribe({
+            next: (user) =>
+                this.modalState.changeFooter({
+                    type: "submit",
+                    submit: user ? "OK" : "login",
+                    alert: user ? "logout" : "cancel",
+                    disabled: false,
+                }),
+        });
+        this.modalState.changeHeader("user profile");
     }
 
-    update() {
-        let userAux = this.storage.getUser();
-        this.user = userAux || null;
-        this.mode = {
-            type: "submit",
-            submit: userAux ? "OK" : "login",
-            alert: userAux ? "logout" : "cancel",
-        };
+    onActionPrimary() {
+        this.userState.user$
+            .subscribe({
+                next: (user) =>
+                    user === null ? this.onProfileSubmit() : this.onCloseModal(),
+            })
+            .unsubscribe();
+    }
+
+    onActionSecondary() {
+        this.userState.user$
+            .subscribe({
+                next: (user) => (user === null ? this.onCloseModal() : this.onLogout()),
+            })
+            .unsubscribe();
     }
 
     onProfileSubmit() {
         this.userService.getUser(this.username).subscribe({
-            next: (data: any) => {
-                this.storage.setUser(data);
-                this.user = data;
+            next: (user) => {
+                this.userState.setUser(user as User);
+                this.storage.setUser(user);
                 this.snack.openSnackBar("login successful", "success");
-                this.mode = {
+                this.modalState.changeFooter({
                     type: "submit",
                     submit: "OK",
                     alert: "logout",
-                };
+                });
             },
-            error: () => {
-                this.snack.openSnackBar("login error, try again", "success");
-                this.mode = {
+            error: (error) => {
+                console.log("error", error);
+                this.snack.openSnackBar("login error, try again", "error");
+                this.modalState.changeFooter({
                     type: "submit",
                     submit: "login",
                     alert: "cancel",
-                };
+                });
             },
         });
     }
@@ -91,11 +113,11 @@ export class ModalProfile implements OnInit {
 
     onLogout() {
         this.storage.removeUser();
-        this.user = null;
-        this.mode = {
+        this.userState.setUser(null);
+        this.modalState.changeFooter({
             type: "submit",
             submit: "login",
             alert: "cancel",
-        };
+        });
     }
 }

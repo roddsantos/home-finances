@@ -41,21 +41,16 @@ export class ManagementCompaniesComponent {
     };
 
     getCompanies(reloaded?: boolean) {
-        setTimeout(() => {
-            this.userState.user$
-                .pipe(mergeMap((user) => this.compApi.getCompanies(user!.id)))
-                .subscribe({
-                    next: (comps) => {
-                        this.compState.setCompanies(comps as Company[]);
-                    },
-                    error: () => {
-                        if (reloaded)
-                            this.snack.openSnackBar("Error fetching banks", "error");
-                        this.compState.changeStatus("error");
-                    },
-                });
-            this.typeObject.loading = false;
-        }, 2000);
+        this.userState.user$.pipe(mergeMap(() => this.compApi.getCompanies())).subscribe({
+            next: (comps) => {
+                this.compState.setCompanies(comps as Company[]);
+            },
+            error: () => {
+                if (reloaded) this.snack.openSnackBar("Error fetching banks", "error");
+                this.compState.changeStatus("error");
+            },
+        });
+        this.typeObject.loading = false;
     }
 
     ngOnInit() {
@@ -66,5 +61,9 @@ export class ManagementCompaniesComponent {
     onReload() {
         this.typeObject.loading = true;
         this.getCompanies(true);
+    }
+
+    trackCompany(index: number, company: Company) {
+        return company.id;
     }
 }
