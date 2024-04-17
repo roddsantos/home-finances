@@ -1,4 +1,4 @@
-.type-item-list {
+.cc-item-list {
     display: flex;
     flex-direction: row;
     width: auto;
@@ -6,21 +6,21 @@
     background-color: var(--item-list);
 }
 
-.type-item-text {
+.cc-item-text {
     display: flex;
     flex-direction: row;
     padding: 0px;
     width: 75%;
 }
 
-.type-title {
+.cc-title {
     font: bold 22px Helvetica;
     color: var(--secondary);
     width: 50%;
     margin: auto 10px auto 0px;
 }
 
-.type-description {
+.cc-description {
     font: normal 14px Helvetica;
     color: var(--primary);
     margin: auto 0px;
@@ -34,7 +34,7 @@
     color: blueviolet;
 }
 
-.icon-type {
+.icon-cc {
     font-size: 24px;
     height: auto;
     margin: auto 20px auto auto;

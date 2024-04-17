@@ -1,13 +1,23 @@
-import { Component, inject, OnInit, QueryList, ViewChildren, ViewEncapsulation } from "@angular/core";
-import { MatTab, MatTabGroup, MatTabsModule } from "@angular/material/tabs";
-import { COMPANIES } from "src/utils/data";
+import {
+    Component,
+    inject,
+    QueryList,
+    ViewChildren,
+    ViewEncapsulation,
+} from "@angular/core";
+import { MatTabChangeEvent, MatTabGroup, MatTabsModule } from "@angular/material/tabs";
 import { TypeBillsManagementComponent } from "./type-bills/pages.management.type-bills";
 import { ManagementCompaniesComponent } from "./companies/pages.management.companies";
 import { MatButton } from "@angular/material/button";
 import { ModalNewBank } from "src/app/components/modal/new-bank/new-bank.modal";
 import { Dialog } from "@angular/cdk/dialog";
-import { NgIf } from "@angular/common";
+import { AsyncPipe, NgIf } from "@angular/common";
 import { ModalNewCompany } from "src/app/components/modal/new-company/new-company.modal";
+import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
+import { CreditCardsManagementComponent } from "./credit-cards/pages.management.credit-cards";
+import { GeneralState } from "src/app/subjects/subjects.general";
+import { ManagerTabs } from "src/app/types/general";
+import { BanksManagementComponent } from "./banks/pages.management.banks";
 
 @Component({
     selector: "page-management",
@@ -15,38 +25,38 @@ import { ModalNewCompany } from "src/app/components/modal/new-company/new-compan
     styleUrls: ["./pages.management.css"],
     standalone: true,
     encapsulation: ViewEncapsulation.None,
-    imports: [MatTabsModule, TypeBillsManagementComponent, ManagementCompaniesComponent, MatButton, NgIf],
+    imports: [
+        MatTabsModule,
+        TypeBillsManagementComponent,
+        ManagementCompaniesComponent,
+        CreditCardsManagementComponent,
+        BanksManagementComponent,
+        MatButton,
+        NgIf,
+        FeedbackContainerComponent,
+        AsyncPipe,
+    ],
 })
-export class PageManagement implements OnInit {
+export class PageManagement {
     public dialog = inject(Dialog);
+    public general = inject(GeneralState);
 
-    genTab: number;
-    nameTab: String[] = ["company", "bank", "", ""];
-    companies = COMPANIES;
+    nameTab: string[] = ["company", "bank", "", "credit card"];
     @ViewChildren("childTabs") childTabs: QueryList<MatTabGroup>;
 
-    styleButton: Object = {
-        marginLeft: "auto",
-        display: "flex",
-    };
-
-    ngOnInit() {
-        this.genTab = 0;
-    }
-
-    onChangeTab(event: any) {
-        this.genTab = event.index;
+    onChangeTab(event: MatTabChangeEvent) {
+        this.general.changeTab(event.index.toString() as ManagerTabs);
 
         this.childTabs.forEach((childTab) => {
             childTab.realignInkBar();
         });
     }
 
-    openModal(): void {
-        this.dialog.open<string>(this.genTab === 0 ? ModalNewCompany : ModalNewBank, {
+    openModal(refTab: ManagerTabs): void {
+        this.dialog.open<string>(refTab === "0" ? ModalNewCompany : ModalNewBank, {
             width: "250px",
             data: {
-                header: "new " + this.nameTab[this.genTab],
+                header: "new " + this.nameTab[refTab],
             },
             hasBackdrop: true,
             backdropClass: "modal-backdrop",

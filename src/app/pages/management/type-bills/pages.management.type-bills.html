@@ -1,23 +1,30 @@
-<li *ngFor="let typeBill of typeBills">
-  <div class="type-item-list">
-    <div class="type-item-text">
-      <p class="type-title">{{typeBill.name}}</p>
-      <p class="type-description">{{typeBill.description}}</p>
-    </div>
-    <mat-icon
-      class="icon-type"
-      aria-hidden="false"
-      aria-label="Example home icon"
-      fontIcon="{{typeBill.icon}}"
-    ></mat-icon>
+<div class="tab-container">
+    <feedback-container
+        *ngIf="(tbState.typeBill$ | async)?.length === 0"
+        [variant]="'empty'"
+        [info]="typeObject"
+    ></feedback-container>
+    <li *ngFor="let typeBill of tbState.typeBill$ | async">
+        <div class="type-item-list">
+            <div class="type-item-text">
+                <p class="type-title">{{typeBill.name}}</p>
+                <p class="type-description">{{typeBill.description}}</p>
+            </div>
+            <mat-icon
+                class="icon-type"
+                aria-hidden="false"
+                aria-label="Example home icon"
+                fontIcon="{{typeBill.icon}}"
+            ></mat-icon>
 
-    <button class="icon-button" mat-icon-button aria-label="color label">
-      <mat-icon
-        class="icon-edit"
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="edit"
-      ></mat-icon>
-    </button>
-  </div>
-</li>
+            <button class="icon-button" mat-icon-button aria-label="color label">
+                <mat-icon
+                    class="icon-edit"
+                    aria-hidden="false"
+                    aria-label="Example home icon"
+                    fontIcon="edit"
+                ></mat-icon>
+            </button>
+        </div>
+    </li>
+</div>

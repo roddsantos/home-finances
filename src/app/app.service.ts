@@ -14,8 +14,4 @@ export class AppService {
             "Access-Control-Allow-Origin": "http://localhost:5000",
         }),
     };
-
-    getUser(user: String) {
-        return this.http.get(`http://localhost:5000/api/user/${user}`);
-    }
 }

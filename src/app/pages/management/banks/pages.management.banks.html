@@ -1,14 +1,14 @@
 <div class="tab-container">
     <feedback-container
-        *ngIf="(compState.company$| async)?.length === 0"
+        *ngIf="(bankState.banks$ | async)?.length === 0"
         [variant]="'empty'"
         [info]="typeObject"
     ></feedback-container>
-    <li *ngFor="let company of (compState.company$| async)">
+    <li *ngFor="let bank of (bankState.banks$ | async)">
         <div class="creation-item-list">
-            <div class="company-item-text">
-                <p class="company-title">{{company.name}}</p>
-                <p class="company-description">{{company.description}}</p>
+            <div class="bank-item-text">
+                <p class="bank-title">{{bank.name}}</p>
+                <p class="bank-description">{{bank.description}}</p>
             </div>
 
             <button class="icon-button" mat-icon-button aria-label="color label">
@@ -20,8 +20,8 @@
                 ></mat-icon>
             </button>
             <div
-                class="company-color-container"
-                [ngStyle]="{backgroundColor:company.color}"
+                class="bank-color-container"
+                [ngStyle]="{backgroundColor:bank.color}"
             ></div>
         </div>
     </li>

@@ -1,14 +1,14 @@
 <div class="tab-container">
     <feedback-container
-        *ngIf="(compState.company$| async)?.length === 0"
+        *ngIf="(ccState.creditCards$ | async)?.length === 0"
         [variant]="'empty'"
         [info]="typeObject"
     ></feedback-container>
-    <li *ngFor="let company of (compState.company$| async)">
-        <div class="creation-item-list">
-            <div class="company-item-text">
-                <p class="company-title">{{company.name}}</p>
-                <p class="company-description">{{company.description}}</p>
+    <li *ngFor="let creditCard of (ccState.creditCards$ | async)">
+        <div class="cc-item-list">
+            <div class="cc-item-text">
+                <p class="cc-title">{{creditCard.name}}</p>
+                <p class="cc-description">{{creditCard.description}}</p>
             </div>
 
             <button class="icon-button" mat-icon-button aria-label="color label">
@@ -19,10 +19,6 @@
                     fontIcon="edit"
                 ></mat-icon>
             </button>
-            <div
-                class="company-color-container"
-                [ngStyle]="{backgroundColor:company.color}"
-            ></div>
         </div>
     </li>
 </div>

@@ -1,24 +1,34 @@
 <div class="creation-main">
-    <div class="button-container">
-        <button *ngIf="nameTab[genTab]" (click)="openModal()" mat-button class="button-primary">
-            {{"new " + nameTab[genTab]}}
+    <div class="button-container" *ngIf="general.managerTabs$ | async as tab">
+        <button
+            *ngIf="nameTab[tab]"
+            (click)="openModal(tab)"
+            mat-button
+            class="button-primary"
+        >
+            {{"new " + nameTab[tab]}}
         </button>
     </div>
     <div class="creation-container">
         <mat-tab-group
+            *ngIf="general.managerTabs$ | async as tab"
             class="creation-tabs"
             #childTabs
-            [selectedIndex]="genTab"
+            [selectedIndex]="tab"
             (selectedTabChange)="onChangeTab($event)"
         >
-            <mat-tab tabindex="0" class="creation-tab" label="empresas"
-                ><management-companies></management-companies
+            <mat-tab tabindex="0" class="creation-tab" label="companies">
+                <management-companies></management-companies
             ></mat-tab>
-            <mat-tab tabindex="1" class="creation-tab" label="bancos"> Content 2 </mat-tab>
-            <mat-tab tabindex="2" class="creation-tab" label="tipos de despesas">
+            <mat-tab tabindex="1" class="creation-tab" label="banks">
+                <management-banks></management-banks>
+            </mat-tab>
+            <mat-tab tabindex="2" class="creation-tab" label="bill types">
                 <management-type-bills></management-type-bills>
             </mat-tab>
-            <mat-tab tabindex="3" class="creation-tab" label="outros"> Content 3 </mat-tab>
+            <mat-tab tabindex="3" class="creation-tab" label="credit cards">
+                <management-credit-cards></management-credit-cards>
+            </mat-tab>
         </mat-tab-group>
     </div>
 </div>

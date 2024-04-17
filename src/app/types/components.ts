@@ -20,4 +20,5 @@ export type FeedbackInfo = {
     description?: string;
     actionLabel?: string;
     action?: () => void;
+    loading?: boolean;
 };

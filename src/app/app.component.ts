@@ -1,27 +1,23 @@
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { TypeBillsService } from './api/api.type-bills';
-import { LocalStorageService } from './services/services.local-storage';
+import { Component, ViewEncapsulation, inject } from "@angular/core";
+import { LocalStorageService } from "./services/services.local-storage";
+import { UserState } from "src/app/subjects/subjects.user";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  encapsulation: ViewEncapsulation.None,
+    selector: "app-root",
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.css"],
+    encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
-  title = 'bills-app';
+    public storage = inject(LocalStorageService);
+    public userState = inject(UserState);
 
-  constructor(
-    private typeBillApi: TypeBillsService,
-    private storage: LocalStorageService
-  ) {}
+    title = "bills-app";
 
-  ngOnInit() {
-    this.typeBillApi.getTypeBills().subscribe((data) => {
-      if (data) {
-        let res = JSON.stringify(data);
-        this.storage.setTypeBills(res);
-      }
-    });
-  }
+    ngOnInit() {
+        const user = this.storage.getUser();
+        if (user) {
+            this.userState.setUser(user);
+        }
+    }
 }
