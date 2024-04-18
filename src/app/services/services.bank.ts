@@ -1,20 +1,25 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BANK } from "src/utils/constants/services";
 import { BankObject } from "../types/services";
+import { UserState } from "../subjects/subjects.user";
+import { mergeMap } from "rxjs";
 
 @Injectable({
     providedIn: "root",
 })
 export class ServiceBank {
-    constructor(private http: HttpClient) {}
+    private http = inject(HttpClient);
+    private user = inject(UserState);
 
     getBanks(id: string) {
         return this.http.get(BANK + `/${id}`);
     }
 
     createBank(data: BankObject) {
-        return this.http.post(BANK, data);
+        return this.user.user$.pipe(
+            mergeMap((user) => this.http.post(BANK, { ...data, userId: user!.id }))
+        );
     }
 
     deleteBank(id: string) {

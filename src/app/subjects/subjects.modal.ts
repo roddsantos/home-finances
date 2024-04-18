@@ -65,6 +65,13 @@ export class ModalState {
         });
     }
 
+    setDisableButton(flag: boolean) {
+        this._footer$.next({
+            ...this._footer$.getValue(),
+            disabled: flag,
+        });
+    }
+
     disableButton() {
         this._footer$.next({
             ...this._footer$.getValue(),

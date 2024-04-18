@@ -1,48 +1,35 @@
 <modal-component (actionPrimary)="onSubmit()" [bodyTemplate]="newBank"></modal-component>
 
 <ng-template #newBank>
-    <div class="new-bank-container">
-        <mat-form-field class="new-bank-field" appearance="outline">
-            <mat-label>name</mat-label>
-            <input
-                maxlength="100"
-                required
-                matInput
-                [formControl]="name"
-                (blur)="updateNameErrorMessage()"
-            />
-            @if (name.invalid) {
-            <mat-error>{{errorMessage.name}}</mat-error>
-            }
-        </mat-form-field>
-        <mat-form-field class="new-bank-field" appearance="outline">
-            <mat-label>description</mat-label>
-            <input
-                maxlength="100"
-                matInput
-                [formControl]="description"
-                (blur)="updateDescriptionErrorMessage()"
-            />
-            @if (description.invalid) {
-            <mat-error>{{errorMessage.description}}</mat-error>
-            }
-        </mat-form-field>
-        <div class="savings-color">
-            <mat-form-field class="color-picker" appearance="outline">
-                <mat-label>color</mat-label>
-                <input matInput type="color" [(ngModel)]="color" />
-            </mat-form-field>
-            <mat-form-field class="savings-input" appearance="outline">
-                <mat-label>savings</mat-label>
-                <input
-                    matInput
-                    [formControl]="savings"
-                    (blur)="updateSavingsErrorMessage()"
-                />
-                @if (savings.invalid) {
-                <mat-error>{{errorMessage.savings}}</mat-error>
+    <form [formGroup]="bankForm">
+        <div class="new-bank-container">
+            <mat-form-field class="new-bank-field" appearance="outline">
+                <mat-label>name</mat-label>
+                <input maxlength="100" required matInput formControlName="name" />
+                @if (bankForm.controls.name.errors?.["required"]) {
+                <mat-error>{{errorMessage.name}}</mat-error>
                 }
             </mat-form-field>
+            <mat-form-field class="new-bank-field" appearance="outline">
+                <mat-label>description</mat-label>
+                <input maxlength="100" matInput formControlName="description" />
+                @if (bankForm.controls.description.errors?.["required"]) {
+                <mat-error>{{errorMessage.description}}</mat-error>
+                }
+            </mat-form-field>
+            <div class="savings-color">
+                <mat-form-field class="color-picker" appearance="outline">
+                    <mat-label>color</mat-label>
+                    <input matInput type="color" formControlName="color" />
+                </mat-form-field>
+                <mat-form-field class="savings-input" appearance="outline">
+                    <mat-label>savings</mat-label>
+                    <input matInput type="number" formControlName="savings" />
+                    @if (bankForm.controls.savings.errors?.["required"]) {
+                    <mat-error>{{errorMessage.savings}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
         </div>
-    </div>
+    </form>
 </ng-template>

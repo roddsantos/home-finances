@@ -23,4 +23,13 @@ export class BankState {
 
         this._banks$.next(banks);
     }
+
+    addBank(bank: Bank, index?: number) {
+        let auxBanks = [...this._banks$.getValue()];
+        const existingBank = this._banks$.getValue().find((b) => b.id === bank.id);
+        if (existingBank && index !== undefined) auxBanks[index] = bank;
+        else auxBanks = [bank, ...auxBanks];
+
+        this._banks$.next(auxBanks);
+    }
 }

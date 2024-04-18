@@ -67,4 +67,8 @@ export class BanksManagementComponent {
         this.typeObject.variant = "loading";
         this.getBanks(true);
     }
+
+    trackBank(index: number, bank: Bank) {
+        return bank.id;
+    }
 }

@@ -1,12 +1,29 @@
-import { Component, Inject, OnInit, Output, EventEmitter } from "@angular/core";
-import { Router } from "@angular/router";
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import {
+    Component,
+    OnInit,
+    Output,
+    EventEmitter,
+    inject,
+    ViewChild,
+} from "@angular/core";
 import { LocalStorageService } from "src/app/services/services.local-storage";
 import { ModalComponent } from "../modal.component";
 import { FooterModal } from "src/app/types/modal";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
-import { FormControl, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
+import {
+    FormControl,
+    FormGroup,
+    FormsModule,
+    ReactiveFormsModule,
+    Validators,
+} from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
+import { ServiceBank } from "src/app/services/services.bank";
+import { BankState } from "src/app/subjects/subjects.bank";
+import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
+import { ModalState } from "src/app/subjects/subjects.modal";
+import { BankObject } from "src/app/types/services";
+import { Bank } from "src/app/types/general";
 
 export interface DialogData {
     username: string;
@@ -17,19 +34,36 @@ export interface DialogData {
     templateUrl: "./new-bank.modal.html",
     styleUrls: ["./new-bank.modal.css"],
     standalone: true,
-    imports: [ModalComponent, MatFormField, FormsModule, MatLabel, MatInputModule, FormsModule, ReactiveFormsModule],
+    imports: [
+        ModalComponent,
+        MatFormField,
+        FormsModule,
+        MatLabel,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
 })
 export class ModalNewBank implements OnInit {
-    mode: FooterModal = {
-        type: "submit",
-        submit: "OK",
-        alert: "cancel",
-        disabled: true,
-    };
-    name = new FormControl("", [Validators.required, Validators.maxLength(100)]);
-    description = new FormControl("", [Validators.required, Validators.maxLength(100)]);
-    color: String = "";
-    savings = new FormControl("", [Validators.required, Validators.pattern(/[0-9,.]/gi)]);
+    public modalState = inject(ModalState);
+    public bankApi = inject(ServiceBank);
+    public bankState = inject(BankState);
+    public snack = inject(CustomSnackbarComponent);
+    @ViewChild(ModalComponent) modalComponent: any;
+
+    bankForm = new FormGroup({
+        name: new FormControl<string>("", {
+            validators: [Validators.required, Validators.maxLength(100)],
+            nonNullable: true,
+        }),
+        description: new FormControl<string>("", {
+            validators: [Validators.required, Validators.maxLength(100)],
+            nonNullable: true,
+        }),
+        color: new FormControl<string>("#000000", { nonNullable: true }),
+        savings: new FormControl<number>(0, { nonNullable: true }),
+    });
+
     errorMessage = {
         name: "you must enter a name",
         description: "you must enter a description",
@@ -38,49 +72,41 @@ export class ModalNewBank implements OnInit {
     @Output() submit = new EventEmitter<String>();
     @Output() onClose = new EventEmitter<void>();
 
-    constructor(private storage: LocalStorageService) {}
+    constructor() {
+        this.bankForm.valueChanges.subscribe({
+            next: (data) => {
+                this.modalState.setDisableButton(
+                    !Boolean(data.description) || !Boolean(data.name)
+                );
+            },
+        });
+    }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.modalState.onSubmitFooter("OK", "cancel");
+        this.modalState.disableButton();
+        this.modalState.changeHeader("new company");
+    }
 
     onSubmit() {
-        if (this.name && this.color && this.description) {
-            console.log("ok", this.name, this.color, this.description, this.savings);
+        if (!this.bankForm.invalid) {
+            this.bankApi
+                .createBank({
+                    ...(this.bankForm.value as BankObject),
+                })
+                .subscribe({
+                    next: (data) => {
+                        this.bankState.addBank(data as Bank);
+                        this.snack.openSnackBar(
+                            "company successfully created",
+                            "success"
+                        );
+                        this.modalComponent.onClose();
+                    },
+                    error: (err) => {
+                        this.snack.openSnackBar("error creating bank", "error");
+                    },
+                });
         } else this.onClose.emit();
-    }
-
-    updateButtonState() {
-        this.mode.disabled =
-            Boolean(this.errorMessage.name) ||
-            Boolean(this.errorMessage.description) ||
-            Boolean(this.errorMessage.savings);
-    }
-
-    updateNameErrorMessage() {
-        if (this.name.hasError("required")) {
-            this.errorMessage.name = "you must enter a name";
-        } else {
-            this.errorMessage.name = "";
-        }
-        this.updateButtonState();
-    }
-
-    updateSavingsErrorMessage() {
-        if (this.savings.hasError("required")) {
-            this.errorMessage.savings = "you must enter the savings";
-        } else if (this.savings.hasError("pattern")) {
-            this.errorMessage.savings = "invalid characters";
-        } else {
-            this.errorMessage.savings = "";
-        }
-        this.updateButtonState();
-    }
-
-    updateDescriptionErrorMessage() {
-        if (this.description.hasError("required")) {
-            this.errorMessage.description = "you must enter a description";
-        } else {
-            this.errorMessage.description = "";
-        }
-        this.updateButtonState();
     }
 }
