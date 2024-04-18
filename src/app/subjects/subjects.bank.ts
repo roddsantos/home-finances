@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { Bank, ListStatus } from "src/app/types/general";
+import { ListStatus } from "src/app/types/general";
+import { Bank } from "src/app/types/objects";
 
 @Injectable({
     providedIn: "root",

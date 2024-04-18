@@ -20,7 +20,7 @@ import { MatInputModule } from "@angular/material/input";
 import { ServiceCompany } from "src/app/services/services.company";
 import { ModalState } from "src/app/subjects/subjects.modal";
 import { CompanyState } from "src/app/subjects/subjects.company";
-import { Company } from "src/app/types/general";
+import { Company } from "src/app/types/objects";
 import { CompanyObject } from "src/app/types/services";
 
 export interface DialogData {

@@ -8,7 +8,7 @@ import { LocalStorageService } from "src/app/services/services.local-storage";
 import { ServiceTypeBill } from "src/app/services/services.type-bill";
 import { FeedbackInfo } from "src/app/types/components";
 import { TypeBillState } from "src/app/subjects/subjects.type-bills";
-import { TypeBill } from "src/app/types/general";
+import { TypeBill } from "src/app/types/objects";
 
 @Component({
     selector: "management-type-bills",

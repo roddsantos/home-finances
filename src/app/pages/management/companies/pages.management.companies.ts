@@ -9,7 +9,7 @@ import { ServiceCompany } from "src/app/services/services.company";
 import { CompanyState } from "src/app/subjects/subjects.company";
 import { UserState } from "src/app/subjects/subjects.user";
 import { FeedbackInfo } from "src/app/types/components";
-import { Company } from "src/app/types/general";
+import { Company } from "src/app/types/objects";
 
 @Component({
     selector: "management-companies",

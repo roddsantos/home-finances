@@ -7,7 +7,7 @@ import { FeedbackContainerComponent } from "src/app/components/feedback-containe
 import { ServiceCreditCard } from "src/app/services/services.credit-card";
 import { LocalStorageService } from "src/app/services/services.local-storage";
 import { FeedbackInfo } from "src/app/types/components";
-import { CreditCard, User } from "src/app/types/general";
+import { CreditCard } from "src/app/types/objects";
 import { CreditCardState } from "src/app/subjects//subjects.credit-card";
 import { UserState } from "src/app/subjects//subjects.user";
 import { mergeMap } from "rxjs";

@@ -9,7 +9,7 @@ import { ServiceBank } from "src/app/services/services.bank";
 import { BankState } from "src/app/subjects/subjects.bank";
 import { UserState } from "src/app/subjects/subjects.user";
 import { FeedbackInfo } from "src/app/types/components";
-import { Bank } from "src/app/types/general";
+import { Bank } from "src/app/types/objects";
 
 @Component({
     selector: "management-banks",

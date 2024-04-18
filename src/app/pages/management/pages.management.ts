@@ -18,6 +18,7 @@ import { CreditCardsManagementComponent } from "./credit-cards/pages.management.
 import { GeneralState } from "src/app/subjects/subjects.general";
 import { ManagerTabs } from "src/app/types/general";
 import { BanksManagementComponent } from "./banks/pages.management.banks";
+import { ModalNewCreditCard } from "src/app/components/modal/new-credit-card/new-credit-card.modal";
 
 @Component({
     selector: "page-management",
@@ -53,13 +54,20 @@ export class PageManagement {
     }
 
     openModal(refTab: ManagerTabs): void {
-        this.dialog.open<string>(refTab === "0" ? ModalNewCompany : ModalNewBank, {
-            width: "250px",
-            data: {
-                header: "new " + this.nameTab[refTab],
-            },
-            hasBackdrop: true,
-            backdropClass: "modal-backdrop",
-        });
+        this.dialog.open<string>(
+            refTab === "0"
+                ? ModalNewCompany
+                : refTab === "1"
+                ? ModalNewBank
+                : ModalNewCreditCard,
+            {
+                width: "250px",
+                data: {
+                    header: "new " + this.nameTab[refTab],
+                },
+                hasBackdrop: true,
+                backdropClass: "modal-backdrop",
+            }
+        );
     }
 }

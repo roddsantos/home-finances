@@ -1,13 +1,16 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { CREDIT_CARD } from "src/utils/constants/services";
 import { CreditCardObject, GetCreditCard } from "../types/services";
+import { mergeMap } from "rxjs";
+import { UserState } from "../subjects/subjects.user";
 
 @Injectable({
     providedIn: "root",
 })
 export class ServiceCreditCard {
-    constructor(private http: HttpClient) {}
+    private http = inject(HttpClient);
+    private user = inject(UserState);
 
     getCreditCards(data: GetCreditCard) {
         const stringfyHeader = JSON.stringify(data);
@@ -19,7 +22,9 @@ export class ServiceCreditCard {
     }
 
     createCreditCard(data: CreditCardObject) {
-        return this.http.post(CREDIT_CARD, data);
+        return this.user.user$.pipe(
+            mergeMap((user) => this.http.post(CREDIT_CARD, { ...data, userId: user!.id }))
+        );
     }
 
     deleteCreditCard(id: string) {
