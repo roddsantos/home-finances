@@ -3,8 +3,6 @@ import { BrowserModule } from "@angular/platform-browser";
 
 import { AppComponent } from "./app.component";
 import { LayoutComponent } from "./components/layout/layout.component";
-import { PageHome } from "./pages/home/pages.home";
-import { PageManagement } from "./pages/management/pages.management";
 import { MatTabsModule } from "@angular/material/tabs";
 import { AppRoutingModule } from "./app-routing.module";
 import { ReactiveFormsModule } from "@angular/forms";

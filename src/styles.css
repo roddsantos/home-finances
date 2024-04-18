@@ -45,6 +45,13 @@ body {
     min-height: 100vh;
 }
 
+.creation-main {
+    min-height: 100vh;
+    padding: 80px 50px 40px;
+    max-width: 1000px;
+    margin: 0px auto;
+}
+
 .modal-backdrop {
     position: absolute;
     z-index: 3;
