@@ -24,3 +24,40 @@ export type FeedbackInfo = {
 };
 
 export type SizeType = "xm" | "sm" | "md" | "lg" | "xl";
+
+export type AvailableFilters =
+    | "month"
+    | "year"
+    | "typebill"
+    | "company"
+    | "creditcard"
+    | "bank"
+    | "min"
+    | "max"
+    | "datespam";
+
+export type AvailableDataFilters = "typebill" | "creditcard" | "bank" | "company";
+
+export type ListFilter = {
+    id: string;
+    identifier: AvailableDataFilters;
+    name: string;
+};
+
+export type MonthFilter = {
+    id: number;
+    identifier: "month";
+    name: string;
+};
+
+export type YearFilter = {
+    id: number;
+    identifier: "year";
+    name: number;
+};
+
+export type FilterDisplay = {
+    id: string | number;
+    identifier: AvailableFilters;
+    name: string | number;
+};

@@ -1,0 +1,25 @@
+.divider {
+    height: 1px;
+    width: 100%;
+    background-color: #000000;
+}
+
+.add-filter-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.type-bill-field {
+    margin-bottom: 10px;
+}
+
+.chip-grid {
+    display: block;
+    padding: 6px 0px;
+}
+
+.chip-item {
+    margin-right: 6px;
+    margin-bottom: 6px;
+}

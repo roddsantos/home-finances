@@ -180,3 +180,23 @@ body {
     width: 100%;
     min-height: 500px;
 }
+
+.mat-mdc-standard-chip {
+    border-radius: 0px !important;
+    /* border: solid 1px #ffffff; */
+    & .mdc-evolution-chip__text-label {
+        font-size: 16px !important;
+        & .typebill {
+            color: #ffffff !important;
+        }
+    }
+    &.typebill {
+        background-color: var(--warning) !important;
+        & .mdc-evolution-chip__text-label {
+            color: #ffffff !important;
+        }
+        & .mdc-evolution-chip__icon--trailing {
+            color: #ffffff !important;
+        }
+    }
+}

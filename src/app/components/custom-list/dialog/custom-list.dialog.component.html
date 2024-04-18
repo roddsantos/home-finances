@@ -1,0 +1,40 @@
+<modal-component
+    (actionPrimary)="onSubmit()"
+    [bodyTemplate]="listDialog"
+></modal-component>
+
+<ng-template #listDialog>
+    <form>
+        <div class="add-filter-container">
+            <div *ngIf="(tbState.typeBill$ | async)!.length > 0">
+                <mat-form-field class="type-bill-field" appearance="outline">
+                    <mat-label>type bill</mat-label>
+                    <mat-select
+                        #typeBillSelector
+                        (selectionChange)="addFilter($event, 'typebill')"
+                    >
+                        @for (m of (tbState.typeBill$ | async); track m) {
+                        <mat-option [value]="m">{{ m.name }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="divider"></div>
+            <!-- <mat-chip-grid #chipGrid aria-label="filters selected"> -->
+            <div class="chip-grid">
+                @for (chip of selectedFilters; track chip; let i = $index) {
+                <mat-chip-row
+                    [ngClass]="[chip.identifier, 'chip-item']"
+                    (removed)="removeFilter(i)"
+                >
+                    {{ chip.name }}
+                    <button matChipRemove [attr.aria-label]="'remove ' + chip.name">
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                </mat-chip-row>
+                }
+            </div>
+            <!-- </mat-chip-grid> -->
+        </div>
+    </form>
+</ng-template>
