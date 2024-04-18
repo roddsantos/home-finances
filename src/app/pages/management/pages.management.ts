@@ -61,9 +61,9 @@ export class PageManagement {
                 ? ModalNewBank
                 : ModalNewCreditCard,
             {
-                width: "250px",
                 data: {
                     header: "new " + this.nameTab[refTab],
+                    size: "md",
                 },
                 hasBackdrop: true,
                 backdropClass: "modal-backdrop",

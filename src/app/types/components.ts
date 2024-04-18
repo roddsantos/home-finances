@@ -22,3 +22,5 @@ export type FeedbackInfo = {
     actionLabel?: string;
     action?: () => void;
 };
+
+export type SizeType = "xm" | "sm" | "md" | "lg" | "xl";
