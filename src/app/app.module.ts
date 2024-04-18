@@ -24,7 +24,7 @@ import { TypeBillsManagementComponent } from "./pages/management/type-bills/page
 import { CustomButtonComponent } from "./components/custom-button/custom-button.component";
 
 @NgModule({
-    declarations: [AppComponent, PageHome, TextfieldComponent, CustomButtonComponent],
+    declarations: [AppComponent, TextfieldComponent, CustomButtonComponent],
     imports: [
         BrowserModule,
         HttpClientModule,
@@ -41,7 +41,6 @@ import { CustomButtonComponent } from "./components/custom-button/custom-button.
         LayoutComponent,
         ModalComponent,
         ModalProfile,
-        PageManagement,
         TypeBillsManagementComponent,
         ManagementCompaniesComponent,
     ],

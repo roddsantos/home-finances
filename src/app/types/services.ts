@@ -14,10 +14,9 @@ export type CreditCardObject = {
     name: string;
     description: string;
     color: string;
-    month: string;
+    month: number;
     year: number;
     isClosed: boolean;
-    userId: string;
 };
 
 export type BankObject = {

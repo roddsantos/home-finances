@@ -1,14 +1,17 @@
 <div class="tab-container">
     <feedback-container
         *ngIf="(bankState.banks$ | async)?.length === 0"
-        [variant]="'empty'"
         [info]="typeObject"
     ></feedback-container>
-    <li *ngFor="let bank of (bankState.banks$ | async)">
+    <li *ngFor="let bank of (bankState.banks$ | async); index as i; trackBy: trackBank">
         <div class="creation-item-list">
             <div class="bank-item-text">
                 <p class="bank-title">{{bank.name}}</p>
                 <p class="bank-description">{{bank.description}}</p>
+                <div class="bank-savings">
+                    <p>saldo:</p>
+                    <p>{{bank.savings}} R$</p>
+                </div>
             </div>
 
             <button class="icon-button" mat-icon-button aria-label="color label">
@@ -21,7 +24,7 @@
             </button>
             <div
                 class="bank-color-container"
-                [ngStyle]="{backgroundColor:bank.color}"
+                [ngStyle]="{borderRightColor:bank.color}"
             ></div>
         </div>
     </li>

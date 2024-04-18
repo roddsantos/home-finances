@@ -16,21 +16,20 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
-import { ServiceBank } from "src/app/services/services.bank";
-import { BankState } from "src/app/subjects/subjects.bank";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 import { ModalState } from "src/app/subjects/subjects.modal";
-import { BankObject } from "src/app/types/services";
-import { Bank } from "src/app/types/objects";
-
-export interface DialogData {
-    username: string;
-}
+import { MatSelectModule } from "@angular/material/select";
+import { CreditCardObject } from "src/app/types/services";
+import { CreditCard } from "src/app/types/objects";
+import { MonthType } from "src/app/types/general";
+import { ServiceCreditCard } from "src/app/services/services.credit-card";
+import { CreditCardState } from "src/app/subjects/subjects.credit-card";
+import { MONTHS } from "src/utils/constants/general";
 
 @Component({
-    selector: "modal-new-bank",
-    templateUrl: "./new-bank.modal.html",
-    styleUrls: ["./new-bank.modal.css"],
+    selector: "modal-new-credit-card",
+    templateUrl: "./new-credit-card.modal.html",
+    styleUrls: ["./new-credit-card.modal.css"],
     standalone: true,
     imports: [
         ModalComponent,
@@ -40,16 +39,19 @@ export interface DialogData {
         MatInputModule,
         FormsModule,
         ReactiveFormsModule,
+        MatSelectModule,
     ],
 })
-export class ModalNewBank implements OnInit {
+export class ModalNewCreditCard implements OnInit {
     public modalState = inject(ModalState);
-    public bankApi = inject(ServiceBank);
-    public bankState = inject(BankState);
+    public ccApi = inject(ServiceCreditCard);
+    public ccState = inject(CreditCardState);
     public snack = inject(CustomSnackbarComponent);
     @ViewChild(ModalComponent) modalComponent: any;
 
-    bankForm = new FormGroup({
+    months = MONTHS;
+
+    creditCardForm = new FormGroup({
         name: new FormControl<string>("", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
@@ -59,22 +61,32 @@ export class ModalNewBank implements OnInit {
             nonNullable: true,
         }),
         color: new FormControl<string>("#000000", { nonNullable: true }),
-        savings: new FormControl<number>(0, { nonNullable: true }),
+        limit: new FormControl<number>(0, { nonNullable: true }),
+        year: new FormControl<number>(new Date().getFullYear(), {
+            nonNullable: true,
+            validators: [Validators.min(2023)],
+        }),
+        month: new FormControl<MonthType>(MONTHS[new Date().getMonth()], {
+            nonNullable: true,
+        }),
+        isClosed: new FormControl<boolean>(false),
     });
 
     errorMessage = {
         name: "you must enter a name",
         description: "you must enter a description",
         savings: "you must enter the savings",
+        limit: "limit must be greater than zero",
+        year: "year should be equal or greater than 2023",
     };
     @Output() submit = new EventEmitter<String>();
     @Output() onClose = new EventEmitter<void>();
 
     constructor() {
-        this.bankForm.valueChanges.subscribe({
+        this.creditCardForm.valueChanges.subscribe({
             next: (data) => {
                 this.modalState.setDisableButton(
-                    !Boolean(data.description) || !Boolean(data.name)
+                    !Boolean(data.description) || !Boolean(data.name) || data.year! < 2023
                 );
             },
         });
@@ -83,26 +95,27 @@ export class ModalNewBank implements OnInit {
     ngOnInit() {
         this.modalState.onSubmitFooter("OK", "cancel");
         this.modalState.disableButton();
-        this.modalState.changeHeader("new company");
+        this.modalState.changeHeader("new credit card");
     }
 
     onSubmit() {
-        if (!this.bankForm.invalid) {
-            this.bankApi
-                .createBank({
-                    ...(this.bankForm.value as BankObject),
-                })
+        if (!this.creditCardForm.invalid) {
+            this.ccApi
+                .createCreditCard({
+                    ...this.creditCardForm.value,
+                    month: this.creditCardForm.value.month!.order,
+                } as CreditCardObject)
                 .subscribe({
                     next: (data) => {
-                        this.bankState.addBank(data as Bank);
+                        this.ccState.addCreditCard(data as CreditCard);
                         this.snack.openSnackBar(
-                            "company successfully created",
+                            "credit card successfully created",
                             "success"
                         );
                         this.modalComponent.onClose();
                     },
-                    error: (err) => {
-                        this.snack.openSnackBar("error creating bank", "error");
+                    error: () => {
+                        this.snack.openSnackBar("error creating credit card", "error");
                     },
                 });
         } else this.onClose.emit();

@@ -1,7 +1,6 @@
 <div class="tab-container">
     <feedback-container
         *ngIf="(ccState.creditCards$ | async)?.length === 0"
-        [variant]="'empty'"
         [info]="typeObject"
     ></feedback-container>
     <li *ngFor="let creditCard of (ccState.creditCards$ | async)">
@@ -9,6 +8,10 @@
             <div class="cc-item-text">
                 <p class="cc-title">{{creditCard.name}}</p>
                 <p class="cc-description">{{creditCard.description}}</p>
+                <div class="cc-limit">
+                    <p>limit:</p>
+                    <p>{{creditCard.limit}} R$</p>
+                </div>
             </div>
 
             <button class="icon-button" mat-icon-button aria-label="color label">
@@ -19,6 +22,11 @@
                     fontIcon="edit"
                 ></mat-icon>
             </button>
+
+            <div
+                class="cc-color-container"
+                [ngStyle]="{borderRightColor:creditCard.color}"
+            ></div>
         </div>
     </li>
 </div>

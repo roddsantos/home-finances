@@ -1,7 +1,6 @@
 <div class="tab-container">
     <feedback-container
         *ngIf="(compState.company$| async)?.length === 0"
-        [variant]="'empty'"
         [info]="typeObject"
     ></feedback-container>
     <li
@@ -23,7 +22,7 @@
             </button>
             <div
                 class="company-color-container"
-                [ngStyle]="{backgroundColor:company.color}"
+                [ngStyle]="{borderRightColor:company.color}"
             ></div>
         </div>
     </li>

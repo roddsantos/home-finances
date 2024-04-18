@@ -9,7 +9,7 @@ import { ServiceBank } from "src/app/services/services.bank";
 import { BankState } from "src/app/subjects/subjects.bank";
 import { UserState } from "src/app/subjects/subjects.user";
 import { FeedbackInfo } from "src/app/types/components";
-import { Bank } from "src/app/types/general";
+import { Bank } from "src/app/types/objects";
 
 @Component({
     selector: "management-banks",
@@ -33,13 +33,11 @@ export class BanksManagementComponent {
     public bankState = inject(BankState);
     private snack = inject(CustomSnackbarComponent);
 
-    loading: boolean = false;
-
     typeObject: FeedbackInfo = {
         title: "no banks",
         actionLabel: "reload",
         action: () => this.onReload(),
-        loading: this.loading,
+        variant: "loading",
     };
 
     getBanks(reloaded?: boolean) {
@@ -48,22 +46,29 @@ export class BanksManagementComponent {
             .subscribe({
                 next: (banks) => {
                     this.bankState.setBanks(banks as Bank[]);
+                    this.typeObject.variant =
+                        (banks as Bank[]).length === 0 ? "empty" : "loading";
                 },
                 error: () => {
                     if (reloaded)
                         this.snack.openSnackBar("Error fetching banks", "error");
                     this.bankState.changeStatus("error");
+                    this.typeObject.variant = "error";
                 },
             });
     }
 
     ngOnInit() {
-        this.loading = true;
+        this.typeObject.variant = "loading";
         this.getBanks();
     }
 
     onReload() {
-        this.loading = true;
+        this.typeObject.variant = "loading";
         this.getBanks(true);
+    }
+
+    trackBank(index: number, bank: Bank) {
+        return bank.id;
     }
 }

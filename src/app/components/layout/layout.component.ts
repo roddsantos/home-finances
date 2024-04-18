@@ -1,16 +1,13 @@
-import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit, Inject, Input, inject } from "@angular/core";
+import { Component, ViewChild, AfterViewInit, inject } from "@angular/core";
 import { Router } from "@angular/router";
-import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
 import { ModalProfile } from "../modal/profile/profile.modal";
 import { AppService } from "src/app/app.service";
-import { Subject, takeUntil } from "rxjs";
 import { LocalStorageService } from "src/app/services/services.local-storage";
 import { ModalComponent } from "../modal/modal.component";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
-import { ProfileDialogType } from "src/app/types/modal";
 import { Dialog } from "@angular/cdk/dialog";
-import { Overlay, OverlayConfig } from "@angular/cdk/overlay";
+import { Overlay } from "@angular/cdk/overlay";
 
 @Component({
     standalone: true,
@@ -24,7 +21,6 @@ export class LayoutComponent implements AfterViewInit {
     @ViewChild(ModalProfile) profile: any;
 
     private router = inject(Router);
-    private appService = inject(AppService);
     private storage = inject(LocalStorageService);
     public dialog = inject(Dialog);
     public overlay = inject(Overlay);
@@ -33,18 +29,16 @@ export class LayoutComponent implements AfterViewInit {
 
     openProfile(): void {
         const dialogRef = this.dialog.open<string>(ModalProfile, {
-            width: "250px",
             data: {
                 header: "perfil",
                 username: "a",
+                size: "sm",
             },
             hasBackdrop: true,
             backdropClass: "modal-backdrop",
         });
 
-        dialogRef.closed.subscribe((result) => {
-            console.log("The dialog was closed");
-        });
+        dialogRef.closed.subscribe();
     }
 
     onHomeClick() {

@@ -3,7 +3,7 @@
     flex-direction: column;
     background-color: var(--item-list);
     position: absolute;
-    left: calc(50vw - 25vw);
+    left: 25vw;
     top: 20vh;
     min-height: 150px;
     width: 50vw;
@@ -16,26 +16,22 @@
 }
 
 .modal-container.xl {
-    left: calc(50vw - 40vw);
-    top: 20vh;
+    left: 10vw;
     width: 80vw;
 }
 
 .modal-container.lg {
-    left: calc(50vw - 32.5vw);
-    top: 20vh;
+    left: 17.5vw;
     width: 65vw;
 }
 
 .modal-container.sm {
-    left: calc(50vw - 17.5vw);
-    top: 20vh;
+    left: 32.5vw;
     width: 35vw;
 }
 
-.modal-container.xs {
-    left: calc(50vw - 10vw);
-    top: 20vh;
+.modal-container.xm {
+    left: 40vw;
     width: 20vw;
 }
 

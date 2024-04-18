@@ -1,6 +1,9 @@
-<modal-component (actionPrimary)="onSubmit()" [bodyTemplate]="newBank"></modal-component>
+<modal-component
+    (actionPrimary)="onSubmit()"
+    [bodyTemplate]="newCompany"
+></modal-component>
 
-<ng-template #newBank>
+<ng-template #newCompany>
     <form [formGroup]="companyForm">
         <div class="new-bank-container">
             <mat-form-field class="new-bank-field" appearance="outline">

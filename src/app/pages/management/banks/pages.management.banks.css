@@ -16,7 +16,7 @@
 .bank-title {
     font: bold 22px Helvetica;
     color: var(--secondary);
-    width: 50%;
+    width: 40%;
     margin: auto 10px auto 0px;
 }
 
@@ -24,7 +24,16 @@
     font: normal 14px Helvetica;
     color: var(--primary);
     margin: auto 0px;
-    width: 50%;
+    width: 40%;
+}
+
+.bank-savings {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    color: var(--primary);
+    font: normal 12px Helvetica;
+    margin: auto 10px;
 }
 
 .icon-edit {
@@ -57,9 +66,13 @@
 }
 
 .bank-color-container {
-    height: 52px;
-    width: 7px;
+    width: 0;
+    height: 0;
     position: absolute;
-    right: 3px;
-    margin-top: -6px;
+    right: 0px;
+    top: 8px;
+    rotate: 135deg;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-right: 20px solid transparent;
 }

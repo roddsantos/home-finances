@@ -1,6 +1,9 @@
+import { SizeType } from "./components";
+
 export type ProfileDialogType = {
     header: string;
-    username: string;
+    username?: string;
+    size?: SizeType;
 };
 
 export type FooterModal = {
