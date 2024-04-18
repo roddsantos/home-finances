@@ -8,6 +8,10 @@
             <div class="cc-item-text">
                 <p class="cc-title">{{creditCard.name}}</p>
                 <p class="cc-description">{{creditCard.description}}</p>
+                <div class="cc-limit">
+                    <p>limit:</p>
+                    <p>{{creditCard.limit}} R$</p>
+                </div>
             </div>
 
             <button class="icon-button" mat-icon-button aria-label="color label">
@@ -18,6 +22,11 @@
                     fontIcon="edit"
                 ></mat-icon>
             </button>
+
+            <div
+                class="cc-color-container"
+                [ngStyle]="{borderRightColor:creditCard.color}"
+            ></div>
         </div>
     </li>
 </div>
