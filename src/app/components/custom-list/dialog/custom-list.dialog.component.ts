@@ -9,17 +9,20 @@ import { TypeBillState } from "src/app/subjects/subjects.type-bills";
 import { CommonModule } from "@angular/common";
 import { MatSelect, MatSelectChange, MatSelectModule } from "@angular/material/select";
 import { MatIconModule } from "@angular/material/icon";
-import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import {
+    FormControl,
+    FormsModule,
+    ReactiveFormsModule,
+    Validators,
+} from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButton } from "@angular/material/button";
-import { COMMA, ENTER } from "@angular/cdk/keycodes";
-import { Observable } from "rxjs";
-import { TypeBill } from "src/app/types/objects";
 import { CustomListState } from "../custom-list.subjects.component";
 import { CreditCardState } from "src/app/subjects/subjects.credit-card";
 import { CompanyState } from "src/app/subjects/subjects.company";
 import { BankState } from "src/app/subjects/subjects.bank";
+import { MONTHS } from "src/utils/constants/general";
 
 @Component({
     selector: "dialog-custom-list",
@@ -28,6 +31,7 @@ import { BankState } from "src/app/subjects/subjects.bank";
     standalone: true,
     imports: [
         CommonModule,
+        MatInputModule,
         MatButton,
         ModalComponent,
         MatSelectModule,
@@ -52,11 +56,19 @@ export class DialogCustomList implements OnInit {
     @ViewChild("creditcard") creditcard: MatSelect;
     @ViewChild("company") company: MatSelect;
     @ViewChild("bank") bank: MatSelect;
+    @ViewChild("month") month: MatSelect;
+    @ViewChild("year") year: MatSelect;
 
+    months = MONTHS;
     tbCtrl = new FormControl("");
     ccCrtl = new FormControl("");
     cCtrl = new FormControl("");
     bkCtrl = new FormControl("");
+    monthCtrl = new FormControl("");
+    yCtrl = new FormControl(new Date().getFullYear(), {
+        validators: [Validators.min(2023), Validators.max(2080)],
+        nonNullable: true,
+    });
     selectedFilters: FilterDisplay[] = [];
 
     ngOnInit() {
@@ -95,7 +107,25 @@ export class DialogCustomList implements OnInit {
                     name: identifier === "month" ? filter.name : filter,
                 });
         }
-        this[identifier as AvailableDataFilters].value = "";
+        this[identifier as AvailableDataFilters | "month"].value = "";
+    }
+
+    addYear() {
+        if (this.yCtrl.valid) {
+            const hasFilter = this.selectedFilters.find((f) => f.id === this.yCtrl.value);
+            this.clState.yearFilter$.subscribe({
+                next: (data) => {
+                    const hasFilterDefined = data.find((f) => f.id === this.yCtrl.value);
+                    if (!hasFilter && !hasFilterDefined)
+                        this.selectedFilters.push({
+                            id: this.yCtrl.value,
+                            identifier: "year",
+                            name: this.yCtrl.value,
+                        });
+                },
+            });
+            this.year.value = "";
+        }
     }
 
     removeFilter(index: number) {

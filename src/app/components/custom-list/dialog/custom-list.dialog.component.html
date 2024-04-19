@@ -57,6 +57,27 @@
                     }
                 </mat-select>
             </mat-form-field>
+            <mat-form-field class="condition-field" appearance="outline">
+                <mat-label>month</mat-label>
+                <mat-select #month (selectionChange)="addFilter($event, 'month')">
+                    @for (m of months; track m) {
+                    <mat-option [value]="m">{{ m.name }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="condition-field" appearance="outline">
+                <mat-label>year</mat-label>
+                <input
+                    (keydown.enter)="addYear()"
+                    matInput
+                    #year
+                    type="number"
+                    [formControl]="yCtrl"
+                />
+                @if (yCtrl.invalid) {
+                <mat-error>invalid year (2023-2090)</mat-error>
+                }
+            </mat-form-field>
             <div class="divider"></div>
             <!-- <mat-chip-grid #chipGrid aria-label="filters selected"> -->
             <div class="chip-grid">

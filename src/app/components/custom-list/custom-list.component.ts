@@ -31,7 +31,7 @@ export class CustomListComponent {
         this.dialog.open<string>(DialogCustomList, {
             data: {
                 header: "add filters",
-                size: "md",
+                size: "lg",
             },
         });
     }

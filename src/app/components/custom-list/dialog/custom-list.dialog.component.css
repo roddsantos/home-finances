@@ -16,6 +16,12 @@
     padding: 0px 5px 0px;
 }
 
+.condition-field {
+    width: 25%;
+    margin-bottom: 10px;
+    padding: 0px 5px 0px;
+}
+
 .credit-card-field {
     width: 40%;
     margin-bottom: 10px;
