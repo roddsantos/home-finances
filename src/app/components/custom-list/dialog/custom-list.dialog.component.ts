@@ -6,13 +6,8 @@ import { MatChipsModule } from "@angular/material/chips";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { AvailableFilters, FilterDisplay } from "src/app/types/components";
 import { TypeBillState } from "src/app/subjects/subjects.type-bills";
-import { AsyncPipe, NgClass, NgIf } from "@angular/common";
-import {
-    MatOption,
-    MatSelect,
-    MatSelectChange,
-    MatSelectModule,
-} from "@angular/material/select";
+import { CommonModule } from "@angular/common";
+import { MatSelect, MatSelectChange, MatSelectModule } from "@angular/material/select";
 import { MatIconModule } from "@angular/material/icon";
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
@@ -29,10 +24,8 @@ import { CustomListState } from "../custom-list.subjects.component";
     styleUrls: ["./custom-list.dialog.component.css"],
     standalone: true,
     imports: [
-        NgIf,
-        NgClass,
+        CommonModule,
         MatButton,
-        AsyncPipe,
         ModalComponent,
         MatSelectModule,
         MatAutocompleteModule,

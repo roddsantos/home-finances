@@ -1,4 +1,4 @@
-import { AsyncPipe, NgFor, NgIf, NgStyle } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
@@ -17,15 +17,7 @@ import { mergeMap } from "rxjs";
     templateUrl: "./pages.management.credit-cards.html",
     styleUrls: ["./pages.management.credit-cards.css"],
     standalone: true,
-    imports: [
-        MatIcon,
-        MatButton,
-        NgFor,
-        NgIf,
-        NgStyle,
-        FeedbackContainerComponent,
-        AsyncPipe,
-    ],
+    imports: [MatIcon, MatButton, FeedbackContainerComponent, CommonModule],
 })
 export class CreditCardsManagementComponent {
     public ccApi = inject(ServiceCreditCard);

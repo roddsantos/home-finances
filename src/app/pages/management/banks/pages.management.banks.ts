@@ -1,4 +1,4 @@
-import { AsyncPipe, NgFor, NgIf, NgStyle } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatButton, MatIconButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
@@ -19,12 +19,9 @@ import { Bank } from "src/app/types/objects";
     imports: [
         MatIcon,
         MatButton,
-        NgIf,
-        NgFor,
-        NgStyle,
         MatIconButton,
         FeedbackContainerComponent,
-        AsyncPipe,
+        CommonModule,
     ],
 })
 export class BanksManagementComponent {

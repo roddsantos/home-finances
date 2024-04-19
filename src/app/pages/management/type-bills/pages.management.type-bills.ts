@@ -1,4 +1,4 @@
-import { AsyncPipe, NgFor, NgIf } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
@@ -15,7 +15,7 @@ import { TypeBill } from "src/app/types/objects";
     templateUrl: "./pages.management.type-bills.html",
     styleUrls: ["./pages.management.type-bills.css"],
     standalone: true,
-    imports: [MatIcon, MatButton, NgFor, NgIf, FeedbackContainerComponent, AsyncPipe],
+    imports: [MatIcon, MatButton, FeedbackContainerComponent, CommonModule],
 })
 export class TypeBillsManagementComponent {
     public typebillApi = inject(ServiceTypeBill);
