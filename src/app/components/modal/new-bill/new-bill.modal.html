@@ -1,0 +1,59 @@
+<modal-component (actionPrimary)="onSubmit()" [bodyTemplate]="newBill"></modal-component>
+
+<ng-template #newBill>
+    <form [formGroup]="billForm">
+        <div class="new-bill-container">
+            <mat-form-field class="new-bill-field" appearance="outline">
+                <mat-label>name</mat-label>
+                <input maxlength="100" required matInput formControlName="name" />
+                @if (billForm.controls.name.errors?.["required"]) {
+                <mat-error>{{errorMessage.name}}</mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field class="new-bill-field" appearance="outline">
+                <mat-label>description</mat-label>
+                <input maxlength="100" matInput formControlName="description" />
+                @if (billForm.controls.description.errors?.["required"]) {
+                <mat-error>{{errorMessage.description}}</mat-error>
+                }
+            </mat-form-field>
+            <div class="new-bill-container-split">
+                <mat-button-toggle-group
+                    formControlName="settled"
+                    class="new-bill-settled"
+                    name="status"
+                    aria-label="bill status"
+                >
+                    <mat-button-toggle [value]="false">pending</mat-button-toggle>
+                    <mat-button-toggle [value]="true">settled</mat-button-toggle>
+                </mat-button-toggle-group>
+                <mat-form-field class="new-bill-total" appearance="outline">
+                    <mat-label>bill value</mat-label>
+                    <input matInput type="number" formControlName="total" />
+                    @if (billForm.controls.total.invalid) {
+                    <mat-error>{{errorMessage.total}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <p class="type-bill-title">select the bill type to proceed:</p>
+            <div class="type-bill-separator"></div>
+            <mat-button-toggle-group
+                formControlName="typebill"
+                class="new-bill-type-bill"
+                name="type bill"
+                aria-label="type bill selector"
+            >
+                @for (t of (tbState.typeBill$ | async); track t) {
+                <mat-button-toggle [value]="t">{{t.name}}</mat-button-toggle>}
+            </mat-button-toggle-group>
+            <p *ngIf="billForm.controls.typebill.valid" class="type-bill-title">
+                proceed to fill the type info:
+            </p>
+            <div
+                *ngIf="billForm.controls.typebill.valid"
+                class="type-bill-separator"
+            ></div>
+        </div>
+    </form>
+    <template-banks *ngIf="itsBankType" #banks="templateBanks"></template-banks>
+</ng-template>

@@ -1,0 +1,13 @@
+.template-bank-field {
+    width: 48%;
+    margin-bottom: 10px;
+    padding: 0px;
+}
+
+.template-banks-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: max-content;
+}
