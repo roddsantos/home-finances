@@ -59,7 +59,11 @@
             </mat-form-field>
             <mat-form-field class="condition-field" appearance="outline">
                 <mat-label>month</mat-label>
-                <mat-select #month (selectionChange)="addFilter($event, 'month')">
+                <mat-select
+                    placeholder="select month"
+                    #month
+                    (selectionChange)="addFilter($event, 'month')"
+                >
                     @for (m of months; track m) {
                     <mat-option [value]="m">{{ m.name }}</mat-option>
                     }
@@ -68,7 +72,7 @@
             <mat-form-field class="condition-field" appearance="outline">
                 <mat-label>year</mat-label>
                 <input
-                    (keydown.enter)="addYear()"
+                    (keydown.enter)="addYear($event)"
                     matInput
                     #year
                     type="number"
@@ -78,6 +82,33 @@
                 <mat-error>invalid year (2023-2090)</mat-error>
                 }
             </mat-form-field>
+            <mat-form-field class="condition-field" appearance="outline">
+                <mat-label>min</mat-label>
+                <input
+                    (keydown.enter)="addLimit($event, 'min')"
+                    matInput
+                    #min
+                    type="number"
+                    [formControl]="minCtrl"
+                />
+                @if (minCtrl.invalid) {
+                <mat-error>invalid min value</mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field class="condition-field" appearance="outline">
+                <mat-label>max</mat-label>
+                <input
+                    (keydown.enter)="addLimit($event, 'max')"
+                    matInput
+                    #max
+                    type="number"
+                    [formControl]="maxCtrl"
+                />
+                @if (maxCtrl.invalid) {
+                <mat-error>invalid max value</mat-error>
+                }
+            </mat-form-field>
+            <p class="chip-grid-title">choosed filters</p>
             <div class="divider"></div>
             <!-- <mat-chip-grid #chipGrid aria-label="filters selected"> -->
             <div class="chip-grid">
@@ -86,6 +117,11 @@
                     [ngClass]="[chip.identifier, 'chip-item']"
                     (removed)="removeFilter(i)"
                 >
+                    {{
+                        chip.identifier === "min" || chip.identifier === "max"
+                            ? chip.identifier + ":"
+                            : ""
+                    }}
                     {{ chip.name }}
                     <button matChipRemove [attr.aria-label]="'remove ' + chip.name">
                         <mat-icon>cancel</mat-icon>

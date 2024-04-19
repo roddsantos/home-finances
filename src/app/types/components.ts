@@ -56,6 +56,12 @@ export type YearFilter = {
     name: number;
 };
 
+export type LimitFilter = {
+    id: number;
+    identifier: "max" | "min";
+    name: number;
+};
+
 export type FilterDisplay = {
     id: string | number;
     identifier: AvailableFilters;

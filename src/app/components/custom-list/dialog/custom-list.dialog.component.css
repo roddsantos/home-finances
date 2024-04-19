@@ -1,7 +1,7 @@
 .divider {
     height: 1px;
     width: 100%;
-    background-color: #000000;
+    background-color: var(--description);
 }
 
 .add-filter-container {
@@ -29,7 +29,17 @@
 
 .chip-grid {
     display: block;
-    padding: 6px 0px;
+    padding: 12px 0px;
+    min-height: 50px;
+}
+
+.chip-grid-title {
+    font: normal 14px Roboto;
+    margin-bottom: -8px;
+    background-color: var(--item-list);
+    color: var(--description);
+    width: 90px;
+    position: relative;
 }
 
 .chip-item {
