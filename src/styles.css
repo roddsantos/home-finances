@@ -1,13 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
-@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
 
 :root .dark-theme {
     --primary: #8ea4d2ff;
-    --secondary: #6279b8ff;
-    --item-list: #49516fff;
-    --title: #496f5dff;
+    --secondary: #2a407d;
+    --item-list: rgb(135, 147, 192);
+    --title: rgb(6, 7, 7);
     --description: #4c9f70ff;
-    --background: rgb(30, 30, 30);
+    --background: rgb(75, 75, 75);
+
+    --error: #e21111;
+    --warning: #e28e11;
+    --info: #1153e2;
+    --success: #11e26f;
+    --default: #474141;
 
     --error: #e21111;
     --warning: #e28e11;
@@ -39,9 +45,6 @@
 }
 
 body {
-    /* display: flex;
-  flex-direction: column;
-  position: relative; */
     min-height: 100vh;
 }
 
@@ -186,12 +189,21 @@ body {
     /* border: solid 1px #ffffff; */
     & .mdc-evolution-chip__text-label {
         font-size: 16px !important;
-        & .typebill {
+        & .typebill.creditcard {
             color: #ffffff !important;
         }
     }
     &.typebill {
         background-color: var(--warning) !important;
+        & .mdc-evolution-chip__text-label {
+            color: #ffffff !important;
+        }
+        & .mdc-evolution-chip__icon--trailing {
+            color: #ffffff !important;
+        }
+    }
+    &.creditcard {
+        background-color: var(--description) !important;
         & .mdc-evolution-chip__text-label {
             color: #ffffff !important;
         }

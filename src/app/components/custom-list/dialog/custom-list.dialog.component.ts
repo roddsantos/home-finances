@@ -17,6 +17,9 @@ import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import { Observable } from "rxjs";
 import { TypeBill } from "src/app/types/objects";
 import { CustomListState } from "../custom-list.subjects.component";
+import { CreditCardState } from "src/app/subjects/subjects.credit-card";
+import { CompanyState } from "src/app/subjects/subjects.company";
+import { BankState } from "src/app/subjects/subjects.bank";
 
 @Component({
     selector: "dialog-custom-list",
@@ -40,13 +43,20 @@ import { CustomListState } from "../custom-list.subjects.component";
 export class DialogCustomList implements OnInit {
     public modalState = inject(ModalState);
     public tbState = inject(TypeBillState);
+    public ccState = inject(CreditCardState);
+    public compState = inject(CompanyState);
+    public bankState = inject(BankState);
     public clState = inject(CustomListState);
     @ViewChild(ModalComponent) modalComponent: any;
-    @ViewChild("typeBillSelector") typeBillSelector: MatSelect;
+    @ViewChild("typebill") typebill: MatSelect;
+    @ViewChild("creditcard") creditcard: MatSelect;
+    @ViewChild("company") company: MatSelect;
+    @ViewChild("bank") bank: MatSelect;
 
-    separatorKeysCodes: number[] = [ENTER, COMMA];
     tbCtrl = new FormControl("");
-    tbFiltered: Observable<TypeBill[]>;
+    ccCrtl = new FormControl("");
+    cCtrl = new FormControl("");
+    bkCtrl = new FormControl("");
     selectedFilters: FilterDisplay[] = [];
 
     ngOnInit() {
@@ -74,14 +84,18 @@ export class DialogCustomList implements OnInit {
                         });
                 },
             });
-        } else
-            this.selectedFilters.push({
-                id: identifier === "month" ? filter.order : filter,
-                identifier,
-                name: identifier === "month" ? filter.name : filter,
-            });
-        this.tbCtrl.patchValue("");
-        this.typeBillSelector.value = "";
+        } else {
+            const hasFilter = this.selectedFilters.find(
+                (f) => f.id === (identifier === "month" ? filter.order : filter)
+            );
+            if (!hasFilter)
+                this.selectedFilters.push({
+                    id: identifier === "month" ? filter.order : filter,
+                    identifier,
+                    name: identifier === "month" ? filter.name : filter,
+                });
+        }
+        this[identifier as AvailableDataFilters].value = "";
     }
 
     removeFilter(index: number) {

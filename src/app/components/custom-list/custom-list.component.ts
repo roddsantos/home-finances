@@ -5,6 +5,7 @@ import { AvailableFilters } from "src/app/types/components";
 import { Dialog } from "@angular/cdk/dialog";
 import { DialogCustomList } from "./dialog/custom-list.dialog.component";
 import { MatButton } from "@angular/material/button";
+import { MatIcon } from "@angular/material/icon";
 
 @Injectable({
     providedIn: "root",
@@ -14,7 +15,7 @@ import { MatButton } from "@angular/material/button";
     templateUrl: "./custom-list.component.html",
     styleUrls: ["./custom-list.component.css"],
     standalone: true,
-    imports: [MatButton],
+    imports: [MatButton, MatIcon],
 })
 export class CustomListComponent {
     public dialog = inject(Dialog);

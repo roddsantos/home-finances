@@ -6,19 +6,57 @@
 <ng-template #listDialog>
     <form>
         <div class="add-filter-container">
-            <div *ngIf="(tbState.typeBill$ | async)!.length > 0">
-                <mat-form-field class="type-bill-field" appearance="outline">
-                    <mat-label>type bill</mat-label>
-                    <mat-select
-                        #typeBillSelector
-                        (selectionChange)="addFilter($event, 'typebill')"
-                    >
-                        @for (m of (tbState.typeBill$ | async); track m) {
-                        <mat-option [value]="m">{{ m.name }}</mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
-            </div>
+            <mat-form-field
+                *ngIf="(tbState.typeBill$ | async)!.length > 0"
+                class="data-field"
+                appearance="outline"
+            >
+                <mat-label>type bills</mat-label>
+                <mat-select #typebill (selectionChange)="addFilter($event, 'typebill')">
+                    @for (m of (tbState.typeBill$ | async); track m) {
+                    <mat-option [value]="m">{{ m.name }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field
+                *ngIf="(ccState.creditCards$ | async)!.length > 0"
+                class="data-field"
+                appearance="outline"
+            >
+                <mat-label>credit cards</mat-label>
+                <mat-select
+                    #creditcard
+                    (selectionChange)="addFilter($event, 'creditcard')"
+                >
+                    @for (cc of (ccState.creditCards$ | async); track cc) {
+                    <mat-option [value]="cc">{{ cc.name }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field
+                *ngIf="(bankState.banks$ | async)!.length > 0"
+                class="data-field"
+                appearance="outline"
+            >
+                <mat-label>banks</mat-label>
+                <mat-select #bank (selectionChange)="addFilter($event, 'bank')">
+                    @for (b of (bankState.banks$ | async); track b) {
+                    <mat-option [value]="b">{{ b.name }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field
+                *ngIf="(compState.company$ | async)!.length > 0"
+                class="data-field"
+                appearance="outline"
+            >
+                <mat-label>companies</mat-label>
+                <mat-select #company (selectionChange)="addFilter($event, 'company')">
+                    @for (c of (compState.company$ | async); track c) {
+                    <mat-option [value]="c">{{ c.name }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
             <div class="divider"></div>
             <!-- <mat-chip-grid #chipGrid aria-label="filters selected"> -->
             <div class="chip-grid">
