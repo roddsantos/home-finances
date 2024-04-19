@@ -28,14 +28,7 @@ export interface DialogData {
     templateUrl: "./profile.modal.html",
     styleUrls: ["./profile.modal.css"],
     standalone: true,
-    imports: [
-        MatFormField,
-        MatInputModule,
-        MatLabel,
-        ModalComponent,
-        FormsModule,
-        AsyncPipe,
-    ],
+    imports: [MatFormField, MatInputModule, ModalComponent, FormsModule, AsyncPipe],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalProfile implements OnInit {

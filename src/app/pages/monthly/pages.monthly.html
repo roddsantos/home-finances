@@ -1,0 +1,21 @@
+<div class="creation-main">
+    <custom-filter></custom-filter>
+    <div>
+        <ng-template
+            ngFor
+            let-item
+            [ngForOf]="(bills.bills$ | async)"
+            let-i="index"
+            [ngForTrackBy]="trackByFn"
+        >
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header *ngFor="let ti of titleItems">
+                    <mat-panel-title> {{ item[ti] }} </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div *ngFor="let di of detailsItems">
+                    <p>{{ item[di] }}</p>
+                </div>
+            </mat-expansion-panel>
+        </ng-template>
+    </div>
+</div>

@@ -1,8 +1,9 @@
-import { AsyncPipe, NgFor, NgIf, NgStyle } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatButton, MatIconButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
 import { mergeMap } from "rxjs";
+import { CustomFilterComponent } from "src/app/components/custom-filter/custom-filter.component";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { ServiceCompany } from "src/app/services/services.company";
@@ -19,12 +20,10 @@ import { Company } from "src/app/types/objects";
     imports: [
         MatIcon,
         MatButton,
-        NgIf,
-        NgFor,
-        NgStyle,
         MatIconButton,
         FeedbackContainerComponent,
-        AsyncPipe,
+        CommonModule,
+        CustomFilterComponent,
     ],
 })
 export class ManagementCompaniesComponent {

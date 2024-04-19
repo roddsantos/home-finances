@@ -12,6 +12,7 @@ import { ProfileDialogType } from "src/app/types/modal";
 import { DIALOG_DATA, DialogRef } from "@angular/cdk/dialog";
 import {
     AsyncPipe,
+    CommonModule,
     NgClass,
     NgSwitch,
     NgSwitchCase,
@@ -24,15 +25,7 @@ import { ModalState } from "src/app/subjects/subjects.modal";
     templateUrl: "./modal.component.html",
     styleUrls: ["./modal.component.css"],
     standalone: true,
-    imports: [
-        NgClass,
-        MatIcon,
-        NgTemplateOutlet,
-        MatButtonModule,
-        NgSwitch,
-        NgSwitchCase,
-        AsyncPipe,
-    ],
+    imports: [CommonModule, MatIcon, NgTemplateOutlet, MatButtonModule, AsyncPipe],
 })
 export class ModalComponent {
     constructor(

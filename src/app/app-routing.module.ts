@@ -12,6 +12,11 @@ const routes: Routes = [
         loadComponent: () =>
             import("./pages/management/pages.management").then((m) => m.PageManagement),
     },
+    {
+        path: "monthly",
+        loadComponent: () =>
+            import("./pages/monthly/pages.monthly").then((m) => m.PageMonthly),
+    },
 ];
 
 @NgModule({

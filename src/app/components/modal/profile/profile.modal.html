@@ -8,7 +8,7 @@
     <div class="profile-body">
         <mat-form-field appearance="outline">
             <mat-label>username</mat-label>
-            <input matInput [(ngModel)]="username" />
+            <input (keydown.enter)="onActionPrimary()" matInput [(ngModel)]="username" />
         </mat-form-field>
     </div>
 </ng-template>

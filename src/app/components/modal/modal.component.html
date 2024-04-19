@@ -1,6 +1,6 @@
 <div [ngClass]="['modal-container', data.size]">
     <h2 mat-dialog-title class="modal-header">
-        <p>{{ modalState.header$ | async }}</p>
+        <p>{{ (modalState.header$ | async) || data.header }}</p>
         <mat-icon
             class="app-icon close"
             aria-hidden="false"

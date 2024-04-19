@@ -23,10 +23,6 @@ import { ModalState } from "src/app/subjects/subjects.modal";
 import { BankObject } from "src/app/types/services";
 import { Bank } from "src/app/types/objects";
 
-export interface DialogData {
-    username: string;
-}
-
 @Component({
     selector: "modal-new-bank",
     templateUrl: "./new-bank.modal.html",
@@ -38,7 +34,6 @@ export interface DialogData {
         FormsModule,
         MatLabel,
         MatInputModule,
-        FormsModule,
         ReactiveFormsModule,
     ],
 })

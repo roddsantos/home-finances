@@ -11,7 +11,7 @@ import { ManagementCompaniesComponent } from "./companies/pages.management.compa
 import { MatButton } from "@angular/material/button";
 import { ModalNewBank } from "src/app/components/modal/new-bank/new-bank.modal";
 import { Dialog } from "@angular/cdk/dialog";
-import { AsyncPipe, NgIf } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { ModalNewCompany } from "src/app/components/modal/new-company/new-company.modal";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { CreditCardsManagementComponent } from "./credit-cards/pages.management.credit-cards";
@@ -33,9 +33,8 @@ import { ModalNewCreditCard } from "src/app/components/modal/new-credit-card/new
         CreditCardsManagementComponent,
         BanksManagementComponent,
         MatButton,
-        NgIf,
+        CommonModule,
         FeedbackContainerComponent,
-        AsyncPipe,
     ],
 })
 export class PageManagement {

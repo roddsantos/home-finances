@@ -1,0 +1,48 @@
+.divider {
+    height: 1px;
+    width: 100%;
+    background-color: var(--description);
+}
+
+.add-filter-container {
+    display: inline-block;
+    flex-direction: column;
+    width: 100%;
+}
+
+.data-field {
+    width: 50%;
+    margin-bottom: 10px;
+    padding: 0px 5px 0px;
+}
+
+.condition-field {
+    width: 25%;
+    margin-bottom: 10px;
+    padding: 0px 5px 0px;
+}
+
+.credit-card-field {
+    width: 40%;
+    margin-bottom: 10px;
+}
+
+.chip-grid {
+    display: block;
+    padding: 12px 0px;
+    min-height: 50px;
+}
+
+.chip-grid-title {
+    font: normal 14px Roboto;
+    margin-bottom: -8px;
+    background-color: var(--item-list);
+    color: var(--description);
+    width: 90px;
+    position: relative;
+}
+
+.chip-item {
+    margin-right: 6px;
+    margin-bottom: 6px;
+}

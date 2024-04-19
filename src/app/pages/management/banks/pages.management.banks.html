@@ -22,10 +22,7 @@
                     fontIcon="edit"
                 ></mat-icon>
             </button>
-            <div
-                class="bank-color-container"
-                [ngStyle]="{borderRightColor:bank.color}"
-            ></div>
+            <div class="bank-color-container" [style.borderRightColor]="bank.color"></div>
         </div>
     </li>
 </div>
