@@ -67,3 +67,10 @@ export type FilterDisplay = {
     identifier: AvailableFilters;
     name: string | number;
 };
+
+export type ListAction = {
+    icon: string;
+    action: () => void;
+    tooltip?: string;
+    color?: string;
+};

@@ -1,4 +1,4 @@
-import { AvailableDataFilters } from "./../../../types/components";
+import { AvailableDataFilters } from "../../../types/components";
 import { Component, inject, OnInit, ViewChild } from "@angular/core";
 import { ModalState } from "src/app/subjects/subjects.modal";
 import { ModalComponent } from "src/app/components/modal/modal.component";
@@ -18,7 +18,7 @@ import {
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButton } from "@angular/material/button";
-import { CustomListState } from "../custom-list.subjects.component";
+import { CustomListState } from "../custom-filter.subjects.component";
 import { CreditCardState } from "src/app/subjects/subjects.credit-card";
 import { CompanyState } from "src/app/subjects/subjects.company";
 import { BankState } from "src/app/subjects/subjects.bank";
@@ -26,9 +26,9 @@ import { MONTHS } from "src/utils/constants/general";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 
 @Component({
-    selector: "dialog-custom-list",
-    templateUrl: "./custom-list.dialog.component.html",
-    styleUrls: ["./custom-list.dialog.component.css"],
+    selector: "dialog-custom-filter",
+    templateUrl: "./custom-filter.dialog.component.html",
+    styleUrls: ["./custom-filter.dialog.component.css"],
     standalone: true,
     imports: [
         CommonModule,
@@ -81,7 +81,7 @@ export class DialogCustomList implements OnInit {
     ngOnInit() {
         this.modalState.onSubmitFooter("OK", "cancel");
         this.modalState.disableButton();
-        this.modalState.changeHeader("new credit card");
+        this.modalState.changeHeader("add filters");
     }
 
     isData(item: AvailableFilters): item is AvailableDataFilters {

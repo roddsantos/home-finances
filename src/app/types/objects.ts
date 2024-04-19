@@ -52,4 +52,30 @@ export type Bank = {
     color: string;
     savings: number;
     userId: string;
+    updatedAt: string;
+    createdAt: string;
+    deletedAt: string | null;
+};
+
+export type Bill = {
+    id: string;
+    name: string;
+    description: string;
+    total: number;
+    settled: boolean;
+    parcels: number;
+    taxes: number;
+    delta: number;
+    due: Date;
+    month: string;
+    year: number;
+    companyId: string;
+    typeBillId: string;
+    bank1Id: string;
+    bank2Id: string;
+    creditCardId: string;
+    userId: string;
+    updatedAt: string;
+    createdAt: string;
+    deletedAt: string | null;
 };
