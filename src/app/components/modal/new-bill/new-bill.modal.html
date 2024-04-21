@@ -58,6 +58,7 @@
             ></div>
         </div>
     </form>
-    <template-banks *ngIf="inputTime ==='banks'" #banks="templateBanks"></template-banks>
-    <template-companies *ngIf="inputTime ==='company'"></template-companies>
+    <template-banks *ngIf="inputType ==='banks'" #banks="templateBanks"></template-banks>
+    <template-companies *ngIf="inputType ==='company'"></template-companies>
+    <template-credit-card *ngIf="inputType ==='creditCard'"></template-credit-card>
 </ng-template>

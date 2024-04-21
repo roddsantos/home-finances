@@ -13,13 +13,12 @@ import { BillState } from "src/app/subjects/subjects.bill";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 import { ModalState } from "src/app/subjects/subjects.modal";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
-import { MonthType } from "src/app/types/general";
-import { MONTHS } from "src/utils/constants/general";
 import { TypeBill } from "src/app/types/objects";
 import { BankTemplateNewBill } from "./templates/bank/bank.template.new-bill";
 import { TypeBillState } from "src/app/subjects/subjects.type-bills";
 import { CommonModule } from "@angular/common";
 import { CompanyTemplateNewBill } from "./templates/company/company.template.new-bill";
+import { CreditCardTemplateNewBill } from "./templates/credit-card/credit-card.template.new-bill";
 
 @Component({
     selector: "modal-new-bill",
@@ -36,6 +35,7 @@ import { CompanyTemplateNewBill } from "./templates/company/company.template.new
         MatButtonToggleModule,
         BankTemplateNewBill,
         CompanyTemplateNewBill,
+        CreditCardTemplateNewBill,
     ],
 })
 export class ModalNewBill implements OnInit {
@@ -43,7 +43,10 @@ export class ModalNewBill implements OnInit {
     public billState = inject(BillState);
     public tbState = inject(TypeBillState);
     public snack = inject(CustomSnackbarComponent);
-    @ViewChild(ModalComponent) modalComponent: any;
+    @ViewChild(ModalComponent) modalComponent: ModalComponent;
+    @ViewChild(BankTemplateNewBill) bankTemplate: BankTemplateNewBill;
+    @ViewChild(CompanyTemplateNewBill) companyTemplate: CompanyTemplateNewBill;
+    @ViewChild(CreditCardTemplateNewBill) creditCardTemplate: CreditCardTemplateNewBill;
 
     @Input() addTemplate!: TemplateRef<any>;
 
@@ -82,11 +85,34 @@ export class ModalNewBill implements OnInit {
         // bank2: new FormControl<Bank | null>(null, { nonNullable: false }),
     });
 
-    inputTime: string = "";
-    itsBankType: boolean = false;
-    itsCCType: boolean = false;
-    itsCompType: boolean = false;
-    itsServiceType: boolean = false;
+    inputType: string = "";
+
+    constructor() {
+        switch (this.billForm.value.typebill?.referTo) {
+            case "banks":
+                this.modalState.setDisableButton(
+                    this.billForm.invalid || this.bankTemplate.bankForm.invalid
+                );
+                break;
+            case "creditCard":
+                this.modalState.setDisableButton(
+                    this.billForm.invalid || this.creditCardTemplate.ccForm.invalid
+                );
+                break;
+            case "company":
+                this.modalState.setDisableButton(
+                    this.billForm.invalid || this.companyTemplate.compForm.invalid
+                );
+                break;
+            // case "service":
+            //     this.modalState.setDisableButton(
+            //         this.billForm.invalid || this.bankTemplate.bankForm.invalid
+            //     );
+            //     break;
+            default:
+                break;
+        }
+    }
 
     errorMessage = {
         name: "you must enter a name",
@@ -97,7 +123,7 @@ export class ModalNewBill implements OnInit {
     onSubmit() {}
 
     onChangeType($event: TypeBill) {
-        this.inputTime = $event.referTo;
+        this.inputType = $event.referTo;
     }
 
     ngOnInit() {}

@@ -1,6 +1,12 @@
 import { Component, inject, Injectable } from "@angular/core";
 import { ModalNewBill } from "../../new-bill.modal";
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import {
+    FormControl,
+    FormGroup,
+    FormsModule,
+    ReactiveFormsModule,
+    Validators,
+} from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { BankState } from "src/app/subjects/subjects.bank";
 import { Bank } from "src/app/types/objects";
@@ -27,7 +33,10 @@ export class BankTemplateNewBill {
     public banks = inject(BankState);
 
     bankForm = new FormGroup({
-        bank1: new FormControl<Bank | null>(null, { nonNullable: false }),
+        bank1: new FormControl<Bank | null>(null, {
+            nonNullable: false,
+            validators: [Validators.required],
+        }),
         bank2: new FormControl<Bank | null>(null, { nonNullable: false }),
     });
 }
