@@ -25,6 +25,7 @@ import { MonthType } from "src/app/types/general";
 import { ServiceCreditCard } from "src/app/services/services.credit-card";
 import { CreditCardState } from "src/app/subjects/subjects.credit-card";
 import { MONTHS } from "src/utils/constants/general";
+import { NO_DESCRIPTION, NO_NAME } from "src/utils/constants/forms";
 
 @Component({
     selector: "modal-new-credit-card",
@@ -73,8 +74,8 @@ export class ModalNewCreditCard implements OnInit {
     });
 
     errorMessage = {
-        name: "you must enter a name",
-        description: "you must enter a description",
+        name: NO_NAME,
+        description: NO_DESCRIPTION,
         savings: "you must enter the savings",
         limit: "limit must be greater than zero",
         year: "year should be equal or greater than 2023",

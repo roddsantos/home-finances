@@ -13,6 +13,7 @@ import { Bank } from "src/app/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
+import { NO_BANK } from "src/utils/constants/forms";
 
 @Component({
     selector: "template-banks",
@@ -39,4 +40,6 @@ export class BankTemplateNewBill {
         }),
         bank2: new FormControl<Bank | null>(null, { nonNullable: false }),
     });
+
+    errorMessage = NO_BANK;
 }

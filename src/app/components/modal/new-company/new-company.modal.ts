@@ -22,6 +22,7 @@ import { ModalState } from "src/app/subjects/subjects.modal";
 import { CompanyState } from "src/app/subjects/subjects.company";
 import { Company } from "src/app/types/objects";
 import { CompanyObject } from "src/app/types/services";
+import { NO_DESCRIPTION, NO_NAME } from "src/utils/constants/forms";
 
 export interface DialogData {
     username: string;
@@ -75,8 +76,8 @@ export class ModalNewCompany implements OnInit {
     }
 
     errorMessage = {
-        name: "you must enter a name",
-        description: "you must enter a description",
+        name: NO_NAME,
+        description: NO_DESCRIPTION,
     };
     @Output() submit = new EventEmitter<String>();
     @Output() onClose = new EventEmitter<void>();

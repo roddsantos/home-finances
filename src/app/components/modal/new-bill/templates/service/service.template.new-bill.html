@@ -1,9 +1,9 @@
-<form [formGroup]="compForm">
-    <div class="template-companies-container">
-        <div class="template-data-input">
+<form [formGroup]="serviceForm">
+    <div class="template-credit-cards-container">
+        <div class="template-service-input">
             <mat-form-field
-                *ngIf="(companies.company$| async)!.length > 0"
-                class="template-data-field"
+                *ngIf="(companies.company$ | async)!.length > 0"
+                class="template-service-field"
                 appearance="outline"
             >
                 <mat-label>company</mat-label>
@@ -12,31 +12,42 @@
                     <mat-option [value]="c">{{ c.name }}</mat-option>
                     }
                 </mat-select>
-                @if (compForm.controls.company.invalid) {
+                @if (serviceForm.controls.company.invalid) {
                 <mat-error>{{errorMessage.company}}</mat-error>
                 }
             </mat-form-field>
             <mat-form-field
+                *ngIf="(creditCards.creditCards$| async)!.length > 0"
+                class="template-service-field"
+                appearance="outline"
+            >
+                <mat-label>credit card</mat-label>
+                <mat-select formControlName="creditCard">
+                    <mat-option [value]="null">none</mat-option>
+                    @for (c of (creditCards.creditCards$ | async); track c) {
+                    <mat-option [value]="c">{{ c.name }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field
                 *ngIf="(banks.banks$| async)!.length > 0"
-                class="template-data-field"
+                class="template-service-field"
                 appearance="outline"
             >
                 <mat-label>bank</mat-label>
                 <mat-select formControlName="bank">
+                    <mat-option [value]="null">none</mat-option>
                     @for (b of (banks.banks$ | async); track b) {
                     <mat-option [value]="b">{{ b.name }}</mat-option>
                     }
                 </mat-select>
-                @if (compForm.controls.bank.invalid) {
-                <mat-error>{{errorMessage.bank}}</mat-error>
-                }
             </mat-form-field>
         </div>
-        <div class="template-data-input">
+        <div class="template-service-input">
             <mat-form-field class="number-input" appearance="outline">
                 <mat-label>parcels</mat-label>
                 <input matInput type="number" formControlName="parcels" />
-                @if (compForm.controls.parcels.invalid) {
+                @if (serviceForm.controls.parcels.invalid) {
                 <mat-error>{{errorMessage.parcels}}</mat-error>
                 }
             </mat-form-field>

@@ -19,6 +19,13 @@ import { TypeBillState } from "src/app/subjects/subjects.type-bills";
 import { CommonModule } from "@angular/common";
 import { CompanyTemplateNewBill } from "./templates/company/company.template.new-bill";
 import { CreditCardTemplateNewBill } from "./templates/credit-card/credit-card.template.new-bill";
+import { ServiceTemplateNewBill } from "./templates/service/service.template.new-bill";
+import {
+    NO_BILL_VALUE,
+    NO_DESCRIPTION,
+    NO_NAME,
+    NO_TYPE_BILL,
+} from "src/utils/constants/forms";
 
 @Component({
     selector: "modal-new-bill",
@@ -36,6 +43,7 @@ import { CreditCardTemplateNewBill } from "./templates/credit-card/credit-card.t
         BankTemplateNewBill,
         CompanyTemplateNewBill,
         CreditCardTemplateNewBill,
+        ServiceTemplateNewBill,
     ],
 })
 export class ModalNewBill implements OnInit {
@@ -115,9 +123,10 @@ export class ModalNewBill implements OnInit {
     }
 
     errorMessage = {
-        name: "you must enter a name",
-        description: "you must enter a description",
-        total: "you must enter a valid bill value",
+        name: NO_NAME,
+        description: NO_DESCRIPTION,
+        total: NO_BILL_VALUE,
+        typebill: NO_TYPE_BILL,
     };
 
     onSubmit() {}

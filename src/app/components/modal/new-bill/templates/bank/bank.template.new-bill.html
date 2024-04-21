@@ -11,6 +11,9 @@
                 <mat-option [value]="b1">{{ b1.name }}</mat-option>
                 }
             </mat-select>
+            @if (bankForm.controls.bank1.invalid) {
+            <mat-error>{{errorMessage}}</mat-error>
+            }
         </mat-form-field>
         <mat-form-field
             *ngIf="(banks.banks$ | async)!.length > 0"

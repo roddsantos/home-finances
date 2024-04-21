@@ -14,6 +14,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { CompanyState } from "src/app/subjects/subjects.company";
 import { MatInputModule } from "@angular/material/input";
 import { BankState } from "src/app/subjects/subjects.bank";
+import { INVALID_PARCEL, NO_BANK, NO_COMPANY } from "src/utils/constants/forms";
 
 @Component({
     selector: "template-companies",
@@ -47,13 +48,14 @@ export class CompanyTemplateNewBill {
         taxes: new FormControl<number>(0, { nonNullable: false }),
         parcels: new FormControl<number>(1, {
             nonNullable: false,
-            validators: [Validators.required],
+            validators: [Validators.required, Validators.min(1)],
         }),
         delta: new FormControl<number>(0, { nonNullable: false }),
     });
 
     errorMessage = {
-        company: "you must select a company",
-        parcels: "invalid number of parcels",
+        company: NO_COMPANY,
+        bank: NO_BANK,
+        parcels: INVALID_PARCEL,
     };
 }

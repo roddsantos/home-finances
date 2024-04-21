@@ -83,7 +83,6 @@ export class ModalProfile implements OnInit {
                 this.modalState.onSubmitFooter("OK", "logout");
             },
             error: (error) => {
-                console.log("error", error);
                 this.snack.openSnackBar("login error, try again", "error");
                 this.modalState.onSubmitFooter("login", "cancel");
             },

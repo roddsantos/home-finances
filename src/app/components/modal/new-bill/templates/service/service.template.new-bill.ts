@@ -7,19 +7,20 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { Company, CreditCard } from "src/app/types/objects";
+import { Bank, Company, CreditCard } from "src/app/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
 import { MatInputModule } from "@angular/material/input";
 import { CreditCardState } from "src/app/subjects/subjects.credit-card";
 import { CompanyState } from "src/app/subjects/subjects.company";
-import { INVALID_PARCEL, NO_CREDIT_CARD } from "src/utils/constants/forms";
+import { BankState } from "src/app/subjects/subjects.bank";
+import { INVALID_PARCEL, NO_COMPANY } from "src/utils/constants/forms";
 
 @Component({
-    selector: "template-credit-card",
-    templateUrl: "./credit-card.template.new-bill.html",
-    styleUrls: ["./credit-card.template.new-bill.css"],
+    selector: "template-service",
+    templateUrl: "./service.template.new-bill.html",
+    styleUrls: ["./service.template.new-bill.css"],
     standalone: true,
     imports: [
         MatFormFieldModule,
@@ -30,18 +31,22 @@ import { INVALID_PARCEL, NO_CREDIT_CARD } from "src/utils/constants/forms";
         MatSelectModule,
         MatInputModule,
     ],
-    exportAs: "templateCreditCard",
+    exportAs: "templateService",
 })
-export class CreditCardTemplateNewBill {
+export class ServiceTemplateNewBill {
     public creditCards = inject(CreditCardState);
     public companies = inject(CompanyState);
+    public banks = inject(BankState);
 
-    ccForm = new FormGroup({
+    serviceForm = new FormGroup({
         creditCard: new FormControl<CreditCard | null>(null, {
+            nonNullable: false,
+        }),
+        company: new FormControl<Company | null>(null, {
             nonNullable: false,
             validators: [Validators.required],
         }),
-        company: new FormControl<Company | null>(null, {
+        bank: new FormControl<Bank | null>(null, {
             nonNullable: false,
         }),
         taxes: new FormControl<number>(0, { nonNullable: false }),
@@ -53,7 +58,7 @@ export class CreditCardTemplateNewBill {
     });
 
     errorMessage = {
-        creditCard: NO_CREDIT_CARD,
+        company: NO_COMPANY,
         parcels: INVALID_PARCEL,
     };
 }
