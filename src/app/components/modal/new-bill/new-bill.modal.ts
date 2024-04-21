@@ -15,11 +15,11 @@ import { ModalState } from "src/app/subjects/subjects.modal";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MonthType } from "src/app/types/general";
 import { MONTHS } from "src/utils/constants/general";
-import { Bank, Company, CreditCard, TypeBill } from "src/app/types/objects";
-import { Dialog } from "@angular/cdk/dialog";
+import { TypeBill } from "src/app/types/objects";
 import { BankTemplateNewBill } from "./templates/bank/bank.template.new-bill";
 import { TypeBillState } from "src/app/subjects/subjects.type-bills";
 import { CommonModule } from "@angular/common";
+import { CompanyTemplateNewBill } from "./templates/company/company.template.new-bill";
 
 @Component({
     selector: "modal-new-bill",
@@ -35,6 +35,7 @@ import { CommonModule } from "@angular/common";
         ReactiveFormsModule,
         MatButtonToggleModule,
         BankTemplateNewBill,
+        CompanyTemplateNewBill,
     ],
 })
 export class ModalNewBill implements OnInit {
@@ -81,26 +82,23 @@ export class ModalNewBill implements OnInit {
         // bank2: new FormControl<Bank | null>(null, { nonNullable: false }),
     });
 
+    inputTime: string = "";
+    itsBankType: boolean = false;
+    itsCCType: boolean = false;
+    itsCompType: boolean = false;
+    itsServiceType: boolean = false;
+
     errorMessage = {
         name: "you must enter a name",
         description: "you must enter a description",
         total: "you must enter a valid bill value",
     };
 
-    itsBankType =
-        this.billForm.value.typebill?.referTo === "betweenBanks" ||
-        this.billForm.value.typebill?.referTo === "referToBank";
+    onSubmit() {}
 
-    onSubmit() {
-        console.log("FORM", this.billForm);
+    onChangeType($event: TypeBill) {
+        this.inputTime = $event.referTo;
     }
 
-    ngOnInit() {
-        // this.tbState.typeBill$.subscribe({
-        //     next: (tb) =>
-        //         this.billForm.patchValue({
-        //             typebill: tb,
-        //         }),
-        // });
-    }
+    ngOnInit() {}
 }

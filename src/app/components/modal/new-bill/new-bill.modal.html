@@ -3,20 +3,22 @@
 <ng-template #newBill>
     <form [formGroup]="billForm">
         <div class="new-bill-container">
-            <mat-form-field class="new-bill-field" appearance="outline">
-                <mat-label>name</mat-label>
-                <input maxlength="100" required matInput formControlName="name" />
-                @if (billForm.controls.name.errors?.["required"]) {
-                <mat-error>{{errorMessage.name}}</mat-error>
-                }
-            </mat-form-field>
-            <mat-form-field class="new-bill-field" appearance="outline">
-                <mat-label>description</mat-label>
-                <input maxlength="100" matInput formControlName="description" />
-                @if (billForm.controls.description.errors?.["required"]) {
-                <mat-error>{{errorMessage.description}}</mat-error>
-                }
-            </mat-form-field>
+            <div class="new-bill-container-split">
+                <mat-form-field class="new-bill-field" appearance="outline">
+                    <mat-label>name</mat-label>
+                    <input maxlength="100" required matInput formControlName="name" />
+                    @if (billForm.controls.name.errors?.["required"]) {
+                    <mat-error>{{errorMessage.name}}</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field class="new-bill-field" appearance="outline">
+                    <mat-label>description</mat-label>
+                    <input maxlength="100" matInput formControlName="description" />
+                    @if (billForm.controls.description.errors?.["required"]) {
+                    <mat-error>{{errorMessage.description}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
             <div class="new-bill-container-split">
                 <mat-button-toggle-group
                     formControlName="settled"
@@ -42,6 +44,7 @@
                 class="new-bill-type-bill"
                 name="type bill"
                 aria-label="type bill selector"
+                (valueChange)="onChangeType($event)"
             >
                 @for (t of (tbState.typeBill$ | async); track t) {
                 <mat-button-toggle [value]="t">{{t.name}}</mat-button-toggle>}
@@ -55,5 +58,6 @@
             ></div>
         </div>
     </form>
-    <template-banks *ngIf="itsBankType" #banks="templateBanks"></template-banks>
+    <template-banks *ngIf="inputTime ==='banks'" #banks="templateBanks"></template-banks>
+    <template-companies *ngIf="inputTime ==='company'"></template-companies>
 </ng-template>
