@@ -32,7 +32,6 @@ import { MonthType } from "src/app/types/general";
 import { MONTHS } from "src/utils/constants/general";
 import { MatOption } from "@angular/material/core";
 import { MatSelectModule } from "@angular/material/select";
-
 @Component({
     selector: "modal-new-bill",
     templateUrl: "./new-bill.modal.html",
@@ -68,6 +67,8 @@ export class ModalNewBill implements OnInit {
 
     @Input() addTemplate!: TemplateRef<any>;
 
+    ngOnInit() {}
+
     billForm = new FormGroup({
         name: new FormControl<string>("", {
             validators: [Validators.required, Validators.maxLength(100)],
@@ -79,7 +80,7 @@ export class ModalNewBill implements OnInit {
         }),
         total: new FormControl<number>(0, {
             nonNullable: true,
-            validators: [Validators.required, Validators.min(0.01)],
+            validators: [Validators.required],
         }),
         settled: new FormControl<boolean>(true, { nonNullable: false }),
         // parcels: new FormControl<number>(0, { nonNullable: false }),
@@ -103,6 +104,21 @@ export class ModalNewBill implements OnInit {
         // bank1: new FormControl<Bank | null>(null, { nonNullable: false }),
         // bank2: new FormControl<Bank | null>(null, { nonNullable: false }),
     });
+
+    bankValue(formGroup: FormGroup) {
+        console.log(formGroup);
+        if (formGroup) {
+            if (formGroup.value.typebill?.referTo === "banks") {
+                if (
+                    Boolean(this.bankTemplate.bankForm.value.bank2) &&
+                    formGroup.value.total! <= 0
+                )
+                    return { bankValue: true };
+                else return null;
+            }
+        }
+        return null;
+    }
 
     months = MONTHS;
     inputType: string = "";
@@ -215,8 +231,6 @@ export class ModalNewBill implements OnInit {
     }
 
     onChangeType($event: TypeBill) {
-        this.inputType = $event.referTo;
+        this.inputType = $event?.referTo || "";
     }
-
-    ngOnInit() {}
 }

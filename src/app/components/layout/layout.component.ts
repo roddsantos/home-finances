@@ -9,7 +9,19 @@ import { Dialog } from "@angular/cdk/dialog";
 import { Overlay } from "@angular/cdk/overlay";
 import { ServiceBill } from "src/app/services/services.bill";
 import { BillState } from "src/app/subjects/subjects.bill";
-import { Bill } from "src/app/types/objects";
+import { Bank, Bill, Company, CreditCard, TypeBill } from "src/app/types/objects";
+import { ServiceBank } from "src/app/services/services.bank";
+import { UserState } from "src/app/subjects/subjects.user";
+import { BankState } from "src/app/subjects/subjects.bank";
+import { zip } from "rxjs";
+import { CompanyState } from "src/app/subjects/subjects.company";
+import { ServiceCompany } from "src/app/services/services.company";
+import { CustomSnackbarComponent } from "../custom-snackbar/custom-snackbar.component";
+import { HttpErrorResponse } from "@angular/common/http";
+import { ServiceCreditCard } from "src/app/services/services.credit-card";
+import { CreditCardState } from "src/app/subjects/subjects.credit-card";
+import { ServiceTypeBill } from "src/app/services/services.type-bill";
+import { TypeBillState } from "src/app/subjects/subjects.type-bills";
 
 @Component({
     standalone: true,
@@ -26,12 +38,74 @@ export class LayoutComponent implements AfterViewInit {
     private storage = inject(LocalStorageService);
     public dialog = inject(Dialog);
     public overlay = inject(Overlay);
+    private snack = inject(CustomSnackbarComponent);
+
     public billApi = inject(ServiceBill);
     public billState = inject(BillState);
+
+    public bankApi = inject(ServiceBank);
+    public userState = inject(UserState);
+    public bankState = inject(BankState);
+
+    public compApi = inject(ServiceCompany);
+    public compState = inject(CompanyState);
+
+    public ccApi = inject(ServiceCreditCard);
+    public ccState = inject(CreditCardState);
+
+    public typebillApi = inject(ServiceTypeBill);
+    public tbState = inject(TypeBillState);
 
     ngOnInit() {
         this.billApi.getBills({ limit: 10, page: 1 }).subscribe({
             next: (data) => this.billState.setBills(data as Bill[]),
+        });
+
+        zip([
+            this.userState.user$,
+            this.typebillApi.getTypeBills(),
+            this.bankApi.getBanks(),
+            this.compApi.getCompanies(),
+            this.ccApi.getCreditCards({
+                limit: 10,
+                page: 1,
+            }),
+        ]).subscribe({
+            next: ([user, tb, banks, comps, ccs]) => {
+                if (!user) this.snack.openSnackBar("Error fetching banks", "error");
+                else {
+                    console.log("OK", user, banks, comps, ccs, tb);
+                    this.bankState.setBanks(banks as Bank[]);
+                    this.bankState.changeStatus(
+                        (banks as Bank[]).length > 0 ? "data" : "empty"
+                    );
+                    this.compState.setCompanies(comps as Company[]);
+                    this.compState.changeStatus(
+                        (comps as Company[]).length > 0 ? "data" : "empty"
+                    );
+                    this.ccState.setCreditCards(ccs as CreditCard[]);
+                    this.ccState.changeStatus(
+                        (ccs as CreditCard[]).length > 0 ? "data" : "empty"
+                    );
+                    this.tbState.setTypeBill(tb as TypeBill[]);
+                    this.tbState.changeStatus(
+                        (tb as TypeBill[]).length > 0 ? "data" : "empty"
+                    );
+                }
+            },
+            error: (err: HttpErrorResponse) => {
+                console.log(err);
+                if (err.url?.includes("4001/bill") || err.status === 0)
+                    this.billState.changeStatus("error");
+                if (err.url?.includes("4001/company") || err.status === 0)
+                    this.compState.changeStatus("error");
+                if (err.url?.includes("4001/bank") || err.status === 0)
+                    this.bankState.changeStatus("error");
+                if (err.url?.includes("4001/credit-card") || err.status === 0)
+                    this.ccState.changeStatus("error");
+                if (err.url?.includes("4001/typebill") || err.status === 0)
+                    this.tbState.changeStatus("error");
+            },
         });
     }
 

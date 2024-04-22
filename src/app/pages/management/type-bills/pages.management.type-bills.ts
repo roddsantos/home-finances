@@ -45,9 +45,7 @@ export class TypeBillsManagementComponent {
         });
     }
 
-    ngOnInit() {
-        this.getTypeBills();
-    }
+    ngOnInit() {}
 
     onReload() {
         this.typeObject.variant = "loading";

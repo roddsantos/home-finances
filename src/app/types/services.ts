@@ -72,7 +72,6 @@ export type GetCreditCard = {
     month?: string;
     year?: number;
     isClosed?: boolean;
-    userId: string;
     page: number;
     limit: number;
 };

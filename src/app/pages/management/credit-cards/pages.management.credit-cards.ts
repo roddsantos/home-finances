@@ -38,7 +38,6 @@ export class CreditCardsManagementComponent {
             .pipe(
                 mergeMap((user) =>
                     this.ccApi.getCreditCards({
-                        userId: user!.id,
                         limit: 10,
                         page: 1,
                     })
@@ -59,10 +58,7 @@ export class CreditCardsManagementComponent {
             });
     }
 
-    ngOnInit() {
-        this.typeObject.variant = "loading";
-        this.getCreditCards();
-    }
+    ngOnInit() {}
 
     onReload() {
         this.typeObject.variant = "loading";

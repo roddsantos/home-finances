@@ -13,11 +13,11 @@ export class ServiceCreditCard {
     private user = inject(UserState);
 
     getCreditCards(data: GetCreditCard) {
-        return this.http.get(CREDIT_CARD, {
-            params: {
-                ...data,
-            },
-        });
+        return this.user.user$.pipe(
+            mergeMap((user) =>
+                this.http.get(CREDIT_CARD, { params: { ...data, userId: user!.id } })
+            )
+        );
     }
 
     createCreditCard(data: CreditCardObject) {

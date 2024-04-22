@@ -12,8 +12,10 @@ export class ServiceBank {
     private http = inject(HttpClient);
     private user = inject(UserState);
 
-    getBanks(id: string) {
-        return this.http.get(BANK + `/${id}`);
+    getBanks() {
+        return this.user.user$.pipe(
+            mergeMap((user) => this.http.get(BANK + `/${user?.id}`))
+        );
     }
 
     createBank(data: BankObject) {

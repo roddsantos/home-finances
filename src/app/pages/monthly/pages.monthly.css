@@ -44,6 +44,6 @@
     color: var(--title);
 }
 .value {
-    font: normal 16px Roboto !important;
+    font: bold 16px Roboto !important;
     color: var(--description);
 }

@@ -38,27 +38,21 @@ export class BanksManagementComponent {
     };
 
     getBanks(reloaded?: boolean) {
-        this.userState.user$
-            .pipe(mergeMap((user) => this.bankApi.getBanks(user!.id)))
-            .subscribe({
-                next: (banks) => {
-                    this.bankState.setBanks(banks as Bank[]);
-                    this.typeObject.variant =
-                        (banks as Bank[]).length === 0 ? "empty" : "loading";
-                },
-                error: () => {
-                    if (reloaded)
-                        this.snack.openSnackBar("Error fetching banks", "error");
-                    this.bankState.changeStatus("error");
-                    this.typeObject.variant = "error";
-                },
-            });
+        this.bankApi.getBanks().subscribe({
+            next: (banks) => {
+                this.bankState.setBanks(banks as Bank[]);
+                this.typeObject.variant =
+                    (banks as Bank[]).length === 0 ? "empty" : "loading";
+            },
+            error: () => {
+                if (reloaded) this.snack.openSnackBar("Error fetching banks", "error");
+                this.bankState.changeStatus("error");
+                this.typeObject.variant = "error";
+            },
+        });
     }
 
-    ngOnInit() {
-        this.typeObject.variant = "loading";
-        this.getBanks();
-    }
+    ngOnInit() {}
 
     onReload() {
         this.typeObject.variant = "loading";

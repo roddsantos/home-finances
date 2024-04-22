@@ -54,10 +54,7 @@ export class ManagementCompaniesComponent {
         });
     }
 
-    ngOnInit() {
-        this.typeObject.variant = "loading";
-        this.getCompanies();
-    }
+    ngOnInit() {}
 
     onReload() {
         this.typeObject.variant = "loading";
