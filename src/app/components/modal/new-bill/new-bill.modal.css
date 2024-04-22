@@ -15,6 +15,13 @@
     justify-content: space-between;
 }
 
+.new-bill-date-split {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 5%;
+}
+
 .new-bill-settled {
     width: max-content;
     height: 56px;

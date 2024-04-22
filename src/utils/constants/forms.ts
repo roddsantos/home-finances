@@ -7,3 +7,4 @@ export const INVALID_PARCEL = "invalid number of parcels";
 
 export const NO_NAME = "you must enter a name";
 export const NO_DESCRIPTION = "you must enter a description";
+export const YEAR_OUT_OF_RANGE = "year must be between 2023 and 2090";

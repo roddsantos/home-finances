@@ -49,12 +49,12 @@ export class ServiceTemplateNewBill {
         bank: new FormControl<Bank | null>(null, {
             nonNullable: false,
         }),
-        taxes: new FormControl<number>(0, { nonNullable: false }),
+        taxes: new FormControl<number>(0, { nonNullable: true }),
         parcels: new FormControl<number>(1, {
-            nonNullable: false,
+            nonNullable: true,
             validators: [Validators.required, Validators.min(1)],
         }),
-        delta: new FormControl<number>(0, { nonNullable: false }),
+        delta: new FormControl<number>(0, { nonNullable: true }),
     });
 
     errorMessage = {

@@ -39,6 +39,8 @@ export class CreditCardsManagementComponent {
                 mergeMap((user) =>
                     this.ccApi.getCreditCards({
                         userId: user!.id,
+                        limit: 10,
+                        page: 1,
                     })
                 )
             )

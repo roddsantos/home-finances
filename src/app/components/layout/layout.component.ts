@@ -1,13 +1,15 @@
 import { Component, ViewChild, AfterViewInit, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { ModalProfile } from "../modal/profile/profile.modal";
-import { AppService } from "src/app/app.service";
 import { LocalStorageService } from "src/app/services/services.local-storage";
 import { ModalComponent } from "../modal/modal.component";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
 import { Dialog } from "@angular/cdk/dialog";
 import { Overlay } from "@angular/cdk/overlay";
+import { ServiceBill } from "src/app/services/services.bill";
+import { BillState } from "src/app/subjects/subjects.bill";
+import { Bill } from "src/app/types/objects";
 
 @Component({
     standalone: true,
@@ -24,8 +26,14 @@ export class LayoutComponent implements AfterViewInit {
     private storage = inject(LocalStorageService);
     public dialog = inject(Dialog);
     public overlay = inject(Overlay);
+    public billApi = inject(ServiceBill);
+    public billState = inject(BillState);
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.billApi.getBills({ limit: 10, page: 1 }).subscribe({
+            next: (data) => this.billState.setBills(data as Bill[]),
+        });
+    }
 
     openProfile(): void {
         const dialogRef = this.dialog.open<string>(ModalProfile, {

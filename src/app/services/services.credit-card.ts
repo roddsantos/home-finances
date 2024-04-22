@@ -13,10 +13,9 @@ export class ServiceCreditCard {
     private user = inject(UserState);
 
     getCreditCards(data: GetCreditCard) {
-        const stringfyHeader = JSON.stringify(data);
         return this.http.get(CREDIT_CARD, {
             params: {
-                filters: stringfyHeader,
+                ...data,
             },
         });
     }

@@ -78,7 +78,7 @@ export class ModalNewCreditCard implements OnInit {
         description: NO_DESCRIPTION,
         savings: "you must enter the savings",
         limit: "limit must be greater than zero",
-        year: "year should be equal or greater than 2023",
+        year: "year should be between 2023 asn 2090",
     };
     @Output() submit = new EventEmitter<String>();
     @Output() onClose = new EventEmitter<void>();

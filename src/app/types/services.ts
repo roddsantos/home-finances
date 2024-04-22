@@ -32,18 +32,40 @@ export type BillObject = {
     description: string;
     total: number;
     settled: boolean;
-    parcels?: number;
-    taxes: number;
-    delta: number;
+    typeBillId: string;
     due?: Date;
-    month: string;
+    month: number;
     year: number;
-    companyId?: string;
-    typeBillId?: string;
-    bank1Id?: string;
+};
+
+export type BillObjectBank = {
+    bank1Id: string;
     bank2Id?: string;
+};
+
+export type BillObjectCompany = {
+    companyId: string;
+    bank1Id: string;
+    parcels: number;
+    taxes?: number;
+    delta?: number;
+};
+
+export type BillObjectCredtCard = {
+    creditCardId: string;
+    companyId?: string;
+    parcels: number;
+    taxes?: number;
+    delta?: number;
+};
+
+export type BillObjectService = {
     creditCardId?: string;
-    userId: string;
+    companyId: string;
+    bank1Id: string;
+    parcels: number;
+    taxes?: number;
+    delta?: number;
 };
 
 export type GetCreditCard = {
@@ -51,4 +73,15 @@ export type GetCreditCard = {
     year?: number;
     isClosed?: boolean;
     userId: string;
+    page: number;
+    limit: number;
+};
+
+export type GetBillsFilter = {
+    page: number;
+    limit: number;
+    typeBillId?: string;
+    month?: string;
+    year?: number;
+    settled?: boolean;
 };
