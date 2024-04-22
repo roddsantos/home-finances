@@ -3,7 +3,7 @@
         new bill
     </button>
     <custom-filter></custom-filter>
-    <div>
+    <div class="bill-list-container">
         <ng-template
             ngFor
             let-item
@@ -11,12 +11,24 @@
             let-i="index"
             [ngForTrackBy]="trackByFn"
         >
-            <mat-expansion-panel hideToggle>
-                <mat-expansion-panel-header *ngFor="let ti of titleItems">
-                    <mat-panel-title> {{ item[ti] }} </mat-panel-title>
+            <mat-expansion-panel class="bill-expansion" hideToggle>
+                <mat-expansion-panel-header class="bill-expansion-container">
+                    <mat-panel-title>
+                        <div class="bill-title-container">
+                            <p>{{ item.name }}</p>
+                            <div>
+                                <p class="label">{{getTypeTranslation(item)}}</p>
+                                <p class="value">{{getSpecialLabel(item)}}</p>
+                            </div>
+                            <p class="value">{{getDate(item)}}</p>
+                        </div></mat-panel-title
+                    >
                 </mat-expansion-panel-header>
-                <div *ngFor="let di of detailsItems">
-                    <p>{{ item[di] }}</p>
+                <div class="bill-expanded-container" *ngFor="let di of detailsItems">
+                    <div>
+                        <p class="label">{{di}}</p>
+                        <p class="value">{{ item[di] }}</p>
+                    </div>
                 </div>
             </mat-expansion-panel>
         </ng-template>

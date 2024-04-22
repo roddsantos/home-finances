@@ -2,3 +2,48 @@
     display: flex;
     margin: auto 0px auto auto;
 }
+
+.bill-list-container {
+    padding: 20px 0px;
+}
+
+.bill-expansion {
+    margin-bottom: 15px;
+    border-radius: 0px;
+    & .mat-expansion-panel-body {
+        display: flex;
+        flex-direction: row !important;
+        justify-content: space-between;
+        background-color: var(--secondary);
+        padding-top: 16px;
+    }
+}
+
+.bill-expansion-container {
+    background-color: var(--item-list) !important;
+    &:hover {
+        background-color: var(--item-list) !important;
+    }
+}
+
+.bill-title-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.bill-expanded-container {
+    display: flex;
+    flex-direction: row !important;
+}
+
+.label {
+    font: normal 12px Roboto;
+    color: var(--title);
+}
+.value {
+    font: normal 16px Roboto !important;
+    color: var(--description);
+}

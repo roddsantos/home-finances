@@ -192,8 +192,8 @@ export class ModalNewBill implements OnInit {
                 observer = this.billService.createBillService({
                     ...defaultData,
                     creditCardId: this.serviceTemplate.serviceForm.value.creditCard?.id,
-                    companyId: this.companyTemplate.compForm.value.company!.id,
-                    bank1Id: this.serviceTemplate.serviceForm.value.bank!.id,
+                    companyId: this.serviceTemplate.serviceForm.value.company!.id,
+                    bank1Id: this.serviceTemplate.serviceForm.value.bank?.id,
                     parcels: this.serviceTemplate.serviceForm.value.parcels!,
                     taxes: this.serviceTemplate.serviceForm.value.taxes,
                     delta: this.serviceTemplate.serviceForm.value.delta,

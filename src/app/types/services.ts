@@ -62,7 +62,7 @@ export type BillObjectCredtCard = {
 export type BillObjectService = {
     creditCardId?: string;
     companyId: string;
-    bank1Id: string;
+    bank1Id?: string;
     parcels: number;
     taxes?: number;
     delta?: number;

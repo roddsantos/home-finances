@@ -7,3 +7,5 @@ export type MonthType = {
     order: number;
     short: string;
 };
+
+export type DateType = "mmYY" | "mmmmYYYY" | "mmmYY";
