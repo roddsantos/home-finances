@@ -89,7 +89,7 @@ export class ModalNewBill implements OnInit {
             validators: [Validators.required],
         }),
         settled: new FormControl<boolean>(true, { nonNullable: false }),
-        due: new FormControl<Date>(new Date(), { nonNullable: true }),
+        due: new FormControl<Date | null>(null, { nonNullable: false }),
         year: new FormControl<number>(new Date().getFullYear(), {
             nonNullable: true,
             validators: [Validators.min(2023), Validators.max(2090)],
@@ -194,7 +194,7 @@ export class ModalNewBill implements OnInit {
             name: this.billForm.value.name!,
             description: this.billForm.value.description!,
             settled: this.billForm.value.settled!,
-            due: this.billForm.value.due,
+            due: this.billForm.value.due || undefined,
             total: this.billForm.value.total!,
             year: this.billForm.value.year!,
             month: this.billForm.value.month!.order,
