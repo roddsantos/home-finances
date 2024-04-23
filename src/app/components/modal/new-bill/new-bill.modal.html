@@ -31,7 +31,12 @@
                 </mat-button-toggle-group>
                 <mat-form-field class="new-bill-total" appearance="outline">
                     <mat-label>bill value</mat-label>
-                    <input matInput type="number" formControlName="total" />
+                    <input
+                        (change)="totalValue($event)"
+                        matInput
+                        type="number"
+                        formControlName="total"
+                    />
                     @if (billForm.controls.total.invalid) {
                     <mat-error>{{errorMessage.total}}</mat-error>
                     }
@@ -52,6 +57,16 @@
                     @if (billForm.controls.year.invalid) {
                     <mat-error>{{errorMessage.year}}</mat-error>
                     }
+                </mat-form-field>
+                <mat-form-field class="savings-input" appearance="outline">
+                    <mat-label>date due</mat-label>
+                    <input [matDatepicker]="picker" matInput formControlName="due" />
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
             </div>
             <p class="type-bill-title">select the bill type to proceed:</p>

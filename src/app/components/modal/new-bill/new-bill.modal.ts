@@ -21,6 +21,7 @@ import { CompanyTemplateNewBill } from "./templates/company/company.template.new
 import { CreditCardTemplateNewBill } from "./templates/credit-card/credit-card.template.new-bill";
 import { ServiceTemplateNewBill } from "./templates/service/service.template.new-bill";
 import {
+    NEGATIVE_TOTAL,
     NO_BILL_VALUE,
     NO_DESCRIPTION,
     NO_NAME,
@@ -32,11 +33,15 @@ import { MonthType } from "src/app/types/general";
 import { MONTHS } from "src/utils/constants/general";
 import { MatOption } from "@angular/material/core";
 import { MatSelectModule } from "@angular/material/select";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { provideNativeDateAdapter } from "@angular/material/core";
+
 @Component({
     selector: "modal-new-bill",
     templateUrl: "./new-bill.modal.html",
     styleUrls: ["./new-bill.modal.css"],
     standalone: true,
+    providers: [provideNativeDateAdapter()],
     imports: [
         MatOption,
         CommonModule,
@@ -51,6 +56,7 @@ import { MatSelectModule } from "@angular/material/select";
         CreditCardTemplateNewBill,
         ServiceTemplateNewBill,
         MatSelectModule,
+        MatDatepickerModule,
     ],
 })
 export class ModalNewBill implements OnInit {
@@ -83,10 +89,7 @@ export class ModalNewBill implements OnInit {
             validators: [Validators.required],
         }),
         settled: new FormControl<boolean>(true, { nonNullable: false }),
-        // parcels: new FormControl<number>(0, { nonNullable: false }),
-        // taxes: new FormControl<number>(0, { nonNullable: false }),
-        // delta: new FormControl<number>(0, { nonNullable: false }),
-        // due: new FormControl<Date>(new Date(), { nonNullable: false }),
+        due: new FormControl<Date>(new Date(), { nonNullable: true }),
         year: new FormControl<number>(new Date().getFullYear(), {
             nonNullable: true,
             validators: [Validators.min(2023), Validators.max(2090)],
@@ -99,14 +102,34 @@ export class ModalNewBill implements OnInit {
             nonNullable: true,
             validators: [Validators.required],
         }),
-        // company: new FormControl<Company | null>(null, { nonNullable: false }),
-        // creditcard: new FormControl<CreditCard | null>(null, { nonNullable: false }),
-        // bank1: new FormControl<Bank | null>(null, { nonNullable: false }),
-        // bank2: new FormControl<Bank | null>(null, { nonNullable: false }),
     });
 
+    totalValue(event: any) {
+        const value = event.target.value;
+        if (value < 0 && this.billForm.value.typebill) {
+            if (
+                this.billForm.value.typebill.referTo === "company" ||
+                this.billForm.value.typebill.referTo === "service"
+            ) {
+                this.billForm.controls.total.setErrors({
+                    min: true,
+                });
+                return;
+            }
+            if (
+                this.bankTemplate.bankForm.value.bank2 &&
+                this.bankTemplate.bankForm.value.bank1 &&
+                this.billForm.value.typebill.referTo === "banks"
+            ) {
+                this.billForm.controls.total.setErrors({
+                    negativeValue: true,
+                });
+                return;
+            }
+        }
+    }
+
     bankValue(formGroup: FormGroup) {
-        console.log(formGroup);
         if (formGroup) {
             if (formGroup.value.typebill?.referTo === "banks") {
                 if (
@@ -161,6 +184,7 @@ export class ModalNewBill implements OnInit {
         name: NO_NAME,
         description: NO_DESCRIPTION,
         total: NO_BILL_VALUE,
+        negativeValue: NEGATIVE_TOTAL,
         typebill: NO_TYPE_BILL,
         year: YEAR_OUT_OF_RANGE,
     };
@@ -170,6 +194,7 @@ export class ModalNewBill implements OnInit {
             name: this.billForm.value.name!,
             description: this.billForm.value.description!,
             settled: this.billForm.value.settled!,
+            due: this.billForm.value.due,
             total: this.billForm.value.total!,
             year: this.billForm.value.year!,
             month: this.billForm.value.month!.order,

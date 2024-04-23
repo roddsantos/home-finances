@@ -15,7 +15,12 @@ import { MatInputModule } from "@angular/material/input";
 import { CreditCardState } from "src/app/subjects/subjects.credit-card";
 import { CompanyState } from "src/app/subjects/subjects.company";
 import { BankState } from "src/app/subjects/subjects.bank";
-import { INVALID_PARCEL, NO_COMPANY } from "src/utils/constants/forms";
+import {
+    INVALID_PARCEL,
+    NO_COMPANY,
+    UNNECESSARY_BANK,
+    UNNECESSARY_CC,
+} from "src/utils/constants/forms";
 
 @Component({
     selector: "template-service",
@@ -60,5 +65,13 @@ export class ServiceTemplateNewBill {
     errorMessage = {
         company: NO_COMPANY,
         parcels: INVALID_PARCEL,
+        noBank: UNNECESSARY_BANK,
+        noCC: UNNECESSARY_CC,
     };
+
+    toggleError(type: "cc" | "bank") {
+        if (this.serviceForm.value.creditCard && this.serviceForm.value.bank)
+            if (type === "cc") this.serviceForm.controls.bank.setErrors({ noBank: true });
+            else this.serviceForm.controls.creditCard.setErrors({ noCC: true });
+    }
 }

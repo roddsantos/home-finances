@@ -22,12 +22,18 @@
                 appearance="outline"
             >
                 <mat-label>credit card</mat-label>
-                <mat-select formControlName="creditCard">
+                <mat-select
+                    (selectionChange)="toggleError('cc')"
+                    formControlName="creditCard"
+                >
                     <mat-option [value]="null">none</mat-option>
                     @for (c of (creditCards.creditCards$ | async); track c) {
                     <mat-option [value]="c">{{ c.name }}</mat-option>
                     }
                 </mat-select>
+                @if (serviceForm.controls.creditCard.invalid) {
+                <mat-error>{{errorMessage.noCC}}</mat-error>
+                }
             </mat-form-field>
             <mat-form-field
                 *ngIf="(banks.banks$| async)!.length > 0"
@@ -35,12 +41,18 @@
                 appearance="outline"
             >
                 <mat-label>bank</mat-label>
-                <mat-select formControlName="bank">
+                <mat-select
+                    (selectionChange)="toggleError('bank')"
+                    formControlName="bank"
+                >
                     <mat-option [value]="null">none</mat-option>
                     @for (b of (banks.banks$ | async); track b) {
                     <mat-option [value]="b">{{ b.name }}</mat-option>
                     }
                 </mat-select>
+                @if (serviceForm.controls.bank.invalid) {
+                <mat-error>{{errorMessage.noBank}}</mat-error>
+                }
             </mat-form-field>
         </div>
         <div class="template-service-input">
