@@ -15,6 +15,7 @@ import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
 import { NO_BANK } from "src/utils/constants/forms";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
     selector: "template-banks",
@@ -29,6 +30,7 @@ import { NO_BANK } from "src/utils/constants/forms";
         CommonModule,
         MatSelectModule,
         MatCheckboxModule,
+        MatIconModule,
     ],
     exportAs: "templateBanks",
 })
@@ -37,14 +39,18 @@ export class BankTemplateNewBill {
 
     bankForm = new FormGroup({
         bank1: new FormControl<Bank | null>(null, {
-            nonNullable: false,
+            nonNullable: true,
             validators: [Validators.required],
         }),
         bank2: new FormControl<Bank | null>(null, { nonNullable: false }),
-        isPayment: new FormControl<boolean>(false, {
+        isPayment: new FormControl<boolean>(true, {
             nonNullable: true,
         }),
     });
+
+    enableArrow() {
+        return this.bankForm.value.bank1 && this.bankForm.value.bank2;
+    }
 
     errorMessage = NO_BANK;
 }

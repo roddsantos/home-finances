@@ -13,7 +13,7 @@ import { BillState } from "src/app/subjects/subjects.bill";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 import { ModalState } from "src/app/subjects/subjects.modal";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
-import { Bill, TypeBill } from "src/app/types/objects";
+import { Bill, BillData, TypeBill } from "src/app/types/objects";
 import { BankTemplateNewBill } from "./templates/bank/bank.template.new-bill";
 import { TypeBillState } from "src/app/subjects/subjects.type-bills";
 import { CommonModule } from "@angular/common";
@@ -177,8 +177,11 @@ export class ModalNewBill implements OnInit {
                 break;
         }
         observer?.subscribe({
-            next: (data) => {
-                this.billState.addBill(data as Bill[]);
+            next: () => {
+                this.billService.getBills({ limit: 10, page: 1 }).subscribe({
+                    next: (data) =>
+                        this.billState.setBills(data as Array<Bill & BillData>),
+                });
                 this.snack.openSnackBar("bill successfully created", "success");
                 this.modalComponent.onClose();
             },

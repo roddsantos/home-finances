@@ -1,0 +1,36 @@
+<mat-expansion-panel class="bill-expansion" hideToggle>
+    <mat-expansion-panel-header class="bill-expansion-container">
+        <mat-panel-title>
+            <div class="bill-title-container">
+                <p>{{ data.name }}</p>
+                <div>
+                    <p class="label">bank</p>
+                    <p class="value">{{data.bank1?.name}}</p>
+                </div>
+                <div>
+                    <p class="label">value</p>
+                    <p class="value">{{data.total}}</p>
+                </div>
+                <p class="value">{{getDate('separated')}}</p>
+            </div></mat-panel-title
+        >
+    </mat-expansion-panel-header>
+    <div class="bill-expanded-container">
+        <div>
+            <p class="label">description</p>
+            <p class="value">{{ data.description }}</p>
+        </div>
+        <div *ngIf="data.bank2">
+            <p class="label">bank 2</p>
+            <p class="value">{{data.bank2.name}}</p>
+        </div>
+        <div *ngIf="data.totalParcel">
+            <p class="label">value this month</p>
+            <p class="value">{{data.totalParcel}}</p>
+        </div>
+        <div>
+            <p class="label">transaction date</p>
+            <p class="value">{{getDate('updatedAt')}}</p>
+        </div>
+    </div>
+</mat-expansion-panel>

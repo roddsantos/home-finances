@@ -8,4 +8,4 @@ export type MonthType = {
     short: string;
 };
 
-export type DateType = "mmYY" | "mmmmYYYY" | "mmmYY";
+export type DateType = "mmYY" | "mmmmYYYY" | "mmmYY" | "ddMMyyyy";

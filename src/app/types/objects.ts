@@ -78,6 +78,7 @@ export type Bill = {
     updatedAt: string;
     createdAt: string;
     deletedAt: string | null;
+    totalParcel: number | null;
 };
 
 export type BillData = {

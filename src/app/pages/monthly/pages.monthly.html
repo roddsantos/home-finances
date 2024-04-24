@@ -11,26 +11,18 @@
             let-i="index"
             [ngForTrackBy]="trackByFn"
         >
-            <mat-expansion-panel class="bill-expansion" hideToggle>
-                <mat-expansion-panel-header class="bill-expansion-container">
-                    <mat-panel-title>
-                        <div class="bill-title-container">
-                            <p>{{ item.name }}</p>
-                            <div>
-                                <p class="label">{{getTypeTranslation(item)}}</p>
-                                <p class="value">{{getSpecialLabel(item)}}</p>
-                            </div>
-                            <p class="value">{{getDate(item)}}</p>
-                        </div></mat-panel-title
-                    >
-                </mat-expansion-panel-header>
-                <div class="bill-expanded-container" *ngFor="let di of detailsItems">
-                    <div>
-                        <p class="label">{{di}}</p>
-                        <p class="value">{{ item[di] }}</p>
-                    </div>
-                </div>
-            </mat-expansion-panel>
+            <bank-list-template
+                *ngIf="item.typeBill.referTo === 'banks'"
+                [data]="item"
+            ></bank-list-template>
+            <credit-card-list-template
+                *ngIf="item.typeBill.referTo === 'creditCard'"
+                [data]="item"
+            ></credit-card-list-template>
+            <service-list-template
+                *ngIf="item.typeBill.referTo === 'service'"
+                [data]="item"
+            ></service-list-template>
         </ng-template>
     </div>
 </div>

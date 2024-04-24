@@ -11,3 +11,7 @@
     width: 100%;
     height: max-content;
 }
+
+.app-icon {
+    margin: 18px auto auto;
+}

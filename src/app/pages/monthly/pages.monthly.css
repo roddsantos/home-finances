@@ -37,6 +37,8 @@
 .bill-expanded-container {
     display: flex;
     flex-direction: row !important;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .label {

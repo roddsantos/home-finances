@@ -9,7 +9,14 @@ import { Dialog } from "@angular/cdk/dialog";
 import { Overlay } from "@angular/cdk/overlay";
 import { ServiceBill } from "src/app/services/services.bill";
 import { BillState } from "src/app/subjects/subjects.bill";
-import { Bank, Bill, Company, CreditCard, TypeBill } from "src/app/types/objects";
+import {
+    Bank,
+    Bill,
+    BillData,
+    Company,
+    CreditCard,
+    TypeBill,
+} from "src/app/types/objects";
 import { ServiceBank } from "src/app/services/services.bank";
 import { UserState } from "src/app/subjects/subjects.user";
 import { BankState } from "src/app/subjects/subjects.bank";
@@ -58,7 +65,7 @@ export class LayoutComponent implements AfterViewInit {
 
     ngOnInit() {
         this.billApi.getBills({ limit: 10, page: 1 }).subscribe({
-            next: (data) => this.billState.setBills(data as Bill[]),
+            next: (data) => this.billState.setBills(data as Array<Bill & BillData>),
         });
 
         zip([

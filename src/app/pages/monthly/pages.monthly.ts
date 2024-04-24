@@ -9,6 +9,9 @@ import { ModalNewBill } from "src/app/components/modal/new-bill/new-bill.modal";
 import { BillState } from "src/app/subjects/subjects.bill";
 import { Bill, BillData } from "src/app/types/objects";
 import { getMonthAndYear } from "src/utils/date";
+import { BankListTemplateMonthly } from "./templates/bank/bank.template.monthly";
+import { CreditCardTemplateMonthly } from "./templates/credit-card/credit-card.template.monthly";
+import { ServiceTemplateMonthly } from "./templates/service/service.template.monthly";
 
 @Component({
     selector: "page-monthly",
@@ -21,6 +24,9 @@ import { getMonthAndYear } from "src/utils/date";
         CommonModule,
         MatIconModule,
         MatButtonModule,
+        BankListTemplateMonthly,
+        CreditCardTemplateMonthly,
+        ServiceTemplateMonthly,
     ],
 })
 export class PageMonthly {
@@ -64,8 +70,12 @@ export class PageMonthly {
         }
     }
 
-    getDate(item: Bill) {
-        return getMonthAndYear(item.month, item.year, "mmmmYYYY");
+    getDate(item: Bill, toUse: "updatedAt" | "separated") {
+        let obj =
+            toUse === "updatedAt"
+                ? { date: new Date(item.updatedAt) }
+                : { month: item.month, year: item.year };
+        return getMonthAndYear(obj, "ddMMyyyy");
     }
 
     openDialog(): void {
