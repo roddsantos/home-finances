@@ -34,7 +34,7 @@ export class BanksManagementComponent {
         title: "no banks",
         actionLabel: "reload",
         action: () => this.onReload(),
-        variant: "loading",
+        variant: "empty",
     };
 
     getBanks(reloaded?: boolean) {

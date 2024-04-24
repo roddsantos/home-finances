@@ -27,7 +27,7 @@ export class CreditCardsManagementComponent {
     private snack = inject(CustomSnackbarComponent);
 
     typeObject: FeedbackInfo = {
-        variant: "loading",
+        variant: "empty",
         title: "no credit cards",
         actionLabel: "reload",
         action: () => this.onReload(),

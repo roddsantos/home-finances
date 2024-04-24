@@ -86,7 +86,7 @@ export class ModalNewBill implements OnInit {
         }),
         total: new FormControl<number>(0, {
             nonNullable: true,
-            validators: [Validators.required],
+            validators: [Validators.required, Validators.min(0.01)],
         }),
         settled: new FormControl<boolean>(true, { nonNullable: false }),
         due: new FormControl<Date | null>(null, { nonNullable: false }),
@@ -103,45 +103,6 @@ export class ModalNewBill implements OnInit {
             validators: [Validators.required],
         }),
     });
-
-    totalValue(event: any) {
-        const value = event.target.value;
-        if (value < 0 && this.billForm.value.typebill) {
-            if (
-                this.billForm.value.typebill.referTo === "company" ||
-                this.billForm.value.typebill.referTo === "service"
-            ) {
-                this.billForm.controls.total.setErrors({
-                    min: true,
-                });
-                return;
-            }
-            if (
-                this.bankTemplate.bankForm.value.bank2 &&
-                this.bankTemplate.bankForm.value.bank1 &&
-                this.billForm.value.typebill.referTo === "banks"
-            ) {
-                this.billForm.controls.total.setErrors({
-                    negativeValue: true,
-                });
-                return;
-            }
-        }
-    }
-
-    bankValue(formGroup: FormGroup) {
-        if (formGroup) {
-            if (formGroup.value.typebill?.referTo === "banks") {
-                if (
-                    Boolean(this.bankTemplate.bankForm.value.bank2) &&
-                    formGroup.value.total! <= 0
-                )
-                    return { bankValue: true };
-                else return null;
-            }
-        }
-        return null;
-    }
 
     months = MONTHS;
     inputType: string = "";
@@ -207,11 +168,14 @@ export class ModalNewBill implements OnInit {
                     ...defaultData,
                     bank1Id: this.bankTemplate.bankForm.value.bank1!.id,
                     bank2Id: this.bankTemplate.bankForm.value.bank2?.id,
+                    total: this.billForm.value.total!,
+                    isPayment: this.bankTemplate.bankForm.value.isPayment!,
                 });
                 break;
             case "creditCard":
                 observer = this.billService.createBillCreditCard({
                     ...defaultData,
+                    isRefund: this.creditCardTemplate.ccForm.value.isRefund!,
                     creditCardId: this.creditCardTemplate.ccForm.value.creditCard!.id,
                     companyId: this.creditCardTemplate.ccForm.value.company?.id,
                     parcels: this.creditCardTemplate.ccForm.value.parcels!,
@@ -245,7 +209,7 @@ export class ModalNewBill implements OnInit {
         }
         observer?.subscribe({
             next: (data) => {
-                this.billState.addBill(data as Bill);
+                this.billState.addBill(data as Bill[]);
                 this.snack.openSnackBar("bill successfully created", "success");
                 this.modalComponent.onClose();
             },

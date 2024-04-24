@@ -25,11 +25,9 @@ export class BillState {
         this._bills$.next(bills);
     }
 
-    addBill(bill: Bill, index?: number) {
+    addBill(bill: Bill[], index?: number) {
         let auxBills = [...this._bills$.getValue()];
-        const existingBank = this._bills$.getValue().find((b) => b.id === bill.id);
-        if (existingBank && index !== undefined) auxBills[index] = bill;
-        else auxBills = [bill, ...auxBills];
+        auxBills = [...bill, ...auxBills];
 
         this._bills$.next(auxBills);
     }

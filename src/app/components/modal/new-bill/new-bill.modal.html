@@ -31,12 +31,7 @@
                 </mat-button-toggle-group>
                 <mat-form-field class="new-bill-total" appearance="outline">
                     <mat-label>bill value</mat-label>
-                    <input
-                        (change)="totalValue($event)"
-                        matInput
-                        type="number"
-                        formControlName="total"
-                    />
+                    <input matInput type="number" formControlName="total" />
                     @if (billForm.controls.total.invalid) {
                     <mat-error>{{errorMessage.total}}</mat-error>
                     }

@@ -24,7 +24,7 @@ export class TypeBillsManagementComponent {
     private snack = inject(CustomSnackbarComponent);
 
     typeObject: FeedbackInfo = {
-        variant: "loading",
+        variant: "empty",
         title: "no type bills",
         actionLabel: "reload",
         action: () => this.onReload(),

@@ -33,7 +33,7 @@ export class ManagementCompaniesComponent {
     private snack = inject(CustomSnackbarComponent);
 
     typeObject: FeedbackInfo = {
-        variant: "loading",
+        variant: "empty",
         title: "no companies",
         actionLabel: "reload",
         action: () => this.onReload(),

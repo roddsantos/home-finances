@@ -8,6 +8,7 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 import { BankState } from "src/app/subjects/subjects.bank";
 import { Bank } from "src/app/types/objects";
 import { MatOption } from "@angular/material/core";
@@ -27,6 +28,7 @@ import { NO_BANK } from "src/utils/constants/forms";
         MatOption,
         CommonModule,
         MatSelectModule,
+        MatCheckboxModule,
     ],
     exportAs: "templateBanks",
 })
@@ -39,6 +41,9 @@ export class BankTemplateNewBill {
             validators: [Validators.required],
         }),
         bank2: new FormControl<Bank | null>(null, { nonNullable: false }),
+        isPayment: new FormControl<boolean>(false, {
+            nonNullable: true,
+        }),
     });
 
     errorMessage = NO_BANK;

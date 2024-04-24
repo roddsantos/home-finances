@@ -7,30 +7,30 @@ import { ListStatus } from "src/app/types/general";
     providedIn: "root",
 })
 export class CreditCardState {
-    private _ceditCards$ = new BehaviorSubject<CreditCard[]>([]);
+    private _creditCards$ = new BehaviorSubject<CreditCard[]>([]);
     private _status$ = new BehaviorSubject<ListStatus>("empty");
 
     public readonly status$ = this._status$.asObservable();
-    public readonly creditCards$ = this._ceditCards$.asObservable();
+    public readonly creditCards$ = this._creditCards$.asObservable();
 
     changeStatus(newStatus: ListStatus) {
         this._status$.next(newStatus);
-        if (newStatus !== "data") this._ceditCards$.next([]);
+        if (newStatus !== "data") this._creditCards$.next([]);
     }
 
     setCreditCards(creditCards: CreditCard[]) {
         if (creditCards.length === 0) this._status$.next("empty");
         else this._status$.next("data");
 
-        this._ceditCards$.next(creditCards);
+        this._creditCards$.next(creditCards);
     }
 
     addCreditCard(cc: CreditCard, index?: number) {
-        let auxCompanies = [...this._ceditCards$.getValue()];
-        const existingCompany = this._ceditCards$.getValue().find((c) => c.id === cc.id);
+        let auxCompanies = [...this._creditCards$.getValue()];
+        const existingCompany = this._creditCards$.getValue().find((c) => c.id === cc.id);
         if (existingCompany && index !== undefined) auxCompanies[index] = cc;
         else auxCompanies = [cc, ...auxCompanies];
 
-        this._ceditCards$.next(auxCompanies);
+        this._creditCards$.next(auxCompanies);
     }
 }

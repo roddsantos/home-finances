@@ -41,6 +41,7 @@ export type BillObject = {
 export type BillObjectBank = {
     bank1Id: string;
     bank2Id?: string;
+    isPayment: boolean;
 };
 
 export type BillObjectCompany = {
@@ -57,6 +58,7 @@ export type BillObjectCredtCard = {
     parcels: number;
     taxes?: number;
     delta?: number;
+    isRefund: boolean;
 };
 
 export type BillObjectService = {

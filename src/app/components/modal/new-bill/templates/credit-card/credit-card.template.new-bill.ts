@@ -14,6 +14,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatInputModule } from "@angular/material/input";
 import { CreditCardState } from "src/app/subjects/subjects.credit-card";
 import { CompanyState } from "src/app/subjects/subjects.company";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 import { INVALID_PARCEL, NO_CREDIT_CARD } from "src/utils/constants/forms";
 
 @Component({
@@ -29,6 +30,7 @@ import { INVALID_PARCEL, NO_CREDIT_CARD } from "src/utils/constants/forms";
         CommonModule,
         MatSelectModule,
         MatInputModule,
+        MatCheckboxModule,
     ],
     exportAs: "templateCreditCard",
 })
@@ -50,6 +52,7 @@ export class CreditCardTemplateNewBill {
             validators: [Validators.required, Validators.min(1)],
         }),
         delta: new FormControl<number>(0, { nonNullable: true }),
+        isRefund: new FormControl<boolean>(false, { nonNullable: true }),
     });
 
     errorMessage = {
