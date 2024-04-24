@@ -33,7 +33,7 @@ export type BillObject = {
     total: number;
     settled: boolean;
     typeBillId: string;
-    due?: Date;
+    due: Date;
     month: number;
     year: number;
 };
@@ -46,7 +46,8 @@ export type BillObjectBank = {
 
 export type BillObjectCompany = {
     companyId: string;
-    bank1Id: string;
+    bank1Id?: string;
+    creditCardId?: string;
     parcels: number;
     taxes?: number;
     delta?: number;

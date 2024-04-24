@@ -3,7 +3,7 @@
         <div class="template-data-input">
             <mat-form-field
                 *ngIf="(companies.company$| async)!.length > 0"
-                class="template-data-field"
+                class="number-input"
                 appearance="outline"
             >
                 <mat-label>company</mat-label>
@@ -18,17 +18,40 @@
             </mat-form-field>
             <mat-form-field
                 *ngIf="(banks.banks$| async)!.length > 0"
-                class="template-data-field"
+                class="number-input"
                 appearance="outline"
             >
                 <mat-label>bank</mat-label>
-                <mat-select formControlName="bank">
+                <mat-select
+                    (selectionChange)="toggleError('bank')"
+                    formControlName="bank"
+                >
+                    <mat-option [value]="null">none</mat-option>
                     @for (b of (banks.banks$ | async); track b) {
                     <mat-option [value]="b">{{ b.name }}</mat-option>
                     }
                 </mat-select>
-                @if (compForm.controls.bank.invalid) {
-                <mat-error>{{errorMessage.bank}}</mat-error>
+                @if (compForm.controls.bank.getError("noBank")) {
+                <mat-error>{{errorMessage.noBank}}</mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field
+                *ngIf="(ccs.creditCards$| async)!.length > 0"
+                class="number-input"
+                appearance="outline"
+            >
+                <mat-label>credit card</mat-label>
+                <mat-select
+                    (selectionChange)="toggleError('cc')"
+                    formControlName="creditcard"
+                >
+                    <mat-option [value]="null">none</mat-option>
+                    @for (cc of (ccs.creditCards$ | async); track cc) {
+                    <mat-option [value]="cc">{{ cc.name }}</mat-option>
+                    }
+                </mat-select>
+                @if (compForm.controls.creditcard.getError('noCC')) {
+                <mat-error>{{errorMessage.noCC}}</mat-error>
                 }
             </mat-form-field>
         </div>

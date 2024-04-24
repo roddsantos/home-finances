@@ -89,7 +89,7 @@ export class ModalNewBill implements OnInit {
             validators: [Validators.required, Validators.min(0.01)],
         }),
         settled: new FormControl<boolean>(true, { nonNullable: false }),
-        due: new FormControl<Date | null>(null, { nonNullable: false }),
+        due: new FormControl<Date>(new Date(), { nonNullable: true }),
         year: new FormControl<number>(new Date().getFullYear(), {
             nonNullable: true,
             validators: [Validators.min(2023), Validators.max(2090)],
@@ -108,38 +108,7 @@ export class ModalNewBill implements OnInit {
     inputType: string = "";
     isInvalid: boolean = true;
 
-    constructor() {
-        switch (this.billForm.value.typebill?.referTo) {
-            case "banks":
-                this.modalState.setDisableButton(
-                    this.billForm.invalid || this.bankTemplate.bankForm.invalid
-                );
-                this.isInvalid =
-                    this.billForm.invalid || this.bankTemplate.bankForm.invalid;
-                break;
-            case "creditCard":
-                this.modalState.setDisableButton(
-                    this.billForm.invalid || this.creditCardTemplate.ccForm.invalid
-                );
-                this.isInvalid =
-                    this.billForm.invalid || this.creditCardTemplate.ccForm.invalid;
-                break;
-            case "company":
-                this.modalState.setDisableButton(
-                    this.billForm.invalid || this.companyTemplate.compForm.invalid
-                );
-                this.isInvalid =
-                    this.billForm.invalid || this.companyTemplate.compForm.invalid;
-                break;
-            // case "service":
-            //     this.modalState.setDisableButton(
-            //         this.billForm.invalid || this.bankTemplate.bankForm.invalid
-            //     );
-            //     break;
-            default:
-                break;
-        }
-    }
+    constructor() {}
 
     errorMessage = {
         name: NO_NAME,
@@ -155,7 +124,7 @@ export class ModalNewBill implements OnInit {
             name: this.billForm.value.name!,
             description: this.billForm.value.description!,
             settled: this.billForm.value.settled!,
-            due: this.billForm.value.due || undefined,
+            due: this.billForm.value.due!,
             total: this.billForm.value.total!,
             year: this.billForm.value.year!,
             month: this.billForm.value.month!.order,
@@ -168,7 +137,6 @@ export class ModalNewBill implements OnInit {
                     ...defaultData,
                     bank1Id: this.bankTemplate.bankForm.value.bank1!.id,
                     bank2Id: this.bankTemplate.bankForm.value.bank2?.id,
-                    total: this.billForm.value.total!,
                     isPayment: this.bankTemplate.bankForm.value.isPayment!,
                 });
                 break;
@@ -186,8 +154,9 @@ export class ModalNewBill implements OnInit {
             case "company":
                 observer = this.billService.createBillCompany({
                     ...defaultData,
+                    creditCardId: this.companyTemplate.compForm.value.creditcard?.id,
                     companyId: this.companyTemplate.compForm.value.company!.id,
-                    bank1Id: this.companyTemplate.compForm.value.bank!.id,
+                    bank1Id: this.companyTemplate.compForm.value.bank?.id,
                     parcels: this.companyTemplate.compForm.value.parcels!,
                     taxes: this.companyTemplate.compForm.value.taxes,
                     delta: this.companyTemplate.compForm.value.delta,
