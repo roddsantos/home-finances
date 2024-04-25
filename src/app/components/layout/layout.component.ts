@@ -1,13 +1,13 @@
 import { Component, ViewChild, AfterViewInit, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { ModalProfile } from "../modal/profile/profile.modal";
-import { LocalStorageService } from "src/app/services/services.local-storage";
+import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ModalComponent } from "../modal/modal.component";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
 import { Dialog } from "@angular/cdk/dialog";
 import { Overlay } from "@angular/cdk/overlay";
-import { ServiceBill } from "src/app/services/services.bill";
+import { ServiceBill } from "src/app/services/bill.service";
 import { BillState } from "src/app/subjects/subjects.bill";
 import {
     Bank,
@@ -17,17 +17,17 @@ import {
     CreditCard,
     TypeBill,
 } from "src/app/types/objects";
-import { ServiceBank } from "src/app/services/services.bank";
+import { ServiceBank } from "src/app/services/bank.service";
 import { UserState } from "src/app/subjects/subjects.user";
 import { BankState } from "src/app/subjects/subjects.bank";
 import { zip } from "rxjs";
 import { CompanyState } from "src/app/subjects/subjects.company";
-import { ServiceCompany } from "src/app/services/services.company";
+import { ServiceCompany } from "src/app/services/company.service";
 import { CustomSnackbarComponent } from "../custom-snackbar/custom-snackbar.component";
 import { HttpErrorResponse } from "@angular/common/http";
-import { ServiceCreditCard } from "src/app/services/services.credit-card";
+import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { CreditCardState } from "src/app/subjects/subjects.credit-card";
-import { ServiceTypeBill } from "src/app/services/services.type-bill";
+import { ServiceTypeBill } from "src/app/services/type-bill.service";
 import { TypeBillState } from "src/app/subjects/subjects.type-bills";
 
 @Component({
@@ -70,7 +70,6 @@ export class LayoutComponent implements AfterViewInit {
 
         zip([
             this.userState.user$,
-            this.typebillApi.getTypeBills(),
             this.bankApi.getBanks(),
             this.compApi.getCompanies(),
             this.ccApi.getCreditCards({
@@ -78,10 +77,9 @@ export class LayoutComponent implements AfterViewInit {
                 page: 1,
             }),
         ]).subscribe({
-            next: ([user, tb, banks, comps, ccs]) => {
+            next: ([user, banks, comps, ccs]) => {
                 if (!user) this.snack.openSnackBar("Error fetching banks", "error");
                 else {
-                    console.log("OK", user, banks, comps, ccs, tb);
                     this.bankState.setBanks(banks as Bank[]);
                     this.bankState.changeStatus(
                         (banks as Bank[]).length > 0 ? "data" : "empty"
@@ -93,10 +91,6 @@ export class LayoutComponent implements AfterViewInit {
                     this.ccState.setCreditCards(ccs as CreditCard[]);
                     this.ccState.changeStatus(
                         (ccs as CreditCard[]).length > 0 ? "data" : "empty"
-                    );
-                    this.tbState.setTypeBill(tb as TypeBill[]);
-                    this.tbState.changeStatus(
-                        (tb as TypeBill[]).length > 0 ? "data" : "empty"
                     );
                 }
             },
@@ -110,8 +104,6 @@ export class LayoutComponent implements AfterViewInit {
                     this.bankState.changeStatus("error");
                 if (err.url?.includes("4001/credit-card") || err.status === 0)
                     this.ccState.changeStatus("error");
-                if (err.url?.includes("4001/typebill") || err.status === 0)
-                    this.tbState.changeStatus("error");
             },
         });
     }

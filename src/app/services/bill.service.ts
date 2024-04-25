@@ -4,7 +4,7 @@ import {
     BillObjectCredtCard,
     BillObjectService,
     GetBillsFilter,
-} from "./../types/services";
+} from "../types/services";
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BILL } from "src/utils/constants/services";

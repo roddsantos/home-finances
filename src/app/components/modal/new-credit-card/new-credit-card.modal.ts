@@ -22,7 +22,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { CreditCardObject } from "src/app/types/services";
 import { CreditCard } from "src/app/types/objects";
 import { MonthType } from "src/app/types/general";
-import { ServiceCreditCard } from "src/app/services/services.credit-card";
+import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { CreditCardState } from "src/app/subjects/subjects.credit-card";
 import { MONTHS } from "src/utils/constants/general";
 import { NO_DESCRIPTION, NO_NAME } from "src/utils/constants/forms";

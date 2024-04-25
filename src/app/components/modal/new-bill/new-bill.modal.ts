@@ -28,7 +28,7 @@ import {
     NO_TYPE_BILL,
     YEAR_OUT_OF_RANGE,
 } from "src/utils/constants/forms";
-import { ServiceBill } from "src/app/services/services.bill";
+import { ServiceBill } from "src/app/services/bill.service";
 import { MonthType } from "src/app/types/general";
 import { MONTHS } from "src/utils/constants/general";
 import { MatOption } from "@angular/material/core";
@@ -73,7 +73,14 @@ export class ModalNewBill implements OnInit {
 
     @Input() addTemplate!: TemplateRef<any>;
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.modalState.changeFooter({
+            type: "submit",
+            submit: "create",
+            alert: "cancel",
+            disabled: false,
+        });
+    }
 
     billForm = new FormGroup({
         name: new FormControl<string>("", {

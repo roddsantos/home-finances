@@ -2,18 +2,19 @@
     <mat-expansion-panel-header class="bill-expansion-container">
         <mat-panel-title>
             <div class="bill-title-container">
-                <p>{{ data.name }}</p>
-                <div>
+                <p [ngClass]="['value', 'width-40']">{{ data.name }}</p>
+                <div class="width-30">
                     <p class="label">company</p>
                     <p class="value">{{data.company?.name}}</p>
                 </div>
-                <div>
+                <div *ngIf="showTotalParcels()" class="width-15">
                     <p class="label">value</p>
-                    <p class="value">{{data.total}}</p>
+                    <p class="value">{{currency()}}</p>
                 </div>
-                <p class="value">{{getDate('separated')}}</p>
-            </div></mat-panel-title
-        >
+                <p [ngClass]="['value', 'width-15']">{{getDate('separated')}}</p>
+            </div>
+            <div class="bill-color-container" [style.borderRightColor]="color"></div>
+        </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="bill-expanded-container">
         <div>
@@ -24,9 +25,9 @@
             <p class="label">number of parcels</p>
             <p class="value">{{data.parcels}}</p>
         </div>
-        <div *ngIf="data.totalParcel">
-            <p class="label">value this month</p>
-            <p class="value">{{data.totalParcel}}</p>
+        <div>
+            <p class="label">total value</p>
+            <p class="value">{{currency(true)}}</p>
         </div>
         <div>
             <p class="label">transaction date</p>

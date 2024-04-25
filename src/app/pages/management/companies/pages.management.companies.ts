@@ -6,7 +6,7 @@ import { mergeMap } from "rxjs";
 import { CustomFilterComponent } from "src/app/components/custom-filter/custom-filter.component";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
-import { ServiceCompany } from "src/app/services/services.company";
+import { ServiceCompany } from "src/app/services/company.service";
 import { CompanyState } from "src/app/subjects/subjects.company";
 import { UserState } from "src/app/subjects/subjects.user";
 import { FeedbackInfo } from "src/app/types/components";

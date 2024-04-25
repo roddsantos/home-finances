@@ -42,10 +42,47 @@
 }
 
 .label {
-    font: normal 12px Roboto;
+    font-weight: normal;
+    font-size: 12px;
+    font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
     color: var(--title);
 }
 .value {
-    font: bold 16px Roboto !important;
+    font-weight: bold;
+    font-size: 16px;
+    font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
     color: var(--description);
+}
+
+.width-50 {
+    width: 50%;
+}
+
+.width-25 {
+    width: 25%;
+}
+
+.width-30 {
+    width: 30%;
+}
+
+.width-15 {
+    width: 15%;
+}
+
+.width-40 {
+    width: 40%;
+}
+
+.bill-color-container {
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: 2px;
+    top: -4px;
+    rotate: 45deg;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 12px solid transparent;
+    box-shadow: 2px 0px 1px 0px rgba(0, 0, 0, 0.2);
 }

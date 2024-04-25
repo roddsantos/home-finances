@@ -17,7 +17,7 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
-import { ServiceCompany } from "src/app/services/services.company";
+import { ServiceCompany } from "src/app/services/company.service";
 import { ModalState } from "src/app/subjects/subjects.modal";
 import { CompanyState } from "src/app/subjects/subjects.company";
 import { Company } from "src/app/types/objects";

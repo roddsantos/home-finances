@@ -7,14 +7,14 @@ import {
     ViewChild,
     ChangeDetectionStrategy,
 } from "@angular/core";
-import { LocalStorageService } from "src/app/services/services.local-storage";
+import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ModalComponent } from "../modal.component";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { FormsModule } from "@angular/forms";
 import { User } from "src/app/types/objects";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
-import { ServiceUser } from "src/app/services/services.user";
+import { ServiceUser } from "src/app/services/user.service";
 import { ModalState } from "src/app/subjects/subjects.modal";
 import { UserState } from "src/app/subjects/subjects.user";
 import { AsyncPipe } from "@angular/common";

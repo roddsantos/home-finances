@@ -66,7 +66,7 @@ export type Bill = {
     parcels: number;
     taxes: number;
     delta: number;
-    due: Date;
+    due: string;
     month: number;
     year: number;
     companyId: string;

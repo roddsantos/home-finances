@@ -5,13 +5,4 @@ import { getSourceMapRange } from "typescript";
 @Injectable({
     providedIn: "root",
 })
-export class AppService {
-    constructor(private http: HttpClient) {}
-
-    httpOptions = {
-        headers: new HttpHeaders({
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "http://localhost:5000",
-        }),
-    };
-}
+export class AppService {}
