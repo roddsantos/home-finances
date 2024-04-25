@@ -4,5 +4,24 @@
 
 .margin {
     display: flex;
-    margin: 20px 0px auto auto;
+    margin: 20px 0px auto 20px;
+}
+
+.chip-grid {
+    display: block;
+    padding: 12px 0px 0px;
+    min-height: 50px;
+    margin: auto 20px -6px auto;
+    text-align: right;
+    font-variant-caps: all-small-caps;
+}
+
+.chip-item {
+    margin-right: 6px;
+    margin-bottom: 6px;
+}
+
+.filter-container {
+    display: flex;
+    flex-direction: row;
 }

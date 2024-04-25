@@ -18,12 +18,14 @@ import {
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButton } from "@angular/material/button";
-import { CustomListState } from "../custom-filter.subjects.component";
+import { CustomFilterState } from "../custom-filter.subjects.component";
 import { CreditCardState } from "src/app/subjects/subjects.credit-card";
 import { CompanyState } from "src/app/subjects/subjects.company";
 import { BankState } from "src/app/subjects/subjects.bank";
 import { MONTHS } from "src/utils/constants/general";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
+import { LocalStorageService } from "src/app/services/local-storage.service";
+import { ServiceBill } from "src/app/services/bill.service";
 
 @Component({
     selector: "dialog-custom-filter",
@@ -51,8 +53,10 @@ export class DialogCustomList implements OnInit {
     public ccState = inject(CreditCardState);
     public compState = inject(CompanyState);
     public bankState = inject(BankState);
-    public clState = inject(CustomListState);
+    public filterState = inject(CustomFilterState);
+    public billService = inject(ServiceBill);
     public snack = inject(CustomSnackbarComponent);
+    public localStorage = inject(LocalStorageService);
 
     @ViewChild(ModalComponent) modalComponent: any;
     @ViewChild("typebill") typebill: MatSelect;
@@ -80,8 +84,12 @@ export class DialogCustomList implements OnInit {
 
     ngOnInit() {
         this.modalState.onSubmitFooter("OK", "cancel");
-        this.modalState.disableButton();
         this.modalState.changeHeader("add filters");
+
+        this.filterState.filters$.subscribe({
+            next: (filters) => (this.selectedFilters = [...filters]),
+            error: () => (this.selectedFilters = []),
+        });
     }
 
     isData(item: AvailableFilters): item is AvailableDataFilters {
@@ -92,7 +100,7 @@ export class DialogCustomList implements OnInit {
         const filter = event.value;
         const hasFilter = this.selectedFilters.find((f) => f.id === filter.id);
         if (this.isData(identifier)) {
-            this.clState.datafilters$.subscribe({
+            this.filterState.datafilters$.subscribe({
                 next: (data) => {
                     const hasFilterDefined = data.find((f) => f.id === filter.id);
                     if (!hasFilter && !hasFilterDefined)
@@ -131,7 +139,7 @@ export class DialogCustomList implements OnInit {
                         f.identifier === "max" &&
                         (f.name as number) < value)
             );
-            this.clState.limitFilter$.subscribe({
+            this.filterState.limitFilter$.subscribe({
                 next: (data) => {
                     const hasFilterDefined = data.find(
                         (f) =>
@@ -174,7 +182,7 @@ export class DialogCustomList implements OnInit {
         value = value === "" ? null : parseFloat(value);
         if (value) {
             const hasFilter = this.selectedFilters.find((f) => f.id === value);
-            this.clState.yearFilter$.subscribe({
+            this.filterState.yearFilter$.subscribe({
                 next: (data) => {
                     const hasFilterDefined = data.find((f) => f.id === value);
                     if (!hasFilter && !hasFilterDefined)
@@ -193,7 +201,17 @@ export class DialogCustomList implements OnInit {
         this.selectedFilters.splice(index, 1);
     }
 
+    reduceToFilter() {
+        return {
+            page: 1,
+            limit: 10,
+        };
+    }
+
     onSubmit() {
+        this.filterState.setFilters([...this.selectedFilters]);
+        this.localStorage.setFilters(JSON.stringify(this.selectedFilters));
+        this.billService.getBills(this.reduceToFilter());
         console.log("CHIPS", this.selectedFilters);
     }
 }

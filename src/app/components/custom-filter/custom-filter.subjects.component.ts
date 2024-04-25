@@ -1,7 +1,9 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
+import { LocalStorageService } from "src/app/services/local-storage.service";
 import {
     AvailableFilters,
+    FilterDisplay,
     LimitFilter,
     ListFilter,
     MonthFilter,
@@ -11,7 +13,10 @@ import {
 @Injectable({
     providedIn: "root",
 })
-export class CustomListState {
+export class CustomFilterState {
+    public localStorage = inject(LocalStorageService);
+
+    private _filters$ = new BehaviorSubject<FilterDisplay[]>([]);
     private _datafilters$ = new BehaviorSubject<ListFilter[]>([]);
     private _monthFilters$ = new BehaviorSubject<MonthFilter[]>([]);
     private _yearFilters$ = new BehaviorSubject<YearFilter[]>([]);
@@ -22,6 +27,7 @@ export class CustomListState {
     public readonly monthFilter$ = this._monthFilters$.asObservable();
     public readonly yearFilter$ = this._yearFilters$.asObservable();
     public readonly limitFilter$ = this._limitFilters$.asObservable();
+    public readonly filters$ = this._filters$.asObservable();
 
     addMonth(month: MonthFilter) {
         let auxMonths = [...this._monthFilters$.getValue()];
@@ -67,7 +73,19 @@ export class CustomListState {
         }
     }
 
-    getFilterDisplayFromSector(sector: string) {}
+    setFilters(filters: FilterDisplay[]) {
+        this._filters$.next(filters);
+    }
+
+    removeFilter(filter: FilterDisplay) {
+        const index = this._filters$.getValue().findIndex((f) => f.id === filter.id);
+        if (index >= 0) {
+            let auxFilter = [...this._filters$.getValue()];
+            auxFilter.splice(index, 1);
+            this._filters$.next(auxFilter);
+            this.localStorage.setFilters(JSON.stringify(auxFilter));
+        }
+    }
 
     setAvailableFilters(availableFilters: AvailableFilters[]) {
         this._availableFilters$.next(availableFilters);

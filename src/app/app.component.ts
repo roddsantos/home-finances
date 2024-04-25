@@ -4,6 +4,7 @@ import { UserState } from "src/app/subjects/subjects.user";
 import { TypeBillState } from "./subjects/subjects.type-bills";
 import { TypeBill } from "./types/objects";
 import { ServiceTypeBill } from "./services/type-bill.service";
+import { CustomFilterState } from "./components/custom-filter/custom-filter.subjects.component";
 
 @Component({
     selector: "app-root",
@@ -16,6 +17,7 @@ export class AppComponent {
     public userState = inject(UserState);
     public tbState = inject(TypeBillState);
     public tbService = inject(ServiceTypeBill);
+    public filterState = inject(CustomFilterState);
 
     title = "bills-app";
 
@@ -35,5 +37,9 @@ export class AppComponent {
                 error: () => this.tbState.changeStatus("error"),
             });
         }
+
+        const filters = this.storage.getFilters();
+        if (filters) this.filterState.setFilters(filters);
+        else this.filterState.setFilters([]);
     }
 }

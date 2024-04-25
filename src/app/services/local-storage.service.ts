@@ -24,7 +24,6 @@ export class LocalStorageService {
 
     setTypeBills(typeBills: string) {
         localStorage.setItem("typeBills", typeBills);
-        localStorage.setItem("hasTypeBills", "true");
     }
 
     getTypeBills() {
@@ -35,5 +34,18 @@ export class LocalStorageService {
     removeTypeBills() {
         localStorage.removeItem("typeBills");
         localStorage.removeItem("hasTypeBills");
+    }
+
+    setFilters(filters: string) {
+        localStorage.setItem("filters", filters);
+    }
+
+    getFilters() {
+        let filters = localStorage.getItem("filters");
+        return filters ? JSON.parse(filters) : null;
+    }
+
+    removeFilters() {
+        localStorage.removeItem("filters");
     }
 }
