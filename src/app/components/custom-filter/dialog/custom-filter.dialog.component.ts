@@ -199,7 +199,7 @@ export class DialogCustomList implements OnInit {
     onSubmit() {
         this.filterState.setFilters([...this.selectedFilters]);
         this.localStorage.setFilters(JSON.stringify(this.selectedFilters));
-        this.billService.getBills(1, 10).subscribe({
+        this.billService.getBills().subscribe({
             next: (data) => {
                 if ((data as Array<Bill & BillData>).length === 0)
                     this.billState.changeStatus("empty", "no bills");

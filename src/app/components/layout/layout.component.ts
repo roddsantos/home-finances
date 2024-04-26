@@ -9,14 +9,7 @@ import { Dialog } from "@angular/cdk/dialog";
 import { Overlay } from "@angular/cdk/overlay";
 import { ServiceBill } from "src/app/services/bill.service";
 import { BillState } from "src/app/subjects/subjects.bill";
-import {
-    Bank,
-    Bill,
-    BillData,
-    Company,
-    CreditCard,
-    TypeBill,
-} from "src/app/types/objects";
+import { Bank, Bill, BillData, Company, CreditCard } from "src/app/types/objects";
 import { ServiceBank } from "src/app/services/bank.service";
 import { UserState } from "src/app/subjects/subjects.user";
 import { BankState } from "src/app/subjects/subjects.bank";
@@ -30,6 +23,7 @@ import { CreditCardState } from "src/app/subjects/subjects.credit-card";
 import { ServiceTypeBill } from "src/app/services/type-bill.service";
 import { TypeBillState } from "src/app/subjects/subjects.type-bills";
 import { CustomFilterState } from "../custom-filter/custom-filter.subjects.component";
+import { FetchPaginatedData } from "src/app/types/services";
 
 @Component({
     standalone: true,
@@ -66,11 +60,11 @@ export class LayoutComponent implements AfterViewInit {
     public tbState = inject(TypeBillState);
 
     ngOnInit() {
-        this.billApi.getBills(1, 5).subscribe({
+        this.billApi.getBills().subscribe({
             next: (data) => {
-                if ((data as Array<Bill & BillData>).length === 0)
-                    this.billState.changeStatus("empty", "no bills");
-                else this.billState.setBills(data as Array<Bill & BillData>);
+                const result = data as FetchPaginatedData<Bill & BillData>;
+                if (result.count === 0) this.billState.changeStatus("empty", "no bills");
+                else this.billState.setBills(result.data);
             },
             error: () => {
                 this.snack.openSnackBar("error fetching bills", "error");

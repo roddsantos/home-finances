@@ -50,3 +50,8 @@ export type ListAction = {
     tooltip?: string;
     color?: string;
 };
+
+export type PaginationType = {
+    page: number;
+    limit: number;
+};

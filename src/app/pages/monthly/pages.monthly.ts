@@ -15,6 +15,8 @@ import { ServiceTemplateMonthly } from "./templates/service/service.template.mon
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { ServiceBill } from "src/app/services/bill.service";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
+import { FetchPaginatedData } from "src/app/types/services";
+import { PaginationTemplate } from "./templates/pagination/pagination.template.monthly";
 
 @Component({
     selector: "page-monthly",
@@ -31,6 +33,7 @@ import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/cust
         CreditCardTemplateMonthly,
         ServiceTemplateMonthly,
         FeedbackContainerComponent,
+        PaginationTemplate,
     ],
 })
 export class PageMonthly {
@@ -100,11 +103,11 @@ export class PageMonthly {
     }
 
     getBills() {
-        this.billService.getBills(1, 10).subscribe({
+        this.billService.getBills().subscribe({
             next: (data) => {
-                if ((data as Array<Bill & BillData>).length === 0)
-                    this.billState.changeStatus("empty", "no bills");
-                else this.billState.setBills(data as Array<Bill & BillData>);
+                const result = data as FetchPaginatedData<Bill & BillData>;
+                if (result.count === 0) this.billState.changeStatus("empty", "no bills");
+                else this.billState.setBills(result.data);
             },
             error: () => {
                 this.snack.openSnackBar("error fetching bills", "error");

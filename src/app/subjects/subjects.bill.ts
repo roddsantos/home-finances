@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { Bill, BillData } from "src/app/types/objects";
-import { FeedbackInfo, FeedbackVariant } from "../types/components";
+import { FeedbackInfo, FeedbackVariant, PaginationType } from "../types/components";
 
 @Injectable({
     providedIn: "root",
@@ -15,9 +15,14 @@ export class BillState {
         action: undefined,
         variant: "loading",
     });
+    private _billsPagination$ = new BehaviorSubject<PaginationType>({
+        page: 1,
+        limit: 10,
+    });
 
     public readonly status$ = this._status$.asObservable();
     public readonly bills$ = this._bills$.asObservable();
+    public readonly billsPagination$ = this._billsPagination$.asObservable();
 
     changeStatus(variant: FeedbackVariant, title: string) {
         this._status$.next({ ...this._status$.getValue(), variant, title });
@@ -47,5 +52,19 @@ export class BillState {
 
     setAction(action: () => void) {
         this._status$.next({ ...this._status$.getValue(), action });
+    }
+
+    setPage(page: number) {
+        this._billsPagination$.next({
+            page,
+            limit: this._billsPagination$.getValue().limit,
+        });
+    }
+
+    setLimit(limit: number) {
+        this._billsPagination$.next({
+            page: this._billsPagination$.getValue().page,
+            limit,
+        });
     }
 }

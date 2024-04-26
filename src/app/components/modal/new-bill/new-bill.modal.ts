@@ -185,7 +185,7 @@ export class ModalNewBill implements OnInit {
         }
         observer?.subscribe({
             next: () => {
-                this.billService.getBills(1, 10).subscribe({
+                this.billService.getBills().subscribe({
                     next: (data) =>
                         this.billState.setBills(
                             data as unknown as Array<Bill & BillData>

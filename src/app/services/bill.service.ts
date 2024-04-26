@@ -11,6 +11,7 @@ import { BillObject } from "../types/services";
 import { UserState } from "../subjects/subjects.user";
 import { mergeMap, zip } from "rxjs";
 import { CustomFilterState } from "../components/custom-filter/custom-filter.subjects.component";
+import { BillState } from "../subjects/subjects.bill";
 
 @Injectable({
     providedIn: "root",
@@ -19,15 +20,20 @@ export class ServiceBill {
     private http = inject(HttpClient);
     private user = inject(UserState);
     private filterState = inject(CustomFilterState);
+    private billState = inject(BillState);
 
-    getBills(page: number, limit: number) {
-        return zip([this.filterState.filters$, this.user.user$]).pipe(
-            mergeMap(([filters, user]) =>
+    getBills() {
+        return zip([
+            this.filterState.filters$,
+            this.billState.billsPagination$,
+            this.user.user$,
+        ]).pipe(
+            mergeMap(([filters, pagination, user]) =>
                 this.http.get(BILL, {
                     params: {
                         data: filters ? JSON.stringify(filters) : "",
-                        page,
-                        limit,
+                        page: pagination.page,
+                        limit: pagination.limit,
                         userId: user!.id,
                     },
                 })

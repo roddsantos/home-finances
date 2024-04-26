@@ -8,6 +8,7 @@
             *ngIf="(billState.bills$| async)?.length === 0"
             [info]="(billState.status$ | async)!"
         ></feedback-container>
+        <pagination-template></pagination-template>
         <ng-template
             ngFor
             let-item

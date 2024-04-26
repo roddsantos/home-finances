@@ -48,7 +48,7 @@ export class CustomFilterComponent {
     removeFilter(filter?: FilterDisplay) {
         if (filter) {
             this.filterState.removeFilter(filter);
-            this.billService.getBills(1, 10).subscribe({
+            this.billService.getBills().subscribe({
                 next: (data) => {
                     if ((data as Array<Bill & BillData>).length === 0)
                         this.billState.changeStatus("empty", "no bills");

@@ -89,3 +89,8 @@ export type GetBillsFilter = {
     data?: string;
     status?: "all" | "pending" | "settled";
 };
+
+export type FetchPaginatedData<T = any> = {
+    count: number;
+    data: T[];
+};
