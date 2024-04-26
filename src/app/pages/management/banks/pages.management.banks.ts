@@ -30,32 +30,28 @@ export class BanksManagementComponent {
     public bankState = inject(BankState);
     private snack = inject(CustomSnackbarComponent);
 
-    typeObject: FeedbackInfo = {
-        title: "no banks",
-        actionLabel: "reload",
-        action: () => this.onReload(),
-        variant: "empty",
-    };
-
     getBanks(reloaded?: boolean) {
         this.bankApi.getBanks().subscribe({
             next: (banks) => {
                 this.bankState.setBanks(banks as Bank[]);
-                this.typeObject.variant =
-                    (banks as Bank[]).length === 0 ? "empty" : "loading";
+                this.bankState.changeStatus(
+                    (banks as Bank[]).length === 0 ? "empty" : "none",
+                    "no banks"
+                );
             },
             error: () => {
-                if (reloaded) this.snack.openSnackBar("Error fetching banks", "error");
-                this.bankState.changeStatus("error");
-                this.typeObject.variant = "error";
+                if (reloaded) this.snack.openSnackBar("error fetching banks", "error");
+                this.bankState.changeStatus("error", "error fetching banks");
             },
         });
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.bankState.setAction(() => this.onReload());
+    }
 
     onReload() {
-        this.typeObject.variant = "loading";
+        this.bankState.changeStatus("loading", "loading");
         this.getBanks(true);
     }
 

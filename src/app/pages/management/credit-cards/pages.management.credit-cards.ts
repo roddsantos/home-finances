@@ -26,13 +26,6 @@ export class CreditCardsManagementComponent {
     public storage = inject(LocalStorageService);
     private snack = inject(CustomSnackbarComponent);
 
-    typeObject: FeedbackInfo = {
-        variant: "empty",
-        title: "no credit cards",
-        actionLabel: "reload",
-        action: () => this.onReload(),
-    };
-
     getCreditCards(reloaded?: boolean) {
         this.userState.user$
             .pipe(
@@ -46,22 +39,25 @@ export class CreditCardsManagementComponent {
             .subscribe({
                 next: (ccs) => {
                     this.ccState.setCreditCards(ccs as CreditCard[]);
-                    this.typeObject.variant =
-                        (ccs as CreditCard[]).length === 0 ? "empty" : "loading";
+                    this.ccState.changeStatus(
+                        (ccs as CreditCard[]).length === 0 ? "empty" : "none",
+                        "no companies"
+                    );
                 },
                 error: () => {
                     if (reloaded)
-                        this.snack.openSnackBar("Error fetching banks", "error");
-                    this.ccState.changeStatus("error");
-                    this.typeObject.variant = "error";
+                        this.snack.openSnackBar("error fetching credit cards", "error");
+                    this.ccState.changeStatus("error", "error fetching credit cards");
                 },
             });
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.ccState.setAction(() => this.onReload());
+    }
 
     onReload() {
-        this.typeObject.variant = "loading";
+        this.ccState.changeStatus("loading", "loading");
         this.getCreditCards(true);
     }
 }

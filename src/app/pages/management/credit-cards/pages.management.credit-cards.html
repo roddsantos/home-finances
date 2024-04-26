@@ -1,7 +1,7 @@
 <div class="tab-container">
     <feedback-container
         *ngIf="(ccState.creditCards$ | async)?.length === 0"
-        [info]="typeObject"
+        [info]="(ccState.status$ | async)!"
     ></feedback-container>
     <li *ngFor="let creditCard of (ccState.creditCards$ | async)">
         <div class="cc-item-list">

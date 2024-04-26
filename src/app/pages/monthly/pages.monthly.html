@@ -4,10 +4,14 @@
     </button>
     <custom-filter></custom-filter>
     <div class="bill-list-container">
+        <feedback-container
+            *ngIf="(billState.bills$| async)?.length === 0"
+            [info]="(billState.status$ | async)!"
+        ></feedback-container>
         <ng-template
             ngFor
             let-item
-            [ngForOf]="(bills.bills$ | async)"
+            [ngForOf]="(billState.bills$ | async)"
             let-i="index"
             [ngForTrackBy]="trackByFn"
         >

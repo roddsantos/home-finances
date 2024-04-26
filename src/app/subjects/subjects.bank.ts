@@ -1,26 +1,36 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { ListStatus } from "src/app/types/general";
 import { Bank } from "src/app/types/objects";
+import { FeedbackInfo, FeedbackVariant } from "../types/components";
 
 @Injectable({
     providedIn: "root",
 })
 export class BankState {
     private _banks$ = new BehaviorSubject<Bank[]>([]);
-    private _status$ = new BehaviorSubject<ListStatus>("empty");
+    private _status$ = new BehaviorSubject<FeedbackInfo>({
+        title: "loading",
+        description: "",
+        actionLabel: "reload",
+        action: undefined,
+        variant: "loading",
+    });
 
     public readonly status$ = this._status$.asObservable();
     public readonly banks$ = this._banks$.asObservable();
 
-    changeStatus(newStatus: ListStatus) {
-        this._status$.next(newStatus);
-        if (newStatus !== "data") this._banks$.next([]);
+    changeStatus(variant: FeedbackVariant, title: string) {
+        this._status$.next({ ...this._status$.getValue(), variant, title });
+        if (variant !== "none" && variant !== "loading") this._banks$.next([]);
+    }
+
+    changeVariant(variant: FeedbackVariant) {
+        this._status$.next({ ...this._status$.getValue(), variant });
     }
 
     setBanks(banks: Bank[]) {
-        if (banks.length === 0) this._status$.next("empty");
-        else this._status$.next("data");
+        if (banks.length === 0) this.changeStatus("empty", "no banks");
+        else this.changeVariant("none");
 
         this._banks$.next(banks);
     }
@@ -32,5 +42,13 @@ export class BankState {
         else auxBanks = [bank, ...auxBanks];
 
         this._banks$.next(auxBanks);
+    }
+
+    setStatus(status: FeedbackInfo) {
+        this._status$.next(status);
+    }
+
+    setAction(action: () => void) {
+        this._status$.next({ ...this._status$.getValue(), action });
     }
 }

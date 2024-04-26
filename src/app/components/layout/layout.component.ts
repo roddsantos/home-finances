@@ -69,12 +69,12 @@ export class LayoutComponent implements AfterViewInit {
         this.billApi.getBills(1, 5).subscribe({
             next: (data) => {
                 if ((data as Array<Bill & BillData>).length === 0)
-                    this.billState.changeStatus("empty");
+                    this.billState.changeStatus("empty", "no bills");
                 else this.billState.setBills(data as Array<Bill & BillData>);
             },
             error: () => {
-                this.snack.openSnackBar("error getting bills", "error");
-                this.billState.changeStatus("error");
+                this.snack.openSnackBar("error fetching bills", "error");
+                this.billState.changeStatus("error", "error fetching bills");
             },
         });
 
@@ -88,32 +88,43 @@ export class LayoutComponent implements AfterViewInit {
             }),
         ]).subscribe({
             next: ([user, banks, comps, ccs]) => {
-                if (!user) this.snack.openSnackBar("Error fetching banks", "error");
-                else {
+                if (!user) {
+                    this.snack.openSnackBar("user not logged", "error");
+                    this.compState.changeStatus("http", "user not logged");
+                    this.bankState.changeStatus("http", "user not logged");
+                    this.ccState.changeStatus("http", "user not logged");
+                } else {
                     this.bankState.setBanks(banks as Bank[]);
-                    this.bankState.changeStatus(
-                        (banks as Bank[]).length > 0 ? "data" : "empty"
+                    this.bankState.changeVariant(
+                        (banks as Bank[]).length > 0 ? "none" : "empty"
                     );
                     this.compState.setCompanies(comps as Company[]);
-                    this.compState.changeStatus(
-                        (comps as Company[]).length > 0 ? "data" : "empty"
+                    this.compState.changeVariant(
+                        (comps as Company[]).length > 0 ? "none" : "empty"
                     );
                     this.ccState.setCreditCards(ccs as CreditCard[]);
-                    this.ccState.changeStatus(
-                        (ccs as CreditCard[]).length > 0 ? "data" : "empty"
+                    this.ccState.changeVariant(
+                        (ccs as CreditCard[]).length > 0 ? "none" : "empty"
                     );
                 }
             },
             error: (err: HttpErrorResponse) => {
-                console.log(err);
-                if (err.url?.includes("4001/bill") || err.status === 0)
-                    this.billState.changeStatus("error");
-                if (err.url?.includes("4001/company") || err.status === 0)
-                    this.compState.changeStatus("error");
-                if (err.url?.includes("4001/bank") || err.status === 0)
-                    this.bankState.changeStatus("error");
-                if (err.url?.includes("4001/credit-card") || err.status === 0)
-                    this.ccState.changeStatus("error");
+                console.log(err.url);
+                if (err.message.includes("reading 'id'")) {
+                    this.billState.changeStatus("error", "user not logged in");
+                    this.compState.changeStatus("error", "user not logged in");
+                    this.bankState.changeStatus("error", "user not logged in");
+                    this.ccState.changeStatus("error", "user not logged in");
+                } else {
+                    if (err.url?.includes("4001/bill") || err.status === 0)
+                        this.billState.changeStatus("http", "error fetching bills");
+                    if (err.url?.includes("4001/company") || err.status === 0)
+                        this.compState.changeStatus("http", "error fetching companies");
+                    if (err.url?.includes("4001/bank") || err.status === 0)
+                        this.bankState.changeStatus("http", "error fetching banks");
+                    if (err.url?.includes("4001/credit-card") || err.status === 0)
+                        this.ccState.changeStatus("http", "error fetching credit cards");
+                }
             },
         });
     }

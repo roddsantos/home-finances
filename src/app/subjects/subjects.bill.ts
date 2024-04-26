@@ -1,27 +1,36 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { ListStatus } from "src/app/types/general";
 import { Bill, BillData } from "src/app/types/objects";
+import { FeedbackInfo, FeedbackVariant } from "../types/components";
 
 @Injectable({
     providedIn: "root",
 })
 export class BillState {
     private _bills$ = new BehaviorSubject<Array<Bill & BillData>>([]);
-    private _status$ = new BehaviorSubject<ListStatus>("empty");
+    private _status$ = new BehaviorSubject<FeedbackInfo>({
+        title: "loading",
+        description: "",
+        actionLabel: "reload",
+        action: undefined,
+        variant: "loading",
+    });
 
     public readonly status$ = this._status$.asObservable();
     public readonly bills$ = this._bills$.asObservable();
 
-    changeStatus(newStatus: ListStatus) {
-        this._status$.next(newStatus);
-        if (newStatus !== "data") this._bills$.next([]);
+    changeStatus(variant: FeedbackVariant, title: string) {
+        this._status$.next({ ...this._status$.getValue(), variant, title });
+        if (variant !== "none" && variant !== "loading") this._bills$.next([]);
+    }
+
+    changeVariant(variant: FeedbackVariant) {
+        this._status$.next({ ...this._status$.getValue(), variant });
     }
 
     setBills(bills: Array<Bill & BillData>) {
-        if (bills.length === 0) this._status$.next("empty");
-        else this._status$.next("data");
-
+        if (bills.length === 0) this.changeStatus("empty", "no bills");
+        else this.changeVariant("none");
         this._bills$.next(bills);
     }
 
@@ -30,5 +39,13 @@ export class BillState {
         auxBills = [...bill, ...auxBills];
 
         this._bills$.next(auxBills);
+    }
+
+    setStatus(status: FeedbackInfo) {
+        this._status$.next(status);
+    }
+
+    setAction(action: () => void) {
+        this._status$.next({ ...this._status$.getValue(), action });
     }
 }

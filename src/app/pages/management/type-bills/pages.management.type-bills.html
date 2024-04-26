@@ -1,7 +1,7 @@
 <div class="tab-container">
     <feedback-container
         *ngIf="(tbState.typeBill$ | async)?.length === 0"
-        [info]="typeObject"
+        [info]="(tbState.status$ | async)!"
     ></feedback-container>
     <li *ngFor="let typeBill of tbState.typeBill$ | async">
         <div class="type-item-list">

@@ -12,6 +12,9 @@ import { getMonthAndYear } from "src/utils/date";
 import { BankListTemplateMonthly } from "./templates/bank/bank.template.monthly";
 import { CreditCardTemplateMonthly } from "./templates/credit-card/credit-card.template.monthly";
 import { ServiceTemplateMonthly } from "./templates/service/service.template.monthly";
+import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
+import { ServiceBill } from "src/app/services/bill.service";
+import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 
 @Component({
     selector: "page-monthly",
@@ -27,14 +30,21 @@ import { ServiceTemplateMonthly } from "./templates/service/service.template.mon
         BankListTemplateMonthly,
         CreditCardTemplateMonthly,
         ServiceTemplateMonthly,
+        FeedbackContainerComponent,
     ],
 })
 export class PageMonthly {
-    public bills = inject(BillState);
+    public billState = inject(BillState);
     public dialog = inject(Dialog);
+    public billService = inject(ServiceBill);
+    public snack = inject(CustomSnackbarComponent);
 
     titleItems: Partial<keyof Bill>[] = ["name", "updatedAt"];
     detailsItems: Partial<keyof Bill>[] = ["description", "total"];
+
+    ngOnInit() {
+        this.billState.setAction(() => this.onReload());
+    }
 
     trackByFn(index: number, item: any) {
         return item.id;
@@ -87,5 +97,24 @@ export class PageMonthly {
             hasBackdrop: true,
             backdropClass: "modal-backdrop",
         });
+    }
+
+    getBills() {
+        this.billService.getBills(1, 10).subscribe({
+            next: (data) => {
+                if ((data as Array<Bill & BillData>).length === 0)
+                    this.billState.changeStatus("empty", "no bills");
+                else this.billState.setBills(data as Array<Bill & BillData>);
+            },
+            error: () => {
+                this.snack.openSnackBar("error fetching bills", "error");
+                this.billState.changeStatus("error", "error fetching bills");
+            },
+        });
+    }
+
+    onReload() {
+        this.billState.changeStatus("loading", "loading");
+        this.getBills();
     }
 }

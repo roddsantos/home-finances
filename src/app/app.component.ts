@@ -27,16 +27,15 @@ export class AppComponent {
 
         const tbs = this.storage.getTypeBills();
         if (tbs) this.tbState.setTypeBill(tbs);
-        else {
-            console.log("TBS", tbs);
+        else
             this.tbService.getTypeBills().subscribe({
                 next: (tb) => {
                     this.tbState.setTypeBill(tb as TypeBill[]);
                     this.storage.setTypeBills(JSON.stringify(tb));
                 },
-                error: () => this.tbState.changeStatus("error"),
+                error: () =>
+                    this.tbState.changeStatus("error", "error fetching bills type"),
             });
-        }
 
         const filters = this.storage.getFilters();
         if (filters) this.filterState.setFilters(filters);
