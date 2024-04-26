@@ -185,9 +185,11 @@ export class ModalNewBill implements OnInit {
         }
         observer?.subscribe({
             next: () => {
-                this.billService.getBills({ limit: 10, page: 1 }).subscribe({
+                this.billService.getBills(1, 10).subscribe({
                     next: (data) =>
-                        this.billState.setBills(data as Array<Bill & BillData>),
+                        this.billState.setBills(
+                            data as unknown as Array<Bill & BillData>
+                        ),
                 });
                 this.snack.openSnackBar("bill successfully created", "success");
                 this.modalComponent.onClose();

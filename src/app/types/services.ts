@@ -82,8 +82,10 @@ export type GetCreditCard = {
 export type GetBillsFilter = {
     page: number;
     limit: number;
-    typeBillId?: string;
-    month?: string;
+    months?: number[];
+    min?: number;
+    max?: number;
     year?: number;
-    settled?: boolean;
+    data?: string;
+    status?: "all" | "pending" | "settled";
 };

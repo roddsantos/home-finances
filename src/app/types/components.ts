@@ -34,33 +34,9 @@ export type AvailableFilters =
     | "bank"
     | "min"
     | "max"
-    | "datespam";
+    | "status";
 
 export type AvailableDataFilters = "typebill" | "creditcard" | "bank" | "company";
-
-export type ListFilter = {
-    id: string;
-    identifier: AvailableDataFilters;
-    name: string;
-};
-
-export type MonthFilter = {
-    id: number;
-    identifier: "month";
-    name: string;
-};
-
-export type YearFilter = {
-    id: number;
-    identifier: "year";
-    name: number;
-};
-
-export type LimitFilter = {
-    id: number;
-    identifier: "max" | "min";
-    name: number;
-};
 
 export type FilterDisplay = {
     id: string | number;

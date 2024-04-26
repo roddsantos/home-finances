@@ -3,15 +3,14 @@ import {
     BillObjectCompany,
     BillObjectCredtCard,
     BillObjectService,
-    GetBillsFilter,
 } from "../types/services";
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BILL } from "src/utils/constants/services";
 import { BillObject } from "../types/services";
 import { UserState } from "../subjects/subjects.user";
-import { mergeMap } from "rxjs";
-import { parseFilters } from "src/utils/parser";
+import { mergeMap, zip } from "rxjs";
+import { CustomFilterState } from "../components/custom-filter/custom-filter.subjects.component";
 
 @Injectable({
     providedIn: "root",
@@ -19,17 +18,20 @@ import { parseFilters } from "src/utils/parser";
 export class ServiceBill {
     private http = inject(HttpClient);
     private user = inject(UserState);
+    private filterState = inject(CustomFilterState);
 
-    getBills(filters: GetBillsFilter) {
-        return this.user.user$.pipe(
-            mergeMap((user) => {
-                return this.http.get(BILL, {
+    getBills(page: number, limit: number) {
+        return zip([this.filterState.filters$, this.user.user$]).pipe(
+            mergeMap(([filters, user]) =>
+                this.http.get(BILL, {
                     params: {
-                        ...filters,
+                        data: filters ? JSON.stringify(filters) : "",
+                        page,
+                        limit,
                         userId: user!.id,
                     },
-                });
-            })
+                })
+            )
         );
     }
 

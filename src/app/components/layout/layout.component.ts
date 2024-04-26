@@ -29,6 +29,7 @@ import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { CreditCardState } from "src/app/subjects/subjects.credit-card";
 import { ServiceTypeBill } from "src/app/services/type-bill.service";
 import { TypeBillState } from "src/app/subjects/subjects.type-bills";
+import { CustomFilterState } from "../custom-filter/custom-filter.subjects.component";
 
 @Component({
     standalone: true,
@@ -46,6 +47,7 @@ export class LayoutComponent implements AfterViewInit {
     public dialog = inject(Dialog);
     public overlay = inject(Overlay);
     private snack = inject(CustomSnackbarComponent);
+    public filtersState = inject(CustomFilterState);
 
     public billApi = inject(ServiceBill);
     public billState = inject(BillState);
@@ -64,8 +66,16 @@ export class LayoutComponent implements AfterViewInit {
     public tbState = inject(TypeBillState);
 
     ngOnInit() {
-        this.billApi.getBills({ limit: 10, page: 1 }).subscribe({
-            next: (data) => this.billState.setBills(data as Array<Bill & BillData>),
+        this.billApi.getBills(1, 5).subscribe({
+            next: (data) => {
+                if ((data as Array<Bill & BillData>).length === 0)
+                    this.billState.changeStatus("empty");
+                else this.billState.setBills(data as Array<Bill & BillData>);
+            },
+            error: () => {
+                this.snack.openSnackBar("error getting bills", "error");
+                this.billState.changeStatus("error");
+            },
         });
 
         zip([

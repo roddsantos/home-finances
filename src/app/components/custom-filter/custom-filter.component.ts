@@ -8,6 +8,10 @@ import { MatIcon } from "@angular/material/icon";
 import { CommonModule } from "@angular/common";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatChipsModule } from "@angular/material/chips";
+import { ServiceBill } from "src/app/services/bill.service";
+import { BillState } from "src/app/subjects/subjects.bill";
+import { Bill, BillData } from "src/app/types/objects";
+import { CustomSnackbarComponent } from "../custom-snackbar/custom-snackbar.component";
 
 @Injectable({
     providedIn: "root",
@@ -22,6 +26,9 @@ import { MatChipsModule } from "@angular/material/chips";
 export class CustomFilterComponent {
     public dialog = inject(Dialog);
     public filterState = inject(CustomFilterState);
+    public billService = inject(ServiceBill);
+    public billState = inject(BillState);
+    public snack = inject(CustomSnackbarComponent);
 
     @Input() availableFilters: AvailableFilters[];
     @Input() data: Array<any> = [];
@@ -38,7 +45,20 @@ export class CustomFilterComponent {
         });
     }
 
-    removeFilter(filter: FilterDisplay) {
-        this.filterState.removeFilter(filter);
+    removeFilter(filter?: FilterDisplay) {
+        if (filter) {
+            this.filterState.removeFilter(filter);
+            this.billService.getBills(1, 10).subscribe({
+                next: (data) => {
+                    if ((data as Array<Bill & BillData>).length === 0)
+                        this.billState.changeStatus("empty");
+                    else this.billState.setBills(data as Array<Bill & BillData>);
+                },
+                error: () => {
+                    this.snack.openSnackBar("error getting bills", "error");
+                    this.billState.changeStatus("error");
+                },
+            });
+        } else this.filterState.removeAll();
     }
 }
