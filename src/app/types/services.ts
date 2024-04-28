@@ -1,3 +1,5 @@
+import { PaymentTypes } from "./general";
+
 export type UserObject = {
     name: string;
     surname: string;
@@ -32,7 +34,8 @@ export type BillObject = {
     description: string;
     total: number;
     settled: boolean;
-    typeBillId: string;
+    type: PaymentTypes;
+    categoryId: string;
     due: Date;
     month: number;
     year: number;

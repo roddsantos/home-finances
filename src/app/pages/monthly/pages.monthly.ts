@@ -54,14 +54,12 @@ export class PageMonthly {
     }
 
     getSpecialLabel(item: Bill & Partial<BillData>) {
-        switch (item.typeBill?.referTo) {
+        switch (item.type) {
             case "creditCard":
                 return item.creditCard?.name;
-            case "banks":
+            case "money":
                 return item.bank1?.name;
-            case "company":
-                return item.company?.name;
-            case "service":
+            case "companyCredit":
                 return item.company?.name;
             default:
                 return;
@@ -69,15 +67,13 @@ export class PageMonthly {
     }
 
     getTypeTranslation(item: Bill & Partial<BillData>) {
-        switch (item.typeBill?.referTo) {
+        switch (item.type) {
             case "creditCard":
                 return "credit card";
-            case "banks":
-                return "bank";
-            case "service":
-                return "service";
-            case "company":
-                return "company";
+            case "money":
+                return "money";
+            case "companyCredit":
+                return "company credit";
             default:
                 return;
         }

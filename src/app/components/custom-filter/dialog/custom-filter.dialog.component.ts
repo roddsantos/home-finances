@@ -4,7 +4,7 @@ import { ModalComponent } from "src/app/components/modal/modal.component";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { AvailableDataFilters, FilterDisplay } from "src/app/types/components";
-import { TypeBillState } from "src/app/subjects/subjects.type-bills";
+import { CategoryState } from "src/app/subjects/subjects.category";
 import { CommonModule } from "@angular/common";
 import { MatSelect, MatSelectChange, MatSelectModule } from "@angular/material/select";
 import { MatIconModule } from "@angular/material/icon";
@@ -52,7 +52,7 @@ import { Bill, BillData } from "src/app/types/objects";
 })
 export class DialogCustomList implements OnInit {
     public modalState = inject(ModalState);
-    public tbState = inject(TypeBillState);
+    public catState = inject(CategoryState);
     public ccState = inject(CreditCardState);
     public compState = inject(CompanyState);
     public bankState = inject(BankState);
@@ -63,7 +63,7 @@ export class DialogCustomList implements OnInit {
     public localStorage = inject(LocalStorageService);
 
     @ViewChild(ModalComponent) modalComponent: ModalComponent;
-    @ViewChild("typebill") typebill: MatSelect;
+    @ViewChild("category") category: MatSelect;
     @ViewChild("creditcard") creditcard: MatSelect;
     @ViewChild("company") company: MatSelect;
     @ViewChild("bank") bank: MatSelect;
@@ -74,7 +74,7 @@ export class DialogCustomList implements OnInit {
     @ViewChild("status") status: MatButtonToggle;
 
     months = MONTHS;
-    tbCtrl = new FormControl<string>("");
+    catCtrl = new FormControl<string>("");
     ccCrtl = new FormControl<string>("");
     compCtrl = new FormControl<string>("");
     bkCtrl = new FormControl<string>("");

@@ -1,19 +1,19 @@
 <div class="tab-container">
     <feedback-container
-        *ngIf="(tbState.typeBill$ | async)?.length === 0"
-        [info]="(tbState.status$ | async)!"
+        *ngIf="(catState.categories$ | async)?.length === 0"
+        [info]="(catState.status$ | async)!"
     ></feedback-container>
-    <li *ngFor="let typeBill of tbState.typeBill$ | async">
-        <div class="type-item-list">
-            <div class="type-item-text">
-                <p class="type-title">{{typeBill.name}}</p>
-                <p class="type-description">{{typeBill.description}}</p>
+    <li *ngFor="let category of catState.categories$ | async">
+        <div class="cat-item-list">
+            <div class="cat-item-text">
+                <p class="cat-title">{{category.name}}</p>
+                <p class="cat-description">{{category.description}}</p>
             </div>
             <mat-icon
                 class="icon-type"
                 aria-hidden="false"
                 aria-label="Example home icon"
-                fontIcon="{{typeBill.icon}}"
+                fontIcon="{{category.icon}}"
             ></mat-icon>
 
             <button class="icon-button" mat-icon-button aria-label="color label">

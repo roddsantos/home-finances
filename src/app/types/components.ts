@@ -28,7 +28,7 @@ export type SizeType = "xm" | "sm" | "md" | "lg" | "xl";
 export type AvailableFilters =
     | "month"
     | "year"
-    | "typebill"
+    | "category"
     | "company"
     | "creditcard"
     | "bank"
@@ -36,7 +36,7 @@ export type AvailableFilters =
     | "max"
     | "status";
 
-export type AvailableDataFilters = "typebill" | "creditcard" | "bank" | "company";
+export type AvailableDataFilters = "category" | "creditcard" | "bank" | "company";
 
 export type FilterDisplay = {
     id: string | number;

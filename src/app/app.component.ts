@@ -1,9 +1,9 @@
 import { Component, ViewEncapsulation, inject } from "@angular/core";
 import { LocalStorageService } from "./services/local-storage.service";
 import { UserState } from "src/app/subjects/subjects.user";
-import { TypeBillState } from "./subjects/subjects.type-bills";
-import { TypeBill } from "./types/objects";
-import { ServiceTypeBill } from "./services/type-bill.service";
+import { CategoryState } from "./subjects/subjects.category";
+import { Category } from "./types/objects";
+import { ServiceCategory } from "./services/type-bill.service";
 import { CustomFilterState } from "./components/custom-filter/custom-filter.subjects.component";
 
 @Component({
@@ -15,8 +15,8 @@ import { CustomFilterState } from "./components/custom-filter/custom-filter.subj
 export class AppComponent {
     public storage = inject(LocalStorageService);
     public userState = inject(UserState);
-    public tbState = inject(TypeBillState);
-    public tbService = inject(ServiceTypeBill);
+    public catState = inject(CategoryState);
+    public catService = inject(ServiceCategory);
     public filterState = inject(CustomFilterState);
 
     title = "bills-app";
@@ -24,17 +24,11 @@ export class AppComponent {
     ngOnInit() {
         const user = this.storage.getUser();
         if (user) this.userState.setUser(user);
-
-        const tbs = this.storage.getTypeBills();
-        if (tbs) this.tbState.setTypeBill(tbs);
         else
-            this.tbService.getTypeBills().subscribe({
-                next: (tb) => {
-                    this.tbState.setTypeBill(tb as TypeBill[]);
-                    this.storage.setTypeBills(JSON.stringify(tb));
-                },
+            this.catService.getCategories().subscribe({
+                next: (cat) => this.catState.setCategory(cat as Category[]),
                 error: () =>
-                    this.tbState.changeStatus("error", "error fetching bills type"),
+                    this.catState.changeStatus("error", "error fetching bills type"),
             });
 
         const filters = this.storage.getFilters();

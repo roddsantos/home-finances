@@ -20,8 +20,8 @@ import { CustomSnackbarComponent } from "../custom-snackbar/custom-snackbar.comp
 import { HttpErrorResponse } from "@angular/common/http";
 import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { CreditCardState } from "src/app/subjects/subjects.credit-card";
-import { ServiceTypeBill } from "src/app/services/type-bill.service";
-import { TypeBillState } from "src/app/subjects/subjects.type-bills";
+import { ServiceCategory } from "src/app/services/type-bill.service";
+import { CategoryState } from "src/app/subjects/subjects.category";
 import { CustomFilterState } from "../custom-filter/custom-filter.subjects.component";
 import { FetchPaginatedData } from "src/app/types/services";
 
@@ -56,8 +56,8 @@ export class LayoutComponent implements AfterViewInit {
     public ccApi = inject(ServiceCreditCard);
     public ccState = inject(CreditCardState);
 
-    public typebillApi = inject(ServiceTypeBill);
-    public tbState = inject(TypeBillState);
+    public catApi = inject(ServiceCategory);
+    public catState = inject(CategoryState);
 
     ngOnInit() {
         this.billApi.getBills().subscribe({

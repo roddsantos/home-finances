@@ -1,14 +1,14 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { TYPEBILL } from "src/utils/constants/services";
+import { CATEGORY } from "src/utils/constants/services";
 
 @Injectable({
     providedIn: "root",
 })
-export class ServiceTypeBill {
+export class ServiceCategory {
     constructor(private http: HttpClient) {}
 
-    getTypeBills() {
-        return this.http.get(TYPEBILL);
+    getCategories() {
+        return this.http.get(CATEGORY);
     }
 }

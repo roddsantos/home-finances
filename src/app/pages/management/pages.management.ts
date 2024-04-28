@@ -6,7 +6,6 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import { MatTabChangeEvent, MatTabGroup, MatTabsModule } from "@angular/material/tabs";
-import { TypeBillsManagementComponent } from "./type-bills/pages.management.type-bills";
 import { ManagementCompaniesComponent } from "./companies/pages.management.companies";
 import { MatButton } from "@angular/material/button";
 import { ModalNewBank } from "src/app/components/modal/new-bank/new-bank.modal";
@@ -19,6 +18,7 @@ import { GeneralState } from "src/app/subjects/subjects.general";
 import { ManagerTabs } from "src/app/types/general";
 import { BanksManagementComponent } from "./banks/pages.management.banks";
 import { ModalNewCreditCard } from "src/app/components/modal/new-credit-card/new-credit-card.modal";
+import { CategoriesManagementComponent } from "./categories/pages.management.categories";
 
 @Component({
     selector: "page-management",
@@ -28,7 +28,7 @@ import { ModalNewCreditCard } from "src/app/components/modal/new-credit-card/new
     encapsulation: ViewEncapsulation.None,
     imports: [
         MatTabsModule,
-        TypeBillsManagementComponent,
+        CategoriesManagementComponent,
         ManagementCompaniesComponent,
         CreditCardsManagementComponent,
         BanksManagementComponent,

@@ -7,13 +7,13 @@
     <form>
         <div class="add-filter-container">
             <mat-form-field
-                *ngIf="(tbState.typeBill$ | async)!.length > 0"
+                *ngIf="(catState.categories$ | async)!.length > 0"
                 class="data-field"
                 appearance="outline"
             >
                 <mat-label>type bills</mat-label>
-                <mat-select #typebill (selectionChange)="addFilter($event, 'typebill')">
-                    @for (m of (tbState.typeBill$ | async); track m) {
+                <mat-select #typebill (selectionChange)="addFilter($event, 'category')">
+                    @for (m of (catState.categories$ | async); track m) {
                     <mat-option [value]="m">{{ m.name }}</mat-option>
                     }
                 </mat-select>
