@@ -62,7 +62,7 @@
                 <mat-select
                     placeholder="select month"
                     #month
-                    (selectionChange)="addFilter($event, 'month')"
+                    (selectionChange)="addMonth($event)"
                 >
                     @for (m of months; track m) {
                     <mat-option [value]="m">{{ m.name }}</mat-option>
@@ -107,6 +107,14 @@
                 @if (maxCtrl.invalid) {
                 <mat-error>invalid max value</mat-error>
                 }
+            </mat-form-field>
+            <mat-form-field class="data-field" appearance="outline">
+                <mat-label>status</mat-label>
+                <mat-select #status (selectionChange)="addStatus($event)">
+                    <mat-option [value]="'all'">all</mat-option>
+                    <mat-option [value]="'pending'">pending</mat-option>
+                    <mat-option [value]="'settled'">settled</mat-option>
+                </mat-select>
             </mat-form-field>
             <p class="chip-grid-title">choosed filters</p>
             <div class="divider"></div>

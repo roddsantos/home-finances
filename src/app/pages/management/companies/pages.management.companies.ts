@@ -6,7 +6,7 @@ import { mergeMap } from "rxjs";
 import { CustomFilterComponent } from "src/app/components/custom-filter/custom-filter.component";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
-import { ServiceCompany } from "src/app/services/services.company";
+import { ServiceCompany } from "src/app/services/company.service";
 import { CompanyState } from "src/app/subjects/subjects.company";
 import { UserState } from "src/app/subjects/subjects.user";
 import { FeedbackInfo } from "src/app/types/components";
@@ -32,35 +32,29 @@ export class ManagementCompaniesComponent {
     public userState = inject(UserState);
     private snack = inject(CustomSnackbarComponent);
 
-    typeObject: FeedbackInfo = {
-        variant: "loading",
-        title: "no companies",
-        actionLabel: "reload",
-        action: () => this.onReload(),
-    };
-
     getCompanies(reloaded?: boolean) {
         this.userState.user$.pipe(mergeMap(() => this.compApi.getCompanies())).subscribe({
             next: (comps) => {
                 this.compState.setCompanies(comps as Company[]);
-                this.typeObject.variant =
-                    (comps as Company[]).length === 0 ? "empty" : "none";
+                this.compState.changeStatus(
+                    (comps as Company[]).length === 0 ? "empty" : "none",
+                    "no companies"
+                );
             },
             error: () => {
-                if (reloaded) this.snack.openSnackBar("Error fetching banks", "error");
-                this.compState.changeStatus("error");
-                this.typeObject.variant = "error";
+                if (reloaded)
+                    this.snack.openSnackBar("error fetching companies", "error");
+                this.compState.changeStatus("error", "error fetching companies");
             },
         });
     }
 
     ngOnInit() {
-        this.typeObject.variant = "loading";
-        this.getCompanies();
+        this.compState.setAction(() => this.onReload());
     }
 
     onReload() {
-        this.typeObject.variant = "loading";
+        this.compState.changeStatus("loading", "loading");
         this.getCompanies(true);
     }
 

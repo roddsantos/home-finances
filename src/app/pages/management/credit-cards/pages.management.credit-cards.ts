@@ -4,8 +4,8 @@ import { MatButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
-import { ServiceCreditCard } from "src/app/services/services.credit-card";
-import { LocalStorageService } from "src/app/services/services.local-storage";
+import { ServiceCreditCard } from "src/app/services/credit-card.service";
+import { LocalStorageService } from "src/app/services/local-storage.service";
 import { FeedbackInfo } from "src/app/types/components";
 import { CreditCard } from "src/app/types/objects";
 import { CreditCardState } from "src/app/subjects//subjects.credit-card";
@@ -26,44 +26,38 @@ export class CreditCardsManagementComponent {
     public storage = inject(LocalStorageService);
     private snack = inject(CustomSnackbarComponent);
 
-    typeObject: FeedbackInfo = {
-        variant: "loading",
-        title: "no credit cards",
-        actionLabel: "reload",
-        action: () => this.onReload(),
-    };
-
     getCreditCards(reloaded?: boolean) {
         this.userState.user$
             .pipe(
                 mergeMap((user) =>
                     this.ccApi.getCreditCards({
-                        userId: user!.id,
+                        limit: 10,
+                        page: 1,
                     })
                 )
             )
             .subscribe({
                 next: (ccs) => {
                     this.ccState.setCreditCards(ccs as CreditCard[]);
-                    this.typeObject.variant =
-                        (ccs as CreditCard[]).length === 0 ? "empty" : "loading";
+                    this.ccState.changeStatus(
+                        (ccs as CreditCard[]).length === 0 ? "empty" : "none",
+                        "no companies"
+                    );
                 },
                 error: () => {
                     if (reloaded)
-                        this.snack.openSnackBar("Error fetching banks", "error");
-                    this.ccState.changeStatus("error");
-                    this.typeObject.variant = "error";
+                        this.snack.openSnackBar("error fetching credit cards", "error");
+                    this.ccState.changeStatus("error", "error fetching credit cards");
                 },
             });
     }
 
     ngOnInit() {
-        this.typeObject.variant = "loading";
-        this.getCreditCards();
+        this.ccState.setAction(() => this.onReload());
     }
 
     onReload() {
-        this.typeObject.variant = "loading";
+        this.ccState.changeStatus("loading", "loading");
         this.getCreditCards(true);
     }
 }

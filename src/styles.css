@@ -3,10 +3,10 @@
 
 :root .dark-theme {
     --primary: #8ea4d2ff;
-    --secondary: #2a407d;
+    --secondary: #4d69b6;
     --item-list: rgb(135, 147, 192);
-    --title: rgb(6, 7, 7);
-    --description: #4c9f70ff;
+    --title: #222222;
+    --description: #740000;
     --background: rgb(75, 75, 75);
 
     --error: #e21111;
@@ -24,14 +24,14 @@
 
 :root {
     --primary: #6665dd;
-    --secondary: #473bf0;
+    --secondary: #5391cc;
     --item-list: lightsteelblue;
-    --title: #000500;
-    --description: #4c9f70ff;
+    --title: #222222;
+    --description: #740000;
     --background: #eee;
 
     --error: #8f0000;
-    --warning: #8f5d00;
+    --warning: #a86d00;
     --info: #00328f;
     --success: #008f18;
     --default: #474141;

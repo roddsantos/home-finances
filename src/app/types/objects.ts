@@ -66,8 +66,8 @@ export type Bill = {
     parcels: number;
     taxes: number;
     delta: number;
-    due: Date;
-    month: string;
+    due: string;
+    month: number;
     year: number;
     companyId: string;
     typeBillId: string;
@@ -78,4 +78,13 @@ export type Bill = {
     updatedAt: string;
     createdAt: string;
     deletedAt: string | null;
+    totalParcel: number | null;
+};
+
+export type BillData = {
+    typeBill: TypeBill;
+    creditCard: CreditCard | null;
+    bank1: Bank | null;
+    bank2: Bank | null;
+    company: Company | null;
 };

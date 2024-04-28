@@ -7,3 +7,7 @@ export type MonthType = {
     order: number;
     short: string;
 };
+
+export type DateType = "mmYY" | "mmmmYYYY" | "mmmYY" | "ddMMyyyy";
+
+export type PaymentTypes = "creditCard" | "money" | "companyCredit";

@@ -1,6 +1,10 @@
 import { Component, ViewEncapsulation, inject } from "@angular/core";
-import { LocalStorageService } from "./services/services.local-storage";
+import { LocalStorageService } from "./services/local-storage.service";
 import { UserState } from "src/app/subjects/subjects.user";
+import { TypeBillState } from "./subjects/subjects.type-bills";
+import { TypeBill } from "./types/objects";
+import { ServiceTypeBill } from "./services/type-bill.service";
+import { CustomFilterState } from "./components/custom-filter/custom-filter.subjects.component";
 
 @Component({
     selector: "app-root",
@@ -11,13 +15,30 @@ import { UserState } from "src/app/subjects/subjects.user";
 export class AppComponent {
     public storage = inject(LocalStorageService);
     public userState = inject(UserState);
+    public tbState = inject(TypeBillState);
+    public tbService = inject(ServiceTypeBill);
+    public filterState = inject(CustomFilterState);
 
     title = "bills-app";
 
     ngOnInit() {
         const user = this.storage.getUser();
-        if (user) {
-            this.userState.setUser(user);
-        }
+        if (user) this.userState.setUser(user);
+
+        const tbs = this.storage.getTypeBills();
+        if (tbs) this.tbState.setTypeBill(tbs);
+        else
+            this.tbService.getTypeBills().subscribe({
+                next: (tb) => {
+                    this.tbState.setTypeBill(tb as TypeBill[]);
+                    this.storage.setTypeBills(JSON.stringify(tb));
+                },
+                error: () =>
+                    this.tbState.changeStatus("error", "error fetching bills type"),
+            });
+
+        const filters = this.storage.getFilters();
+        if (filters) this.filterState.setFilters(filters);
+        else this.filterState.setFilters([]);
     }
 }

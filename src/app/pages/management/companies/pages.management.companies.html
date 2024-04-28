@@ -1,7 +1,7 @@
 <div class="tab-container">
     <feedback-container
         *ngIf="(compState.company$| async)?.length === 0"
-        [info]="typeObject"
+        [info]="(compState.status$ | async)!"
     ></feedback-container>
     <li
         *ngFor="let company of (compState.company$| async); index as i; trackBy: trackCompany"

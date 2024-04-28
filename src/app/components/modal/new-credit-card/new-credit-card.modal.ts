@@ -22,9 +22,10 @@ import { MatSelectModule } from "@angular/material/select";
 import { CreditCardObject } from "src/app/types/services";
 import { CreditCard } from "src/app/types/objects";
 import { MonthType } from "src/app/types/general";
-import { ServiceCreditCard } from "src/app/services/services.credit-card";
+import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { CreditCardState } from "src/app/subjects/subjects.credit-card";
 import { MONTHS } from "src/utils/constants/general";
+import { NO_DESCRIPTION, NO_NAME } from "src/utils/constants/forms";
 
 @Component({
     selector: "modal-new-credit-card",
@@ -73,11 +74,11 @@ export class ModalNewCreditCard implements OnInit {
     });
 
     errorMessage = {
-        name: "you must enter a name",
-        description: "you must enter a description",
+        name: NO_NAME,
+        description: NO_DESCRIPTION,
         savings: "you must enter the savings",
         limit: "limit must be greater than zero",
-        year: "year should be equal or greater than 2023",
+        year: "year should be between 2023 asn 2090",
     };
     @Output() submit = new EventEmitter<String>();
     @Output() onClose = new EventEmitter<void>();

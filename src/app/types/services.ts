@@ -32,23 +32,65 @@ export type BillObject = {
     description: string;
     total: number;
     settled: boolean;
-    parcels?: number;
-    taxes: number;
-    delta: number;
-    due?: Date;
-    month: string;
+    typeBillId: string;
+    due: Date;
+    month: number;
     year: number;
-    companyId?: string;
-    typeBillId?: string;
-    bank1Id?: string;
+};
+
+export type BillObjectBank = {
+    bank1Id: string;
     bank2Id?: string;
+    isPayment: boolean;
+};
+
+export type BillObjectCompany = {
+    companyId: string;
+    bank1Id?: string;
     creditCardId?: string;
-    userId: string;
+    parcels: number;
+    taxes?: number;
+    delta?: number;
+};
+
+export type BillObjectCredtCard = {
+    creditCardId: string;
+    companyId?: string;
+    parcels: number;
+    taxes?: number;
+    delta?: number;
+    isRefund: boolean;
+};
+
+export type BillObjectService = {
+    creditCardId?: string;
+    companyId: string;
+    bank1Id?: string;
+    parcels: number;
+    taxes?: number;
+    delta?: number;
 };
 
 export type GetCreditCard = {
     month?: string;
     year?: number;
     isClosed?: boolean;
-    userId: string;
+    page: number;
+    limit: number;
+};
+
+export type GetBillsFilter = {
+    page: number;
+    limit: number;
+    months?: number[];
+    min?: number;
+    max?: number;
+    year?: number;
+    data?: string;
+    status?: "all" | "pending" | "settled";
+};
+
+export type FetchPaginatedData<T = any> = {
+    count: number;
+    data: T[];
 };

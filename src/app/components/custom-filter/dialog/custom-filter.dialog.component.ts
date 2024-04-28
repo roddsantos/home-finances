@@ -1,10 +1,9 @@
-import { AvailableDataFilters } from "../../../types/components";
 import { Component, inject, OnInit, ViewChild } from "@angular/core";
 import { ModalState } from "src/app/subjects/subjects.modal";
 import { ModalComponent } from "src/app/components/modal/modal.component";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
-import { AvailableFilters, FilterDisplay } from "src/app/types/components";
+import { AvailableDataFilters, FilterDisplay } from "src/app/types/components";
 import { TypeBillState } from "src/app/subjects/subjects.type-bills";
 import { CommonModule } from "@angular/common";
 import { MatSelect, MatSelectChange, MatSelectModule } from "@angular/material/select";
@@ -18,12 +17,17 @@ import {
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButton } from "@angular/material/button";
-import { CustomListState } from "../custom-filter.subjects.component";
+import { CustomFilterState } from "../custom-filter.subjects.component";
 import { CreditCardState } from "src/app/subjects/subjects.credit-card";
 import { CompanyState } from "src/app/subjects/subjects.company";
 import { BankState } from "src/app/subjects/subjects.bank";
 import { MONTHS } from "src/utils/constants/general";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
+import { LocalStorageService } from "src/app/services/local-storage.service";
+import { ServiceBill } from "src/app/services/bill.service";
+import { MatButtonToggle, MatButtonToggleModule } from "@angular/material/button-toggle";
+import { BillState } from "src/app/subjects/subjects.bill";
+import { Bill, BillData } from "src/app/types/objects";
 
 @Component({
     selector: "dialog-custom-filter",
@@ -43,6 +47,7 @@ import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.c
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
+        MatButtonToggleModule,
     ],
 })
 export class DialogCustomList implements OnInit {
@@ -51,10 +56,13 @@ export class DialogCustomList implements OnInit {
     public ccState = inject(CreditCardState);
     public compState = inject(CompanyState);
     public bankState = inject(BankState);
-    public clState = inject(CustomListState);
+    public filterState = inject(CustomFilterState);
+    public billService = inject(ServiceBill);
+    public billState = inject(BillState);
     public snack = inject(CustomSnackbarComponent);
+    public localStorage = inject(LocalStorageService);
 
-    @ViewChild(ModalComponent) modalComponent: any;
+    @ViewChild(ModalComponent) modalComponent: ModalComponent;
     @ViewChild("typebill") typebill: MatSelect;
     @ViewChild("creditcard") creditcard: MatSelect;
     @ViewChild("company") company: MatSelect;
@@ -63,58 +71,46 @@ export class DialogCustomList implements OnInit {
     @ViewChild("year") year: MatSelect;
     @ViewChild("min") min: MatSelect;
     @ViewChild("max") max: MatSelect;
+    @ViewChild("status") status: MatButtonToggle;
 
     months = MONTHS;
-    tbCtrl = new FormControl("");
-    ccCrtl = new FormControl("");
-    cCtrl = new FormControl("");
-    bkCtrl = new FormControl("");
-    monthCtrl = new FormControl("");
-    yCtrl = new FormControl(new Date().getFullYear(), {
+    tbCtrl = new FormControl<string>("");
+    ccCrtl = new FormControl<string>("");
+    compCtrl = new FormControl<string>("");
+    bkCtrl = new FormControl<string>("");
+    monthCtrl = new FormControl<string>("");
+    yCtrl = new FormControl<number>(new Date().getFullYear(), {
         validators: [Validators.min(2023), Validators.max(2080)],
         nonNullable: true,
     });
-    minCtrl = new FormControl(0, { nonNullable: true });
-    maxCtrl = new FormControl(0, { nonNullable: true });
+    minCtrl = new FormControl<number>(0, { nonNullable: true });
+    maxCtrl = new FormControl<number>(0, { nonNullable: true });
+    statusCtrl = new FormControl<"all" | "settled" | "pending" | "">("", {
+        nonNullable: true,
+    });
     selectedFilters: FilterDisplay[] = [];
 
     ngOnInit() {
         this.modalState.onSubmitFooter("OK", "cancel");
-        this.modalState.disableButton();
         this.modalState.changeHeader("add filters");
+
+        this.filterState.filters$.subscribe({
+            next: (filters) => (this.selectedFilters = [...filters]),
+            error: () => (this.selectedFilters = []),
+        });
     }
 
-    isData(item: AvailableFilters): item is AvailableDataFilters {
-        return (item as AvailableDataFilters) !== undefined;
-    }
-
-    addFilter(event: MatSelectChange, identifier: AvailableFilters) {
+    addFilter(event: MatSelectChange, identifier: AvailableDataFilters) {
         const filter = event.value;
         const hasFilter = this.selectedFilters.find((f) => f.id === filter.id);
-        if (this.isData(identifier)) {
-            this.clState.datafilters$.subscribe({
-                next: (data) => {
-                    const hasFilterDefined = data.find((f) => f.id === filter.id);
-                    if (!hasFilter && !hasFilterDefined)
-                        this.selectedFilters.push({
-                            id: filter.id,
-                            identifier,
-                            name: filter.name,
-                        });
-                },
+        if (!hasFilter) {
+            this.selectedFilters.push({
+                id: filter.id,
+                identifier,
+                name: filter.name,
             });
-        } else {
-            const hasFilter = this.selectedFilters.find(
-                (f) => f.id === (identifier === "month" ? filter.order : filter)
-            );
-            if (!hasFilter)
-                this.selectedFilters.push({
-                    id: identifier === "month" ? filter.order : filter,
-                    identifier,
-                    name: identifier === "month" ? filter.name : filter,
-                });
+            this[identifier as AvailableDataFilters | "month"].value = "";
         }
-        this[identifier as AvailableDataFilters | "month"].value = "";
     }
 
     addLimit(event: any, identifier: "min" | "max") {
@@ -131,41 +127,19 @@ export class DialogCustomList implements OnInit {
                         f.identifier === "max" &&
                         (f.name as number) < value)
             );
-            this.clState.limitFilter$.subscribe({
-                next: (data) => {
-                    const hasFilterDefined = data.find(
-                        (f) =>
-                            f.identifier === identifier ||
-                            (identifier === "max" &&
-                                f.identifier === "min" &&
-                                f.name > value) ||
-                            (identifier === "min" &&
-                                f.identifier === "max" &&
-                                f.name < value)
-                    );
-                    if (hasFilter) {
-                        if (identifier === hasFilter.identifier)
-                            this.snack.openSnackBar(
-                                "only one " + identifier + " value allowed"
-                            );
-                        else if ((hasFilter.name as number) !== value)
-                            this.snack.openSnackBar(identifier + " value not allowed");
-                    } else if (hasFilterDefined) {
-                        if (identifier === hasFilterDefined.identifier)
-                            this.snack.openSnackBar(
-                                "only one " + identifier + " value allowed"
-                            );
-                        else if ((hasFilterDefined.name as number) !== value)
-                            this.snack.openSnackBar(identifier + " value not allowed");
-                    } else
-                        this.selectedFilters.push({
-                            id: value,
-                            identifier,
-                            name: value,
-                        });
-                },
-            });
-            this[identifier].value = "";
+            if (hasFilter) {
+                if (identifier === hasFilter.identifier)
+                    this.snack.openSnackBar("only one " + identifier + " value allowed");
+                else if ((hasFilter.name as number) !== value)
+                    this.snack.openSnackBar(identifier + " value not allowed");
+            } else {
+                this.selectedFilters.push({
+                    id: value,
+                    identifier,
+                    name: value,
+                });
+                this[identifier].value = "";
+            }
         }
     }
 
@@ -174,19 +148,48 @@ export class DialogCustomList implements OnInit {
         value = value === "" ? null : parseFloat(value);
         if (value) {
             const hasFilter = this.selectedFilters.find((f) => f.id === value);
-            this.clState.yearFilter$.subscribe({
-                next: (data) => {
-                    const hasFilterDefined = data.find((f) => f.id === value);
-                    if (!hasFilter && !hasFilterDefined)
-                        this.selectedFilters.push({
-                            id: value,
-                            identifier: "year",
-                            name: value,
-                        });
-                },
-            });
-            this.year.value = "";
+            if (!hasFilter) {
+                this.selectedFilters.push({
+                    id: value,
+                    identifier: "year",
+                    name: value,
+                });
+                this.year.value = "";
+            }
         }
+    }
+
+    addMonth(event: any) {
+        const filter = event.value;
+        const hasFilter = this.selectedFilters.filter((f) => f.identifier === "month");
+        if (hasFilter.length < 2 || !hasFilter.find((f) => f.id === filter.id))
+            this.selectedFilters.push({
+                id: filter.order,
+                identifier: "month",
+                name: filter.name,
+            });
+        this.month.value = "";
+    }
+
+    addStatus(event: MatSelectChange) {
+        const value = event.value;
+        const hasFilter = this.selectedFilters.findIndex(
+            (f) => f.identifier === "status"
+        );
+        if (hasFilter < 0) {
+            this.selectedFilters.push({
+                id: value,
+                identifier: "status",
+                name: value,
+            });
+        } else {
+            this.selectedFilters.splice(hasFilter, 1, {
+                id: value,
+                identifier: "status",
+                name: value,
+            });
+        }
+        this.status.value = "";
     }
 
     removeFilter(index: number) {
@@ -194,6 +197,19 @@ export class DialogCustomList implements OnInit {
     }
 
     onSubmit() {
-        console.log("CHIPS", this.selectedFilters);
+        this.filterState.setFilters([...this.selectedFilters]);
+        this.localStorage.setFilters(JSON.stringify(this.selectedFilters));
+        this.billService.getBills().subscribe({
+            next: (data) => {
+                if ((data as Array<Bill & BillData>).length === 0)
+                    this.billState.changeStatus("empty", "no bills");
+                else this.billState.setBills(data as Array<Bill & BillData>);
+                this.modalComponent.onClose();
+            },
+            error: () => {
+                this.snack.openSnackBar("error fetching bills", "error");
+                this.billState.changeStatus("error", "error fetching bills");
+            },
+        });
     }
 }

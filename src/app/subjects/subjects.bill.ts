@@ -1,36 +1,70 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { ListStatus } from "src/app/types/general";
-import { Bill } from "src/app/types/objects";
+import { Bill, BillData } from "src/app/types/objects";
+import { FeedbackInfo, FeedbackVariant, PaginationType } from "../types/components";
 
 @Injectable({
     providedIn: "root",
 })
 export class BillState {
-    private _bills$ = new BehaviorSubject<Bill[]>([]);
-    private _status$ = new BehaviorSubject<ListStatus>("empty");
+    private _bills$ = new BehaviorSubject<Array<Bill & BillData>>([]);
+    private _status$ = new BehaviorSubject<FeedbackInfo>({
+        title: "loading",
+        description: "",
+        actionLabel: "reload",
+        action: undefined,
+        variant: "loading",
+    });
+    private _billsPagination$ = new BehaviorSubject<PaginationType>({
+        page: 1,
+        limit: 10,
+    });
 
     public readonly status$ = this._status$.asObservable();
     public readonly bills$ = this._bills$.asObservable();
+    public readonly billsPagination$ = this._billsPagination$.asObservable();
 
-    changeStatus(newStatus: ListStatus) {
-        this._status$.next(newStatus);
-        if (newStatus !== "data") this._bills$.next([]);
+    changeStatus(variant: FeedbackVariant, title: string) {
+        this._status$.next({ ...this._status$.getValue(), variant, title });
+        if (variant !== "none" && variant !== "loading") this._bills$.next([]);
     }
 
-    setBills(bills: Bill[]) {
-        if (bills.length === 0) this._status$.next("empty");
-        else this._status$.next("data");
+    changeVariant(variant: FeedbackVariant) {
+        this._status$.next({ ...this._status$.getValue(), variant });
+    }
 
+    setBills(bills: Array<Bill & BillData>) {
+        if (bills.length === 0) this.changeStatus("empty", "no bills");
+        else this.changeVariant("none");
         this._bills$.next(bills);
     }
 
-    addBill(bill: Bill, index?: number) {
+    addBill(bill: Array<Bill & BillData>, index?: number) {
         let auxBills = [...this._bills$.getValue()];
-        const existingBank = this._bills$.getValue().find((b) => b.id === bill.id);
-        if (existingBank && index !== undefined) auxBills[index] = bill;
-        else auxBills = [bill, ...auxBills];
+        auxBills = [...bill, ...auxBills];
 
         this._bills$.next(auxBills);
+    }
+
+    setStatus(status: FeedbackInfo) {
+        this._status$.next(status);
+    }
+
+    setAction(action: () => void) {
+        this._status$.next({ ...this._status$.getValue(), action });
+    }
+
+    setPage(page: number) {
+        this._billsPagination$.next({
+            page,
+            limit: this._billsPagination$.getValue().limit,
+        });
+    }
+
+    setLimit(limit: number) {
+        this._billsPagination$.next({
+            page: this._billsPagination$.getValue().page,
+            limit,
+        });
     }
 }
