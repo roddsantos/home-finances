@@ -1,6 +1,20 @@
 <form [formGroup]="bankForm">
     <div class="template-banks-container">
         <mat-form-field
+            *ngIf="(companies.company$| async)!.length > 0"
+            class="template-bank-field"
+            appearance="outline"
+        >
+            <mat-label>company</mat-label>
+            <mat-select formControlName="company">
+                @for (c of (companies.company$ | async); track c) {
+                <mat-option [value]="c">{{ c.name }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="template-banks-container">
+        <mat-form-field
             *ngIf="(banks.banks$ | async)!.length > 0"
             class="template-bank-field"
             appearance="outline"

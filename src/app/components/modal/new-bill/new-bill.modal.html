@@ -3,6 +3,14 @@
 <ng-template #newBill>
     <form [formGroup]="billForm">
         <div class="new-bill-container">
+            <mat-form-field class="new-bill-field" appearance="outline">
+                <mat-label>payment type</mat-label>
+                <mat-select #type formControlName="paymentType">
+                    <mat-option [value]="'money'">money</mat-option>
+                    <mat-option [value]="'creditCard'">credit card</mat-option>
+                    <mat-option [value]="'companyCredit'">company credit</mat-option>
+                </mat-select>
+            </mat-form-field>
             <div class="new-bill-container-split">
                 <mat-form-field class="new-bill-field" appearance="outline">
                     <mat-label>name</mat-label>
@@ -29,7 +37,10 @@
                     <mat-button-toggle [value]="false">pending</mat-button-toggle>
                     <mat-button-toggle [value]="true">settled</mat-button-toggle>
                 </mat-button-toggle-group>
-                <mat-form-field class="new-bill-total" appearance="outline">
+                <mat-checkbox [style.marginBottom]="'20px'" formControlName="isFixed"
+                    >is fixed payment (charged each month)</mat-checkbox
+                >
+                <mat-form-field class="new-bill-field" appearance="outline">
                     <mat-label>bill value</mat-label>
                     <input matInput type="number" formControlName="total" />
                     @if (billForm.controls.total.invalid) {
@@ -38,7 +49,7 @@
                 </mat-form-field>
             </div>
             <div class="new-bill-date-split">
-                <mat-form-field class="color-picker" appearance="outline">
+                <!-- <mat-form-field class="color-picker" appearance="outline">
                     <mat-label>month</mat-label>
                     <mat-select formControlName="month">
                         @for (m of this.months; track m) {
@@ -52,6 +63,16 @@
                     @if (billForm.controls.year.invalid) {
                     <mat-error>{{errorMessage.year}}</mat-error>
                     }
+                </mat-form-field> -->
+                <mat-form-field class="savings-input" appearance="outline">
+                    <mat-label>date of payment</mat-label>
+                    <input [matDatepicker]="picker" matInput formControlName="due" />
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field class="savings-input" appearance="outline">
                     <mat-label>date due</mat-label>
@@ -64,7 +85,7 @@
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
             </div>
-            <p class="type-bill-title">select the bill type to proceed:</p>
+            <!-- <p class="type-bill-title">select the bill type to proceed:</p>
             <div class="type-bill-separator"></div>
             <mat-button-toggle-group
                 formControlName="typebill"
@@ -82,11 +103,11 @@
             <div
                 *ngIf="billForm.controls.typebill.valid"
                 class="type-bill-separator"
-            ></div>
+            ></div> -->
         </div>
     </form>
-    <template-banks *ngIf="inputType ==='banks'" #banks="templateBanks"></template-banks>
-    <template-companies *ngIf="inputType ==='company'"></template-companies>
-    <template-credit-card *ngIf="inputType ==='creditCard'"></template-credit-card>
-    <template-service *ngIf="inputType ==='service'"></template-service>
+    <template-banks *ngIf="type.value ==='money'" #banks="templateBanks"></template-banks>
+    <template-companies *ngIf="type.value ==='companyCredit'"></template-companies>
+    <template-credit-card *ngIf="type.value ==='creditCard'"></template-credit-card>
+    <!-- <template-service *ngIf="inputType ==='service'"></template-service> -->
 </ng-template>

@@ -10,12 +10,13 @@ import {
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { BankState } from "src/app/subjects/subjects.bank";
-import { Bank } from "src/app/types/objects";
+import { Bank, Company } from "src/app/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
 import { NO_BANK } from "src/utils/constants/forms";
 import { MatIconModule } from "@angular/material/icon";
+import { CompanyState } from "src/app/subjects/subjects.company";
 
 @Component({
     selector: "template-banks",
@@ -35,6 +36,7 @@ import { MatIconModule } from "@angular/material/icon";
     exportAs: "templateBanks",
 })
 export class BankTemplateNewBill {
+    public companies = inject(CompanyState);
     public banks = inject(BankState);
 
     bankForm = new FormGroup({
@@ -45,6 +47,11 @@ export class BankTemplateNewBill {
         bank2: new FormControl<Bank | null>(null, { nonNullable: false }),
         isPayment: new FormControl<boolean>(true, {
             nonNullable: true,
+        }),
+
+        company: new FormControl<Company | null>(null, {
+            nonNullable: false,
+            validators: [Validators.required],
         }),
     });
 

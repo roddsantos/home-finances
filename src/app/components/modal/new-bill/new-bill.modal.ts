@@ -29,12 +29,13 @@ import {
     YEAR_OUT_OF_RANGE,
 } from "src/utils/constants/forms";
 import { ServiceBill } from "src/app/services/bill.service";
-import { MonthType } from "src/app/types/general";
+import { MonthType, PaymentTypes } from "src/app/types/general";
 import { MONTHS } from "src/utils/constants/general";
 import { MatOption } from "@angular/material/core";
 import { MatSelectModule } from "@angular/material/select";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { provideNativeDateAdapter } from "@angular/material/core";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 @Component({
     selector: "modal-new-bill",
@@ -57,6 +58,7 @@ import { provideNativeDateAdapter } from "@angular/material/core";
         ServiceTemplateNewBill,
         MatSelectModule,
         MatDatepickerModule,
+        MatCheckboxModule,
     ],
 })
 export class ModalNewBill implements OnInit {
@@ -97,6 +99,8 @@ export class ModalNewBill implements OnInit {
         }),
         settled: new FormControl<boolean>(true, { nonNullable: false }),
         due: new FormControl<Date>(new Date(), { nonNullable: true }),
+        payment: new FormControl<Date>(new Date(), { nonNullable: true }),
+        paymentType: new FormControl<PaymentTypes>("money", { nonNullable: true }),
         year: new FormControl<number>(new Date().getFullYear(), {
             nonNullable: true,
             validators: [Validators.min(2023), Validators.max(2090)],
@@ -109,6 +113,7 @@ export class ModalNewBill implements OnInit {
             nonNullable: true,
             validators: [Validators.required],
         }),
+        isFixed: new FormControl<boolean>(false, { nonNullable: true }),
     });
 
     months = MONTHS;

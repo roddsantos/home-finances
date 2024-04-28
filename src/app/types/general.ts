@@ -9,3 +9,5 @@ export type MonthType = {
 };
 
 export type DateType = "mmYY" | "mmmmYYYY" | "mmmYY" | "ddMMyyyy";
+
+export type PaymentTypes = "creditCard" | "money" | "companyCredit";
