@@ -1,0 +1,42 @@
+<modal-component
+    (actionPrimary)="onSubmit()"
+    [bodyTemplate]="newCompany"
+></modal-component>
+
+<ng-template #newCompany>
+    <form [formGroup]="categoryForm">
+        <div class="new-bank-container">
+            <mat-form-field class="new-bank-field" appearance="outline">
+                <mat-label>name</mat-label>
+                <input maxlength="100" required matInput formControlName="name" />
+                @if (categoryForm.controls.name.errors?.["required"]) {
+                <mat-error>{{errorMessage.name}}</mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field class="new-bank-field" appearance="outline">
+                <mat-label>description</mat-label>
+                <input maxlength="100" matInput formControlName="description" />
+                @if (categoryForm.controls.description.errors?.["required"]) {
+                <mat-error>{{errorMessage.description}}</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <mat-form-field class="color-picker" appearance="outline">
+            <mat-label>color</mat-label>
+            <input formControlName="color" matInput type="color" />
+        </mat-form-field>
+        <mat-form-field class="color-picker margin" appearance="outline">
+            <mat-label>icon</mat-label>
+            <input #icon maxlength="100" required matInput formControlName="icon" />
+            @if (categoryForm.controls.icon.errors?.["required"]) {
+            <mat-error>{{errorMessage.name}}</mat-error>
+            }
+        </mat-form-field>
+        <mat-icon
+            class="category-icon"
+            aria-hidden="false"
+            aria-label="Example home icon"
+            [fontIcon]="icon.value"
+        ></mat-icon>
+    </form>
+</ng-template>

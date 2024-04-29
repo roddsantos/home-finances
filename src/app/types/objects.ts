@@ -67,6 +67,7 @@ export type Bill = {
     taxes: number;
     delta: number;
     due: string;
+    paid: string;
     month: number;
     year: number;
     type: string;

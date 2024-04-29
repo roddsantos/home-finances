@@ -21,6 +21,13 @@ export type CreditCardObject = {
     isClosed: boolean;
 };
 
+export type CategoryObject = {
+    name: string;
+    description: string;
+    color: string;
+    icon: string;
+};
+
 export type BankObject = {
     name: string;
     description: string;
@@ -44,6 +51,7 @@ export type BillObject = {
 export type BillObjectBank = {
     bank1Id: string;
     bank2Id?: string;
+    companyId?: string;
     isPayment: boolean;
 };
 
@@ -65,21 +73,10 @@ export type BillObjectCredtCard = {
     isRefund: boolean;
 };
 
-export type BillObjectService = {
-    creditCardId?: string;
-    companyId: string;
-    bank1Id?: string;
-    parcels: number;
-    taxes?: number;
-    delta?: number;
-};
-
 export type GetCreditCard = {
     month?: string;
     year?: number;
     isClosed?: boolean;
-    page: number;
-    limit: number;
 };
 
 export type GetBillsFilter = {
@@ -96,4 +93,10 @@ export type GetBillsFilter = {
 export type FetchPaginatedData<T = any> = {
     count: number;
     data: T[];
+};
+
+export type AllSettledHttpConnection = {
+    status: "fulfilled" | "rejected";
+    value?: any;
+    error?: any;
 };

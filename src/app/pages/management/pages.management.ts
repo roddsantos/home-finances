@@ -19,6 +19,7 @@ import { ManagerTabs } from "src/app/types/general";
 import { BanksManagementComponent } from "./banks/pages.management.banks";
 import { ModalNewCreditCard } from "src/app/components/modal/new-credit-card/new-credit-card.modal";
 import { CategoriesManagementComponent } from "./categories/pages.management.categories";
+import { ModalNewCategory } from "src/app/components/modal/new-category/new-category.modal";
 
 @Component({
     selector: "page-management",
@@ -41,7 +42,7 @@ export class PageManagement {
     public dialog = inject(Dialog);
     public general = inject(GeneralState);
 
-    nameTab: string[] = ["company", "bank", "", "credit card"];
+    nameTab: string[] = ["company", "bank", "category", "credit card"];
     @ViewChildren("childTabs") childTabs: QueryList<MatTabGroup>;
 
     onChangeTab(event: MatTabChangeEvent) {
@@ -58,6 +59,8 @@ export class PageManagement {
                 ? ModalNewCompany
                 : refTab === "1"
                 ? ModalNewBank
+                : refTab === "2"
+                ? ModalNewCategory
                 : ModalNewCreditCard,
             {
                 data: {

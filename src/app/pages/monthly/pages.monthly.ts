@@ -100,10 +100,10 @@ export class PageMonthly {
 
     getBills() {
         this.billService.getBills().subscribe({
-            next: (data) => {
-                const result = data as FetchPaginatedData<Bill & BillData>;
-                if (result.count === 0) this.billState.changeStatus("empty", "no bills");
-                else this.billState.setBills(result.data);
+            next: (bills) => {
+                if (bills.data.length === 0)
+                    this.billState.changeStatus("empty", "no bills");
+                else this.billState.setBills(bills);
             },
             error: () => {
                 this.snack.openSnackBar("error fetching bills", "error");

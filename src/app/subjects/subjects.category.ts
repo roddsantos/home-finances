@@ -35,6 +35,17 @@ export class CategoryState {
         this._categories$.next(tb);
     }
 
+    addCategory(category: Category, index?: number) {
+        let auxCategories = [...this._categories$.getValue()];
+        const existingCompany = this._categories$
+            .getValue()
+            .find((c) => c.id === category.id);
+        if (existingCompany && index !== undefined) auxCategories[index] = category;
+        else auxCategories = [category, ...auxCategories];
+
+        this._categories$.next(auxCategories);
+    }
+
     setStatus(status: FeedbackInfo) {
         this._status$.next(status);
     }

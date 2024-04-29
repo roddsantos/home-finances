@@ -3,7 +3,7 @@ import { LocalStorageService } from "./services/local-storage.service";
 import { UserState } from "src/app/subjects/subjects.user";
 import { CategoryState } from "./subjects/subjects.category";
 import { Category } from "./types/objects";
-import { ServiceCategory } from "./services/type-bill.service";
+import { ServiceCategory } from "./services/category.service";
 import { CustomFilterState } from "./components/custom-filter/custom-filter.subjects.component";
 
 @Component({
@@ -24,12 +24,12 @@ export class AppComponent {
     ngOnInit() {
         const user = this.storage.getUser();
         if (user) this.userState.setUser(user);
-        else
-            this.catService.getCategories().subscribe({
-                next: (cat) => this.catState.setCategory(cat as Category[]),
-                error: () =>
-                    this.catState.changeStatus("error", "error fetching bills type"),
-            });
+        // else
+        //     this.catService.getCategories().subscribe({
+        //         next: (cat) => this.catState.setCategory(cat as Category[]),
+        //         error: () =>
+        //             this.catState.changeStatus("error", "error fetching bills type"),
+        //     });
 
         const filters = this.storage.getFilters();
         if (filters) this.filterState.setFilters(filters);

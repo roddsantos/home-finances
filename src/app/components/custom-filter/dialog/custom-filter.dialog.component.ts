@@ -100,7 +100,7 @@ export class DialogCustomList implements OnInit {
         });
     }
 
-    addFilter(event: MatSelectChange, identifier: AvailableDataFilters) {
+    addFilter(event: MatSelectChange, identifier: AvailableDataFilters | "type") {
         const filter = event.value;
         const hasFilter = this.selectedFilters.find((f) => f.id === filter.id);
         if (!hasFilter) {
@@ -200,10 +200,10 @@ export class DialogCustomList implements OnInit {
         this.filterState.setFilters([...this.selectedFilters]);
         this.localStorage.setFilters(JSON.stringify(this.selectedFilters));
         this.billService.getBills().subscribe({
-            next: (data) => {
-                if ((data as Array<Bill & BillData>).length === 0)
+            next: (bills) => {
+                if (bills.data.length === 0)
                     this.billState.changeStatus("empty", "no bills");
-                else this.billState.setBills(data as Array<Bill & BillData>);
+                else this.billState.setBills(bills);
                 this.modalComponent.onClose();
             },
             error: () => {

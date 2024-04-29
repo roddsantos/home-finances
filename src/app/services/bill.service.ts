@@ -2,7 +2,7 @@ import {
     BillObjectBank,
     BillObjectCompany,
     BillObjectCredtCard,
-    BillObjectService,
+    FetchPaginatedData,
 } from "../types/services";
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
@@ -12,6 +12,7 @@ import { UserState } from "../subjects/subjects.user";
 import { mergeMap, zip } from "rxjs";
 import { CustomFilterState } from "../components/custom-filter/custom-filter.subjects.component";
 import { BillState } from "../subjects/subjects.bill";
+import { Bill, BillData } from "../types/objects";
 
 @Injectable({
     providedIn: "root",
@@ -29,7 +30,7 @@ export class ServiceBill {
             this.user.user$,
         ]).pipe(
             mergeMap(([filters, pagination, user]) =>
-                this.http.get(BILL, {
+                this.http.get<FetchPaginatedData<Bill & BillData>>(BILL, {
                     params: {
                         data: filters ? JSON.stringify(filters) : "",
                         page: pagination.page,
@@ -61,14 +62,6 @@ export class ServiceBill {
         return this.user.user$.pipe(
             mergeMap((user) =>
                 this.http.post(BILL + "/company", { ...data, userId: user!.id })
-            )
-        );
-    }
-
-    createBillService(data: BillObject & BillObjectService) {
-        return this.user.user$.pipe(
-            mergeMap((user) =>
-                this.http.post(BILL + "/service", { ...data, userId: user!.id })
             )
         );
     }

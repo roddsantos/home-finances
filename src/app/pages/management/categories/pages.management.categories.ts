@@ -5,7 +5,7 @@ import { MatIcon } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
-import { ServiceCategory } from "src/app/services/type-bill.service";
+import { ServiceCategory } from "src/app/services/category.service";
 import { FeedbackInfo } from "src/app/types/components";
 import { CategoryState } from "src/app/subjects/subjects.category";
 import { Category } from "src/app/types/objects";

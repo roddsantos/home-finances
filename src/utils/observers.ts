@@ -1,11 +1,10 @@
 import { Observable } from "rxjs";
+import { AllSettledHttpConnection } from "src/app/types/services";
 
-export function allSettledFork(observables: Observable<any>[]) {
-    const results: {
-        status: "fulfilled" | "rejected";
-        value?: any;
-        error?: any;
-    }[] = [];
+export function allSettledFork(
+    observables: Observable<any>[]
+): Observable<AllSettledHttpConnection[]> {
+    const results: AllSettledHttpConnection[] = [];
 
     const observableFinished = (observer: any) => {
         observer.next(results);

@@ -34,7 +34,8 @@ export type AvailableFilters =
     | "bank"
     | "min"
     | "max"
-    | "status";
+    | "status"
+    | "type";
 
 export type AvailableDataFilters = "category" | "creditcard" | "bank" | "company";
 
@@ -54,4 +55,5 @@ export type ListAction = {
 export type PaginationType = {
     page: number;
     limit: number;
+    total: number;
 };

@@ -48,10 +48,8 @@ export class BankTemplateNewBill {
         isPayment: new FormControl<boolean>(true, {
             nonNullable: true,
         }),
-
         company: new FormControl<Company | null>(null, {
             nonNullable: false,
-            validators: [Validators.required],
         }),
     });
 

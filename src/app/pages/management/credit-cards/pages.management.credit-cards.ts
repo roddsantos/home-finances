@@ -28,14 +28,7 @@ export class CreditCardsManagementComponent {
 
     getCreditCards(reloaded?: boolean) {
         this.userState.user$
-            .pipe(
-                mergeMap((user) =>
-                    this.ccApi.getCreditCards({
-                        limit: 10,
-                        page: 1,
-                    })
-                )
-            )
+            .pipe(mergeMap((user) => this.ccApi.getCreditCards({})))
             .subscribe({
                 next: (ccs) => {
                     this.ccState.setCreditCards(ccs as CreditCard[]);

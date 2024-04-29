@@ -23,9 +23,9 @@ import { ServiceTemplateNewBill } from "./templates/service/service.template.new
 import {
     NEGATIVE_TOTAL,
     NO_BILL_VALUE,
+    NO_CATEGORY,
     NO_DESCRIPTION,
     NO_NAME,
-    NO_TYPE_BILL,
     YEAR_OUT_OF_RANGE,
 } from "src/utils/constants/forms";
 import { ServiceBill } from "src/app/services/bill.service";
@@ -99,7 +99,7 @@ export class ModalNewBill implements OnInit {
         }),
         settled: new FormControl<boolean>(true, { nonNullable: false }),
         due: new FormControl<Date>(new Date(), { nonNullable: true }),
-        payment: new FormControl<Date>(new Date(), { nonNullable: true }),
+        paid: new FormControl<Date>(new Date(), { nonNullable: true }),
         type: new FormControl<PaymentTypes>("money", { nonNullable: true }),
         year: new FormControl<number>(new Date().getFullYear(), {
             nonNullable: true,
@@ -127,7 +127,7 @@ export class ModalNewBill implements OnInit {
         description: NO_DESCRIPTION,
         total: NO_BILL_VALUE,
         negativeValue: NEGATIVE_TOTAL,
-        typebill: NO_TYPE_BILL,
+        category: NO_CATEGORY,
         year: YEAR_OUT_OF_RANGE,
     };
 
@@ -137,6 +137,7 @@ export class ModalNewBill implements OnInit {
             description: this.billForm.value.description!,
             settled: this.billForm.value.settled!,
             due: this.billForm.value.due!,
+            paid: this.billForm.value.paid!,
             total: this.billForm.value.total!,
             year: this.billForm.value.year!,
             month: this.billForm.value.month!.order,
@@ -181,10 +182,7 @@ export class ModalNewBill implements OnInit {
         observer?.subscribe({
             next: () => {
                 this.billService.getBills().subscribe({
-                    next: (data) =>
-                        this.billState.setBills(
-                            data as unknown as Array<Bill & BillData>
-                        ),
+                    next: (bills) => this.billState.setBills(bills),
                 });
                 this.snack.openSnackBar("bill successfully created", "success");
                 this.modalComponent.onClose();

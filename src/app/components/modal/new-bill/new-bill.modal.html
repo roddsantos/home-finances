@@ -3,14 +3,27 @@
 <ng-template #newBill>
     <form [formGroup]="billForm">
         <div class="new-bill-container">
-            <mat-form-field class="new-bill-field" appearance="outline">
-                <mat-label>payment type</mat-label>
-                <mat-select #type formControlName="paymentType">
-                    <mat-option [value]="'money'">money</mat-option>
-                    <mat-option [value]="'creditCard'">credit card</mat-option>
-                    <mat-option [value]="'companyCredit'">company credit</mat-option>
-                </mat-select>
-            </mat-form-field>
+            <div class="new-bill-container-split">
+                <mat-form-field class="new-bill-field" appearance="outline">
+                    <mat-label>payment type</mat-label>
+                    <mat-select #type formControlName="type">
+                        <mat-option [value]="'money'">money</mat-option>
+                        <mat-option [value]="'creditCard'">credit card</mat-option>
+                        <mat-option [value]="'companyCredit'">company credit</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="new-bill-field" appearance="outline">
+                    <mat-label>category</mat-label>
+                    <mat-select formControlName="category">
+                        @for (cat of catState.categories$ | async; track $index) {
+                        <mat-option [value]="cat">{{cat.name}}</mat-option>
+                        }
+                    </mat-select>
+                    @if (billForm.controls.category.errors?.["required"]) {
+                    <mat-error>{{errorMessage.name}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
             <div class="new-bill-container-split">
                 <mat-form-field class="new-bill-field" appearance="outline">
                     <mat-label>name</mat-label>
@@ -66,23 +79,23 @@
                 </mat-form-field> -->
                 <mat-form-field class="savings-input" appearance="outline">
                     <mat-label>date of payment</mat-label>
-                    <input [matDatepicker]="picker" matInput formControlName="due" />
+                    <input [matDatepicker]="picker1" matInput formControlName="paid" />
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle
                         matIconSuffix
-                        [for]="picker"
+                        [for]="picker1"
                     ></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-datepicker #picker1></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field class="savings-input" appearance="outline">
                     <mat-label>date due</mat-label>
-                    <input [matDatepicker]="picker" matInput formControlName="due" />
+                    <input [matDatepicker]="picker2" matInput formControlName="due" />
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle
                         matIconSuffix
-                        [for]="picker"
+                        [for]="picker2"
                     ></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
             </div>
             <!-- <p class="type-bill-title">select the bill type to proceed:</p>
@@ -109,5 +122,4 @@
     <template-banks *ngIf="type.value ==='money'" #banks="templateBanks"></template-banks>
     <template-companies *ngIf="type.value ==='companyCredit'"></template-companies>
     <template-credit-card *ngIf="type.value ==='creditCard'"></template-credit-card>
-    <!-- <template-service *ngIf="inputType ==='service'"></template-service> -->
 </ng-template>

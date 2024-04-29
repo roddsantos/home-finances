@@ -1,5 +1,27 @@
 <div class="margin-right">
-    <button [ngClass]="['button-primary', 'pad']" mat-button>x</button>
-    <button [ngClass]="['button-primary', 'pad']" mat-button>0</button>
-    <button [ngClass]="['button-primary', 'pad']" mat-button>y</button>
+    <button [ngClass]="['button-primary', 'pad']" mat-button>
+        <mat-icon
+            class="icon-page"
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="arrow_back"
+        ></mat-icon>
+    </button>
+    <button (click)="setLimitList()" [ngClass]="['button-primary', 'pad']" mat-button>
+        <mat-icon
+            class="icon-page"
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="list_alt"
+        ></mat-icon>
+        {{(billsState.billsPagination$ | async)?.limit}}
+    </button>
+    <button [ngClass]="['button-primary', 'pad']" mat-button>
+        <mat-icon
+            class="icon-page"
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="arrow_forward"
+        ></mat-icon>
+    </button>
 </div>
