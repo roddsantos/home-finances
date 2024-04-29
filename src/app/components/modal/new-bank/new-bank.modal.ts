@@ -65,19 +65,10 @@ export class ModalNewBank implements OnInit {
     @Output() submit = new EventEmitter<String>();
     @Output() onClose = new EventEmitter<void>();
 
-    constructor() {
-        this.bankForm.valueChanges.subscribe({
-            next: (data) => {
-                this.modalState.setDisableButton(
-                    !Boolean(data.description) || !Boolean(data.name)
-                );
-            },
-        });
-    }
+    constructor() {}
 
     ngOnInit() {
         this.modalState.onSubmitFooter("OK", "cancel");
-        this.modalState.disableButton();
         this.modalState.changeHeader("new company");
     }
 

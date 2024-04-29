@@ -1,4 +1,8 @@
-<modal-component (actionPrimary)="onSubmit()" [bodyTemplate]="newBill"></modal-component>
+<modal-component
+    [disabled]="onDisableButton()"
+    (actionPrimary)="onSubmit()"
+    [bodyTemplate]="newBill"
+></modal-component>
 
 <ng-template #newBill>
     <form [formGroup]="billForm">
@@ -6,7 +10,11 @@
             <div class="new-bill-container-split">
                 <mat-form-field class="new-bill-field" appearance="outline">
                     <mat-label>payment type</mat-label>
-                    <mat-select #type formControlName="type">
+                    <mat-select
+                        (selectionChange)="onSetSettled($event)"
+                        #type
+                        formControlName="type"
+                    >
                         <mat-option [value]="'money'">money</mat-option>
                         <mat-option [value]="'creditCard'">credit card</mat-option>
                         <mat-option [value]="'companyCredit'">company credit</mat-option>
@@ -41,15 +49,12 @@
                 </mat-form-field>
             </div>
             <div class="new-bill-container-split">
-                <mat-button-toggle-group
+                <mat-checkbox
+                    [disabled]="type.value === 'companyCredit'"
+                    [style.marginBottom]="'20px'"
                     formControlName="settled"
-                    class="new-bill-settled"
-                    name="status"
-                    aria-label="bill status"
+                    >bill settled</mat-checkbox
                 >
-                    <mat-button-toggle [value]="false">pending</mat-button-toggle>
-                    <mat-button-toggle [value]="true">settled</mat-button-toggle>
-                </mat-button-toggle-group>
                 <mat-checkbox [style.marginBottom]="'20px'" formControlName="isFixed"
                     >is fixed payment (charged each month)</mat-checkbox
                 >

@@ -29,13 +29,14 @@ import {
     YEAR_OUT_OF_RANGE,
 } from "src/utils/constants/forms";
 import { ServiceBill } from "src/app/services/bill.service";
-import { MonthType, PaymentTypes } from "src/app/types/general";
+import { MonthType, PaymentTypes, RequiredKeys } from "src/app/types/general";
 import { MONTHS } from "src/utils/constants/general";
 import { MatOption } from "@angular/material/core";
-import { MatSelectModule } from "@angular/material/select";
+import { MatSelectChange, MatSelectModule } from "@angular/material/select";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { provideNativeDateAdapter } from "@angular/material/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { BillObject } from "src/app/types/services";
 
 @Component({
     selector: "modal-new-bill",
@@ -80,7 +81,6 @@ export class ModalNewBill implements OnInit {
             type: "submit",
             submit: "create",
             alert: "cancel",
-            disabled: false,
         });
     }
 
@@ -99,7 +99,7 @@ export class ModalNewBill implements OnInit {
         }),
         settled: new FormControl<boolean>(true, { nonNullable: false }),
         due: new FormControl<Date>(new Date(), { nonNullable: true }),
-        paid: new FormControl<Date>(new Date(), { nonNullable: true }),
+        paid: new FormControl<Date>(new Date(), { nonNullable: false }),
         type: new FormControl<PaymentTypes>("money", { nonNullable: true }),
         year: new FormControl<number>(new Date().getFullYear(), {
             nonNullable: true,
@@ -130,6 +130,29 @@ export class ModalNewBill implements OnInit {
         category: NO_CATEGORY,
         year: YEAR_OUT_OF_RANGE,
     };
+
+    onDisableButton() {
+        switch (this.billForm.value.type) {
+            case "money":
+                return this.billForm.invalid || this.bankTemplate.bankForm.invalid;
+            case "companyCredit":
+                return this.billForm.invalid || this.companyTemplate.compForm.invalid;
+            case "creditCard":
+                return this.billForm.invalid || this.creditCardTemplate.ccForm.invalid;
+            default:
+                return false;
+        }
+    }
+
+    onSetSettled(event: MatSelectChange) {
+        if (event.value === "companyCredit") {
+            this.billForm.patchValue({ settled: false });
+            this.billForm.patchValue({ paid: null });
+        } else {
+            this.billForm.patchValue({ settled: true });
+            this.billForm.patchValue({ paid: new Date() });
+        }
+    }
 
     onSubmit() {
         var defaultData = {

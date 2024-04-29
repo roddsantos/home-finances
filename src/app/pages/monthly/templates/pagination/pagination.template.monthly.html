@@ -1,5 +1,18 @@
 <div class="margin-right">
-    <button [ngClass]="['button-primary', 'pad']" mat-button>
+    <div class="input-page-container pad">
+        <mat-icon
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="description"
+        ></mat-icon>
+        {{(billsState.billsPagination$ | async)?.page}}
+    </div>
+    <button
+        [disabled]="disablePrevious()"
+        (click)="onPreviousPage()"
+        [ngClass]="['button-primary', 'pad']"
+        mat-button
+    >
         <mat-icon
             class="icon-page"
             aria-hidden="false"
@@ -12,11 +25,17 @@
             class="icon-page"
             aria-hidden="false"
             aria-label="Example home icon"
-            fontIcon="list_alt"
+            fontIcon="reorder"
         ></mat-icon>
         {{(billsState.billsPagination$ | async)?.limit}}
     </button>
-    <button [ngClass]="['button-primary', 'pad']" mat-button>
+    <!-- <div class="input-page-container pad"></div> -->
+    <button
+        [disabled]="disableNext()"
+        (click)="onNextPage()"
+        [ngClass]="['button-primary', 'pad']"
+        mat-button
+    >
         <mat-icon
             class="icon-page"
             aria-hidden="false"

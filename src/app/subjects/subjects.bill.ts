@@ -76,4 +76,8 @@ export class BillState {
             total: this._billsPagination$.getValue().total,
         });
     }
+
+    autoPage(increase: boolean) {
+        this.setPage(this._billsPagination$.getValue().page + 1 * (increase ? 1 : -1));
+    }
 }

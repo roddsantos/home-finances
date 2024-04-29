@@ -70,21 +70,7 @@ export class ModalNewCategory implements OnInit {
         }),
     });
 
-    constructor() {
-        this.categoryForm.valueChanges.subscribe({
-            next: (data) => {
-                this.modalState.changeFooter({
-                    type: "submit",
-                    submit: "OK",
-                    alert: "cancel",
-                    disabled:
-                        !Boolean(data.description) ||
-                        !Boolean(data.name) ||
-                        !Boolean(data.icon),
-                });
-            },
-        });
-    }
+    constructor() {}
 
     errorMessage = {
         name: NO_NAME,
@@ -118,17 +104,7 @@ export class ModalNewCategory implements OnInit {
             type: "submit",
             submit: "OK",
             alert: "cancel",
-            disabled: true,
         });
-        this.modalState.changeHeader("new company");
-    }
-
-    updateButtonState() {
-        this.modalState.changeFooter({
-            type: "submit",
-            submit: "OK",
-            alert: "cancel",
-            disabled: false,
-        });
+        this.modalState.changeHeader("new category");
     }
 }

@@ -1,4 +1,5 @@
 <modal-component
+    [disabled]="companyForm.invalid"
     (actionPrimary)="onSubmit()"
     [bodyTemplate]="newCompany"
 ></modal-component>

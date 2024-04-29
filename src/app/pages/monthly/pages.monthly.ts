@@ -79,14 +79,6 @@ export class PageMonthly {
         }
     }
 
-    getDate(item: Bill, toUse: "updatedAt" | "separated") {
-        let obj =
-            toUse === "updatedAt"
-                ? { date: new Date(item.updatedAt) }
-                : { month: item.month, year: item.year };
-        return getMonthAndYear(obj, "ddMMyyyy");
-    }
-
     openDialog(): void {
         this.dialog.open<string>(ModalNewBill, {
             data: {
