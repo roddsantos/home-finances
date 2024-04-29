@@ -6,18 +6,20 @@
 <ng-template #listDialog>
     <form>
         <div class="add-filter-container">
+            <!-- categories -->
             <mat-form-field
                 *ngIf="(catState.categories$ | async)!.length > 0"
                 class="data-field"
                 appearance="outline"
             >
-                <mat-label>type bills</mat-label>
-                <mat-select #typebill (selectionChange)="addFilter($event, 'category')">
+                <mat-label>category</mat-label>
+                <mat-select #category (selectionChange)="addFilter($event, 'category')">
                     @for (m of (catState.categories$ | async); track m) {
                     <mat-option [value]="m">{{ m.name }}</mat-option>
                     }
                 </mat-select>
             </mat-form-field>
+            <!-- credit cards -->
             <mat-form-field
                 *ngIf="(ccState.creditCards$ | async)!.length > 0"
                 class="data-field"
@@ -33,6 +35,7 @@
                     }
                 </mat-select>
             </mat-form-field>
+            <!-- banks -->
             <mat-form-field
                 *ngIf="(bankState.banks$ | async)!.length > 0"
                 class="data-field"
@@ -45,6 +48,7 @@
                     }
                 </mat-select>
             </mat-form-field>
+            <!-- companies -->
             <mat-form-field
                 *ngIf="(compState.company$ | async)!.length > 0"
                 class="data-field"
@@ -57,6 +61,7 @@
                     }
                 </mat-select>
             </mat-form-field>
+            <!-- month -->
             <mat-form-field class="condition-field" appearance="outline">
                 <mat-label>month</mat-label>
                 <mat-select
@@ -69,6 +74,7 @@
                     }
                 </mat-select>
             </mat-form-field>
+            <!-- year -->
             <mat-form-field class="condition-field" appearance="outline">
                 <mat-label>year</mat-label>
                 <input
@@ -82,6 +88,7 @@
                 <mat-error>invalid year (2023-2090)</mat-error>
                 }
             </mat-form-field>
+            <!-- min value total -->
             <mat-form-field class="condition-field" appearance="outline">
                 <mat-label>min</mat-label>
                 <input
@@ -95,6 +102,7 @@
                 <mat-error>invalid min value</mat-error>
                 }
             </mat-form-field>
+            <!-- max value total -->
             <mat-form-field class="condition-field" appearance="outline">
                 <mat-label>max</mat-label>
                 <input
@@ -108,6 +116,7 @@
                 <mat-error>invalid max value</mat-error>
                 }
             </mat-form-field>
+            <!-- status -->
             <mat-form-field class="data-field" appearance="outline">
                 <mat-label>status</mat-label>
                 <mat-select #status (selectionChange)="addStatus($event)">
@@ -116,17 +125,65 @@
                     <mat-option [value]="'settled'">settled</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field
-                *ngIf="(catState.categories$ | async)!.length > 0"
-                class="data-field"
-                appearance="outline"
-            >
+            <!-- payment type -->
+            <mat-form-field class="data-field" appearance="outline">
                 <mat-label>payment type</mat-label>
                 <mat-select #type (selectionChange)="addFilter($event, 'type')">
                     <mat-option [value]="'creditCard'">credit card</mat-option>
                     <mat-option [value]="'money'">money</mat-option>
                     <mat-option [value]="'companyCredit'">company credit</mat-option>
                 </mat-select>
+            </mat-form-field>
+            <!-- start date -->
+            <!-- <mat-form-field class="savings-input" appearance="outline">
+                <mat-label>from start date</mat-label>
+                <input
+                    (change)="addDate($event, true)"
+                    [matDatepicker]="picker1"
+                    matInput
+                    #startDate
+                    [formControl]="startDateCtrl"
+                />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="picker1"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field> -->
+            <!-- end date -->
+            <!-- <mat-form-field class="savings-input" appearance="outline">
+                <mat-label>until end date</mat-label>
+                <input
+                    (change)="addDate($event, false)"
+                    [matDatepicker]="picker2"
+                    matInput
+                    #endDate
+                    [formControl]="endDateCtrl"
+                />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="picker2"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field> -->
+
+            <mat-form-field>
+                <mat-label>date range</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                    <input matInput matStartDate #startDate placeholder="Start date" />
+                    <input matInput matEndDate #endDate placeholder="End date" />
+                </mat-date-range-input>
+                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-date-range-picker
+                    (closed)="addDate(startDate, endDate)"
+                    #picker
+                ></mat-date-range-picker>
             </mat-form-field>
             <p class="chip-grid-title">choosed filters</p>
             <div class="divider"></div>

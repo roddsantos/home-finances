@@ -77,7 +77,8 @@ export class PaginationTemplate {
         this.billsState.billsPagination$.subscribe({
             next: (pagination) => {
                 status =
-                    pagination.page === Math.ceil(pagination.total / pagination.limit);
+                    pagination.page === Math.ceil(pagination.total / pagination.limit) ||
+                    pagination.total === 0;
             },
         });
         return status;

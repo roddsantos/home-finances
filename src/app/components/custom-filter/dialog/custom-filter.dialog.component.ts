@@ -14,7 +14,7 @@ import {
     ReactiveFormsModule,
     Validators,
 } from "@angular/forms";
-import { MatInputModule } from "@angular/material/input";
+import { MatInput, MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButton } from "@angular/material/button";
 import { CustomFilterState } from "../custom-filter.subjects.component";
@@ -28,6 +28,8 @@ import { ServiceBill } from "src/app/services/bill.service";
 import { MatButtonToggle, MatButtonToggleModule } from "@angular/material/button-toggle";
 import { BillState } from "src/app/subjects/subjects.bill";
 import { Bill, BillData } from "src/app/types/objects";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatNativeDateModule, provideNativeDateAdapter } from "@angular/material/core";
 
 @Component({
     selector: "dialog-custom-filter",
@@ -48,7 +50,10 @@ import { Bill, BillData } from "src/app/types/objects";
         MatFormFieldModule,
         MatInputModule,
         MatButtonToggleModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
     ],
+    providers: [provideNativeDateAdapter()],
 })
 export class DialogCustomList implements OnInit {
     public modalState = inject(ModalState);
@@ -71,6 +76,8 @@ export class DialogCustomList implements OnInit {
     @ViewChild("year") year: MatSelect;
     @ViewChild("min") min: MatSelect;
     @ViewChild("max") max: MatSelect;
+    @ViewChild("startDate") startDate: MatInput;
+    @ViewChild("endDate") endDate: MatInput;
     @ViewChild("status") status: MatButtonToggle;
 
     months = MONTHS;
@@ -88,6 +95,9 @@ export class DialogCustomList implements OnInit {
     statusCtrl = new FormControl<"all" | "settled" | "pending" | "">("", {
         nonNullable: true,
     });
+    rangeDateCtrl = new FormControl<any>("");
+    startDateCtrl = new FormControl<Date | null>(null);
+    endDateCtrl = new FormControl<Date | null>(null);
     selectedFilters: FilterDisplay[] = [];
 
     ngOnInit() {
@@ -190,6 +200,10 @@ export class DialogCustomList implements OnInit {
             });
         }
         this.status.value = "";
+    }
+
+    addDate(event1: any, event2: any) {
+        console.log(event1.value, event2.value);
     }
 
     removeFilter(index: number) {
