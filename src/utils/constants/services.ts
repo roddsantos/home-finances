@@ -1,6 +1,6 @@
-export const URL =
-    // "http://ec2-54-94-128-41.sa-east-1.compute.amazonaws.com:4001" ||
-    "http://localhost:4001";
+import { environment } from "src/environments/environment";
+
+export const URL = environment.backend_url;
 
 export const COMPANY = URL + "/company";
 
