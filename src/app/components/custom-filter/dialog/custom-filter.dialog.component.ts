@@ -28,7 +28,11 @@ import { ServiceBill } from "src/app/services/bill.service";
 import { MatButtonToggle, MatButtonToggleModule } from "@angular/material/button-toggle";
 import { BillState } from "src/app/subjects/subjects.bill";
 import { Bill, BillData } from "src/app/types/objects";
-import { MatDatepickerModule } from "@angular/material/datepicker";
+import {
+    MatDatepickerInput,
+    MatDatepickerInputEvent,
+    MatDatepickerModule,
+} from "@angular/material/datepicker";
 import { MatNativeDateModule, provideNativeDateAdapter } from "@angular/material/core";
 
 @Component({
@@ -76,8 +80,8 @@ export class DialogCustomList implements OnInit {
     @ViewChild("year") year: MatSelect;
     @ViewChild("min") min: MatSelect;
     @ViewChild("max") max: MatSelect;
-    @ViewChild("startDate") startDate: MatInput;
-    @ViewChild("endDate") endDate: MatInput;
+    @ViewChild("date1") date1: MatInput;
+    @ViewChild("date2") date2: MatInput;
     @ViewChild("status") status: MatButtonToggle;
 
     months = MONTHS;
@@ -95,7 +99,6 @@ export class DialogCustomList implements OnInit {
     statusCtrl = new FormControl<"all" | "settled" | "pending" | "">("", {
         nonNullable: true,
     });
-    rangeDateCtrl = new FormControl<any>("");
     startDateCtrl = new FormControl<Date | null>(null);
     endDateCtrl = new FormControl<Date | null>(null);
     selectedFilters: FilterDisplay[] = [];
@@ -202,12 +205,22 @@ export class DialogCustomList implements OnInit {
         this.status.value = "";
     }
 
-    addDate(event1: any, event2: any) {
-        console.log(event1.value, event2.value);
+    addDate(event: any, start: boolean) {
+        const date = new Date(event.value).toLocaleDateString();
+        const dateFound = this.selectedFilters.find(
+            (sf) => sf.identifier === (start ? "date1" : "date2")
+        );
+        if (!Boolean(dateFound))
+            this.selectedFilters.push({
+                id: date,
+                identifier: start ? "date1" : "date2",
+                name: date,
+            });
+        else this[start ? "date1" : "date2"].value = dateFound;
     }
 
     removeFilter(index: number) {
-        this.selectedFilters.splice(index, 1);
+        const removed = this.selectedFilters.splice(index, 1);
     }
 
     onSubmit() {

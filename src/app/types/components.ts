@@ -35,7 +35,9 @@ export type AvailableFilters =
     | "min"
     | "max"
     | "status"
-    | "type";
+    | "type"
+    | "date1"
+    | "date2";
 
 export type AvailableDataFilters = "category" | "creditcard" | "bank" | "company";
 

@@ -135,13 +135,13 @@
                 </mat-select>
             </mat-form-field>
             <!-- start date -->
-            <!-- <mat-form-field class="savings-input" appearance="outline">
+            <mat-form-field class="savings-input" appearance="outline">
                 <mat-label>from start date</mat-label>
                 <input
-                    (change)="addDate($event, true)"
                     [matDatepicker]="picker1"
+                    (dateChange)="addDate($event, true)"
                     matInput
-                    #startDate
+                    #date1
                     [formControl]="startDateCtrl"
                 />
                 <mat-hint>MM/DD/YYYY</mat-hint>
@@ -150,15 +150,15 @@
                     [for]="picker1"
                 ></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
-            </mat-form-field> -->
+            </mat-form-field>
             <!-- end date -->
-            <!-- <mat-form-field class="savings-input" appearance="outline">
+            <mat-form-field class="savings-input" appearance="outline">
                 <mat-label>until end date</mat-label>
                 <input
-                    (change)="addDate($event, false)"
+                    (dateChange)="addDate($event, false)"
                     [matDatepicker]="picker2"
                     matInput
-                    #endDate
+                    #date2
                     [formControl]="endDateCtrl"
                 />
                 <mat-hint>MM/DD/YYYY</mat-hint>
@@ -167,23 +167,6 @@
                     [for]="picker2"
                 ></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
-            </mat-form-field> -->
-
-            <mat-form-field>
-                <mat-label>date range</mat-label>
-                <mat-date-range-input [rangePicker]="picker">
-                    <input matInput matStartDate #startDate placeholder="Start date" />
-                    <input matInput matEndDate #endDate placeholder="End date" />
-                </mat-date-range-input>
-                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle
-                    matIconSuffix
-                    [for]="picker"
-                ></mat-datepicker-toggle>
-                <mat-date-range-picker
-                    (closed)="addDate(startDate, endDate)"
-                    #picker
-                ></mat-date-range-picker>
             </mat-form-field>
             <p class="chip-grid-title">choosed filters</p>
             <div class="divider"></div>
