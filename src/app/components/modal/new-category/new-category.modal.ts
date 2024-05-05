@@ -1,3 +1,4 @@
+import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 import {
     Component,
     OnInit,
@@ -16,17 +17,24 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
-import { ServiceBank } from "src/app/services/bank.service";
-import { BankState } from "src/app/subjects/subjects.bank";
-import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
+import { ServiceCompany } from "src/app/services/company.service";
 import { ModalState } from "src/app/subjects/subjects.modal";
-import { BankObject } from "src/app/types/services";
-import { Bank } from "src/app/types/objects";
+import { CompanyState } from "src/app/subjects/subjects.company";
+import { Category, Company } from "src/app/types/objects";
+import { CategoryObject, CompanyObject } from "src/app/types/services";
+import { NO_DESCRIPTION, NO_NAME } from "src/utils/constants/forms";
+import { ServiceCategory } from "src/app/services/category.service";
+import { CategoryState } from "src/app/subjects/subjects.category";
+import { MatIconModule } from "@angular/material/icon";
+
+export interface DialogData {
+    username: string;
+}
 
 @Component({
-    selector: "modal-new-bank",
-    templateUrl: "./new-bank.modal.html",
-    styleUrls: ["./new-bank.modal.css"],
+    selector: "modal-new-category",
+    templateUrl: "./new-category.modal.html",
+    styleUrls: ["./new-category.modal.css"],
     standalone: true,
     imports: [
         ModalComponent,
@@ -34,17 +42,19 @@ import { Bank } from "src/app/types/objects";
         FormsModule,
         MatLabel,
         MatInputModule,
+        FormsModule,
         ReactiveFormsModule,
+        MatIconModule,
     ],
 })
-export class ModalNewBank implements OnInit {
+export class ModalNewCategory implements OnInit {
+    public catApi = inject(ServiceCategory);
     public modalState = inject(ModalState);
-    public bankApi = inject(ServiceBank);
-    public bankState = inject(BankState);
+    public catState = inject(CategoryState);
     public snack = inject(CustomSnackbarComponent);
     @ViewChild(ModalComponent) modalComponent: any;
 
-    bankForm = new FormGroup({
+    categoryForm = new FormGroup({
         name: new FormControl<string>("", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
@@ -54,43 +64,47 @@ export class ModalNewBank implements OnInit {
             nonNullable: true,
         }),
         color: new FormControl<string>("#000000", { nonNullable: true }),
-        savings: new FormControl<number>(0, { nonNullable: true }),
+        icon: new FormControl<string>("", {
+            validators: [Validators.required, Validators.maxLength(100)],
+            nonNullable: true,
+        }),
     });
 
+    constructor() {}
+
     errorMessage = {
-        name: "you must enter a name",
-        description: "you must enter a description",
-        savings: "you must enter the savings",
+        name: NO_NAME,
+        description: NO_DESCRIPTION,
+        icon: "you must enter an icon",
     };
     @Output() submit = new EventEmitter<String>();
     @Output() onClose = new EventEmitter<void>();
 
-    constructor() {}
-
-    ngOnInit() {
-        this.modalState.onSubmitFooter("OK", "cancel");
-        this.modalState.changeHeader("new company");
-    }
-
     onSubmit() {
-        if (!this.bankForm.invalid) {
-            this.bankApi
-                .createBank({
-                    ...(this.bankForm.value as BankObject),
+        if (!this.categoryForm.invalid) {
+            this.catApi
+                .createCategory({
+                    ...(this.categoryForm.value as CategoryObject),
                 })
                 .subscribe({
                     next: (data) => {
-                        this.bankState.addBank(data as Bank);
+                        this.catState.addCategory(data as Category);
                         this.snack.openSnackBar(
                             "company successfully created",
                             "success"
                         );
                         this.modalComponent.onClose();
                     },
-                    error: (err) => {
-                        this.snack.openSnackBar("error creating bank", "error");
-                    },
                 });
         } else this.onClose.emit();
+    }
+
+    ngOnInit() {
+        this.modalState.changeFooter({
+            type: "submit",
+            submit: "OK",
+            alert: "cancel",
+        });
+        this.modalState.changeHeader("new category");
     }
 }

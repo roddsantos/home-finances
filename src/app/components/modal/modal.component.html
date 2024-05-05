@@ -24,7 +24,7 @@
         </button>
         <button
             *ngSwitchCase="'submit'"
-            [disabled]="(modalState.footer$ | async)?.disabled"
+            [disabled]="disabled"
             mat-button
             class="button-primary add-margin-left"
             (click)="this.onPrimary()"

@@ -35,6 +35,7 @@ export class ModalComponent {
     ) {}
 
     @Input() bodyTemplate!: TemplateRef<any>;
+    @Input() disabled: boolean;
     @Output() actionSecondary = new EventEmitter<void>();
     @Output() actionPrimary = new EventEmitter<Object>();
 

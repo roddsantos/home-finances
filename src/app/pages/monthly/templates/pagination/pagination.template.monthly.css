@@ -7,3 +7,17 @@
 .pad {
     margin-left: 10px;
 }
+
+.icon-page {
+    margin: auto;
+}
+
+.input-page-container {
+    height: 36px;
+    width: 60px;
+    background-color: var(--secondary);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,4 +1,8 @@
-<modal-component (actionPrimary)="onSubmit()" [bodyTemplate]="newBank"></modal-component>
+<modal-component
+    [disabled]="bankForm.invalid"
+    (actionPrimary)="onSubmit()"
+    [bodyTemplate]="newBank"
+></modal-component>
 
 <ng-template #newBank>
     <form [formGroup]="bankForm">

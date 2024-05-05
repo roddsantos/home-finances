@@ -10,7 +10,6 @@ export class ModalState {
         type: "submit",
         submit: "ok",
         alert: "cancel",
-        disabled: false,
     });
 
     private _header$ = new BehaviorSubject<string>("");
@@ -43,7 +42,6 @@ export class ModalState {
             type: "submit",
             submit,
             alert,
-            disabled: false,
         });
     }
 
@@ -52,7 +50,6 @@ export class ModalState {
             type: "alert",
             submit,
             alert,
-            disabled: false,
         });
     }
 
@@ -61,28 +58,6 @@ export class ModalState {
             type: "none",
             submit,
             alert,
-            disabled: false,
-        });
-    }
-
-    setDisableButton(flag: boolean) {
-        this._footer$.next({
-            ...this._footer$.getValue(),
-            disabled: flag,
-        });
-    }
-
-    disableButton() {
-        this._footer$.next({
-            ...this._footer$.getValue(),
-            disabled: true,
-        });
-    }
-
-    enableButton() {
-        this._footer$.next({
-            ...this._footer$.getValue(),
-            disabled: false,
         });
     }
 }

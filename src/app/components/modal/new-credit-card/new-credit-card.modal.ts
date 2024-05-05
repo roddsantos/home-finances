@@ -83,19 +83,10 @@ export class ModalNewCreditCard implements OnInit {
     @Output() submit = new EventEmitter<String>();
     @Output() onClose = new EventEmitter<void>();
 
-    constructor() {
-        this.creditCardForm.valueChanges.subscribe({
-            next: (data) => {
-                this.modalState.setDisableButton(
-                    !Boolean(data.description) || !Boolean(data.name) || data.year! < 2023
-                );
-            },
-        });
-    }
+    constructor() {}
 
     ngOnInit() {
         this.modalState.onSubmitFooter("OK", "cancel");
-        this.modalState.disableButton();
         this.modalState.changeHeader("new credit card");
     }
 

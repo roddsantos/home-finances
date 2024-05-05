@@ -49,10 +49,10 @@ export class CustomFilterComponent {
         if (filter) {
             this.filterState.removeFilter(filter);
             this.billService.getBills().subscribe({
-                next: (data) => {
-                    if ((data as Array<Bill & BillData>).length === 0)
+                next: (bills) => {
+                    if (bills.data.length === 0)
                         this.billState.changeStatus("empty", "no bills");
-                    else this.billState.setBills(data as Array<Bill & BillData>);
+                    else this.billState.setBills(bills);
                 },
                 error: () => {
                     this.snack.openSnackBar("error fetching bills", "error");

@@ -17,15 +17,15 @@
             [ngForTrackBy]="trackByFn"
         >
             <bank-list-template
-                *ngIf="item.typeBill.referTo === 'banks'"
+                *ngIf="item.type === 'money'"
                 [data]="item"
             ></bank-list-template>
             <credit-card-list-template
-                *ngIf="item.typeBill.referTo === 'creditCard'"
+                *ngIf="item.type === 'creditCard'"
                 [data]="item"
             ></credit-card-list-template>
             <service-list-template
-                *ngIf="item.typeBill.referTo === 'service'"
+                *ngIf="item.type === 'companyCredit'"
                 [data]="item"
             ></service-list-template>
         </ng-template>

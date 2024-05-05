@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { Bill, BillData } from "src/app/types/objects";
 import { FeedbackInfo, FeedbackVariant, PaginationType } from "../types/components";
+import { FetchPaginatedData } from "../types/services";
 
 @Injectable({
     providedIn: "root",
@@ -18,6 +19,7 @@ export class BillState {
     private _billsPagination$ = new BehaviorSubject<PaginationType>({
         page: 1,
         limit: 10,
+        total: 0,
     });
 
     public readonly status$ = this._status$.asObservable();
@@ -33,10 +35,15 @@ export class BillState {
         this._status$.next({ ...this._status$.getValue(), variant });
     }
 
-    setBills(bills: Array<Bill & BillData>) {
-        if (bills.length === 0) this.changeStatus("empty", "no bills");
+    setBills(bills: FetchPaginatedData<Bill & BillData>) {
+        if (bills.data.length === 0) this.changeStatus("empty", "no bills");
         else this.changeVariant("none");
-        this._bills$.next(bills);
+        this._bills$.next(bills.data);
+        this._billsPagination$.next({
+            page: this._billsPagination$.getValue().page,
+            limit: this._billsPagination$.getValue().limit,
+            total: bills.count,
+        });
     }
 
     addBill(bill: Array<Bill & BillData>, index?: number) {
@@ -58,6 +65,7 @@ export class BillState {
         this._billsPagination$.next({
             page,
             limit: this._billsPagination$.getValue().limit,
+            total: this._billsPagination$.getValue().total,
         });
     }
 
@@ -65,6 +73,11 @@ export class BillState {
         this._billsPagination$.next({
             page: this._billsPagination$.getValue().page,
             limit,
+            total: this._billsPagination$.getValue().total,
         });
+    }
+
+    autoPage(increase: boolean) {
+        this.setPage(this._billsPagination$.getValue().page + 1 * (increase ? 1 : -1));
     }
 }

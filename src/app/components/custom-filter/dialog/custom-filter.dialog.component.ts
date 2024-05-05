@@ -4,7 +4,7 @@ import { ModalComponent } from "src/app/components/modal/modal.component";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { AvailableDataFilters, FilterDisplay } from "src/app/types/components";
-import { TypeBillState } from "src/app/subjects/subjects.type-bills";
+import { CategoryState } from "src/app/subjects/subjects.category";
 import { CommonModule } from "@angular/common";
 import { MatSelect, MatSelectChange, MatSelectModule } from "@angular/material/select";
 import { MatIconModule } from "@angular/material/icon";
@@ -14,7 +14,7 @@ import {
     ReactiveFormsModule,
     Validators,
 } from "@angular/forms";
-import { MatInputModule } from "@angular/material/input";
+import { MatInput, MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButton } from "@angular/material/button";
 import { CustomFilterState } from "../custom-filter.subjects.component";
@@ -28,6 +28,12 @@ import { ServiceBill } from "src/app/services/bill.service";
 import { MatButtonToggle, MatButtonToggleModule } from "@angular/material/button-toggle";
 import { BillState } from "src/app/subjects/subjects.bill";
 import { Bill, BillData } from "src/app/types/objects";
+import {
+    MatDatepickerInput,
+    MatDatepickerInputEvent,
+    MatDatepickerModule,
+} from "@angular/material/datepicker";
+import { MatNativeDateModule, provideNativeDateAdapter } from "@angular/material/core";
 
 @Component({
     selector: "dialog-custom-filter",
@@ -48,11 +54,14 @@ import { Bill, BillData } from "src/app/types/objects";
         MatFormFieldModule,
         MatInputModule,
         MatButtonToggleModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
     ],
+    providers: [provideNativeDateAdapter()],
 })
 export class DialogCustomList implements OnInit {
     public modalState = inject(ModalState);
-    public tbState = inject(TypeBillState);
+    public catState = inject(CategoryState);
     public ccState = inject(CreditCardState);
     public compState = inject(CompanyState);
     public bankState = inject(BankState);
@@ -63,7 +72,7 @@ export class DialogCustomList implements OnInit {
     public localStorage = inject(LocalStorageService);
 
     @ViewChild(ModalComponent) modalComponent: ModalComponent;
-    @ViewChild("typebill") typebill: MatSelect;
+    @ViewChild("category") category: MatSelect;
     @ViewChild("creditcard") creditcard: MatSelect;
     @ViewChild("company") company: MatSelect;
     @ViewChild("bank") bank: MatSelect;
@@ -71,10 +80,12 @@ export class DialogCustomList implements OnInit {
     @ViewChild("year") year: MatSelect;
     @ViewChild("min") min: MatSelect;
     @ViewChild("max") max: MatSelect;
+    @ViewChild("date1") date1: MatInput;
+    @ViewChild("date2") date2: MatInput;
     @ViewChild("status") status: MatButtonToggle;
 
     months = MONTHS;
-    tbCtrl = new FormControl<string>("");
+    catCtrl = new FormControl<string>("");
     ccCrtl = new FormControl<string>("");
     compCtrl = new FormControl<string>("");
     bkCtrl = new FormControl<string>("");
@@ -88,6 +99,8 @@ export class DialogCustomList implements OnInit {
     statusCtrl = new FormControl<"all" | "settled" | "pending" | "">("", {
         nonNullable: true,
     });
+    startDateCtrl = new FormControl<Date | null>(null);
+    endDateCtrl = new FormControl<Date | null>(null);
     selectedFilters: FilterDisplay[] = [];
 
     ngOnInit() {
@@ -100,7 +113,7 @@ export class DialogCustomList implements OnInit {
         });
     }
 
-    addFilter(event: MatSelectChange, identifier: AvailableDataFilters) {
+    addFilter(event: MatSelectChange, identifier: AvailableDataFilters | "type") {
         const filter = event.value;
         const hasFilter = this.selectedFilters.find((f) => f.id === filter.id);
         if (!hasFilter) {
@@ -192,18 +205,32 @@ export class DialogCustomList implements OnInit {
         this.status.value = "";
     }
 
+    addDate(event: any, start: boolean) {
+        const date = new Date(event.value).toLocaleDateString();
+        const dateFound = this.selectedFilters.find(
+            (sf) => sf.identifier === (start ? "date1" : "date2")
+        );
+        if (!Boolean(dateFound))
+            this.selectedFilters.push({
+                id: date,
+                identifier: start ? "date1" : "date2",
+                name: date,
+            });
+        else this[start ? "date1" : "date2"].value = dateFound;
+    }
+
     removeFilter(index: number) {
-        this.selectedFilters.splice(index, 1);
+        const removed = this.selectedFilters.splice(index, 1);
     }
 
     onSubmit() {
         this.filterState.setFilters([...this.selectedFilters]);
         this.localStorage.setFilters(JSON.stringify(this.selectedFilters));
         this.billService.getBills().subscribe({
-            next: (data) => {
-                if ((data as Array<Bill & BillData>).length === 0)
+            next: (bills) => {
+                if (bills.data.length === 0)
                     this.billState.changeStatus("empty", "no bills");
-                else this.billState.setBills(data as Array<Bill & BillData>);
+                else this.billState.setBills(bills);
                 this.modalComponent.onClose();
             },
             error: () => {

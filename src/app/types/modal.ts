@@ -10,5 +10,4 @@ export type FooterModal = {
     type: "none" | "submit" | "alert";
     submit?: String;
     alert?: String;
-    disabled?: boolean;
 };

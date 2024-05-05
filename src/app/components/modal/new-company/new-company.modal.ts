@@ -62,18 +62,7 @@ export class ModalNewCompany implements OnInit {
         color: new FormControl<string>("#000000", { nonNullable: true }),
     });
 
-    constructor() {
-        this.companyForm.valueChanges.subscribe({
-            next: (data) => {
-                this.modalState.changeFooter({
-                    type: "submit",
-                    submit: "OK",
-                    alert: "cancel",
-                    disabled: !Boolean(data.description) || !Boolean(data.name),
-                });
-            },
-        });
-    }
+    constructor() {}
 
     errorMessage = {
         name: NO_NAME,
@@ -106,17 +95,7 @@ export class ModalNewCompany implements OnInit {
             type: "submit",
             submit: "OK",
             alert: "cancel",
-            disabled: true,
         });
         this.modalState.changeHeader("new company");
-    }
-
-    updateButtonState() {
-        this.modalState.changeFooter({
-            type: "submit",
-            submit: "OK",
-            alert: "cancel",
-            disabled: false,
-        });
     }
 }

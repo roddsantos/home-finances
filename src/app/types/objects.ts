@@ -34,12 +34,12 @@ export type CreditCard = {
     deletedAt: string | null;
 };
 
-export type TypeBill = {
+export type Category = {
     id: string;
     name: string;
     description: string;
     icon: string;
-    referTo: string;
+    userId: string;
     updatedAt: string;
     createdAt: string;
     deletedAt: string | null;
@@ -67,10 +67,12 @@ export type Bill = {
     taxes: number;
     delta: number;
     due: string;
+    paid: string;
     month: number;
     year: number;
+    type: string;
     companyId: string;
-    typeBillId: string;
+    categoryId: string;
     bank1Id: string;
     bank2Id: string;
     creditCardId: string;
@@ -82,7 +84,7 @@ export type Bill = {
 };
 
 export type BillData = {
-    typeBill: TypeBill;
+    category: Category;
     creditCard: CreditCard | null;
     bank1: Bank | null;
     bank2: Bank | null;

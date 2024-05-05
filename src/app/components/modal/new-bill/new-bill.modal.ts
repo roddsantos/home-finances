@@ -13,9 +13,9 @@ import { BillState } from "src/app/subjects/subjects.bill";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 import { ModalState } from "src/app/subjects/subjects.modal";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
-import { Bill, BillData, TypeBill } from "src/app/types/objects";
+import { Bill, BillData, Category } from "src/app/types/objects";
 import { BankTemplateNewBill } from "./templates/bank/bank.template.new-bill";
-import { TypeBillState } from "src/app/subjects/subjects.type-bills";
+import { CategoryState } from "src/app/subjects/subjects.category";
 import { CommonModule } from "@angular/common";
 import { CompanyTemplateNewBill } from "./templates/company/company.template.new-bill";
 import { CreditCardTemplateNewBill } from "./templates/credit-card/credit-card.template.new-bill";
@@ -23,19 +23,20 @@ import { ServiceTemplateNewBill } from "./templates/service/service.template.new
 import {
     NEGATIVE_TOTAL,
     NO_BILL_VALUE,
+    NO_CATEGORY,
     NO_DESCRIPTION,
     NO_NAME,
-    NO_TYPE_BILL,
     YEAR_OUT_OF_RANGE,
 } from "src/utils/constants/forms";
 import { ServiceBill } from "src/app/services/bill.service";
-import { MonthType, PaymentTypes } from "src/app/types/general";
+import { MonthType, PaymentTypes, RequiredKeys } from "src/app/types/general";
 import { MONTHS } from "src/utils/constants/general";
 import { MatOption } from "@angular/material/core";
-import { MatSelectModule } from "@angular/material/select";
+import { MatSelectChange, MatSelectModule } from "@angular/material/select";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { provideNativeDateAdapter } from "@angular/material/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { BillObject } from "src/app/types/services";
 
 @Component({
     selector: "modal-new-bill",
@@ -65,7 +66,7 @@ export class ModalNewBill implements OnInit {
     public modalState = inject(ModalState);
     public billState = inject(BillState);
     public billService = inject(ServiceBill);
-    public tbState = inject(TypeBillState);
+    public catState = inject(CategoryState);
     public snack = inject(CustomSnackbarComponent);
     @ViewChild(ModalComponent) modalComponent: ModalComponent;
     @ViewChild(BankTemplateNewBill) bankTemplate: BankTemplateNewBill;
@@ -80,7 +81,6 @@ export class ModalNewBill implements OnInit {
             type: "submit",
             submit: "create",
             alert: "cancel",
-            disabled: false,
         });
     }
 
@@ -99,8 +99,8 @@ export class ModalNewBill implements OnInit {
         }),
         settled: new FormControl<boolean>(true, { nonNullable: false }),
         due: new FormControl<Date>(new Date(), { nonNullable: true }),
-        payment: new FormControl<Date>(new Date(), { nonNullable: true }),
-        paymentType: new FormControl<PaymentTypes>("money", { nonNullable: true }),
+        paid: new FormControl<Date>(new Date(), { nonNullable: false }),
+        type: new FormControl<PaymentTypes>("money", { nonNullable: true }),
         year: new FormControl<number>(new Date().getFullYear(), {
             nonNullable: true,
             validators: [Validators.min(2023), Validators.max(2090)],
@@ -109,7 +109,7 @@ export class ModalNewBill implements OnInit {
             nonNullable: true,
             validators: [Validators.required],
         }),
-        typebill: new FormControl<TypeBill | null>(null, {
+        category: new FormControl<Category | null>(null, {
             nonNullable: true,
             validators: [Validators.required],
         }),
@@ -127,9 +127,32 @@ export class ModalNewBill implements OnInit {
         description: NO_DESCRIPTION,
         total: NO_BILL_VALUE,
         negativeValue: NEGATIVE_TOTAL,
-        typebill: NO_TYPE_BILL,
+        category: NO_CATEGORY,
         year: YEAR_OUT_OF_RANGE,
     };
+
+    onDisableButton() {
+        switch (this.billForm.value.type) {
+            case "money":
+                return this.billForm.invalid || this.bankTemplate.bankForm.invalid;
+            case "companyCredit":
+                return this.billForm.invalid || this.companyTemplate.compForm.invalid;
+            case "creditCard":
+                return this.billForm.invalid || this.creditCardTemplate.ccForm.invalid;
+            default:
+                return false;
+        }
+    }
+
+    onSetSettled(event: MatSelectChange) {
+        if (event.value === "companyCredit") {
+            this.billForm.patchValue({ settled: false });
+            this.billForm.patchValue({ paid: null });
+        } else {
+            this.billForm.patchValue({ settled: true });
+            this.billForm.patchValue({ paid: new Date() });
+        }
+    }
 
     onSubmit() {
         var defaultData = {
@@ -137,14 +160,16 @@ export class ModalNewBill implements OnInit {
             description: this.billForm.value.description!,
             settled: this.billForm.value.settled!,
             due: this.billForm.value.due!,
+            paid: this.billForm.value.paid!,
             total: this.billForm.value.total!,
             year: this.billForm.value.year!,
             month: this.billForm.value.month!.order,
-            typeBillId: this.billForm.value.typebill!.id,
+            type: this.billForm.value.type!,
+            categoryId: this.billForm.value.category!.id,
         };
         var observer;
-        switch (this.billForm.value.typebill?.referTo) {
-            case "banks":
+        switch (this.billForm.value.type) {
+            case "money":
                 observer = this.billService.createBillBank({
                     ...defaultData,
                     bank1Id: this.bankTemplate.bankForm.value.bank1!.id,
@@ -163,7 +188,7 @@ export class ModalNewBill implements OnInit {
                     delta: this.creditCardTemplate.ccForm.value.delta,
                 });
                 break;
-            case "company":
+            case "companyCredit":
                 observer = this.billService.createBillCompany({
                     ...defaultData,
                     creditCardId: this.companyTemplate.compForm.value.creditcard?.id,
@@ -174,27 +199,13 @@ export class ModalNewBill implements OnInit {
                     delta: this.companyTemplate.compForm.value.delta,
                 });
                 break;
-            case "service":
-                observer = this.billService.createBillService({
-                    ...defaultData,
-                    creditCardId: this.serviceTemplate.serviceForm.value.creditCard?.id,
-                    companyId: this.serviceTemplate.serviceForm.value.company!.id,
-                    bank1Id: this.serviceTemplate.serviceForm.value.bank?.id,
-                    parcels: this.serviceTemplate.serviceForm.value.parcels!,
-                    taxes: this.serviceTemplate.serviceForm.value.taxes,
-                    delta: this.serviceTemplate.serviceForm.value.delta,
-                });
-                break;
             default:
                 break;
         }
         observer?.subscribe({
             next: () => {
                 this.billService.getBills().subscribe({
-                    next: (data) =>
-                        this.billState.setBills(
-                            data as unknown as Array<Bill & BillData>
-                        ),
+                    next: (bills) => this.billState.setBills(bills),
                 });
                 this.snack.openSnackBar("bill successfully created", "success");
                 this.modalComponent.onClose();
@@ -205,7 +216,7 @@ export class ModalNewBill implements OnInit {
         });
     }
 
-    onChangeType($event: TypeBill) {
-        this.inputType = $event?.referTo || "";
+    onChangeType($event: PaymentTypes) {
+        this.inputType = $event || "";
     }
 }

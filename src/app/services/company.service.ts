@@ -4,6 +4,7 @@ import { COMPANY } from "src/utils/constants/services";
 import { CompanyObject } from "../types/services";
 import { UserState } from "../subjects/subjects.user";
 import { mergeMap } from "rxjs";
+import { Company } from "../types/objects";
 
 @Injectable({
     providedIn: "root",
@@ -14,7 +15,7 @@ export class ServiceCompany {
 
     getCompanies() {
         return this.user.user$.pipe(
-            mergeMap((user) => this.http.get(COMPANY + `/${user!.id}`))
+            mergeMap((user) => this.http.get<Company[]>(COMPANY + `/${user!.id}`))
         );
     }
 

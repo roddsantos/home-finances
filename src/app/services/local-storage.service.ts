@@ -22,19 +22,19 @@ export class LocalStorageService {
         localStorage.removeItem("user");
     }
 
-    setTypeBills(typeBills: string) {
-        localStorage.setItem("typeBills", typeBills);
-    }
+    // setTypeBills(typeBills: string) {
+    //     localStorage.setItem("typeBills", typeBills);
+    // }
 
-    getTypeBills() {
-        let typeBills = localStorage.getItem("typeBills");
-        return typeBills ? JSON.parse(typeBills) : null;
-    }
+    // getTypeBills() {
+    //     let typeBills = localStorage.getItem("typeBills");
+    //     return typeBills ? JSON.parse(typeBills) : null;
+    // }
 
-    removeTypeBills() {
-        localStorage.removeItem("typeBills");
-        localStorage.removeItem("hasTypeBills");
-    }
+    // removeTypeBills() {
+    //     localStorage.removeItem("typeBills");
+    //     localStorage.removeItem("hasTypeBills");
+    // }
 
     setFilters(filters: string) {
         localStorage.setItem("filters", filters);

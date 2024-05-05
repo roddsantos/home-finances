@@ -14,15 +14,13 @@ import { MatButtonModule } from "@angular/material/button";
 import { ModalProfile } from "./components/modal/profile/profile.modal";
 import { ModalComponent } from "./components/modal/modal.component";
 import { MatInputModule } from "@angular/material/input";
-import { TextfieldComponent } from "./components/textfield/textfield.component";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
-import { TypeBillsManagementComponent } from "./pages/management/type-bills/pages.management.type-bills";
-import { CustomButtonComponent } from "./components/custom-button/custom-button.component";
+import { CategoriesManagementComponent } from "./pages/management/categories/pages.management.categories";
 
 @NgModule({
-    declarations: [AppComponent, TextfieldComponent, CustomButtonComponent],
+    declarations: [AppComponent],
     imports: [
         BrowserModule,
         HttpClientModule,
@@ -39,7 +37,7 @@ import { CustomButtonComponent } from "./components/custom-button/custom-button.
         LayoutComponent,
         ModalComponent,
         ModalProfile,
-        TypeBillsManagementComponent,
+        CategoriesManagementComponent,
         ManagementCompaniesComponent,
     ],
     providers: [],

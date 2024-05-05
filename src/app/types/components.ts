@@ -28,15 +28,18 @@ export type SizeType = "xm" | "sm" | "md" | "lg" | "xl";
 export type AvailableFilters =
     | "month"
     | "year"
-    | "typebill"
+    | "category"
     | "company"
     | "creditcard"
     | "bank"
     | "min"
     | "max"
-    | "status";
+    | "status"
+    | "type"
+    | "date1"
+    | "date2";
 
-export type AvailableDataFilters = "typebill" | "creditcard" | "bank" | "company";
+export type AvailableDataFilters = "category" | "creditcard" | "bank" | "company";
 
 export type FilterDisplay = {
     id: string | number;
@@ -54,4 +57,5 @@ export type ListAction = {
 export type PaginationType = {
     page: number;
     limit: number;
+    total: number;
 };

@@ -23,13 +23,13 @@ export class BankListTemplateMonthly {
         else this.color = "#8f0000";
     }
 
-    getDate(toUse: "updatedAt" | "separated" | "due") {
+    getDate(toUse: "updatedAt" | "paid" | "due") {
         let obj =
             toUse === "updatedAt"
                 ? { date: new Date(this.data.updatedAt) }
                 : toUse === "due"
                 ? { date: new Date(this.data.due) }
-                : { month: this.data.month, year: this.data.year };
+                : { date: new Date(this.data.paid) };
         return getMonthAndYear(obj, "ddMMyyyy");
     }
 

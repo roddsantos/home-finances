@@ -6,7 +6,7 @@ export const COMPANY = URL + "/company";
 
 export const USER = URL + "/user";
 
-export const TYPEBILL = URL + "/typebill";
+export const CATEGORY = URL + "/category";
 
 export const CREDIT_CARD = URL + "/credit-card";
 

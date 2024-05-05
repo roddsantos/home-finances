@@ -4,6 +4,7 @@ import { BANK } from "src/utils/constants/services";
 import { BankObject } from "../types/services";
 import { UserState } from "../subjects/subjects.user";
 import { mergeMap } from "rxjs";
+import { Bank } from "../types/objects";
 
 @Injectable({
     providedIn: "root",
@@ -14,7 +15,7 @@ export class ServiceBank {
 
     getBanks() {
         return this.user.user$.pipe(
-            mergeMap((user) => this.http.get(BANK + `/${user?.id}`))
+            mergeMap((user) => this.http.get<Bank[]>(BANK + `/${user?.id}`))
         );
     }
 

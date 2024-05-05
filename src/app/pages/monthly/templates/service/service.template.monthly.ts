@@ -23,11 +23,8 @@ export class ServiceTemplateMonthly {
         else this.color = "#8f0000";
     }
 
-    getDate(toUse: "updatedAt" | "separated") {
-        let obj =
-            toUse === "updatedAt"
-                ? { date: new Date(this.data.updatedAt) }
-                : { month: this.data.month, year: this.data.year };
+    getDate(toUse: "updatedAt" | "due" | "paid") {
+        let obj = { date: new Date(this.data[toUse]) };
         return getMonthAndYear(obj, "ddMMyyyy");
     }
 

@@ -1,4 +1,5 @@
 <modal-component
+    [disabled]="creditCardForm.invalid"
     (actionPrimary)="onSubmit()"
     [bodyTemplate]="newCreditCard"
 ></modal-component>

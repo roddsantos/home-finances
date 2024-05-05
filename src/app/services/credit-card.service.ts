@@ -4,6 +4,7 @@ import { CREDIT_CARD } from "src/utils/constants/services";
 import { CreditCardObject, GetCreditCard } from "../types/services";
 import { mergeMap } from "rxjs";
 import { UserState } from "../subjects/subjects.user";
+import { CreditCard } from "../types/objects";
 
 @Injectable({
     providedIn: "root",
@@ -15,7 +16,9 @@ export class ServiceCreditCard {
     getCreditCards(data: GetCreditCard) {
         return this.user.user$.pipe(
             mergeMap((user) =>
-                this.http.get(CREDIT_CARD, { params: { ...data, userId: user!.id } })
+                this.http.get<CreditCard[]>(CREDIT_CARD, {
+                    params: { ...data, userId: user!.id },
+                })
             )
         );
     }
