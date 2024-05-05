@@ -4,26 +4,49 @@
         [info]="(catState.status$ | async)!"
     ></feedback-container>
     <li *ngFor="let category of catState.categories$ | async">
-        <div class="cat-item-list">
+        <div class="item-list">
             <div class="cat-item-text">
-                <p class="cat-title">{{category.name}}</p>
-                <p class="cat-description">{{category.description}}</p>
+                <p class="title">{{category.name}}</p>
+                <p class="description">{{category.description}}</p>
             </div>
             <mat-icon
                 class="icon-type"
                 aria-hidden="false"
                 aria-label="Example home icon"
                 fontIcon="{{category.icon}}"
+                [style.color]="category.color"
             ></mat-icon>
 
-            <button class="icon-button" mat-icon-button aria-label="color label">
-                <mat-icon
-                    class="icon-edit"
-                    aria-hidden="false"
-                    aria-label="Example home icon"
-                    fontIcon="edit"
-                ></mat-icon>
-            </button>
+            <div class="button-container">
+                <button
+                    matTooltip="edit"
+                    matTooltipPosition="above"
+                    class="icon-button"
+                    mat-icon-button
+                    aria-label="edit company button"
+                >
+                    <mat-icon
+                        class="icon-edit"
+                        aria-hidden="false"
+                        aria-label="pen icon"
+                        fontIcon="edit"
+                    ></mat-icon>
+                </button>
+                <button
+                    matTooltip="delete"
+                    matTooltipPosition="above"
+                    [ngClass]="['icon-button', 'left']"
+                    mat-icon-button
+                    aria-label="delete company button"
+                >
+                    <mat-icon
+                        class="icon-edit"
+                        aria-hidden="false"
+                        aria-label="trash bin icon"
+                        fontIcon="delete"
+                    ></mat-icon>
+                </button>
+            </div>
         </div>
     </li>
 </div>

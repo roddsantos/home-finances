@@ -1,30 +1,8 @@
-.cc-item-list {
-    display: flex;
-    flex-direction: row;
-    width: auto;
-    padding: 10px 50px;
-    background-color: var(--item-list);
-}
-
 .cc-item-text {
     display: flex;
     flex-direction: row;
     padding: 0px;
     width: 75%;
-}
-
-.cc-title {
-    font: bold 22px Helvetica;
-    color: var(--secondary);
-    width: 50%;
-    margin: auto 10px auto 0px;
-}
-
-.cc-description {
-    font: normal 14px Helvetica;
-    color: var(--primary);
-    margin: auto 0px;
-    width: 50%;
 }
 
 .cc-limit {
@@ -34,39 +12,4 @@
     color: var(--primary);
     font: normal 12px Helvetica;
     margin: auto 10px;
-}
-
-.icon-edit {
-    font-size: 30px;
-    height: auto;
-    width: auto;
-    color: blueviolet;
-}
-
-.icon-cc {
-    font-size: 24px;
-    height: auto;
-    margin: auto 20px auto auto;
-    color: blueviolet;
-}
-
-.icon-button {
-    margin: auto 0px auto 20px;
-    cursor: pointer;
-    box-shadow: none;
-    background-color: transparent;
-    border: 0px;
-    border-radius: 50%;
-}
-
-.cc-color-container {
-    width: 0;
-    height: 0;
-    position: absolute;
-    right: 0px;
-    top: 8px;
-    rotate: 135deg;
-    border-top: 20px solid transparent;
-    border-bottom: 20px solid transparent;
-    border-right: 20px solid transparent;
 }

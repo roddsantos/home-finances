@@ -15,7 +15,7 @@ import { ServiceTemplateMonthly } from "./templates/service/service.template.mon
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { ServiceBill } from "src/app/services/bill.service";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
-import { FetchPaginatedData } from "src/app/types/services";
+import { MatTooltipModule } from "@angular/material/tooltip";
 import { PaginationTemplate } from "./templates/pagination/pagination.template.monthly";
 
 @Component({
@@ -34,6 +34,7 @@ import { PaginationTemplate } from "./templates/pagination/pagination.template.m
         ServiceTemplateMonthly,
         FeedbackContainerComponent,
         PaginationTemplate,
+        MatTooltipModule,
     ],
 })
 export class PageMonthly {

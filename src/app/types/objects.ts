@@ -39,6 +39,7 @@ export type Category = {
     name: string;
     description: string;
     icon: string;
+    color: string;
     userId: string;
     updatedAt: string;
     createdAt: string;

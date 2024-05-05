@@ -38,3 +38,76 @@
 .button-container {
     height: 60px;
 }
+
+.color-container {
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: 0px;
+    top: 8px;
+    rotate: 135deg;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-right: 20px solid transparent;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    right: 30px;
+    height: auto;
+}
+
+.left {
+    margin-left: 10px !important;
+}
+
+.icon-button {
+    display: none;
+}
+
+.item-list:hover .icon-button {
+    position: relative;
+    margin: auto 0px auto auto;
+    border: 0px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+}
+
+.icon-edit {
+    height: auto;
+    width: auto;
+    color: var(--description);
+}
+
+.title {
+    font-weight: bold;
+    font-size: 22px;
+    font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+    color: var(--title);
+    width: 50%;
+    margin: auto 10px auto 0px;
+}
+
+.description {
+    font-weight: normal;
+    font-size: 14px;
+    font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+    color: var(--description);
+    margin: auto 0px;
+    width: 50%;
+}
+
+.item-list {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 60px;
+    padding: 10px 50px;
+    background-color: var(--item-list);
+}

@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatButton, MatIconButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
+import { MatTooltipModule } from "@angular/material/tooltip";
 import { mergeMap } from "rxjs";
 import { CustomFilterComponent } from "src/app/components/custom-filter/custom-filter.component";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
@@ -15,12 +16,13 @@ import { Company } from "src/app/types/objects";
 @Component({
     selector: "management-companies",
     templateUrl: "./pages.management.companies.html",
-    styleUrls: ["./pages.management.companies.css"],
+    styleUrls: ["./pages.management.companies.css", "../pages.management.css"],
     standalone: true,
     imports: [
         MatIcon,
         MatButton,
         MatIconButton,
+        MatTooltipModule,
         FeedbackContainerComponent,
         CommonModule,
         CustomFilterComponent,

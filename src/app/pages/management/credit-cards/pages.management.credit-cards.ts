@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
-import { MatButton } from "@angular/material/button";
+import { MatButton, MatIconButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
@@ -15,9 +15,15 @@ import { mergeMap } from "rxjs";
 @Component({
     selector: "management-credit-cards",
     templateUrl: "./pages.management.credit-cards.html",
-    styleUrls: ["./pages.management.credit-cards.css"],
+    styleUrls: ["./pages.management.credit-cards.css", "../pages.management.css"],
     standalone: true,
-    imports: [MatIcon, MatButton, FeedbackContainerComponent, CommonModule],
+    imports: [
+        MatIcon,
+        MatButton,
+        FeedbackContainerComponent,
+        CommonModule,
+        MatIconButton,
+    ],
 })
 export class CreditCardsManagementComponent {
     public ccApi = inject(ServiceCreditCard);

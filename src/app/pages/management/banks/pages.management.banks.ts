@@ -14,7 +14,7 @@ import { Bank } from "src/app/types/objects";
 @Component({
     selector: "management-banks",
     templateUrl: "./pages.management.banks.html",
-    styleUrls: ["./pages.management.banks.css"],
+    styleUrls: ["./pages.management.banks.css", "../pages.management.css"],
     standalone: true,
     imports: [
         MatIcon,

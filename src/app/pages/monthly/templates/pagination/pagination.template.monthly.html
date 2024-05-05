@@ -1,5 +1,9 @@
 <div class="margin-right">
-    <div class="input-page-container pad">
+    <div
+        class="input-page-container pad"
+        [matTooltip]="'page '+(billsState.billsPagination$ | async)?.page"
+        matTooltipPosition="above"
+    >
         <mat-icon
             aria-hidden="false"
             aria-label="Example home icon"
@@ -8,6 +12,7 @@
         {{(billsState.billsPagination$ | async)?.page}}
     </div>
     <button
+        aria-label="previous page"
         [disabled]="disablePrevious()"
         (click)="onPreviousPage()"
         [ngClass]="['button-primary', 'pad']"
@@ -20,7 +25,14 @@
             fontIcon="arrow_back"
         ></mat-icon>
     </button>
-    <button (click)="setLimitList()" [ngClass]="['button-primary', 'pad']" mat-button>
+    <button
+        [matTooltip]="'number of items: '+(billsState.billsPagination$ | async)?.limit"
+        matTooltipPosition="above"
+        aria-label="toggle number of items per page"
+        (click)="setLimitList()"
+        [ngClass]="['button-primary', 'pad']"
+        mat-button
+    >
         <mat-icon
             class="icon-page"
             aria-hidden="false"
@@ -31,6 +43,7 @@
     </button>
     <!-- <div class="input-page-container pad"></div> -->
     <button
+        aria-label="next page"
         [disabled]="disableNext()"
         (click)="onNextPage()"
         [ngClass]="['button-primary', 'pad']"

@@ -4,27 +4,49 @@
         [info]="(ccState.status$ | async)!"
     ></feedback-container>
     <li *ngFor="let creditCard of (ccState.creditCards$ | async)">
-        <div class="cc-item-list">
+        <div class="item-list">
             <div class="cc-item-text">
-                <p class="cc-title">{{creditCard.name}}</p>
-                <p class="cc-description">{{creditCard.description}}</p>
+                <p class="title">{{creditCard.name}}</p>
+                <p class="description">{{creditCard.description}}</p>
                 <div class="cc-limit">
                     <p>limit:</p>
                     <p>{{creditCard.limit | currency: "R$ "}}</p>
                 </div>
             </div>
 
-            <button class="icon-button" mat-icon-button aria-label="color label">
-                <mat-icon
-                    class="icon-edit"
-                    aria-hidden="false"
-                    aria-label="Example home icon"
-                    fontIcon="edit"
-                ></mat-icon>
-            </button>
+            <div class="button-container">
+                <button
+                    matTooltip="edit"
+                    matTooltipPosition="above"
+                    class="icon-button"
+                    mat-icon-button
+                    aria-label="edit company button"
+                >
+                    <mat-icon
+                        class="icon-edit"
+                        aria-hidden="false"
+                        aria-label="pen icon"
+                        fontIcon="edit"
+                    ></mat-icon>
+                </button>
+                <button
+                    matTooltip="delete"
+                    matTooltipPosition="above"
+                    [ngClass]="['icon-button', 'left']"
+                    mat-icon-button
+                    aria-label="delete company button"
+                >
+                    <mat-icon
+                        class="icon-edit"
+                        aria-hidden="false"
+                        aria-label="trash bin icon"
+                        fontIcon="delete"
+                    ></mat-icon>
+                </button>
+            </div>
 
             <div
-                class="cc-color-container"
+                class="color-container"
                 [style.borderRightColor]="creditCard.color"
             ></div>
         </div>

@@ -1,21 +1,26 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
-import { MatButton } from "@angular/material/button";
+import { MatButton, MatIconButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ServiceCategory } from "src/app/services/category.service";
-import { FeedbackInfo } from "src/app/types/components";
 import { CategoryState } from "src/app/subjects/subjects.category";
 import { Category } from "src/app/types/objects";
 
 @Component({
     selector: "management-categories",
     templateUrl: "./pages.management.categories.html",
-    styleUrls: ["./pages.management.categories.css"],
+    styleUrls: ["./pages.management.categories.css", "../pages.management.css"],
     standalone: true,
-    imports: [MatIcon, MatButton, FeedbackContainerComponent, CommonModule],
+    imports: [
+        MatIcon,
+        MatButton,
+        FeedbackContainerComponent,
+        CommonModule,
+        MatIconButton,
+    ],
 })
 export class CategoriesManagementComponent {
     public typebillApi = inject(ServiceCategory);

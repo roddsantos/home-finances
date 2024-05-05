@@ -25,7 +25,14 @@
     >
         <mat-icon class="filter-icon">delete_sweep</mat-icon>
     </button>
-    <button mat-button [ngClass]="['button-primary', 'margin']" (click)="openDialog()">
+    <button
+        aria-label="open filter selector"
+        matTooltip="filter selector"
+        matTooltipPosition="above"
+        mat-button
+        [ngClass]="['button-primary', 'margin']"
+        (click)="openDialog()"
+    >
         <mat-icon class="filter-icon">filter_alt</mat-icon>
     </button>
 </div>

@@ -2,9 +2,7 @@
     display: flex;
     flex-direction: column;
     background-color: var(--item-list);
-    position: absolute;
-    left: 25vw;
-    top: 20vh;
+    position: relative;
     min-height: 150px;
     width: 50vw;
     z-index: 3;
@@ -16,22 +14,18 @@
 }
 
 .modal-container.xl {
-    left: 10vw;
     width: 80vw;
 }
 
 .modal-container.lg {
-    left: 17.5vw;
     width: 65vw;
 }
 
 .modal-container.sm {
-    left: 32.5vw;
     width: 35vw;
 }
 
 .modal-container.xm {
-    left: 40vw;
     width: 20vw;
 }
 

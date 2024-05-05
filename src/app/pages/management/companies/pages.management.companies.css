@@ -1,69 +1,6 @@
-.creation-item-list {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    padding: 10px 50px;
-    background-color: var(--item-list);
-}
-
 .company-item-text {
     display: flex;
     flex-direction: row;
     padding: 0px;
     width: 100%;
-}
-
-.company-title {
-    font: bold 22px Helvetica;
-    color: var(--secondary);
-    width: 50%;
-    margin: auto 10px auto 0px;
-}
-
-.company-description {
-    font: normal 14px Helvetica;
-    color: var(--primary);
-    margin: auto 0px;
-    width: 50%;
-}
-
-.icon-edit {
-    height: auto;
-    width: auto;
-    color: var(--description);
-}
-
-.icon-color {
-    font-size: 20px;
-    height: auto;
-    margin: auto 20px auto auto;
-}
-
-.icon-button {
-    margin: auto 0px auto 20px;
-    border: 0px;
-    height: 40px;
-    width: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0px;
-}
-
-.company-divider {
-    width: 100%;
-    height: 1px;
-    background-color: blueviolet;
-}
-
-.company-color-container {
-    width: 0;
-    height: 0;
-    position: absolute;
-    right: 0px;
-    top: 8px;
-    rotate: 135deg;
-    border-top: 20px solid transparent;
-    border-bottom: 20px solid transparent;
-    border-right: 20px solid transparent;
 }

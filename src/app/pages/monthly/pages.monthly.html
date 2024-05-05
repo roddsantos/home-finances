@@ -1,5 +1,10 @@
 <div class="creation-main">
-    <button mat-button [ngClass]="['button-primary', 'margin']" (click)="openDialog()">
+    <button
+        aria-label="create new bill button"
+        mat-button
+        [ngClass]="['button-primary', 'margin']"
+        (click)="openDialog()"
+    >
         new bill
     </button>
     <custom-filter></custom-filter>
