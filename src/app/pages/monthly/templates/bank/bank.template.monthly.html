@@ -9,9 +9,11 @@
                 </div>
                 <div class="width-15">
                     <p class="label">value</p>
-                    <p class="value">{{currency()}}</p>
+                    <p class="value">{{data.total | currency:"R$ "}}</p>
                 </div>
-                <p [ngClass]="['value', 'width-15']">{{getDate('paid')}}</p>
+                <p [ngClass]="['value', 'width-15']">
+                    {{ data.paid | date: "MMM/yyyy" }}
+                </p>
             </div>
             <div class="bill-color-container" [style.borderRightColor]="color"></div>
         </mat-panel-title>
@@ -27,7 +29,7 @@
         </div>
         <div class="width-25">
             <p class="label">max transaction date</p>
-            <p class="value">{{getDate('due')}}</p>
+            <p class="value">{{data.due | date: "fullDate"}}</p>
         </div>
     </div>
 </mat-expansion-panel>

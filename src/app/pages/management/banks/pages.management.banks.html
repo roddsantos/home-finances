@@ -10,7 +10,7 @@
                 <p class="bank-description">{{bank.description}}</p>
                 <div class="bank-savings">
                     <p>savings:</p>
-                    <p>{{bank.savings}} R$</p>
+                    <p>{{bank.savings | currency: "R$ "}}</p>
                 </div>
             </div>
 

@@ -53,32 +53,6 @@ export class PageMonthly {
         return item.id;
     }
 
-    getSpecialLabel(item: Bill & Partial<BillData>) {
-        switch (item.type) {
-            case "creditCard":
-                return item.creditCard?.name;
-            case "money":
-                return item.bank1?.name;
-            case "companyCredit":
-                return item.company?.name;
-            default:
-                return;
-        }
-    }
-
-    getTypeTranslation(item: Bill & Partial<BillData>) {
-        switch (item.type) {
-            case "creditCard":
-                return "credit card";
-            case "money":
-                return "money";
-            case "companyCredit":
-                return "company credit";
-            default:
-                return;
-        }
-    }
-
     openDialog(): void {
         this.dialog.open<string>(ModalNewBill, {
             data: {

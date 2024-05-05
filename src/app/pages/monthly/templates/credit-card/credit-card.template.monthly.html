@@ -7,11 +7,11 @@
                     <p class="label">credit card</p>
                     <p class="value">{{data.creditCard?.name}}</p>
                 </div>
-                <div *ngIf="showTotalParcels()" class="width-15">
+                <div *ngIf="data.parcels > 1" class="width-15">
                     <p class="label">value</p>
-                    <p class="value">{{currency()}}</p>
+                    <p class="value">{{data.totalParcel | currency: "R$ "}}</p>
                 </div>
-                <p [ngClass]="['value', 'width-15']">{{getDate('paid')}}</p>
+                <p [ngClass]="['value', 'width-15']">{{data.due | date: "fullDate"}}</p>
             </div>
             <div class="bill-color-container" [style.borderRightColor]="color"></div>
         </mat-panel-title>
@@ -27,11 +27,11 @@
         </div>
         <div>
             <p class="label">total value</p>
-            <p class="value">{{currency(true)}}</p>
+            <p class="value">{{ data.total | currency: "R$ " }}</p>
         </div>
         <div>
             <p class="label">transaction date</p>
-            <p class="value">{{getDate('updatedAt')}}</p>
+            <p class="value">{{ data.paid | date: "fullDate" }}</p>
         </div>
     </div>
 </mat-expansion-panel>
