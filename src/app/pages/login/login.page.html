@@ -1,0 +1,16 @@
+<div class="login-page">
+    <form class="form-login" [formGroup]="loginGroup" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+            <mat-label>username</mat-label>
+            <input (keydown.enter)="onSubmit()" matInput formControlName="username" />
+        </mat-form-field>
+        <button
+            mat-button
+            class="button-primary"
+            type="submit"
+            [disabled]="loginGroup.invalid"
+        >
+            login
+        </button>
+    </form>
+</div>

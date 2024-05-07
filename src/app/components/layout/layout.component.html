@@ -1,9 +1,9 @@
 <mat-toolbar class="toolbar" color="secondary">
     <mat-toolbar-row class="toolbar-row">
-        <div class="app-container" (click)="onHomeClick()">
+        <div class="app-container" [routerLink]="['/']">
             <span class="app-title">home finances</span>
         </div>
-        <div class="app-container" (click)="onManagementClick()">
+        <div class="app-container" [routerLink]="['/manager']">
             <mat-icon
                 class="app-icon"
                 aria-hidden="false"
@@ -12,7 +12,7 @@
             ></mat-icon>
             <span class="app-title">manager</span>
         </div>
-        <div class="app-container" (click)="onMonthlyClick()">
+        <div class="app-container" [routerLink]="['/monthly']">
             <mat-icon
                 class="app-icon"
                 aria-hidden="false"
@@ -21,7 +21,7 @@
             ></mat-icon>
             <span class="app-title">monthly</span>
         </div>
-        <div class="app-container">
+        <div class="app-container" [routerLink]="['/dashboard']">
             <mat-icon
                 class="app-icon"
                 aria-hidden="false"

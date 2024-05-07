@@ -1,5 +1,5 @@
 import { Component, ViewChild, AfterViewInit, inject } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router, RouterModule } from "@angular/router";
 import { ModalProfile } from "../modal/profile/profile.modal";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ModalComponent } from "../modal/modal.component";
@@ -29,7 +29,13 @@ import { allSettledFork } from "src/utils/observers";
     selector: "app-layout",
     templateUrl: "./layout.component.html",
     styleUrls: ["./layout.component.css"],
-    imports: [MatToolbarModule, MatIconModule, ModalComponent, ModalProfile],
+    imports: [
+        MatToolbarModule,
+        MatIconModule,
+        ModalComponent,
+        ModalProfile,
+        RouterModule,
+    ],
 })
 export class LayoutComponent implements AfterViewInit {
     @ViewChild(ModalComponent) modal: any;
@@ -115,19 +121,6 @@ export class LayoutComponent implements AfterViewInit {
         });
 
         dialogRef.closed.subscribe();
-    }
-
-    onHomeClick() {
-        this.router.navigate([""]);
-    }
-    onManagementClick() {
-        this.router.navigate(["management"]);
-    }
-    onMonthlyClick() {
-        this.router.navigate(["monthly"]);
-    }
-    onDashboardClick() {
-        this.router.navigate(["dashboard"]);
     }
 
     toggleDarkMode() {

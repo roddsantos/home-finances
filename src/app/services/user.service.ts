@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { USER } from "src/utils/constants/services";
 import { UserObject } from "src/app/types/services";
+import { User } from "../types/objects";
 
 @Injectable({
     providedIn: "root",
@@ -10,7 +11,7 @@ export class ServiceUser {
     constructor(private http: HttpClient) {}
 
     getUser(username: string) {
-        return this.http.get(USER + `/${username}`);
+        return this.http.get<User>(USER + `/${username}`);
     }
 
     createUser(data: UserObject) {
