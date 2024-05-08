@@ -3,35 +3,38 @@
         <div class="app-container" [routerLink]="['/']">
             <span class="app-title">home finances</span>
         </div>
-        <div class="app-container" [routerLink]="['/manager']">
-            <mat-icon
-                class="app-icon"
-                aria-hidden="false"
-                aria-label="Example home icon"
-                fontIcon="edit_square"
-            ></mat-icon>
-            <span class="app-title">manager</span>
+        <div class="routes-container" *ngIf="userState.user$ | async">
+            <div class="app-container" [routerLink]="['/manager']">
+                <mat-icon
+                    class="app-icon"
+                    aria-hidden="false"
+                    aria-label="Example home icon"
+                    fontIcon="edit_square"
+                ></mat-icon>
+                <span class="app-title">manager</span>
+            </div>
+            <div class="app-container" [routerLink]="['/monthly']">
+                <mat-icon
+                    class="app-icon"
+                    aria-hidden="false"
+                    aria-label="Example home icon"
+                    fontIcon="calendar_month"
+                ></mat-icon>
+                <span class="app-title">monthly</span>
+            </div>
+            <div class="app-container" [routerLink]="['/dashboard']">
+                <mat-icon
+                    class="app-icon"
+                    aria-hidden="false"
+                    aria-label="Example home icon"
+                    fontIcon="space_dashboard"
+                ></mat-icon>
+                <span class="app-title">dashboard</span>
+            </div>
+            <span class="example-spacer"></span>
         </div>
-        <div class="app-container" [routerLink]="['/monthly']">
-            <mat-icon
-                class="app-icon"
-                aria-hidden="false"
-                aria-label="Example home icon"
-                fontIcon="calendar_month"
-            ></mat-icon>
-            <span class="app-title">monthly</span>
-        </div>
-        <div class="app-container" [routerLink]="['/dashboard']">
-            <mat-icon
-                class="app-icon"
-                aria-hidden="false"
-                aria-label="Example home icon"
-                fontIcon="space_dashboard"
-            ></mat-icon>
-            <span class="app-title">dashboard</span>
-        </div>
-        <span class="example-spacer"></span>
         <mat-icon
+            *ngIf="userState.user$ | async"
             class="app-icon profile"
             aria-hidden="false"
             aria-label="Example home icon"
@@ -39,6 +42,7 @@
             (click)="openProfile()"
         ></mat-icon>
         <mat-icon
+            *ngIf="userState.user$ | async"
             class="app-icon dark-mode"
             aria-hidden="false"
             aria-label="Example home icon"

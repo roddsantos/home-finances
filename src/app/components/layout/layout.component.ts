@@ -1,5 +1,5 @@
 import { Component, ViewChild, AfterViewInit, inject } from "@angular/core";
-import { Router, RouterModule } from "@angular/router";
+import { RouterModule } from "@angular/router";
 import { ModalProfile } from "../modal/profile/profile.modal";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ModalComponent } from "../modal/modal.component";
@@ -15,14 +15,12 @@ import { BankState } from "src/app/subjects/subjects.bank";
 import { CompanyState } from "src/app/subjects/subjects.company";
 import { ServiceCompany } from "src/app/services/company.service";
 import { CustomSnackbarComponent } from "../custom-snackbar/custom-snackbar.component";
-import { HttpErrorResponse } from "@angular/common/http";
 import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { CreditCardState } from "src/app/subjects/subjects.credit-card";
 import { ServiceCategory } from "src/app/services/category.service";
 import { CategoryState } from "src/app/subjects/subjects.category";
 import { CustomFilterState } from "../custom-filter/custom-filter.subjects.component";
-import { FetchPaginatedData } from "src/app/types/services";
-import { allSettledFork } from "src/utils/observers";
+import { CommonModule } from "@angular/common";
 
 @Component({
     standalone: true,
@@ -35,13 +33,13 @@ import { allSettledFork } from "src/utils/observers";
         ModalComponent,
         ModalProfile,
         RouterModule,
+        CommonModule,
     ],
 })
 export class LayoutComponent implements AfterViewInit {
     @ViewChild(ModalComponent) modal: any;
     @ViewChild(ModalProfile) profile: any;
 
-    private router = inject(Router);
     private storage = inject(LocalStorageService);
     public dialog = inject(Dialog);
     public overlay = inject(Overlay);

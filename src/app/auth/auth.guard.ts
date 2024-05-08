@@ -9,7 +9,7 @@ export function authGuard() {
     userState.user$.subscribe({
         next: (user) => {
             if (user) return true;
-            else return router.parseUrl("/login");
+            else return router.navigate(["/login"]);
         },
     });
 }

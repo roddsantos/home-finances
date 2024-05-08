@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import {
     FormControl,
     FormGroup,
@@ -9,6 +9,7 @@ import {
 import { MatButtonModule } from "@angular/material/button";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
+import { Router } from "@angular/router";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ServiceUser } from "src/app/services/user.service";
@@ -26,11 +27,20 @@ import { UserState } from "src/app/subjects/subjects.user";
         MatInputModule,
     ],
 })
-export class PageLogin {
+export class PageLogin implements OnInit {
     public storage = inject(LocalStorageService);
     public userState = inject(UserState);
     public userService = inject(ServiceUser);
     public snack = inject(CustomSnackbarComponent);
+    public router = inject(Router);
+
+    ngOnInit() {
+        this.userState.user$.subscribe({
+            next: (user) => {
+                if (user) this.router.navigate(["/monthly"]);
+            },
+        });
+    }
 
     loginGroup = new FormGroup({
         username: new FormControl<string>("", {
@@ -53,6 +63,7 @@ export class PageLogin {
                 this.userState.setUser(user);
                 this.storage.setUser(user);
                 this.snack.openSnackBar("login successful", "success");
+                this.router.navigate(["/"]);
             },
             error: () => {
                 this.snack.openSnackBar("login error, try again", "error");
