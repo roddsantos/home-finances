@@ -1,0 +1,29 @@
+.button-container {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    right: 30px;
+    height: auto;
+}
+
+.left {
+    margin-left: 10px !important;
+}
+
+.icon-button {
+    position: relative;
+    margin: auto 0px auto auto;
+    border: 0px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+}
+
+.icon-edit {
+    height: auto;
+    width: auto;
+    color: var(--description);
+}

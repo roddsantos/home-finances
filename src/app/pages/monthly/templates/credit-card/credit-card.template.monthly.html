@@ -2,7 +2,7 @@
     <mat-expansion-panel-header class="bill-expansion-container">
         <mat-panel-title>
             <div class="bill-title-container">
-                <p [ngClass]="['value', 'width-40']">{{ data.name }}</p>
+                <p [ngClass]="['value', 'width-30']">{{ data.name }}</p>
                 <div class="width-30">
                     <p class="label">credit card</p>
                     <p class="value">{{data.creditCard?.name}}</p>
@@ -11,27 +11,32 @@
                     <p class="label">value</p>
                     <p class="value">{{data.totalParcel | currency: "R$ "}}</p>
                 </div>
-                <p [ngClass]="['value', 'width-15']">{{data.due | date: "fullDate"}}</p>
+                <p [ngClass]="['value', 'width-25']">{{data.due | date: "fullDate"}}</p>
             </div>
             <div class="bill-color-container" [style.borderRightColor]="color"></div>
         </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="bill-expanded-container">
-        <div>
+        <div class="desc">
             <p class="label">description</p>
             <p class="value">{{ data.description }}</p>
         </div>
-        <div>
+        <div class="parcels">
             <p class="label">number of parcels</p>
             <p class="value">{{data.parcels}}</p>
         </div>
-        <div>
+        <div class="total">
             <p class="label">total value</p>
             <p class="value">{{ data.total | currency: "R$ " }}</p>
         </div>
-        <div>
+        <div class="transaction">
             <p class="label">transaction date</p>
             <p class="value">{{ data.paid | date: "fullDate" }}</p>
         </div>
+        <actions
+            class="icons-container width-30"
+            (onEdit)="onEdit()"
+            (onDelete)="onDelete()"
+        ></actions>
     </div>
 </mat-expansion-panel>

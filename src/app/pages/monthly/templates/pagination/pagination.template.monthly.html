@@ -32,6 +32,7 @@
         (click)="setLimitList()"
         [ngClass]="['button-primary', 'pad']"
         mat-button
+        [disabled]="(billsState.bills$ | async)?.length === 0"
     >
         <mat-icon
             class="icon-page"

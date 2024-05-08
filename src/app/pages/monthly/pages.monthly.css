@@ -4,25 +4,45 @@
 }
 
 .bill-list-container {
-    padding: 20px 0px;
+    padding: 10px 0px;
 }
 
 .bill-expansion {
     margin-bottom: 15px;
-    border-radius: 0px;
+    border-radius: 7px;
+    border: 2px solid var(--primary);
+
+    &.mat-expansion-panel {
+        box-shadow: none;
+    }
+    & .mat-expanded {
+        border-radius: 10px 10px 0px 0px;
+        border-bottom: 1px solid var(--primary);
+    }
     & .mat-expansion-panel-body {
         display: flex;
         flex-direction: row !important;
         justify-content: space-between;
-        background-color: var(--secondary);
+        background-color: var(--background);
         padding-top: 16px;
+    }
+    & .mat-expansion-panel-body:hover .icons-container {
+        display: flex;
+        align-items: center;
+        z-index: 3;
+        background-color: var(--background);
     }
 }
 
+.icons-container {
+    display: none;
+}
+
 .bill-expansion-container {
-    background-color: var(--item-list) !important;
+    min-height: 55px;
+    background-color: var(--background) !important;
     &:hover {
-        background-color: var(--item-list) !important;
+        background-color: var(--background) !important;
     }
 }
 
@@ -35,9 +55,8 @@
 }
 
 .bill-expanded-container {
-    display: flex;
-    flex-direction: row !important;
-    justify-content: space-between;
+    display: grid;
+    grid-template-areas: "desc parcels total transaction icons-container";
     width: 100%;
 }
 
@@ -48,7 +67,7 @@
     color: var(--title);
 }
 .value {
-    font-weight: bold;
+    font-weight: normal;
     font-size: 16px;
     font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
     color: var(--description);

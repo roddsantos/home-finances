@@ -31,5 +31,10 @@
             <p class="label">max transaction date</p>
             <p class="value">{{data.due | date: "fullDate"}}</p>
         </div>
+        <actions
+            class="icons-container width-30"
+            (onEdit)="onEdit()"
+            (onDelete)="onDelete()"
+        ></actions>
     </div>
 </mat-expansion-panel>
