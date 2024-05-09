@@ -2,13 +2,12 @@ import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatButton, MatIconButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
-import { mergeMap } from "rxjs";
+import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { ServiceBank } from "src/app/services/bank.service";
 import { BankState } from "src/app/subjects/subjects.bank";
 import { UserState } from "src/app/subjects/subjects.user";
-import { FeedbackInfo } from "src/app/types/components";
 import { Bank } from "src/app/types/objects";
 
 @Component({
@@ -22,6 +21,7 @@ import { Bank } from "src/app/types/objects";
         MatIconButton,
         FeedbackContainerComponent,
         CommonModule,
+        ActionsComponent,
     ],
 })
 export class BanksManagementComponent {
@@ -57,5 +57,13 @@ export class BanksManagementComponent {
 
     trackBank(index: number, bank: Bank) {
         return bank.id;
+    }
+
+    onEdit() {
+        console.log("EDIT");
+    }
+
+    onDelete() {
+        console.log("DELETE");
     }
 }

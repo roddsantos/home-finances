@@ -5,6 +5,7 @@
 .margin {
     display: flex;
     margin: 10px 0px auto 20px;
+    border-radius: 5px !important;
 }
 
 .chip-grid {

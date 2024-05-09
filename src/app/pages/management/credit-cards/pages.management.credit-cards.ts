@@ -6,11 +6,11 @@ import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/cust
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { LocalStorageService } from "src/app/services/local-storage.service";
-import { FeedbackInfo } from "src/app/types/components";
 import { CreditCard } from "src/app/types/objects";
 import { CreditCardState } from "src/app/subjects//subjects.credit-card";
 import { UserState } from "src/app/subjects//subjects.user";
 import { mergeMap } from "rxjs";
+import { ActionsComponent } from "src/app/components/actions/actions.component";
 
 @Component({
     selector: "management-credit-cards",
@@ -23,6 +23,7 @@ import { mergeMap } from "rxjs";
         FeedbackContainerComponent,
         CommonModule,
         MatIconButton,
+        ActionsComponent,
     ],
 })
 export class CreditCardsManagementComponent {
@@ -58,5 +59,13 @@ export class CreditCardsManagementComponent {
     onReload() {
         this.ccState.changeStatus("loading", "loading");
         this.getCreditCards(true);
+    }
+
+    onEdit() {
+        console.log("EDIT");
+    }
+
+    onDelete() {
+        console.log("DELETE");
     }
 }

@@ -1,6 +1,7 @@
 .margin {
     display: flex;
     margin: auto 0px auto auto;
+    border-radius: 5px !important;
 }
 
 .bill-list-container {

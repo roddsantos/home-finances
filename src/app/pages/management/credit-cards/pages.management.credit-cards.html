@@ -14,36 +14,11 @@
                 </div>
             </div>
 
-            <div class="button-container">
-                <button
-                    matTooltip="edit"
-                    matTooltipPosition="above"
-                    class="icon-button"
-                    mat-icon-button
-                    aria-label="edit company button"
-                >
-                    <mat-icon
-                        class="icon-edit"
-                        aria-hidden="false"
-                        aria-label="pen icon"
-                        fontIcon="edit"
-                    ></mat-icon>
-                </button>
-                <button
-                    matTooltip="delete"
-                    matTooltipPosition="above"
-                    [ngClass]="['icon-button', 'left']"
-                    mat-icon-button
-                    aria-label="delete company button"
-                >
-                    <mat-icon
-                        class="icon-edit"
-                        aria-hidden="false"
-                        aria-label="trash bin icon"
-                        fontIcon="delete"
-                    ></mat-icon>
-                </button>
-            </div>
+            <actions
+                class="icons-buttons"
+                (onEdit)="onEdit()"
+                (onDelete)="onDelete()"
+            ></actions>
 
             <div
                 class="color-container"

@@ -54,8 +54,7 @@
 .button-container {
     display: flex;
     flex-direction: row;
-    position: absolute;
-    right: 30px;
+    margin: 0px 0px 20px auto;
     height: auto;
 }
 
@@ -63,20 +62,12 @@
     margin-left: 10px !important;
 }
 
-.icon-button {
+.icons-buttons {
     display: none;
 }
 
-.item-list:hover .icon-button {
-    position: relative;
-    margin: auto 0px auto auto;
-    border: 0px;
-    height: 40px;
-    width: 40px;
+.item-list:hover .icons-buttons {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0px;
 }
 
 .icon-edit {

@@ -8,6 +8,7 @@ import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ServiceCategory } from "src/app/services/category.service";
 import { CategoryState } from "src/app/subjects/subjects.category";
 import { Category } from "src/app/types/objects";
+import { ActionsComponent } from "src/app/components/actions/actions.component";
 
 @Component({
     selector: "management-categories",
@@ -20,6 +21,7 @@ import { Category } from "src/app/types/objects";
         FeedbackContainerComponent,
         CommonModule,
         MatIconButton,
+        ActionsComponent,
     ],
 })
 export class CategoriesManagementComponent {
@@ -52,5 +54,13 @@ export class CategoriesManagementComponent {
     onReload() {
         this.catState.changeStatus("loading", "loading");
         this.getCategories(true);
+    }
+
+    onEdit() {
+        console.log("EDIT");
+    }
+
+    onDelete() {
+        console.log("DELETE");
     }
 }

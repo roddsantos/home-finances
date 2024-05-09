@@ -4,13 +4,13 @@ import { MatButton, MatIconButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { mergeMap } from "rxjs";
+import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { CustomFilterComponent } from "src/app/components/custom-filter/custom-filter.component";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { ServiceCompany } from "src/app/services/company.service";
 import { CompanyState } from "src/app/subjects/subjects.company";
 import { UserState } from "src/app/subjects/subjects.user";
-import { FeedbackInfo } from "src/app/types/components";
 import { Company } from "src/app/types/objects";
 
 @Component({
@@ -26,6 +26,7 @@ import { Company } from "src/app/types/objects";
         FeedbackContainerComponent,
         CommonModule,
         CustomFilterComponent,
+        ActionsComponent,
     ],
 })
 export class ManagementCompaniesComponent {
@@ -62,5 +63,13 @@ export class ManagementCompaniesComponent {
 
     trackCompany(index: number, company: Company) {
         return company.id;
+    }
+
+    onEdit() {
+        console.log("EDIT");
+    }
+
+    onDelete() {
+        console.log("DELETE");
     }
 }

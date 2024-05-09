@@ -36,7 +36,7 @@ import { CommonModule } from "@angular/common";
         CommonModule,
     ],
 })
-export class LayoutComponent implements AfterViewInit {
+export class LayoutComponent {
     @ViewChild(ModalComponent) modal: any;
     @ViewChild(ModalProfile) profile: any;
 
@@ -130,6 +130,4 @@ export class LayoutComponent implements AfterViewInit {
         this.modal.close();
         this.profile.update();
     }
-
-    ngAfterViewInit() {}
 }
