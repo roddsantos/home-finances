@@ -1,6 +1,7 @@
 import { CommonModule, CurrencyPipe, DatePipe } from "@angular/common";
 import { Component, Input } from "@angular/core";
 import { MatExpansionModule } from "@angular/material/expansion";
+import { MatIconModule } from "@angular/material/icon";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { Bill, BillData } from "src/app/types/objects";
 
@@ -9,7 +10,14 @@ import { Bill, BillData } from "src/app/types/objects";
     templateUrl: "./bank.template.monthly.html",
     styleUrls: ["../../pages.monthly.css"],
     standalone: true,
-    imports: [CommonModule, MatExpansionModule, DatePipe, CurrencyPipe, ActionsComponent],
+    imports: [
+        CommonModule,
+        MatExpansionModule,
+        DatePipe,
+        CurrencyPipe,
+        ActionsComponent,
+        MatIconModule,
+    ],
 })
 export class BankListTemplateMonthly {
     @Input() data: Bill & BillData;

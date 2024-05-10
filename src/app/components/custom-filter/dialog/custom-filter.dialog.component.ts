@@ -224,6 +224,17 @@ export class DialogCustomList implements OnInit {
     }
 
     onSubmit() {
+        let countMonths = 0;
+        let countYears = 0;
+        countYears = this.selectedFilters.filter((f) => f.identifier === "year").length;
+        countMonths = this.selectedFilters.filter((f) => f.identifier === "month").length;
+        if (countYears === 0 && countMonths > 0) {
+            this.snack.openSnackBar(
+                "you need at least one year when filtering months",
+                "warning"
+            );
+            return;
+        }
         this.filterState.setFilters([...this.selectedFilters]);
         this.localStorage.setFilters(JSON.stringify(this.selectedFilters));
         this.billService.getBills().subscribe({

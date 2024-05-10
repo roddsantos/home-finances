@@ -61,6 +61,13 @@
     width: 100%;
 }
 
+.bill-expanded-container.bank {
+    display: grid;
+    grid-template-areas: "desc bank2 transaction icons-container";
+    grid-template-columns: auto;
+    width: 100%;
+}
+
 .label {
     font-weight: normal;
     font-size: 12px;

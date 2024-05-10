@@ -53,6 +53,23 @@ export class CustomFilterComponent {
     }
 
     removeFilter(filter?: FilterDisplay) {
+        let countMonths = 0;
+        let countYears = 0;
+        if (filter?.identifier === "year") {
+            this.filterState.filters$.subscribe({
+                next: (filters) => {
+                    countYears = filters.filter((f) => f.identifier === "year").length;
+                    countMonths = filters.filter((f) => f.identifier === "month").length;
+                },
+            });
+        }
+        if (countYears === 1 && countMonths > 0) {
+            this.snack.openSnackBar(
+                "you need at least one year when filtering months",
+                "warning"
+            );
+            return;
+        }
         if (filter) {
             this.filterState.removeFilter(filter);
             this.billService.getBills().subscribe({
