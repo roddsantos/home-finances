@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: row;
     padding: 0px;
-    width: 75%;
+    width: 100%;
 }
 
 .icon-type {

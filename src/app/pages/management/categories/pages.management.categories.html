@@ -5,10 +5,6 @@
     ></feedback-container>
     <li *ngFor="let category of catState.categories$ | async">
         <div class="item-list">
-            <div class="cat-item-text">
-                <p class="title">{{category.name}}</p>
-                <p class="description">{{category.description}}</p>
-            </div>
             <mat-icon
                 class="icon-type"
                 aria-hidden="false"
@@ -16,6 +12,10 @@
                 fontIcon="{{category.icon}}"
                 [style.color]="category.color"
             ></mat-icon>
+            <div class="cat-item-text">
+                <p class="title">{{category.name}}</p>
+                <p class="description">{{category.description}}</p>
+            </div>
             <actions class="icons-buttons" [actions]="actions"></actions>
         </div>
     </li>
