@@ -8,6 +8,7 @@ import { FeedbackContainerComponent } from "src/app/components/feedback-containe
 import { ServiceBank } from "src/app/services/bank.service";
 import { BankState } from "src/app/subjects/subjects.bank";
 import { UserState } from "src/app/subjects/subjects.user";
+import { ActionItem } from "src/app/types/components";
 import { Bank } from "src/app/types/objects";
 
 @Component({
@@ -29,6 +30,16 @@ export class BanksManagementComponent {
     public userState = inject(UserState);
     public bankState = inject(BankState);
     private snack = inject(CustomSnackbarComponent);
+
+    actions: ActionItem[] = [
+        { name: "", icon: "edit", action: () => this.onEdit(), color: "#00328f" },
+        {
+            name: "",
+            icon: "delete",
+            action: () => this.onDelete(),
+            color: "#8f0000",
+        },
+    ];
 
     getBanks(reloaded?: boolean) {
         this.bankApi.getBanks().subscribe({

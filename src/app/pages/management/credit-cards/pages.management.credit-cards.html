@@ -14,11 +14,7 @@
                 </div>
             </div>
 
-            <actions
-                class="icons-buttons"
-                (onEdit)="onEdit()"
-                (onDelete)="onDelete()"
-            ></actions>
+            <actions class="icons-buttons" [actions]="actions"></actions>
 
             <div
                 class="color-container"

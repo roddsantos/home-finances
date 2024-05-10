@@ -16,11 +16,7 @@
                 fontIcon="{{category.icon}}"
                 [style.color]="category.color"
             ></mat-icon>
-            <actions
-                class="icons-buttons"
-                (onEdit)="onEdit()"
-                (onDelete)="onDelete()"
-            ></actions>
+            <actions class="icons-buttons" [actions]="actions"></actions>
         </div>
     </li>
 </div>

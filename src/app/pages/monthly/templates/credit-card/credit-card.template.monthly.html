@@ -33,10 +33,6 @@
             <p class="label">transaction date</p>
             <p class="value">{{ data.paid | date: "fullDate" }}</p>
         </div>
-        <actions
-            class="icons-container width-30"
-            (onEdit)="onEdit()"
-            (onDelete)="onDelete()"
-        ></actions>
+        <actions class="icons-container width-30" [actions]="actions"></actions>
     </div>
 </mat-expansion-panel>

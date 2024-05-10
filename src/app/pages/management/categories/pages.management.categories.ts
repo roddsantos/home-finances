@@ -9,6 +9,7 @@ import { ServiceCategory } from "src/app/services/category.service";
 import { CategoryState } from "src/app/subjects/subjects.category";
 import { Category } from "src/app/types/objects";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
+import { ActionItem } from "src/app/types/components";
 
 @Component({
     selector: "management-categories",
@@ -29,6 +30,16 @@ export class CategoriesManagementComponent {
     public catState = inject(CategoryState);
     public storage = inject(LocalStorageService);
     private snack = inject(CustomSnackbarComponent);
+
+    actions: ActionItem[] = [
+        { name: "", icon: "edit", action: () => this.onEdit(), color: "#00328f" },
+        {
+            name: "",
+            icon: "delete",
+            action: () => this.onDelete(),
+            color: "#8f0000",
+        },
+    ];
 
     getCategories(reloaded?: boolean) {
         this.typebillApi.getCategories().subscribe({

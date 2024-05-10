@@ -11,6 +11,7 @@ import { CreditCardState } from "src/app/subjects//subjects.credit-card";
 import { UserState } from "src/app/subjects//subjects.user";
 import { mergeMap } from "rxjs";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
+import { ActionItem } from "src/app/types/components";
 
 @Component({
     selector: "management-credit-cards",
@@ -32,6 +33,16 @@ export class CreditCardsManagementComponent {
     public userState = inject(UserState);
     public storage = inject(LocalStorageService);
     private snack = inject(CustomSnackbarComponent);
+
+    actions: ActionItem[] = [
+        { name: "", icon: "edit", action: () => this.onEdit(), color: "#00328f" },
+        {
+            name: "",
+            icon: "delete",
+            action: () => this.onDelete(),
+            color: "#8f0000",
+        },
+    ];
 
     getCreditCards(reloaded?: boolean) {
         this.userState.user$

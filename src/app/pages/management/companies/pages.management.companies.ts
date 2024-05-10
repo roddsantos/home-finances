@@ -11,6 +11,7 @@ import { FeedbackContainerComponent } from "src/app/components/feedback-containe
 import { ServiceCompany } from "src/app/services/company.service";
 import { CompanyState } from "src/app/subjects/subjects.company";
 import { UserState } from "src/app/subjects/subjects.user";
+import { ActionItem } from "src/app/types/components";
 import { Company } from "src/app/types/objects";
 
 @Component({
@@ -34,6 +35,16 @@ export class ManagementCompaniesComponent {
     public compState = inject(CompanyState);
     public userState = inject(UserState);
     private snack = inject(CustomSnackbarComponent);
+
+    actions: ActionItem[] = [
+        { name: "", icon: "edit", action: () => this.onEdit(), color: "#00328f" },
+        {
+            name: "",
+            icon: "delete",
+            action: () => this.onDelete(),
+            color: "#8f0000",
+        },
+    ];
 
     getCompanies(reloaded?: boolean) {
         this.userState.user$.pipe(mergeMap(() => this.compApi.getCompanies())).subscribe({

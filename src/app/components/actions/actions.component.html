@@ -1,50 +1,13 @@
-<div class="buttons-container">
+<div class="buttons-container animate blur">
     <button
-        *ngIf="onEdit.observed"
-        (click)="onEdit.emit()"
-        matTooltip="edit"
+        *ngFor="let a of actions"
+        (click)="(a.action)"
+        [matTooltip]="a.name"
         matTooltipPosition="above"
         class="icon-button"
         mat-icon-button
-        aria-label="edit company button"
+        aria-label="action company button"
     >
-        <mat-icon
-            class="icon-edit"
-            aria-hidden="false"
-            aria-label="pen icon"
-            fontIcon="edit"
-        ></mat-icon>
-    </button>
-    <button
-        *ngIf="onDelete.observed"
-        (click)="onDelete.emit()"
-        matTooltip="delete"
-        matTooltipPosition="above"
-        [ngClass]="['icon-button', 'left']"
-        mat-icon-button
-        aria-label="delete company button"
-    >
-        <mat-icon
-            class="icon-edit"
-            aria-hidden="false"
-            aria-label="trash bin icon"
-            fontIcon="delete"
-        ></mat-icon>
-    </button>
-    <button
-        *ngIf="onView.observed"
-        (click)="onView.emit()"
-        matTooltip="delete"
-        matTooltipPosition="above"
-        [ngClass]="['icon-button', 'left']"
-        mat-icon-button
-        aria-label="delete company button"
-    >
-        <mat-icon
-            class="icon-edit"
-            aria-hidden="false"
-            aria-label="trash bin icon"
-            fontIcon="delete"
-        ></mat-icon>
+        <mat-icon [fontIcon]="a.icon" [style.color]="a.color"></mat-icon>
     </button>
 </div>

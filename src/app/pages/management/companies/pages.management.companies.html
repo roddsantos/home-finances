@@ -11,11 +11,7 @@
                 <p class="title">{{company.name}}</p>
                 <p class="description">{{company.description}}</p>
             </div>
-            <actions
-                class="icons-buttons"
-                (onEdit)="onEdit()"
-                (onDelete)="onDelete()"
-            ></actions>
+            <actions class="icons-buttons" [actions]="actions"></actions>
             <div class="color-container" [style.borderRightColor]="company.color"></div>
         </div>
     </li>

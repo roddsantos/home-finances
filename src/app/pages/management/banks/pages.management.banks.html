@@ -13,11 +13,7 @@
                     <p>{{bank.savings | currency: "R$ "}}</p>
                 </div>
             </div>
-            <actions
-                class="icons-buttons"
-                (onEdit)="onEdit()"
-                (onDelete)="onDelete()"
-            ></actions>
+            <actions class="icons-buttons" [actions]="actions"></actions>
             <div class="color-container" [style.borderRightColor]="bank.color"></div>
         </div>
     </li>
