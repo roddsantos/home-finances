@@ -1,0 +1,53 @@
+.buttons-container {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    right: 30px;
+    height: auto;
+}
+
+.left {
+    margin-left: 10px !important;
+}
+
+.icon-button {
+    position: relative;
+    margin: auto 0px auto auto;
+    border: 0px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+}
+
+.animate {
+    animation-duration: 0.2s;
+    animation-duration: 0.3s;
+    animation-delay: 0.1s;
+    animation-name: animate-blur;
+    animation-timing-function: cubic-bezier(0.26, 0.53, 0.74, 1.48);
+    animation-fill-mode: backwards;
+}
+
+.animate.blur {
+    animation-name: animate-blur;
+    animation-timing-function: ease;
+}
+@keyframes animate-blur {
+    0% {
+        opacity: 0;
+        filter: blur(15px);
+    }
+    100% {
+        opacity: 1;
+        filter: blur(0px);
+    }
+}
+
+.icon-edit {
+    height: auto;
+    width: auto;
+    color: var(--description);
+}

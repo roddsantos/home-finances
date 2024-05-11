@@ -2,28 +2,32 @@ import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatButton, MatIconButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
+import { MatTooltipModule } from "@angular/material/tooltip";
 import { mergeMap } from "rxjs";
+import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { CustomFilterComponent } from "src/app/components/custom-filter/custom-filter.component";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { ServiceCompany } from "src/app/services/company.service";
 import { CompanyState } from "src/app/subjects/subjects.company";
 import { UserState } from "src/app/subjects/subjects.user";
-import { FeedbackInfo } from "src/app/types/components";
+import { ActionItem } from "src/app/types/components";
 import { Company } from "src/app/types/objects";
 
 @Component({
     selector: "management-companies",
     templateUrl: "./pages.management.companies.html",
-    styleUrls: ["./pages.management.companies.css"],
+    styleUrls: ["./pages.management.companies.css", "../pages.management.css"],
     standalone: true,
     imports: [
         MatIcon,
         MatButton,
         MatIconButton,
+        MatTooltipModule,
         FeedbackContainerComponent,
         CommonModule,
         CustomFilterComponent,
+        ActionsComponent,
     ],
 })
 export class ManagementCompaniesComponent {
@@ -31,6 +35,16 @@ export class ManagementCompaniesComponent {
     public compState = inject(CompanyState);
     public userState = inject(UserState);
     private snack = inject(CustomSnackbarComponent);
+
+    actions: ActionItem[] = [
+        { name: "", icon: "edit", action: () => this.onEdit(), color: "#00328f" },
+        {
+            name: "",
+            icon: "delete",
+            action: () => this.onDelete(),
+            color: "#8f0000",
+        },
+    ];
 
     getCompanies(reloaded?: boolean) {
         this.userState.user$.pipe(mergeMap(() => this.compApi.getCompanies())).subscribe({
@@ -60,5 +74,13 @@ export class ManagementCompaniesComponent {
 
     trackCompany(index: number, company: Company) {
         return company.id;
+    }
+
+    onEdit() {
+        console.log("EDIT");
+    }
+
+    onDelete() {
+        console.log("DELETE");
     }
 }

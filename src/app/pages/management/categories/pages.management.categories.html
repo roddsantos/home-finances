@@ -4,26 +4,19 @@
         [info]="(catState.status$ | async)!"
     ></feedback-container>
     <li *ngFor="let category of catState.categories$ | async">
-        <div class="cat-item-list">
-            <div class="cat-item-text">
-                <p class="cat-title">{{category.name}}</p>
-                <p class="cat-description">{{category.description}}</p>
-            </div>
+        <div class="item-list">
             <mat-icon
                 class="icon-type"
                 aria-hidden="false"
                 aria-label="Example home icon"
                 fontIcon="{{category.icon}}"
+                [style.color]="category.color"
             ></mat-icon>
-
-            <button class="icon-button" mat-icon-button aria-label="color label">
-                <mat-icon
-                    class="icon-edit"
-                    aria-hidden="false"
-                    aria-label="Example home icon"
-                    fontIcon="edit"
-                ></mat-icon>
-            </button>
+            <div class="cat-item-text">
+                <p class="title">{{category.name}}</p>
+                <p class="description">{{category.description}}</p>
+            </div>
+            <actions class="icons-buttons" [actions]="actions"></actions>
         </div>
     </li>
 </div>

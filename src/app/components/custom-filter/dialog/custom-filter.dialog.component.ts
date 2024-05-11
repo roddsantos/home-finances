@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild } from "@angular/core";
+import { Component, ElementRef, inject, OnInit, ViewChild } from "@angular/core";
 import { ModalState } from "src/app/subjects/subjects.modal";
 import { ModalComponent } from "src/app/components/modal/modal.component";
 import { MatChipsModule } from "@angular/material/chips";
@@ -78,8 +78,8 @@ export class DialogCustomList implements OnInit {
     @ViewChild("bank") bank: MatSelect;
     @ViewChild("month") month: MatSelect;
     @ViewChild("year") year: MatSelect;
-    @ViewChild("min") min: MatSelect;
-    @ViewChild("max") max: MatSelect;
+    @ViewChild("min") min: ElementRef;
+    @ViewChild("max") max: ElementRef;
     @ViewChild("date1") date1: MatInput;
     @ViewChild("date2") date2: MatInput;
     @ViewChild("status") status: MatButtonToggle;
@@ -151,7 +151,7 @@ export class DialogCustomList implements OnInit {
                     identifier,
                     name: value,
                 });
-                this[identifier].value = "";
+                this[identifier].nativeElement.disabled = true;
             }
         }
     }
@@ -221,9 +221,22 @@ export class DialogCustomList implements OnInit {
 
     removeFilter(index: number) {
         const removed = this.selectedFilters.splice(index, 1);
+        if (removed[0].identifier === "min" || removed[0].identifier === "max")
+            this[removed[0].identifier].nativeElement.disabled = false;
     }
 
     onSubmit() {
+        let countMonths = 0;
+        let countYears = 0;
+        countYears = this.selectedFilters.filter((f) => f.identifier === "year").length;
+        countMonths = this.selectedFilters.filter((f) => f.identifier === "month").length;
+        if (countYears === 0 && countMonths > 0) {
+            this.snack.openSnackBar(
+                "you need at least one year when filtering months",
+                "warning"
+            );
+            return;
+        }
         this.filterState.setFilters([...this.selectedFilters]);
         this.localStorage.setFilters(JSON.stringify(this.selectedFilters));
         this.billService.getBills().subscribe({

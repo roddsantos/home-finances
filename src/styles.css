@@ -5,8 +5,8 @@
     --primary: #8ea4d2ff;
     --secondary: #4d69b6;
     --item-list: rgb(135, 147, 192);
-    --title: #222222;
-    --description: #740000;
+    --title: #e4e4e4;
+    --description: #ffe0e0;
     --background: rgb(75, 75, 75);
 
     --error: #e21111;
@@ -46,6 +46,17 @@
 
 body {
     min-height: 100vh;
+    min-width: 100vw;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100vw;
+    padding: 80px 50px 40px;
+    max-width: 1000px;
+    margin: 0px auto;
 }
 
 .creation-main {

@@ -59,3 +59,12 @@ export type PaginationType = {
     limit: number;
     total: number;
 };
+
+// Action items
+
+export type ActionItem = {
+    name: string;
+    icon: string;
+    action: () => void;
+    color: string;
+};

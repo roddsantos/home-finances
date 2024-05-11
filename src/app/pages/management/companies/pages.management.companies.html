@@ -6,24 +6,13 @@
     <li
         *ngFor="let company of (compState.company$| async); index as i; trackBy: trackCompany"
     >
-        <div class="creation-item-list">
+        <div class="item-list">
             <div class="company-item-text">
-                <p class="company-title">{{company.name}}</p>
-                <p class="company-description">{{company.description}}</p>
+                <p class="title">{{company.name}}</p>
+                <p class="description">{{company.description}}</p>
             </div>
-
-            <button class="icon-button" mat-icon-button aria-label="color label">
-                <mat-icon
-                    class="icon-edit"
-                    aria-hidden="false"
-                    aria-label="Example home icon"
-                    fontIcon="edit"
-                ></mat-icon>
-            </button>
-            <div
-                class="company-color-container"
-                [style.borderRightColor]="company.color"
-            ></div>
+            <actions class="icons-buttons" [actions]="actions"></actions>
+            <div class="color-container" [style.backgroundColor]="company.color"></div>
         </div>
     </li>
 </div>

@@ -5,13 +5,14 @@ import { MatIconModule } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { ServiceBill } from "src/app/services/bill.service";
 import { BillState } from "src/app/subjects/subjects.bill";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 @Component({
     selector: "pagination-template",
     standalone: true,
     templateUrl: "./pagination.template.monthly.html",
     styleUrls: ["./pagination.template.monthly.css", "../../pages.monthly.css"],
-    imports: [CommonModule, MatButtonModule, MatIconModule],
+    imports: [CommonModule, MatButtonModule, MatIconModule, MatTooltipModule],
 })
 export class PaginationTemplate {
     public billsState = inject(BillState);

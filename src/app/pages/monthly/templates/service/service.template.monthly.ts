@@ -1,20 +1,36 @@
 import { CommonModule } from "@angular/common";
 import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 import { MatExpansionModule } from "@angular/material/expansion";
+import { ActionsComponent } from "src/app/components/actions/actions.component";
+import { ActionItem } from "src/app/types/components";
 import { Bill, BillData } from "src/app/types/objects";
-import { getMonthAndYear } from "src/utils/date";
-import { currencyDisplay } from "src/utils/parser";
 
 @Component({
     selector: "service-list-template",
     templateUrl: "./service.template.monthly.html",
     styleUrls: ["../../pages.monthly.css"],
     standalone: true,
-    imports: [CommonModule, MatExpansionModule],
+    imports: [CommonModule, MatExpansionModule, ActionsComponent],
 })
 export class ServiceTemplateMonthly {
     @Input() data: Bill & BillData;
     color: string = "transparent";
+
+    actions: ActionItem[] = [
+        { name: "", icon: "edit", action: () => this.onEdit(), color: "#00328f" },
+        {
+            name: "",
+            icon: "delete",
+            action: () => this.onDelete(),
+            color: "#8f0000",
+        },
+        {
+            name: "",
+            icon: "check_circle",
+            action: () => this.onCheck(),
+            color: "#008f18",
+        },
+    ];
 
     ngOnInit() {
         if (this.data.settled) this.color = "#008f18";
@@ -23,19 +39,15 @@ export class ServiceTemplateMonthly {
         else this.color = "#8f0000";
     }
 
-    getDate(toUse: "updatedAt" | "due" | "paid") {
-        let obj = { date: new Date(this.data[toUse]) };
-        return getMonthAndYear(obj, "ddMMyyyy");
+    onEdit() {
+        console.log("EDIT");
     }
 
-    currency(isTotal?: boolean) {
-        if (this.data.parcels > 1 && !isTotal)
-            return currencyDisplay(this.data.totalParcel || 0);
-        else return currencyDisplay(this.data.total);
+    onDelete() {
+        console.log("DELETE");
     }
 
-    showTotalParcels() {
-        if (this.data.parcels > 1) return true;
-        else return false;
+    onCheck() {
+        console.log("DELETE");
     }
 }

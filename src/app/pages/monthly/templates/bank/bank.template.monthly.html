@@ -1,4 +1,4 @@
-<mat-expansion-panel class="bill-expansion" hideToggle>
+<mat-expansion-panel class="bill-expansion">
     <mat-expansion-panel-header class="bill-expansion-container">
         <mat-panel-title>
             <div class="bill-title-container">
@@ -9,25 +9,28 @@
                 </div>
                 <div class="width-15">
                     <p class="label">value</p>
-                    <p class="value">{{currency()}}</p>
+                    <p class="value">{{data.total | currency:"R$ "}}</p>
                 </div>
-                <p [ngClass]="['value', 'width-15']">{{getDate('paid')}}</p>
+                <p [ngClass]="['value', 'width-15']">
+                    {{ data.paid | date: "MMM/yyyy" }}
+                </p>
             </div>
             <div class="bill-color-container" [style.borderRightColor]="color"></div>
         </mat-panel-title>
     </mat-expansion-panel-header>
-    <div class="bill-expanded-container">
-        <div class="width-50">
+    <div class="bill-expanded-container bank">
+        <div class="desc">
             <p class="label">description</p>
             <p class="value">{{ data.description }}</p>
         </div>
-        <div class="width-25" *ngIf="data.bank2">
+        <div class="bank2" *ngIf="data.bank2">
             <p class="label">bank 2</p>
             <p class="value">{{data.bank2.name}}</p>
         </div>
-        <div class="width-25">
+        <div class="transaction">
             <p class="label">max transaction date</p>
-            <p class="value">{{getDate('due')}}</p>
+            <p class="value">{{data.due | date: "fullDate"}}</p>
         </div>
+        <actions class="icons-container width-30" [actions]="actions"></actions>
     </div>
 </mat-expansion-panel>

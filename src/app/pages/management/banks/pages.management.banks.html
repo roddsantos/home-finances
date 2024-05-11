@@ -4,25 +4,17 @@
         [info]="(bankState.status$ | async)!"
     ></feedback-container>
     <li *ngFor="let bank of (bankState.banks$ | async); index as i; trackBy: trackBank">
-        <div class="creation-item-list">
+        <div class="item-list">
             <div class="bank-item-text">
-                <p class="bank-title">{{bank.name}}</p>
-                <p class="bank-description">{{bank.description}}</p>
+                <p class="title">{{bank.name}}</p>
+                <p class="description">{{bank.description}}</p>
                 <div class="bank-savings">
                     <p>savings:</p>
-                    <p>{{bank.savings}} R$</p>
+                    <p>{{bank.savings | currency: "R$ "}}</p>
                 </div>
             </div>
-
-            <button class="icon-button" mat-icon-button aria-label="color label">
-                <mat-icon
-                    class="icon-edit"
-                    aria-hidden="false"
-                    aria-label="Example home icon"
-                    fontIcon="edit"
-                ></mat-icon>
-            </button>
-            <div class="bank-color-container" [style.borderRightColor]="bank.color"></div>
+            <actions class="icons-buttons" [actions]="actions"></actions>
+            <div class="color-container" [style.backgroundColor]="bank.color"></div>
         </div>
     </li>
 </div>

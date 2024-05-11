@@ -10,7 +10,7 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { MatChipsModule } from "@angular/material/chips";
 import { ServiceBill } from "src/app/services/bill.service";
 import { BillState } from "src/app/subjects/subjects.bill";
-import { Bill, BillData } from "src/app/types/objects";
+import { MatTooltipModule } from "@angular/material/tooltip";
 import { CustomSnackbarComponent } from "../custom-snackbar/custom-snackbar.component";
 
 @Injectable({
@@ -21,7 +21,14 @@ import { CustomSnackbarComponent } from "../custom-snackbar/custom-snackbar.comp
     templateUrl: "./custom-filter.component.html",
     styleUrls: ["./custom-filter.component.css"],
     standalone: true,
-    imports: [MatButton, MatIcon, CommonModule, MatChipsModule, MatExpansionModule],
+    imports: [
+        MatButton,
+        MatIcon,
+        CommonModule,
+        MatChipsModule,
+        MatExpansionModule,
+        MatTooltipModule,
+    ],
 })
 export class CustomFilterComponent {
     public dialog = inject(Dialog);
@@ -46,6 +53,23 @@ export class CustomFilterComponent {
     }
 
     removeFilter(filter?: FilterDisplay) {
+        let countMonths = 0;
+        let countYears = 0;
+        if (filter?.identifier === "year") {
+            this.filterState.filters$.subscribe({
+                next: (filters) => {
+                    countYears = filters.filter((f) => f.identifier === "year").length;
+                    countMonths = filters.filter((f) => f.identifier === "month").length;
+                },
+            });
+        }
+        if (countYears === 1 && countMonths > 0) {
+            this.snack.openSnackBar(
+                "you need at least one year when filtering months",
+                "warning"
+            );
+            return;
+        }
         if (filter) {
             this.filterState.removeFilter(filter);
             this.billService.getBills().subscribe({
