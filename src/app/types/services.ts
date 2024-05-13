@@ -44,8 +44,6 @@ export type BillObject = {
     type: PaymentTypes;
     categoryId: string;
     due: Date;
-    month: number;
-    year: number;
 };
 
 export type BillObjectBank = {

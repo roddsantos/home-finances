@@ -1,7 +1,7 @@
 <div class="buttons-container animate blur">
     <button
         *ngFor="let a of actions"
-        (click)="(a.action)"
+        (click)="a.action()"
         [matTooltip]="a.name"
         matTooltipPosition="above"
         class="icon-button"

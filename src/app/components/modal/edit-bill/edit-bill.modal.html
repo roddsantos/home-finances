@@ -1,0 +1,107 @@
+<modal-component
+    [disabled]="onDisableButton()"
+    (actionPrimary)="onSubmit()"
+    [bodyTemplate]="editBill"
+></modal-component>
+
+<ng-template #editBill>
+    <form [formGroup]="billForm">
+        <div class="new-bill-container">
+            <div class="new-bill-container-split">
+                <mat-form-field class="new-bill-field" appearance="outline">
+                    <mat-label>payment type</mat-label>
+                    <mat-select
+                        (selectionChange)="onSetSettled($event)"
+                        #type
+                        formControlName="type"
+                    >
+                        <mat-option [value]="'money'">money</mat-option>
+                        <mat-option [value]="'creditCard'">credit card</mat-option>
+                        <mat-option [value]="'companyCredit'">company credit</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="new-bill-field" appearance="outline">
+                    <mat-label>category</mat-label>
+                    <mat-select formControlName="category">
+                        @for (cat of catState.categories$ | async; track $index) {
+                        <mat-option [value]="cat">{{cat.name}}</mat-option>
+                        }
+                    </mat-select>
+                    @if (billForm.controls.category.errors?.["required"]) {
+                    <mat-error>{{errorMessage.name}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="new-bill-container-split">
+                <mat-form-field class="new-bill-field" appearance="outline">
+                    <mat-label>name</mat-label>
+                    <input maxlength="100" required matInput formControlName="name" />
+                    @if (billForm.controls.name.errors?.["required"]) {
+                    <mat-error>{{errorMessage.name}}</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field class="new-bill-field" appearance="outline">
+                    <mat-label>description</mat-label>
+                    <input maxlength="100" matInput formControlName="description" />
+                    @if (billForm.controls.description.errors?.["required"]) {
+                    <mat-error>{{errorMessage.description}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="new-bill-container-split">
+                <mat-checkbox
+                    [disabled]="type.value === 'companyCredit'"
+                    [style.marginBottom]="'20px'"
+                    formControlName="settled"
+                    >bill settled</mat-checkbox
+                >
+                <mat-checkbox [style.marginBottom]="'20px'" formControlName="isFixed"
+                    >is fixed payment (charged each month)</mat-checkbox
+                >
+                <mat-form-field class="new-bill-field" appearance="outline">
+                    <mat-label>bill value</mat-label>
+                    <input matInput type="number" formControlName="total" />
+                    @if (billForm.controls.total.invalid) {
+                    <mat-error>{{errorMessage.total}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="new-bill-date-split">
+                <mat-form-field class="savings-input" appearance="outline">
+                    <mat-label>date of payment</mat-label>
+                    <input [matDatepicker]="picker1" matInput formControlName="paid" />
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="picker1"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="savings-input" appearance="outline">
+                    <mat-label>date due</mat-label>
+                    <input [matDatepicker]="picker2" matInput formControlName="due" />
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="picker2"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+    <template-edit-banks
+        *ngIf="type.value ==='money'"
+        #banks="templateEditBanks"
+        [bill]="data.bill"
+    ></template-edit-banks>
+    <template-edit-companies
+        *ngIf="type.value ==='companyCredit'"
+        [bill]="data.bill"
+    ></template-edit-companies>
+    <template-edit-credit-card
+        *ngIf="type.value ==='creditCard'"
+        [bill]="data.bill"
+        #ccTemplate
+    ></template-edit-credit-card>
+</ng-template>
