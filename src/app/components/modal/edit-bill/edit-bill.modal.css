@@ -66,3 +66,10 @@
     width: 175px;
     position: relative;
 }
+
+.disclaimer {
+    font: normal 16px Roboto;
+    margin: 25px 0px 0px;
+    position: absolute;
+    color: var(--warning);
+}

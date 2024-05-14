@@ -22,7 +22,10 @@
                 </mat-form-field>
                 <mat-form-field class="new-bill-field" appearance="outline">
                     <mat-label>category</mat-label>
-                    <mat-select formControlName="category">
+                    <mat-select
+                        [compareWith]="compareCategories"
+                        formControlName="category"
+                    >
                         @for (cat of catState.categories$ | async; track $index) {
                         <mat-option [value]="cat">{{cat.name}}</mat-option>
                         }
@@ -104,4 +107,7 @@
         [bill]="data.bill"
         #ccTemplate
     ></template-edit-credit-card>
+    <p class="disclaimer" *ngIf="data.bill.settled">
+        some fields are disabled due to the bill settled
+    </p>
 </ng-template>

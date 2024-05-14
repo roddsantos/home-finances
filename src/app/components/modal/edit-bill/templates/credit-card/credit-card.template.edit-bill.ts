@@ -72,6 +72,11 @@ export class CreditCardTemplateEditBill {
             delta: this.bill.delta,
             isRefund: this.bill.isRefund,
         });
+        this.ccForm.controls["creditCard"].disable();
+        this.ccForm.controls["parcels"].disable();
+        this.ccForm.controls["taxes"].disable();
+        this.ccForm.controls["isRefund"].disable();
+        this.ccForm.controls["delta"].disable();
     }
 
     compareCreditCards(cc1: CreditCard, cc2: CreditCard): boolean {

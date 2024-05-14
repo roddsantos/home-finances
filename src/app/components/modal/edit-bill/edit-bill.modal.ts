@@ -85,16 +85,31 @@ export class ModalEditBill {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
         }),
-        total: new FormControl<number>(0, {
-            nonNullable: true,
-            validators: [Validators.required, Validators.min(0.01)],
-        }),
-        settled: new FormControl<boolean>(true, { nonNullable: false }),
-        due: new FormControl<Date>(new Date(), { nonNullable: true }),
-        paid: new FormControl<Date>(new Date(), { nonNullable: false }),
-        type: new FormControl<PaymentTypes>("money" as PaymentTypes, {
-            nonNullable: true,
-        }),
+        total: new FormControl<number>(
+            { value: 0, disabled: this.data.bill.settled },
+            {
+                nonNullable: true,
+                validators: [Validators.required, Validators.min(0.01)],
+            }
+        ),
+        settled: new FormControl<boolean>(
+            { value: true, disabled: this.data.bill.settled },
+            { nonNullable: false }
+        ),
+        due: new FormControl<Date>(
+            { value: new Date(), disabled: this.data.bill.settled },
+            { nonNullable: true }
+        ),
+        paid: new FormControl<Date>(
+            { value: new Date(), disabled: this.data.bill.settled },
+            { nonNullable: false }
+        ),
+        type: new FormControl<PaymentTypes>(
+            { value: "money" as PaymentTypes, disabled: this.data.bill.settled },
+            {
+                nonNullable: true,
+            }
+        ),
         category: new FormControl<Category | null>(null, {
             nonNullable: true,
             validators: [Validators.required],
@@ -116,7 +131,7 @@ export class ModalEditBill {
         });
         this.modalState.changeFooter({
             type: "submit",
-            submit: "create",
+            submit: "update",
             alert: "cancel",
         });
         this.modalState.changeHeader("edit bill");
@@ -219,5 +234,9 @@ export class ModalEditBill {
 
     onChangeType($event: PaymentTypes) {
         this.inputType = $event || "";
+    }
+
+    compareCategories(c1: Category, c2: Category): boolean {
+        return c1.id === c2.id;
     }
 }
