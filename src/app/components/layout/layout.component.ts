@@ -1,5 +1,5 @@
 import { Component, ViewChild, AfterViewInit, inject } from "@angular/core";
-import { RouterModule } from "@angular/router";
+import { Router, RouterModule } from "@angular/router";
 import { ModalProfile } from "../modal/profile/profile.modal";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ModalComponent } from "../modal/modal.component";
@@ -45,6 +45,7 @@ export class LayoutComponent {
     public overlay = inject(Overlay);
     private snack = inject(CustomSnackbarComponent);
     public filtersState = inject(CustomFilterState);
+    public router = inject(Router);
 
     public billApi = inject(ServiceBill);
     public billState = inject(BillState);
@@ -61,6 +62,8 @@ export class LayoutComponent {
 
     public catApi = inject(ServiceCategory);
     public catState = inject(CategoryState);
+
+    page = window.location.pathname;
 
     ngOnInit() {
         this.billApi.getBills().subscribe({
@@ -129,5 +132,10 @@ export class LayoutComponent {
         this.storage.removeUser();
         this.modal.close();
         this.profile.update();
+    }
+
+    onChangeRoute(route: "/manager" | "/monthly" | "/dashboard" | "/") {
+        this.router.navigate([route]);
+        this.page = route;
     }
 }

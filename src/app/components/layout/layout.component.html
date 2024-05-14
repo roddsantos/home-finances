@@ -1,53 +1,79 @@
 <mat-toolbar class="toolbar" color="secondary">
     <mat-toolbar-row class="toolbar-row">
-        <div class="app-container" [routerLink]="['/']">
+        <div
+            [ngClass]="{
+                'app-container': true,
+                'selected-container': page === '/'
+            }"
+            (click)="onChangeRoute('/')"
+        >
             <span class="app-title">home finances</span>
         </div>
         <div class="routes-container" *ngIf="userState.user$ | async">
-            <div class="app-container" [routerLink]="['/manager']">
+            <div
+                [ngClass]="{
+                    'app-container': true,
+                    'selected-container': page === '/manager'
+                }"
+                (click)="onChangeRoute('/manager')"
+            >
                 <mat-icon
-                    class="app-icon"
+                    [ngClass]="{ 'app-icon': true, 'icon-route': page !== '/manager' }"
                     aria-hidden="false"
                     aria-label="Example home icon"
                     fontIcon="edit_square"
                 ></mat-icon>
-                <span class="app-title">manager</span>
+                <span *ngIf="page === '/manager'" class="app-title">manager</span>
             </div>
-            <div class="app-container" [routerLink]="['/monthly']">
+            <div
+                [ngClass]="{
+                    'app-container': true,
+                    'selected-container': page === '/monthly'
+                }"
+                (click)="onChangeRoute('/monthly')"
+            >
                 <mat-icon
-                    class="app-icon"
+                    [ngClass]="{ 'app-icon': true, 'icon-route': page !== '/monthly' }"
                     aria-hidden="false"
                     aria-label="Example home icon"
                     fontIcon="calendar_month"
                 ></mat-icon>
-                <span class="app-title">monthly</span>
+                <span *ngIf="page === '/monthly'" class="app-title">monthly</span>
             </div>
-            <div class="app-container" [routerLink]="['/dashboard']">
+            <div
+                [ngClass]="{
+                    'app-container': true,
+                    'selected-container': page === '/dashboard'
+                }"
+                (click)="onChangeRoute('/dashboard')"
+            >
                 <mat-icon
-                    class="app-icon"
+                    [ngClass]="{ 'app-icon': true, 'icon-route': page !== '/dashboard' }"
                     aria-hidden="false"
                     aria-label="Example home icon"
                     fontIcon="space_dashboard"
                 ></mat-icon>
-                <span class="app-title">dashboard</span>
+                <span *ngIf="page === '/dashboard'" class="app-title">dashboard</span>
             </div>
-            <span class="example-spacer"></span>
         </div>
-        <mat-icon
-            *ngIf="userState.user$ | async"
-            class="app-icon profile"
-            aria-hidden="false"
-            aria-label="Example home icon"
-            fontIcon="account_circle"
-            (click)="openProfile()"
-        ></mat-icon>
-        <mat-icon
-            *ngIf="userState.user$ | async"
-            class="app-icon dark-mode"
-            aria-hidden="false"
-            aria-label="Example home icon"
-            fontIcon="dark_mode"
-            (click)="toggleDarkMode()"
-        ></mat-icon>
+        <div class="icon-container">
+            <mat-icon
+                *ngIf="userState.user$ | async"
+                class="app-icon profile"
+                aria-hidden="false"
+                aria-label="Example home icon"
+                fontIcon="account_circle"
+                (click)="openProfile()"
+            ></mat-icon>
+        </div>
+        <div class="icon-container">
+            <mat-icon
+                class="app-icon dark-mode"
+                aria-hidden="false"
+                aria-label="Example home icon"
+                fontIcon="dark_mode"
+                (click)="toggleDarkMode()"
+            ></mat-icon>
+        </div>
     </mat-toolbar-row>
 </mat-toolbar>
