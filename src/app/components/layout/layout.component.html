@@ -7,7 +7,18 @@
             }"
             (click)="onChangeRoute('/')"
         >
-            <span class="app-title">home finances</span>
+            <mat-icon
+                [ngClass]="{
+                    'material-symbols-outlined': true,
+                    'app-icon': true,
+                    'icon-route': page !== '/'
+                }"
+                [matTooltip]="page !== '/' ? 'home' : ''"
+                aria-hidden="false"
+                aria-label="Example home icon"
+                fontIcon="cottage"
+            ></mat-icon>
+            <span class="app-title">finances</span>
         </div>
         <div class="routes-container" *ngIf="userState.user$ | async">
             <div
@@ -18,7 +29,11 @@
                 (click)="onChangeRoute('/manager')"
             >
                 <mat-icon
-                    [ngClass]="{ 'app-icon': true, 'icon-route': page !== '/manager' }"
+                    [ngClass]="{
+                        'material-symbols-outlined': page !== '/manager',
+                        'app-icon': true,
+                        'icon-route': page !== '/manager'
+                    }"
                     [matTooltip]="page !== '/manager' ? 'manager' : ''"
                     aria-hidden="false"
                     aria-label="Example home icon"
@@ -34,7 +49,11 @@
                 (click)="onChangeRoute('/monthly')"
             >
                 <mat-icon
-                    [ngClass]="{ 'app-icon': true, 'icon-route': page !== '/monthly' }"
+                    [ngClass]="{
+                        'material-symbols-outlined': page !== '/monthly',
+                        'app-icon': true,
+                        'icon-route': page !== '/monthly'
+                    }"
                     [matTooltip]="page !== '/monthly' ? 'monthly' : ''"
                     aria-hidden="false"
                     aria-label="Example home icon"
@@ -50,11 +69,15 @@
                 (click)="onChangeRoute('/dashboard')"
             >
                 <mat-icon
-                    [ngClass]="{ 'app-icon': true, 'icon-route': page !== '/dashboard' }"
+                    [ngClass]="{
+                        'material-symbols-outlined': page !== '/dashboard',
+                        'app-icon': true,
+                        'icon-route': page !== '/dashboard'
+                    }"
                     [matTooltip]="page !== '/dashboard' ? 'dashboard' : ''"
                     aria-hidden="false"
                     aria-label="Example home icon"
-                    fontIcon="space_dashboard"
+                    fontIcon="pie_chart"
                 ></mat-icon>
                 <span *ngIf="page === '/dashboard'" class="app-title">dashboard</span>
             </div>
@@ -62,7 +85,7 @@
         <div class="icon-container">
             <mat-icon
                 *ngIf="userState.user$ | async"
-                class="app-icon profile"
+                [ngClass]="['app-icon', 'profile', 'material-symbols-outlined']"
                 aria-hidden="false"
                 aria-label="Example home icon"
                 fontIcon="account_circle"
@@ -71,7 +94,7 @@
         </div>
         <div class="icon-container">
             <mat-icon
-                class="app-icon dark-mode"
+                [ngClass]="['app-icon', 'dark-mode', 'material-symbols-outlined']"
                 aria-hidden="false"
                 aria-label="Example home icon"
                 fontIcon="dark_mode"

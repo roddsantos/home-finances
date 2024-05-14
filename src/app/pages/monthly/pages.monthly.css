@@ -70,13 +70,11 @@
 .label {
     font-weight: normal;
     font-size: 12px;
-    font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
     color: var(--title);
 }
 .value {
     font-weight: normal;
     font-size: 16px;
-    font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
     color: var(--description);
 }
 

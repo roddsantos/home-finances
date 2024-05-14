@@ -8,6 +8,7 @@
             aria-hidden="false"
             aria-label="Example home icon"
             fontIcon="description"
+            class="material-symbols-outlined"
         ></mat-icon>
         {{(billsState.billsPagination$ | async)?.page}}
     </div>
@@ -35,7 +36,7 @@
         [disabled]="(billsState.bills$ | async)?.length === 0"
     >
         <mat-icon
-            class="icon-page"
+            class="icon-page material-symbols-outlined"
             aria-hidden="false"
             aria-label="Example home icon"
             fontIcon="reorder"
