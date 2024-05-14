@@ -19,6 +19,7 @@
             >
                 <mat-icon
                     [ngClass]="{ 'app-icon': true, 'icon-route': page !== '/manager' }"
+                    [matTooltip]="page !== '/manager' ? 'manager' : ''"
                     aria-hidden="false"
                     aria-label="Example home icon"
                     fontIcon="edit_square"
@@ -34,6 +35,7 @@
             >
                 <mat-icon
                     [ngClass]="{ 'app-icon': true, 'icon-route': page !== '/monthly' }"
+                    [matTooltip]="page !== '/monthly' ? 'monthly' : ''"
                     aria-hidden="false"
                     aria-label="Example home icon"
                     fontIcon="calendar_month"
@@ -49,6 +51,7 @@
             >
                 <mat-icon
                     [ngClass]="{ 'app-icon': true, 'icon-route': page !== '/dashboard' }"
+                    [matTooltip]="page !== '/dashboard' ? 'dashboard' : ''"
                     aria-hidden="false"
                     aria-label="Example home icon"
                     fontIcon="space_dashboard"

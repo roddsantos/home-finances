@@ -1,8 +1,10 @@
+import { Dialog } from "@angular/cdk/dialog";
 import { CommonModule, CurrencyPipe, DatePipe } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, inject, Input } from "@angular/core";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatIconModule } from "@angular/material/icon";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
+import { ModalEditBill } from "src/app/components/modal/edit-bill/edit-bill.modal";
 import { ActionItem } from "src/app/types/components";
 import { Bill, BillData } from "src/app/types/objects";
 
@@ -21,6 +23,7 @@ import { Bill, BillData } from "src/app/types/objects";
     ],
 })
 export class BankListTemplateMonthly {
+    public dialog = inject(Dialog);
     @Input() data: Bill & BillData;
     color: string = "transparent";
 
@@ -32,12 +35,6 @@ export class BankListTemplateMonthly {
             action: () => this.onDelete(),
             color: "#8f0000",
         },
-        {
-            name: "",
-            icon: "check_circle",
-            action: () => this.onCheck(),
-            color: "#008f18",
-        },
     ];
 
     ngOnInit() {
@@ -45,10 +42,24 @@ export class BankListTemplateMonthly {
         else if (new Date(this.data.due).getTime() - new Date().getTime() > 0)
             this.color = "#a86d00";
         else this.color = "#8f0000";
+        if (!this.data.settled)
+            this.actions.push({
+                name: "",
+                icon: "check_circle",
+                action: () => this.onCheck(),
+                color: "#008f18",
+            });
     }
 
     onEdit() {
-        console.log("EDIT");
+        this.dialog.open(ModalEditBill, {
+            data: {
+                bill: this.data,
+                size: "md",
+            },
+            hasBackdrop: true,
+            backdropClass: "modal-backdrop",
+        });
     }
 
     onDelete() {

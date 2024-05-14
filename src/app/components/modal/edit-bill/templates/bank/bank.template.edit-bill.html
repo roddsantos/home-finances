@@ -6,7 +6,7 @@
             appearance="outline"
         >
             <mat-label>company</mat-label>
-            <mat-select formControlName="company">
+            <mat-select [compareWith]="compareCompanies" formControlName="company">
                 @for (c of (companies.company$ | async); track c) {
                 <mat-option [value]="c">{{ c.name }}</mat-option>
                 }
@@ -20,7 +20,7 @@
             appearance="outline"
         >
             <mat-label>bank 1</mat-label>
-            <mat-select formControlName="bank1">
+            <mat-select [compareWith]="compareBanks" formControlName="bank1">
                 @for (b1 of (banks.banks$ | async); track b1) {
                 <mat-option [value]="b1">{{ b1.name }}</mat-option>
                 }
@@ -42,7 +42,7 @@
             appearance="outline"
         >
             <mat-label>bank 2</mat-label>
-            <mat-select formControlName="bank2">
+            <mat-select [compareWith]="compareBanks" formControlName="bank2">
                 <mat-option [value]="null">none</mat-option>
                 @for (b2 of (banks.banks$ | async); track b2) {
                 <mat-option [value]="b2">{{ b2.name }}</mat-option>

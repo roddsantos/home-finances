@@ -39,12 +39,6 @@ export class CreditCardTemplateMonthly {
             action: () => this.onDelete(),
             color: "#8f0000",
         },
-        {
-            name: "",
-            icon: "check_circle",
-            action: () => this.onCheck(),
-            color: "#008f18",
-        },
     ];
 
     onEdit() {
@@ -56,6 +50,13 @@ export class CreditCardTemplateMonthly {
             hasBackdrop: true,
             backdropClass: "modal-backdrop",
         });
+        if (!this.data.settled)
+            this.actions.push({
+                name: "",
+                icon: "check_circle",
+                action: () => this.onCheck(),
+                color: "#008f18",
+            });
     }
 
     onDelete() {

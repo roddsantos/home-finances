@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, inject } from "@angular/core";
+import { Component, ViewChild, inject } from "@angular/core";
 import { Router, RouterModule } from "@angular/router";
 import { ModalProfile } from "../modal/profile/profile.modal";
 import { LocalStorageService } from "src/app/services/local-storage.service";
@@ -21,6 +21,7 @@ import { ServiceCategory } from "src/app/services/category.service";
 import { CategoryState } from "src/app/subjects/subjects.category";
 import { CustomFilterState } from "../custom-filter/custom-filter.subjects.component";
 import { CommonModule } from "@angular/common";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 @Component({
     standalone: true,
@@ -34,6 +35,7 @@ import { CommonModule } from "@angular/common";
         ModalProfile,
         RouterModule,
         CommonModule,
+        MatTooltipModule,
     ],
 })
 export class LayoutComponent {

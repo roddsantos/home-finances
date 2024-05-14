@@ -152,11 +152,22 @@ export class ModalEditBill {
     onDisableButton() {
         switch (this.billForm.value.type) {
             case "money":
-                return this.billForm.invalid || this.bankTemplate.bankForm.invalid;
+                return (
+                    this.billForm.invalid ||
+                    (this.bankTemplate ? this.bankTemplate.bankForm.invalid : false)
+                );
             case "companyCredit":
-                return this.billForm.invalid || this.companyTemplate.compForm.invalid;
+                return (
+                    this.billForm.invalid ||
+                    (this.companyTemplate ? this.companyTemplate.compForm.invalid : false)
+                );
             case "creditCard":
-                return this.billForm.invalid;
+                return (
+                    this.billForm.invalid ||
+                    (this.creditCardTemplate
+                        ? this.creditCardTemplate.ccForm.invalid
+                        : false)
+                );
             default:
                 return false;
         }

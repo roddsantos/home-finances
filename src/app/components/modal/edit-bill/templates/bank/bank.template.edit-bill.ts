@@ -61,6 +61,11 @@ export class BankTemplateEditBill {
             isPayment: this.bill.isPayment,
             company: this.bill.company,
         });
+        if (this.bill.settled) {
+            this.bankForm.controls["bank1"].disable();
+            this.bankForm.controls["bank2"].disable();
+            this.bankForm.controls["isPayment"].disable();
+        }
     }
 
     enableArrow() {
@@ -68,4 +73,12 @@ export class BankTemplateEditBill {
     }
 
     errorMessage = NO_BANK;
+
+    compareBanks(b1: Bank, b2: Bank): boolean {
+        return b1.id === b2.id;
+    }
+
+    compareCompanies(c1: Company, c2: Company): boolean {
+        return c1.id === c2.id;
+    }
 }

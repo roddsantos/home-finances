@@ -80,6 +80,13 @@ export class CompanyTemplateEditBill {
             parcels: this.bill.parcels,
             delta: this.bill.delta,
         });
+        if (this.bill.settled) {
+            this.compForm.controls["bank"].disable();
+            this.compForm.controls["creditcard"].disable();
+            this.compForm.controls["parcels"].disable();
+            this.compForm.controls["taxes"].disable();
+            this.compForm.controls["delta"].disable();
+        }
     }
 
     toggleError(type: "cc" | "bank") {
@@ -93,5 +100,9 @@ export class CompanyTemplateEditBill {
             this.compForm.controls.bank.updateValueAndValidity();
             this.compForm.controls.creditcard.updateValueAndValidity();
         }
+    }
+
+    compareCompanies(c1: Company, c2: Company): boolean {
+        return c1.id === c2.id;
     }
 }

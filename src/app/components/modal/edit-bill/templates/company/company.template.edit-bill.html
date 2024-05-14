@@ -7,7 +7,7 @@
                 appearance="outline"
             >
                 <mat-label>company</mat-label>
-                <mat-select formControlName="company">
+                <mat-select [compareWith]="compareCompanies" formControlName="company">
                     @for (c of (companies.company$ | async); track c) {
                     <mat-option [value]="c">{{ c.name }}</mat-option>
                     }
