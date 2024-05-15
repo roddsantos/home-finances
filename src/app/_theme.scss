@@ -1,0 +1,14 @@
+@use "@angular/material" as mat;
+@include mat.core();
+
+@import "./colors";
+
+/* ======== Angular material custom themes ======== */
+$app-primary: mat.define-palette($custom-brand-primary);
+$app-accent: mat.define-palette($custom-brand-accent);
+$app-warn: mat.define-palette($custom-brand-warn);
+
+$brand-light-theme: mat.define-light-theme($app-primary, $app-accent, $app-warn);
+$brand-dark-theme: mat.define-dark-theme($app-primary, $app-accent, $app-warn);
+
+@include mat.all-component-themes($brand-dark-theme);
