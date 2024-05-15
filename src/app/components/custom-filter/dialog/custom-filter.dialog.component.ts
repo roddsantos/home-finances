@@ -118,9 +118,9 @@ export class DialogCustomList implements OnInit {
         const hasFilter = this.selectedFilters.find((f) => f.id === filter.id);
         if (!hasFilter) {
             this.selectedFilters.push({
-                id: filter.id,
+                id: identifier === "type" ? filter : filter.id,
                 identifier,
-                name: filter.name,
+                name: identifier === "type" ? filter : filter.name,
             });
             this[identifier as AvailableDataFilters | "month"].value = "";
         }

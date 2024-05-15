@@ -1,10 +1,16 @@
 .margin {
     display: flex;
-    margin: auto 0px auto auto;
+    margin: 10px 0px 20px auto;
+}
+
+.monthly-container {
+    display: flex;
+    flex-direction: row;
 }
 
 .bill-list-container {
     padding: 10px 0px;
+    width: 100%;
 }
 
 .bill-expansion {

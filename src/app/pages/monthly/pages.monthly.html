@@ -1,38 +1,40 @@
-<div class="creation-main">
-    <button
-        aria-label="create new bill button"
-        mat-button
-        [ngClass]="['button-primary', 'margin']"
-        (click)="openDialog()"
-    >
-        new bill
-    </button>
-    <custom-filter></custom-filter>
-    <div class="bill-list-container">
-        <pagination-template></pagination-template>
-        <feedback-container
-            *ngIf="(billState.bills$| async)?.length === 0"
-            [info]="(billState.status$ | async)!"
-        ></feedback-container>
-        <ng-template
-            ngFor
-            let-item
-            [ngForOf]="(billState.bills$ | async)"
-            let-i="index"
-            [ngForTrackBy]="trackByFn"
-        >
-            <bank-list-template
-                *ngIf="item.type === 'money'"
-                [data]="item"
-            ></bank-list-template>
-            <credit-card-list-template
-                *ngIf="item.type === 'creditCard'"
-                [data]="item"
-            ></credit-card-list-template>
-            <service-list-template
-                *ngIf="item.type === 'companyCredit'"
-                [data]="item"
-            ></service-list-template>
-        </ng-template>
+<div class="creation-main wide">
+    <div class="monthly-container">
+        <custom-filter></custom-filter>
+        <div class="bill-list-container">
+            <button
+                aria-label="create new bill button"
+                mat-button
+                [ngClass]="['button-primary', 'margin']"
+                (click)="openDialog()"
+            >
+                new bill
+            </button>
+            <pagination-template></pagination-template>
+            <feedback-container
+                *ngIf="(billState.bills$| async)?.length === 0"
+                [info]="(billState.status$ | async)!"
+            ></feedback-container>
+            <ng-template
+                ngFor
+                let-item
+                [ngForOf]="(billState.bills$ | async)"
+                let-i="index"
+                [ngForTrackBy]="trackByFn"
+            >
+                <bank-list-template
+                    *ngIf="item.type === 'money'"
+                    [data]="item"
+                ></bank-list-template>
+                <credit-card-list-template
+                    *ngIf="item.type === 'creditCard'"
+                    [data]="item"
+                ></credit-card-list-template>
+                <service-list-template
+                    *ngIf="item.type === 'companyCredit'"
+                    [data]="item"
+                ></service-list-template>
+            </ng-template>
+        </div>
     </div>
 </div>

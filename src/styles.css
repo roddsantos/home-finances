@@ -70,6 +70,10 @@ p {
     margin: 0px auto;
 }
 
+.wide {
+    max-width: 1500px;
+}
+
 .modal-backdrop {
     position: absolute;
     z-index: 3;
@@ -200,7 +204,7 @@ p {
 }
 
 .mat-mdc-standard-chip {
-    border-radius: 0px !important;
+    border-radius: 10px !important;
     /* border: solid 1px #ffffff; */
     & .mdc-evolution-chip__text-label {
         font-size: 16px !important;
@@ -208,7 +212,7 @@ p {
             color: #ffffff !important;
         }
     }
-    &.typebill {
+    &.category {
         background-color: var(--warning) !important;
         & .mdc-evolution-chip__text-label {
             color: #ffffff !important;
@@ -219,6 +223,53 @@ p {
     }
     &.creditcard {
         background-color: var(--description) !important;
+        & .mdc-evolution-chip__text-label {
+            color: #ffffff !important;
+        }
+        & .mdc-evolution-chip__icon--trailing {
+            color: #ffffff !important;
+        }
+    }
+    &.year,
+    &.month {
+        background-color: #c97c7c !important;
+        & .mdc-evolution-chip__text-label {
+            color: #000000 !important;
+        }
+        & .mdc-evolution-chip__icon--trailing {
+            color: #000000 !important;
+        }
+    }
+    &.bank {
+        background-color: var(--info) !important;
+        & .mdc-evolution-chip__text-label {
+            color: #ffffff !important;
+        }
+        & .mdc-evolution-chip__icon--trailing {
+            color: #ffffff !important;
+        }
+    }
+    &.type {
+        background-color: var(--success) !important;
+        & .mdc-evolution-chip__text-label {
+            color: #ffffff !important;
+        }
+        & .mdc-evolution-chip__icon--trailing {
+            color: #ffffff !important;
+        }
+    }
+    &.status {
+        background-color: var(--secondary) !important;
+        & .mdc-evolution-chip__text-label {
+            color: #ffffff !important;
+        }
+        & .mdc-evolution-chip__icon--trailing {
+            color: #ffffff !important;
+        }
+    }
+    &.min,
+    &.max {
+        background-color: var(--default) !important;
         & .mdc-evolution-chip__text-label {
             color: #ffffff !important;
         }

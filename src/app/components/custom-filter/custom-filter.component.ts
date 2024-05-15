@@ -12,6 +12,7 @@ import { ServiceBill } from "src/app/services/bill.service";
 import { BillState } from "src/app/subjects/subjects.bill";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { CustomSnackbarComponent } from "../custom-snackbar/custom-snackbar.component";
+import { LocalStorageService } from "src/app/services/local-storage.service";
 
 @Injectable({
     providedIn: "root",
@@ -35,6 +36,7 @@ export class CustomFilterComponent {
     public filterState = inject(CustomFilterState);
     public billService = inject(ServiceBill);
     public billState = inject(BillState);
+    public storage = inject(LocalStorageService);
     public snack = inject(CustomSnackbarComponent);
 
     @Input() availableFilters: AvailableFilters[];
@@ -83,6 +85,9 @@ export class CustomFilterComponent {
                     this.billState.changeStatus("error", "error fetching bills");
                 },
             });
-        } else this.filterState.removeAll();
+        } else {
+            this.filterState.removeAll();
+            this.storage.removeFilters();
+        }
     }
 }
