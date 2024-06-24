@@ -1,6 +1,8 @@
-@import "./app/theme";
+@use "src/assets/styles/theme.scss" as app-theme;
+@use "@angular/material" as mat;
 
-:root .dark-theme {
+:root .dark {
+    @include mat.all-component-themes(app-theme.$app-dark-theme);
     --primary: #8ea4d2ff;
     --secondary: #4d69b6;
     --item-list: rgb(135, 147, 192);
@@ -22,12 +24,45 @@
 }
 
 :root {
+    @include mat.all-component-themes(app-theme.$app-light-theme);
     --primary: #6665dd;
     --secondary: #5391cc;
     --item-list: lightsteelblue;
     --title: #222222;
     --description: #740000;
     --background: #eee;
+
+    --error: #8f0000;
+    --warning: #a86d00;
+    --info: #00328f;
+    --success: #008f18;
+    --default: #474141;
+}
+
+:root .white-black {
+    @include mat.all-component-themes(app-theme.$app-binary-theme);
+    --primary: #ffffff;
+    --secondary: #ffffff;
+    --item-list: #ffffff;
+    --title: #000000;
+    --description: #000000;
+    --background: #ffffff;
+
+    --error: #8f0000;
+    --warning: #a86d00;
+    --info: #00328f;
+    --success: #008f18;
+    --default: #474141;
+}
+
+:root .black-white {
+    @include mat.all-component-themes(app-theme.$app-binary-dark-theme);
+    --primary: #000000;
+    --secondary: #000000;
+    --item-list: #000000;
+    --title: #ffffff;
+    --description: #ffffff;
+    --background: #000000;
 
     --error: #8f0000;
     --warning: #a86d00;

@@ -96,10 +96,20 @@
             <mat-icon
                 [ngClass]="['app-icon', 'dark-mode', 'material-symbols-outlined']"
                 aria-hidden="false"
+                [matMenuTriggerFor]="menu"
                 aria-label="Example home icon"
                 fontIcon="dark_mode"
-                (click)="toggleDarkMode()"
             ></mat-icon>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="changeLayout('default')">default</button>
+                <button mat-menu-item (click)="changeLayout('dark')">dark</button>
+                <button mat-menu-item (click)="changeLayout('black-white')">
+                    black-white
+                </button>
+                <button mat-menu-item (click)="changeLayout('white-black')">
+                    white-black
+                </button>
+            </mat-menu>
         </div>
     </mat-toolbar-row>
 </mat-toolbar>

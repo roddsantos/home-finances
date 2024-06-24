@@ -22,6 +22,8 @@ import { CategoryState } from "src/app/subjects/subjects.category";
 import { CustomFilterState } from "../custom-filter/custom-filter.subjects.component";
 import { CommonModule } from "@angular/common";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatButtonModule } from "@angular/material/button";
 
 @Component({
     standalone: true,
@@ -36,6 +38,8 @@ import { MatTooltipModule } from "@angular/material/tooltip";
         RouterModule,
         CommonModule,
         MatTooltipModule,
+        MatMenuModule,
+        MatButtonModule,
     ],
 })
 export class LayoutComponent {
@@ -128,6 +132,11 @@ export class LayoutComponent {
 
     toggleDarkMode() {
         document.body.classList.toggle("dark-theme");
+    }
+
+    changeLayout(layout: "default" | "dark" | "black-white" | "white-black") {
+        document.body.className = "";
+        document.body.classList.toggle(layout === "default" ? "" : layout);
     }
 
     onLogout() {
