@@ -9,6 +9,7 @@
     --title: #e4e4e4;
     --description: #ffe0e0;
     --background: rgb(75, 75, 75);
+    --border: #8ea4d2ff;
 
     --error: #e21111;
     --warning: #e28e11;
@@ -31,6 +32,7 @@
     --title: #222222;
     --description: #740000;
     --background: #eee;
+    --border: #6665dd;
 
     --error: #8f0000;
     --warning: #a86d00;
@@ -39,30 +41,15 @@
     --default: #474141;
 }
 
-:root .white-black {
-    @include mat.all-component-themes(app-theme.$app-binary-theme);
-    --primary: #ffffff;
-    --secondary: #ffffff;
-    --item-list: #ffffff;
-    --title: #000000;
-    --description: #000000;
-    --background: #ffffff;
-
-    --error: #8f0000;
-    --warning: #a86d00;
-    --info: #00328f;
-    --success: #008f18;
-    --default: #474141;
-}
-
-:root .black-white {
+:root .binary {
     @include mat.all-component-themes(app-theme.$app-binary-dark-theme);
-    --primary: #000000;
+    --primary: #ffffff;
     --secondary: #000000;
     --item-list: #000000;
     --title: #ffffff;
     --description: #ffffff;
     --background: #000000;
+    --border: #ffffff;
 
     --error: #8f0000;
     --warning: #a86d00;

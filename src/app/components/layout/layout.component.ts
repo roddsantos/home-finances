@@ -134,9 +134,10 @@ export class LayoutComponent {
         document.body.classList.toggle("dark-theme");
     }
 
-    changeLayout(layout: "default" | "dark" | "black-white" | "white-black") {
+    changeLayout(layout: "default" | "dark" | "binary") {
         document.body.className = "";
-        document.body.classList.toggle(layout === "default" ? "" : layout);
+        document.body.className = layout === "default" ? "" : layout;
+        this.storage.setTheme(layout);
     }
 
     onLogout() {

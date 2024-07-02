@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { User } from "src/app/types/objects";
+import { ThemeType } from "../types/general";
 
 @Injectable({
     providedIn: "root",
@@ -47,5 +48,18 @@ export class LocalStorageService {
 
     removeFilters() {
         localStorage.removeItem("filters");
+    }
+
+    setTheme(theme: ThemeType) {
+        localStorage.setItem("theme", theme);
+    }
+
+    getTheme() {
+        let theme = localStorage.getItem("theme");
+        return theme;
+    }
+
+    removeTheme() {
+        localStorage.removeItem("theme");
     }
 }
