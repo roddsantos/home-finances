@@ -1,13 +1,17 @@
 <div class="buttons-container animate blur">
     <button
         *ngFor="let a of actions"
-        (click)="(a.action)"
+        (click)="a.action()"
         [matTooltip]="a.name"
         matTooltipPosition="above"
         class="icon-button"
         mat-icon-button
         aria-label="action company button"
     >
-        <mat-icon [fontIcon]="a.icon" [style.color]="a.color"></mat-icon>
+        <mat-icon
+            class="material-symbols-outlined"
+            [fontIcon]="a.icon"
+            [style.color]="a.color"
+        ></mat-icon>
     </button>
 </div>

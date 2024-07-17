@@ -1,5 +1,5 @@
-import { Component, ViewChild, AfterViewInit, inject } from "@angular/core";
-import { RouterModule } from "@angular/router";
+import { Component, ViewChild, inject } from "@angular/core";
+import { Router, RouterModule } from "@angular/router";
 import { ModalProfile } from "../modal/profile/profile.modal";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ModalComponent } from "../modal/modal.component";
@@ -21,6 +21,9 @@ import { ServiceCategory } from "src/app/services/category.service";
 import { CategoryState } from "src/app/subjects/subjects.category";
 import { CustomFilterState } from "../custom-filter/custom-filter.subjects.component";
 import { CommonModule } from "@angular/common";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatButtonModule } from "@angular/material/button";
 
 @Component({
     standalone: true,
@@ -34,6 +37,9 @@ import { CommonModule } from "@angular/common";
         ModalProfile,
         RouterModule,
         CommonModule,
+        MatTooltipModule,
+        MatMenuModule,
+        MatButtonModule,
     ],
 })
 export class LayoutComponent {
@@ -45,6 +51,7 @@ export class LayoutComponent {
     public overlay = inject(Overlay);
     private snack = inject(CustomSnackbarComponent);
     public filtersState = inject(CustomFilterState);
+    public router = inject(Router);
 
     public billApi = inject(ServiceBill);
     public billState = inject(BillState);
@@ -61,6 +68,8 @@ export class LayoutComponent {
 
     public catApi = inject(ServiceCategory);
     public catState = inject(CategoryState);
+
+    page = window.location.pathname;
 
     ngOnInit() {
         this.billApi.getBills().subscribe({
@@ -125,9 +134,20 @@ export class LayoutComponent {
         document.body.classList.toggle("dark-theme");
     }
 
+    changeLayout(layout: "default" | "dark" | "binary") {
+        document.body.className = "";
+        document.body.className = layout === "default" ? "" : layout;
+        this.storage.setTheme(layout);
+    }
+
     onLogout() {
         this.storage.removeUser();
         this.modal.close();
         this.profile.update();
+    }
+
+    onChangeRoute(route: "/manager" | "/monthly" | "/dashboard" | "/") {
+        this.router.navigate([route]);
+        this.page = route;
     }
 }

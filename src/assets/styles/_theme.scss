@@ -1,0 +1,15 @@
+@use "@angular/material" as mat;
+@include mat.core();
+
+@import "./colors";
+
+$app-primary: mat.define-palette($custom-brand-purple);
+$app-accent: mat.define-palette($custom-brand-blue);
+$app-warn: mat.define-palette($custom-brand-warn);
+$app-black: mat.define-palette($custom-brand-black);
+$app-white: mat.define-palette($custom-brand-white);
+
+$app-light-theme: mat.define-light-theme($app-primary, $app-accent, $app-warn);
+$app-dark-theme: mat.define-dark-theme($app-primary, $app-accent, $app-warn);
+$app-binary-theme: mat.define-light-theme($app-white, $app-black, $app-warn);
+$app-binary-dark-theme: mat.define-dark-theme($app-black, $app-white, $app-warn);

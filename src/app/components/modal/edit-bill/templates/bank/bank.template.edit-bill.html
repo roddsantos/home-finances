@@ -1,0 +1,54 @@
+<form [formGroup]="bankForm">
+    <div class="template-banks-container">
+        <mat-form-field
+            *ngIf="(companies.company$| async)!.length > 0"
+            class="template-bank-field"
+            appearance="outline"
+        >
+            <mat-label>company</mat-label>
+            <mat-select [compareWith]="compareCompanies" formControlName="company">
+                @for (c of (companies.company$ | async); track c) {
+                <mat-option [value]="c">{{ c.name }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="template-banks-container">
+        <mat-form-field
+            *ngIf="(banks.banks$ | async)!.length > 0"
+            class="template-bank-field"
+            appearance="outline"
+        >
+            <mat-label>bank 1</mat-label>
+            <mat-select [compareWith]="compareBanks" formControlName="bank1">
+                @for (b1 of (banks.banks$ | async); track b1) {
+                <mat-option [value]="b1">{{ b1.name }}</mat-option>
+                }
+            </mat-select>
+            @if (bankForm.controls.bank1.invalid) {
+            <mat-error>{{errorMessage}}</mat-error>
+            }
+        </mat-form-field>
+        <mat-icon
+            *ngIf="enableArrow()"
+            class="app-icon"
+            aria-hidden="false"
+            aria-label="Example home icon"
+            [fontIcon]="bankForm.value.isPayment ? 'arrow_forward': 'arrow_back'"
+        ></mat-icon>
+        <mat-form-field
+            *ngIf="(banks.banks$ | async)!.length > 0"
+            class="template-bank-field"
+            appearance="outline"
+        >
+            <mat-label>bank 2</mat-label>
+            <mat-select [compareWith]="compareBanks" formControlName="bank2">
+                <mat-option [value]="null">none</mat-option>
+                @for (b2 of (banks.banks$ | async); track b2) {
+                <mat-option [value]="b2">{{ b2.name }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <mat-checkbox formControlName="isPayment">is payment</mat-checkbox>
+</form>

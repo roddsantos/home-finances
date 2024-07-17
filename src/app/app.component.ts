@@ -29,5 +29,11 @@ export class AppComponent {
         const filters = this.storage.getFilters();
         if (filters) this.filterState.setFilters(filters);
         else this.filterState.setFilters([]);
+
+        const theme = this.storage.getTheme();
+        if (theme) {
+            document.body.className = "";
+            document.body.className = theme === "default" ? "" : theme;
+        }
     }
 }

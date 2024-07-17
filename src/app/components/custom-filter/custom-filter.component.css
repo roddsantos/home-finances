@@ -1,20 +1,27 @@
 .filter-icon {
     margin: auto !important;
+    font-size: 25px;
+    width: auto;
+    height: auto;
 }
 
 .margin {
     display: flex;
-    margin: 10px 0px auto 20px;
+    margin: auto 20px auto 0px;
     border-radius: 5px !important;
 }
 
 .chip-grid {
     display: block;
+    background-color: var(--item-list);
     padding: 12px 0px 0px;
-    min-height: 50px;
+    min-height: 100px;
+    width: 300px;
+    padding: 10px;
     margin: auto 20px -6px auto;
-    text-align: right;
+    text-align: left;
     font-variant-caps: all-small-caps;
+    border-radius: 10px;
 }
 
 .chip-item {
@@ -24,5 +31,15 @@
 
 .filter-container {
     display: flex;
+    flex-direction: column;
+}
+
+.filter-button-container {
+    display: flex;
     flex-direction: row;
+    margin: 20px 0px;
+}
+
+.filter-label {
+    margin: 0px 0px 12px;
 }

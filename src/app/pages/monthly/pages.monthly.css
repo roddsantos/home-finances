@@ -1,10 +1,16 @@
 .margin {
     display: flex;
-    margin: auto 0px auto auto;
+    margin: 10px 0px 20px auto;
+}
+
+.monthly-container {
+    display: flex;
+    flex-direction: row;
 }
 
 .bill-list-container {
     padding: 10px 0px;
+    width: 100%;
 }
 
 .bill-expansion {
@@ -70,13 +76,11 @@
 .label {
     font-weight: normal;
     font-size: 12px;
-    font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
     color: var(--title);
 }
 .value {
     font-weight: normal;
     font-size: 16px;
-    font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
     color: var(--description);
 }
 

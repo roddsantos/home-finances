@@ -1,53 +1,110 @@
 <mat-toolbar class="toolbar" color="secondary">
     <mat-toolbar-row class="toolbar-row">
-        <div class="app-container" [routerLink]="['/']">
-            <span class="app-title">home finances</span>
+        <div
+            [ngClass]="{
+                'app-container': true,
+                'selected-container': page === '/'
+            }"
+            (click)="onChangeRoute('/')"
+        >
+            <mat-icon
+                [ngClass]="{
+                    'material-symbols-outlined': true,
+                    'app-icon': true,
+                    'icon-route': page !== '/'
+                }"
+                [matTooltip]="page !== '/' ? 'home' : ''"
+                aria-hidden="false"
+                aria-label="Example home icon"
+                fontIcon="cottage"
+            ></mat-icon>
+            <span class="app-title">finances</span>
         </div>
         <div class="routes-container" *ngIf="userState.user$ | async">
-            <div class="app-container" [routerLink]="['/manager']">
+            <div
+                [ngClass]="{
+                    'app-container': true,
+                    'selected-container': page === '/manager'
+                }"
+                (click)="onChangeRoute('/manager')"
+            >
                 <mat-icon
-                    class="app-icon"
+                    [ngClass]="{
+                        'material-symbols-outlined': page !== '/manager',
+                        'app-icon': true,
+                        'icon-route': page !== '/manager'
+                    }"
+                    [matTooltip]="page !== '/manager' ? 'manager' : ''"
                     aria-hidden="false"
                     aria-label="Example home icon"
                     fontIcon="edit_square"
                 ></mat-icon>
-                <span class="app-title">manager</span>
+                <span *ngIf="page === '/manager'" class="app-title">manager</span>
             </div>
-            <div class="app-container" [routerLink]="['/monthly']">
+            <div
+                [ngClass]="{
+                    'app-container': true,
+                    'selected-container': page === '/monthly'
+                }"
+                (click)="onChangeRoute('/monthly')"
+            >
                 <mat-icon
-                    class="app-icon"
+                    [ngClass]="{
+                        'material-symbols-outlined': page !== '/monthly',
+                        'app-icon': true,
+                        'icon-route': page !== '/monthly'
+                    }"
+                    [matTooltip]="page !== '/monthly' ? 'monthly' : ''"
                     aria-hidden="false"
                     aria-label="Example home icon"
                     fontIcon="calendar_month"
                 ></mat-icon>
-                <span class="app-title">monthly</span>
+                <span *ngIf="page === '/monthly'" class="app-title">monthly</span>
             </div>
-            <div class="app-container" [routerLink]="['/dashboard']">
+            <div
+                [ngClass]="{
+                    'app-container': true,
+                    'selected-container': page === '/dashboard'
+                }"
+                (click)="onChangeRoute('/dashboard')"
+            >
                 <mat-icon
-                    class="app-icon"
+                    [ngClass]="{
+                        'material-symbols-outlined': page !== '/dashboard',
+                        'app-icon': true,
+                        'icon-route': page !== '/dashboard'
+                    }"
+                    [matTooltip]="page !== '/dashboard' ? 'dashboard' : ''"
                     aria-hidden="false"
                     aria-label="Example home icon"
-                    fontIcon="space_dashboard"
+                    fontIcon="pie_chart"
                 ></mat-icon>
-                <span class="app-title">dashboard</span>
+                <span *ngIf="page === '/dashboard'" class="app-title">dashboard</span>
             </div>
-            <span class="example-spacer"></span>
         </div>
-        <mat-icon
-            *ngIf="userState.user$ | async"
-            class="app-icon profile"
-            aria-hidden="false"
-            aria-label="Example home icon"
-            fontIcon="account_circle"
-            (click)="openProfile()"
-        ></mat-icon>
-        <mat-icon
-            *ngIf="userState.user$ | async"
-            class="app-icon dark-mode"
-            aria-hidden="false"
-            aria-label="Example home icon"
-            fontIcon="dark_mode"
-            (click)="toggleDarkMode()"
-        ></mat-icon>
+        <div class="icon-container">
+            <mat-icon
+                *ngIf="userState.user$ | async"
+                [ngClass]="['app-icon', 'profile', 'material-symbols-outlined']"
+                aria-hidden="false"
+                aria-label="Example home icon"
+                fontIcon="account_circle"
+                (click)="openProfile()"
+            ></mat-icon>
+        </div>
+        <div class="icon-container">
+            <mat-icon
+                [ngClass]="['app-icon', 'dark-mode', 'material-symbols-outlined']"
+                aria-hidden="false"
+                [matMenuTriggerFor]="menu"
+                aria-label="Example home icon"
+                fontIcon="dark_mode"
+            ></mat-icon>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="changeLayout('default')">default</button>
+                <button mat-menu-item (click)="changeLayout('dark')">dark</button>
+                <button mat-menu-item (click)="changeLayout('binary')">binary</button>
+            </mat-menu>
+        </div>
     </mat-toolbar-row>
 </mat-toolbar>

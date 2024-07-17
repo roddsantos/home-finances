@@ -76,7 +76,9 @@ export type Bill = {
     categoryId: string;
     bank1Id: string;
     bank2Id: string;
+    isPayment: boolean;
     creditCardId: string;
+    isRefund: boolean;
     userId: string;
     updatedAt: string;
     createdAt: string;

@@ -1,0 +1,57 @@
+<form [formGroup]="ccForm">
+    <div class="template-credit-cards-container">
+        <div class="template-credit-card-input">
+            <mat-form-field
+                *ngIf="(creditCards.creditCards$| async)!.length > 0"
+                class="template-data-field"
+                appearance="outline"
+            >
+                <mat-label>credit card</mat-label>
+                <mat-select
+                    [compareWith]="compareCreditCards"
+                    formControlName="creditCard"
+                >
+                    @for (c of (creditCards.creditCards$ | async); track c) {
+                    <mat-option [value]="c">{{ c.name }}</mat-option>
+                    }
+                </mat-select>
+                @if (ccForm.controls.creditCard.invalid) {
+                <mat-error>{{errorMessage.creditCard}}</mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field
+                *ngIf="(companies.company$ | async)!.length > 0"
+                class="template-data-field"
+                appearance="outline"
+            >
+                <mat-label>company</mat-label>
+                <mat-select [compareWith]="compareCompanies" formControlName="company">
+                    <mat-option [value]="null">none</mat-option>
+                    @for (c of (companies.company$ | async); track c) {
+                    <mat-option [value]="c">{{ c.name }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="template-credit-card-input">
+            <mat-form-field class="number-input" appearance="outline">
+                <mat-label>parcels</mat-label>
+                <input matInput type="number" formControlName="parcels" />
+                @if (ccForm.controls.parcels.invalid) {
+                <mat-error>{{errorMessage.parcels}}</mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field class="number-input" appearance="outline">
+                <mat-label>delta</mat-label>
+                <input matInput type="number" formControlName="delta" />
+            </mat-form-field>
+            <mat-form-field class="number-input" appearance="outline">
+                <mat-label>taxes</mat-label>
+                <input matInput type="number" formControlName="taxes" />
+            </mat-form-field>
+        </div>
+        <mat-checkbox formControlName="isRefund" class="example-margin"
+            >is refund</mat-checkbox
+        >
+    </div>
+</form>

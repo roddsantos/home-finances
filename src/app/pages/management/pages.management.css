@@ -76,7 +76,6 @@
 .title {
     font-weight: bold;
     font-size: 22px;
-    font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
     color: var(--title);
     width: 50%;
     margin: auto 10px auto 0px;
@@ -85,7 +84,6 @@
 .description {
     font-weight: normal;
     font-size: 14px;
-    font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
     color: var(--description);
     margin: auto 0px;
     width: 50%;
@@ -97,5 +95,6 @@
     width: 100%;
     min-height: 60px;
     padding: 10px 50px;
+    border-radius: 5px;
     background-color: var(--item-list);
 }

@@ -1,11 +1,8 @@
-.example-spacer {
-    flex: 1 1 auto;
-}
-
 .toolbar {
     display: flex;
     background-color: var(--primary);
-    margin: -8px -8px 0px -8px;
+    border-bottom: 1px solid var(--border);
+    margin: 0px;
     width: 100%;
     height: 60px;
     position: fixed;
@@ -17,11 +14,6 @@
     margin: auto;
 }
 
-.app-container {
-    margin: auto 10px;
-    display: flex;
-}
-
 .routes-container {
     margin: auto 10px;
     display: flex;
@@ -30,27 +22,55 @@
 
 .app-title {
     font-weight: bold;
-    font-family: Roboto;
-    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--background);
     margin: auto 5px auto 0px;
 }
 
 .app-icon {
-    color: white;
+    color: var(--primary);
     height: auto;
-    font-size: 16px;
+    width: 40px;
+    font-size: 30px;
     margin: auto;
+    cursor: pointer;
+    &.profile {
+        margin: auto 0px;
+    }
 }
 
-.app-icon.profile {
-    color: white;
-    height: auto;
-    font-size: 20px;
+.icon-route {
+    color: var(--background);
+}
+
+.icon-container {
+    display: flex;
+    text-align: center;
+    height: 40px;
+    margin-right: 10px;
+    width: max-content;
+    background-color: var(--background);
+    border-radius: 5px;
+}
+
+.app-container {
     margin: auto 10px;
-    width: auto;
-    cursor: pointer;
+    display: flex;
 }
 
 .app-container:hover {
     cursor: pointer;
+}
+
+.selected-container {
+    width: max-content;
+    height: 40px;
+    padding: 0px 10px;
+    text-align: center;
+    border-radius: 5px;
+    background-color: var(--background);
+}
+
+.selected-container .app-title {
+    color: var(--primary);
 }
