@@ -114,7 +114,6 @@ export class ModalEditBill {
             nonNullable: true,
             validators: [Validators.required],
         }),
-        isFixed: new FormControl<boolean>(false, { nonNullable: true }),
     });
 
     ngOnInit() {
@@ -127,7 +126,6 @@ export class ModalEditBill {
             paid: new Date(this.data.bill.paid),
             type: this.data.bill.type as PaymentTypes,
             category: this.data.bill.category,
-            isFixed: false,
         });
         this.modalState.changeFooter({
             type: "submit",
@@ -150,7 +148,7 @@ export class ModalEditBill {
     };
 
     onDisableButton() {
-        switch (this.billForm.value.type) {
+        switch (this.data.bill.type) {
             case "money":
                 return (
                     this.billForm.invalid ||
@@ -184,20 +182,25 @@ export class ModalEditBill {
     }
 
     onSubmit() {
+        const billFormValue = this.billForm.getRawValue();
+        const creditCardFormValue = this.creditCardTemplate.ccForm.getRawValue();
         var defaultData = {
-            name: this.billForm.value.name!,
-            description: this.billForm.value.description!,
-            settled: this.billForm.value.settled!,
-            due: this.billForm.value.due!,
-            paid: this.billForm.value.paid!,
-            total: this.billForm.value.total!,
-            type: this.billForm.value.type!,
-            categoryId: this.billForm.value.category!.id,
+            type: billFormValue.type!,
+            name: billFormValue.name!,
+            categoryId: billFormValue.category!.id,
+            description: billFormValue.description!,
+            settled: billFormValue.settled!,
+            total: billFormValue.total!,
+            due: billFormValue.due!,
+            paid: billFormValue.paid!,
+            groupId: this.data.bill.groupId,
+            id: this.data.bill.id,
         };
         var observer;
-        switch (this.billForm.value.type) {
+
+        switch (this.data.bill.type) {
             case "money":
-                observer = this.billService.createBillBank({
+                observer = this.billService.updateBillBank({
                     ...defaultData,
                     bank1Id: this.bankTemplate.bankForm.value.bank1!.id,
                     bank2Id: this.bankTemplate.bankForm.value.bank2?.id,
@@ -205,19 +208,22 @@ export class ModalEditBill {
                 });
                 break;
             case "creditCard":
-                observer = this.billService.createBillCreditCard({
+                observer = this.billService.updateBillCreditCard({
                     ...defaultData,
-                    isRefund: this.creditCardTemplate.ccForm.value.isRefund!,
-                    creditCardId: this.creditCardTemplate.ccForm.value.creditCard!.id,
-                    companyId: this.creditCardTemplate.ccForm.value.company?.id,
-                    parcels: this.creditCardTemplate.ccForm.value.parcels!,
-                    taxes: this.creditCardTemplate.ccForm.value.taxes,
-                    delta: this.creditCardTemplate.ccForm.value.delta,
+                    isRefund: creditCardFormValue.isRefund!,
+                    creditCardId: creditCardFormValue.creditCard!.id,
+                    companyId: creditCardFormValue.company?.id,
+                    parcels: creditCardFormValue.parcels!,
+                    parcel: this.data.bill.parcel,
+                    totalParcel: this.data.bill.totalParcel,
+                    taxes: creditCardFormValue.taxes,
+                    delta: creditCardFormValue.delta,
                 });
                 break;
             case "companyCredit":
-                observer = this.billService.createBillCompany({
+                observer = this.billService.updateBillCompany({
                     ...defaultData,
+                    id: this.data.bill.id,
                     creditCardId: this.companyTemplate.compForm.value.creditcard?.id,
                     companyId: this.companyTemplate.compForm.value.company!.id,
                     bank1Id: this.companyTemplate.compForm.value.bank?.id,

@@ -71,6 +71,11 @@ export type BillObjectCredtCard = {
     isRefund: boolean;
 };
 
+export type BillObjectCredtCardUpdate = {
+    totalParcel: number | null;
+    parcel: number;
+};
+
 export type GetCreditCard = {
     month?: string;
     year?: number;

@@ -76,7 +76,6 @@ export class CreditCardTemplateEditBill {
             this.ccForm.controls["creditCard"].disable();
             this.ccForm.controls["parcels"].disable();
             this.ccForm.controls["taxes"].disable();
-            this.ccForm.controls["isRefund"].disable();
             this.ccForm.controls["delta"].disable();
         }
     }

@@ -113,7 +113,6 @@ export class ModalNewBill implements OnInit {
             nonNullable: true,
             validators: [Validators.required],
         }),
-        isFixed: new FormControl<boolean>(false, { nonNullable: true }),
     });
 
     months = MONTHS;

@@ -19,13 +19,6 @@ export class CreditCardTemplateMonthly {
     @Input() data: Bill & BillData;
     color: string = "transparent";
 
-    ngOnInit() {
-        if (this.data.settled) this.color = "#008f18";
-        else if (new Date(this.data.due).getTime() - new Date().getTime() > 0)
-            this.color = "#a86d00";
-        else this.color = "#8f0000";
-    }
-
     actions: ActionItem[] = [
         {
             name: "",
@@ -41,6 +34,24 @@ export class CreditCardTemplateMonthly {
         },
     ];
 
+    ngOnInit() {
+        if (this.data.settled) this.color = "#008f18";
+        else if (new Date(this.data.due).getTime() - new Date().getTime() > 0)
+            this.color = "#a86d00";
+        else this.color = "#8f0000";
+
+        if (!this.data.settled)
+            this.actions = [
+                ...this.actions,
+                {
+                    name: "",
+                    icon: "check_circle",
+                    action: () => this.onCheck(),
+                    color: "#008f18",
+                },
+            ];
+    }
+
     onEdit() {
         this.dialog.open(ModalEditBill, {
             data: {
@@ -50,13 +61,6 @@ export class CreditCardTemplateMonthly {
             hasBackdrop: true,
             backdropClass: "modal-backdrop",
         });
-        if (!this.data.settled)
-            this.actions.push({
-                name: "",
-                icon: "check_circle",
-                action: () => this.onCheck(),
-                color: "#008f18",
-            });
     }
 
     onDelete() {

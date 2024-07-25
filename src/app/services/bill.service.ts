@@ -2,6 +2,7 @@ import {
     BillObjectBank,
     BillObjectCompany,
     BillObjectCredtCard,
+    BillObjectCredtCardUpdate,
     FetchPaginatedData,
 } from "../types/services";
 import { inject, Injectable } from "@angular/core";
@@ -62,6 +63,34 @@ export class ServiceBill {
         return this.user.user$.pipe(
             mergeMap((user) =>
                 this.http.post(BILL + "/company", { ...data, userId: user!.id })
+            )
+        );
+    }
+
+    updateBillBank(data: BillObject & BillObjectBank & { id: string }) {
+        return this.user.user$.pipe(
+            mergeMap((user) =>
+                this.http.patch(BILL + "/transaction", { ...data, id: user!.id })
+            )
+        );
+    }
+
+    updateBillCreditCard(
+        data: BillObject &
+            BillObjectCredtCard &
+            BillObjectCredtCardUpdate & { id: string }
+    ) {
+        return this.user.user$.pipe(
+            mergeMap((user) =>
+                this.http.patch(BILL + "/cc", { ...data, userId: user!.id })
+            )
+        );
+    }
+
+    updateBillCompany(data: BillObject & BillObjectCompany & { id: string }) {
+        return this.user.user$.pipe(
+            mergeMap((user) =>
+                this.http.patch(BILL + "/company", { ...data, userId: user!.id })
             )
         );
     }

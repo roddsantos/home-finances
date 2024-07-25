@@ -84,6 +84,7 @@ export type Bill = {
     createdAt: string;
     deletedAt: string | null;
     totalParcel: number | null;
+    parcel: number;
 };
 
 export type BillData = {
@@ -92,4 +93,5 @@ export type BillData = {
     bank1: Bank | null;
     bank2: Bank | null;
     company: Company | null;
+    groupId: string;
 };
