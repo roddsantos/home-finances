@@ -3,7 +3,10 @@ import { CommonModule } from "@angular/common";
 import { Component, inject, Input } from "@angular/core";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
+import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { ModalEditBill } from "src/app/components/modal/edit-bill/edit-bill.modal";
+import { ServiceBill } from "src/app/services/bill.service";
+import { BillState } from "src/app/subjects/subjects.bill";
 import { ActionItem } from "src/app/types/components";
 import { Bill, BillData } from "src/app/types/objects";
 
@@ -16,6 +19,9 @@ import { Bill, BillData } from "src/app/types/objects";
 })
 export class CreditCardTemplateMonthly {
     public dialog = inject(Dialog);
+    public billService = inject(ServiceBill);
+    public billState = inject(BillState);
+    public snack = inject(CustomSnackbarComponent);
     @Input() data: Bill & BillData;
     color: string = "transparent";
 
@@ -68,6 +74,36 @@ export class CreditCardTemplateMonthly {
     }
 
     onCheck() {
-        console.log("CHECK");
+        console.log("CHECK", this.data);
+        this.billService
+            .updateBillCreditCard({
+                id: this.data.id,
+                name: this.data.name,
+                description: this.data.description,
+                total: this.data.total,
+                settled: true,
+                type: this.data.type,
+                categoryId: this.data.categoryId,
+                due: new Date(this.data.due),
+                creditCardId: this.data.creditCardId,
+                companyId: this.data.companyId,
+                parcels: this.data.parcels,
+                taxes: this.data.taxes,
+                delta: this.data.delta,
+                isRefund: this.data.isRefund,
+                totalParcel: this.data.totalParcel,
+                parcel: this.data.parcel,
+            })
+            .subscribe({
+                next: () => {
+                    this.billService.getBills().subscribe({
+                        next: (bills) => this.billState.setBills(bills),
+                    });
+                    this.snack.openSnackBar("bill successfully updated", "success");
+                },
+                error: () => {
+                    this.snack.openSnackBar("error updating bill", "error");
+                },
+            });
     }
 }

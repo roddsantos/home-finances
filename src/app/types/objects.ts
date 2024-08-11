@@ -1,3 +1,5 @@
+import { PaymentTypes } from "./general";
+
 export type User = {
     id: string;
     name: string;
@@ -71,7 +73,7 @@ export type Bill = {
     paid: string;
     month: number;
     year: number;
-    type: string;
+    type: PaymentTypes;
     companyId: string;
     categoryId: string;
     bank1Id: string;
