@@ -16,6 +16,7 @@ export type CreditCardObject = {
     name: string;
     description: string;
     color: string;
+    day: number;
     month: number;
     year: number;
     isClosed: boolean;
@@ -74,6 +75,7 @@ export type BillObjectCredtCard = {
 export type BillObjectCredtCardUpdate = {
     totalParcel: number | null;
     parcel: number;
+    groupId: string;
 };
 
 export type GetCreditCard = {

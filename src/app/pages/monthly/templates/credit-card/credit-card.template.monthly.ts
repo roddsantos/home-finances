@@ -32,12 +32,6 @@ export class CreditCardTemplateMonthly {
             action: () => this.onEdit(),
             color: "#00328f",
         },
-        {
-            name: "",
-            icon: "delete",
-            action: () => this.onDelete(),
-            color: "#8f0000",
-        },
     ];
 
     ngOnInit() {
@@ -49,6 +43,12 @@ export class CreditCardTemplateMonthly {
         if (!this.data.settled)
             this.actions = [
                 ...this.actions,
+                {
+                    name: "",
+                    icon: "delete",
+                    action: () => this.onDelete(),
+                    color: "#8f0000",
+                },
                 {
                     name: "",
                     icon: "check_circle",
@@ -93,6 +93,7 @@ export class CreditCardTemplateMonthly {
                 isRefund: this.data.isRefund,
                 totalParcel: this.data.totalParcel,
                 parcel: this.data.parcel,
+                groupId: this.data.groupId,
             })
             .subscribe({
                 next: () => {
