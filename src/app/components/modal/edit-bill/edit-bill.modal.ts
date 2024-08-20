@@ -183,7 +183,6 @@ export class ModalEditBill {
 
     onSubmit() {
         const billFormValue = this.billForm.getRawValue();
-        const creditCardFormValue = this.creditCardTemplate.ccForm.getRawValue();
         var defaultData = {
             type: billFormValue.type!,
             name: billFormValue.name!,
@@ -200,14 +199,17 @@ export class ModalEditBill {
 
         switch (this.data.bill.type) {
             case "money":
+                const bankFormValue = this.bankTemplate.bankForm.getRawValue();
                 observer = this.billService.updateBillBank({
                     ...defaultData,
-                    bank1Id: this.bankTemplate.bankForm.value.bank1!.id,
-                    bank2Id: this.bankTemplate.bankForm.value.bank2?.id,
-                    isPayment: this.bankTemplate.bankForm.value.isPayment!,
+                    bank1Id: bankFormValue.bank1!.id,
+                    bank2Id: bankFormValue.bank2?.id,
+                    isPayment: bankFormValue.isPayment!,
+                    companyId: bankFormValue.company?.id,
                 });
                 break;
             case "creditCard":
+                const creditCardFormValue = this.creditCardTemplate.ccForm.getRawValue();
                 observer = this.billService.updateBillCreditCard({
                     ...defaultData,
                     isRefund: creditCardFormValue.isRefund!,
@@ -221,15 +223,15 @@ export class ModalEditBill {
                 });
                 break;
             case "companyCredit":
+                const companyFormValue = this.companyTemplate.compForm.getRawValue();
                 observer = this.billService.updateBillCompany({
                     ...defaultData,
-                    id: this.data.bill.id,
-                    creditCardId: this.companyTemplate.compForm.value.creditcard?.id,
-                    companyId: this.companyTemplate.compForm.value.company!.id,
-                    bank1Id: this.companyTemplate.compForm.value.bank?.id,
-                    parcels: this.companyTemplate.compForm.value.parcels!,
-                    taxes: this.companyTemplate.compForm.value.taxes,
-                    delta: this.companyTemplate.compForm.value.delta,
+                    creditCardId: companyFormValue.creditcard?.id,
+                    companyId: companyFormValue.company!.id,
+                    bank1Id: companyFormValue.bank?.id,
+                    parcels: companyFormValue.parcels!,
+                    taxes: companyFormValue.taxes,
+                    delta: companyFormValue.delta,
                 });
                 break;
             default:

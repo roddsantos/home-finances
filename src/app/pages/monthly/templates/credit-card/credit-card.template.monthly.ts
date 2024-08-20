@@ -74,7 +74,6 @@ export class CreditCardTemplateMonthly {
     }
 
     onCheck() {
-        console.log("CHECK", this.data);
         this.billService
             .updateBillCreditCard({
                 id: this.data.id,
@@ -85,6 +84,7 @@ export class CreditCardTemplateMonthly {
                 type: this.data.type,
                 categoryId: this.data.categoryId,
                 due: new Date(this.data.due),
+                paid: new Date(),
                 creditCardId: this.data.creditCardId,
                 companyId: this.data.companyId,
                 parcels: this.data.parcels,

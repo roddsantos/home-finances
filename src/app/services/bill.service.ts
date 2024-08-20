@@ -70,7 +70,7 @@ export class ServiceBill {
     updateBillBank(data: BillObject & BillObjectBank & { id: string }) {
         return this.user.user$.pipe(
             mergeMap((user) =>
-                this.http.patch(BILL + "/transaction", { ...data, id: user!.id })
+                this.http.patch(BILL + "/transaction", { ...data, userId: user!.id })
             )
         );
     }
