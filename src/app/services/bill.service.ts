@@ -1,6 +1,7 @@
 import {
     BillObjectBank,
     BillObjectCompany,
+    BillObjectCompanyUpdate,
     BillObjectCredtCard,
     BillObjectCredtCardUpdate,
     FetchPaginatedData,
@@ -76,9 +77,7 @@ export class ServiceBill {
     }
 
     updateBillCreditCard(
-        data: BillObject &
-            BillObjectCredtCard &
-            BillObjectCredtCardUpdate & { id: string }
+        data: BillObject & BillObjectCredtCard & BillObjectCredtCardUpdate
     ) {
         return this.user.user$.pipe(
             mergeMap((user) =>
@@ -87,7 +86,7 @@ export class ServiceBill {
         );
     }
 
-    updateBillCompany(data: BillObject & BillObjectCompany & { id: string }) {
+    updateBillCompany(data: BillObject & BillObjectCompany & BillObjectCompanyUpdate) {
         return this.user.user$.pipe(
             mergeMap((user) =>
                 this.http.patch(BILL + "/company", { ...data, userId: user!.id })

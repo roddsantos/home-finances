@@ -64,6 +64,11 @@ export type BillObjectCompany = {
     delta?: number;
 };
 
+export type BillObjectCompanyUpdate = {
+    totalParcel: number | null;
+    id: string;
+};
+
 export type BillObjectCredtCard = {
     creditCardId: string;
     companyId?: string;
@@ -77,6 +82,7 @@ export type BillObjectCredtCardUpdate = {
     totalParcel: number | null;
     parcel: number;
     groupId: string;
+    id: string;
 };
 
 export type GetCreditCard = {

@@ -1,4 +1,10 @@
-import { Component, inject, Input, OnInit, TemplateRef, ViewChild } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    inject,
+    OnInit,
+    ViewChild,
+} from "@angular/core";
 import { ModalComponent } from "../modal.component";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import {
@@ -13,7 +19,7 @@ import { BillState } from "src/app/subjects/subjects.bill";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 import { ModalState } from "src/app/subjects/subjects.modal";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
-import { Bill, BillData, Category } from "src/app/types/objects";
+import { Category } from "src/app/types/objects";
 import { BankTemplateNewBill } from "./templates/bank/bank.template.new-bill";
 import { CategoryState } from "src/app/subjects/subjects.category";
 import { CommonModule } from "@angular/common";
@@ -61,6 +67,7 @@ import { BillObject } from "src/app/types/services";
         MatDatepickerModule,
         MatCheckboxModule,
     ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalNewBill implements OnInit {
     public modalState = inject(ModalState);
@@ -73,8 +80,6 @@ export class ModalNewBill implements OnInit {
     @ViewChild(CompanyTemplateNewBill) companyTemplate: CompanyTemplateNewBill;
     @ViewChild(CreditCardTemplateNewBill) creditCardTemplate: CreditCardTemplateNewBill;
     @ViewChild(ServiceTemplateNewBill) serviceTemplate: ServiceTemplateNewBill;
-
-    @Input() addTemplate!: TemplateRef<any>;
 
     ngOnInit() {
         this.modalState.changeFooter({
@@ -98,7 +103,7 @@ export class ModalNewBill implements OnInit {
             validators: [Validators.required, Validators.min(0.01)],
         }),
         settled: new FormControl<boolean>(true, { nonNullable: false }),
-        due: new FormControl<Date>(new Date(), { nonNullable: true }),
+        due: new FormControl<Date>(new Date(), { nonNullable: false }),
         paid: new FormControl<Date>(new Date(), { nonNullable: false }),
         type: new FormControl<PaymentTypes>("money", { nonNullable: true }),
         year: new FormControl<number>(new Date().getFullYear(), {
@@ -131,11 +136,13 @@ export class ModalNewBill implements OnInit {
     };
 
     onDisableButton() {
+        console.log("KKKKKKKKKK", this.bankTemplate);
         switch (this.billForm.value.type) {
             case "money":
                 return this.billForm.invalid || this.bankTemplate.bankForm.invalid;
-            case "companyCredit":
+            case "companyCredit": {
                 return this.billForm.invalid || this.companyTemplate.compForm.invalid;
+            }
             case "creditCard":
                 return this.billForm.invalid || this.creditCardTemplate.ccForm.invalid;
             default:

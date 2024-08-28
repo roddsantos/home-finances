@@ -53,7 +53,7 @@ export class CompanyTemplateEditBill {
         bank: new FormControl<Bank | null>(null, {
             nonNullable: false,
         }),
-        creditcard: new FormControl<CreditCard | null>(null, {
+        creditcard: new FormControl<string | null>(null, {
             nonNullable: false,
         }),
         taxes: new FormControl<number>(0, { nonNullable: true }),
@@ -75,7 +75,7 @@ export class CompanyTemplateEditBill {
         this.compForm.patchValue({
             company: this.bill.company,
             bank: this.bill.bank1,
-            creditcard: this.bill.creditCard,
+            creditcard: this.bill.creditCard?.id || null,
             taxes: this.bill.taxes,
             parcels: this.bill.parcels,
             delta: this.bill.delta,

@@ -123,7 +123,7 @@ export class ModalEditBill {
             total: this.data.bill.total,
             settled: this.data.bill.settled,
             due: new Date(this.data.bill.due),
-            paid: new Date(this.data.bill.paid),
+            paid: this.data.bill.paid ? new Date(this.data.bill.paid) : null,
             type: this.data.bill.type as PaymentTypes,
             category: this.data.bill.category,
         });
@@ -226,12 +226,13 @@ export class ModalEditBill {
                 const companyFormValue = this.companyTemplate.compForm.getRawValue();
                 observer = this.billService.updateBillCompany({
                     ...defaultData,
-                    creditCardId: companyFormValue.creditcard?.id,
+                    creditCardId: companyFormValue.creditcard!,
                     companyId: companyFormValue.company!.id,
                     bank1Id: companyFormValue.bank?.id,
                     parcels: companyFormValue.parcels!,
                     taxes: companyFormValue.taxes,
                     delta: companyFormValue.delta,
+                    totalParcel: this.data.bill.totalParcel,
                 });
                 break;
             default:
@@ -242,11 +243,11 @@ export class ModalEditBill {
                 this.billService.getBills().subscribe({
                     next: (bills) => this.billState.setBills(bills),
                 });
-                this.snack.openSnackBar("bill successfully created", "success");
+                this.snack.openSnackBar("bill successfully updated", "success");
                 this.modalComponent.onClose();
             },
             error: () => {
-                this.snack.openSnackBar("error creating bill", "error");
+                this.snack.openSnackBar("error updating bill", "error");
             },
         });
     }

@@ -27,10 +27,12 @@ export type CreditCard = {
     description: string;
     color: string;
     limit: number;
+    day: number;
     month: string;
     year: number;
     isClosed: boolean;
     userId: string;
+    invoice: number;
     updatedAt: string;
     createdAt: string;
     deletedAt: string | null;
