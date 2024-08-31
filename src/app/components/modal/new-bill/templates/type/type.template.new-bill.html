@@ -1,0 +1,23 @@
+<div class="type-modal">
+    <div class="type-list">
+        <div class="type-container" *ngFor="let t of typeList">
+            <div class="type-container-inner">
+                <div class="type-container-inner-front">
+                    <mat-icon
+                        fontIcon="{{t.icon}}"
+                        class="type-icon material-symbols-outlined"
+                    ></mat-icon>
+                    <p class="type-name">{{t.name}}</p>
+                </div>
+                <div class="type-container-inner-back">
+                    <mat-icon
+                        fontIcon="{{t.icon}}"
+                        class="type-icon material-symbols-outlined"
+                    ></mat-icon>
+                    <p class="type-name">{{t.name}}</p>
+                    <p class="type-description">{{t.description}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

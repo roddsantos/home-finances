@@ -6,7 +6,10 @@
 
 <ng-template #newBill>
     <form [formGroup]="billForm">
-        <div class="new-bill-container">
+        <ng-container *ngIf="step === 1">
+            <type-template [type]="billForm.getRawValue().type" />
+        </ng-container>
+        <!-- <div class="new-bill-container">
             <div class="new-bill-container-split">
                 <mat-form-field class="new-bill-field" appearance="outline">
                     <mat-label>payment type</mat-label>
@@ -85,9 +88,9 @@
                     <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
             </div>
-        </div>
+        </div> -->
     </form>
-    <template-banks *ngIf="type.value ==='money'" #banks="templateBanks"></template-banks>
+    <!-- <template-banks *ngIf="type.value ==='money'" #banks="templateBanks"></template-banks>
     <template-companies *ngIf="type.value ==='companyCredit'"></template-companies>
-    <template-credit-card *ngIf="type.value ==='creditCard'"></template-credit-card>
+    <template-credit-card *ngIf="type.value ==='creditCard'"></template-credit-card> -->
 </ng-template>

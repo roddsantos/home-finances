@@ -43,6 +43,7 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { provideNativeDateAdapter } from "@angular/material/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { BillObject } from "src/app/types/services";
+import { TypeTemplate } from "./templates/type/type.template.new-bill";
 
 @Component({
     selector: "modal-new-bill",
@@ -66,6 +67,7 @@ import { BillObject } from "src/app/types/services";
         MatSelectModule,
         MatDatepickerModule,
         MatCheckboxModule,
+        TypeTemplate,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -80,6 +82,8 @@ export class ModalNewBill implements OnInit {
     @ViewChild(CompanyTemplateNewBill) companyTemplate: CompanyTemplateNewBill;
     @ViewChild(CreditCardTemplateNewBill) creditCardTemplate: CreditCardTemplateNewBill;
     @ViewChild(ServiceTemplateNewBill) serviceTemplate: ServiceTemplateNewBill;
+
+    step: number = 1;
 
     ngOnInit() {
         this.modalState.changeFooter({
