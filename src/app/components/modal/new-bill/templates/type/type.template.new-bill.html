@@ -1,6 +1,12 @@
 <div class="type-modal">
+    <h1>choose the bill type</h1>
     <div class="type-list">
-        <div class="type-container" *ngFor="let t of typeList">
+        <div
+            (click)="handleType(t.id)"
+            [ngClass]="['type-container', type === t.id ? 'selected' : '']"
+            class="type-container"
+            *ngFor="let t of typeList"
+        >
             <div class="type-container-inner">
                 <div class="type-container-inner-front">
                     <mat-icon

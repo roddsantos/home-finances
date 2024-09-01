@@ -109,7 +109,7 @@ export class ModalNewBill implements OnInit {
         settled: new FormControl<boolean>(true, { nonNullable: false }),
         due: new FormControl<Date>(new Date(), { nonNullable: false }),
         paid: new FormControl<Date>(new Date(), { nonNullable: false }),
-        type: new FormControl<PaymentTypes>("money", { nonNullable: true }),
+        type: new FormControl<PaymentTypes | null>(null, { nonNullable: false }),
         year: new FormControl<number>(new Date().getFullYear(), {
             nonNullable: true,
             validators: [Validators.min(2023), Validators.max(2090)],
@@ -140,18 +140,23 @@ export class ModalNewBill implements OnInit {
     };
 
     onDisableButton() {
-        console.log("KKKKKKKKKK", this.bankTemplate);
-        switch (this.billForm.value.type) {
-            case "money":
-                return this.billForm.invalid || this.bankTemplate.bankForm.invalid;
-            case "companyCredit": {
-                return this.billForm.invalid || this.companyTemplate.compForm.invalid;
-            }
-            case "creditCard":
-                return this.billForm.invalid || this.creditCardTemplate.ccForm.invalid;
+        switch (this.step) {
+            case 1:
+                return !Boolean(this.billForm.get("type")?.value);
             default:
                 return false;
         }
+        // switch (this.billForm.value.type) {
+        //     case "money":
+        //         return this.billForm.invalid || this.bankTemplate.bankForm.invalid;
+        //     case "companyCredit": {
+        //         return this.billForm.invalid || this.companyTemplate.compForm.invalid;
+        //     }
+        //     case "creditCard":
+        //         return this.billForm.invalid || this.creditCardTemplate.ccForm.invalid;
+        //     default:
+        //         return false;
+        // }
     }
 
     onSetSettled(event: MatSelectChange) {
@@ -162,6 +167,10 @@ export class ModalNewBill implements OnInit {
             this.billForm.patchValue({ settled: true });
             this.billForm.patchValue({ paid: new Date() });
         }
+    }
+
+    onNextStep() {
+        console.log("step");
     }
 
     onSubmit() {

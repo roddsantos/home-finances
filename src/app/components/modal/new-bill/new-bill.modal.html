@@ -1,13 +1,16 @@
 <modal-component
     [disabled]="onDisableButton()"
-    (actionPrimary)="onSubmit()"
+    (actionPrimary)="step !== 4 ? onNextStep() : onSubmit()"
     [bodyTemplate]="newBill"
 ></modal-component>
 
 <ng-template #newBill>
     <form [formGroup]="billForm">
         <ng-container *ngIf="step === 1">
-            <type-template [type]="billForm.getRawValue().type" />
+            <type-template
+                [type]="billForm.getRawValue().type"
+                (setType)="billForm.controls['type'].setValue($event)"
+            />
         </ng-container>
         <!-- <div class="new-bill-container">
             <div class="new-bill-container-split">
