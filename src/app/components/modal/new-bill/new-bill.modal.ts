@@ -44,6 +44,8 @@ import { provideNativeDateAdapter } from "@angular/material/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { BillObject } from "src/app/types/services";
 import { TypeTemplate } from "./templates/type/type.template.new-bill";
+import { InfoTemplate } from "./templates/info/info.template.new-bill";
+import { ErrorsBillForm, InfoBillForm } from "src/app/types/forms";
 
 @Component({
     selector: "modal-new-bill",
@@ -68,6 +70,7 @@ import { TypeTemplate } from "./templates/type/type.template.new-bill";
         MatDatepickerModule,
         MatCheckboxModule,
         TypeTemplate,
+        InfoTemplate,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -139,6 +142,22 @@ export class ModalNewBill implements OnInit {
         year: YEAR_OUT_OF_RANGE,
     };
 
+    getInfoForm() {
+        return {
+            name: this.billForm.get("name")?.value || "",
+            description: this.billForm.get("description")?.value || "",
+            total: this.billForm.get("total")?.value || 0,
+            category: this.billForm.get("category")?.value || null,
+        };
+    }
+
+    infoFormError: ErrorsBillForm<InfoBillForm> = {
+        name: this.billForm.controls.name.errors,
+        description: this.billForm.controls.description.errors,
+        total: this.billForm.controls.total.errors,
+        category: this.billForm.controls.category.errors,
+    };
+
     onDisableButton() {
         switch (this.step) {
             case 1:
@@ -170,7 +189,15 @@ export class ModalNewBill implements OnInit {
     }
 
     onNextStep() {
-        console.log("step");
+        this.step = this.step + 1;
+    }
+
+    onPreviousStep() {
+        this.step = this.step - 1;
+    }
+
+    onPatch(e: any) {
+        this.billForm.patchValue(e);
     }
 
     onSubmit() {

@@ -18,13 +18,6 @@ export class TypeTemplate {
 
     typeList = PAYMENT_TYPES;
 
-    typeForm = new FormGroup({
-        typeLocal: new FormControl<PaymentTypes | null>(null, {
-            validators: [Validators.required],
-            nonNullable: false,
-        }),
-    });
-
     handleType(t: PaymentTypes) {
         this.setType.emit(t);
     }
