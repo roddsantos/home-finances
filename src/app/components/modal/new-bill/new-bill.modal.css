@@ -12,7 +12,8 @@
 }
 
 .new-bill-field {
-    width: 48%;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 .new-bill-container-split {

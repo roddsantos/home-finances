@@ -1,43 +1,39 @@
 <div class="type-modal">
     <h1>main info</h1>
-    <div class="form-container">
-        <form [formGroup]="infoForm">
-            <mat-form-field
-                floatLabel="always"
-                class="new-bill-field"
-                appearance="outline"
-            >
+    <form [formGroup]="infoForm">
+        <div class="form-container">
+            <mat-form-field class="new-bill-field" appearance="outline">
                 <mat-label>category</mat-label>
                 <mat-select formControlName="category">
                     @for (cat of catState.categories$ | async; track $index) {
                     <mat-option [value]="cat" [value]="cat">{{cat.name}}</mat-option>
                     }
                 </mat-select>
-                <!-- @if (billForm.controls.category.errors?.["required"]) {
-        <mat-error>{{errorMessage.name}}</mat-error>
-        } -->
+                @if (infoErrors.category?.["required"]) {
+                <mat-error>{{errorMessage.category}}</mat-error>
+                }
             </mat-form-field>
             <mat-form-field class="new-bill-field" appearance="outline">
                 <mat-label>title</mat-label>
                 <input formControlName="name" maxlength="100" required matInput />
-                <!-- @if (billForm.controls.name.errors?.["required"]) {
-      <mat-error>{{errorMessage.name}}</mat-error>
-      } -->
+                @if (infoErrors.name?.["required"]) {
+                <mat-error>{{errorMessage.name}}</mat-error>
+                }
             </mat-form-field>
             <mat-form-field class="new-bill-field" appearance="outline">
                 <mat-label>description</mat-label>
-                <input maxlength="100" matInput />
-                <!-- @if (billForm.controls.description.errors?.["required"]) {
-      <mat-error>{{errorMessage.description}}</mat-error>
-      } -->
+                <input formControlName="description" maxlength="100" matInput />
+                @if (infoErrors.description?.["required"]) {
+                <mat-error>{{errorMessage.description}}</mat-error>
+                }
             </mat-form-field>
             <mat-form-field class="new-bill-field" appearance="outline">
                 <mat-label>bill value</mat-label>
-                <input matInput type="number" />
-                <!-- @if (billForm.controls.total.invalid) {
-      <mat-error>{{errorMessage.total}}</mat-error>
-      } -->
+                <input formControlName="total" matInput type="number" />
+                @if (infoErrors.total !== null) {
+                <mat-error>{{errorMessage.total}}</mat-error>
+                }
             </mat-form-field>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>

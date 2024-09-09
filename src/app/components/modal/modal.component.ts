@@ -5,6 +5,8 @@ import {
     EventEmitter,
     Inject,
     TemplateRef,
+    OnChanges,
+    SimpleChanges,
 } from "@angular/core";
 import { MatIcon } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
@@ -27,7 +29,7 @@ import { ModalState } from "src/app/subjects/subjects.modal";
     standalone: true,
     imports: [CommonModule, MatIcon, NgTemplateOutlet, MatButtonModule, AsyncPipe],
 })
-export class ModalComponent {
+export class ModalComponent implements OnChanges {
     constructor(
         public dialogRef: DialogRef,
         public modalState: ModalState,
@@ -38,6 +40,17 @@ export class ModalComponent {
     @Input() disabled: boolean;
     @Output() actionSecondary = new EventEmitter<void>();
     @Output() actionPrimary = new EventEmitter<Object>();
+    disableButton = false;
+
+    ngOnInit() {
+        this.disableButton = this.disabled;
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes["disabled"]) {
+            this.disableButton = this.disabled;
+        }
+    }
 
     onPrimary() {
         if (!this.actionPrimary.observed) this.dialogRef.close();

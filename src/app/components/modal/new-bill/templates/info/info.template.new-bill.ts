@@ -77,11 +77,4 @@ export class InfoTemplate {
     ngOnInit() {
         this.infoForm.patchValue({ ...this.info });
     }
-
-    handleChange(field: keyof InfoBillForm, value: any) {
-        console.log("ERRORS", this.infoErrors, value, field);
-        // this.setInfo.emit({
-        //     [field]: value,
-        // });
-    }
 }

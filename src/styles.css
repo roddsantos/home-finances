@@ -94,6 +94,11 @@ p {
         padding: 13px 0px !important;
         min-height: 50px !important;
     }
+    & .mdc-notched-outline--upgraded {
+        & .mdc-floating-label--float-above {
+            font-size: 20px !important;
+        }
+    }
     &.mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
         top: 25px !important;
     }

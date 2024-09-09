@@ -151,17 +151,27 @@ export class ModalNewBill implements OnInit {
         };
     }
 
-    infoFormError: ErrorsBillForm<InfoBillForm> = {
-        name: this.billForm.controls.name.errors,
-        description: this.billForm.controls.description.errors,
-        total: this.billForm.controls.total.errors,
-        category: this.billForm.controls.category.errors,
-    };
+    getErrorInfoForm() {
+        return {
+            name: this.billForm.controls.name.errors,
+            description: this.billForm.controls.description.errors,
+            total: this.billForm.controls.total.errors,
+            category: this.billForm.controls.category.errors,
+        };
+    }
 
     onDisableButton() {
+        const formErrors = this.billForm.controls;
         switch (this.step) {
             case 1:
                 return !Boolean(this.billForm.get("type")?.value);
+            case 2:
+                return (
+                    Boolean(formErrors.name.errors) ||
+                    Boolean(formErrors.category.errors) ||
+                    Boolean(formErrors.description.errors) ||
+                    Boolean(formErrors.total.errors)
+                );
             default:
                 return false;
         }

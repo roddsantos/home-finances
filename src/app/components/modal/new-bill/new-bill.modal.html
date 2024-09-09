@@ -14,7 +14,11 @@
             />
         </ng-container>
         <ng-container *ngIf="step === 2">
-            <info-template [info]="getInfoForm()" (setInfo)="onPatch($event)" />
+            <info-template
+                [info]="getInfoForm()"
+                [infoErrors]="getErrorInfoForm()"
+                (setInfo)="onPatch($event)"
+            />
         </ng-container>
         <!-- <div class="new-bill-container">
             <div class="new-bill-container-split">
