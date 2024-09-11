@@ -20,6 +20,27 @@
                 (setInfo)="onPatch($event)"
             />
         </ng-container>
+        <ng-container *ngIf="step === 3 && billForm.value.type === 'money'">
+            <template-banks
+                [bankData]="getBankForm()"
+                [bankDataErrors]="getErrorBankForm()"
+                (setBankData)="onPatch($event)"
+            />
+        </ng-container>
+        <ng-container *ngIf="step === 3 && billForm.value.type === 'companyCredit'">
+            <template-companies
+                [compData]="getCompanyForm()"
+                [compDataErrors]="getErrorCompanyForm()"
+                (setCompData)="onPatch($event)"
+            />
+        </ng-container>
+        <ng-container *ngIf="step === 3 && billForm.value.type === 'creditCard'">
+            <template-credit-card
+                [creditCardData]="getCreditCardForm()"
+                [creditCardDataErrors]="getErrorCreditCardForm()"
+                (setCreditCardData)="onPatch($event)"
+            />
+        </ng-container>
         <!-- <div class="new-bill-container">
             <div class="new-bill-container-split">
                 <mat-form-field class="new-bill-field" appearance="outline">

@@ -9,6 +9,7 @@ export const NEGATIVE_TOTAL = "total can't be negative when both banks choosed";
 export const INVALID_PARCEL = "invalid number of parcels";
 export const UNNECESSARY_BANK = "bank not allowed when credit card is selected";
 export const UNNECESSARY_CC = "credit card not allowed when bank is selected";
+export const SAME_BANK = "banks cannot be the same";
 
 export const NO_NAME = "you must enter a name";
 export const NO_DESCRIPTION = "you must enter a description";

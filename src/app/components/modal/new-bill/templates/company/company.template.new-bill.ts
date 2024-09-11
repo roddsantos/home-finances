@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
 import {
     FormControl,
     FormGroup,
@@ -21,11 +21,12 @@ import {
     UNNECESSARY_CC,
 } from "src/utils/constants/forms";
 import { CreditCardState } from "src/app/subjects/subjects.credit-card";
+import { BankBillForm, CompanyBillForm, ErrorsBillForm } from "src/app/types/forms";
 
 @Component({
     selector: "template-companies",
     templateUrl: "./company.template.new-bill.html",
-    styleUrls: ["./company.template.new-bill.css"],
+    styleUrls: ["./company.template.new-bill.css", "../../new-bill.modal.css"],
     standalone: true,
     imports: [
         MatFormFieldModule,
@@ -39,16 +40,25 @@ import { CreditCardState } from "src/app/subjects/subjects.credit-card";
     exportAs: "templateCompanies",
 })
 export class CompanyTemplateNewBill {
+    constructor() {
+        this.compForm.valueChanges.subscribe((data) => {
+            this.setCompData.emit({ ...data });
+        });
+    }
     public companies = inject(CompanyState);
     public banks = inject(BankState);
     public ccs = inject(CreditCardState);
+
+    @Input() compData: CompanyBillForm;
+    @Input() compDataErrors: ErrorsBillForm<CompanyBillForm>;
+    @Output() setCompData = new EventEmitter<Partial<BankBillForm>>();
 
     compForm = new FormGroup({
         company: new FormControl<Company | null>(null, {
             nonNullable: false,
             validators: [Validators.required],
         }),
-        bank: new FormControl<Bank | null>(null, {
+        bank1: new FormControl<Bank | null>(null, {
             nonNullable: false,
         }),
         creditcard: new FormControl<CreditCard | null>(null, {
@@ -70,14 +80,14 @@ export class CompanyTemplateNewBill {
     };
 
     toggleError(type: "cc" | "bank") {
-        if (this.compForm.value.creditcard && this.compForm.value.bank) {
+        if (this.compForm.value.creditcard && this.compForm.value.bank1) {
             if (type === "cc")
                 this.compForm.controls.creditcard.setErrors({ noCC: true });
-            else this.compForm.controls.bank.setErrors({ noBank: true });
+            else this.compForm.controls.bank1.setErrors({ noBank: true });
         } else {
-            this.compForm.controls.bank.clearValidators();
+            this.compForm.controls.bank1.clearValidators();
             this.compForm.controls.creditcard.clearValidators();
-            this.compForm.controls.bank.updateValueAndValidity();
+            this.compForm.controls.bank1.updateValueAndValidity();
             this.compForm.controls.creditcard.updateValueAndValidity();
         }
     }

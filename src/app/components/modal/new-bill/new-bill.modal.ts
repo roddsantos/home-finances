@@ -19,7 +19,7 @@ import { BillState } from "src/app/subjects/subjects.bill";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 import { ModalState } from "src/app/subjects/subjects.modal";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
-import { Category } from "src/app/types/objects";
+import { Bank, Category, Company, CreditCard } from "src/app/types/objects";
 import { BankTemplateNewBill } from "./templates/bank/bank.template.new-bill";
 import { CategoryState } from "src/app/subjects/subjects.category";
 import { CommonModule } from "@angular/common";
@@ -125,6 +125,27 @@ export class ModalNewBill implements OnInit {
             nonNullable: true,
             validators: [Validators.required],
         }),
+        bank1: new FormControl<Bank | null>(null, {
+            nonNullable: false,
+            validators: [Validators.required],
+        }),
+        bank2: new FormControl<Bank | null>(null, { nonNullable: false }),
+        isPayment: new FormControl<boolean>(true, {
+            nonNullable: true,
+        }),
+        company: new FormControl<Company | null>(null, {
+            nonNullable: false,
+        }),
+        creditcard: new FormControl<CreditCard | null>(null, {
+            nonNullable: false,
+        }),
+        taxes: new FormControl<number>(0, { nonNullable: true }),
+        parcels: new FormControl<number>(1, {
+            nonNullable: true,
+            validators: [Validators.required, Validators.min(1)],
+        }),
+        delta: new FormControl<number>(0, { nonNullable: true }),
+        isRefund: new FormControl<boolean>(false, { nonNullable: true }),
     });
 
     months = MONTHS;
@@ -160,6 +181,68 @@ export class ModalNewBill implements OnInit {
         };
     }
 
+    getBankForm() {
+        return {
+            bank1: this.billForm.get("bank1")?.value || null,
+            bank2: this.billForm.get("bank2")?.value || null,
+            isPayment: this.billForm.get("isPayment")!.value,
+            company: this.billForm.get("company")?.value || null,
+        };
+    }
+
+    getErrorBankForm() {
+        return {
+            bank1: this.billForm.controls.bank1.errors,
+            bank2: this.billForm.controls.bank2.errors,
+            isPayment: this.billForm.controls.isPayment.errors,
+            company: this.billForm.controls.company.errors,
+        };
+    }
+
+    getCompanyForm() {
+        return {
+            company: this.billForm.get("company")?.value || null,
+            bank1: this.billForm.get("bank1")?.value || null,
+            creditcard: this.billForm.get("creditcard")?.value || null,
+            taxes: this.billForm.get("taxes")?.value || 0,
+            parcels: this.billForm.get("parcels")?.value || 0,
+            delta: this.billForm.get("delta")?.value || 0,
+        };
+    }
+
+    getErrorCompanyForm() {
+        return {
+            company: this.billForm.controls.company.errors,
+            bank1: this.billForm.controls.bank1.errors,
+            creditcard: this.billForm.controls.creditcard.errors,
+            taxes: this.billForm.controls.taxes.errors,
+            parcels: this.billForm.controls.parcels.errors,
+            delta: this.billForm.controls.delta.errors,
+        };
+    }
+
+    getCreditCardForm() {
+        return {
+            company: this.billForm.get("company")?.value || null,
+            bank1: this.billForm.get("isRefund")!.value,
+            creditcard: this.billForm.get("creditcard")?.value || null,
+            taxes: this.billForm.get("taxes")?.value || 0,
+            parcels: this.billForm.get("parcels")?.value || 0,
+            delta: this.billForm.get("delta")?.value || 0,
+        };
+    }
+
+    getErrorCreditCardForm() {
+        return {
+            company: this.billForm.controls.company.errors,
+            isRefund: this.billForm.controls.isRefund.errors,
+            creditcard: this.billForm.controls.creditcard.errors,
+            taxes: this.billForm.controls.taxes.errors,
+            parcels: this.billForm.controls.parcels.errors,
+            delta: this.billForm.controls.delta.errors,
+        };
+    }
+
     onDisableButton() {
         const formErrors = this.billForm.controls;
         switch (this.step) {
@@ -172,6 +255,17 @@ export class ModalNewBill implements OnInit {
                     Boolean(formErrors.description.errors) ||
                     Boolean(formErrors.total.errors)
                 );
+            case 3:
+                return this.billForm.value.type === "money"
+                    ? Boolean(formErrors.bank1.errors) ||
+                          this.billForm.value.bank1?.id === this.billForm.value.bank2?.id
+                    : this.billForm.value.type === "companyCredit"
+                    ? Boolean(formErrors.company.errors) ||
+                      Boolean(formErrors.parcels.errors) ||
+                      Boolean(this.billForm.value.bank1) ===
+                          Boolean(this.billForm.value.creditcard)
+                    : !Boolean(this.billForm.value.creditcard) ||
+                      Boolean(formErrors.parcels.errors);
             default:
                 return false;
         }
@@ -237,7 +331,7 @@ export class ModalNewBill implements OnInit {
                 observer = this.billService.createBillCreditCard({
                     ...defaultData,
                     isRefund: this.creditCardTemplate.ccForm.value.isRefund!,
-                    creditCardId: this.creditCardTemplate.ccForm.value.creditCard!.id,
+                    creditCardId: this.creditCardTemplate.ccForm.value.creditcard!.id,
                     companyId: this.creditCardTemplate.ccForm.value.company?.id,
                     parcels: this.creditCardTemplate.ccForm.value.parcels!,
                     taxes: this.creditCardTemplate.ccForm.value.taxes,
@@ -249,7 +343,7 @@ export class ModalNewBill implements OnInit {
                     ...defaultData,
                     creditCardId: this.companyTemplate.compForm.value.creditcard?.id,
                     companyId: this.companyTemplate.compForm.value.company!.id,
-                    bank1Id: this.companyTemplate.compForm.value.bank?.id,
+                    bank1Id: this.companyTemplate.compForm.value.bank1?.id,
                     parcels: this.companyTemplate.compForm.value.parcels!,
                     taxes: this.companyTemplate.compForm.value.taxes,
                     delta: this.companyTemplate.compForm.value.delta,

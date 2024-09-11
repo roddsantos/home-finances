@@ -32,15 +32,15 @@ export type BankBillForm = {
 
 export type CompanyBillForm = {
     company: Company | null;
-    bank: Bank | null;
-    creditCard: CreditCard | null;
+    bank1: Bank | null;
+    creditcard: CreditCard | null;
     taxes: number;
     parcels: number;
     delta: number;
 };
 
 export type CreditCardForm = {
-    creditCard: CreditCard | null;
+    creditcard: CreditCard | null;
     company: Company | null;
     taxes: number;
     parcels: number;

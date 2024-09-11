@@ -8,7 +8,7 @@ import { PAYMENT_TYPES } from "src/utils/constants/forms";
 @Component({
     selector: "type-template",
     templateUrl: "./type.template.new-bill.html",
-    styleUrls: ["./type.template.new-bill.css"],
+    styleUrls: ["./type.template.new-bill.css", "../../new-bill.modal.css"],
     standalone: true,
     imports: [CommonModule, MatIconModule, ReactiveFormsModule],
 })
