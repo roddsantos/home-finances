@@ -88,8 +88,22 @@ p {
 
 /* TOGGLE STYLES */
 .mat-button-toggle-group {
+    &.mat-button-toggle-2 {
+        & .mat-button-toggle .mat-button-toggle-group-appearance-standard {
+            background-color: transparent !important;
+        }
+    }
     &.mat-button-toggle-group-appearance-standard {
         width: fit-content !important;
+        border-color: var(--primary) !important;
+        background-color: transparent !important;
+        & .mat-button-toggle-group-appearance-standard {
+            background-color: transparent !important;
+        }
+        & .mat-button-toggle-checked {
+            color: black;
+            background-color: var(--primary) !important;
+        }
     }
 }
 

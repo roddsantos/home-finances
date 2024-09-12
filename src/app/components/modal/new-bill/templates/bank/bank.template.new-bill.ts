@@ -6,7 +6,6 @@ import {
     Input,
     Output,
 } from "@angular/core";
-import { ModalNewBill } from "../../new-bill.modal";
 import {
     FormControl,
     FormGroup,

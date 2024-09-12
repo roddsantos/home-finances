@@ -46,6 +46,7 @@ import { BillObject } from "src/app/types/services";
 import { TypeTemplate } from "./templates/type/type.template.new-bill";
 import { InfoTemplate } from "./templates/info/info.template.new-bill";
 import { ErrorsBillForm, InfoBillForm } from "src/app/types/forms";
+import { ConfigTemplate } from "./templates/config/config.template.new-bill";
 
 @Component({
     selector: "modal-new-bill",
@@ -71,6 +72,7 @@ import { ErrorsBillForm, InfoBillForm } from "src/app/types/forms";
         MatCheckboxModule,
         TypeTemplate,
         InfoTemplate,
+        ConfigTemplate,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -91,7 +93,7 @@ export class ModalNewBill implements OnInit {
     ngOnInit() {
         this.modalState.changeFooter({
             type: "submit",
-            submit: "create",
+            submit: "advance",
             alert: "cancel",
         });
     }
@@ -109,7 +111,7 @@ export class ModalNewBill implements OnInit {
             nonNullable: true,
             validators: [Validators.required, Validators.min(0.01)],
         }),
-        settled: new FormControl<boolean>(true, { nonNullable: false }),
+        settled: new FormControl<boolean>(true, { nonNullable: true }),
         due: new FormControl<Date>(new Date(), { nonNullable: false }),
         paid: new FormControl<Date>(new Date(), { nonNullable: false }),
         type: new FormControl<PaymentTypes | null>(null, { nonNullable: false }),
@@ -243,6 +245,17 @@ export class ModalNewBill implements OnInit {
         };
     }
 
+    getConfigForm() {
+        return {
+            isPayment: this.billForm.get("isPayment")!.value,
+            isRefund: this.billForm.get("isRefund")!.value,
+            settled: this.billForm.get("settled")!.value,
+            due: this.billForm.get("due")!.value,
+            paid: this.billForm.get("paid")?.value || null,
+            type: this.billForm.get("type")!.value!,
+        };
+    }
+
     onDisableButton() {
         const formErrors = this.billForm.controls;
         switch (this.step) {
@@ -294,10 +307,20 @@ export class ModalNewBill implements OnInit {
 
     onNextStep() {
         this.step = this.step + 1;
+        this.modalState.changeFooter({
+            type: "submit",
+            submit: this.step === 4 ? "create" : "advance",
+            alert: this.step === 1 ? "cancel" : "back",
+        });
     }
 
     onPreviousStep() {
         this.step = this.step - 1;
+        this.modalState.changeFooter({
+            type: "submit",
+            submit: this.step === 4 ? "create" : "advance",
+            alert: this.step === 1 ? "cancel" : "back",
+        });
     }
 
     onPatch(e: any) {

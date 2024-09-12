@@ -41,6 +41,12 @@
                 (setCreditCardData)="onPatch($event)"
             />
         </ng-container>
+        <ng-container *ngIf="step === 4">
+            <template-config
+                [configData]="getConfigForm()"
+                (setConfigData)="onPatch($event)"
+            />
+        </ng-container>
         <!-- <div class="new-bill-container">
             <div class="new-bill-container-split">
                 <mat-form-field class="new-bill-field" appearance="outline">

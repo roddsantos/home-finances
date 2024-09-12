@@ -1,5 +1,6 @@
 import { AbstractControl, ValidationErrors } from "@angular/forms";
 import { Bank, Category, Company, CreditCard } from "./objects";
+import { PaymentTypes } from "./general";
 
 export type ErrorsBillForm<T> = {
     [k in keyof T]: ValidationErrors | null;
@@ -45,4 +46,13 @@ export type CreditCardForm = {
     taxes: number;
     parcels: number;
     delta: number;
+};
+
+export type ConfigForm = {
+    isPayment: boolean;
+    isRefund: boolean;
+    settled: boolean;
+    due: Date | null;
+    paid: Date | null;
+    type: PaymentTypes;
 };
