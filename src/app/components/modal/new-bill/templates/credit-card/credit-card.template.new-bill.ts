@@ -62,7 +62,6 @@ export class CreditCardTemplateNewBill {
             validators: [Validators.required, Validators.min(1)],
         }),
         delta: new FormControl<number>(0, { nonNullable: true }),
-        isRefund: new FormControl<boolean>(false, { nonNullable: true }),
     });
 
     errorMessage = {

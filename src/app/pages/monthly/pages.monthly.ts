@@ -58,7 +58,7 @@ export class PageMonthly {
         this.dialog.open<string>(ModalNewBill, {
             data: {
                 header: "new bill",
-                size: "lg",
+                size: "md",
             },
             hasBackdrop: true,
             backdropClass: "modal-backdrop",

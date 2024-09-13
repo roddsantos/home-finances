@@ -1,7 +1,7 @@
 <modal-component
     [disabled]="onDisableButton()"
     (actionPrimary)="step !== 4 ? onNextStep() : onSubmit()"
-    (actionSecondary)="step !== 1 && onPreviousStep()"
+    (actionSecondary)="step !== 1 ? onPreviousStep() : modalComponent.onClose()"
     [bodyTemplate]="newBill"
 ></modal-component>
 

@@ -83,10 +83,6 @@ export class ModalNewBill implements OnInit {
     public catState = inject(CategoryState);
     public snack = inject(CustomSnackbarComponent);
     @ViewChild(ModalComponent) modalComponent: ModalComponent;
-    @ViewChild(BankTemplateNewBill) bankTemplate: BankTemplateNewBill;
-    @ViewChild(CompanyTemplateNewBill) companyTemplate: CompanyTemplateNewBill;
-    @ViewChild(CreditCardTemplateNewBill) creditCardTemplate: CreditCardTemplateNewBill;
-    @ViewChild(ServiceTemplateNewBill) serviceTemplate: ServiceTemplateNewBill;
 
     step: number = 1;
 
@@ -282,17 +278,6 @@ export class ModalNewBill implements OnInit {
             default:
                 return false;
         }
-        // switch (this.billForm.value.type) {
-        //     case "money":
-        //         return this.billForm.invalid || this.bankTemplate.bankForm.invalid;
-        //     case "companyCredit": {
-        //         return this.billForm.invalid || this.companyTemplate.compForm.invalid;
-        //     }
-        //     case "creditCard":
-        //         return this.billForm.invalid || this.creditCardTemplate.ccForm.invalid;
-        //     default:
-        //         return false;
-        // }
     }
 
     onSetSettled(event: MatSelectChange) {
@@ -335,8 +320,6 @@ export class ModalNewBill implements OnInit {
             due: this.billForm.value.due!,
             paid: this.billForm.value.paid!,
             total: this.billForm.value.total!,
-            year: this.billForm.value.year!,
-            month: this.billForm.value.month!.order,
             type: this.billForm.value.type!,
             categoryId: this.billForm.value.category!.id,
         };
@@ -345,31 +328,32 @@ export class ModalNewBill implements OnInit {
             case "money":
                 observer = this.billService.createBillBank({
                     ...defaultData,
-                    bank1Id: this.bankTemplate.bankForm.value.bank1!.id,
-                    bank2Id: this.bankTemplate.bankForm.value.bank2?.id,
-                    isPayment: this.bankTemplate.bankForm.value.isPayment!,
+                    bank1Id: this.billForm.value.bank1!.id,
+                    bank2Id: this.billForm.value.bank2?.id,
+                    companyId: this.billForm.value.company?.id,
+                    isPayment: this.billForm.value.isPayment!,
                 });
                 break;
             case "creditCard":
                 observer = this.billService.createBillCreditCard({
                     ...defaultData,
-                    isRefund: this.creditCardTemplate.ccForm.value.isRefund!,
-                    creditCardId: this.creditCardTemplate.ccForm.value.creditcard!.id,
-                    companyId: this.creditCardTemplate.ccForm.value.company?.id,
-                    parcels: this.creditCardTemplate.ccForm.value.parcels!,
-                    taxes: this.creditCardTemplate.ccForm.value.taxes,
-                    delta: this.creditCardTemplate.ccForm.value.delta,
+                    isRefund: this.billForm.value.isRefund!,
+                    creditCardId: this.billForm.value.creditcard!.id,
+                    companyId: this.billForm.value.company?.id,
+                    parcels: this.billForm.value.parcels!,
+                    taxes: this.billForm.value.taxes,
+                    delta: this.billForm.value.delta,
                 });
                 break;
             case "companyCredit":
                 observer = this.billService.createBillCompany({
                     ...defaultData,
-                    creditCardId: this.companyTemplate.compForm.value.creditcard?.id,
-                    companyId: this.companyTemplate.compForm.value.company!.id,
-                    bank1Id: this.companyTemplate.compForm.value.bank1?.id,
-                    parcels: this.companyTemplate.compForm.value.parcels!,
-                    taxes: this.companyTemplate.compForm.value.taxes,
-                    delta: this.companyTemplate.compForm.value.delta,
+                    creditCardId: this.billForm.value.creditcard?.id,
+                    companyId: this.billForm.value.company!.id,
+                    bank1Id: this.billForm.value.bank1?.id,
+                    parcels: this.billForm.value.parcels!,
+                    taxes: this.billForm.value.taxes,
+                    delta: this.billForm.value.delta,
                 });
                 break;
             default:

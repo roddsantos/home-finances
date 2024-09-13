@@ -2,24 +2,28 @@
     <h1>company info</h1>
     <form [formGroup]="configForm">
         <div class="form-container">
-            <h4>money flow</h4>
-            <mat-button-toggle-group
-                formControlName="isPayment"
-                name="moneyy flow"
-                aria-label="Font Style"
+            <ng-container *ngIf="configData.type === 'money'">
+                <h4>money flow</h4>
+                <mat-button-toggle-group
+                    formControlName="isPayment"
+                    name="moneyy flow"
+                    aria-label="Font Style"
+                >
+                    <mat-button-toggle [value]="true">outcome</mat-button-toggle>
+                    <mat-button-toggle [value]="false">income</mat-button-toggle>
+                </mat-button-toggle-group></ng-container
             >
-                <mat-button-toggle [value]="true">outcome</mat-button-toggle>
-                <mat-button-toggle [value]="false">income</mat-button-toggle>
-            </mat-button-toggle-group>
-            <h4>is refund?</h4>
-            <mat-button-toggle-group
-                formControlName="isRefund"
-                name="refund"
-                aria-label="Font Style"
+            <ng-container *ngIf="configData.type === 'creditCard'">
+                <h4>is refund?</h4>
+                <mat-button-toggle-group
+                    formControlName="isRefund"
+                    name="refund"
+                    aria-label="Font Style"
+                >
+                    <mat-button-toggle [value]="true">yes</mat-button-toggle>
+                    <mat-button-toggle [value]="false">no</mat-button-toggle>
+                </mat-button-toggle-group></ng-container
             >
-                <mat-button-toggle [value]="true">yes</mat-button-toggle>
-                <mat-button-toggle [value]="false">no</mat-button-toggle>
-            </mat-button-toggle-group>
             <h4>payment processed?</h4>
             <mat-button-toggle-group
                 formControlName="settled"
