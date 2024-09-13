@@ -40,6 +40,14 @@
 
             <div class="savings-color">
                 <mat-form-field class="color-picker" appearance="outline">
+                    <mat-label>day of closing invoice</mat-label>
+                    <input matInput type="number" formControlName="day" />
+                    @if (creditCardForm.controls.day.errors) {
+                    <mat-error>{{errorMessage.day}}</mat-error>
+                    }
+                </mat-form-field>
+
+                <mat-form-field class="color-picker" appearance="outline">
                     <mat-label>month</mat-label>
                     <mat-select formControlName="month">
                         @for (m of this.months; track m) {
@@ -48,7 +56,7 @@
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field class="savings-input" appearance="outline">
+                <mat-form-field class="color-picker" appearance="outline">
                     <mat-label>year</mat-label>
                     <input matInput type="number" formControlName="year" />
                     @if (creditCardForm.controls.year.errors?.["min"]) {

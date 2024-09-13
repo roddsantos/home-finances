@@ -16,6 +16,7 @@ export type CreditCardObject = {
     name: string;
     description: string;
     color: string;
+    day: number;
     month: number;
     year: number;
     isClosed: boolean;
@@ -44,6 +45,7 @@ export type BillObject = {
     type: PaymentTypes;
     categoryId: string;
     due: Date;
+    paid: Date;
 };
 
 export type BillObjectBank = {
@@ -62,6 +64,11 @@ export type BillObjectCompany = {
     delta?: number;
 };
 
+export type BillObjectCompanyUpdate = {
+    totalParcel: number | null;
+    id: string;
+};
+
 export type BillObjectCredtCard = {
     creditCardId: string;
     companyId?: string;
@@ -69,6 +76,13 @@ export type BillObjectCredtCard = {
     taxes?: number;
     delta?: number;
     isRefund: boolean;
+};
+
+export type BillObjectCredtCardUpdate = {
+    totalParcel: number | null;
+    parcel: number;
+    groupId: string;
+    id: string;
 };
 
 export type GetCreditCard = {

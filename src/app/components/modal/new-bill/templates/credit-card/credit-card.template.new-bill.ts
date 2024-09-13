@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
 import {
     FormControl,
     FormGroup,
@@ -16,11 +16,12 @@ import { CreditCardState } from "src/app/subjects/subjects.credit-card";
 import { CompanyState } from "src/app/subjects/subjects.company";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { INVALID_PARCEL, NO_CREDIT_CARD } from "src/utils/constants/forms";
+import { CreditCardForm, ErrorsBillForm } from "src/app/types/forms";
 
 @Component({
     selector: "template-credit-card",
     templateUrl: "./credit-card.template.new-bill.html",
-    styleUrls: ["./credit-card.template.new-bill.css"],
+    styleUrls: ["./credit-card.template.new-bill.css", "../../new-bill.modal.css"],
     standalone: true,
     imports: [
         MatFormFieldModule,
@@ -35,11 +36,20 @@ import { INVALID_PARCEL, NO_CREDIT_CARD } from "src/utils/constants/forms";
     exportAs: "templateCreditCard",
 })
 export class CreditCardTemplateNewBill {
+    constructor() {
+        this.ccForm.valueChanges.subscribe((data) => {
+            this.setCreditCardData.emit({ ...data });
+        });
+    }
     public creditCards = inject(CreditCardState);
     public companies = inject(CompanyState);
 
+    @Input() creditCardData: CreditCardForm;
+    @Input() creditCardDataErrors: ErrorsBillForm<CreditCardForm>;
+    @Output() setCreditCardData = new EventEmitter<Partial<CreditCardForm>>();
+
     ccForm = new FormGroup({
-        creditCard: new FormControl<CreditCard | null>(null, {
+        creditcard: new FormControl<CreditCard | null>(null, {
             nonNullable: false,
             validators: [Validators.required],
         }),
@@ -52,7 +62,6 @@ export class CreditCardTemplateNewBill {
             validators: [Validators.required, Validators.min(1)],
         }),
         delta: new FormControl<number>(0, { nonNullable: true }),
-        isRefund: new FormControl<boolean>(false, { nonNullable: true }),
     });
 
     errorMessage = {

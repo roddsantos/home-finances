@@ -24,3 +24,14 @@
     margin-bottom: 10px;
     padding: 0px;
 }
+
+.disclaimer {
+    font: normal 16px Roboto;
+    margin: auto 10px;
+    position: relative;
+    color: var(--warning);
+}
+
+.refund-container {
+    display: flex;
+}

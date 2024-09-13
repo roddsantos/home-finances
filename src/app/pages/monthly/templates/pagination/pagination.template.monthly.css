@@ -27,6 +27,13 @@
     cursor: default;
 }
 
+.outlined {
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--secondary);
+    background-color: var(--background);
+    color: var(--secondary);
+}
 .next-page {
     border-radius: 0px 5px 5px 0px !important;
 }

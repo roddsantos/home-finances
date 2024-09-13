@@ -58,9 +58,6 @@
                     formControlName="settled"
                     >bill settled</mat-checkbox
                 >
-                <mat-checkbox [style.marginBottom]="'20px'" formControlName="isFixed"
-                    >is fixed payment (charged each month)</mat-checkbox
-                >
                 <mat-form-field class="new-bill-field" appearance="outline">
                     <mat-label>bill value</mat-label>
                     <input matInput type="number" formControlName="total" />
@@ -97,10 +94,12 @@
         *ngIf="type.value ==='money'"
         #banks="templateEditBanks"
         [bill]="data.bill"
+        #bankTemplate
     ></template-edit-banks>
     <template-edit-companies
         *ngIf="type.value ==='companyCredit'"
         [bill]="data.bill"
+        #companyTemplate
     ></template-edit-companies>
     <template-edit-credit-card
         *ngIf="type.value ==='creditCard'"

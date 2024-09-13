@@ -1,9 +1,10 @@
-<form [formGroup]="compForm">
-    <div class="template-companies-container">
-        <div class="template-data-input">
+<div class="modal-content">
+    <h1>company info</h1>
+    <form [formGroup]="compForm">
+        <div class="form-container">
             <mat-form-field
                 *ngIf="(companies.company$| async)!.length > 0"
-                class="number-input"
+                class="new-bill-field"
                 appearance="outline"
             >
                 <mat-label>company</mat-label>
@@ -18,26 +19,26 @@
             </mat-form-field>
             <mat-form-field
                 *ngIf="(banks.banks$| async)!.length > 0"
-                class="number-input"
+                class="new-bill-field"
                 appearance="outline"
             >
                 <mat-label>bank</mat-label>
                 <mat-select
                     (selectionChange)="toggleError('bank')"
-                    formControlName="bank"
+                    formControlName="bank1"
                 >
                     <mat-option [value]="null">none</mat-option>
                     @for (b of (banks.banks$ | async); track b) {
                     <mat-option [value]="b">{{ b.name }}</mat-option>
                     }
                 </mat-select>
-                @if (compForm.controls.bank.getError("noBank")) {
+                @if (compForm.controls.bank1.getError("noBank")) {
                 <mat-error>{{errorMessage.noBank}}</mat-error>
                 }
             </mat-form-field>
             <mat-form-field
                 *ngIf="(ccs.creditCards$| async)!.length > 0"
-                class="number-input"
+                class="new-bill-field"
                 appearance="outline"
             >
                 <mat-label>credit card</mat-label>
@@ -54,23 +55,23 @@
                 <mat-error>{{errorMessage.noCC}}</mat-error>
                 }
             </mat-form-field>
+            <div class="new-bill-field">
+                <mat-form-field class="number-input third" appearance="outline">
+                    <mat-label>parcels</mat-label>
+                    <input matInput type="number" formControlName="parcels" />
+                    @if (compForm.controls.parcels.invalid) {
+                    <mat-error>{{errorMessage.parcels}}</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field class="number-input" appearance="outline">
+                    <mat-label>delta</mat-label>
+                    <input matInput type="number" formControlName="delta" />
+                </mat-form-field>
+                <mat-form-field class="number-input" appearance="outline">
+                    <mat-label>taxes</mat-label>
+                    <input matInput type="number" formControlName="taxes" />
+                </mat-form-field>
+            </div>
         </div>
-        <div class="template-data-input">
-            <mat-form-field class="number-input" appearance="outline">
-                <mat-label>parcels</mat-label>
-                <input matInput type="number" formControlName="parcels" />
-                @if (compForm.controls.parcels.invalid) {
-                <mat-error>{{errorMessage.parcels}}</mat-error>
-                }
-            </mat-form-field>
-            <mat-form-field class="number-input" appearance="outline">
-                <mat-label>delta</mat-label>
-                <input matInput type="number" formControlName="delta" />
-            </mat-form-field>
-            <mat-form-field class="number-input" appearance="outline">
-                <mat-label>taxes</mat-label>
-                <input matInput type="number" formControlName="taxes" />
-            </mat-form-field>
-        </div>
-    </div>
-</form>
+    </form>
+</div>

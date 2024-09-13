@@ -114,7 +114,6 @@ export class ModalEditBill {
             nonNullable: true,
             validators: [Validators.required],
         }),
-        isFixed: new FormControl<boolean>(false, { nonNullable: true }),
     });
 
     ngOnInit() {
@@ -124,10 +123,9 @@ export class ModalEditBill {
             total: this.data.bill.total,
             settled: this.data.bill.settled,
             due: new Date(this.data.bill.due),
-            paid: new Date(this.data.bill.paid),
+            paid: this.data.bill.paid ? new Date(this.data.bill.paid) : null,
             type: this.data.bill.type as PaymentTypes,
             category: this.data.bill.category,
-            isFixed: false,
         });
         this.modalState.changeFooter({
             type: "submit",
@@ -150,7 +148,7 @@ export class ModalEditBill {
     };
 
     onDisableButton() {
-        switch (this.billForm.value.type) {
+        switch (this.data.bill.type) {
             case "money":
                 return (
                     this.billForm.invalid ||
@@ -184,46 +182,57 @@ export class ModalEditBill {
     }
 
     onSubmit() {
+        const billFormValue = this.billForm.getRawValue();
         var defaultData = {
-            name: this.billForm.value.name!,
-            description: this.billForm.value.description!,
-            settled: this.billForm.value.settled!,
-            due: this.billForm.value.due!,
-            paid: this.billForm.value.paid!,
-            total: this.billForm.value.total!,
-            type: this.billForm.value.type!,
-            categoryId: this.billForm.value.category!.id,
+            type: billFormValue.type!,
+            name: billFormValue.name!,
+            categoryId: billFormValue.category!.id,
+            description: billFormValue.description!,
+            settled: billFormValue.settled!,
+            total: billFormValue.total!,
+            due: billFormValue.due!,
+            paid: billFormValue.paid!,
+            groupId: this.data.bill.groupId,
+            id: this.data.bill.id,
         };
         var observer;
-        switch (this.billForm.value.type) {
+
+        switch (this.data.bill.type) {
             case "money":
-                observer = this.billService.createBillBank({
+                const bankFormValue = this.bankTemplate.bankForm.getRawValue();
+                observer = this.billService.updateBillBank({
                     ...defaultData,
-                    bank1Id: this.bankTemplate.bankForm.value.bank1!.id,
-                    bank2Id: this.bankTemplate.bankForm.value.bank2?.id,
-                    isPayment: this.bankTemplate.bankForm.value.isPayment!,
+                    bank1Id: bankFormValue.bank1!.id,
+                    bank2Id: bankFormValue.bank2?.id,
+                    isPayment: bankFormValue.isPayment!,
+                    companyId: bankFormValue.company?.id,
                 });
                 break;
             case "creditCard":
-                observer = this.billService.createBillCreditCard({
+                const creditCardFormValue = this.creditCardTemplate.ccForm.getRawValue();
+                observer = this.billService.updateBillCreditCard({
                     ...defaultData,
-                    isRefund: this.creditCardTemplate.ccForm.value.isRefund!,
-                    creditCardId: this.creditCardTemplate.ccForm.value.creditCard!.id,
-                    companyId: this.creditCardTemplate.ccForm.value.company?.id,
-                    parcels: this.creditCardTemplate.ccForm.value.parcels!,
-                    taxes: this.creditCardTemplate.ccForm.value.taxes,
-                    delta: this.creditCardTemplate.ccForm.value.delta,
+                    isRefund: creditCardFormValue.isRefund!,
+                    creditCardId: creditCardFormValue.creditCard!.id,
+                    companyId: creditCardFormValue.company?.id,
+                    parcels: creditCardFormValue.parcels!,
+                    parcel: this.data.bill.parcel,
+                    totalParcel: this.data.bill.totalParcel,
+                    taxes: creditCardFormValue.taxes,
+                    delta: creditCardFormValue.delta,
                 });
                 break;
             case "companyCredit":
-                observer = this.billService.createBillCompany({
+                const companyFormValue = this.companyTemplate.compForm.getRawValue();
+                observer = this.billService.updateBillCompany({
                     ...defaultData,
-                    creditCardId: this.companyTemplate.compForm.value.creditcard?.id,
-                    companyId: this.companyTemplate.compForm.value.company!.id,
-                    bank1Id: this.companyTemplate.compForm.value.bank?.id,
-                    parcels: this.companyTemplate.compForm.value.parcels!,
-                    taxes: this.companyTemplate.compForm.value.taxes,
-                    delta: this.companyTemplate.compForm.value.delta,
+                    creditCardId: companyFormValue.creditcard!,
+                    companyId: companyFormValue.company!.id,
+                    bank1Id: companyFormValue.bank?.id,
+                    parcels: companyFormValue.parcels!,
+                    taxes: companyFormValue.taxes,
+                    delta: companyFormValue.delta,
+                    totalParcel: this.data.bill.totalParcel,
                 });
                 break;
             default:
@@ -234,11 +243,11 @@ export class ModalEditBill {
                 this.billService.getBills().subscribe({
                     next: (bills) => this.billState.setBills(bills),
                 });
-                this.snack.openSnackBar("bill successfully created", "success");
+                this.snack.openSnackBar("bill successfully updated", "success");
                 this.modalComponent.onClose();
             },
             error: () => {
-                this.snack.openSnackBar("error creating bill", "error");
+                this.snack.openSnackBar("error updating bill", "error");
             },
         });
     }

@@ -70,6 +70,9 @@ export class ModalNewCreditCard implements OnInit {
         month: new FormControl<MonthType>(MONTHS[new Date().getMonth()], {
             nonNullable: true,
         }),
+        day: new FormControl<number>(1, {
+            validators: [Validators.required, Validators.max(28), Validators.min(1)],
+        }),
         isClosed: new FormControl<boolean>(false),
     });
 
@@ -79,6 +82,7 @@ export class ModalNewCreditCard implements OnInit {
         savings: "you must enter the savings",
         limit: "limit must be greater than zero",
         year: "year should be between 2023 asn 2090",
+        day: "day needs to be a valid number",
     };
     @Output() submit = new EventEmitter<String>();
     @Output() onClose = new EventEmitter<void>();

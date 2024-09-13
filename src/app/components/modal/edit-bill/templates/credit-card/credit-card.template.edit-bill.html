@@ -50,8 +50,11 @@
                 <input matInput type="number" formControlName="taxes" />
             </mat-form-field>
         </div>
-        <mat-checkbox formControlName="isRefund" class="example-margin"
-            >is refund</mat-checkbox
-        >
+        <div class="refund-container">
+            <mat-checkbox formControlName="isRefund">is refund</mat-checkbox>
+            <p class="disclaimer" *ngIf="ccForm.value.isRefund">
+                (related bills will be refunded)
+            </p>
+        </div>
     </div>
 </form>

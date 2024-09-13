@@ -36,7 +36,7 @@
                 }
             </mat-form-field>
             <mat-form-field
-                *ngIf="(ccs.creditCards$| async)!.length > 0"
+                *ngIf="(ccs.creditCards$ | async)!.length > 0"
                 class="number-input"
                 appearance="outline"
             >
@@ -47,7 +47,7 @@
                 >
                     <mat-option [value]="null">none</mat-option>
                     @for (cc of (ccs.creditCards$ | async); track cc) {
-                    <mat-option [value]="cc">{{ cc.name }}</mat-option>
+                    <mat-option [value]="cc.id">{{ cc.name }}</mat-option>
                     }
                 </mat-select>
                 @if (compForm.controls.creditcard.getError('noCC')) {

@@ -1,12 +1,51 @@
-.new-bill-container {
+.form-container {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & h1 {
+        padding: 10px 0px 20px;
+    }
+}
+
+.new-bill-field {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.app-icon {
+    color: var(--primary);
+    height: auto;
+    font-size: 30px;
+    cursor: pointer;
+    &.arrow {
+        margin: 12px auto 0px;
+    }
+}
+
+.half {
+    width: 40%;
+}
+
+.third {
+    width: 31%;
+}
+
+/* continue here */
+
+/* .new-bill-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin-bottom: 10px;
-}
-
-.new-bill-field {
-    width: 48%;
 }
 
 .new-bill-container-split {
@@ -65,4 +104,4 @@
     color: #707070;
     width: 175px;
     position: relative;
-}
+} */

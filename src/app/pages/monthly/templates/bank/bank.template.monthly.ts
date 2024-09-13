@@ -4,7 +4,10 @@ import { Component, inject, Input } from "@angular/core";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatIconModule } from "@angular/material/icon";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
+import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { ModalEditBill } from "src/app/components/modal/edit-bill/edit-bill.modal";
+import { ServiceBill } from "src/app/services/bill.service";
+import { BillState } from "src/app/subjects/subjects.bill";
 import { ActionItem } from "src/app/types/components";
 import { Bill, BillData } from "src/app/types/objects";
 
@@ -24,31 +27,48 @@ import { Bill, BillData } from "src/app/types/objects";
 })
 export class BankListTemplateMonthly {
     public dialog = inject(Dialog);
+    public billService = inject(ServiceBill);
+    public billState = inject(BillState);
+    public snack = inject(CustomSnackbarComponent);
     @Input() data: Bill & BillData;
     color: string = "transparent";
 
-    actions: ActionItem[] = [
-        { name: "", icon: "edit", action: () => this.onEdit(), color: "#00328f" },
-        {
-            name: "",
-            icon: "delete",
-            action: () => this.onDelete(),
-            color: "#8f0000",
-        },
-    ];
+    deleteAction = {
+        name: "",
+        icon: "delete",
+        action: () => this.onDelete(),
+        color: "#8f0000",
+    };
 
-    ngOnInit() {
-        if (this.data.settled) this.color = "#008f18";
-        else if (new Date(this.data.due).getTime() - new Date().getTime() > 0)
+    editAction = {
+        name: "",
+        icon: "edit",
+        action: () => this.onEdit(),
+        color: "#00328f",
+    };
+
+    checkAction = {
+        name: "",
+        icon: "check_circle",
+        action: () => this.onCheck(),
+        color: "#008f18",
+    };
+
+    actions: ActionItem[] = [];
+
+    setActions(settled: boolean, due: string) {
+        if (settled) this.color = "#008f18";
+        else if (new Date(due).getTime() - new Date().getTime() > 0)
             this.color = "#a86d00";
         else this.color = "#8f0000";
-        if (!this.data.settled)
-            this.actions.push({
-                name: "",
-                icon: "check_circle",
-                action: () => this.onCheck(),
-                color: "#008f18",
-            });
+
+        if (!settled)
+            this.actions = [this.editAction, this.deleteAction, this.checkAction];
+        else this.actions = [this.editAction];
+    }
+
+    ngOnInit() {
+        this.setActions(this.data.settled, this.data.due);
     }
 
     onEdit() {
@@ -67,6 +87,27 @@ export class BankListTemplateMonthly {
     }
 
     onCheck() {
-        console.log("CHECK");
+        this.billService
+            .updateBillBank({
+                ...this.data,
+                due: new Date(this.data.due),
+                paid: new Date(),
+                settled: true,
+            })
+            .subscribe({
+                next: () => {
+                    this.billService.getBills().subscribe({
+                        next: (bills) => {
+                            this.billState.setBills(bills);
+                            this.setActions(true, this.data.due);
+                        },
+                    });
+                    this.snack.openSnackBar("bill successfully updated", "success");
+                },
+                error: () => {
+                    this.setActions(false, this.data.due);
+                    this.snack.openSnackBar("error updating bill", "error");
+                },
+            });
     }
 }

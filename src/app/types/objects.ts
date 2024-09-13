@@ -1,3 +1,5 @@
+import { PaymentTypes } from "./general";
+
 export type User = {
     id: string;
     name: string;
@@ -25,10 +27,12 @@ export type CreditCard = {
     description: string;
     color: string;
     limit: number;
+    day: number;
     month: string;
     year: number;
     isClosed: boolean;
     userId: string;
+    invoice: number;
     updatedAt: string;
     createdAt: string;
     deletedAt: string | null;
@@ -71,7 +75,7 @@ export type Bill = {
     paid: string;
     month: number;
     year: number;
-    type: string;
+    type: PaymentTypes;
     companyId: string;
     categoryId: string;
     bank1Id: string;
@@ -84,6 +88,7 @@ export type Bill = {
     createdAt: string;
     deletedAt: string | null;
     totalParcel: number | null;
+    parcel: number;
 };
 
 export type BillData = {
@@ -92,4 +97,5 @@ export type BillData = {
     bank1: Bank | null;
     bank2: Bank | null;
     company: Company | null;
+    groupId: string;
 };
