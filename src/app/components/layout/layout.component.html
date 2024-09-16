@@ -19,7 +19,13 @@
                 aria-label="Example home icon"
                 fontIcon="cottage"
             ></mat-icon>
-            <span class="app-title">finances</span>
+            <span
+                [ngClass]="{
+                    'app-title': true,
+                    'background-color': (generalState.theme$ | async) !== 'binary'
+                }"
+                >finances</span
+            >
         </div>
         <div class="routes-container" *ngIf="userState.user$ | async">
             <div
@@ -42,7 +48,13 @@
                     aria-label="Example home icon"
                     fontIcon="edit_square"
                 ></mat-icon>
-                <span *ngIf="page === '/manager'" class="app-title">manager</span>
+                <span
+                    *ngIf="page === '/manager'"
+                    [ngClass]="{
+                        'app-title': true,
+                    }"
+                    >manager</span
+                >
             </div>
             <div
                 [ngClass]="{
