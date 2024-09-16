@@ -1,4 +1,11 @@
-import { Component, ViewChild, inject } from "@angular/core";
+import {
+    Component,
+    Input,
+    OnChanges,
+    SimpleChanges,
+    ViewChild,
+    inject,
+} from "@angular/core";
 import { Router, RouterModule } from "@angular/router";
 import { ModalProfile } from "../modal/profile/profile.modal";
 import { LocalStorageService } from "src/app/services/local-storage.service";
@@ -24,6 +31,8 @@ import { CommonModule } from "@angular/common";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";
+import { ThemeType } from "src/app/types/general";
+import { GeneralState } from "src/app/subjects/subjects.general";
 
 @Component({
     standalone: true,
@@ -42,11 +51,12 @@ import { MatButtonModule } from "@angular/material/button";
         MatButtonModule,
     ],
 })
-export class LayoutComponent {
+export class LayoutComponent implements OnChanges {
     @ViewChild(ModalComponent) modal: any;
     @ViewChild(ModalProfile) profile: any;
+    @Input() theme: string | null;
 
-    private storage = inject(LocalStorageService);
+    public storage = inject(LocalStorageService);
     public dialog = inject(Dialog);
     public overlay = inject(Overlay);
     private snack = inject(CustomSnackbarComponent);
@@ -69,7 +79,16 @@ export class LayoutComponent {
     public catApi = inject(ServiceCategory);
     public catState = inject(CategoryState);
 
+    public generalState = inject(GeneralState);
+
     page = window.location.pathname;
+    themeUsed: string | null;
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes["themeUsed"]) {
+            this.themeUsed = changes["themeUsed"].currentValue;
+        }
+    }
 
     ngOnInit() {
         this.billApi.getBills().subscribe({
@@ -134,7 +153,7 @@ export class LayoutComponent {
         document.body.classList.toggle("dark-theme");
     }
 
-    changeLayout(layout: "default" | "dark" | "binary") {
+    changeLayout(layout: ThemeType) {
         document.body.className = "";
         document.body.className = layout === "default" ? "" : layout;
         this.storage.setTheme(layout);

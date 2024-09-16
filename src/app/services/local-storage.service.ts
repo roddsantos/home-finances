@@ -1,13 +1,14 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { User } from "src/app/types/objects";
 import { ThemeType } from "../types/general";
+import { GeneralState } from "../subjects/subjects.general";
 
 @Injectable({
     providedIn: "root",
 })
 export class LocalStorageService {
-    constructor(private http: HttpClient) {}
+    public generalState = inject(GeneralState);
 
     setUser(user: Object) {
         let str = JSON.stringify(user);
@@ -52,6 +53,7 @@ export class LocalStorageService {
 
     setTheme(theme: ThemeType) {
         localStorage.setItem("theme", theme);
+        this.generalState.changeTheme(theme);
     }
 
     getTheme() {
@@ -61,5 +63,6 @@ export class LocalStorageService {
 
     removeTheme() {
         localStorage.removeItem("theme");
+        this.generalState.changeTheme("default");
     }
 }

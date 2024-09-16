@@ -23,12 +23,16 @@
 .app-title {
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
-    color: var(--background);
+    color: var(--icon);
     margin: auto 5px auto 0px;
 }
 
+.background-color {
+    color: var(--background);
+}
+
 .app-icon {
-    color: var(--primary);
+    color: var(--icon);
     height: auto;
     width: 40px;
     font-size: 30px;
@@ -56,10 +60,9 @@
 .app-container {
     margin: auto 10px;
     display: flex;
-}
-
-.app-container:hover {
-    cursor: pointer;
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .selected-container {
@@ -69,8 +72,5 @@
     text-align: center;
     border-radius: 5px;
     background-color: var(--background);
-}
-
-.selected-container .app-title {
-    color: var(--primary);
+    border: solid 1px var(--border);
 }

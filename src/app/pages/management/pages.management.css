@@ -97,4 +97,5 @@
     padding: 10px 50px;
     border-radius: 5px;
     background-color: var(--item-list);
+    border: solid 1px var(--item-list-border);
 }

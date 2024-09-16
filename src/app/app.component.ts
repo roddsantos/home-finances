@@ -5,6 +5,8 @@ import { CategoryState } from "./subjects/subjects.category";
 import { ServiceCategory } from "./services/category.service";
 import { CustomFilterState } from "./components/custom-filter/custom-filter.subjects.component";
 import { Router } from "@angular/router";
+import { GeneralState } from "./subjects/subjects.general";
+import { ThemeType } from "./types/general";
 
 @Component({
     selector: "app-root",
@@ -14,6 +16,7 @@ import { Router } from "@angular/router";
 })
 export class AppComponent {
     public storage = inject(LocalStorageService);
+    public generalState = inject(GeneralState);
     public userState = inject(UserState);
     public catState = inject(CategoryState);
     public catService = inject(ServiceCategory);
@@ -21,6 +24,7 @@ export class AppComponent {
     public router = inject(Router);
 
     title = "bills-app";
+    theme = this.storage.getTheme();
 
     ngOnInit() {
         const user = this.storage.getUser();
@@ -31,6 +35,7 @@ export class AppComponent {
         else this.filterState.setFilters([]);
 
         const theme = this.storage.getTheme();
+        this.generalState.changeTheme((theme || "default") as ThemeType);
         if (theme) {
             document.body.className = "";
             document.body.className = theme === "default" ? "" : theme;
