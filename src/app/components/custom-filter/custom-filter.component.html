@@ -28,7 +28,7 @@
         </p>
         @for (chip of filterState.filters$ | async; track chip; let i = $index) {
         <mat-chip-row
-            [ngClass]="[chip.identifier, 'chip-item']"
+            [ngClass]="[chip.identifier, 'chip-item', generalState.theme$ | async]"
             (removed)="removeFilter(chip)"
         >
             {{

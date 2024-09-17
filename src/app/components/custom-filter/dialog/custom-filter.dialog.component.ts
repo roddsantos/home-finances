@@ -34,6 +34,7 @@ import {
     MatDatepickerModule,
 } from "@angular/material/datepicker";
 import { MatNativeDateModule, provideNativeDateAdapter } from "@angular/material/core";
+import { GeneralState } from "src/app/subjects/subjects.general";
 
 @Component({
     selector: "dialog-custom-filter",
@@ -70,6 +71,7 @@ export class DialogCustomList implements OnInit {
     public billState = inject(BillState);
     public snack = inject(CustomSnackbarComponent);
     public localStorage = inject(LocalStorageService);
+    public generalState = inject(GeneralState);
 
     @ViewChild(ModalComponent) modalComponent: ModalComponent;
     @ViewChild("category") category: MatSelect;

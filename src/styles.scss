@@ -116,6 +116,9 @@ p {
 /* TEXTFIELD STYLES */
 .mdc-text-field--outlined {
     height: 50px !important;
+    &.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+        caret-color: var(--title) !important;
+    }
     & .mdc-notched-outline__notch {
         border-left: none !important;
     }
@@ -256,6 +259,10 @@ p {
         }
     }
     &.category {
+        &.binary {
+            background-color: var(--background) !important;
+            border: solid 3px var(--warning) !important;
+        }
         background-color: var(--warning) !important;
         & .mdc-evolution-chip__text-label {
             color: #ffffff !important;
@@ -265,6 +272,10 @@ p {
         }
     }
     &.creditcard {
+        &.binary {
+            background-color: var(--background) !important;
+            border: solid 3px var(--description) !important;
+        }
         background-color: var(--description) !important;
         & .mdc-evolution-chip__text-label {
             color: #ffffff !important;
@@ -275,15 +286,23 @@ p {
     }
     &.year,
     &.month {
+        &.binary {
+            background-color: var(--background) !important;
+            border: solid 3px #c97c7c !important;
+        }
         background-color: #c97c7c !important;
         & .mdc-evolution-chip__text-label {
-            color: #000000 !important;
+            color: var(--title) !important;
         }
         & .mdc-evolution-chip__icon--trailing {
-            color: #000000 !important;
+            color: var(--title) !important;
         }
     }
     &.bank {
+        &.binary {
+            background-color: var(--background) !important;
+            border: solid 3px var(--info) !important;
+        }
         background-color: var(--info) !important;
         & .mdc-evolution-chip__text-label {
             color: #ffffff !important;
@@ -293,6 +312,10 @@ p {
         }
     }
     &.type {
+        &.binary {
+            background-color: var(--background) !important;
+            border: solid 3px var(--success) !important;
+        }
         background-color: var(--success) !important;
         & .mdc-evolution-chip__text-label {
             color: #ffffff !important;
@@ -302,6 +325,10 @@ p {
         }
     }
     &.status {
+        &.binary {
+            background-color: var(--background) !important;
+            border: solid 3px var(--secondary) !important;
+        }
         background-color: var(--secondary) !important;
         & .mdc-evolution-chip__text-label {
             color: #ffffff !important;
@@ -312,6 +339,10 @@ p {
     }
     &.min,
     &.max {
+        &.binary {
+            background-color: var(--background) !important;
+            border: solid 3px var(--default) !important;
+        }
         background-color: var(--default) !important;
         & .mdc-evolution-chip__text-label {
             color: #ffffff !important;
