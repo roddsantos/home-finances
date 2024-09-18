@@ -208,15 +208,15 @@ export class DialogCustomList implements OnInit {
     }
 
     addDate(event: any, start: boolean) {
-        const date = new Date(event.value).toLocaleDateString();
+        const date = new Date(event.value);
         const dateFound = this.selectedFilters.find(
             (sf) => sf.identifier === (start ? "date1" : "date2")
         );
         if (!Boolean(dateFound))
             this.selectedFilters.push({
-                id: date,
+                id: date.toISOString(),
                 identifier: start ? "date1" : "date2",
-                name: date,
+                name: date.toLocaleDateString(),
             });
         else this[start ? "date1" : "date2"].value = dateFound;
     }
