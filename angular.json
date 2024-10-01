@@ -23,7 +23,13 @@
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "tsconfig.app.json",
                         "assets": ["src/favicon.ico", "src/assets"],
-                        "styles": ["src/styles.scss"],
+                        "styles": [
+                            "src/assets/styles/styles.scss",
+                            "src/assets/styles/material/_textfield.scss",
+                            "src/assets/styles/material/chip.scss",
+                            "src/assets/styles/components/_buttons.scss",
+                            "src/assets/styles/components/_snackbar.scss"
+                        ],
                         "scripts": [],
                         "stylePreprocessorOptions": {
                             "includePaths": ["node_modules/"]
@@ -88,7 +94,13 @@
                         "tsConfig": "tsconfig.spec.json",
                         "karmaConfig": "karma.conf.js",
                         "assets": ["src/favicon.ico", "src/assets"],
-                        "styles": ["src/styles.scss"],
+                        "styles": [
+                            "src/assets/styles/styles.scss",
+                            "src/assets/styles/material/_textfield.scss",
+                            "src/assets/styles/material/chip.scss",
+                            "src/assets/styles/components/_buttons.scss",
+                            "src/assets/styles/components/_snackbar.scss"
+                        ],
                         "scripts": []
                     }
                 }

@@ -84,12 +84,6 @@
     display: flex;
 }
 
-.icon-edit {
-    height: auto;
-    width: auto;
-    color: var(--description);
-}
-
 .title {
     font-weight: bold;
     font-size: 22px;
