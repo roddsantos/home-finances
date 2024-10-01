@@ -1,0 +1,37 @@
+.icon-container {
+    display: grid;
+    grid-template-columns: repeat(5, 20%);
+    grid-template-rows: repeat(auto-fill, 70px);
+    row-gap: 20px;
+    width: 100%;
+}
+
+.icon-container-2 {
+    height: 500px;
+    overflow-y: auto;
+}
+
+.icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: max-content;
+}
+
+.selection-icon {
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
+    color: var(--description);
+}
+
+.icon-name {
+    color: var(--description);
+    font-size: 14px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    overflow: auto;
+    width: 90%;
+    text-align: center;
+}

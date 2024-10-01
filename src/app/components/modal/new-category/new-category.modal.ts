@@ -26,6 +26,8 @@ import { NO_DESCRIPTION, NO_NAME } from "src/utils/constants/forms";
 import { ServiceCategory } from "src/app/services/category.service";
 import { CategoryState } from "src/app/subjects/subjects.category";
 import { MatIconModule } from "@angular/material/icon";
+import { IconSelection } from "../icon-selection/icon-selection-modal";
+import { Dialog } from "@angular/cdk/dialog";
 
 export interface DialogData {
     username: string;
@@ -52,7 +54,9 @@ export class ModalNewCategory implements OnInit {
     public modalState = inject(ModalState);
     public catState = inject(CategoryState);
     public snack = inject(CustomSnackbarComponent);
+    public dialog = inject(Dialog);
     @ViewChild(ModalComponent) modalComponent: any;
+    @ViewChild(IconSelection) iconSelection: IconSelection;
 
     categoryForm = new FormGroup({
         name: new FormControl<string>("", {
@@ -97,6 +101,21 @@ export class ModalNewCategory implements OnInit {
                     },
                 });
         } else this.onClose.emit();
+    }
+
+    openDialog(): void {
+        this.dialog
+            .open<string>(IconSelection, {
+                data: {
+                    header: "choose icon",
+                    size: "md",
+                },
+                hasBackdrop: true,
+                backdropClass: "modal-backdrop",
+            })
+            .closed.subscribe((res) => {
+                console.log("RES", res);
+            });
     }
 
     ngOnInit() {

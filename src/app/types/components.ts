@@ -68,3 +68,14 @@ export type ActionItem = {
     action: () => void;
     color: string;
 };
+
+export type IconType = {
+    name: string;
+    version: number;
+    popularity: number;
+    codepoint: number;
+    unsupported_families: any[];
+    categories: string[];
+    tags: string[];
+    sizes_px: number[];
+};

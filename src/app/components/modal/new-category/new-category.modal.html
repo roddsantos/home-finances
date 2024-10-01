@@ -34,11 +34,22 @@
             }
             <mat-hint>if the text match an icon, it will appear in the right</mat-hint>
         </mat-form-field>
-        <mat-icon
-            class="category-icon"
-            aria-hidden="false"
-            aria-label="Example home icon"
-            [fontIcon]="icon.value"
-        ></mat-icon>
+        <div>
+            <button
+                aria-label="create new bill button"
+                mat-button
+                color="primary"
+                class="button-primary"
+                (click)="openDialog()"
+            >
+                choose icon
+            </button>
+            <mat-icon
+                class="category-icon"
+                aria-hidden="false"
+                aria-label="Example home icon"
+                [fontIcon]="icon.value"
+            ></mat-icon>
+        </div>
     </form>
 </ng-template>

@@ -1,0 +1,31 @@
+<modal-component
+    [disabled]="selectedIcon === null"
+    (actionPrimary)="onSubmit()"
+    [bodyTemplate]="iconSelection"
+></modal-component>
+
+<ng-template #iconSelection>
+    <div class="container">
+        <mat-form-field class="new-bank-field" appearance="outline">
+            <mat-label>search an icon</mat-label>
+            <input maxlength="100" [(ngModel)]="searchTerm" matInput />
+        </mat-form-field>
+        <div class="icon-container-2">
+            <div class="icon-container">
+                <div
+                    class="icon-item"
+                    *ngFor="let icon of icons"
+                    (click)="onSelect(icon)"
+                >
+                    <mat-icon
+                        class="selection-icon"
+                        aria-hidden="false"
+                        aria-label="icon"
+                        [fontIcon]="icon.name"
+                    ></mat-icon>
+                    <p class="icon-name">{{icon.name}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
