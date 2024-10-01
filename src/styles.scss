@@ -72,6 +72,21 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Inter", sans-serif;
+    &::-webkit-scrollbar {
+        width: 15px;
+        border-radius: 3px;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: var(--background);
+        border: solid 1px var(--border);
+        border-radius: 3px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: var(--secondary);
+        height: auto;
+        margin: 1px;
+        border-radius: 3px;
+    }
 }
 
 body {

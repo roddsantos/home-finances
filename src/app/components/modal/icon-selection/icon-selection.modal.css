@@ -9,6 +9,7 @@
 .icon-container-2 {
     height: 500px;
     overflow-y: auto;
+    margin-top: 10px;
 }
 
 .icon-item {
@@ -17,6 +18,11 @@
     align-items: center;
     justify-content: center;
     height: max-content;
+
+    &.selected {
+        border: solid 1px var(--border);
+        border-radius: 5px;
+    }
 }
 
 .selection-icon {

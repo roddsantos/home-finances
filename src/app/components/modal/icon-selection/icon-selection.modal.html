@@ -13,8 +13,8 @@
         <div class="icon-container-2">
             <div class="icon-container">
                 <div
-                    class="icon-item"
                     *ngFor="let icon of icons"
+                    [ngClass]="['icon-item', selectedIcon?.name === icon.name ? 'selected' : '']"
                     (click)="onSelect(icon)"
                 >
                     <mat-icon

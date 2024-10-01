@@ -62,7 +62,7 @@ export class ModalComponent implements OnChanges {
         else this.actionSecondary.emit();
     }
 
-    onClose() {
-        this.dialogRef.close();
+    onClose(data?: any) {
+        this.dialogRef.close(data);
     }
 }

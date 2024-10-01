@@ -28,6 +28,7 @@ import { CategoryState } from "src/app/subjects/subjects.category";
 import { MatIconModule } from "@angular/material/icon";
 import { IconSelection } from "../icon-selection/icon-selection-modal";
 import { Dialog } from "@angular/cdk/dialog";
+import { MatButtonModule } from "@angular/material/button";
 
 export interface DialogData {
     username: string;
@@ -47,6 +48,7 @@ export interface DialogData {
         FormsModule,
         ReactiveFormsModule,
         MatIconModule,
+        MatButtonModule,
     ],
 })
 export class ModalNewCategory implements OnInit {
@@ -114,7 +116,7 @@ export class ModalNewCategory implements OnInit {
                 backdropClass: "modal-backdrop",
             })
             .closed.subscribe((res) => {
-                console.log("RES", res);
+                this.categoryForm.patchValue({ icon: res });
             });
     }
 

@@ -22,33 +22,25 @@
                 }
             </mat-form-field>
         </div>
-        <mat-form-field class="color-picker" appearance="outline">
-            <mat-label>color</mat-label>
-            <input formControlName="color" matInput type="color" />
-        </mat-form-field>
-        <mat-form-field class="color-picker margin" appearance="outline">
-            <mat-label>icon</mat-label>
-            <input #icon maxlength="100" required matInput formControlName="icon" />
-            @if (categoryForm.controls.icon.errors?.["required"]) {
-            <mat-error>{{errorMessage.name}}</mat-error>
-            }
-            <mat-hint>if the text match an icon, it will appear in the right</mat-hint>
-        </mat-form-field>
         <div>
+            <mat-form-field class="color-picker" appearance="outline">
+                <mat-label>color</mat-label>
+                <input formControlName="color" matInput type="color" />
+            </mat-form-field>
             <button
                 aria-label="create new bill button"
                 mat-button
                 color="primary"
-                class="button-primary"
+                class="button-primary margin"
                 (click)="openDialog()"
             >
-                choose icon
+                {{categoryForm.get("icon")?.value || 'choose icon'}}
             </button>
             <mat-icon
                 class="category-icon"
                 aria-hidden="false"
                 aria-label="Example home icon"
-                [fontIcon]="icon.value"
+                [fontIcon]="categoryForm.get('icon')?.value || ''"
             ></mat-icon>
         </div>
     </form>
