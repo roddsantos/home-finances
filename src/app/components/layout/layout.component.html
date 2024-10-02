@@ -9,16 +9,23 @@
         >
             <mat-icon
                 [ngClass]="{
-                    'material-symbols-outlined': true,
+                    'material-symbols-outlined': page !== '/',
                     'app-icon': true,
-                    'icon-route': page !== '/'
+                    'icon-route':
+                        page !== '/' && (generalState.theme$ | async) !== 'binary'
                 }"
                 [matTooltip]="page !== '/' ? 'home' : ''"
                 aria-hidden="false"
                 aria-label="Example home icon"
                 fontIcon="cottage"
             ></mat-icon>
-            <span class="app-title">finances</span>
+            <span
+                [ngClass]="{
+                    'app-title': true,
+                    'background-color': (generalState.theme$ | async) !== 'binary'
+                }"
+                >finances</span
+            >
         </div>
         <div class="routes-container" *ngIf="userState.user$ | async">
             <div
@@ -32,14 +39,22 @@
                     [ngClass]="{
                         'material-symbols-outlined': page !== '/manager',
                         'app-icon': true,
-                        'icon-route': page !== '/manager'
+                        'icon-route':
+                            page !== '/manager' &&
+                            (generalState.theme$ | async) !== 'binary'
                     }"
                     [matTooltip]="page !== '/manager' ? 'manager' : ''"
                     aria-hidden="false"
                     aria-label="Example home icon"
                     fontIcon="edit_square"
                 ></mat-icon>
-                <span *ngIf="page === '/manager'" class="app-title">manager</span>
+                <span
+                    *ngIf="page === '/manager'"
+                    [ngClass]="{
+                        'app-title': true,
+                    }"
+                    >manager</span
+                >
             </div>
             <div
                 [ngClass]="{
@@ -52,7 +67,9 @@
                     [ngClass]="{
                         'material-symbols-outlined': page !== '/monthly',
                         'app-icon': true,
-                        'icon-route': page !== '/monthly'
+                        'icon-route':
+                            page !== '/monthly' &&
+                            (generalState.theme$ | async) !== 'binary'
                     }"
                     [matTooltip]="page !== '/monthly' ? 'monthly' : ''"
                     aria-hidden="false"
@@ -72,7 +89,9 @@
                     [ngClass]="{
                         'material-symbols-outlined': page !== '/dashboard',
                         'app-icon': true,
-                        'icon-route': page !== '/dashboard'
+                        'icon-route':
+                            page !== '/dashboard' &&
+                            (generalState.theme$ | async) !== 'binary'
                     }"
                     [matTooltip]="page !== '/dashboard' ? 'dashboard' : ''"
                     aria-hidden="false"

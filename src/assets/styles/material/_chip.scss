@@ -1,0 +1,103 @@
+.mat-mdc-standard-chip {
+    border-radius: 10px !important;
+    /* border: solid 1px #ffffff; */
+    & .mdc-evolution-chip__text-label {
+        font-size: 16px !important;
+        & .typebill.creditcard {
+            color: #ffffff !important;
+        }
+    }
+    &.category {
+        &.binary {
+            background-color: var(--background) !important;
+            border: solid 3px var(--warning) !important;
+        }
+        background-color: var(--warning) !important;
+        & .mdc-evolution-chip__text-label {
+            color: #ffffff !important;
+        }
+        & .mdc-evolution-chip__icon--trailing {
+            color: #ffffff !important;
+        }
+    }
+    &.creditcard {
+        &.binary {
+            background-color: var(--background) !important;
+            border: solid 3px var(--description) !important;
+        }
+        background-color: var(--description) !important;
+        & .mdc-evolution-chip__text-label {
+            color: #ffffff !important;
+        }
+        & .mdc-evolution-chip__icon--trailing {
+            color: #ffffff !important;
+        }
+    }
+    &.year,
+    &.month {
+        &.binary {
+            background-color: var(--background) !important;
+            border: solid 3px #c97c7c !important;
+        }
+        background-color: #c97c7c !important;
+        & .mdc-evolution-chip__text-label {
+            color: var(--title) !important;
+        }
+        & .mdc-evolution-chip__icon--trailing {
+            color: var(--title) !important;
+        }
+    }
+    &.bank {
+        &.binary {
+            background-color: var(--background) !important;
+            border: solid 3px var(--info) !important;
+        }
+        background-color: var(--info) !important;
+        & .mdc-evolution-chip__text-label {
+            color: #ffffff !important;
+        }
+        & .mdc-evolution-chip__icon--trailing {
+            color: #ffffff !important;
+        }
+    }
+    &.type {
+        &.binary {
+            background-color: var(--background) !important;
+            border: solid 3px var(--success) !important;
+        }
+        background-color: var(--success) !important;
+        & .mdc-evolution-chip__text-label {
+            color: #ffffff !important;
+        }
+        & .mdc-evolution-chip__icon--trailing {
+            color: #ffffff !important;
+        }
+    }
+    &.status {
+        &.binary {
+            background-color: var(--background) !important;
+            border: solid 3px var(--secondary) !important;
+        }
+        background-color: var(--secondary) !important;
+        & .mdc-evolution-chip__text-label {
+            color: #ffffff !important;
+        }
+        & .mdc-evolution-chip__icon--trailing {
+            color: #ffffff !important;
+        }
+    }
+    &.min,
+    &.max {
+        &.binary {
+            background-color: var(--background) !important;
+            border: solid 3px var(--default) !important;
+        }
+        background-color: var(--default) !important;
+        & .mdc-evolution-chip__text-label {
+            color: #ffffff !important;
+        }
+        & .mdc-evolution-chip__icon--trailing {
+            color: #ffffff !important;
+        }
+    }
+}

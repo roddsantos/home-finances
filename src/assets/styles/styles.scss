@@ -1,4 +1,4 @@
-@use "src/assets/styles/theme.scss" as app-theme;
+@use "src/assets/styles/layout/theme.scss" as app-theme;
 @use "@angular/material" as mat;
 
 :root .dark {
@@ -13,12 +13,6 @@
     --border: #8ea4d2ff;
     --icon: var(--primary);
     --disabled: #7a7a7a;
-
-    --error: #e21111;
-    --warning: #e28e11;
-    --info: #1153e2;
-    --success: #11e26f;
-    --default: #474141;
 
     --error: #e21111;
     --warning: #e28e11;

@@ -1,0 +1,43 @@
+.error {
+    &.mat-mdc-snack-bar-container {
+        .mdc-snackbar__surface {
+            background-color: var(--error);
+        }
+        .mdc-button__label {
+            color: white;
+        }
+    }
+}
+
+.warning {
+    &.mat-mdc-snack-bar-container {
+        .mdc-snackbar__surface {
+            background-color: var(--warning);
+        }
+        .mdc-button__label {
+            color: white;
+        }
+    }
+}
+
+.success {
+    &.mat-mdc-snack-bar-container {
+        .mdc-snackbar__surface {
+            background-color: var(--success);
+        }
+        .mdc-button__label {
+            color: white;
+        }
+    }
+}
+
+.info {
+    &.mat-mdc-snack-bar-container {
+        .mdc-snackbar__surface {
+            background-color: var(--info);
+        }
+        .mdc-button__label {
+            color: white;
+        }
+    }
+}

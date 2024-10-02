@@ -42,7 +42,7 @@ export class PageManagement {
     public dialog = inject(Dialog);
     public general = inject(GeneralState);
 
-    nameTab: string[] = ["company", "bank", "category", "credit card"];
+    nameTab: string[] = ["credit card", "bank", "company", "category"];
     @ViewChildren("childTabs") childTabs: QueryList<MatTabGroup>;
 
     onChangeTab(event: MatTabChangeEvent) {
@@ -56,12 +56,12 @@ export class PageManagement {
     openModal(refTab: ManagerTabs): void {
         this.dialog.open<string>(
             refTab === "0"
-                ? ModalNewCompany
+                ? ModalNewCreditCard
                 : refTab === "1"
                 ? ModalNewBank
                 : refTab === "2"
-                ? ModalNewCategory
-                : ModalNewCreditCard,
+                ? ModalNewCompany
+                : ModalNewCategory,
             {
                 data: {
                     header: "new " + this.nameTab[refTab],

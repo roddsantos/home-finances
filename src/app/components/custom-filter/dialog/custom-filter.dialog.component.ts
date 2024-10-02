@@ -34,6 +34,7 @@ import {
     MatDatepickerModule,
 } from "@angular/material/datepicker";
 import { MatNativeDateModule, provideNativeDateAdapter } from "@angular/material/core";
+import { GeneralState } from "src/app/subjects/subjects.general";
 
 @Component({
     selector: "dialog-custom-filter",
@@ -70,6 +71,7 @@ export class DialogCustomList implements OnInit {
     public billState = inject(BillState);
     public snack = inject(CustomSnackbarComponent);
     public localStorage = inject(LocalStorageService);
+    public generalState = inject(GeneralState);
 
     @ViewChild(ModalComponent) modalComponent: ModalComponent;
     @ViewChild("category") category: MatSelect;
@@ -206,15 +208,15 @@ export class DialogCustomList implements OnInit {
     }
 
     addDate(event: any, start: boolean) {
-        const date = new Date(event.value).toLocaleDateString();
+        const date = new Date(event.value);
         const dateFound = this.selectedFilters.find(
             (sf) => sf.identifier === (start ? "date1" : "date2")
         );
         if (!Boolean(dateFound))
             this.selectedFilters.push({
-                id: date,
+                id: date.toISOString(),
                 identifier: start ? "date1" : "date2",
-                name: date,
+                name: date.toLocaleDateString(),
             });
         else this[start ? "date1" : "date2"].value = dateFound;
     }

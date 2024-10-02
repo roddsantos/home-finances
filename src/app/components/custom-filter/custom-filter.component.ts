@@ -13,6 +13,7 @@ import { BillState } from "src/app/subjects/subjects.bill";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { CustomSnackbarComponent } from "../custom-snackbar/custom-snackbar.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
+import { GeneralState } from "src/app/subjects/subjects.general";
 
 @Injectable({
     providedIn: "root",
@@ -36,6 +37,7 @@ export class CustomFilterComponent {
     public filterState = inject(CustomFilterState);
     public billService = inject(ServiceBill);
     public billState = inject(BillState);
+    public generalState = inject(GeneralState);
     public storage = inject(LocalStorageService);
     public snack = inject(CustomSnackbarComponent);
 

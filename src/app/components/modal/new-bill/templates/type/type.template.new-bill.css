@@ -9,16 +9,16 @@
     width: 30%;
     min-height: 180px;
     height: 180px;
-    border: solid 1px var(--secondary);
+    border: solid 1px var(--border);
     margin: 10px;
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;
 
     &.selected {
-        border: solid 4px var(--primary);
+        border: solid 6px var(--border);
         & .type-icon {
-            color: var(--primary);
+            color: var(--border);
         }
     }
 }
@@ -67,14 +67,16 @@
     width: 100px;
     height: 100px;
     font-size: 100px;
-    color: var(--secondary);
+    color: var(--border);
 }
 
 .type-name {
     font-size: 18px;
+    color: var(--title);
 }
 
 .type-description {
     /* transition: all 0.5s; */
     font-size: 14px;
+    color: var(--description);
 }

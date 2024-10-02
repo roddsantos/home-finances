@@ -1,0 +1,66 @@
+.mdc-text-field--outlined {
+    height: 50px !important;
+
+    &.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+        caret-color: var(--title) !important;
+    }
+    & .mdc-notched-outline__notch {
+        border-left: none !important;
+    }
+    & .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+        border-color: var(--title) !important;
+    }
+    & .mdc-text-field--focused {
+        & .mdc-floating-label--float-above {
+            color: var(--title) !important;
+        }
+    }
+    & .mat-mdc-form-field-infix,
+    .mdc-text-field--no-label .mat-mdc-form-field-infix {
+        padding: 13px 0px !important;
+        min-height: 50px !important;
+    }
+
+    & .mdc-notched-outline--upgraded {
+        & .mdc-floating-label--float-above {
+            font-size: 20px !important;
+            color: var(--title) !important;
+        }
+    }
+    &.mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
+        top: 25px !important;
+    }
+    &.mdc-text-field--invalid:not(.mdc-text-field--disabled) {
+        & .mdc-floating-label {
+            color: var(--error) !important;
+        }
+        & .mdc-notched-outline__trailing {
+            border-color: var(--error) !important;
+        }
+        & .mdc-notched-outline__notch {
+            border-color: var(--error) !important;
+            &.mdc-notched-outline__notch {
+                border-left: 0px !important;
+            }
+        }
+        & .mdc-notched-outline__leading {
+            border-color: var(--error) !important;
+        }
+    }
+
+    &.mdc-text-field--disabled {
+        & .mdc-notched-outline--upgraded {
+            & .mdc-floating-label--float-above {
+                font-size: 20px !important;
+                color: var(--disabled) !important;
+            }
+        }
+        & .mdc-notched-outline__leading,
+        .mdc-notched-outline__notch,
+        .mdc-notched-outline__trailing {
+            border-color: var(--disabled) !important;
+        }
+    }
+}

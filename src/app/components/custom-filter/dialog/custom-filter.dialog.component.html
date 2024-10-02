@@ -174,7 +174,11 @@
             <div class="chip-grid">
                 @for (chip of selectedFilters; track chip; let i = $index) {
                 <mat-chip-row
-                    [ngClass]="[chip.identifier, 'chip-item']"
+                    [ngClass]="[
+                        chip.identifier,
+                        'chip-item',
+                        generalState.theme$ | async
+                    ]"
                     (removed)="removeFilter(i)"
                 >
                     {{

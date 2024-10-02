@@ -8,37 +8,11 @@
 }
 
 .creation-tab {
-    background-color: blueviolet;
-    color: blueviolet;
+    background-color: var(--secondary);
+    color: var(--title);
     margin: 10px;
     height: 100px;
 }
-
-.mdc-tab {
-    min-height: 50px;
-    min-width: 25px !important;
-    padding: 5px;
-    background-color: transparent;
-    color: var(--description);
-    font-weight: 700;
-}
-
-.mdc-tab-indicator--active {
-    min-width: 25px !important;
-    padding: 5px;
-    background-color: var(--secondary);
-    color: var(--secondary);
-    font-weight: 700;
-}
-
-.button-action {
-    margin: auto 0px auto auto;
-}
-
-.button-container {
-    height: 60px;
-}
-
 .color-container {
     width: 10px;
     height: 40px;
@@ -55,24 +29,6 @@
     height: auto;
 }
 
-.left {
-    margin-left: 10px !important;
-}
-
-.icons-buttons {
-    display: none;
-}
-
-.item-list:hover .icons-buttons {
-    display: flex;
-}
-
-.icon-edit {
-    height: auto;
-    width: auto;
-    color: var(--description);
-}
-
 .title {
     font-weight: bold;
     font-size: 22px;
@@ -87,14 +43,4 @@
     color: var(--description);
     margin: auto 0px;
     width: 50%;
-}
-
-.item-list {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    min-height: 60px;
-    padding: 10px 50px;
-    border-radius: 5px;
-    background-color: var(--item-list);
 }

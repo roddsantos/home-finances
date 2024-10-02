@@ -14,6 +14,7 @@
 .chip-grid {
     display: block;
     background-color: var(--item-list);
+    border: solid 1px var(--border);
     padding: 12px 0px 0px;
     min-height: 100px;
     width: 300px;
@@ -42,4 +43,5 @@
 
 .filter-label {
     margin: 0px 0px 12px;
+    color: var(--title);
 }
