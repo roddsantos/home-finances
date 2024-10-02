@@ -16,27 +16,27 @@
 .bill-expansion {
     margin-bottom: 15px;
     border-radius: 7px;
-    border: 2px solid var(--border);
+    border: solid 1px var(--item-list-border);
 
     &.mat-expansion-panel {
         box-shadow: none;
     }
     & .mat-expanded {
         border-radius: 10px 10px 0px 0px;
-        border-bottom: 1px solid var(--primary);
+        border: solid 1px var(--item-list-border);
     }
     & .mat-expansion-panel-body {
         display: flex;
         flex-direction: row !important;
         justify-content: space-between;
-        background-color: var(--background);
+        background-color: var(--item-list);
         padding-top: 16px;
     }
     & .mat-expansion-panel-body:hover .icons-container {
         display: flex;
         align-items: center;
         z-index: 3;
-        background-color: var(--background);
+        background-color: var(--item-list);
     }
 }
 
@@ -46,9 +46,9 @@
 
 .bill-expansion-container {
     min-height: 55px;
-    background-color: var(--background) !important;
+    background-color: var(--item-list) !important;
     &:hover {
-        background-color: var(--background) !important;
+        background-color: var(--item-list) !important;
     }
 }
 

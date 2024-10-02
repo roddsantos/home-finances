@@ -13,49 +13,6 @@
     margin: 10px;
     height: 100px;
 }
-
-.mdc-tab {
-    min-height: 50px;
-    min-width: 25px !important;
-    padding: 5px;
-    background-color: transparent;
-    color: var(--title);
-    font-weight: 700;
-
-    &.mat-mdc-tab.mdc-tab--active {
-        &:focus {
-            & .mdc-tab__text-label {
-                color: var(--title);
-            }
-        }
-        & .mdc-tab__text-label {
-            color: var(--title);
-            &.mat-mdc-focus-indicator {
-                color: var(--title);
-            }
-        }
-    }
-    & .mdc-tab-indicator__content.mdc-tab-indicator__content--underline {
-        border-color: var(--secondary) !important;
-    }
-}
-
-.mdc-tab-indicator--active {
-    min-width: 25px !important;
-    padding: 5px;
-    background-color: var(--secondary);
-    color: var(--title);
-    font-weight: 700;
-}
-
-.button-action {
-    margin: auto 0px auto auto;
-}
-
-.button-container {
-    height: 60px;
-}
-
 .color-container {
     width: 10px;
     height: 40px;
@@ -72,18 +29,6 @@
     height: auto;
 }
 
-.left {
-    margin-left: 10px !important;
-}
-
-.icons-buttons {
-    display: none;
-}
-
-.item-list:hover .icons-buttons {
-    display: flex;
-}
-
 .title {
     font-weight: bold;
     font-size: 22px;
@@ -98,15 +43,4 @@
     color: var(--description);
     margin: auto 0px;
     width: 50%;
-}
-
-.item-list {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    min-height: 60px;
-    padding: 10px 50px;
-    border-radius: 5px;
-    background-color: var(--item-list);
-    border: solid 1px var(--item-list-border);
 }
