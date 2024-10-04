@@ -1,7 +1,1 @@
-body {
-    background-color: var(--background);
-}
 
-.router-outlet {
-    min-height: 100vh;
-}

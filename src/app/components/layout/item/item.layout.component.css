@@ -1,0 +1,39 @@
+.page-container {
+    display: flex;
+    height: 40px;
+    width: max-content;
+    text-align: center;
+    background-color: var(--background);
+    border-radius: 5px;
+    margin-bottom: 20px;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.page-selected {
+    border: solid 1px var(--border);
+    border-radius: 5px;
+}
+
+.page-title {
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--icon);
+    margin: auto 5px auto 0px;
+}
+
+.page-icon {
+    color: var(--icon);
+    height: auto;
+    width: 40px;
+    font-size: 30px;
+    margin: auto;
+    cursor: pointer;
+    &.profile {
+        margin: auto 0px;
+    }
+    &.icon-route {
+        color: var(--background);
+    }
+}

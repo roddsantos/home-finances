@@ -1,3 +1,17 @@
+.drawer-main {
+    min-width: 100vw;
+    min-height: 100vh;
+    border: 1px solid #555;
+}
+
+.drawer-container {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    padding: 20px;
+    gap: 20px;
+}
+
 .toolbar {
     display: flex;
     background-color: var(--primary);

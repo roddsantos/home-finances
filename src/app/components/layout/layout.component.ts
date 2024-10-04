@@ -1,5 +1,6 @@
 import {
     Component,
+    HostListener,
     Input,
     OnChanges,
     SimpleChanges,
@@ -31,8 +32,10 @@ import { CommonModule } from "@angular/common";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";
-import { ThemeType } from "src/app/types/general";
+import { RouteItemType, RoutesType, ThemeType } from "src/app/types/general";
 import { GeneralState } from "src/app/subjects/subjects.general";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { ItemLayoutComponent } from "./item/item.layout.component";
 
 @Component({
     standalone: true,
@@ -49,6 +52,8 @@ import { GeneralState } from "src/app/subjects/subjects.general";
         MatTooltipModule,
         MatMenuModule,
         MatButtonModule,
+        MatSidenavModule,
+        ItemLayoutComponent,
     ],
 })
 export class LayoutComponent implements OnChanges {
@@ -80,9 +85,47 @@ export class LayoutComponent implements OnChanges {
     public catState = inject(CategoryState);
 
     public generalState = inject(GeneralState);
+    public innerWidth: number;
 
-    page = window.location.pathname;
+    actualPage = window.location.pathname;
     themeUsed: string | null;
+
+    onChangeRoute(route: RoutesType) {
+        this.actualPage = route;
+        this.router.navigate([route]);
+    }
+
+    items: RouteItemType[] = [
+        {
+            page: "/home",
+            title: "finances",
+            icon: "cottage",
+            onClick: (r: string) => this.onChangeRoute(r as RoutesType),
+        },
+        {
+            page: "/manager",
+            title: "manager",
+            icon: "edit_square",
+            onClick: (r: string) => this.onChangeRoute(r as RoutesType),
+        },
+        {
+            page: "/monthly",
+            title: "monthly",
+            icon: "calendar_month",
+            onClick: (r: string) => this.onChangeRoute(r as RoutesType),
+        },
+        {
+            page: "/dashboard",
+            title: "dashboard",
+            icon: "pie_chart",
+            onClick: (r: string) => this.onChangeRoute(r as RoutesType),
+        },
+    ];
+
+    @HostListener("window:resize", ["$event"])
+    onResize() {
+        this.innerWidth = window.innerWidth;
+    }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes["themeUsed"]) {
@@ -163,10 +206,5 @@ export class LayoutComponent implements OnChanges {
         this.storage.removeUser();
         this.modal.close();
         this.profile.update();
-    }
-
-    onChangeRoute(route: "/manager" | "/monthly" | "/dashboard" | "/") {
-        this.router.navigate([route]);
-        this.page = route;
     }
 }

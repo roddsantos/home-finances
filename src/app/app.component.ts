@@ -21,7 +21,6 @@ export class AppComponent {
     public catState = inject(CategoryState);
     public catService = inject(ServiceCategory);
     public filterState = inject(CustomFilterState);
-    public router = inject(Router);
 
     title = "bills-app";
     theme = this.storage.getTheme();

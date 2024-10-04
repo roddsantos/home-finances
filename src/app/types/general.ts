@@ -27,3 +27,11 @@ export type OptionalKeys<T> = {
 }[keyof T];
 
 export type ThemeType = "default" | "dark" | "binary";
+
+export type RoutesType = "/manager" | "/monthly" | "/dashboard" | "/";
+export type RouteItemType = {
+    page: string;
+    icon: string;
+    title: string;
+    onClick: (ref: string) => void;
+};

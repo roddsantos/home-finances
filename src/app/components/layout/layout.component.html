@@ -1,6 +1,30 @@
-<mat-toolbar class="toolbar" color="secondary">
+<mat-toolbar class="toolbar mobile" color="secondary">
     <mat-toolbar-row class="toolbar-row">
-        <div
+        <mat-icon
+            [ngClass]="{
+                    'material-symbols-outlined': true,
+                    'app-icon': true,
+                }"
+            aria-hidden="false"
+            aria-label="Example menu icon"
+            fontIcon="menu"
+        ></mat-icon>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-drawer-container [hasBackdrop]="innerWidth < 600" class="drawer-main">
+    <mat-drawer
+        class="drawer-container"
+        #drawer
+        [mode]="innerWidth < 600 ? 'over' : 'side'"
+        opened
+    >
+        <item-layout-component
+            class="item"
+            *ngFor="let item of items"
+            [item]="item"
+            [actualPage]="actualPage"
+        />
+        <!-- <div
             [ngClass]="{
                 'app-container': true,
                 'selected-container': page === '/'
@@ -51,8 +75,8 @@
                 <span
                     *ngIf="page === '/manager'"
                     [ngClass]="{
-                        'app-title': true,
-                    }"
+                          'app-title': true,
+                      }"
                     >manager</span
                 >
             </div>
@@ -124,6 +148,11 @@
                 <button mat-menu-item (click)="changeLayout('dark')">dark</button>
                 <button mat-menu-item (click)="changeLayout('binary')">binary</button>
             </mat-menu>
+        </div> -->
+    </mat-drawer>
+    <mat-drawer-content>
+        <div class="router-outlet">
+            <router-outlet></router-outlet>
         </div>
-    </mat-toolbar-row>
-</mat-toolbar>
+    </mat-drawer-content>
+</mat-drawer-container>

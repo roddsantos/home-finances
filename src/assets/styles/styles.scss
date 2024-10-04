@@ -86,10 +86,15 @@
 body {
     min-height: 100vh;
     min-width: 100vw;
+    background-color: var(--background);
 }
 
 p {
     font-family: Arial, Helvetica, sans-serif;
+}
+
+.router-outlet {
+    min-height: 100vh;
 }
 
 .page {
