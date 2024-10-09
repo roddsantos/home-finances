@@ -13,6 +13,7 @@ import { mergeMap } from "rxjs";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ActionItem } from "src/app/types/components";
 import { GeneralState } from "src/app/subjects/subjects.general";
+import { ROUTES } from "src/utils/route";
 
 @Component({
     selector: "page-credit-cards",
@@ -35,6 +36,9 @@ export class PageCreditCards {
     public storage = inject(LocalStorageService);
     private snack = inject(CustomSnackbarComponent);
     public generalState = inject(GeneralState);
+
+    public actualPage = window.location.pathname;
+    public page = ROUTES.find((r) => r.page === this.actualPage);
 
     actions: ActionItem[] = [
         { name: "", icon: "edit", action: () => this.onEdit(), color: "#00328f" },

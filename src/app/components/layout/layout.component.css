@@ -1,7 +1,7 @@
 .drawer-main {
     min-width: 100vw;
-    min-height: 100vh;
-    border: 1px solid #555;
+    max-height: 100vh;
+    background-color: var(--background);
 }
 
 .drawer-container {
@@ -9,12 +9,18 @@
     flex-direction: column;
     width: 300px;
     padding: 20px;
-    border-right-color: var(--border-color);
-    background-color: var(--secondary);
+    margin: 20px 20px 20px 0px;
+    border-radius: 0px 10px 10px 0px;
+    border: solid 1px var(--border-color);
+    background-color: var(--primary);
     gap: 20px;
     &.binary {
         background-color: var(--background);
     }
+}
+
+.drawer-content {
+    padding: 20px 20px 20px 40px;
 }
 
 .toolbar {
@@ -93,11 +99,11 @@
 .home {
     display: grid;
     grid-template: "page-icon page-title" / 20% 80%;
-    min-height: 55px;
+    min-height: 44px;
     width: 100%;
     text-align: center;
     border-radius: 10px;
-    margin-bottom: 80px;
+    margin-bottom: 8vh;
     padding: 8px 12px;
     &:hover {
         cursor: pointer;

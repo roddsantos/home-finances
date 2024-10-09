@@ -1,4 +1,5 @@
 <div class="cc">
+    <h1 class="page-title">{{ page?.title }}</h1>
     <feedback-container
         *ngIf="(ccState.creditCards$ | async)?.length === 0"
         [info]="(ccState.status$ | async)!"
@@ -7,7 +8,7 @@
     <div class="cc-grid">
         <li class="cc-li" *ngFor="let creditCard of (ccState.creditCards$ | async)">
             <div class="cc-container">
-                <p class="cc-title">{{creditCard.name}}</p>
+                <h2 class="cc-title">{{creditCard.name}}</h2>
                 <p class="cc-description">{{creditCard.description}}</p>
                 <p class="cc-month">
                     {{creditCard.month > 8 ?"" : "0" + (creditCard.month + 1)+ '/' +

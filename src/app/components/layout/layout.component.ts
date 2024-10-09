@@ -37,6 +37,7 @@ import { GeneralState } from "src/app/subjects/subjects.general";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { ItemLayoutComponent } from "./item/item.layout.component";
 import { ROUTES } from "src/utils/route";
+import { HeaderLayoutComponent } from "./header/header.layout.component";
 
 @Component({
     standalone: true,
@@ -55,6 +56,7 @@ import { ROUTES } from "src/utils/route";
         MatButtonModule,
         MatSidenavModule,
         ItemLayoutComponent,
+        HeaderLayoutComponent,
     ],
 })
 export class LayoutComponent implements OnChanges {

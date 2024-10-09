@@ -32,7 +32,7 @@
     height: 200px;
     padding: 30px;
     border-radius: 10px;
-    background-color: var(--item-list);
+    background-color: var(--third);
     border: solid 3px var(--secondary);
     z-index: 2;
 
@@ -64,7 +64,6 @@
 .cc-title {
     grid-area: cc-title;
     font-weight: bold;
-    font-size: 22px;
     width: 50%;
     margin: auto 10px auto 0px;
 }
