@@ -23,13 +23,14 @@
 
 :root {
     @include mat.all-component-themes(app-theme.$app-light-theme);
-    --primary: #6665dd;
-    --secondary: #5391cc;
+    --primary: #405d72;
+    --secondary: #758694;
+    --third: #f7e7dc;
     --item-list: lightsteelblue;
     --item-list-border: lightsteelblue;
     --title: #222222;
     --description: #535353;
-    --background: #eee;
+    --background: #fff8f3;
     --border: #6665dd;
     --icon: var(--primary);
     --disabled: #7a7a7a;
@@ -93,29 +94,23 @@ p {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.router-outlet {
-    min-height: 100vh;
-}
-
 .page {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    width: 100vw;
+    max-height: 100vh;
+    width: calc(100vw + 20px);
     padding: 80px 50px 40px;
     max-width: 1000px;
-    margin: 0px auto;
+    margin: 0px auto 0px -20px;
+    background-color: var(--background);
 }
 
-.creation-main {
+.page-content {
     min-height: 100vh;
     padding: 80px 50px 40px;
-    max-width: 1000px;
+    width: 100%;
     margin: 0px auto;
-}
-
-.wide {
-    max-width: 1500px;
+    background-color: var(--background);
 }
 
 .modal-backdrop {

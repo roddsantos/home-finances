@@ -6,7 +6,7 @@ import { RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { GeneralState } from "src/app/subjects/subjects.general";
-import { RouteItemType } from "src/app/types/general";
+import { RouteItemType, RoutesType } from "src/app/types/general";
 
 @Component({
     standalone: true,
@@ -26,8 +26,9 @@ export class ItemLayoutComponent {
     public generalState = inject(GeneralState);
     @Input() item: RouteItemType;
     @Input() actualPage: string;
+    @Output() onClick = new EventEmitter<RoutesType>();
 
-    public page: string;
+    public page: RoutesType;
     public title: string;
     public icon: string;
     public onClickAction: (ref: string) => void;
@@ -36,10 +37,9 @@ export class ItemLayoutComponent {
         this.page = this.item.page;
         this.title = this.item.title;
         this.icon = this.item.icon;
-        this.onClickAction = this.item.onClick;
     }
 
-    onClickItem(ref: string) {
-        this.onClickAction(ref);
+    onClickItem(ref: RoutesType) {
+        this.onClick.emit(ref);
     }
 }

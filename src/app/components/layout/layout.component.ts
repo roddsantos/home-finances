@@ -36,12 +36,13 @@ import { RouteItemType, RoutesType, ThemeType } from "src/app/types/general";
 import { GeneralState } from "src/app/subjects/subjects.general";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { ItemLayoutComponent } from "./item/item.layout.component";
+import { ROUTES } from "src/utils/route";
 
 @Component({
     standalone: true,
     selector: "app-layout",
     templateUrl: "./layout.component.html",
-    styleUrls: ["./layout.component.css"],
+    styleUrls: ["./layout.component.css", "./item/item.layout.component.css"],
     imports: [
         MatToolbarModule,
         MatIconModule,
@@ -95,32 +96,7 @@ export class LayoutComponent implements OnChanges {
         this.router.navigate([route]);
     }
 
-    items: RouteItemType[] = [
-        {
-            page: "/home",
-            title: "finances",
-            icon: "cottage",
-            onClick: (r: string) => this.onChangeRoute(r as RoutesType),
-        },
-        {
-            page: "/manager",
-            title: "manager",
-            icon: "edit_square",
-            onClick: (r: string) => this.onChangeRoute(r as RoutesType),
-        },
-        {
-            page: "/monthly",
-            title: "monthly",
-            icon: "calendar_month",
-            onClick: (r: string) => this.onChangeRoute(r as RoutesType),
-        },
-        {
-            page: "/dashboard",
-            title: "dashboard",
-            icon: "pie_chart",
-            onClick: (r: string) => this.onChangeRoute(r as RoutesType),
-        },
-    ];
+    items: RouteItemType[] = ROUTES;
 
     @HostListener("window:resize", ["$event"])
     onResize() {

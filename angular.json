@@ -26,6 +26,7 @@
                         "styles": [
                             "src/assets/styles/styles.scss",
                             "src/assets/styles/layout/_responsive.scss",
+                            "src/assets/styles/general/_page.scss",
                             "src/assets/styles/material/_textfield.scss",
                             "src/assets/styles/material/_chip.scss",
                             "src/assets/styles/material/_snackbar.scss",
@@ -100,6 +101,7 @@
                         "styles": [
                             "src/assets/styles/styles.scss",
                             "src/assets/styles/layout/_responsive.scss",
+                            "src/assets/styles/general/_page.scss",
                             "src/assets/styles/material/_textfield.scss",
                             "src/assets/styles/material/_chip.scss",
                             "src/assets/styles/material/_snackbar.scss",

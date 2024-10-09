@@ -28,10 +28,17 @@ export type OptionalKeys<T> = {
 
 export type ThemeType = "default" | "dark" | "binary";
 
-export type RoutesType = "/manager" | "/monthly" | "/dashboard" | "/";
+export type RoutesType =
+    | "/settings"
+    | "/credit-cards"
+    | "/companies"
+    | "/banks"
+    | "/categories"
+    | "/monthly"
+    | "/dashboard"
+    | "/";
 export type RouteItemType = {
-    page: string;
+    page: RoutesType;
     icon: string;
     title: string;
-    onClick: (ref: string) => void;
 };

@@ -13,16 +13,45 @@
 </mat-toolbar>
 <mat-drawer-container [hasBackdrop]="innerWidth < 600" class="drawer-main">
     <mat-drawer
-        class="drawer-container"
+        [ngClass]="{
+            'drawer-container': true,
+            binary: (generalState.theme$ | async) === 'binary'
+        }"
         #drawer
         [mode]="innerWidth < 600 ? 'over' : 'side'"
         opened
     >
+        <div
+            [ngClass]="{
+                home: true,
+            }"
+            (click)="onChangeRoute('/')"
+        >
+            <mat-icon
+                [ngClass]="{
+                    'material-symbols-outlined': '/' !== actualPage,
+                    'home-icon': true,
+                    'icon-route':
+                        '/' !== actualPage && (generalState.theme$ | async) !== 'binary'
+                }"
+                aria-hidden="false"
+                aria-label="Example home icon"
+                fontIcon="home"
+            ></mat-icon>
+            <span
+                [ngClass]="{
+                    'home-title': true,
+                    'background-color': (generalState.theme$ | async) !== 'binary'
+                }"
+                >finances</span
+            >
+        </div>
         <item-layout-component
             class="item"
             *ngFor="let item of items"
             [item]="item"
             [actualPage]="actualPage"
+            (onClick)="onChangeRoute($event)"
         />
         <!-- <div
             [ngClass]="{
@@ -151,7 +180,7 @@
         </div> -->
     </mat-drawer>
     <mat-drawer-content>
-        <div class="router-outlet">
+        <div class="page-content">
             <router-outlet></router-outlet>
         </div>
     </mat-drawer-content>

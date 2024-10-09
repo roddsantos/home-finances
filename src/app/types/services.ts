@@ -17,6 +17,7 @@ export type CreditCardObject = {
     description: string;
     color: string;
     day: number;
+    due: number;
     month: number;
     year: number;
     isClosed: boolean;

@@ -27,8 +27,11 @@ export type CreditCard = {
     description: string;
     color: string;
     limit: number;
+    limitLeft: number;
+    flag: string;
     day: number;
-    month: string;
+    due: number;
+    month: number;
     year: number;
     isClosed: boolean;
     userId: string;
@@ -98,4 +101,10 @@ export type BillData = {
     bank2: Bank | null;
     company: Company | null;
     groupId: string;
+};
+
+export type CrreditCardFlag = {
+    name: string;
+    id: string;
+    icon: string;
 };

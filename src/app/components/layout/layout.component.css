@@ -7,9 +7,14 @@
 .drawer-container {
     display: flex;
     flex-direction: column;
-    width: 250px;
+    width: 300px;
     padding: 20px;
+    border-right-color: var(--border-color);
+    background-color: var(--secondary);
     gap: 20px;
+    &.binary {
+        background-color: var(--background);
+    }
 }
 
 .toolbar {
@@ -57,10 +62,6 @@
     }
 }
 
-.icon-route {
-    color: var(--background);
-}
-
 .icon-container {
     display: flex;
     text-align: center;
@@ -87,4 +88,35 @@
     border-radius: 5px;
     background-color: var(--background);
     border: solid 1px var(--border);
+}
+
+.home {
+    display: grid;
+    grid-template: "page-icon page-title" / 20% 80%;
+    min-height: 55px;
+    width: 100%;
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 80px;
+    padding: 8px 12px;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.home-title {
+    font-weight: bold;
+    font-family: Helvetica, sans-serif;
+    color: var(--icon);
+    font-size: 22px;
+    margin: auto auto auto 10px;
+}
+
+.home-icon {
+    color: var(--icon);
+    height: auto;
+    width: 60px;
+    font-size: 50px;
+    margin: auto;
+    cursor: pointer;
 }

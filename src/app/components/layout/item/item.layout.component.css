@@ -1,26 +1,28 @@
-.page-container {
-    display: flex;
-    height: 40px;
-    width: max-content;
+.item-container {
+    display: grid;
+    grid-template: "page-icon page-title" / 20% 80%;
+    min-height: 55px;
+    width: 100%;
     text-align: center;
     background-color: var(--background);
-    border-radius: 5px;
-    margin-bottom: 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 8px 12px;
     &:hover {
         cursor: pointer;
     }
 }
 
-.page-selected {
+.item-selected {
     border: solid 1px var(--border);
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
-.page-title {
+.item-title {
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
     color: var(--icon);
-    margin: auto 5px auto 0px;
+    margin: auto auto auto 10px;
 }
 
 .page-icon {
@@ -33,7 +35,8 @@
     &.profile {
         margin: auto 0px;
     }
-    &.icon-route {
-        color: var(--background);
-    }
+}
+
+.top {
+    margin-top: 80px;
 }

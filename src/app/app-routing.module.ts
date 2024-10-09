@@ -1,3 +1,4 @@
+import { PageCreditCards } from "./pages/credit-cards/pages.credit-cards";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
@@ -8,6 +9,14 @@ const routes: Routes = [
         path: "",
         canActivate: [authGuard],
         loadComponent: () => import("./pages/home/pages.home").then((m) => m.PageHome),
+    },
+    {
+        path: "credit-cards",
+        canActivate: [authGuard],
+        loadComponent: () =>
+            import("./pages/credit-cards/pages.credit-cards").then(
+                (m) => m.PageCreditCards
+            ),
     },
     {
         path: "manager",

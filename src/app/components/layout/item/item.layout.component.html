@@ -1,7 +1,9 @@
 <div
+    *ngIf="page !== '/'"
     [ngClass]="{
-        'page-container': true,
-        'page-selected': page === actualPage
+        'item-container': true,
+        'item-selected': page === actualPage,
+        top: '/settings' === page
     }"
     (click)="onClickItem(page)"
 >
@@ -12,14 +14,13 @@
             'icon-route':
                 page !== actualPage && (generalState.theme$ | async) !== 'binary'
         }"
-        [matTooltip]="page !== actualPage ? page : ''"
         aria-hidden="false"
         aria-label="Example home icon"
         fontIcon="{{ icon }}"
     ></mat-icon>
     <span
         [ngClass]="{
-            'page-title': true,
+            'item-title': true,
             'background-color': (generalState.theme$ | async) !== 'binary'
         }"
         >{{ title }}</span
