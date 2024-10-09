@@ -3,8 +3,12 @@
 
 :root .dark {
     @include mat.all-component-themes(app-theme.$app-dark-theme);
-    --primary: #8ea4d2ff;
-    --secondary: #4d69b6;
+    --primary: #a5c0dd;
+    --secondary: #6c9bcf;
+    --third: #654e92;
+    --background: #302e2a;
+
+    --border-radius: 10px;
     --item-list: rgb(135, 147, 192);
     --item-list-border: rgb(135, 147, 192);
     --title: #e4e4e4;
@@ -28,6 +32,7 @@
     --third: #a5c0dd;
     --background: #e6ddcc;
 
+    --border-radius: 10px;
     --border-color: #654e92;
     --black: #000000;
     --white: #ffffff;
@@ -58,6 +63,7 @@
     --border: #ffffff;
     --icon: #ffffff;
     --disabled: #7a7a7a;
+    --border-radius: 10px;
 
     --error: #d34848;
     --warning: #d89f36;
@@ -88,212 +94,11 @@
     }
 }
 
-@font-face {
-    font-family: "Ougkeh-Regular";
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: local("OpenSans-Bold"), local("OpenSans-Bold.ttf"),
-        url("../../assets/fonts/ougkeh/OugkehRegular.otf") format("opentype");
-}
-
-@font-face {
-    font-family: "Open-Sans-Light";
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src: local("OpenSans-Light"), local("OpenSans-Light.ttf"),
-        url("../../assets/fonts/opensans/OpenSans-Light.ttf") format("truetype");
-}
-
-/* font Open Sans Light Italic*/
-@font-face {
-    font-family: "Open-Sans-Light-Italic";
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src: local("OpenSans-LightItalic"), local("OpenSans-LightItalic.ttf"),
-        url("../../assets/fonts/opensans/OpenSans-LightItalic.ttf") format("truetype");
-}
-
-/* font Open Sans Italic*/
-@font-face {
-    font-family: "Open-Sans-Italic";
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src: local("OpenSans-Italic"), local("OpenSans-Italic.ttf"),
-        url("../../assets/fonts/opensans/OpenSans-Italic.ttf") format("truetype");
-}
-
-/* font Open Sans Regular */
-@font-face {
-    font-family: "Open-Sans-Regular";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: local("OpenSans-Regular"), local("OpenSans-Regular.ttf"),
-        url("../../assets/fonts/opensans/OpenSans-Regular.ttf") format("truetype");
-}
-
-/* font Open Sans Regular Italic */
-@font-face {
-    font-family: "Open-Sans-Regular-Italic";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: local("OpenSans-Italic"), local("OpenSans-Italic.ttf"),
-        url("../../assets/fonts/opensans/OpenSans-Italic.ttf") format("truetype");
-}
-
-/* font Open Sans Bold Italic */
-@font-face {
-    font-family: "Open-Sans-Bold-Italic";
-    font-style: normal;
-    font-weight: 600;
-    font-display: swap;
-    src: local("OpenSans-BoldItalic"), local("OpenSans-BoldItalic.ttf"),
-        url("../../assets/fonts/opensans/OpenSans-BoldItalic.ttf") format("truetype");
-}
-
-/* font Open Sans Semi Bold */
-@font-face {
-    font-family: "Open-Sans-Semi-Bold";
-    font-style: normal;
-    font-weight: 600;
-    font-display: swap;
-    src: local("OpenSans-SemiBold"), local("OpenSans-SemiBold.ttf"),
-        url("../../assets/fonts/opensans/OpenSans-SemiBold.ttf") format("truetype");
-}
-
-/* font Open Sans Bold */
-@font-face {
-    font-family: "Open-Sans-Bold";
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: local("OpenSans-Bold"), local("OpenSans-Bold.ttf"),
-        url("../../assets/fonts/opensans/OpenSans-Bold.ttf") format("truetype");
-}
-
-/* font Open Sans Extra Bold */
-@font-face {
-    font-family: "Open-Sans-Extra-Bold";
-    font-style: normal;
-    font-weight: 800;
-    font-display: swap;
-    src: local("OpenSans-ExtraBold"), local("OpenSans-ExtraBold.ttf"),
-        url("../../assets/fonts/opensans/OpenSans-ExtraBold.ttf") format("truetype");
-}
-
-/* font Open Sans Extra Bold Italic*/
-@font-face {
-    font-family: "Open-Sans-Extra-Bold-Italic";
-    font-style: normal;
-    font-weight: 800;
-    font-display: swap;
-    src: local("OpenSans-ExtraBoldItalic"), local("OpenSans-ExtraBoldItalic.ttf"),
-        url("../../assets/fonts/opensans/OpenSans-ExtraBoldItalic.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Open-Sans-Semi-Bold-Italic";
-    font-style: normal;
-    font-weight: 800;
-    font-display: swap;
-    src: local("OpenSans-SemiBoldItalic"), local("OpenSans-SemiBoldItalic.ttf"),
-        url("../../assets/fonts/opensans/OpenSans-SemiBoldItalic.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Roboto-Light";
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src: local("Roboto-Light"), local("Roboto-Light.ttf"),
-        url("../../assets/fonts/roboto/Roboto-Light.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Roboto-Light-Italic";
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src: local("Roboto-LightItalic"), local("Roboto-LightItalic.ttf"),
-        url("../../assets/fonts/roboto/Roboto-LightItalic.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Roboto-Regular";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: local("Roboto-Regular"), local("Roboto-Regular.ttf"),
-        url("../../assets/fonts/roboto/Roboto-Regular.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Roboto-Italic";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: local("Roboto-Italic"), local("Roboto-Italic.ttf"),
-        url("../../assets/fonts/roboto/Roboto-Italic.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Roboto-Bold";
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: local("Roboto-Bold"), local("Roboto-Bold.ttf"),
-        url("../../assets/fonts/roboto/Roboto-Bold.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Roboto-Bold-Italic";
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: local("Roboto-BoldItalic"), local("Roboto-BoldItalic.ttf"),
-        url("../../assets/fonts/roboto/Roboto-BoldItalic.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Roboto-Black";
-    font-style: normal;
-    font-weight: 900;
-    font-display: swap;
-    src: local("Roboto-Black"), local("Roboto-Black.ttf"),
-        url("../../assets/fonts/roboto/Roboto-Black.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Roboto-Black-Italic";
-    font-style: normal;
-    font-weight: 900;
-    font-display: swap;
-    src: local("Roboto-BlackItalic"), local("Roboto-BlackItalic.ttf"),
-        url("../../assets/fonts/roboto/Roboto-BlackItalic.ttf") format("truetype");
-}
-
 body {
     min-height: 100vh;
     min-width: 100vw;
     background-color: var(--background);
     font-family: "Open-Sans-Regular";
-}
-
-h1 {
-    font-family: Open-Sans-Bold;
-}
-
-h2 {
-    font-family: Open-Sans-Regular;
-}
-
-p {
-    font-family: Roboto-Regular;
 }
 
 .page {
@@ -304,14 +109,6 @@ p {
     padding: 80px 50px 40px;
     max-width: 1000px;
     margin: 0px auto 0px -20px;
-    background-color: var(--background);
-}
-
-.page-content {
-    min-height: 100vh;
-    padding: 40px 0px;
-    width: 100%;
-    margin: 0px auto;
     background-color: var(--background);
 }
 

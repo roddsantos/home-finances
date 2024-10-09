@@ -12,4 +12,6 @@ import { ColorPipe } from "src/utils/pipes/colors";
 export class CardComponent {
     @Input() title?: string;
     @Input() description?: string;
+    public style = getComputedStyle(document.body);
+    public backgroundColor = this.style.getPropertyValue("--background");
 }

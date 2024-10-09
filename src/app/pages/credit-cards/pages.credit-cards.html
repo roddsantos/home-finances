@@ -1,5 +1,5 @@
 <div class="cc">
-    <h1 class="page-title">{{ page?.title }}</h1>
+    <h1 class="page-title">credit card</h1>
     <feedback-container
         *ngIf="(ccState.creditCards$ | async)?.length === 0"
         [info]="(ccState.status$ | async)!"

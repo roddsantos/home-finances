@@ -1,3 +1,9 @@
 .card {
+    border-radius: 10px;
     padding: 10px 15px;
+    background-color: #e2d1b2;
+}
+
+.card-content {
+    padding: 5px 0px;
 }

@@ -19,6 +19,12 @@ const routes: Routes = [
             ),
     },
     {
+        path: "settings",
+        canActivate: [authGuard],
+        loadComponent: () =>
+            import("./pages/settings/settings.page").then((m) => m.PageSettings),
+    },
+    {
         path: "manager",
         canActivate: [authGuard],
         loadComponent: () =>

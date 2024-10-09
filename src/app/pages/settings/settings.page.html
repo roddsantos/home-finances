@@ -1,0 +1,36 @@
+<div class="settings">
+    <h1 class="page-title">settings</h1>
+    <card-component title="themes">
+        <div class="themes">
+            <div
+                class="theme-container"
+                *ngFor="let th of themes"
+                [ngClass]="{
+                  'theme-container': true,
+                  selected: theme === th.id
+                }"
+            >
+                <h3>{{th.title}}</h3>
+                <p>{{th.description}}</p>
+                <div class="theme-pallete">
+                    <div
+                        class="pallete-color"
+                        [style.backgroundColor]="th.primaryColor"
+                    ></div>
+                    <div
+                        class="pallete-color"
+                        [style.backgroundColor]="th.secondaryColor"
+                    ></div>
+                    <div
+                        class="pallete-color"
+                        [style.backgroundColor]="th.thirdColor"
+                    ></div>
+                    <div
+                        class="pallete-color"
+                        [style.backgroundColor]="th.backgroundColor"
+                    ></div>
+                </div>
+            </div>
+        </div>
+    </card-component>
+</div>
