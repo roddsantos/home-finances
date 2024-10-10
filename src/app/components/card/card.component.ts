@@ -1,5 +1,8 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, HostListener, inject, Input } from "@angular/core";
+import { LocalStorageService } from "src/app/services/local-storage.service";
+import { GeneralState } from "src/app/subjects/subjects.general";
+import { ThemeType } from "src/app/types/general";
 import { ColorPipe } from "src/utils/pipes/colors";
 
 @Component({
@@ -10,8 +13,47 @@ import { ColorPipe } from "src/utils/pipes/colors";
     imports: [CommonModule, ColorPipe],
 })
 export class CardComponent {
+    public storage = inject(LocalStorageService);
+    public general = inject(GeneralState);
+
+    @Input() id: string;
     @Input() title?: string;
     @Input() description?: string;
-    public style = getComputedStyle(document.body);
-    public backgroundColor = this.style.getPropertyValue("--background");
+    @Input() shadow?: boolean;
+    @Input() border?: boolean;
+    @Input() backgroundColor?: string;
+    @Input() noDivisor?: number;
+
+    public actualTheme: ThemeType;
+    public cardHeight: number;
+    public cardWidth: number;
+
+    private style = getComputedStyle(document.body);
+    public background = this.style.getPropertyValue("--background");
+    public secondary = this.style.getPropertyValue("--secondary");
+
+    ngOnInit() {
+        this.general.theme$.subscribe({
+            next: (theme) => {
+                this.actualTheme = theme as ThemeType;
+            },
+        });
+    }
+
+    ngAfterViewInit() {
+        if (this.shadow) {
+            this.cardHeight =
+                document.getElementById("card-" + this.id)?.offsetHeight || 0;
+            this.cardWidth = document.getElementById("card-" + this.id)?.offsetWidth || 0;
+        }
+    }
+
+    @HostListener("window:resize", ["$event"])
+    onResize() {
+        if (this.shadow) {
+            this.cardHeight =
+                document.getElementById("card-" + this.id)?.offsetHeight || 0;
+            this.cardWidth = document.getElementById("card-" + this.id)?.offsetWidth || 0;
+        }
+    }
 }

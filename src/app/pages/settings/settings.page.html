@@ -1,13 +1,18 @@
 <div class="settings">
     <h1 class="page-title">settings</h1>
-    <card-component title="themes">
+    <card-component
+        id="themes"
+        title="themes"
+        description="choose a theme for the application"
+    >
         <div class="themes">
             <div
                 class="theme-container"
                 *ngFor="let th of themes"
+                (click)="onSelect(th.id)"
                 [ngClass]="{
                   'theme-container': true,
-                  selected: theme === th.id
+                  selected: selectedTheme === th.id
                 }"
             >
                 <h3>{{th.title}}</h3>
@@ -33,4 +38,18 @@
             </div>
         </div>
     </card-component>
+    <button
+        (click)="onSaveChanges()"
+        *ngIf="hasChanges()"
+        mat-button
+        class="button-primary floating-button"
+    >
+        <mat-icon
+            class="save-icon"
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="save"
+        ></mat-icon>
+        <p>save changes</p>
+    </button>
 </div>

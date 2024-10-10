@@ -1,7 +1,26 @@
-<div class="card">
+<div
+    id="card-{{ id }}"
+    class="card"
+    [style.background]="
+        actualTheme !== 'binary' ? backgroundColor || '#e4ca99' : background
+    "
+    [style.borderColor]="
+        actualTheme !== 'binary' ? backgroundColor || '#e4ca99' : secondary
+    "
+>
     <h2 *ngIf="title">{{ title }}</h2>
     <p *ngIf="description">{{ description }}</p>
+    <div class="card-divisor" *ngIf="!noDivisor"></div>
     <div class="card-content">
         <ng-content></ng-content>
     </div>
 </div>
+<div
+    *ngIf="shadow"
+    class="card-shadow"
+    [style.height]="cardHeight + 'px'"
+    [style.width]="cardWidth + 'px'"
+    [style.bottom]="cardHeight - 10 + 'px'"
+    [style.backgroundColor]="border ? 'transparent' : backgroundColor || '#e4ca99'"
+    [style.borderColor]="backgroundColor || '#e4ca99'"
+></div>

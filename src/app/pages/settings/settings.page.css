@@ -1,14 +1,23 @@
+.settings {
+    min-height: calc(100vh - 140px);
+}
+
 .themes {
     display: grid;
-    grid-template-columns: repeat(3, 25%);
+    grid-template-columns: repeat(3, 28%);
     column-gap: 20px;
+    row-gap: 20px;
 }
 
 .theme-container {
     padding: 10px;
     border-radius: var(--border-radius);
+    background-color: var(--background);
+    cursor: pointer;
     &.selected {
-        border: solid 1px var(--primary);
+        border-style: solid;
+        border-width: 1px;
+        border-color: var(--border-color);
     }
 }
 
@@ -22,5 +31,21 @@
     & .pallete-color {
         width: 25%;
         height: 100%;
+    }
+}
+
+.floating-button {
+    position: absolute;
+    bottom: 80px;
+    right: 40px;
+    padding: 12px !important;
+    height: max-content;
+    & .save-icon {
+        width: 40px;
+        height: fit-content;
+        font-size: 40px;
+    }
+    & p {
+        font-size: 20px;
     }
 }
