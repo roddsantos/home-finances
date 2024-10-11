@@ -1,0 +1,57 @@
+<card-component
+    id="profile"
+    title="profile"
+    description="view and edit your personal info"
+>
+    <div>
+        <form [formGroup]="profileForm">
+            <div class="profile-form">
+                <h3 class="profile-name">name</h3>
+                <p class="profile-name-description">your first name</p>
+                <div class="profile-name-input">
+                    <mat-form-field class="input" appearance="outline">
+                        <!-- <mat-label>name</mat-label> -->
+                        <input maxlength="100" required matInput formControlName="name" />
+                        @if (profileForm.controls.name.errors?.["required"]) {
+                        <mat-error>{{errorMessage.name}}</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+                <h3 class="profile-surname">surname</h3>
+                <p class="profile-surname-description">your last name</p>
+                <div class="profile-surname-input">
+                    <mat-form-field class="input" appearance="outline">
+                        <!-- <mat-label>name</mat-label> -->
+                        <input
+                            maxlength="100"
+                            required
+                            matInput
+                            formControlName="surname"
+                        />
+                        @if (profileForm.controls.name.errors?.["required"]) {
+                        <mat-error>{{errorMessage.surname}}</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+                <h3 class="profile-username">username</h3>
+                <p class="profile-username-description">
+                    your username to access the app
+                </p>
+                <div class="profile-username-input">
+                    <mat-form-field class="input" appearance="outline">
+                        <!-- <mat-label>name</mat-label> -->
+                        <input
+                            maxlength="100"
+                            required
+                            matInput
+                            formControlName="username"
+                        />
+                        @if (profileForm.controls.username.errors?.["required"]) {
+                        <mat-error>{{errorMessage.username}}</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </div>
+</card-component>

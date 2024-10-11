@@ -28,9 +28,9 @@ export class CardComponent {
     public cardHeight: number;
     public cardWidth: number;
 
-    private style = getComputedStyle(document.body);
-    public background = this.style.getPropertyValue("--background");
-    public secondary = this.style.getPropertyValue("--secondary");
+    public style: CSSStyleDeclaration;
+    public background: string;
+    public secondary: string;
 
     ngOnInit() {
         this.general.theme$.subscribe({
@@ -38,6 +38,9 @@ export class CardComponent {
                 this.actualTheme = theme as ThemeType;
             },
         });
+        this.style = getComputedStyle(document.body);
+        this.background = this.style.getPropertyValue("--background");
+        this.secondary = this.style.getPropertyValue("--secondary");
     }
 
     ngAfterViewInit() {

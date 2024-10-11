@@ -11,6 +11,7 @@
     --border-radius: 10px;
     --border-color: #a5c0dd;
     --border-width: 2px;
+
     --item-list: rgb(135, 147, 192);
     --item-list-border: rgb(135, 147, 192);
     --title: #e4e4e4;
@@ -37,6 +38,7 @@
     --border-radius: 10px;
     --border-color: #654e92;
     --border-width: 2px;
+
     --black: #000000;
     --white: #ffffff;
     --item-list: lightsteelblue;
@@ -58,15 +60,17 @@
     @include mat.all-component-themes(app-theme.$app-binary-dark-theme);
     --primary: #000000;
     --secondary: #ffffff;
+    --third: #000000;
+    --background: #000000;
     --item-list: #000000;
     --item-list-border: #ffffff;
 
     --border-radius: 10px;
     --border-color: #ffffff;
     --border-width: 2px;
+
     --title: #ffffff;
     --description: #ffffff;
-    --background: #000000;
     --border: #ffffff;
     --icon: #ffffff;
     --disabled: #7a7a7a;

@@ -2,7 +2,7 @@
     id="card-{{ id }}"
     class="card"
     [style.background]="
-        actualTheme !== 'binary' ? backgroundColor || '#e4ca99' : background
+        actualTheme === 'binary' ? '#000000' : backgroundColor || '#e4ca99'
     "
     [style.borderColor]="
         actualTheme !== 'binary' ? backgroundColor || '#e4ca99' : secondary
