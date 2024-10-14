@@ -55,3 +55,9 @@
         }
     }
 }
+
+.logout {
+    width: 100px;
+    border: solid 1px var(--error);
+    border-radius: var(--border-radius) !important;
+}

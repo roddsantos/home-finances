@@ -48,10 +48,22 @@
                         />
                         @if (profileForm.controls.username.errors?.["required"]) {
                         <mat-error>{{errorMessage.username}}</mat-error>
+                        } @if (profileForm.controls.username.errors?.["usernameExists"]) {
+                        <mat-error>{{errorMessage.usernameExists}}</mat-error>
                         }
                     </mat-form-field>
                 </div>
             </div>
         </form>
     </div>
+
+    <button (click)="onLogout()" mat-button class="button-secondary logout">
+        <mat-icon
+            class="save-icon"
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="logout"
+        ></mat-icon>
+        <p>logout</p>
+    </button>
 </card-component>
