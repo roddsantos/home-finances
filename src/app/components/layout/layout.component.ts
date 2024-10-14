@@ -38,6 +38,7 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { ItemLayoutComponent } from "./item/item.layout.component";
 import { ROUTES } from "src/utils/route";
 import { HeaderLayoutComponent } from "./header/header.layout.component";
+import { ColorPipe } from "src/utils/pipes/colors";
 
 @Component({
     standalone: true,
@@ -57,6 +58,7 @@ import { HeaderLayoutComponent } from "./header/header.layout.component";
         MatSidenavModule,
         ItemLayoutComponent,
         HeaderLayoutComponent,
+        ColorPipe,
     ],
 })
 export class LayoutComponent implements OnChanges {
@@ -92,6 +94,8 @@ export class LayoutComponent implements OnChanges {
 
     actualPage = window.location.pathname;
     themeUsed: string | null;
+    public style = getComputedStyle(document.body);
+    public thirdColor = this.style.getPropertyValue("--third");
 
     onChangeRoute(route: RoutesType) {
         this.actualPage = route;

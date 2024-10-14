@@ -1,8 +1,63 @@
 .header {
     display: grid;
+    grid-template-areas: "header-search header-notifications";
+    grid-template-columns: 70% 30%;
     width: 100%;
-    height: 80px;
+    min-height: 50px;
     border-radius: 10px;
     align-items: center;
-    padding: 20px;
+    padding: 20px 0px 0px;
+}
+
+.header-search {
+    grid-area: header-search;
+    width: 50%;
+    & .mat-mdc-text-field-wrapper {
+        border-color: var(--secondary) !important;
+    }
+}
+
+.header-notifications {
+    grid-area: header-notifications;
+    margin: 0px 0px auto auto;
+    position: relative;
+    border: 0px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    & .icon {
+        margin: auto;
+        color: var(--primary);
+    }
+}
+
+.header-input {
+    & .mat-mdc-form-field-has-icon-prefix.mat-mdc-text-field-wrapper {
+        background-color: var(--primary) !important;
+    }
+}
+
+.header-option {
+    & span {
+        display: grid;
+        grid-template-areas: "indicator name" "indicator description";
+        flex-direction: row;
+    }
+}
+
+.indicator {
+    grid-area: indicator;
+    height: inherit;
+    width: 10px;
+    margin-right: 10px;
+    &.credit-card {
+        background-color: var(--error);
+    }
+}
+
+.name {
+    grid-area: name;
 }

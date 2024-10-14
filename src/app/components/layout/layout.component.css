@@ -9,10 +9,10 @@
     flex-direction: column;
     width: 300px;
     padding: 20px;
-    margin: 20px 20px 20px 0px;
-    border-radius: 0px 10px 10px 0px;
-    border: solid 1px var(--border-color);
-    background-color: var(--primary);
+    margin: 20px;
+    border-radius: 10px;
+    border: solid 1px var(--secondary);
+    background-color: var(--secondary);
     gap: 20px;
     &.binary {
         background-color: var(--background);
@@ -104,7 +104,7 @@
     text-align: center;
     border-radius: 10px;
     margin-bottom: 8vh;
-    padding: 8px 12px;
+    padding: 0px 12px 8px;
     &:hover {
         cursor: pointer;
     }
