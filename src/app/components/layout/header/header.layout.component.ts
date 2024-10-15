@@ -5,9 +5,14 @@ import { MatIconButton } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { BehaviorSubject, debounceTime, distinctUntilChanged } from "rxjs";
+import { ServiceBill } from "src/app/services/bill.service";
+import { BankState } from "src/app/subjects/subjects.bank";
 import { CategoryState } from "src/app/subjects/subjects.category";
+import { CompanyState } from "src/app/subjects/subjects.company";
 import { CreditCardState } from "src/app/subjects/subjects.credit-card";
+import { FilterDisplay } from "src/app/types/components";
 import { ColorPipe } from "src/utils/pipes/colors";
+import { SectorPipe } from "src/utils/pipes/sector";
 import { ROUTES } from "src/utils/route";
 import { removeDiacritics } from "src/utils/validators";
 
@@ -19,6 +24,7 @@ import { removeDiacritics } from "src/utils/validators";
     imports: [
         CommonModule,
         ColorPipe,
+        SectorPipe,
         MatInputModule,
         MatIconModule,
         MatAutocompleteModule,
@@ -28,6 +34,9 @@ import { removeDiacritics } from "src/utils/validators";
 export class HeaderLayoutComponent {
     public creditCards = inject(CreditCardState);
     public categories = inject(CategoryState);
+    public banks = inject(BankState);
+    public companies = inject(CompanyState);
+    public billService = inject(ServiceBill);
 
     public search$ = new BehaviorSubject<string>("");
     public actualPage: string;
@@ -37,26 +46,108 @@ export class HeaderLayoutComponent {
     public style = getComputedStyle(document.body);
     public primaryColor = this.style.getPropertyValue("--secondary");
     public backgroundColor = this.style.getPropertyValue("--background");
-    public filteredOptions: any[];
+    public filteredOptions: any[] = [];
 
     constructor() {
         this.search$
             .pipe(debounceTime(300), distinctUntilChanged())
             .subscribe((value) => {
-                this.creditCards.creditCards$.subscribe({
-                    next: (ccs) => {
-                        this.filteredOptions = [
-                            ...(value === "" || value.length < 2
-                                ? []
-                                : ccs.filter((cc) =>
-                                      removeDiacritics(cc.name).includes(
-                                          removeDiacritics(value)
-                                      )
-                                  )
-                            ).map((cc) => ({ ...cc, sector: "credit-card" })),
-                        ];
-                    },
-                });
+                this.creditCardSubscriber(value);
+                this.categoriesSubscriber(value);
+                this.banksSubscriber(value);
+                this.companySubscriber(value);
+                this.billSubscriber(value);
+            });
+    }
+
+    creditCardSubscriber(term: string) {
+        this.creditCards.creditCards$.subscribe({
+            next: (ccs) => {
+                this.filteredOptions = [
+                    ...(term === "" || term.length < 2
+                        ? []
+                        : ccs.filter((cc) =>
+                              removeDiacritics(cc.name).includes(removeDiacritics(term))
+                          )
+                    ).map((cc) => ({ ...cc, sector: "credit-card" })),
+                ];
+            },
+        });
+    }
+
+    categoriesSubscriber(term: string) {
+        this.categories.categories$.subscribe({
+            next: (cats) => {
+                this.filteredOptions = [
+                    ...this.filteredOptions,
+                    ...(term === "" || term.length < 2
+                        ? []
+                        : cats.filter((cat) =>
+                              removeDiacritics(cat.name).includes(removeDiacritics(term))
+                          )
+                    ).map((cat) => ({ ...cat, sector: "category" })),
+                ];
+            },
+        });
+    }
+
+    banksSubscriber(term: string) {
+        this.banks.banks$.subscribe({
+            next: (banks) => {
+                this.filteredOptions = [
+                    ...this.filteredOptions,
+                    ...(term === "" || term.length < 2
+                        ? []
+                        : banks.filter((bank) =>
+                              removeDiacritics(bank.name).includes(removeDiacritics(term))
+                          )
+                    ).map((bank) => ({ ...bank, sector: "bank" })),
+                ];
+            },
+        });
+    }
+
+    companySubscriber(term: string) {
+        this.companies.company$.subscribe({
+            next: (companies) => {
+                this.filteredOptions = [
+                    ...this.filteredOptions,
+                    ...(term === "" || term.length < 2
+                        ? []
+                        : companies.filter((company) =>
+                              removeDiacritics(company.name).includes(
+                                  removeDiacritics(term)
+                              )
+                          )
+                    ).map((company) => ({ ...company, sector: "company" })),
+                ];
+            },
+        });
+    }
+
+    billSubscriber(term: string) {
+        const filter: FilterDisplay[] = [
+            {
+                id: term,
+                identifier: "name",
+                name: term,
+            },
+        ];
+        this.billService
+            .getBills(1, 25, filter)
+            .pipe(debounceTime(300), distinctUntilChanged())
+            .subscribe({
+                next: (bills) => {
+                    this.filteredOptions = [
+                        ...this.filteredOptions,
+                        ...(term === "" || term.length < 2 ? [] : bills.data).map(
+                            (bill) => ({
+                                ...bill,
+                                sector: "bill",
+                            })
+                        ),
+                    ];
+                },
             });
     }
 

@@ -25,7 +25,9 @@
                 [value]="option"
             >
                 <div [ngClass]="['indicator', option.sector]"></div>
-                <p class="name">{{ option["name"] }}</p>
+                <p class="name">
+                    {{ option["name"] + " - " + (option["sector"] | sector) }}
+                </p>
                 <p class="description">{{ option["description"] }}</p>
             </mat-option>
             }

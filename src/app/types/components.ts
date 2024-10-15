@@ -26,6 +26,7 @@ export type FeedbackInfo = {
 export type SizeType = "xm" | "sm" | "md" | "lg" | "xl";
 
 export type AvailableFilters =
+    | "name"
     | "month"
     | "year"
     | "category"

@@ -41,10 +41,13 @@
 }
 
 .header-option {
+    padding: 4px 16px;
     & span {
         display: grid;
+        width: 100%;
         grid-template-areas: "indicator name" "indicator description";
-        flex-direction: row;
+        grid-template-columns: 5% 95%;
+        row-gap: 3px;
     }
 }
 
@@ -56,8 +59,21 @@
     &.credit-card {
         background-color: var(--error);
     }
+    &.category {
+        background-color: var(--info);
+    }
+    &.bank {
+        background-color: var(--success);
+    }
+    &.company {
+        background-color: var(--default);
+    }
+    &.bill {
+        background-color: var(--warning);
+    }
 }
 
 .name {
     grid-area: name;
+    font-weight: bold;
 }
