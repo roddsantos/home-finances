@@ -7,6 +7,7 @@ import { CommonModule } from "@angular/common";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { GeneralState } from "src/app/subjects/subjects.general";
 import { RouteItemType, RoutesType } from "src/app/types/general";
+import { ColorPipe } from "src/utils/pipes/colors";
 
 @Component({
     standalone: true,
@@ -14,6 +15,7 @@ import { RouteItemType, RoutesType } from "src/app/types/general";
     templateUrl: "./item.layout.component.html",
     styleUrls: ["./item.layout.component.css"],
     imports: [
+        ColorPipe,
         MatIconModule,
         ModalComponent,
         ModalProfile,
@@ -32,6 +34,9 @@ export class ItemLayoutComponent {
     public title: string;
     public icon: string;
     public onClickAction: (ref: string) => void;
+
+    public style = getComputedStyle(document.body);
+    public secondaryColor = this.style.getPropertyValue("--secondary");
 
     ngOnInit() {
         this.page = this.item.page;

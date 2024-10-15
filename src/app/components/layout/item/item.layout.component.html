@@ -5,6 +5,9 @@
         'item-selected': page === actualPage,
         top: '/settings' === page
     }"
+    [style.backgroundColor]="
+        page === actualPage ? (secondaryColor | color : '88') : 'transparent'
+    "
     (click)="onClickItem(page)"
 >
     <mat-icon

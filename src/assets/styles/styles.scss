@@ -3,14 +3,21 @@
 
 :root .dark {
     @include mat.all-component-themes(app-theme.$app-dark-theme);
-    --primary: #a5c0dd;
-    --secondary: #6c9bcf;
-    --third: #654e92;
+
+    --primary: #5a3b96;
+    --secondary: #4587d3;
+    --third: #73a8e0;
     --background: #302e2a;
 
     --border-radius: 10px;
-    --border-color: #a5c0dd;
+    --border-color: #5a3b96;
     --border-width: 2px;
+
+    --text-1: #a7a7a7;
+    --text-2: #353535;
+    --text-3: #353647;
+
+    --disabled: #7a7a7a;
 
     --item-list: rgb(135, 147, 192);
     --item-list-border: rgb(135, 147, 192);
@@ -30,14 +37,27 @@
 
 :root {
     @include mat.all-component-themes(app-theme.$app-light-theme);
-    --primary: #654e92;
+
+    --primary: #a5c0dd;
     --secondary: #6c9bcf;
-    --third: #a5c0dd;
+    --third: #654e92;
     --background: #e6ddcc;
 
     --border-radius: 10px;
-    --border-color: #654e92;
+    --border-color: #a5c0dd;
     --border-width: 2px;
+
+    --text-1: #000d55;
+    --text-2: #2d3058;
+    --text-3: #d1d1d1;
+
+    --disabled: #b9b8b88a;
+
+    --error: #865252;
+    --warning: #a86d00;
+    --info: #0b3d9b;
+    --success: #2ab842;
+    --default: #474141;
 
     --black: #000000;
     --white: #ffffff;
@@ -47,13 +67,6 @@
     --description: #535353;
     --border: #6665dd;
     --icon: var(--primary);
-    --disabled: #7a7a7a;
-
-    --error: #865252;
-    --warning: #a86d00;
-    --info: #00328f;
-    --success: #008f18;
-    --default: #474141;
 }
 
 :root .binary {
@@ -62,25 +75,28 @@
     --secondary: #ffffff;
     --third: #000000;
     --background: #000000;
-    --item-list: #000000;
-    --item-list-border: #ffffff;
+
+    --text-1: #ffffff;
+    --text-2: #ffffff;
+    --text-3: #000000;
 
     --border-radius: 10px;
     --border-color: #ffffff;
-    --border-width: 2px;
+    --border-width: 3px;
 
     --title: #ffffff;
     --description: #ffffff;
     --border: #ffffff;
     --icon: #ffffff;
     --disabled: #7a7a7a;
-    --border-radius: 10px;
 
     --error: #d34848;
     --warning: #d89f36;
     --info: #275ab9;
     --success: #24b43c;
     --default: #5f5959;
+    --item-list: #000000;
+    --item-list-border: #ffffff;
 }
 
 * {

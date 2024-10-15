@@ -12,9 +12,10 @@
     margin: 20px;
     border-radius: 10px;
     border: solid 1px var(--secondary);
-    background-color: var(--secondary);
+    background-color: var(--third);
     gap: 20px;
     &.binary {
+        border: solid var(--border-width) var(--secondary);
         background-color: var(--background);
     }
 }
