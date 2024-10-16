@@ -7,7 +7,7 @@
     <div class="cc-infos"></div>
     <div class="cc-grid">
         <li class="cc-li" *ngFor="let creditCard of (ccState.creditCards$ | async)">
-            <div class="cc-container">
+            <div [ngClass]="['cc-container', generalState.theme$ | async]">
                 <h2 class="cc-title">{{creditCard.name}}</h2>
                 <p class="cc-description">{{creditCard.description}}</p>
                 <p class="cc-month">

@@ -2,7 +2,7 @@
     height: 45px !important;
 
     &.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
-        caret-color: var(--title) !important;
+        caret-color: var(--text-1) !important;
     }
     & .mdc-notched-outline__notch {
         border-left: none !important;
@@ -10,11 +10,11 @@
     & .mdc-notched-outline__leading,
     .mdc-notched-outline__notch,
     .mdc-notched-outline__trailing {
-        border-color: var(--title) !important;
+        border-color: var(--text-1) !important;
     }
     & .mdc-text-field--focused {
         & .mdc-floating-label--float-above {
-            color: var(--title) !important;
+            color: var(--text-1) !important;
         }
     }
     & .mat-mdc-form-field-infix,
@@ -26,7 +26,7 @@
     & .mdc-notched-outline--upgraded {
         & .mdc-floating-label--float-above {
             font-size: 20px !important;
-            color: var(--title) !important;
+            color: var(--text-1) !important;
         }
     }
     &.mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {

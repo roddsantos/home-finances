@@ -30,6 +30,7 @@ export class CardComponent {
 
     public style: CSSStyleDeclaration;
     public background: string;
+    public backgroundHighlighter: string;
     public secondary: string;
 
     ngOnInit() {
@@ -40,6 +41,9 @@ export class CardComponent {
         });
         this.style = getComputedStyle(document.body);
         this.background = this.style.getPropertyValue("--background");
+        this.backgroundHighlighter = this.style.getPropertyValue(
+            "--background-highlighter"
+        );
         this.secondary = this.style.getPropertyValue("--secondary");
     }
 

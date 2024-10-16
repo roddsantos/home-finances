@@ -6,16 +6,16 @@
         top: '/settings' === page
     }"
     [style.backgroundColor]="
-        page === actualPage ? (secondaryColor | color : '88') : 'transparent'
+        page !== actualPage || !isLineThemed ? 'transparent' : secColor
     "
+    [style.borderColor]="page === actualPage ? secColor : 'transparent'"
     (click)="onClickItem(page)"
 >
     <mat-icon
         [ngClass]="{
             'material-symbols-outlined': page !== actualPage,
             'item-icon': true,
-            'icon-route':
-                page !== actualPage && (generalState.theme$ | async) !== 'binary'
+            'icon-route': page !== actualPage && isLineThemed
         }"
         aria-hidden="false"
         aria-label="Example home icon"
@@ -24,7 +24,7 @@
     <span
         [ngClass]="{
             'item-title': true,
-            'background-color': (generalState.theme$ | async) !== 'binary'
+            'background-color': isLineThemed
         }"
         >{{ title }}</span
     >

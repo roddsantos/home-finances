@@ -13,7 +13,8 @@
 }
 
 .item-selected {
-    border: solid var(--border-width) var(--secondary);
+    border: solid var(--border-width) var(--primary);
+    /* background-color: var(--secondary); */
     border-radius: 10px;
 }
 
@@ -21,12 +22,12 @@
     font-size: 0.875rem;
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
-    color: var(--icon);
+    color: var(--text-1);
     margin: auto auto auto 8px;
 }
 
 .item-icon {
-    color: var(--icon);
+    color: var(--text-1);
     height: auto;
     width: 30px;
     font-size: 20px;

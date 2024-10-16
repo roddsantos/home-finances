@@ -32,14 +32,19 @@
     height: 200px;
     padding: 30px;
     border-radius: 10px;
-    background-color: var(--third);
-    border: solid 3px var(--secondary);
+    background-color: var(--primary);
+    border: solid var(--border-width) var(--primary);
     z-index: 2;
+    cursor: pointer;
 
-    &:hover {
-        border-width: 3px 3px 8px 3px;
-        min-height: 205px;
+    &.binary {
+        border: solid var(--border-width) var(--secondary);
     }
+
+    /* &:hover {
+          border-width: 3px 3px 8px 3px;
+          min-height: 205px;
+      } */
 }
 
 .cc-highlighter {

@@ -2,10 +2,14 @@
     id="card-{{ id }}"
     class="card"
     [style.background]="
-        actualTheme === 'binary' ? '#000000' : backgroundColor || '#e4ca99'
+        actualTheme === 'binary'
+            ? '#000000'
+            : (backgroundColor || backgroundHighlighter | color : 'darker')
     "
     [style.borderColor]="
-        actualTheme !== 'binary' ? backgroundColor || '#e4ca99' : secondary
+        actualTheme !== 'binary'
+            ? (backgroundColor || backgroundHighlighter | color : 'darker')
+            : secondary
     "
 >
     <h2 *ngIf="title">{{ title }}</h2>
@@ -21,6 +25,10 @@
     [style.height]="cardHeight + 'px'"
     [style.width]="cardWidth + 'px'"
     [style.bottom]="cardHeight - 10 + 'px'"
-    [style.backgroundColor]="border ? 'transparent' : backgroundColor || '#e4ca99'"
-    [style.borderColor]="backgroundColor || '#e4ca99'"
+    [style.backgroundColor]="
+        border
+            ? 'transparent'
+            : (backgroundColor || backgroundHighlighter | color : 'darker')
+    "
+    [style.borderColor]="backgroundColor! | color : 'darker'"
 ></div>

@@ -4,28 +4,20 @@
 :root .dark {
     @include mat.all-component-themes(app-theme.$app-dark-theme);
 
-    --primary: #5a3b96;
-    --secondary: #4587d3;
-    --third: #73a8e0;
-    --background: #302e2a;
+    --primary: #39255f;
+    --secondary: #2e5b8d;
+    --third: #486a8f;
+    --background: #2a2a30;
+    --background-highlighter: #494a53;
 
     --border-radius: 10px;
     --border-color: #5a3b96;
     --border-width: 2px;
 
     --text-1: #a7a7a7;
-    --text-2: #353535;
+    --text-2: #6e6e6e;
     --text-3: #353647;
 
-    --disabled: #7a7a7a;
-
-    --item-list: rgb(135, 147, 192);
-    --item-list-border: rgb(135, 147, 192);
-    --title: #e4e4e4;
-    --description: #ffe0e0;
-    --background: rgb(75, 75, 75);
-    --border: #8ea4d2ff;
-    --icon: var(--primary);
     --disabled: #7a7a7a;
 
     --error: #e21111;
@@ -33,6 +25,13 @@
     --info: #1153e2;
     --success: #11e26f;
     --default: #474141;
+
+    --item-list: rgb(135, 147, 192);
+    --item-list-border: rgb(135, 147, 192);
+    --title: #e4e4e4;
+    --description: #ffe0e0;
+    --border: #8ea4d2ff;
+    --icon: var(--primary);
 }
 
 :root {
@@ -42,6 +41,7 @@
     --secondary: #6c9bcf;
     --third: #654e92;
     --background: #e6ddcc;
+    --background-highlighter: #e2d1b2;
 
     --border-radius: 10px;
     --border-color: #a5c0dd;
@@ -75,6 +75,7 @@
     --secondary: #ffffff;
     --third: #000000;
     --background: #000000;
+    --background-highlighter: #000000;
 
     --text-1: #ffffff;
     --text-2: #ffffff;

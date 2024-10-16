@@ -6,7 +6,7 @@ import { RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { GeneralState } from "src/app/subjects/subjects.general";
-import { RouteItemType, RoutesType } from "src/app/types/general";
+import { RouteItemType, RoutesType, ThemeType } from "src/app/types/general";
 import { ColorPipe } from "src/utils/pipes/colors";
 
 @Component({
@@ -36,7 +36,17 @@ export class ItemLayoutComponent {
     public onClickAction: (ref: string) => void;
 
     public style = getComputedStyle(document.body);
+    public isLineThemed: boolean = false;
     public secondaryColor = this.style.getPropertyValue("--secondary");
+    public secColor = this.style.getPropertyValue("--secondary");
+
+    constructor() {
+        this.generalState.theme$.subscribe({
+            next: (t) => {
+                this.isLineThemed = t !== "binary";
+            },
+        });
+    }
 
     ngOnInit() {
         this.page = this.item.page;

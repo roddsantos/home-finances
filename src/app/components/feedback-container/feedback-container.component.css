@@ -10,14 +10,11 @@
     color: #fff;
 
     & p {
-        color: var(--description);
+        color: var(--text-1);
     }
 
     & h2 {
-        font: normal 18px Roboto;
-        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-            "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-        color: var(--title);
+        color: var(--text-1);
     }
 
     & .mat-icon {
