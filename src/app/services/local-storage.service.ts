@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { User } from "src/app/types/objects";
 import { ThemeType } from "../types/general";
-import { GeneralState } from "../subjects/subjects.general";
+import { GeneralState } from "src/app/core/subjects/subjects.general";
 
 @Injectable({
     providedIn: "root",

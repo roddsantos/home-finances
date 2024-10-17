@@ -6,8 +6,8 @@ import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { ServiceBank } from "src/app/services/bank.service";
-import { BankState } from "src/app/subjects/subjects.bank";
-import { UserState } from "src/app/subjects/subjects.user";
+import { BankState } from "src/app/core/subjects/subjects.bank";
+import { UserState } from "src/app/core/subjects/subjects.user";
 import { ActionItem } from "src/app/types/components";
 import { Bank } from "src/app/types/objects";
 

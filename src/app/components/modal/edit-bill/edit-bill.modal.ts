@@ -9,13 +9,13 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
-import { BillState } from "src/app/subjects/subjects.bill";
+import { BillState } from "src/app/core/subjects/subjects.bill";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
-import { ModalState } from "src/app/subjects/subjects.modal";
+import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { Category } from "src/app/types/objects";
 import { BankTemplateEditBill } from "./templates/bank/bank.template.edit-bill";
-import { CategoryState } from "src/app/subjects/subjects.category";
+import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { CommonModule } from "@angular/common";
 import { CompanyTemplateEditBill } from "./templates/company/company.template.edit-bill";
 import { CreditCardTemplateEditBill } from "./templates/credit-card/credit-card.template.edit-bill";

@@ -10,10 +10,10 @@ import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BILL } from "src/utils/constants/services";
 import { BillObject } from "../types/services";
-import { UserState } from "../subjects/subjects.user";
+import { UserState } from "src/app/core/subjects/subjects.user";
 import { mergeMap, zip } from "rxjs";
 import { CustomFilterState } from "../components/custom-filter/custom-filter.subjects.component";
-import { BillState } from "../subjects/subjects.bill";
+import { BillState } from "src/app/core/subjects/subjects.bill";
 import { Bill, BillData } from "../types/objects";
 import { FilterDisplay } from "../types/components";
 

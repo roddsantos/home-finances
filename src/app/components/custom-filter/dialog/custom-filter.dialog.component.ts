@@ -1,10 +1,10 @@
 import { Component, ElementRef, inject, OnInit, ViewChild } from "@angular/core";
-import { ModalState } from "src/app/subjects/subjects.modal";
+import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { ModalComponent } from "src/app/components/modal/modal.component";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { AvailableDataFilters, FilterDisplay } from "src/app/types/components";
-import { CategoryState } from "src/app/subjects/subjects.category";
+import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { CommonModule } from "@angular/common";
 import { MatSelect, MatSelectChange, MatSelectModule } from "@angular/material/select";
 import { MatIconModule } from "@angular/material/icon";
@@ -18,15 +18,15 @@ import { MatInput, MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButton } from "@angular/material/button";
 import { CustomFilterState } from "../custom-filter.subjects.component";
-import { CreditCardState } from "src/app/subjects/subjects.credit-card";
-import { CompanyState } from "src/app/subjects/subjects.company";
-import { BankState } from "src/app/subjects/subjects.bank";
+import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
+import { CompanyState } from "src/app/core/subjects/subjects.company";
+import { BankState } from "src/app/core/subjects/subjects.bank";
 import { MONTHS } from "src/utils/constants/general";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ServiceBill } from "src/app/services/bill.service";
 import { MatButtonToggle, MatButtonToggleModule } from "@angular/material/button-toggle";
-import { BillState } from "src/app/subjects/subjects.bill";
+import { BillState } from "src/app/core/subjects/subjects.bill";
 import { Bill, BillData } from "src/app/types/objects";
 import {
     MatDatepickerInput,
@@ -34,7 +34,7 @@ import {
     MatDatepickerModule,
 } from "@angular/material/datepicker";
 import { MatNativeDateModule, provideNativeDateAdapter } from "@angular/material/core";
-import { GeneralState } from "src/app/subjects/subjects.general";
+import { GeneralState } from "src/app/core/subjects/subjects.general";
 
 @Component({
     selector: "dialog-custom-filter",

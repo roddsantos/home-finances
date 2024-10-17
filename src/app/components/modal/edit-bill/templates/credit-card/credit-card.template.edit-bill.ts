@@ -12,8 +12,8 @@ import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
 import { MatInputModule } from "@angular/material/input";
-import { CreditCardState } from "src/app/subjects/subjects.credit-card";
-import { CompanyState } from "src/app/subjects/subjects.company";
+import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
+import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { INVALID_PARCEL, NO_CREDIT_CARD } from "src/utils/constants/forms";
 

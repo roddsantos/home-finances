@@ -6,7 +6,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatOption, MatSelectModule } from "@angular/material/select";
 import { distinctUntilChanged } from "rxjs";
-import { CategoryState } from "src/app/subjects/subjects.category";
+import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { ErrorsBillForm, InfoBillForm } from "src/app/types/forms";
 import { PaymentTypes } from "src/app/types/general";
 import { Category } from "src/app/types/objects";

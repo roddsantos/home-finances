@@ -18,8 +18,8 @@ import {
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { ServiceCompany } from "src/app/services/company.service";
-import { ModalState } from "src/app/subjects/subjects.modal";
-import { CompanyState } from "src/app/subjects/subjects.company";
+import { ModalState } from "src/app/core/subjects/subjects.modal";
+import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { Company } from "src/app/types/objects";
 import { CompanyObject } from "src/app/types/services";
 import { NO_DESCRIPTION, NO_NAME } from "src/utils/constants/forms";

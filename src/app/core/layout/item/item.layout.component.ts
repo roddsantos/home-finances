@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
-import { ModalComponent } from "../../modal/modal.component";
-import { ModalProfile } from "../../modal/profile/profile.modal";
+import { ModalComponent } from "src/app/components/modal/modal.component";
+import { ModalProfile } from "src/app/components/modal/profile/profile.modal";
 import { RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { MatTooltipModule } from "@angular/material/tooltip";

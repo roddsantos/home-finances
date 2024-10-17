@@ -15,8 +15,8 @@ import { FormsModule } from "@angular/forms";
 import { User } from "src/app/types/objects";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 import { ServiceUser } from "src/app/services/user.service";
-import { ModalState } from "src/app/subjects/subjects.modal";
-import { UserState } from "src/app/subjects/subjects.user";
+import { ModalState } from "src/app/core/subjects/subjects.modal";
+import { UserState } from "src/app/core/subjects/subjects.user";
 import { AsyncPipe } from "@angular/common";
 
 export interface DialogData {

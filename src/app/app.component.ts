@@ -1,11 +1,11 @@
 import { Component, ViewEncapsulation, inject } from "@angular/core";
 import { LocalStorageService } from "./services/local-storage.service";
-import { UserState } from "src/app/subjects/subjects.user";
-import { CategoryState } from "./subjects/subjects.category";
+import { UserState } from "src/app/core/subjects/subjects.user";
+import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { ServiceCategory } from "./services/category.service";
 import { CustomFilterState } from "./components/custom-filter/custom-filter.subjects.component";
 import { Router } from "@angular/router";
-import { GeneralState } from "./subjects/subjects.general";
+import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ThemeType } from "./types/general";
 
 @Component({

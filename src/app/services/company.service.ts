@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { COMPANY } from "src/utils/constants/services";
 import { CompanyObject } from "../types/services";
-import { UserState } from "../subjects/subjects.user";
+import { UserState } from "src/app/core/subjects/subjects.user";
 import { mergeMap } from "rxjs";
 import { Company } from "../types/objects";
 

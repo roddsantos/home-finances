@@ -4,7 +4,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { ServiceBill } from "src/app/services/bill.service";
-import { BillState } from "src/app/subjects/subjects.bill";
+import { BillState } from "src/app/core/subjects/subjects.bill";
 import { MatTooltipModule } from "@angular/material/tooltip";
 
 @Component({

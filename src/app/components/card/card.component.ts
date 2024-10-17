@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, HostListener, inject, Input } from "@angular/core";
 import { LocalStorageService } from "src/app/services/local-storage.service";
-import { GeneralState } from "src/app/subjects/subjects.general";
+import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ThemeType } from "src/app/types/general";
 import { ColorPipe } from "src/utils/pipes/colors";
 

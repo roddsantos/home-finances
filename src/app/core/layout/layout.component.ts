@@ -8,9 +8,9 @@ import {
     inject,
 } from "@angular/core";
 import { Router, RouterModule } from "@angular/router";
-import { ModalProfile } from "../modal/profile/profile.modal";
+import { ModalProfile } from "src/app/components/modal/profile/profile.modal";
 import { LocalStorageService } from "src/app/services/local-storage.service";
-import { ModalComponent } from "../modal/modal.component";
+import { ModalComponent } from "src/app/components/modal/modal.component";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
 import { Dialog } from "@angular/cdk/dialog";
@@ -22,12 +22,12 @@ import { UserState } from "src/app/core/subjects/subjects.user";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { ServiceCompany } from "src/app/services/company.service";
-import { CustomSnackbarComponent } from "../custom-snackbar/custom-snackbar.component";
+import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { ServiceCategory } from "src/app/services/category.service";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
-import { CustomFilterState } from "../custom-filter/custom-filter.subjects.component";
+import { CustomFilterState } from "src/app/components/custom-filter/custom-filter.subjects.component";
 import { CommonModule } from "@angular/common";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatMenuModule } from "@angular/material/menu";

@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { CREDIT_CARD } from "src/utils/constants/services";
 import { CreditCardObject, GetCreditCard } from "../types/services";
 import { mergeMap } from "rxjs";
-import { UserState } from "../subjects/subjects.user";
+import { UserState } from "src/app/core/subjects/subjects.user";
 import { CreditCard } from "../types/objects";
 
 @Injectable({

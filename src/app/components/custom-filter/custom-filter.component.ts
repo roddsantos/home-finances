@@ -9,11 +9,11 @@ import { CommonModule } from "@angular/common";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatChipsModule } from "@angular/material/chips";
 import { ServiceBill } from "src/app/services/bill.service";
-import { BillState } from "src/app/subjects/subjects.bill";
+import { BillState } from "src/app/core/subjects/subjects.bill";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { CustomSnackbarComponent } from "../custom-snackbar/custom-snackbar.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
-import { GeneralState } from "src/app/subjects/subjects.general";
+import { GeneralState } from "src/app/core/subjects/subjects.general";
 
 @Injectable({
     providedIn: "root",

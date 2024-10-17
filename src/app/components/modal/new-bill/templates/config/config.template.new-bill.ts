@@ -11,16 +11,16 @@ import { Bank, Company, CreditCard } from "src/app/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
-import { CompanyState } from "src/app/subjects/subjects.company";
+import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { MatInputModule } from "@angular/material/input";
-import { BankState } from "src/app/subjects/subjects.bank";
+import { BankState } from "src/app/core/subjects/subjects.bank";
 import {
     INVALID_PARCEL,
     NO_COMPANY,
     UNNECESSARY_BANK,
     UNNECESSARY_CC,
 } from "src/utils/constants/forms";
-import { CreditCardState } from "src/app/subjects/subjects.credit-card";
+import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import {
     BankBillForm,
     CompanyBillForm,

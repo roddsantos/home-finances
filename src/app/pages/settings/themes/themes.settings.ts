@@ -4,7 +4,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { CardComponent } from "src/app/components/card/card.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
-import { GeneralState } from "src/app/subjects/subjects.general";
+import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ThemeType } from "src/app/types/general";
 import { THEMES } from "src/utils/constants/general";
 import { ColorPipe } from "src/utils/pipes/colors";

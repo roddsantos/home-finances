@@ -6,7 +6,7 @@ import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/cust
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ServiceCategory } from "src/app/services/category.service";
-import { CategoryState } from "src/app/subjects/subjects.category";
+import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { Category } from "src/app/types/objects";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ActionItem } from "src/app/types/components";

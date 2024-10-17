@@ -17,13 +17,13 @@ import {
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
-import { ModalState } from "src/app/subjects/subjects.modal";
+import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { MatSelectModule } from "@angular/material/select";
 import { CreditCardObject } from "src/app/types/services";
 import { CreditCard } from "src/app/types/objects";
 import { MonthType } from "src/app/types/general";
 import { ServiceCreditCard } from "src/app/services/credit-card.service";
-import { CreditCardState } from "src/app/subjects/subjects.credit-card";
+import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { MONTHS } from "src/utils/constants/general";
 import { NO_DESCRIPTION, NO_NAME } from "src/utils/constants/forms";
 import { CommonModule } from "@angular/common";

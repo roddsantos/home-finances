@@ -18,13 +18,13 @@ import {
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { ServiceCompany } from "src/app/services/company.service";
-import { ModalState } from "src/app/subjects/subjects.modal";
-import { CompanyState } from "src/app/subjects/subjects.company";
+import { ModalState } from "src/app/core/subjects/subjects.modal";
+import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { Category, Company } from "src/app/types/objects";
 import { CategoryObject, CompanyObject } from "src/app/types/services";
 import { NO_DESCRIPTION, NO_NAME } from "src/utils/constants/forms";
 import { ServiceCategory } from "src/app/services/category.service";
-import { CategoryState } from "src/app/subjects/subjects.category";
+import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { MatIconModule } from "@angular/material/icon";
 import { IconSelection } from "../icon-selection/icon-selection-modal";
 import { Dialog } from "@angular/cdk/dialog";

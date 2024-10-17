@@ -20,7 +20,7 @@ import {
     NgSwitchCase,
     NgTemplateOutlet,
 } from "@angular/common";
-import { ModalState } from "src/app/subjects/subjects.modal";
+import { ModalState } from "src/app/core/subjects/subjects.modal";
 
 @Component({
     selector: "modal-component",
