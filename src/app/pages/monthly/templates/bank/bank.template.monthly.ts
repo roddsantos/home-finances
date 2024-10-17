@@ -8,8 +8,8 @@ import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/cust
 import { ModalEditBill } from "src/app/components/modal/edit-bill/edit-bill.modal";
 import { ServiceBill } from "src/app/services/bill.service";
 import { BillState } from "src/app/core/subjects/subjects.bill";
-import { ActionItem } from "src/app/types/components";
-import { Bill, BillData } from "src/app/types/objects";
+import { ActionItem } from "src/app/core/types/components";
+import { Bill, BillData } from "src/app/core/types/objects";
 
 @Component({
     selector: "bank-list-template",

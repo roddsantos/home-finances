@@ -10,7 +10,7 @@ import { BankState } from "src/app/core/subjects/subjects.bank";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
-import { FilterDisplay } from "src/app/types/components";
+import { FilterDisplay } from "src/app/core/types/components";
 import { ColorPipe } from "src/utils/pipes/colors";
 import { SectorPipe } from "src/utils/pipes/sector";
 import { ROUTES } from "src/utils/route";

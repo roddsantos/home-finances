@@ -1,8 +1,12 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { Bill, BillData } from "src/app/types/objects";
-import { FeedbackInfo, FeedbackVariant, PaginationType } from "../types/components";
-import { FetchPaginatedData } from "../types/services";
+import { Bill, BillData } from "src/app/core/types/objects";
+import {
+    FeedbackInfo,
+    FeedbackVariant,
+    PaginationType,
+} from "src/app/core/types/components";
+import { FetchPaginatedData } from "src/app/core/types/services";
 
 @Injectable({
     providedIn: "root",

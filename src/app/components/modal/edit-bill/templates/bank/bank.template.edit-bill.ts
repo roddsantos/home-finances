@@ -9,7 +9,7 @@ import {
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { BankState } from "src/app/core/subjects/subjects.bank";
-import { Bank, Bill, BillData, Company } from "src/app/types/objects";
+import { Bank, Bill, BillData, Company } from "src/app/core/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";

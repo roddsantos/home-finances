@@ -19,7 +19,7 @@ import { BillState } from "src/app/core/subjects/subjects.bill";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
-import { Bank, Category, Company, CreditCard } from "src/app/types/objects";
+import { Bank, Category, Company, CreditCard } from "src/app/core/types/objects";
 import { BankTemplateNewBill } from "./templates/bank/bank.template.new-bill";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { CommonModule } from "@angular/common";
@@ -35,17 +35,17 @@ import {
     YEAR_OUT_OF_RANGE,
 } from "src/utils/constants/forms";
 import { ServiceBill } from "src/app/services/bill.service";
-import { MonthType, PaymentTypes, RequiredKeys } from "src/app/types/general";
+import { MonthType, PaymentTypes, RequiredKeys } from "src/app/core/types/general";
 import { MONTHS } from "src/utils/constants/general";
 import { MatOption } from "@angular/material/core";
 import { MatSelectChange, MatSelectModule } from "@angular/material/select";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { provideNativeDateAdapter } from "@angular/material/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
-import { BillObject } from "src/app/types/services";
+import { BillObject } from "src/app/core/types/services";
 import { TypeTemplate } from "./templates/type/type.template.new-bill";
 import { InfoTemplate } from "./templates/info/info.template.new-bill";
-import { ErrorsBillForm, InfoBillForm } from "src/app/types/forms";
+import { ErrorsBillForm, InfoBillForm } from "src/app/core/types/forms";
 import { ConfigTemplate } from "./templates/config/config.template.new-bill";
 
 @Component({

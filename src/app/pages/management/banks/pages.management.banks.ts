@@ -8,8 +8,8 @@ import { FeedbackContainerComponent } from "src/app/components/feedback-containe
 import { ServiceBank } from "src/app/services/bank.service";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import { UserState } from "src/app/core/subjects/subjects.user";
-import { ActionItem } from "src/app/types/components";
-import { Bank } from "src/app/types/objects";
+import { ActionItem } from "src/app/core/types/components";
+import { Bank } from "src/app/core/types/objects";
 
 @Component({
     selector: "management-banks",

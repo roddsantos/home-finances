@@ -7,9 +7,9 @@ import { FeedbackContainerComponent } from "src/app/components/feedback-containe
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ServiceCategory } from "src/app/services/category.service";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
-import { Category } from "src/app/types/objects";
+import { Category } from "src/app/core/types/objects";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
-import { ActionItem } from "src/app/types/components";
+import { ActionItem } from "src/app/core/types/components";
 
 @Component({
     selector: "management-categories",

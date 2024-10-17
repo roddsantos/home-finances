@@ -6,7 +6,7 @@ import { ServiceCategory } from "./services/category.service";
 import { CustomFilterState } from "./components/custom-filter/custom-filter.subjects.component";
 import { Router } from "@angular/router";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
-import { ThemeType } from "./types/general";
+import { ThemeType } from "src/app/core/types/general";
 
 @Component({
     selector: "app-root",

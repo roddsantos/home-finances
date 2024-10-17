@@ -2,7 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 
 import { AppComponent } from "./app.component";
-import { LayoutComponent } from "./components/layout/layout.component";
+import { LayoutComponent } from "src/app/core/layout/layout.component";
 import { MatTabsModule } from "@angular/material/tabs";
 import { AppRoutingModule } from "./app-routing.module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";

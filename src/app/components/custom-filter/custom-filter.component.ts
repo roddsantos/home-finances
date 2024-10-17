@@ -1,6 +1,10 @@
 import { Component, inject, Injectable, Input, Output } from "@angular/core";
 import { CustomFilterState } from "./custom-filter.subjects.component";
-import { AvailableFilters, FilterDisplay, ListAction } from "src/app/types/components";
+import {
+    AvailableFilters,
+    FilterDisplay,
+    ListAction,
+} from "src/app/core/types/components";
 import { Dialog } from "@angular/cdk/dialog";
 import { DialogCustomList } from "./dialog/custom-filter.dialog.component";
 import { MatButton } from "@angular/material/button";

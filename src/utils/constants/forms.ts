@@ -1,4 +1,4 @@
-import { PaymentTypesObject } from "src/app/types/general";
+import { PaymentTypesObject } from "src/app/core/types/general";
 
 export const NO_BANK = "you must select a bank";
 export const NO_CREDIT_CARD = "you must select a credit card";

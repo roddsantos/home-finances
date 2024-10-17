@@ -5,17 +5,17 @@ import {
     BillObjectCredtCard,
     BillObjectCredtCardUpdate,
     FetchPaginatedData,
-} from "../types/services";
+} from "src/app/core/types/services";
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BILL } from "src/utils/constants/services";
-import { BillObject } from "../types/services";
+import { BillObject } from "src/app/core/types/services";
 import { UserState } from "src/app/core/subjects/subjects.user";
 import { mergeMap, zip } from "rxjs";
 import { CustomFilterState } from "../components/custom-filter/custom-filter.subjects.component";
 import { BillState } from "src/app/core/subjects/subjects.bill";
-import { Bill, BillData } from "../types/objects";
-import { FilterDisplay } from "../types/components";
+import { Bill, BillData } from "src/app/core/types/objects";
+import { FilterDisplay } from "src/app/core/types/components";
 
 @Injectable({
     providedIn: "root",

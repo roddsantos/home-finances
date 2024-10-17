@@ -2,7 +2,7 @@ import { PageCreditCards } from "./pages/credit-cards/pages.credit-cards";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
-import { authGuard } from "./auth/auth.guard";
+import { authGuard } from "src/app/core/auth/auth.guard";
 
 const routes: Routes = [
     {

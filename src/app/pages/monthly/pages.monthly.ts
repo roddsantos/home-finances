@@ -7,7 +7,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { CustomFilterComponent } from "src/app/components/custom-filter/custom-filter.component";
 import { ModalNewBill } from "src/app/components/modal/new-bill/new-bill.modal";
 import { BillState } from "src/app/core/subjects/subjects.bill";
-import { Bill, BillData } from "src/app/types/objects";
+import { Bill, BillData } from "src/app/core/types/objects";
 import { getMonthAndYear } from "src/utils/date";
 import { BankListTemplateMonthly } from "./templates/bank/bank.template.monthly";
 import { CreditCardTemplateMonthly } from "./templates/credit-card/credit-card.template.monthly";

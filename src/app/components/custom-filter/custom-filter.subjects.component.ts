@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { LocalStorageService } from "src/app/services/local-storage.service";
-import { FilterDisplay } from "src/app/types/components";
+import { FilterDisplay } from "src/app/core/types/components";
 
 @Injectable({
     providedIn: "root",

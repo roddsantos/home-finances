@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { User } from "src/app/types/objects";
-import { ThemeType } from "../types/general";
+import { User } from "src/app/core/types/objects";
+import { ThemeType } from "src/app/core/types/general";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 
 @Injectable({

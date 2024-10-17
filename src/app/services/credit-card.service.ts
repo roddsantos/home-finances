@@ -1,10 +1,10 @@
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { CREDIT_CARD } from "src/utils/constants/services";
-import { CreditCardObject, GetCreditCard } from "../types/services";
+import { CreditCardObject, GetCreditCard } from "src/app/core/types/services";
 import { mergeMap } from "rxjs";
 import { UserState } from "src/app/core/subjects/subjects.user";
-import { CreditCard } from "../types/objects";
+import { CreditCard } from "src/app/core/types/objects";
 
 @Injectable({
     providedIn: "root",

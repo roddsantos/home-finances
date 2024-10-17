@@ -4,8 +4,8 @@ import { Component, inject, Input } from "@angular/core";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ModalEditBill } from "src/app/components/modal/edit-bill/edit-bill.modal";
-import { ActionItem } from "src/app/types/components";
-import { Bill, BillData } from "src/app/types/objects";
+import { ActionItem } from "src/app/core/types/components";
+import { Bill, BillData } from "src/app/core/types/objects";
 
 @Component({
     selector: "service-list-template",

@@ -6,7 +6,7 @@ import { RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
-import { RouteItemType, RoutesType, ThemeType } from "src/app/types/general";
+import { RouteItemType, RoutesType, ThemeType } from "src/app/core/types/general";
 import { ColorPipe } from "src/utils/pipes/colors";
 
 @Component({

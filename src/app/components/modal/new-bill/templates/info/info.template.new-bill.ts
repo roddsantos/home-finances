@@ -7,9 +7,9 @@ import { MatInputModule } from "@angular/material/input";
 import { MatOption, MatSelectModule } from "@angular/material/select";
 import { distinctUntilChanged } from "rxjs";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
-import { ErrorsBillForm, InfoBillForm } from "src/app/types/forms";
-import { PaymentTypes } from "src/app/types/general";
-import { Category } from "src/app/types/objects";
+import { ErrorsBillForm, InfoBillForm } from "src/app/core/types/forms";
+import { PaymentTypes } from "src/app/core/types/general";
+import { Category } from "src/app/core/types/objects";
 import {
     NEGATIVE_TOTAL,
     NO_BILL_VALUE,

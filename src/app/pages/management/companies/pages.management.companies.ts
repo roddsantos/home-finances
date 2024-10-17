@@ -11,8 +11,8 @@ import { FeedbackContainerComponent } from "src/app/components/feedback-containe
 import { ServiceCompany } from "src/app/services/company.service";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { UserState } from "src/app/core/subjects/subjects.user";
-import { ActionItem } from "src/app/types/components";
-import { Company } from "src/app/types/objects";
+import { ActionItem } from "src/app/core/types/components";
+import { Company } from "src/app/core/types/objects";
 
 @Component({
     selector: "management-companies",

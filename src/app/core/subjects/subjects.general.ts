@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { ManagerTabs, ThemeType } from "src/app/types/general";
+import { ManagerTabs, ThemeType } from "src/app/core/types/general";
 
 @Injectable({
     providedIn: "root",

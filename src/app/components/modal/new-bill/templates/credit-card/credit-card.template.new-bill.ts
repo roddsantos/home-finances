@@ -7,7 +7,7 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { Company, CreditCard } from "src/app/types/objects";
+import { Company, CreditCard } from "src/app/core/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
@@ -16,7 +16,7 @@ import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { INVALID_PARCEL, NO_CREDIT_CARD } from "src/utils/constants/forms";
-import { CreditCardForm, ErrorsBillForm } from "src/app/types/forms";
+import { CreditCardForm, ErrorsBillForm } from "src/app/core/types/forms";
 
 @Component({
     selector: "template-credit-card",

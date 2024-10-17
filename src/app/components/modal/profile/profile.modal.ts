@@ -12,7 +12,7 @@ import { ModalComponent } from "../modal.component";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { FormsModule } from "@angular/forms";
-import { User } from "src/app/types/objects";
+import { User } from "src/app/core/types/objects";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 import { ServiceUser } from "src/app/services/user.service";
 import { ModalState } from "src/app/core/subjects/subjects.modal";

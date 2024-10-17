@@ -32,7 +32,7 @@ import { CommonModule } from "@angular/common";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";
-import { RouteItemType, RoutesType, ThemeType } from "src/app/types/general";
+import { RouteItemType, RoutesType, ThemeType } from "src/app/core/types/general";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { ItemLayoutComponent } from "./item/item.layout.component";

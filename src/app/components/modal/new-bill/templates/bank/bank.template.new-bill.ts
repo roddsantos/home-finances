@@ -16,14 +16,14 @@ import {
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { BankState } from "src/app/core/subjects/subjects.bank";
-import { Bank, Company } from "src/app/types/objects";
+import { Bank, Company } from "src/app/core/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
 import { NO_BANK, SAME_BANK } from "src/utils/constants/forms";
 import { MatIconModule } from "@angular/material/icon";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
-import { BankBillForm, ErrorsBillForm } from "src/app/types/forms";
+import { BankBillForm, ErrorsBillForm } from "src/app/core/types/forms";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 
 @Component({

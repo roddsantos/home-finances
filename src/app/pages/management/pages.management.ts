@@ -15,7 +15,7 @@ import { ModalNewCompany } from "src/app/components/modal/new-company/new-compan
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { CreditCardsManagementComponent } from "./credit-cards/pages.management.credit-cards";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
-import { ManagerTabs } from "src/app/types/general";
+import { ManagerTabs } from "src/app/core/types/general";
 import { BanksManagementComponent } from "./banks/pages.management.banks";
 import { ModalNewCreditCard } from "src/app/components/modal/new-credit-card/new-credit-card.modal";
 import { CategoriesManagementComponent } from "./categories/pages.management.categories";

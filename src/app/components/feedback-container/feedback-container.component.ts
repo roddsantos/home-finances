@@ -3,7 +3,7 @@ import { Component, Input } from "@angular/core";
 import { MatButton } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { FeedbackInfo } from "src/app/types/components";
+import { FeedbackInfo } from "src/app/core/types/components";
 
 @Component({
     selector: "feedback-container",

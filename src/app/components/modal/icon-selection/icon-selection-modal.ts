@@ -1,4 +1,4 @@
-import { IconType } from "src/app/types/components";
+import { IconType } from "src/app/core/types/components";
 import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Output, ViewChild } from "@angular/core";
 import { MATERIAL_ICONS } from "src/utils/constants/icons";

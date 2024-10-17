@@ -3,7 +3,7 @@ import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { ModalComponent } from "src/app/components/modal/modal.component";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
-import { AvailableDataFilters, FilterDisplay } from "src/app/types/components";
+import { AvailableDataFilters, FilterDisplay } from "src/app/core/types/components";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { CommonModule } from "@angular/common";
 import { MatSelect, MatSelectChange, MatSelectModule } from "@angular/material/select";
@@ -27,7 +27,7 @@ import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ServiceBill } from "src/app/services/bill.service";
 import { MatButtonToggle, MatButtonToggleModule } from "@angular/material/button-toggle";
 import { BillState } from "src/app/core/subjects/subjects.bill";
-import { Bill, BillData } from "src/app/types/objects";
+import { Bill, BillData } from "src/app/core/types/objects";
 import {
     MatDatepickerInput,
     MatDatepickerInputEvent,

@@ -10,7 +10,7 @@ import {
 } from "@angular/core";
 import { MatIcon } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
-import { ProfileDialogType } from "src/app/types/modal";
+import { ProfileDialogType } from "src/app/core/types/modal";
 import { DIALOG_DATA, DialogRef } from "@angular/cdk/dialog";
 import {
     AsyncPipe,

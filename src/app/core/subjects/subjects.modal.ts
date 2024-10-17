@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { FooterModal } from "../types/modal";
+import { FooterModal } from "src/app/core/types/modal";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 
 @Injectable({

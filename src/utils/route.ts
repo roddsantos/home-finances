@@ -1,4 +1,4 @@
-import { RouteItemType } from "src/app/types/general";
+import { RouteItemType } from "src/app/core/types/general";
 
 export const ROUTES: RouteItemType[] = [
     {

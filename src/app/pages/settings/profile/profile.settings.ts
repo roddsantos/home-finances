@@ -16,7 +16,7 @@ import { CardComponent } from "src/app/components/card/card.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ServiceUser } from "src/app/services/user.service";
 import { UserState } from "src/app/core/subjects/subjects.user";
-import { User } from "src/app/types/objects";
+import { User } from "src/app/core/types/objects";
 import { ColorPipe } from "src/utils/pipes/colors";
 
 @Component({

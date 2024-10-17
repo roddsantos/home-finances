@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { Bank } from "src/app/types/objects";
-import { FeedbackInfo, FeedbackVariant } from "../types/components";
+import { Bank } from "src/app/core/types/objects";
+import { FeedbackInfo, FeedbackVariant } from "src/app/core/types/components";
 
 @Injectable({
     providedIn: "root",
