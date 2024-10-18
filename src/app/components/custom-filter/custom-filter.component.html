@@ -1,4 +1,4 @@
-<div class="filter-container">
+<div class="filter-main">
     <div class="filter-button-container">
         <button
             *ngIf="(filterState.filters$ | async)!.length > 0"
@@ -19,9 +19,47 @@
             (click)="openDialog()"
         >
             <mat-icon class="filter-icon material-symbols-outlined">filter_alt</mat-icon>
+            <p>filter</p>
         </button>
     </div>
-    <div class="chip-grid">
+    <div class="filter-container">
+        <div class="filter-date">
+            <h5 class="month-label">month</h5>
+            <mat-form-field class="month-input" appearance="outline">
+                <mat-select
+                    placeholder="pick month"
+                    #month
+                    (selectionChange)="addMonth($event)"
+                    [formControl]="monthCtrl"
+                >
+                    @for (m of months; track m) {
+                    <mat-option [value]="m">{{ m.name }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <p class="slash">/</p>
+            <h5 class="year-label">year</h5>
+            <mat-form-field class="year-input" appearance="outline">
+                <input
+                    (keyup.enter)="addYear($event)"
+                    matInput
+                    #year
+                    type="number"
+                    [formControl]="yearCtrl"
+                />
+                @if (yearCtrl.invalid) {
+                <mat-error>invalid year (2023-2090)</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div class="filter-status"></div>
+        <div class="filter-min-max"></div>
+        <div class="filter-type"></div>
+        <div class="divider-1"></div>
+        <div class="divider-2"></div>
+        <div class="divider-3"></div>
+    </div>
+    <!-- <div class="chip-grid">
         <p class="filter-label">applied filters:</p>
         <p *ngIf="(filterState.filters$ | async)?.length === 0" class="filter-label">
             no filters applied
@@ -42,5 +80,5 @@
             </button>
         </mat-chip-row>
         }
-    </div>
+    </div> -->
 </div>

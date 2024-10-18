@@ -4,18 +4,18 @@
 :root .dark {
     @include mat.all-component-themes(app-theme.$app-dark-theme);
 
-    --primary: #39255f;
-    --secondary: #2e5b8d;
-    --third: #486a8f;
+    --primary: #7440d4;
+    --secondary: #3b77bd;
+    --third: #45afc2;
     --background: #2a2a30;
     --background-highlighter: #494a53;
 
     --border-radius: 10px;
-    --border-color: #5a3b96;
+    --border-color: #7440d4;
     --border-width: 2px;
 
-    --text-1: #a7a7a7;
-    --text-2: #6e6e6e;
+    --text-1: #c0c0c0;
+    --text-2: #818181;
     --text-3: #353647;
 
     --disabled: #7a7a7a;
@@ -37,18 +37,18 @@
 :root {
     @include mat.all-component-themes(app-theme.$app-light-theme);
 
-    --primary: #a5c0dd;
-    --secondary: #6c9bcf;
-    --third: #654e92;
-    --background: #e6ddcc;
-    --background-highlighter: #e2d1b2;
+    --primary: #88b9ee;
+    --secondary: #63d0e4;
+    --third: #735aa7;
+    --background: #dbf2ff;
+    --background-highlighter: #c1cfff;
 
     --border-radius: 10px;
-    --border-color: #a5c0dd;
+    --border-color: #88b9ee;
     --border-width: 2px;
 
     --text-1: #000d55;
-    --text-2: #2d3058;
+    --text-2: #3c3e5c;
     --text-3: #d1d1d1;
 
     --disabled: #b9b8b88a;
@@ -123,8 +123,8 @@
 }
 
 body {
-    min-height: 100vh;
-    min-width: 100vw;
+    min-height: 100dvh;
+    min-width: 100dvw;
     background-color: var(--background);
     font-family: "Open-Sans-Regular";
 }
@@ -132,8 +132,8 @@ body {
 .page {
     display: flex;
     flex-direction: column;
-    max-height: 100vh;
-    width: calc(100vw + 20px);
+    max-height: 100dvh;
+    width: calc(100dvw + 20px);
     padding: 80px 50px 40px;
     max-width: 1000px;
     margin: 0px auto 0px -20px;
@@ -144,8 +144,8 @@ body {
     position: absolute;
     z-index: 3;
     background-color: rgb(0, 0, 0, 0.5);
-    width: 100vw;
-    height: 100vh;
+    width: 100dvw;
+    height: 100dvh;
     align-items: center;
     justify-content: center;
     left: 0px;

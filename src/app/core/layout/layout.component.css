@@ -9,8 +9,8 @@
 .drawer-container {
     display: flex;
     flex-direction: column;
-    width: 300px;
-    padding: 20px;
+    width: 18.25rem; /* 300px */
+    padding: 1.25rem; /* 20px */
     border: solid var(--border-width) var(--background-highlighter);
     border-width: 0px var(--border-width) 0px 0px;
     background-color: var(--background-highlighter);
@@ -63,7 +63,7 @@
     color: var(--icon);
     height: auto;
     width: 40px;
-    font-size: 30px;
+    font-size: 1.875rem;
     margin: auto;
     cursor: pointer;
     &.profile {
@@ -117,7 +117,7 @@
     font-weight: bold;
     font-family: Helvetica, sans-serif;
     color: var(--text-1);
-    font-size: 22px;
+    font-size: 1.4rem;
     margin: auto auto auto 10px;
 }
 
@@ -125,7 +125,7 @@
     color: var(--third);
     height: auto;
     width: 60px;
-    font-size: 50px;
+    font-size: 3.1rem;
     margin: auto;
     cursor: pointer;
     &.binary {

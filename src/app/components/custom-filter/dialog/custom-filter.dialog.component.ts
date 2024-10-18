@@ -240,7 +240,6 @@ export class DialogCustomList implements OnInit {
             return;
         }
         this.filterState.setFilters([...this.selectedFilters]);
-        this.localStorage.setFilters(JSON.stringify(this.selectedFilters));
         this.billService.getBills().subscribe({
             next: (bills) => {
                 if (bills.data.length === 0)

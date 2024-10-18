@@ -43,6 +43,8 @@ export class ProfileSettingsComponent {
     @Output() setProfile = new EventEmitter<Partial<User>>();
     public storage = inject(LocalStorageService);
     public userService = inject(ServiceUser);
+    private style = getComputedStyle(document.body);
+    public errorColor = this.style.getPropertyValue("--error");
 
     public profileForm = new FormGroup({
         name: new FormControl<string>("", {

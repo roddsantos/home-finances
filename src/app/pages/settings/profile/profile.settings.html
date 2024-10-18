@@ -57,9 +57,13 @@
         </form>
     </div>
 
-    <button (click)="onLogout()" mat-button class="button-secondary logout">
+    <button
+        (click)="onLogout()"
+        mat-button
+        class="button-secondary logout"
+        [style.backgroundColor]="errorColor | color:'33'"
+    >
         <mat-icon
-            class="save-icon"
             aria-hidden="false"
             aria-label="Example home icon"
             fontIcon="logout"

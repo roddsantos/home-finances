@@ -1,15 +1,18 @@
 <div class="page-content">
     <div class="monthly-container">
-        <custom-filter></custom-filter>
         <div class="bill-list-container">
-            <button
-                aria-label="create new bill button"
-                mat-button
-                class="button-primary"
-                (click)="openDialog()"
-            >
-                new bill
-            </button>
+            <div>
+                <button
+                    aria-label="create new bill button"
+                    mat-button
+                    class="button-primary"
+                    (click)="openDialog()"
+                >
+                    new bill
+                </button>
+                <custom-filter></custom-filter>
+            </div>
+
             <pagination-template></pagination-template>
             <feedback-container
                 *ngIf="(billState.bills$| async)?.length === 0"

@@ -15,6 +15,7 @@ export class CustomFilterState {
 
     setFilters(filters: FilterDisplay[]) {
         this._filters$.next(filters);
+        this.localStorage.setFilters(JSON.stringify(filters));
     }
 
     removeFilter(filter: FilterDisplay) {
@@ -29,5 +30,6 @@ export class CustomFilterState {
 
     removeAll() {
         this._filters$.next([]);
+        this.localStorage.removeFilters();
     }
 }

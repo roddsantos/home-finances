@@ -30,7 +30,7 @@
     padding: 0px;
     & .icon {
         margin: auto;
-        color: var(--primary);
+        color: var(--third);
     }
 }
 
