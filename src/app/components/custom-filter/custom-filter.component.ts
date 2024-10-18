@@ -7,7 +7,7 @@ import {
 } from "src/app/core/types/components";
 import { Dialog } from "@angular/cdk/dialog";
 import { DialogCustomList } from "./dialog/custom-filter.dialog.component";
-import { MatButton } from "@angular/material/button";
+import { MatButton, MatIconButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
 import { CommonModule } from "@angular/common";
 import { MatExpansionModule } from "@angular/material/expansion";
@@ -44,6 +44,8 @@ import { MatInput, MatInputModule } from "@angular/material/input";
         MatSelectModule,
         ReactiveFormsModule,
         MatInputModule,
+        MatIconButton,
+        MatTooltipModule,
     ],
 })
 export class CustomFilterComponent {
@@ -65,7 +67,7 @@ export class CustomFilterComponent {
     @Output() action: ListAction[];
 
     public monthCtrl = new FormControl<MonthType | null>(null);
-    public yearCtrl = new FormControl<number>(new Date().getFullYear(), {
+    public yearCtrl = new FormControl<number | null>(null, {
         validators: [Validators.min(2023), Validators.max(2080)],
         nonNullable: true,
     });
@@ -96,6 +98,11 @@ export class CustomFilterComponent {
                 size: "lg",
             },
         });
+    }
+
+    closeFilterContainer() {
+        this.generalState.changeFilterContainer(false);
+        this.storage.setFilterContainer(false);
     }
 
     addMonth(event: any) {
@@ -211,6 +218,12 @@ export class CustomFilterComponent {
             });
         } else {
             this.filterState.removeAll();
+            this.clearAllFiltersForms();
         }
+    }
+
+    clearAllFiltersForms() {
+        this.monthCtrl.patchValue(null);
+        this.yearCtrl.patchValue(null);
     }
 }

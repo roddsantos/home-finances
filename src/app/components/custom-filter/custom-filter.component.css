@@ -53,13 +53,14 @@
     border-radius: var(--border-radius);
     /* box-shadow: 2px 2px 4px 0px var(--text-3); */
     display: grid;
-    grid-template-areas: "filter-date divider-1 filter-status divider-2 filter-min-max divider-3 filter-type";
-    grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr;
+    grid-template-areas: "filter-date divider-1 filter-status divider-2 filter-min-max divider-3 filter-type divider-4 filter-buttons";
+    grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px 0.5fr;
 }
 
 .divider-1,
 .divider-2,
-.divider-3 {
+.divider-3,
+.divider-4 {
     height: 80px;
     width: 2px;
     background-color: var(--third);
@@ -103,4 +104,46 @@
 
 .filter-type {
     grid-area: filter-type;
+}
+
+.filter-buttons {
+    grid-area: filter-buttons;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    & .icon-container {
+        display: flex;
+        cursor: pointer;
+        width: 2.4rem;
+        height: 2.4rem;
+        &:hover {
+            border-radius: var(--border-radius);
+            border: 2px solid var(--secondary);
+        }
+    }
+    & .actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+    }
+    & .collapse {
+        cursor: pointer;
+        width: 2rem;
+        height: 2rem;
+        margin: 0px 0px 0px auto;
+        padding: 5px;
+    }
+    & .filter {
+        grid-area: filter;
+        font-size: 1.6rem;
+        margin: auto;
+        color: var(--secondary);
+    }
+    & .delete {
+        grid-area: remove-all;
+        font-size: 1.6rem;
+        margin: auto;
+        color: var(--secondary);
+    }
 }

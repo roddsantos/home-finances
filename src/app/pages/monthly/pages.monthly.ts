@@ -7,8 +7,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { CustomFilterComponent } from "src/app/components/custom-filter/custom-filter.component";
 import { ModalNewBill } from "src/app/components/modal/new-bill/new-bill.modal";
 import { BillState } from "src/app/core/subjects/subjects.bill";
-import { Bill, BillData } from "src/app/core/types/objects";
-import { getMonthAndYear } from "src/utils/date";
+import { Bill } from "src/app/core/types/objects";
 import { BankListTemplateMonthly } from "./templates/bank/bank.template.monthly";
 import { CreditCardTemplateMonthly } from "./templates/credit-card/credit-card.template.monthly";
 import { ServiceTemplateMonthly } from "./templates/service/service.template.monthly";
@@ -17,6 +16,8 @@ import { ServiceBill } from "src/app/services/bill.service";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { PaginationTemplate } from "./templates/pagination/pagination.template.monthly";
+import { LocalStorageService } from "src/app/services/local-storage.service";
+import { GeneralState } from "src/app/core/subjects/subjects.general";
 
 @Component({
     selector: "page-monthly",
@@ -42,6 +43,8 @@ export class PageMonthly {
     public dialog = inject(Dialog);
     public billService = inject(ServiceBill);
     public snack = inject(CustomSnackbarComponent);
+    public generalState = inject(GeneralState);
+    public storage = inject(LocalStorageService);
 
     titleItems: Partial<keyof Bill>[] = ["name", "updatedAt"];
     detailsItems: Partial<keyof Bill>[] = ["description", "total"];
@@ -52,6 +55,11 @@ export class PageMonthly {
 
     trackByFn(index: number, item: any) {
         return item.id;
+    }
+
+    openFilterContainer() {
+        this.generalState.changeFilterContainer(true);
+        this.storage.setFilterContainer(false);
     }
 
     openDialog(): void {
