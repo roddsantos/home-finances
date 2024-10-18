@@ -1,4 +1,4 @@
-import { DateType } from "src/app/types/general";
+import { DateType } from "src/app/core/types/general";
 import { MONTHS } from "./constants/general";
 
 type Entry1 = { month?: number; year?: number; date?: Date };

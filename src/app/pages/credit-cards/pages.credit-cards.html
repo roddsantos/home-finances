@@ -1,0 +1,50 @@
+<div class="cc">
+    <h1 class="page-title">credit card</h1>
+    <feedback-container
+        *ngIf="(ccState.creditCards$ | async)?.length === 0"
+        [info]="(ccState.status$ | async)!"
+    ></feedback-container>
+    <div class="cc-infos"></div>
+    <div class="cc-grid">
+        <li class="cc-li" *ngFor="let creditCard of (ccState.creditCards$ | async)">
+            <div [ngClass]="['cc-container', generalState.theme$ | async]">
+                <h2 class="cc-title">{{creditCard.name}}</h2>
+                <p class="cc-description">{{creditCard.description}}</p>
+                <p class="cc-month">
+                    {{creditCard.month > 8 ?"" : "0" + (creditCard.month + 1)+ '/' +
+                    creditCard.year }}
+                </p>
+                <img
+                    class="cc-flag"
+                    *ngIf="creditCard.flag !== 'other'"
+                    [src]="'assets/images/'+creditCard.flag+'.svg'"
+                />
+                <div class="cc-invoice">
+                    <p class="secondary-text">invoice:</p>
+                    <p>{{creditCard.invoice | currency: "R$ "}}</p>
+                </div>
+                <!-- <div class="cc-limit">
+                    <p>limit:</p>
+                    <p>{{creditCard.limit | currency: "R$ "}}</p>
+                </div> -->
+
+                <actions class="icons-buttons" [actions]="actions"></actions>
+
+                <!-- <div
+                    class="cc-color-container"
+                    [style.backgroundColor]="creditCard.color"
+                ></div> -->
+                <div class="cc-progress-container" [style.borderColor]="creditCard.color">
+                    <div
+                        class="cc-progress-bar"
+                        [ngStyle]="{
+                            width: (creditCard.limitLeft / creditCard.limit) * 100 + '%',
+                            backgroundColor: creditCard.color
+                        }"
+                    ></div>
+                </div>
+            </div>
+            <!-- <div class="cc-highlighter"></div> -->
+        </li>
+    </div>
+</div>

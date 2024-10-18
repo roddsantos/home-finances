@@ -1,0 +1,19 @@
+.settings {
+    min-height: calc(100vh - 140px);
+}
+
+.floating-button {
+    position: absolute;
+    bottom: 80px;
+    right: 40px;
+    padding: 12px !important;
+    height: max-content;
+    & .save-icon {
+        width: 40px;
+        height: fit-content;
+        font-size: 40px;
+    }
+    & p {
+        font-size: 20px;
+    }
+}

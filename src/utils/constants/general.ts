@@ -12,3 +12,34 @@ export const MONTHS = [
     { name: "November", order: 10, short: "nov" },
     { name: "December", order: 11, short: "dec" },
 ];
+
+export const THEMES = [
+    {
+        title: "default",
+        id: "default",
+        description: "the default theme of the application",
+        primaryColor: "#a5c0dd",
+        secondaryColor: "#6c9bcf",
+        thirdColor: "#654e92",
+        backgroundColor: "#e6ddcc",
+    },
+    {
+        title: "dark theme",
+        id: "dark",
+        description: "the dark theme of the application",
+        primaryColor: "#39255f",
+        secondaryColor: "#2e5b8d",
+        thirdColor: "#486a8f",
+        backgroundColor: "#2a2a30",
+    },
+    {
+        title: "binary theme",
+        id: "binary",
+        description:
+            "the full dark theme of the application, with only black and color lines",
+        primaryColor: "#000000",
+        secondaryColor: "#ffffff",
+        thirdColor: "#000000",
+        backgroundColor: "#000000",
+    },
+];

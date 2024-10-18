@@ -1,10 +1,10 @@
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { CATEGORY } from "src/utils/constants/services";
-import { CategoryObject } from "../types/services";
-import { UserState } from "../subjects/subjects.user";
+import { CategoryObject } from "src/app/core/types/services";
+import { UserState } from "src/app/core/subjects/subjects.user";
 import { mergeMap } from "rxjs";
-import { Category } from "../types/objects";
+import { Category } from "src/app/core/types/objects";
 
 @Injectable({
     providedIn: "root",

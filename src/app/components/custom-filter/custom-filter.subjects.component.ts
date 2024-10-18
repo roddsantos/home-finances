@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { LocalStorageService } from "src/app/services/local-storage.service";
-import { FilterDisplay } from "src/app/types/components";
+import { FilterDisplay } from "src/app/core/types/components";
 
 @Injectable({
     providedIn: "root",
@@ -15,6 +15,7 @@ export class CustomFilterState {
 
     setFilters(filters: FilterDisplay[]) {
         this._filters$.next(filters);
+        this.localStorage.setFilters(JSON.stringify(filters));
     }
 
     removeFilter(filter: FilterDisplay) {
@@ -29,5 +30,6 @@ export class CustomFilterState {
 
     removeAll() {
         this._filters$.next([]);
+        this.localStorage.removeFilters();
     }
 }

@@ -1,0 +1,79 @@
+.header {
+    display: grid;
+    grid-template-areas: "header-search header-notifications";
+    grid-template-columns: 70% 30%;
+    width: 100%;
+    min-height: 50px;
+    border-radius: 10px;
+    align-items: center;
+    padding: 20px 0px 0px;
+}
+
+.header-search {
+    grid-area: header-search;
+    width: 50%;
+    & .mat-mdc-text-field-wrapper {
+        border-color: var(--secondary) !important;
+    }
+}
+
+.header-notifications {
+    grid-area: header-notifications;
+    margin: 0px 0px auto auto;
+    position: relative;
+    border: 0px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    & .icon {
+        margin: auto;
+        color: var(--third);
+    }
+}
+
+.header-input {
+    & .mat-mdc-form-field-has-icon-prefix.mat-mdc-text-field-wrapper {
+        background-color: var(--primary) !important;
+    }
+}
+
+.header-option {
+    padding: 4px 16px;
+    & span {
+        display: grid;
+        width: 100%;
+        grid-template-areas: "indicator name" "indicator description";
+        grid-template-columns: 5% 95%;
+        row-gap: 3px;
+    }
+}
+
+.indicator {
+    grid-area: indicator;
+    height: inherit;
+    width: 10px;
+    margin-right: 10px;
+    &.credit-card {
+        background-color: var(--error);
+    }
+    &.category {
+        background-color: var(--info);
+    }
+    &.bank {
+        background-color: var(--success);
+    }
+    &.company {
+        background-color: var(--default);
+    }
+    &.bill {
+        background-color: var(--warning);
+    }
+}
+
+.name {
+    grid-area: name;
+    font-weight: bold;
+}

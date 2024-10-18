@@ -1,0 +1,23 @@
+<div class="settings">
+    <h1 class="page-title">settings</h1>
+    <themes-settings [selectedTheme]="selectedTheme" (onSelect)="onSelect($event)" />
+    <profile-settings
+        [user]="getProfileForm()"
+        (setProfile)="onPatch($event)"
+        (changed)="changedUserInfo($event)"
+    />
+    <button
+        (click)="onSaveChanges()"
+        *ngIf="changedTheme || changedUser"
+        mat-button
+        class="button-primary floating-button"
+    >
+        <mat-icon
+            class="save-icon"
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="save"
+        ></mat-icon>
+        <p>save changes</p>
+    </button>
+</div>

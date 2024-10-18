@@ -25,6 +25,9 @@
                         "assets": ["src/favicon.ico", "src/assets"],
                         "styles": [
                             "src/assets/styles/styles.scss",
+                            "src/assets/styles/layout/_responsive.scss",
+                            "src/assets/styles/general/_page.scss",
+                            "src/assets/styles/general/_fonts.scss",
                             "src/assets/styles/material/_textfield.scss",
                             "src/assets/styles/material/_chip.scss",
                             "src/assets/styles/material/_snackbar.scss",
@@ -98,6 +101,9 @@
                         "assets": ["src/favicon.ico", "src/assets"],
                         "styles": [
                             "src/assets/styles/styles.scss",
+                            "src/assets/styles/layout/_responsive.scss",
+                            "src/assets/styles/general/_page.scss",
+                            "src/assets/styles/general/_fonts.scss",
                             "src/assets/styles/material/_textfield.scss",
                             "src/assets/styles/material/_chip.scss",
                             "src/assets/styles/material/_snackbar.scss",

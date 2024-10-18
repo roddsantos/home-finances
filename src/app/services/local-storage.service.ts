@@ -1,8 +1,8 @@
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { User } from "src/app/types/objects";
-import { ThemeType } from "../types/general";
-import { GeneralState } from "../subjects/subjects.general";
+import { User } from "src/app/core/types/objects";
+import { ThemeType } from "src/app/core/types/general";
+import { GeneralState } from "src/app/core/subjects/subjects.general";
 
 @Injectable({
     providedIn: "root",
@@ -24,19 +24,13 @@ export class LocalStorageService {
         localStorage.removeItem("user");
     }
 
-    // setTypeBills(typeBills: string) {
-    //     localStorage.setItem("typeBills", typeBills);
-    // }
+    getFilterContainerStatus() {
+        return localStorage.getItem("filterContainer") || true;
+    }
 
-    // getTypeBills() {
-    //     let typeBills = localStorage.getItem("typeBills");
-    //     return typeBills ? JSON.parse(typeBills) : null;
-    // }
-
-    // removeTypeBills() {
-    //     localStorage.removeItem("typeBills");
-    //     localStorage.removeItem("hasTypeBills");
-    // }
+    setFilterContainer(status: boolean) {
+        localStorage.setItem("filterContainer", `${status}`);
+    }
 
     setFilters(filters: string) {
         localStorage.setItem("filters", filters);

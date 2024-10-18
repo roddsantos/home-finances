@@ -8,12 +8,17 @@
     <div class="container">
         <mat-form-field class="new-bank-field" appearance="outline">
             <mat-label>search an icon</mat-label>
-            <input maxlength="100" [(ngModel)]="searchTerm" matInput />
+            <input
+                maxlength="100"
+                [value]="searchTerm$ | async"
+                matInput
+                (input)="onType($event)"
+            />
         </mat-form-field>
         <div class="icon-container-2">
             <div class="icon-container">
                 <div
-                    *ngFor="let icon of icons"
+                    *ngFor="let icon of filteredIcons"
                     [ngClass]="['icon-item', selectedIcon?.name === icon.name ? 'selected' : '']"
                     (click)="onSelect(icon)"
                 >

@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { AllSettledHttpConnection } from "src/app/types/services";
+import { AllSettledHttpConnection } from "src/app/core/types/services";
 
 export function allSettledFork(
     observables: Observable<any>[]

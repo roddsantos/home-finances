@@ -1,0 +1,34 @@
+<div
+    id="card-{{ id }}"
+    class="card"
+    [style.background]="
+        actualTheme === 'binary'
+            ? '#000000'
+            : (backgroundColor || backgroundHighlighter | color : 'darker')
+    "
+    [style.borderColor]="
+        actualTheme !== 'binary'
+            ? (backgroundColor || backgroundHighlighter | color : 'darker')
+            : secondary
+    "
+>
+    <h2 *ngIf="title">{{ title }}</h2>
+    <p *ngIf="description">{{ description }}</p>
+    <div class="card-divisor" *ngIf="!noDivisor"></div>
+    <div class="card-content">
+        <ng-content></ng-content>
+    </div>
+</div>
+<div
+    *ngIf="shadow"
+    class="card-shadow"
+    [style.height]="cardHeight + 'px'"
+    [style.width]="cardWidth + 'px'"
+    [style.bottom]="cardHeight - 10 + 'px'"
+    [style.backgroundColor]="
+        border
+            ? 'transparent'
+            : (backgroundColor || backgroundHighlighter | color : 'darker')
+    "
+    [style.borderColor]="backgroundColor! | color : 'darker'"
+></div>

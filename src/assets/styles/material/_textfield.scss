@@ -1,36 +1,54 @@
 .mdc-text-field--outlined {
-    height: 50px !important;
+    --input-unit: 20px;
+    --input-font: 1rem;
+    height: calc(2 * var(--input-unit)) !important;
 
     &.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
-        caret-color: var(--title) !important;
+        caret-color: var(--text-1) !important;
+        font-size: var(--input-font) !important;
     }
     & .mdc-notched-outline__notch {
         border-left: none !important;
     }
-    & .mdc-notched-outline__leading,
-    .mdc-notched-outline__notch,
-    .mdc-notched-outline__trailing {
-        border-color: var(--title) !important;
+    & .mdc-notched-outline__leading {
+        height: calc(2 * var(--input-unit)) !important;
+        border-color: var(--text-2) !important;
+        border-radius: var(--border-radius) 0px 0px var(--border-radius) !important;
+    }
+    & .mdc-notched-outline__notch {
+        height: calc(2 * var(--input-unit)) !important;
+        border-color: var(--text-2) !important;
+        border-radius: 0px !important;
+    }
+    & .mdc-notched-outline__trailing {
+        height: calc(2 * var(--input-unit)) !important;
+        border-color: var(--text-2) !important;
+        border-radius: 0px var(--border-radius) var(--border-radius) 0px !important;
     }
     & .mdc-text-field--focused {
         & .mdc-floating-label--float-above {
-            color: var(--title) !important;
+            color: var(--text-1) !important;
         }
     }
     & .mat-mdc-form-field-infix,
     .mdc-text-field--no-label .mat-mdc-form-field-infix {
-        padding: 13px 0px !important;
-        min-height: 50px !important;
+        padding: calc(0.3 * var(--input-unit)) 0px !important;
+        min-height: calc(2 * var(--input-unit)) !important;
     }
 
     & .mdc-notched-outline--upgraded {
         & .mdc-floating-label--float-above {
-            font-size: 20px !important;
-            color: var(--title) !important;
+            font-size: var(--input-font) !important;
+            color: var(--text-1) !important;
         }
     }
-    &.mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
-        top: 25px !important;
+    &.mat-mdc-text-field-wrapper {
+        & .mat-mdc-form-field-input-control {
+            height: calc(1.4 * var(--input-unit)) !important;
+        }
+        & .mat-mdc-form-field-flex .mat-mdc-floating-label {
+            top: var(--input-unit) !important;
+        }
     }
     &.mdc-text-field--invalid:not(.mdc-text-field--disabled) {
         & .mdc-floating-label {
@@ -53,7 +71,7 @@
     &.mdc-text-field--disabled {
         & .mdc-notched-outline--upgraded {
             & .mdc-floating-label--float-above {
-                font-size: 20px !important;
+                font-size: var(--input-font) !important;
                 color: var(--disabled) !important;
             }
         }
@@ -61,6 +79,12 @@
         .mdc-notched-outline__notch,
         .mdc-notched-outline__trailing {
             border-color: var(--disabled) !important;
+        }
+    }
+    & .mat-mdc-select {
+        height: calc(1.4 * var(--input-unit)) !important;
+        & .mat-mdc-select-trigger {
+            height: calc(1.4 * var(--input-unit)) !important;
         }
     }
 }

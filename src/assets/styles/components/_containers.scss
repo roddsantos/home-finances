@@ -4,13 +4,14 @@
     width: 100%;
     min-height: 60px;
     padding: 10px 50px;
-    border-radius: 5px;
-    background-color: var(--item-list);
-    border: solid 1px var(--item-list-border);
+    border-radius: var(--border-radius);
+    background-color: var(--primary);
+    border: solid 1px var(--border-color);
 }
 
 .item-list:hover .icons-buttons {
     display: flex;
+    right: 80px;
 }
 
 .icons-buttons {

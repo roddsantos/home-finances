@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { MatIconButton } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { ActionItem } from "src/app/types/components";
+import { ActionItem } from "src/app/core/types/components";
 
 @Component({
     selector: "actions",

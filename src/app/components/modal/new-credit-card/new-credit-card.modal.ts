@@ -17,15 +17,16 @@ import {
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
-import { ModalState } from "src/app/subjects/subjects.modal";
+import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { MatSelectModule } from "@angular/material/select";
-import { CreditCardObject } from "src/app/types/services";
-import { CreditCard } from "src/app/types/objects";
-import { MonthType } from "src/app/types/general";
+import { CreditCardObject } from "src/app/core/types/services";
+import { CreditCard } from "src/app/core/types/objects";
+import { MonthType } from "src/app/core/types/general";
 import { ServiceCreditCard } from "src/app/services/credit-card.service";
-import { CreditCardState } from "src/app/subjects/subjects.credit-card";
+import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { MONTHS } from "src/utils/constants/general";
 import { NO_DESCRIPTION, NO_NAME } from "src/utils/constants/forms";
+import { CommonModule } from "@angular/common";
 
 @Component({
     selector: "modal-new-credit-card",
@@ -33,6 +34,7 @@ import { NO_DESCRIPTION, NO_NAME } from "src/utils/constants/forms";
     styleUrls: ["./new-credit-card.modal.css"],
     standalone: true,
     imports: [
+        CommonModule,
         ModalComponent,
         MatFormField,
         FormsModule,
@@ -61,17 +63,31 @@ export class ModalNewCreditCard implements OnInit {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
         }),
-        color: new FormControl<string>("#000000", { nonNullable: true }),
-        limit: new FormControl<number>(0, { nonNullable: true }),
+        color: new FormControl<string>("#000000", {
+            nonNullable: true,
+            validators: [Validators.required],
+        }),
+        limit: new FormControl<number>(0, {
+            nonNullable: true,
+            validators: [Validators.required, Validators.min(0)],
+        }),
         year: new FormControl<number>(new Date().getFullYear(), {
             nonNullable: true,
-            validators: [Validators.min(2023)],
+            validators: [Validators.min(2023), Validators.required],
         }),
         month: new FormControl<MonthType>(MONTHS[new Date().getMonth()], {
             nonNullable: true,
+            validators: [Validators.required],
         }),
         day: new FormControl<number>(1, {
             validators: [Validators.required, Validators.max(28), Validators.min(1)],
+        }),
+        due: new FormControl<number>(1, {
+            validators: [Validators.required, Validators.max(28), Validators.min(1)],
+        }),
+        flag: new FormControl<string | null>(null, {
+            nonNullable: true,
+            validators: [Validators.required],
         }),
         isClosed: new FormControl<boolean>(false),
     });
@@ -82,7 +98,9 @@ export class ModalNewCreditCard implements OnInit {
         savings: "you must enter the savings",
         limit: "limit must be greater than zero",
         year: "year should be between 2023 asn 2090",
-        day: "day needs to be a valid number",
+        day: "closing day needs to be a valid number",
+        due: "due day needs to be a valid number",
+        flag: "flag must be picked",
     };
     @Output() submit = new EventEmitter<String>();
     @Output() onClose = new EventEmitter<void>();

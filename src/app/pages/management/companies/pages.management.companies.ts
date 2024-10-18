@@ -9,10 +9,10 @@ import { CustomFilterComponent } from "src/app/components/custom-filter/custom-f
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { ServiceCompany } from "src/app/services/company.service";
-import { CompanyState } from "src/app/subjects/subjects.company";
-import { UserState } from "src/app/subjects/subjects.user";
-import { ActionItem } from "src/app/types/components";
-import { Company } from "src/app/types/objects";
+import { CompanyState } from "src/app/core/subjects/subjects.company";
+import { UserState } from "src/app/core/subjects/subjects.user";
+import { ActionItem } from "src/app/core/types/components";
+import { Company } from "src/app/core/types/objects";
 
 @Component({
     selector: "management-companies",

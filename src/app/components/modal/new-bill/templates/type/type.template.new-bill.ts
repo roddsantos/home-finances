@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatIconModule } from "@angular/material/icon";
-import { PaymentTypes } from "src/app/types/general";
+import { PaymentTypes } from "src/app/core/types/general";
 import { PAYMENT_TYPES } from "src/utils/constants/forms";
 
 @Component({

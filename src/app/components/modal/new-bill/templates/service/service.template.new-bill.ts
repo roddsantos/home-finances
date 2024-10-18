@@ -7,14 +7,14 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { Bank, Company, CreditCard } from "src/app/types/objects";
+import { Bank, Company, CreditCard } from "src/app/core/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
 import { MatInputModule } from "@angular/material/input";
-import { CreditCardState } from "src/app/subjects/subjects.credit-card";
-import { CompanyState } from "src/app/subjects/subjects.company";
-import { BankState } from "src/app/subjects/subjects.bank";
+import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
+import { CompanyState } from "src/app/core/subjects/subjects.company";
+import { BankState } from "src/app/core/subjects/subjects.bank";
 import {
     INVALID_PARCEL,
     NO_COMPANY,

@@ -13,7 +13,7 @@ import { Router } from "@angular/router";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ServiceUser } from "src/app/services/user.service";
-import { UserState } from "src/app/subjects/subjects.user";
+import { UserState } from "src/app/core/subjects/subjects.user";
 
 @Component({
     templateUrl: "./login.page.html",

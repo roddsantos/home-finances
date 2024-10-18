@@ -1,10 +1,10 @@
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BANK } from "src/utils/constants/services";
-import { BankObject } from "../types/services";
-import { UserState } from "../subjects/subjects.user";
+import { BankObject } from "src/app/core/types/services";
+import { UserState } from "src/app/core/subjects/subjects.user";
 import { mergeMap } from "rxjs";
-import { Bank } from "../types/objects";
+import { Bank } from "src/app/core/types/objects";
 
 @Injectable({
     providedIn: "root",

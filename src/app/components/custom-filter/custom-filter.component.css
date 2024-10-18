@@ -1,6 +1,6 @@
 .filter-icon {
     margin: auto !important;
-    font-size: 25px;
+    font-size: 1.5rem;
     width: auto;
     height: auto;
 }
@@ -30,7 +30,7 @@
     margin-bottom: 6px;
 }
 
-.filter-container {
+.filter-main {
     display: flex;
     flex-direction: column;
 }
@@ -44,4 +44,106 @@
 .filter-label {
     margin: 0px 0px 12px;
     color: var(--title);
+}
+
+.filter-container {
+    width: 100%;
+    min-height: 100px;
+    background-color: var(--background-highlighter);
+    border-radius: var(--border-radius);
+    /* box-shadow: 2px 2px 4px 0px var(--text-3); */
+    display: grid;
+    grid-template-areas: "filter-date divider-1 filter-status divider-2 filter-min-max divider-3 filter-type divider-4 filter-buttons";
+    grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px 0.5fr;
+}
+
+.divider-1,
+.divider-2,
+.divider-3,
+.divider-4 {
+    height: 80px;
+    width: 2px;
+    background-color: var(--third);
+    margin: auto;
+}
+
+.filter-date {
+    padding: 12px 16px;
+    display: grid;
+    row-gap: 3px;
+    column-gap: 5px;
+    grid-template-areas: "month-label month-label year-label" "month-input slash year-input";
+    grid-area: filter-date;
+    & .month-label {
+        grid-area: month-label;
+        color: var(--text-2);
+    }
+    & .month-input {
+        grid-area: month-input;
+    }
+    & .year-label {
+        grid-area: year-label;
+        color: var(--text-2);
+    }
+    & .year-input {
+        grid-area: year-input;
+    }
+    & .slash {
+        margin: 8px auto auto;
+        font-size: 1.25rem;
+    }
+}
+
+.filter-status {
+    grid-area: filter-status;
+}
+
+.filter-min-max {
+    grid-area: filter-min-max;
+}
+
+.filter-type {
+    grid-area: filter-type;
+}
+
+.filter-buttons {
+    grid-area: filter-buttons;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    & .icon-container {
+        display: flex;
+        cursor: pointer;
+        width: 2.4rem;
+        height: 2.4rem;
+        &:hover {
+            border-radius: var(--border-radius);
+            border: 2px solid var(--secondary);
+        }
+    }
+    & .actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+    }
+    & .collapse {
+        cursor: pointer;
+        width: 2rem;
+        height: 2rem;
+        margin: 0px 0px 0px auto;
+        padding: 5px;
+    }
+    & .filter {
+        grid-area: filter;
+        font-size: 1.6rem;
+        margin: auto;
+        color: var(--secondary);
+    }
+    & .delete {
+        grid-area: remove-all;
+        font-size: 1.6rem;
+        margin: auto;
+        color: var(--secondary);
+    }
 }

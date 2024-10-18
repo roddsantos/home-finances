@@ -1,0 +1,31 @@
+.themes {
+    display: grid;
+    grid-template-columns: repeat(3, 28%);
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+.theme-container {
+    padding: 10px;
+    border-radius: var(--border-radius);
+    background-color: var(--background);
+    cursor: pointer;
+    &.selected {
+        border-style: solid;
+        border-width: 1px;
+        border-color: var(--border-color);
+    }
+}
+
+.theme-pallete {
+    display: flex;
+    flex-direction: row;
+    height: 20px;
+    width: 100%;
+    border-radius: var(--border-radius);
+
+    & .pallete-color {
+        width: 25%;
+        height: 100%;
+    }
+}

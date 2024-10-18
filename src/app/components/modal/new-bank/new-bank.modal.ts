@@ -17,11 +17,11 @@ import {
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { ServiceBank } from "src/app/services/bank.service";
-import { BankState } from "src/app/subjects/subjects.bank";
+import { BankState } from "src/app/core/subjects/subjects.bank";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
-import { ModalState } from "src/app/subjects/subjects.modal";
-import { BankObject } from "src/app/types/services";
-import { Bank } from "src/app/types/objects";
+import { ModalState } from "src/app/core/subjects/subjects.modal";
+import { BankObject } from "src/app/core/types/services";
+import { Bank } from "src/app/core/types/objects";
 
 @Component({
     selector: "modal-new-bank",
