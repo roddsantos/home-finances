@@ -1,0 +1,13 @@
+p {
+    color: var(--text-1);
+    margin-bottom: 0.5rem;
+}
+
+.margin {
+    margin-bottom: 1.25rem;
+}
+
+.hint {
+    color: var(--text-1);
+    font-size: 1rem;
+}

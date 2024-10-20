@@ -50,6 +50,10 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 export class ConfigTemplate {
     constructor() {
         this.configForm.valueChanges.subscribe((data) => {
+            if (!data.settled) {
+                this.setConfigData.emit({ ...data, paid: null });
+                this.configForm.patchValue({ paid: null });
+            }
             this.setConfigData.emit({ ...data });
         });
     }

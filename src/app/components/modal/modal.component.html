@@ -1,14 +1,14 @@
 <div [ngClass]="['modal-container', data.size]">
-    <h2 mat-dialog-title class="modal-header">
-        <p>{{ (modalState.header$ | async) || data.header }}</p>
+    <div mat-dialog-title class="modal-header">
+        <h3>{{ (modalState.header$ | async) || data.header }}</h3>
         <mat-icon
-            class="app-icon close"
+            class="icon-close"
             aria-hidden="false"
             aria-label="Example home icon"
             fontIcon="close"
             (click)="dialogRef.close()"
         ></mat-icon>
-    </h2>
+    </div>
     <div class="modal-body">
         <ng-container *ngTemplateOutlet="bodyTemplate || defaultBody"> </ng-container>
         <ng-template #defaultBody></ng-template>

@@ -32,6 +32,7 @@
                             "src/assets/styles/material/_chip.scss",
                             "src/assets/styles/material/_snackbar.scss",
                             "src/assets/styles/material/_tabs.scss",
+                            "src/assets/styles/material/_toggle.scss",
                             "src/assets/styles/components/_buttons.scss",
                             "src/assets/styles/components/_containers.scss"
                         ],
@@ -108,6 +109,7 @@
                             "src/assets/styles/material/_chip.scss",
                             "src/assets/styles/material/_snackbar.scss",
                             "src/assets/styles/material/_tabs.scss",
+                            "src/assets/styles/material/_toggle.scss",
                             "src/assets/styles/components/_buttons.scss",
                             "src/assets/styles/components/_containers.scss"
                         ],
