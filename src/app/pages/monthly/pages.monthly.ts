@@ -59,7 +59,7 @@ export class PageMonthly {
 
     openFilterContainer() {
         this.generalState.changeFilterContainer(true);
-        this.storage.setFilterContainer(false);
+        this.storage.setFilterContainer(true);
     }
 
     openDialog(): void {

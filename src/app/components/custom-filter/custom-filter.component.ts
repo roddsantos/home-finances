@@ -20,8 +20,8 @@ import { LocalStorageService } from "src/app/services/local-storage.service";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatSelectModule } from "@angular/material/select";
-import { MonthType } from "src/app/core/types/general";
+import { MatSelectChange, MatSelectModule } from "@angular/material/select";
+import { MonthType, PaymentTypes } from "src/app/core/types/general";
 import { MONTHS } from "src/utils/constants/general";
 import { MatInput, MatInputModule } from "@angular/material/input";
 
@@ -73,7 +73,10 @@ export class CustomFilterComponent {
     });
     public minCtrl = new FormControl<number>(0, { nonNullable: true });
     public maxCtrl = new FormControl<number>(0, { nonNullable: true });
-    public statusCtrl = new FormControl<"all" | "settled" | "pending" | "">("", {
+    public statusCtrl = new FormControl<"all" | "settled" | "pending">("all", {
+        nonNullable: true,
+    });
+    public typeCtrl = new FormControl<"all" | PaymentTypes>("all", {
         nonNullable: true,
     });
 
@@ -86,9 +89,22 @@ export class CustomFilterComponent {
             );
         }
         const hasYear = filters.find((filter) => filter.identifier === "year");
-        if (hasYear) {
-            this.yearCtrl.patchValue(hasYear.id as number);
-        }
+        if (hasYear) this.yearCtrl.patchValue(hasYear.id as number);
+
+        const hasType = filters.find((filter) => filter.identifier === "type");
+        if (hasType) this.typeCtrl.patchValue(hasType.id as PaymentTypes | "all");
+    }
+
+    getFilters() {
+        let filtersFromState: FilterDisplay[] = [];
+        this.filterState.filters$
+            .subscribe({
+                next: (filters) => {
+                    filtersFromState = filters;
+                },
+            })
+            .unsubscribe();
+        return filtersFromState;
     }
 
     openDialog() {
@@ -107,14 +123,7 @@ export class CustomFilterComponent {
 
     addMonth(event: any) {
         const selectedFilter = event.value as MonthType;
-        let filtersFromState: FilterDisplay[] = [];
-        this.filterState.filters$
-            .subscribe({
-                next: (filters) => {
-                    filtersFromState = filters;
-                },
-            })
-            .unsubscribe();
+        let filtersFromState: FilterDisplay[] = this.getFilters();
         const filterIndex = filtersFromState.findIndex(
             (filter) => filter.identifier === "month"
         );
@@ -143,13 +152,7 @@ export class CustomFilterComponent {
                 : parseInt(selectedFilter, 10);
         let filtersFromState: FilterDisplay[] = [];
         if (selectedFilter) {
-            this.filterState.filters$
-                .subscribe({
-                    next: (filters) => {
-                        filtersFromState = filters;
-                    },
-                })
-                .unsubscribe();
+            filtersFromState = this.getFilters();
             const filterIndex = filtersFromState.findIndex(
                 (filter) => filter.identifier === "year"
             );
@@ -169,6 +172,69 @@ export class CustomFilterComponent {
                 this.getBills();
         }
         this.year.focus();
+    }
+
+    addStatus(event: MatSelectChange) {
+        const value = event.value;
+        let filtersFromState: FilterDisplay[] = this.getFilters();
+        const hasFilter = filtersFromState.find((f) => f.identifier === "status");
+        if (hasFilter) this.filterState.removeFilter(hasFilter);
+        if (value !== "all")
+            this.filterState.addFilters([
+                {
+                    id: value,
+                    identifier: "status",
+                    name: value,
+                },
+            ]);
+        this.getBills();
+    }
+
+    addLimit(event: any, identifier: "min" | "max") {
+        let filtersFromState: FilterDisplay[] = [];
+        let value: string | number | null = (event.target as HTMLInputElement).value;
+        value = value === "" ? null : parseFloat(value);
+        if (value !== null) {
+            filtersFromState = this.getFilters();
+            const hasFilter = filtersFromState.find(
+                (f) =>
+                    f.identifier === identifier ||
+                    (identifier === "max" &&
+                        f.identifier === "min" &&
+                        (f.name as number) > value) ||
+                    (identifier === "min" &&
+                        f.identifier === "max" &&
+                        (f.name as number) < value)
+            );
+            if (hasFilter) {
+                if (identifier === hasFilter.identifier)
+                    this.snack.openSnackBar("only one " + identifier + " value allowed");
+                else if ((hasFilter.name as number) !== value)
+                    this.snack.openSnackBar(identifier + " value not allowed");
+            } else
+                this.filterState.addFilters([
+                    {
+                        id: value,
+                        identifier,
+                        name: value,
+                    },
+                ]);
+        }
+    }
+
+    addType(event: MatSelectChange) {
+        const filter = event.value;
+        let filtersFromState: FilterDisplay[] = this.getFilters();
+        const hasFilter = filtersFromState.find((f) => f.identifier === "type");
+        if (hasFilter) this.filterState.removeFilter(hasFilter);
+        if (filter !== "all")
+            this.filterState.addFilters([
+                {
+                    id: filter,
+                    identifier: "type",
+                    name: filter,
+                },
+            ]);
     }
 
     getBills() {
@@ -225,5 +291,9 @@ export class CustomFilterComponent {
     clearAllFiltersForms() {
         this.monthCtrl.patchValue(null);
         this.yearCtrl.patchValue(null);
+        this.minCtrl.patchValue(0);
+        this.maxCtrl.patchValue(0);
+        this.statusCtrl.patchValue("all");
+        this.typeCtrl.patchValue("all");
     }
 }

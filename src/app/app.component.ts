@@ -4,7 +4,6 @@ import { UserState } from "src/app/core/subjects/subjects.user";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { ServiceCategory } from "./services/category.service";
 import { CustomFilterState } from "./components/custom-filter/custom-filter.subjects.component";
-import { Router } from "@angular/router";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ThemeType } from "src/app/core/types/general";
 
@@ -39,5 +38,13 @@ export class AppComponent {
             document.body.className = "";
             document.body.className = theme === "default" ? "" : theme;
         }
+
+        const filterContainer = this.storage.getFilterContainerStatus();
+        if (filterContainer === undefined || filterContainer === null)
+            this.generalState.changeFilterContainer(true);
+        else
+            this.generalState.changeFilterContainer(
+                filterContainer === "true" ? true : false
+            );
     }
 }

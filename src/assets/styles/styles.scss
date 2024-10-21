@@ -1,5 +1,17 @@
 @use "src/assets/styles/layout/theme.scss" as app-theme;
 @use "@angular/material" as mat;
+@import "../styles/components/buttons";
+@import "../styles/components/containers";
+@import "../styles/general/fonts";
+@import "../styles/general/page";
+@import "../styles/layout/colors";
+@import "../styles/layout/responsive";
+@import "../styles/layout/theme";
+@import "../styles/material/chip";
+@import "../styles/material/snackbar";
+@import "../styles/material/tabs";
+@import "../styles/material/textfield";
+@import "../styles/material/toggle";
 
 :root .dark {
     @include mat.all-component-themes(app-theme.$app-dark-theme);
