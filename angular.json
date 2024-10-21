@@ -23,18 +23,7 @@
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "tsconfig.app.json",
                         "assets": ["src/favicon.ico", "src/assets"],
-                        "styles": [
-                            "src/assets/styles/styles.scss",
-                            "src/assets/styles/layout/_responsive.scss",
-                            "src/assets/styles/general/_page.scss",
-                            "src/assets/styles/general/_fonts.scss",
-                            "src/assets/styles/material/_textfield.scss",
-                            "src/assets/styles/material/_chip.scss",
-                            "src/assets/styles/material/_snackbar.scss",
-                            "src/assets/styles/material/_tabs.scss",
-                            "src/assets/styles/components/_buttons.scss",
-                            "src/assets/styles/components/_containers.scss"
-                        ],
+                        "styles": ["src/assets/styles/styles.scss"],
                         "scripts": [],
                         "stylePreprocessorOptions": {
                             "includePaths": ["node_modules/"]
@@ -99,18 +88,7 @@
                         "tsConfig": "tsconfig.spec.json",
                         "karmaConfig": "karma.conf.js",
                         "assets": ["src/favicon.ico", "src/assets"],
-                        "styles": [
-                            "src/assets/styles/styles.scss",
-                            "src/assets/styles/layout/_responsive.scss",
-                            "src/assets/styles/general/_page.scss",
-                            "src/assets/styles/general/_fonts.scss",
-                            "src/assets/styles/material/_textfield.scss",
-                            "src/assets/styles/material/_chip.scss",
-                            "src/assets/styles/material/_snackbar.scss",
-                            "src/assets/styles/material/_tabs.scss",
-                            "src/assets/styles/components/_buttons.scss",
-                            "src/assets/styles/components/_containers.scss"
-                        ],
+                        "styles": ["src/assets/styles/styles.scss"],
                         "scripts": []
                     }
                 }
