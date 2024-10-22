@@ -4,6 +4,7 @@
         background-color: var(--primary);
         color: var(--text-1) !important;
         border: solid var(--border-width) var(--border-color);
+        padding: 1rem 0.8rem;
     }
 
     & p,
@@ -19,7 +20,7 @@
     }
 
     & .spinner {
-        width: 25px !important;
+        width: 1.5rem !important;
         height: fit-content;
     }
 }
@@ -28,6 +29,12 @@
     &.mat-mdc-button:not(:disabled) {
         border-radius: var(--border-radius);
         background-color: transparent;
+        padding: 1rem 0.8rem;
+    }
+
+    & p,
+    span {
         color: var(--text-1) !important;
+        font-weight: bold !important;
     }
 }

@@ -8,21 +8,21 @@ import { CustomFilterComponent } from "src/app/components/custom-filter/custom-f
 import { ModalNewBill } from "src/app/components/modal/new-bill/new-bill.modal";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { Bill } from "src/app/core/types/objects";
-import { BankListTemplateMonthly } from "./templates/bank/bank.template.monthly";
-import { CreditCardTemplateMonthly } from "./templates/credit-card/credit-card.template.monthly";
-import { ServiceTemplateMonthly } from "./templates/service/service.template.monthly";
+import { BankListTemplateMonthly } from "./templates/bank/bank.template.bills";
+import { CreditCardTemplateMonthly } from "./templates/credit-card/credit-card.template.bills";
+import { ServiceTemplateMonthly } from "./templates/service/service.template.bills";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { ServiceBill } from "src/app/services/bill.service";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { PaginationTemplate } from "./templates/pagination/pagination.template.monthly";
+import { PaginationTemplate } from "./templates/pagination/pagination.template.bills";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 
 @Component({
-    selector: "page-monthly",
-    templateUrl: "./pages.monthly.html",
-    styleUrls: ["./pages.monthly.css"],
+    selector: "page-bills",
+    templateUrl: "./pages.bills.html",
+    styleUrls: ["./pages.bills.css"],
     standalone: true,
     imports: [
         CustomFilterComponent,
@@ -38,7 +38,7 @@ import { GeneralState } from "src/app/core/subjects/subjects.general";
         MatTooltipModule,
     ],
 })
-export class PageMonthly {
+export class PageBills {
     public billState = inject(BillState);
     public dialog = inject(Dialog);
     public billService = inject(ServiceBill);

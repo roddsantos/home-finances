@@ -1,4 +1,3 @@
-import { PageCreditCards } from "./pages/credit-cards/pages.credit-cards";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
@@ -33,8 +32,7 @@ const routes: Routes = [
     {
         path: "bills",
         canActivate: [authGuard],
-        loadComponent: () =>
-            import("./pages/monthly/pages.monthly").then((m) => m.PageMonthly),
+        loadComponent: () => import("./pages/bills/pages.bills").then((m) => m.PageBills),
     },
     {
         path: "login",
