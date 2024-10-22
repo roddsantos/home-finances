@@ -115,17 +115,19 @@ export class DialogCustomList implements OnInit {
         });
     }
 
-    addFilter(event: MatSelectChange, identifier: AvailableDataFilters | "type") {
+    addFilter(event: MatSelectChange, identifier: AvailableDataFilters) {
         const filter = event.value;
-        const hasFilter = this.selectedFilters.find((f) => f.id === filter.id);
-        if (!hasFilter) {
+        const hasFilterIndex = this.selectedFilters.findIndex(
+            (f) => f.identifier === identifier
+        );
+        if (hasFilterIndex >= 0 || filter === null)
+            this.selectedFilters.splice(hasFilterIndex, 1);
+        if (filter !== null)
             this.selectedFilters.push({
-                id: identifier === "type" ? filter : filter.id,
+                id: filter.id,
                 identifier,
-                name: identifier === "type" ? filter : filter.name,
+                name: filter.name,
             });
-            this[identifier as AvailableDataFilters | "month"].value = "";
-        }
     }
 
     addLimit(event: any, identifier: "min" | "max") {
@@ -209,16 +211,16 @@ export class DialogCustomList implements OnInit {
 
     addDate(event: any, start: boolean) {
         const date = new Date(event.value);
-        const dateFound = this.selectedFilters.find(
+        const hasDateIndex = this.selectedFilters.findIndex(
             (sf) => sf.identifier === (start ? "date1" : "date2")
         );
-        if (!Boolean(dateFound))
-            this.selectedFilters.push({
-                id: date.toISOString(),
-                identifier: start ? "date1" : "date2",
-                name: date.toLocaleDateString(),
-            });
-        else this[start ? "date1" : "date2"].value = dateFound;
+        if (hasDateIndex >= 0) this.selectedFilters.splice(hasDateIndex, 1);
+        this.selectedFilters.push({
+            id: date.toISOString(),
+            identifier: start ? "date1" : "date2",
+            name: date.toLocaleDateString("en-GB"),
+        });
+        // else this[start ? "date1" : "date2"].value = dateFound;
     }
 
     removeFilter(index: number) {

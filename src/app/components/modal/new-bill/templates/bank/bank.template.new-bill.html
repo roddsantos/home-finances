@@ -2,33 +2,36 @@
     <h1>bank info</h1>
     <form [formGroup]="bankForm">
         <div class="form-container">
-            <mat-form-field
-                *ngIf="(companies.company$| async)!.length > 0"
-                class="new-bill-field"
-                appearance="outline"
-            >
+            <mat-form-field class="new-bill-field" appearance="outline">
                 <mat-label>company</mat-label>
                 <mat-select formControlName="company">
+                    <mat-option
+                        *ngIf="(companies.company$| async)!.length === 0"
+                        [disabled]="true"
+                        >no companies</mat-option
+                    >
                     @for (c of (companies.company$ | async); track c) {
                     <mat-option [value]="c">{{ c.name }}</mat-option>
                     }
                 </mat-select>
             </mat-form-field>
             <div class="new-bill-field">
-                <mat-form-field
-                    *ngIf="(banks.banks$ | async)!.length > 0"
-                    class="new-bill-field half"
-                    appearance="outline"
-                >
+                <mat-form-field class="new-bill-field half" appearance="outline">
                     <mat-label>bank 1</mat-label>
                     <mat-select formControlName="bank1">
+                        <mat-option
+                            *ngIf="(banks.banks$ | async)!.length === 0"
+                            [disabled]="true"
+                            >no banks</mat-option
+                        >
                         @for (b1 of (banks.banks$ | async); track b1) {
                         <mat-option [value]="b1">{{ b1.name }}</mat-option>
                         }
                     </mat-select>
                     @if (bankDataErrors.bank1?.['required']) {
                     <mat-error>{{errorMessage.bank1}}</mat-error>
-                    } @if (bankData.bank1?.id === bankData.bank2?.id) {
+                    } @if (bankData.bank1?.id === bankData.bank2?.id && bankData.bank1?.id
+                    && bankData.bank2?.id) {
                     <mat-error>{{errorMessage.sameBank}}</mat-error>
                     }
                 </mat-form-field>
@@ -39,29 +42,25 @@
                     aria-label="Example home icon"
                     [fontIcon]="bankForm.value.isPayment ? 'arrow_forward': 'arrow_back'"
                 ></mat-icon>
-                <mat-form-field
-                    *ngIf="(banks.banks$ | async)!.length > 0"
-                    class="new-bill-field half"
-                    appearance="outline"
-                >
+                <mat-form-field class="new-bill-field half" appearance="outline">
                     <mat-label>bank 2</mat-label>
                     <mat-select formControlName="bank2">
-                        <mat-option [value]="null">none</mat-option>
+                        <mat-option
+                            *ngIf="(banks.banks$ | async)!.length === 0"
+                            [disabled]="true"
+                            >no banks</mat-option
+                        >
+                        <mat-option
+                            *ngIf="(banks.banks$ | async)!.length > 0"
+                            [value]="null"
+                            >none</mat-option
+                        >
                         @for (b2 of (banks.banks$ | async); track b2) {
                         <mat-option [value]="b2">{{ b2.name }}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
             </div>
-            <h4>payment processed?</h4>
-            <mat-button-toggle-group
-                formControlName="isPayment"
-                name="payment processed?"
-                aria-label="Font Style"
-            >
-                <mat-button-toggle [value]="true">yes</mat-button-toggle>
-                <mat-button-toggle [value]="false">no</mat-button-toggle>
-            </mat-button-toggle-group>
         </div>
     </form>
 </div>

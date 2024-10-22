@@ -1,34 +1,26 @@
 .modal-container {
     display: flex;
     flex-direction: column;
-    background-color: var(--item-list);
+    background-color: var(--background);
     position: relative;
     min-height: 150px;
-    width: 50vw;
+    width: 700px;
     z-index: 3;
-    padding: 60px 20px 20px;
-    border-radius: 10px;
-    border: solid 1px var(--border);
-}
-
-.hidden {
-    display: none;
-}
-
-.modal-container.xl {
-    width: 80vw;
-}
-
-.modal-container.lg {
-    width: 65vw;
-}
-
-.modal-container.sm {
-    width: 35vw;
-}
-
-.modal-container.xm {
-    width: 20vw;
+    padding: 80px 20px 20px;
+    border-radius: var(--border-radius);
+    border: solid var(--border-width) var(--border-color);
+    &.xl {
+        width: 1200px;
+    }
+    &.lg {
+        width: 900px;
+    }
+    &.sm {
+        width: 500px;
+    }
+    &.xm {
+        width: 300px;
+    }
 }
 
 .modal-backdrop {
@@ -44,40 +36,36 @@
 }
 
 .modal-body {
-    min-height: max-content;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     z-index: 3;
     width: 100%;
-    height: max-content;
+    max-height: 650px;
+    overflow-y: auto;
 }
 
 .modal-header {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 50px;
+    height: 60px;
     z-index: 3;
     position: absolute;
     top: 0%;
     left: 0%;
     text-align: center;
     padding: 0px 20px;
-    margin-top: -8px;
     background-color: var(--primary);
-    border: solid 1px var(--border);
-    border-radius: 10px 10px 0px 0px;
-
-    & p {
-        color: var(--title);
-        margin: auto auto auto 0px;
-        font: bold 16px Roboto;
+    border-bottom: solid var(--border-width) var(--border-color);
+    border-radius: 5px 5px 0px 0px;
+    & .icon-close {
+        margin: auto -10px auto auto;
+        color: var(--text-1);
+        cursor: pointer;
     }
-}
-
-.app-icon.close {
-    margin: auto -10px auto auto;
-    color: var(--secondary);
-    cursor: pointer;
+    & h3 {
+        color: var(--text-1);
+        margin: auto auto auto 0px;
+    }
 }
 
 .modal-footer {

@@ -4,22 +4,33 @@
     background-color: var(--description);
 }
 
+p {
+    color: var(--text-1);
+    font-size: 1rem;
+    font-family: Open-Sans-Regular;
+    margin-bottom: 2px;
+}
+
 .add-filter-container {
-    display: inline-block;
-    flex-direction: column;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.data-field,
+.data-field-1,
+.data-field-2 {
+    width: 48%;
+}
+
+.input {
     width: 100%;
 }
 
-.data-field {
-    width: 50%;
-    margin-bottom: 10px;
-    padding: 0px 5px 0px;
-}
-
-.condition-field {
-    width: 25%;
-    margin-bottom: 10px;
-    padding: 0px 5px 0px;
+.reset-button {
+    margin: 10px 0px 0px auto;
 }
 
 .credit-card-field {
@@ -45,4 +56,10 @@
 .chip-item {
     margin-right: 6px;
     margin-bottom: 6px;
+}
+
+.hint {
+    color: var(--text-1);
+    font-size: 1rem;
+    font-family: Open-Sans-Regular;
 }

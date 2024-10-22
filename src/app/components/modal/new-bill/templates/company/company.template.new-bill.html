@@ -2,11 +2,7 @@
     <h1>company info</h1>
     <form [formGroup]="compForm">
         <div class="form-container">
-            <mat-form-field
-                *ngIf="(companies.company$| async)!.length > 0"
-                class="new-bill-field"
-                appearance="outline"
-            >
+            <mat-form-field class="new-bill-field" appearance="outline">
                 <mat-label>company</mat-label>
                 <mat-select formControlName="company">
                     @for (c of (companies.company$ | async); track c) {
@@ -17,11 +13,7 @@
                 <mat-error>{{errorMessage.company}}</mat-error>
                 }
             </mat-form-field>
-            <mat-form-field
-                *ngIf="(banks.banks$| async)!.length > 0"
-                class="new-bill-field"
-                appearance="outline"
-            >
+            <mat-form-field class="new-bill-field" appearance="outline">
                 <mat-label>bank</mat-label>
                 <mat-select
                     (selectionChange)="toggleError('bank')"
@@ -36,11 +28,7 @@
                 <mat-error>{{errorMessage.noBank}}</mat-error>
                 }
             </mat-form-field>
-            <mat-form-field
-                *ngIf="(ccs.creditCards$| async)!.length > 0"
-                class="new-bill-field"
-                appearance="outline"
-            >
+            <mat-form-field class="new-bill-field" appearance="outline">
                 <mat-label>credit card</mat-label>
                 <mat-select
                     (selectionChange)="toggleError('cc')"

@@ -55,16 +55,51 @@
     display: grid;
     grid-template-areas: "filter-date divider-1 filter-status divider-2 filter-min-max divider-3 filter-type divider-4 filter-buttons";
     grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px 0.5fr;
+    &.binary {
+        border: var(--border-width) solid var(--secondary);
+    }
 }
 
 .divider-1,
 .divider-2,
 .divider-3,
 .divider-4 {
-    height: 80px;
+    height: 60px;
     width: 2px;
     background-color: var(--third);
     margin: auto;
+}
+
+.filter-counter {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    height: max-content;
+    border-radius: var(--border-radius);
+    padding: 0px 1rem;
+    & .counter {
+        display: flex;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin: auto 0.4rem auto auto;
+        border-radius: 50%;
+        background-color: var(--third);
+        &.binary {
+            border: 1px solid var(--secondary);
+            & p {
+                color: var(--text-1);
+                margin: auto;
+            }
+        }
+        & p {
+            color: var(--text-3);
+            margin: auto;
+        }
+    }
+    & p {
+        margin: auto auto auto 5px;
+    }
 }
 
 .filter-date {
@@ -95,15 +130,42 @@
 }
 
 .filter-status {
+    display: grid;
     grid-area: filter-status;
+    row-gap: 3px;
+    grid-template-areas: "status-label" "status-input";
+    padding: 12px 16px;
 }
 
 .filter-min-max {
+    display: grid;
     grid-area: filter-min-max;
+    grid-template-areas: "min-label max-label" "min-input max-input";
+    column-gap: 5px;
+    padding: 12px 16px;
+    grid-template-columns: 1fr 1fr;
+    & .min-label {
+        grid-area: min-label;
+        color: var(--text-2);
+    }
+    & .min-input {
+        grid-area: min-input;
+    }
+    & .max-label {
+        grid-area: max-label;
+        color: var(--text-2);
+    }
+    & .max-input {
+        grid-area: max-input;
+    }
 }
 
 .filter-type {
+    display: grid;
     grid-area: filter-type;
+    grid-template-areas: "type-label" "type-input";
+    padding: 12px 16px;
+    row-gap: 3px;
 }
 
 .filter-buttons {
@@ -116,9 +178,13 @@
         cursor: pointer;
         width: 2.4rem;
         height: 2.4rem;
-        &:hover {
-            border-radius: var(--border-radius);
-            border: 2px solid var(--secondary);
+        & mat-icon {
+            font-size: 1.6rem;
+            margin: auto;
+            color: var(--third);
+        }
+        &.binary mat-icon {
+            color: var(--secondary);
         }
     }
     & .actions {
@@ -133,17 +199,5 @@
         height: 2rem;
         margin: 0px 0px 0px auto;
         padding: 5px;
-    }
-    & .filter {
-        grid-area: filter;
-        font-size: 1.6rem;
-        margin: auto;
-        color: var(--secondary);
-    }
-    & .delete {
-        grid-area: remove-all;
-        font-size: 1.6rem;
-        margin: auto;
-        color: var(--secondary);
     }
 }

@@ -1,6 +1,6 @@
 <div class="filter-main" *ngIf="generalState.filterContainer$ | async">
-    <div class="filter-button-container">
-        <!-- <button
+    <!-- <div class="filter-button-container"> -->
+    <!-- <button
             *ngIf="(filterState.filters$ | async)!.length > 0"
             mat-button
             [ngClass]="['button-primary', 'margin']"
@@ -21,8 +21,13 @@
             <mat-icon class="filter-icon material-symbols-outlined">filter_alt</mat-icon>
             <p>filter</p>
         </button> -->
-    </div>
-    <div class="filter-container">
+    <!-- </div> -->
+    <div
+        [ngClass]="[
+            'filter-container',
+            (generalState.theme$ | async) === 'binary' ? 'binary' : ''
+        ]"
+    >
         <div class="filter-date">
             <h5 class="month-label">month</h5>
             <mat-form-field class="month-input" appearance="outline">
@@ -52,9 +57,88 @@
                 }
             </mat-form-field>
         </div>
-        <div class="filter-status"></div>
-        <div class="filter-min-max"></div>
-        <div class="filter-type"></div>
+        <div class="filter-status">
+            <h5 class="status-label">bill status</h5>
+            <mat-form-field class="status-field" appearance="outline">
+                <mat-select
+                    #status
+                    (selectionChange)="addStatus($event)"
+                    [formControl]="statusCtrl"
+                >
+                    <mat-option [value]="'all'">all</mat-option>
+                    <mat-option [value]="'pending'">pending</mat-option>
+                    <mat-option [value]="'settled'">settled</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="filter-min-max">
+            <h5 class="min-label">min total</h5>
+            <mat-form-field class="min-input" appearance="outline">
+                <input
+                    (keydown.enter)="addLimit($event, 'min')"
+                    matInput
+                    #min
+                    type="number"
+                    [formControl]="minCtrl"
+                />
+                @if (minCtrl.invalid) {
+                <mat-error>invalid min value</mat-error>
+                }
+            </mat-form-field>
+            <!-- max value total -->
+            <h5 class="max-label">max total</h5>
+            <mat-form-field class="max-input" appearance="outline">
+                <input
+                    (keydown.enter)="addLimit($event, 'max')"
+                    matInput
+                    #max
+                    type="number"
+                    [formControl]="maxCtrl"
+                />
+                @if (maxCtrl.invalid) {
+                <mat-error>invalid max value</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div class="filter-type">
+            <h5 class="type-label">bill type</h5>
+            <mat-form-field class="type-input" appearance="outline">
+                <mat-select
+                    #type
+                    (selectionChange)="addType($event)"
+                    [formControl]="typeCtrl"
+                >
+                    <mat-option [value]="'all'">all</mat-option>
+                    <mat-option [value]="'creditCard'">
+                        <mat-icon
+                            class="material-symbols-outlined"
+                            aria-hidden="false"
+                            aria-label="credit card icon"
+                            fontIcon="credit_card"
+                        ></mat-icon>
+                        credit card</mat-option
+                    >
+                    <mat-option [value]="'money'"
+                        ><mat-icon
+                            class="material-symbols-outlined"
+                            aria-hidden="false"
+                            aria-label="credit card icon"
+                            fontIcon="payments"
+                        ></mat-icon
+                        >money</mat-option
+                    >
+                    <mat-option [value]="'companyCredit'"
+                        ><mat-icon
+                            class="material-symbols-outlined"
+                            aria-hidden="false"
+                            aria-label="credit card icon"
+                            fontIcon="store"
+                        ></mat-icon
+                        >company credit</mat-option
+                    >
+                </mat-select>
+            </mat-form-field>
+        </div>
         <div class="filter-buttons">
             <mat-icon
                 class="material-symbols-outlined collapse"
@@ -65,11 +149,26 @@
                 [matTooltipPosition]="'above'"
                 (click)="closeFilterContainer()"
             ></mat-icon>
+            <div class="filter-counter">
+                <div
+                    [ngClass]="[
+                        'counter',
+                        (generalState.theme$ | async) === 'binary' ? 'binary' : ''
+                    ]"
+                >
+                    <p>{{ (filterState.filters$ | async)?.length }}</p>
+                </div>
+                <p>active</p>
+            </div>
             <div class="actions">
-                <div class="icon-container">
+                <div
+                    [ngClass]="[
+                        'icon-container',
+                        (generalState.theme$ | async) === 'binary' ? 'binary' : ''
+                    ]"
+                >
                     <mat-icon
-                        class="material-symbols-outlined icon"
-                        class="filter"
+                        class="material-symbols-outlined"
                         aria-hidden="false"
                         aria-label="filter icon"
                         fontIcon="filter_alt"
@@ -78,10 +177,14 @@
                         (click)="openDialog()"
                     ></mat-icon>
                 </div>
-                <div class="icon-container">
+                <div
+                    [ngClass]="[
+                        'icon-container',
+                        (generalState.theme$ | async) === 'binary' ? 'binary' : ''
+                    ]"
+                >
                     <mat-icon
                         class="material-symbols-outlined"
-                        class="delete"
                         aria-hidden="false"
                         aria-label="remove icon"
                         fontIcon="delete_sweep"

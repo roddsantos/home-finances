@@ -43,6 +43,11 @@
         }
     }
     &.mat-mdc-text-field-wrapper {
+        & .mat-mdc-form-field-hint {
+            & mat-hint {
+                font-family: Open-Sans-Regular;
+            }
+        }
         & .mat-mdc-form-field-input-control {
             height: calc(1.4 * var(--input-unit)) !important;
         }

@@ -1,34 +1,37 @@
 <div class="modal-content">
-    <h1>company info</h1>
+    <h1>final setup</h1>
     <form [formGroup]="configForm">
         <div class="form-container">
             <ng-container *ngIf="configData.type === 'money'">
-                <h4>money flow</h4>
+                <p>money flow</p>
                 <mat-button-toggle-group
                     formControlName="isPayment"
                     name="moneyy flow"
                     aria-label="Font Style"
+                    class="margin"
                 >
                     <mat-button-toggle [value]="true">outcome</mat-button-toggle>
                     <mat-button-toggle [value]="false">income</mat-button-toggle>
                 </mat-button-toggle-group></ng-container
             >
             <ng-container *ngIf="configData.type === 'creditCard'">
-                <h4>is refund?</h4>
+                <p>is refund?</p>
                 <mat-button-toggle-group
                     formControlName="isRefund"
                     name="refund"
                     aria-label="Font Style"
+                    class="margin"
                 >
                     <mat-button-toggle [value]="true">yes</mat-button-toggle>
                     <mat-button-toggle [value]="false">no</mat-button-toggle>
                 </mat-button-toggle-group></ng-container
             >
-            <h4>payment processed?</h4>
+            <p>payment processed?</p>
             <mat-button-toggle-group
                 formControlName="settled"
                 name="settled"
                 aria-label="Font Style"
+                class="margin"
             >
                 <mat-button-toggle [value]="true">yes</mat-button-toggle>
                 <mat-button-toggle [value]="false">no</mat-button-toggle>
@@ -36,8 +39,13 @@
             <div class="new-bill-field">
                 <mat-form-field class="half" appearance="outline" color="primary">
                     <mat-label>date of payment</mat-label>
-                    <input [matDatepicker]="picker1" matInput formControlName="paid" />
-                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <input
+                        [matDatepicker]="picker1"
+                        matInput
+                        formControlName="paid"
+                        [disabled]="!configForm.value.settled"
+                    />
+                    <mat-hint class="hint">MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle
                         matIconSuffix
                         [for]="picker1"
@@ -47,7 +55,7 @@
                 <mat-form-field class="half" appearance="outline">
                     <mat-label>date due</mat-label>
                     <input [matDatepicker]="picker2" matInput formControlName="due" />
-                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-hint class="hint">MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle
                         matIconSuffix
                         [for]="picker2"

@@ -9,8 +9,8 @@ import { Bill, BillData } from "src/app/core/types/objects";
 
 @Component({
     selector: "service-list-template",
-    templateUrl: "./service.template.monthly.html",
-    styleUrls: ["../../pages.monthly.css"],
+    templateUrl: "./service.template.bills.html",
+    styleUrls: ["../../pages.bills.css"],
     standalone: true,
     imports: [CommonModule, MatExpansionModule, ActionsComponent],
 })

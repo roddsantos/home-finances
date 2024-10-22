@@ -1,7 +1,22 @@
-<div class="page-content">
+<div class="bills">
+    <div class="bills-header">
+        <h1 class="page-title">bills</h1>
+        <button
+            *ngIf="!(generalState.filterContainer$ | async)"
+            aria-label="open filter selector"
+            matTooltip="filter selector"
+            matTooltipPosition="above"
+            mat-button
+            [ngClass]="['button-primary']"
+            (click)="openFilterContainer()"
+        >
+            <mat-icon class="filter-icon material-symbols-outlined">filter_alt</mat-icon>
+            <p>open filters</p>
+        </button>
+    </div>
     <div class="monthly-container">
         <div class="bill-list-container">
-            <div>
+            <!-- <div>
                 <button
                     aria-label="create new bill button"
                     mat-button
@@ -25,8 +40,9 @@
                     <p>open filters</p>
                 </button>
                 <custom-filter></custom-filter>
-            </div>
+            </div> -->
 
+            <custom-filter></custom-filter>
             <pagination-template></pagination-template>
             <feedback-container
                 *ngIf="(billState.bills$| async)?.length === 0"

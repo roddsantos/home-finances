@@ -18,6 +18,20 @@ export class CustomFilterState {
         this.localStorage.setFilters(JSON.stringify(filters));
     }
 
+    addFilters(filtersToAdd: FilterDisplay[]) {
+        let actualFilters: FilterDisplay[] = [];
+        this.filters$
+            .subscribe({
+                next: (filters) => {
+                    actualFilters = filters;
+                },
+            })
+            .unsubscribe();
+
+        this._filters$.next([...actualFilters, ...filtersToAdd]);
+        this.localStorage.setFilters(JSON.stringify([...actualFilters, ...filtersToAdd]));
+    }
+
     removeFilter(filter: FilterDisplay) {
         const index = this._filters$.getValue().findIndex((f) => f.id === filter.id);
         if (index >= 0) {

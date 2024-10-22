@@ -25,7 +25,7 @@ export class LocalStorageService {
     }
 
     getFilterContainerStatus() {
-        return localStorage.getItem("filterContainer") || true;
+        return localStorage.getItem("filterContainer");
     }
 
     setFilterContainer(status: boolean) {

@@ -109,7 +109,7 @@ export class ModalNewBill implements OnInit {
         }),
         settled: new FormControl<boolean>(true, { nonNullable: true }),
         due: new FormControl<Date>(new Date(), { nonNullable: false }),
-        paid: new FormControl<Date>(new Date(), { nonNullable: false }),
+        paid: new FormControl<Date | null>(null, { nonNullable: false }),
         type: new FormControl<PaymentTypes | null>(null, { nonNullable: false }),
         year: new FormControl<number>(new Date().getFullYear(), {
             nonNullable: true,
@@ -266,15 +266,20 @@ export class ModalNewBill implements OnInit {
                 );
             case 3:
                 return this.billForm.value.type === "money"
-                    ? Boolean(formErrors.bank1.errors) ||
+                    ? !Boolean(this.billForm.get("bank1")?.value) ||
                           this.billForm.value.bank1?.id === this.billForm.value.bank2?.id
                     : this.billForm.value.type === "companyCredit"
-                    ? Boolean(formErrors.company.errors) ||
+                    ? !Boolean(this.billForm.get("bank1")?.value) ||
                       Boolean(formErrors.parcels.errors) ||
-                      Boolean(this.billForm.value.bank1) ===
-                          Boolean(this.billForm.value.creditcard)
+                      (Boolean(this.billForm.get("bank1")?.value) &&
+                          Boolean(this.billForm.get("creditcard")?.value))
                     : !Boolean(this.billForm.value.creditcard) ||
                       Boolean(formErrors.parcels.errors);
+            case 4:
+                return (
+                    Boolean(this.billForm.get("settled")?.value) &&
+                    !Boolean(this.billForm.get("paid")?.value)
+                );
             default:
                 return false;
         }

@@ -12,8 +12,8 @@ import { Bill, BillData } from "src/app/core/types/objects";
 
 @Component({
     selector: "credit-card-list-template",
-    templateUrl: "./credit-card.template.monthly.html",
-    styleUrls: ["../../pages.monthly.css"],
+    templateUrl: "./credit-card.template.bills.html",
+    styleUrls: ["../../pages.bills.css"],
     standalone: true,
     imports: [CommonModule, MatExpansionModule, ActionsComponent],
 })

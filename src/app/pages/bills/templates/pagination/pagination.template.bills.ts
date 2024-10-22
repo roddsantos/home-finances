@@ -10,8 +10,8 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 @Component({
     selector: "pagination-template",
     standalone: true,
-    templateUrl: "./pagination.template.monthly.html",
-    styleUrls: ["./pagination.template.monthly.css", "../../pages.monthly.css"],
+    templateUrl: "./pagination.template.bills.html",
+    styleUrls: ["./pagination.template.bills.css", "../../pages.bills.css"],
     imports: [CommonModule, MatButtonModule, MatIconModule, MatTooltipModule],
 })
 export class PaginationTemplate {
