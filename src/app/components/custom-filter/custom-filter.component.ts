@@ -83,16 +83,26 @@ export class CustomFilterComponent {
     ngOnInit() {
         const filters: FilterDisplay[] = this.storage.getFilters();
         const hasMonth = filters.find((filter) => filter.identifier === "month");
-        if (hasMonth) {
+        if (hasMonth)
             this.monthCtrl.patchValue(
                 this.months.find((month) => month.order === hasMonth?.id) || null
             );
-        }
+
+        const hasMin = filters.find((filter) => filter.identifier === "min");
+        if (hasMin) this.minCtrl.patchValue(hasMin.id as number);
+
+        const hasMax = filters.find((filter) => filter.identifier === "max");
+        if (hasMax) this.minCtrl.patchValue(hasMax.id as number);
+
         const hasYear = filters.find((filter) => filter.identifier === "year");
         if (hasYear) this.yearCtrl.patchValue(hasYear.id as number);
 
         const hasType = filters.find((filter) => filter.identifier === "type");
         if (hasType) this.typeCtrl.patchValue(hasType.id as PaymentTypes | "all");
+
+        const hasStatus = filters.find((filter) => filter.identifier === "status");
+        if (hasStatus)
+            this.statusCtrl.patchValue(hasStatus.id as "all" | "settled" | "pending");
     }
 
     getFilters() {
@@ -111,7 +121,7 @@ export class CustomFilterComponent {
         this.dialog.open<string>(DialogCustomList, {
             data: {
                 header: "add filters",
-                size: "lg",
+                size: "md",
             },
         });
     }

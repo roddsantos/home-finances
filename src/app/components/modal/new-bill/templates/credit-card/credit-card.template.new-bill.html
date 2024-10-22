@@ -2,13 +2,14 @@
     <h1>credit card info</h1>
     <form [formGroup]="ccForm">
         <div class="form-container">
-            <mat-form-field
-                *ngIf="(creditCards.creditCards$| async)!.length > 0"
-                class="new-bill-field"
-                appearance="outline"
-            >
+            <mat-form-field class="new-bill-field" appearance="outline">
                 <mat-label>credit card</mat-label>
                 <mat-select formControlName="creditcard">
+                    <mat-option
+                        *ngIf="(creditCards.creditCards$ | async)!.length === 0"
+                        [disabled]="true"
+                        >no credit cards</mat-option
+                    >
                     @for (c of (creditCards.creditCards$ | async); track c) {
                     <mat-option [value]="c">{{ c.name }}</mat-option>
                     }
@@ -24,7 +25,16 @@
             >
                 <mat-label>company</mat-label>
                 <mat-select formControlName="company">
-                    <mat-option [value]="null">none</mat-option>
+                    <mat-option
+                        *ngIf="(companies.company$ | async)!.length === 0"
+                        [disabled]="true"
+                        >no companies</mat-option
+                    >
+                    <mat-option
+                        *ngIf="(companies.company$ | async)!.length > 0"
+                        [value]="null"
+                        >none</mat-option
+                    >
                     @for (c of (companies.company$ | async); track c) {
                     <mat-option [value]="c">{{ c.name }}</mat-option>
                     }

@@ -4,22 +4,22 @@
     background-color: var(--background);
     position: relative;
     min-height: 150px;
-    width: 50vw;
+    width: 700px;
     z-index: 3;
     padding: 80px 20px 20px;
     border-radius: var(--border-radius);
     border: solid var(--border-width) var(--border-color);
     &.xl {
-        width: 80vw;
+        width: 1200px;
     }
     &.lg {
-        width: 65vw;
+        width: 900px;
     }
     &.sm {
-        width: 35vw;
+        width: 500px;
     }
     &.xm {
-        width: 20vw;
+        width: 300px;
     }
 }
 
@@ -36,11 +36,11 @@
 }
 
 .modal-body {
-    min-height: max-content;
     border-radius: var(--border-radius);
     z-index: 3;
     width: 100%;
-    height: max-content;
+    max-height: 650px;
+    overflow-y: auto;
 }
 
 .modal-header {

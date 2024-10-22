@@ -109,9 +109,33 @@
                     [formControl]="typeCtrl"
                 >
                     <mat-option [value]="'all'">all</mat-option>
-                    <mat-option [value]="'creditCard'">credit card</mat-option>
-                    <mat-option [value]="'money'">money</mat-option>
-                    <mat-option [value]="'companyCredit'">company credit</mat-option>
+                    <mat-option [value]="'creditCard'">
+                        <mat-icon
+                            class="material-symbols-outlined"
+                            aria-hidden="false"
+                            aria-label="credit card icon"
+                            fontIcon="credit_card"
+                        ></mat-icon>
+                        credit card</mat-option
+                    >
+                    <mat-option [value]="'money'"
+                        ><mat-icon
+                            class="material-symbols-outlined"
+                            aria-hidden="false"
+                            aria-label="credit card icon"
+                            fontIcon="payments"
+                        ></mat-icon
+                        >money</mat-option
+                    >
+                    <mat-option [value]="'companyCredit'"
+                        ><mat-icon
+                            class="material-symbols-outlined"
+                            aria-hidden="false"
+                            aria-label="credit card icon"
+                            fontIcon="store"
+                        ></mat-icon
+                        >company credit</mat-option
+                    >
                 </mat-select>
             </mat-form-field>
         </div>

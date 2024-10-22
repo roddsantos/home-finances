@@ -7,171 +7,236 @@
     <form>
         <div class="add-filter-container">
             <!-- categories -->
-            <mat-form-field
-                *ngIf="(catState.categories$ | async)!.length > 0"
-                class="data-field"
-                appearance="outline"
-            >
-                <mat-label>category</mat-label>
-                <mat-select #category (selectionChange)="addFilter($event, 'category')">
-                    @for (m of (catState.categories$ | async); track m) {
-                    <mat-option [value]="m">{{ m.name }}</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>
+            <div class="data-field-1">
+                <p>category</p>
+                <mat-form-field class="input" appearance="outline">
+                    <mat-select
+                        #category
+                        [formControl]="catCtrl"
+                        (selectionChange)="addFilter($event, 'category')"
+                    >
+                        <mat-option
+                            *ngIf="(catState.categories$ | async)!.length === 0"
+                            [disabled]="true"
+                            >no companies</mat-option
+                        >
+                        <mat-option
+                            *ngIf="(catState.categories$ | async)!.length > 0"
+                            [value]="null"
+                            >none</mat-option
+                        >
+                        @for (m of (catState.categories$ | async); track m) {
+                        <mat-option [value]="m">{{ m.name }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
             <!-- credit cards -->
-            <mat-form-field
-                *ngIf="(ccState.creditCards$ | async)!.length > 0"
-                class="data-field"
-                appearance="outline"
-            >
-                <mat-label>credit cards</mat-label>
-                <mat-select
-                    #creditcard
-                    (selectionChange)="addFilter($event, 'creditcard')"
-                >
-                    @for (cc of (ccState.creditCards$ | async); track cc) {
-                    <mat-option [value]="cc">{{ cc.name }}</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>
+            <div class="data-field-2">
+                <p>credit cards</p>
+                <mat-form-field class="input" [formControl]="ccCrtl" appearance="outline">
+                    <mat-select
+                        #creditcard
+                        (selectionChange)="addFilter($event, 'creditcard')"
+                    >
+                        <mat-option
+                            *ngIf="(ccState.creditCards$ | async)!.length === 0"
+                            [disabled]="true"
+                            >no credit cards</mat-option
+                        >
+                        <mat-option
+                            *ngIf="(compState.company$ | async)!.length > 0"
+                            [value]="null"
+                            >none</mat-option
+                        >
+                        @for (cc of (ccState.creditCards$ | async); track cc) {
+                        <mat-option [value]="cc">{{ cc.name }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
             <!-- banks -->
-            <mat-form-field
-                *ngIf="(bankState.banks$ | async)!.length > 0"
-                class="data-field"
-                appearance="outline"
-            >
-                <mat-label>banks</mat-label>
-                <mat-select #bank (selectionChange)="addFilter($event, 'bank')">
-                    @for (b of (bankState.banks$ | async); track b) {
-                    <mat-option [value]="b">{{ b.name }}</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>
+            <div class="data-field">
+                <p>banks</p>
+                <mat-form-field class="input" [formControl]="bkCtrl" appearance="outline">
+                    <mat-select #bank (selectionChange)="addFilter($event, 'bank')">
+                        <mat-option
+                            *ngIf="(bankState.banks$ | async)!.length === 0"
+                            [disabled]="true"
+                            >no banks</mat-option
+                        >
+                        <mat-option
+                            *ngIf="(bankState.banks$ | async)!.length > 0"
+                            [value]="null"
+                            >none</mat-option
+                        >
+                        @for (b of (bankState.banks$ | async); track b) {
+                        <mat-option [value]="b">{{ b.name }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
             <!-- companies -->
-            <mat-form-field
-                *ngIf="(compState.company$ | async)!.length > 0"
-                class="data-field"
-                appearance="outline"
-            >
-                <mat-label>companies</mat-label>
-                <mat-select #company (selectionChange)="addFilter($event, 'company')">
-                    @for (c of (compState.company$ | async); track c) {
-                    <mat-option [value]="c">{{ c.name }}</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>
+            <div class="data-field">
+                <p>companies</p>
+                <mat-form-field class="input" appearance="outline">
+                    <mat-select #company (selectionChange)="addFilter($event, 'company')">
+                        <mat-option
+                            *ngIf="(compState.company$ | async)!.length === 0"
+                            [disabled]="true"
+                            >no companies</mat-option
+                        >
+                        <mat-option
+                            *ngIf="(compState.company$ | async)!.length > 0"
+                            [value]="null"
+                            >none</mat-option
+                        >
+                        @for (c of (compState.company$ | async); track c) {
+                        <mat-option [value]="c">{{ c.name }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
             <!-- month -->
-            <mat-form-field class="condition-field" appearance="outline">
-                <mat-label>month</mat-label>
-                <mat-select
-                    placeholder="select month"
-                    #month
-                    (selectionChange)="addMonth($event)"
-                >
-                    @for (m of months; track m) {
-                    <mat-option [value]="m">{{ m.name }}</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>
+            <!-- <div class="data-field">
+                <p>month</p>
+                <mat-form-field class="input" appearance="outline">
+                    <mat-select
+                        placeholder="select month"
+                        #month
+                        (selectionChange)="addMonth($event)"
+                    >
+                        @for (m of months; track m) {
+                        <mat-option [value]="m">{{ m.name }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div> -->
             <!-- year -->
-            <mat-form-field class="condition-field" appearance="outline">
-                <mat-label>year</mat-label>
-                <input
-                    (keydown.enter)="addYear($event)"
-                    matInput
-                    #year
-                    type="number"
-                    [formControl]="yCtrl"
-                />
-                @if (yCtrl.invalid) {
-                <mat-error>invalid year (2023-2090)</mat-error>
-                }
-            </mat-form-field>
+            <!-- <div class="data-field">
+                <p>year</p>
+                <mat-form-field class="input" appearance="outline">
+                    <input
+                        (keydown.enter)="addYear($event)"
+                        matInput
+                        #year
+                        type="number"
+                        [formControl]="yCtrl"
+                    />
+                    @if (yCtrl.invalid) {
+                    <mat-error>invalid year (2023-2090)</mat-error>
+                    }
+                </mat-form-field>
+            </div> -->
             <!-- min value total -->
-            <mat-form-field class="condition-field" appearance="outline">
-                <mat-label>min</mat-label>
-                <input
-                    (keydown.enter)="addLimit($event, 'min')"
-                    matInput
-                    #min
-                    type="number"
-                    [formControl]="minCtrl"
-                />
-                @if (minCtrl.invalid) {
-                <mat-error>invalid min value</mat-error>
-                }
-            </mat-form-field>
+            <!-- <div class="data-field">
+                <p>min</p>
+                <mat-form-field class="input" appearance="outline">
+                    <input
+                        (keydown.enter)="addLimit($event, 'min')"
+                        matInput
+                        #min
+                        type="number"
+                        [formControl]="minCtrl"
+                    />
+                    @if (minCtrl.invalid) {
+                    <mat-error>invalid min value</mat-error>
+                    }
+                </mat-form-field>
+            </div> -->
             <!-- max value total -->
-            <mat-form-field class="condition-field" appearance="outline">
-                <mat-label>max</mat-label>
-                <input
-                    (keydown.enter)="addLimit($event, 'max')"
-                    matInput
-                    #max
-                    type="number"
-                    [formControl]="maxCtrl"
-                />
-                @if (maxCtrl.invalid) {
-                <mat-error>invalid max value</mat-error>
-                }
-            </mat-form-field>
+            <!-- <div class="data-field">
+                <p>max</p>
+                <mat-form-field class="input" appearance="outline">
+                    <input
+                        (keydown.enter)="addLimit($event, 'max')"
+                        matInput
+                        #max
+                        type="number"
+                        [formControl]="maxCtrl"
+                    />
+                    @if (maxCtrl.invalid) {
+                    <mat-error>invalid max value</mat-error>
+                    }
+                </mat-form-field>
+            </div> -->
             <!-- status -->
-            <mat-form-field class="data-field" appearance="outline">
-                <mat-label>status</mat-label>
-                <mat-select #status (selectionChange)="addStatus($event)">
-                    <mat-option [value]="'all'">all</mat-option>
-                    <mat-option [value]="'pending'">pending</mat-option>
-                    <mat-option [value]="'settled'">settled</mat-option>
-                </mat-select>
-            </mat-form-field>
+            <!-- <div class="data-field">
+                <p>status</p>
+                <mat-form-field class="input" appearance="outline">
+                    <mat-select #status (selectionChange)="addStatus($event)">
+                        <mat-option [value]="'all'">all</mat-option>
+                        <mat-option [value]="'pending'">pending</mat-option>
+                        <mat-option [value]="'settled'">settled</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div> -->
             <!-- payment type -->
-            <mat-form-field class="data-field" appearance="outline">
-                <mat-label>payment type</mat-label>
-                <mat-select #type (selectionChange)="addFilter($event, 'type')">
-                    <mat-option [value]="'creditCard'">credit card</mat-option>
-                    <mat-option [value]="'money'">money</mat-option>
-                    <mat-option [value]="'companyCredit'">company credit</mat-option>
-                </mat-select>
-            </mat-form-field>
+            <!-- <div class="data-field">
+                <p>payment type</p>
+                <mat-form-field class="input" appearance="outline">
+                    <mat-select #type (selectionChange)="addFilter($event, 'type')">
+                        <mat-option [value]="'creditCard'">credit card</mat-option>
+                        <mat-option [value]="'money'">money</mat-option>
+                        <mat-option [value]="'companyCredit'">company credit</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div> -->
             <!-- start date -->
-            <mat-form-field class="savings-input" appearance="outline">
-                <mat-label>from start date</mat-label>
-                <input
-                    [matDatepicker]="picker1"
-                    (dateChange)="addDate($event, true)"
-                    matInput
-                    #date1
-                    [formControl]="startDateCtrl"
-                />
-                <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle
-                    matIconSuffix
-                    [for]="picker1"
-                ></mat-datepicker-toggle>
-                <mat-datepicker #picker1></mat-datepicker>
-            </mat-form-field>
+            <div class="data-field">
+                <p>from start date</p>
+                <mat-form-field class="input" appearance="outline">
+                    <input
+                        [matDatepicker]="picker1"
+                        (dateChange)="addDate($event, true)"
+                        matInput
+                        #date1
+                        [formControl]="startDateCtrl"
+                    />
+                    <mat-hint class="hint">MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="picker1"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
             <!-- end date -->
-            <mat-form-field class="savings-input" appearance="outline">
-                <mat-label>until end date</mat-label>
-                <input
-                    (dateChange)="addDate($event, false)"
-                    [matDatepicker]="picker2"
-                    matInput
-                    #date2
-                    [formControl]="endDateCtrl"
-                />
-                <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle
-                    matIconSuffix
-                    [for]="picker2"
-                ></mat-datepicker-toggle>
-                <mat-datepicker #picker2></mat-datepicker>
-            </mat-form-field>
-            <p class="chip-grid-title">choosed filters</p>
-            <div class="divider"></div>
+            <div class="data-field">
+                <p>until end date</p>
+                <mat-form-field class="input" appearance="outline">
+                    <input
+                        (dateChange)="addDate($event, false)"
+                        [matDatepicker]="picker2"
+                        matInput
+                        #date2
+                        [formControl]="endDateCtrl"
+                    />
+                    <mat-hint class="hint">MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="picker2"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <button
+                [disabled]="selectedFilters.length === 0"
+                mat-button
+                class="button-primary reset-button"
+            >
+                <mat-icon
+                    class="material-symbols-outlined"
+                    aria-hidden="false"
+                    aria-label="remove icon"
+                    fontIcon="delete_sweep"
+                ></mat-icon>
+                <p>remove all filters</p>
+            </button>
+            <!-- <p class="chip-grid-title">choosed filters</p>
+            <div class="divider"></div> -->
             <!-- <mat-chip-grid #chipGrid aria-label="filters selected"> -->
-            <div class="chip-grid">
+            <!-- <div class="chip-grid">
                 @for (chip of selectedFilters; track chip; let i = $index) {
                 <mat-chip-row
                     [ngClass]="[
@@ -192,7 +257,7 @@
                     </button>
                 </mat-chip-row>
                 }
-            </div>
+            </div> -->
             <!-- </mat-chip-grid> -->
         </div>
     </form>

@@ -1,13 +1,14 @@
 <form [formGroup]="serviceForm">
     <div class="template-credit-cards-container">
         <div class="template-service-input">
-            <mat-form-field
-                *ngIf="(companies.company$ | async)!.length > 0"
-                class="template-service-field"
-                appearance="outline"
-            >
+            <mat-form-field class="template-service-field" appearance="outline">
                 <mat-label>company</mat-label>
                 <mat-select formControlName="company">
+                    <mat-option
+                        *ngIf="(companies.company$ | async)!.length === 0"
+                        [disabled]="true"
+                        >no companies</mat-option
+                    >
                     @for (c of (companies.company$ | async); track c) {
                     <mat-option [value]="c">{{ c.name }}</mat-option>
                     }
@@ -16,17 +17,22 @@
                 <mat-error>{{errorMessage.company}}</mat-error>
                 }
             </mat-form-field>
-            <mat-form-field
-                *ngIf="(creditCards.creditCards$| async)!.length > 0"
-                class="template-service-field"
-                appearance="outline"
-            >
+            <mat-form-field class="template-service-field" appearance="outline">
                 <mat-label>credit card</mat-label>
                 <mat-select
                     (selectionChange)="toggleError('cc')"
                     formControlName="creditCard"
                 >
-                    <mat-option [value]="null">none</mat-option>
+                    <mat-option
+                        *ngIf="(creditCards.creditCards$ | async)!.length === 0"
+                        [disabled]="true"
+                        >no credit cards</mat-option
+                    >
+                    <mat-option
+                        *ngIf="(creditCards.creditCards$ | async)!.length > 0"
+                        [value]="null"
+                        >none</mat-option
+                    >
                     @for (c of (creditCards.creditCards$ | async); track c) {
                     <mat-option [value]="c">{{ c.name }}</mat-option>
                     }
@@ -35,17 +41,20 @@
                 <mat-error>{{errorMessage.noCC}}</mat-error>
                 }
             </mat-form-field>
-            <mat-form-field
-                *ngIf="(banks.banks$| async)!.length > 0"
-                class="template-service-field"
-                appearance="outline"
-            >
+            <mat-form-field class="template-service-field" appearance="outline">
                 <mat-label>bank</mat-label>
                 <mat-select
                     (selectionChange)="toggleError('bank')"
                     formControlName="bank"
                 >
-                    <mat-option [value]="null">none</mat-option>
+                    <mat-option
+                        *ngIf="(banks.banks$ | async)!.length === 0"
+                        [disabled]="true"
+                        >no banks</mat-option
+                    >
+                    <mat-option *ngIf="(banks.banks$ | async)!.length > 0" [value]="null"
+                        >none</mat-option
+                    >
                     @for (b of (banks.banks$ | async); track b) {
                     <mat-option [value]="b">{{ b.name }}</mat-option>
                     }

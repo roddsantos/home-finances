@@ -73,6 +73,7 @@
 .filter-counter {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     width: 100%;
     height: max-content;
     border-radius: var(--border-radius);
@@ -81,7 +82,7 @@
         display: flex;
         width: 1.5rem;
         height: 1.5rem;
-        margin-right: 0.4rem;
+        margin: auto 0.4rem auto auto;
         border-radius: 50%;
         background-color: var(--third);
         &.binary {
@@ -97,7 +98,7 @@
         }
     }
     & p {
-        margin: auto;
+        margin: auto auto auto 5px;
     }
 }
 
