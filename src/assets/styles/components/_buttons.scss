@@ -6,7 +6,8 @@
         border: solid var(--border-width) var(--border-color);
     }
 
-    & p {
+    & p,
+    span {
         color: var(--text-1) !important;
         font-weight: bold !important;
     }

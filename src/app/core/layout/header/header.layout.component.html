@@ -34,6 +34,15 @@
         </mat-autocomplete>
     </mat-form-field>
     <button
+        *ngIf="getPageObject()?.actions || false"
+        mat-button
+        class="header-action button-primary"
+        aria-label="action company button"
+        (click)="openModal()"
+    >
+        {{ "new " + (getPageObject()?.page || "" | page) }}
+    </button>
+    <button
         class="header-notifications"
         mat-icon-button
         aria-label="action company button"

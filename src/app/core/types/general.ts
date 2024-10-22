@@ -34,11 +34,13 @@ export type RoutesType =
     | "/companies"
     | "/banks"
     | "/categories"
-    | "/monthly"
+    | "/bills"
     | "/dashboard"
     | "/";
+
 export type RouteItemType = {
     page: RoutesType;
     icon: string;
     title: string;
+    actions: boolean;
 };

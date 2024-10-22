@@ -31,7 +31,7 @@ const routes: Routes = [
             import("./pages/management/pages.management").then((m) => m.PageManagement),
     },
     {
-        path: "monthly",
+        path: "bills",
         canActivate: [authGuard],
         loadComponent: () =>
             import("./pages/monthly/pages.monthly").then((m) => m.PageMonthly),
