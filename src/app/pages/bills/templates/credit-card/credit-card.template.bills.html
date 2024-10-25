@@ -1,38 +1,26 @@
-<mat-expansion-panel class="bill-expansion">
-    <mat-expansion-panel-header class="bill-expansion-container">
-        <mat-panel-title>
-            <div class="bill-title-container">
-                <p [ngClass]="['value', 'width-30']">{{ data.name }}</p>
-                <div class="width-30">
-                    <p class="label">credit card</p>
-                    <p class="value">{{data.creditCard?.name}}</p>
-                </div>
-                <div *ngIf="data.parcels > 1" class="width-15">
-                    <p class="label">value</p>
-                    <p class="value">{{data.totalParcel | currency: "R$ "}}</p>
-                </div>
-                <p [ngClass]="['value', 'width-25']">{{data.due | date: "fullDate"}}</p>
-            </div>
-            <div class="bill-color-container" [style.borderRightColor]="color"></div>
-        </mat-panel-title>
-    </mat-expansion-panel-header>
-    <div class="bill-expanded-container">
-        <div class="desc">
-            <p class="label">description</p>
-            <p class="value">{{ data.description }}</p>
-        </div>
-        <div class="parcels">
-            <p class="label">number of parcels</p>
-            <p class="value">{{data.parcels}}</p>
-        </div>
-        <div class="total">
-            <p class="label">total value</p>
-            <p class="value">{{ data.total | currency: "R$ " }}</p>
-        </div>
-        <div class="transaction">
-            <p class="label">transaction date</p>
-            <p class="value">{{ data.paid | date: "fullDate" }}</p>
-        </div>
-        <actions class="icons-container width-30" [actions]="actions"></actions>
+<div class="bill-container-cc">
+    <div class="card-container">
+        <mat-icon
+            class="material-symbols-outlined card-icon"
+            aria-hidden="false"
+            aria-label="icon"
+            fontIcon="credit_card"
+        ></mat-icon>
+        <p class="card-name">{{data.creditCard?.name}}</p>
     </div>
-</mat-expansion-panel>
+    <p class="title">{{ data.name }}</p>
+    <p class="description">{{ data.description }}</p>
+    <div [ngClass]="['date-container', dateLeft]">
+        <mat-icon
+            class="material-symbols-outlined card-icon"
+            aria-hidden="false"
+            aria-label="icon"
+            fontIcon="event"
+        ></mat-icon>
+        <p>{{(data.settled ? data.paid : data.due) | date: "mediumDate"}}</p>
+    </div>
+    <div class="value-container">
+        <div class="parcel"><p>{{data.parcel + 1}}</p></div>
+        <p class="value">{{data.totalParcel | currency: "R$ "}}</p>
+    </div>
+</div>

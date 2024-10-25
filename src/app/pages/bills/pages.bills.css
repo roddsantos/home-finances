@@ -9,6 +9,19 @@
     width: 100%;
 }
 
+.bill-list {
+    display: grid;
+    grid-template-columns: repeat(3, 33%);
+    gap: 10px;
+}
+
+.bill-item {
+    width: 100%;
+    min-height: 150px;
+    background-color: var(--primary);
+    border-radius: var(--border-radius);
+}
+
 .margin {
     display: flex;
     margin: 10px 0px 20px auto;

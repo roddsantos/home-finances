@@ -14,7 +14,7 @@ import { Bill, BillData } from "src/app/core/types/objects";
 @Component({
     selector: "bank-list-template",
     templateUrl: "./bank.template.bills.html",
-    styleUrls: ["../../pages.bills.css"],
+    styleUrls: ["../../pages.bills.css", "./bank.template.bills.css"],
     standalone: true,
     imports: [
         CommonModule,
@@ -31,7 +31,7 @@ export class BankListTemplateMonthly {
     public billState = inject(BillState);
     public snack = inject(CustomSnackbarComponent);
     @Input() data: Bill & BillData;
-    color: string = "transparent";
+    dateLeft: string = "settled";
 
     deleteAction = {
         name: "",
@@ -57,10 +57,10 @@ export class BankListTemplateMonthly {
     actions: ActionItem[] = [];
 
     setActions(settled: boolean, due: string) {
-        if (settled) this.color = "#008f18";
-        else if (new Date(due).getTime() - new Date().getTime() > 0)
-            this.color = "#a86d00";
-        else this.color = "#8f0000";
+        if (this.data.settled) this.dateLeft = "settled";
+        else if (new Date(this.data.due).getTime() - new Date().getTime() > 0)
+            this.dateLeft = "close";
+        else this.dateLeft = "late";
 
         if (!settled)
             this.actions = [this.editAction, this.deleteAction, this.checkAction];

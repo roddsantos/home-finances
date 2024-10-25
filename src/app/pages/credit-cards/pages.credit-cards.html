@@ -11,7 +11,7 @@
                 <h2 class="cc-title">{{creditCard.name}}</h2>
                 <p class="cc-description">{{creditCard.description}}</p>
                 <p class="cc-month">
-                    {{creditCard.month > 8 ?"" : "0" + (creditCard.month + 1)+ '/' +
+                    {{(creditCard.month > 8 ? "" : "0") + (creditCard.month + 1)+ '/' +
                     creditCard.year }}
                 </p>
                 <img
@@ -20,8 +20,8 @@
                     [src]="'assets/images/'+creditCard.flag+'.svg'"
                 />
                 <div class="cc-invoice">
-                    <p class="secondary-text">invoice:</p>
-                    <p>{{creditCard.invoice | currency: "R$ "}}</p>
+                    <p class="secondary-text">limit:</p>
+                    <p>{{creditCard.limitLeft | currency: "R$ "}}</p>
                 </div>
                 <!-- <div class="cc-limit">
                     <p>limit:</p>

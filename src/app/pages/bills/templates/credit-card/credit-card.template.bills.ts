@@ -9,13 +9,14 @@ import { ServiceBill } from "src/app/services/bill.service";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { ActionItem } from "src/app/core/types/components";
 import { Bill, BillData } from "src/app/core/types/objects";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
     selector: "credit-card-list-template",
     templateUrl: "./credit-card.template.bills.html",
-    styleUrls: ["../../pages.bills.css"],
+    styleUrls: ["../../pages.bills.css", "./credit-card.template.bills.css"],
     standalone: true,
-    imports: [CommonModule, MatExpansionModule, ActionsComponent],
+    imports: [CommonModule, MatExpansionModule, ActionsComponent, MatIconModule],
 })
 export class CreditCardTemplateMonthly {
     public dialog = inject(Dialog);
@@ -23,7 +24,9 @@ export class CreditCardTemplateMonthly {
     public billState = inject(BillState);
     public snack = inject(CustomSnackbarComponent);
     @Input() data: Bill & BillData;
-    color: string = "transparent";
+    dateLeft: string = "settled";
+    private style = getComputedStyle(document.body);
+    public error = this.style.getPropertyValue("--error");
 
     actions: ActionItem[] = [
         {
@@ -35,10 +38,10 @@ export class CreditCardTemplateMonthly {
     ];
 
     ngOnInit() {
-        if (this.data.settled) this.color = "#008f18";
+        if (this.data.settled) this.dateLeft = "settled";
         else if (new Date(this.data.due).getTime() - new Date().getTime() > 0)
-            this.color = "#a86d00";
-        else this.color = "#8f0000";
+            this.dateLeft = "close";
+        else this.dateLeft = "late";
 
         if (!this.data.settled)
             this.actions = [
