@@ -2,22 +2,28 @@ import { Dialog } from "@angular/cdk/dialog";
 import { CommonModule } from "@angular/common";
 import { Component, inject, Input } from "@angular/core";
 import { MatExpansionModule } from "@angular/material/expansion";
+import { MatIconModule } from "@angular/material/icon";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ModalEditBill } from "src/app/components/modal/edit-bill/edit-bill.modal";
+import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ActionItem } from "src/app/core/types/components";
 import { Bill, BillData } from "src/app/core/types/objects";
 
 @Component({
     selector: "service-list-template",
     templateUrl: "./service.template.bills.html",
-    styleUrls: ["../../pages.bills.css"],
+    styleUrls: ["../../pages.bills.css", "./service.template.bills.css"],
     standalone: true,
-    imports: [CommonModule, MatExpansionModule, ActionsComponent],
+    imports: [CommonModule, MatExpansionModule, ActionsComponent, MatIconModule],
 })
 export class ServiceTemplateMonthly {
     public dialog = inject(Dialog);
+    public general = inject(GeneralState);
     @Input() data: Bill & BillData;
-    color: string = "transparent";
+    dateLeft: string = "settled";
+    isLineTheme: string = "";
+    private style = getComputedStyle(document.body);
+    public error = this.style.getPropertyValue("--error");
 
     actions: ActionItem[] = [
         {
@@ -35,10 +41,15 @@ export class ServiceTemplateMonthly {
     ];
 
     ngOnInit() {
-        if (this.data.settled) this.color = "#008f18";
+        if (this.data.settled) this.dateLeft = "settled";
         else if (new Date(this.data.due).getTime() - new Date().getTime() > 0)
-            this.color = "#a86d00";
-        else this.color = "#8f0000";
+            this.dateLeft = "close";
+        else this.dateLeft = "late";
+
+        this.general.theme$.subscribe({
+            next: (theme) => (this.isLineTheme = theme === "binary" ? "binary" : ""),
+        });
+
         if (!this.data.settled)
             this.actions.push({
                 name: "",

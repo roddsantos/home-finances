@@ -24,7 +24,7 @@
         "cc-title cc-flag"
         "cc-description cc-description"
         "cc-month cc-month"
-        "cc-invoice cc-color-container"
+        "cc-invoice cc-invoice"
         "cc-progress-container cc-progress-container";
     grid-template-columns: 70% 30%;
     flex-direction: row;

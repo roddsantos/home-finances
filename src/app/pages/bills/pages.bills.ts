@@ -48,9 +48,13 @@ export class PageBills {
 
     titleItems: Partial<keyof Bill>[] = ["name", "updatedAt"];
     detailsItems: Partial<keyof Bill>[] = ["description", "total"];
+    isLineTheme: string = "";
 
     ngOnInit() {
         this.billState.setAction(() => this.onReload());
+        this.generalState.theme$.subscribe({
+            next: (theme) => (this.isLineTheme = theme === "binary" ? "binary" : ""),
+        });
     }
 
     trackByFn(index: number, item: any) {

@@ -1,6 +1,7 @@
 <div class="bills">
     <div class="bills-header">
         <h1 class="page-title">bills</h1>
+        <pagination-template [style.margin]="'auto 0px auto auto'"></pagination-template>
         <button
             *ngIf="!(generalState.filterContainer$ | async)"
             aria-label="open filter selector"
@@ -8,6 +9,7 @@
             matTooltipPosition="above"
             mat-button
             [ngClass]="['button-primary']"
+            [style.margin]="'auto 0px auto 10px'"
             (click)="openFilterContainer()"
         >
             <mat-icon class="filter-icon material-symbols-outlined">filter_alt</mat-icon>
@@ -17,7 +19,6 @@
     <div class="monthly-container">
         <div class="bill-list-container">
             <custom-filter></custom-filter>
-            <pagination-template></pagination-template>
             <feedback-container
                 *ngIf="(billState.bills$| async)?.length === 0"
                 [info]="(billState.status$ | async)!"
@@ -31,17 +32,17 @@
                     [ngForTrackBy]="trackByFn"
                 >
                     <bank-list-template
-                        class="bill-item"
+                        [ngClass]="['bill-item', isLineTheme]"
                         *ngIf="item.type === 'money'"
                         [data]="item"
                     ></bank-list-template>
                     <credit-card-list-template
-                        class="bill-item"
+                        [ngClass]="['bill-item', isLineTheme]"
                         *ngIf="item.type === 'creditCard'"
                         [data]="item"
                     ></credit-card-list-template>
                     <service-list-template
-                        class="bill-item"
+                        [ngClass]="['bill-item', isLineTheme]"
                         *ngIf="item.type === 'companyCredit'"
                         [data]="item"
                     ></service-list-template>

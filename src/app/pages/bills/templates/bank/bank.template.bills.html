@@ -1,5 +1,5 @@
 <div class="bill-container-bank">
-    <div class="bank-container">
+    <div [ngClass]="['bank-container', isLineTheme]">
         <mat-icon
             class="material-symbols-outlined card-icon"
             aria-hidden="false"
@@ -8,9 +8,18 @@
         ></mat-icon>
         <p class="bank-name">{{data.bank1?.name}}</p>
     </div>
+    <div [ngClass]="['bank-category', isLineTheme]">
+        <mat-icon
+            class="material-symbols-outlined bank-icon"
+            aria-hidden="false"
+            aria-label="icon"
+            [fontIcon]="data.category.icon"
+        ></mat-icon>
+        <p class="bank-name">{{data.category.name}}</p>
+    </div>
     <p class="title">{{ data.name }}</p>
     <p class="description">{{ data.description }}</p>
-    <div [ngClass]="['date-container', dateLeft]">
+    <div [ngClass]="['date-container', dateLeft, isLineTheme]">
         <mat-icon
             class="material-symbols-outlined card-icon"
             aria-hidden="false"

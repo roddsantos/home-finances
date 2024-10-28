@@ -16,14 +16,14 @@
 :root .dark {
     @include mat.all-component-themes(app-theme.$app-dark-theme);
 
-    --primary: #7440d4;
-    --secondary: #3b77bd;
-    --third: #45afc2;
+    --primary: #56329b;
+    --secondary: #3366a0;
+    --third: #368694;
     --background: #2a2a30;
     --background-highlighter: #494a53;
 
     --border-radius: 10px;
-    --border-color: #7440d4;
+    --border-color: #56329b;
     --border-width: 2px;
 
     --text-1: #c0c0c0;
@@ -37,6 +37,11 @@
     --info: #1346b4;
     --success: #10ad57;
     --default: #474141;
+
+    --credit-card: #a73f3f;
+    --bank: #1346b4;
+    --company: #622991;
+    --category: #2a8a8a;
 
     --item-list: rgb(135, 147, 192);
     --item-list-border: rgb(135, 147, 192);
@@ -71,6 +76,11 @@
     --success: #3db652;
     --default: #474141;
 
+    --credit-card: #da3434;
+    --bank: #5c84da;
+    --company: #a369d3;
+    --category: #44acac;
+
     --black: #000000;
     --white: #ffffff;
     --item-list: lightsteelblue;
@@ -95,13 +105,18 @@
 
     --border-radius: 10px;
     --border-color: #ffffff;
-    --border-width: 3px;
+    --border-width: 2px;
 
     --title: #ffffff;
     --description: #ffffff;
     --border: #ffffff;
     --icon: #ffffff;
     --disabled: #7a7a7a;
+
+    --credit-card: #da3434;
+    --bank: #2d62d4;
+    --company: #8d33d6;
+    --category: #2cadad;
 
     --error: #d34848;
     --warning: #d89f36;

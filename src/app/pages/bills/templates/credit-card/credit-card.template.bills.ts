@@ -10,6 +10,7 @@ import { BillState } from "src/app/core/subjects/subjects.bill";
 import { ActionItem } from "src/app/core/types/components";
 import { Bill, BillData } from "src/app/core/types/objects";
 import { MatIconModule } from "@angular/material/icon";
+import { GeneralState } from "src/app/core/subjects/subjects.general";
 
 @Component({
     selector: "credit-card-list-template",
@@ -20,11 +21,13 @@ import { MatIconModule } from "@angular/material/icon";
 })
 export class CreditCardTemplateMonthly {
     public dialog = inject(Dialog);
+    public general = inject(GeneralState);
     public billService = inject(ServiceBill);
     public billState = inject(BillState);
     public snack = inject(CustomSnackbarComponent);
     @Input() data: Bill & BillData;
     dateLeft: string = "settled";
+    isLineTheme: string = "";
     private style = getComputedStyle(document.body);
     public error = this.style.getPropertyValue("--error");
 
@@ -42,6 +45,10 @@ export class CreditCardTemplateMonthly {
         else if (new Date(this.data.due).getTime() - new Date().getTime() > 0)
             this.dateLeft = "close";
         else this.dateLeft = "late";
+
+        this.general.theme$.subscribe({
+            next: (theme) => (this.isLineTheme = theme === "binary" ? "binary" : ""),
+        });
 
         if (!this.data.settled)
             this.actions = [

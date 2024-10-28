@@ -1,8 +1,8 @@
-.bill-container-cc {
+.bill-container-service {
     display: grid;
     padding: 16px;
     grid-template-areas:
-        "card-container card-container card-category"
+        "service-container service-container service-category"
         "title title title"
         "description description description"
         "value-container value-container date-container";
@@ -20,37 +20,37 @@
     color: var(--text-2);
 }
 
-.card-container {
-    grid-area: card-container;
+.service-container {
+    grid-area: service-container;
     display: flex;
     width: max-content;
     align-items: center;
     padding: 8px;
     height: 30px;
-    border: var(--border-width) solid var(--credit-card);
+    border: var(--border-width) solid var(--company);
     border-radius: var(--border-radius);
-    background-color: var(--credit-card);
-    & .card-icon {
+    background-color: var(--company);
+    & .service-icon {
         color: var(--text-1);
         width: 1.8rem;
         height: 1.8rem;
         font-size: 1.8rem;
     }
-    & .card-name {
+    & .service-name {
         color: var(--text-1);
     }
 }
 
-.card-category {
-    grid-area: card-category;
+.service-category {
+    grid-area: service-category;
     display: flex;
     width: max-content;
     align-items: center;
     padding: 8px;
     height: 30px;
-    border: var(--border-width) solid var(--credit-card);
+    border: var(--border-width) solid var(--company);
     border-radius: var(--border-radius);
-    background-color: var(--credit-card);
+    background-color: var(--company);
     margin: 0px 0px auto auto;
     & .service-icon {
         color: var(--text-1);

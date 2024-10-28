@@ -1,7 +1,6 @@
 .margin-right {
     display: flex;
     justify-content: end;
-    margin-bottom: 10px;
 }
 
 .pad {
@@ -9,18 +8,19 @@
 }
 
 .icon-page {
-    margin: auto;
     font-size: 25px;
-    width: auto;
-    height: auto;
+    width: 25px;
+    height: 25px;
+    margin: 0px;
 }
 
 .input-page-container {
-    border-radius: 5px 0px 0px 5px;
+    border-radius: var(--border-radius);
     height: 36px;
     width: 60px;
     background-color: var(--secondary);
-    color: white;
+    border: var(--border-width) solid var(--secondary);
+    color: var(--text-1);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,6 +34,7 @@
     background-color: var(--background);
     color: var(--secondary);
 }
+
 .next-page {
-    border-radius: 0px 5px 5px 0px !important;
+    border-radius: var(--border-radius);
 }

@@ -10,6 +10,7 @@ import { ServiceBill } from "src/app/services/bill.service";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { ActionItem } from "src/app/core/types/components";
 import { Bill, BillData } from "src/app/core/types/objects";
+import { GeneralState } from "src/app/core/subjects/subjects.general";
 
 @Component({
     selector: "bank-list-template",
@@ -27,11 +28,13 @@ import { Bill, BillData } from "src/app/core/types/objects";
 })
 export class BankListTemplateMonthly {
     public dialog = inject(Dialog);
+    public general = inject(GeneralState);
     public billService = inject(ServiceBill);
     public billState = inject(BillState);
     public snack = inject(CustomSnackbarComponent);
     @Input() data: Bill & BillData;
     dateLeft: string = "settled";
+    isLineTheme: string = "";
 
     deleteAction = {
         name: "",
@@ -69,6 +72,9 @@ export class BankListTemplateMonthly {
 
     ngOnInit() {
         this.setActions(this.data.settled, this.data.due);
+        this.general.theme$.subscribe({
+            next: (theme) => (this.isLineTheme = theme === "binary" ? "binary" : ""),
+        });
     }
 
     onEdit() {

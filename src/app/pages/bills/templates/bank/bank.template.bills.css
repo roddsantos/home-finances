@@ -2,10 +2,10 @@
     display: grid;
     padding: 16px;
     grid-template-areas:
-        "bank-container bank-container bank-container"
+        "bank-container bank-container bank-category"
         "title title title"
         "description description description"
-        "date-container value-container value-container";
+        "value-container value-container date-container";
     grid-template-rows: 1.5fr 1fr 1fr 1fr;
 }
 
@@ -27,9 +27,9 @@
     align-items: center;
     padding: 8px;
     height: 30px;
-    border: 1px solid var(--success);
+    border: var(--border-width) solid var(--bank);
     border-radius: var(--border-radius);
-    background-color: var(--success);
+    background-color: var(--bank);
     & .card-icon {
         color: var(--text-1);
         width: 1.8rem;
@@ -37,6 +37,28 @@
         font-size: 1.8rem;
     }
     & .card-name {
+        color: var(--text-1);
+    }
+}
+
+.bank-category {
+    grid-area: bank-category;
+    display: flex;
+    width: max-content;
+    align-items: center;
+    padding: 8px;
+    height: 30px;
+    border: var(--border-width) solid var(--bank);
+    border-radius: var(--border-radius);
+    background-color: var(--bank);
+    margin: 0px 0px auto auto;
+    & .service-icon {
+        color: var(--text-1);
+        width: 1.8rem;
+        height: 1.8rem;
+        font-size: 1.8rem;
+    }
+    & .service-name {
         color: var(--text-1);
     }
 }
@@ -49,16 +71,17 @@
     padding: 8px;
     height: 30px;
     border-radius: var(--border-radius);
+    margin: auto 0px 0px auto;
     &.late {
-        border: 1px solid var(--error);
+        border: var(--border-width) solid var(--error);
         background-color: var(--error);
     }
     &.settled {
-        border: 1px solid var(--success);
+        border: var(--border-width) solid var(--success);
         background-color: var(--success);
     }
     &.close {
-        border: 1px solid var(--warning);
+        border: var(--border-width) solid var(--warning);
         background-color: var(--warning);
     }
 }
@@ -68,8 +91,8 @@
     display: flex;
     width: max-content;
     align-items: center;
-    padding: 8px;
     height: 30px;
+    margin: auto auto 0px 0px;
     & .parcel {
         border: 2px solid var(--text-1);
         border-radius: var(--border-radius);

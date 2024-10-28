@@ -269,10 +269,12 @@ export class ModalNewBill implements OnInit {
                     ? !Boolean(this.billForm.get("bank1")?.value) ||
                           this.billForm.value.bank1?.id === this.billForm.value.bank2?.id
                     : this.billForm.value.type === "companyCredit"
-                    ? !Boolean(this.billForm.get("bank1")?.value) ||
+                    ? !Boolean(this.billForm.get("company")?.value) ||
                       Boolean(formErrors.parcels.errors) ||
                       (Boolean(this.billForm.get("bank1")?.value) &&
-                          Boolean(this.billForm.get("creditcard")?.value))
+                          Boolean(this.billForm.get("creditcard")?.value)) ||
+                      (!Boolean(this.billForm.get("bank1")?.value) &&
+                          !Boolean(this.billForm.get("creditcard")?.value))
                     : !Boolean(this.billForm.value.creditcard) ||
                       Boolean(formErrors.parcels.errors);
             case 4:
