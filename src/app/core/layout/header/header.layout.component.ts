@@ -192,7 +192,7 @@ export class HeaderLayoutComponent {
     openModal() {
         let options = {
             data: {
-                header: "new" + (this.screen?.title || "").substring(-1),
+                header: "new " + (this.screen?.title || "").substring(-1),
                 size: "md",
             },
             hasBackdrop: true,

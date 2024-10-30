@@ -32,8 +32,8 @@
     height: 200px;
     padding: 30px;
     border-radius: 10px;
-    background-color: var(--primary);
-    border: solid var(--border-width) var(--primary);
+    background-color: var(--bh);
+    border: solid var(--border-width) var(--bh);
     z-index: 2;
     cursor: pointer;
 

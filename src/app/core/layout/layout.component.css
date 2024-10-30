@@ -11,9 +11,9 @@
     flex-direction: column;
     width: 18.25rem; /* 300px */
     padding: 1.25rem; /* 20px */
-    border: solid var(--border-width) var(--background-highlighter);
+    border: solid var(--border-width) var(--bh);
     border-width: 0px var(--border-width) 0px 0px;
-    background-color: var(--background-highlighter);
+    background-color: var(--bh);
     gap: 20px;
     &.binary {
         border: solid var(--border-width) var(--secondary);

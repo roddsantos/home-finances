@@ -10,18 +10,19 @@
 }
 
 .bill-list {
-    margin-top: 10px;
+    margin-top: 20px;
     display: grid;
     grid-template-columns: repeat(3, 32%);
     gap: 2%;
+    row-gap: 20px;
 }
 
 .bill-item {
     width: 100%;
     min-height: 150px;
-    background-color: var(--primary);
+    background-color: var(--bh);
     border-radius: var(--border-radius);
-    border: var(--border-width) solid var(--primary);
+    border: var(--border-width) solid var(--bh);
     &.binary {
         border: var(--border-width) solid var(--secondary);
     }

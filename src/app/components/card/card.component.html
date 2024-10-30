@@ -2,14 +2,10 @@
     id="card-{{ id }}"
     class="card"
     [style.background]="
-        actualTheme === 'binary'
-            ? '#000000'
-            : (backgroundColor || backgroundHighlighter | color : 'darker')
+        actualTheme === 'binary' ? '#000000' : backgroundColor || backgroundHighlighter
     "
     [style.borderColor]="
-        actualTheme !== 'binary'
-            ? (backgroundColor || backgroundHighlighter | color : 'darker')
-            : secondary
+        actualTheme !== 'binary' ? backgroundColor || backgroundHighlighter : secondary
     "
 >
     <h2 *ngIf="title">{{ title }}</h2>
