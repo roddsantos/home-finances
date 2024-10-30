@@ -15,28 +15,32 @@
 
 :root .dark {
     @include mat.all-component-themes(app-theme.$app-dark-theme);
-
-    --primary: #7440d4;
-    --secondary: #3b77bd;
-    --third: #45afc2;
-    --background: #2a2a30;
-    --background-highlighter: #494a53;
+    --primary: #878cec;
+    --secondary: #4f1790;
+    --third: #8c2bdd;
+    --background: #030311;
+    --bh: #080831;
 
     --border-radius: 10px;
-    --border-color: #7440d4;
+    --border-color: #878cec;
     --border-width: 2px;
 
-    --text-1: #c0c0c0;
-    --text-2: #818181;
-    --text-3: #353647;
+    --text-1: #dddef9;
+    --text-2: #696996;
+    --text-3: #030311;
 
     --disabled: #7a7a7a;
 
-    --error: #e21111;
-    --warning: #e28e11;
-    --info: #1153e2;
-    --success: #11e26f;
+    --error: #be1616;
+    --warning: #ca8215;
+    --info: #1346b4;
+    --success: #10ad57;
     --default: #474141;
+
+    --credit-card: #a73f3f;
+    --bank: #1346b4;
+    --company: #622991;
+    --category: #2a8a8a;
 
     --item-list: rgb(135, 147, 192);
     --item-list-border: rgb(135, 147, 192);
@@ -49,27 +53,32 @@
 :root {
     @include mat.all-component-themes(app-theme.$app-light-theme);
 
-    --primary: #88b9ee;
-    --secondary: #63d0e4;
-    --third: #735aa7;
-    --background: #dbf2ff;
-    --background-highlighter: #c1cfff;
+    --primary: #131876;
+    --secondary: #a76ee7;
+    --third: #8322d3;
+    --background: #ebe7ff;
+    --bh: #dcd4ff;
 
     --border-radius: 10px;
-    --border-color: #88b9ee;
+    --border-color: #131876;
     --border-width: 2px;
 
     --text-1: #000d55;
     --text-2: #3c3e5c;
-    --text-3: #d1d1d1;
+    --text-3: #d5d6f1;
 
     --disabled: #b9b8b88a;
 
-    --error: #865252;
-    --warning: #a86d00;
+    --error: #ff5858;
+    --warning: #ffba3b;
     --info: #0b3d9b;
-    --success: #2ab842;
+    --success: #3db652;
     --default: #474141;
+
+    --credit-card: #da3434;
+    --bank: #5c84da;
+    --company: #a369d3;
+    --category: #44acac;
 
     --black: #000000;
     --white: #ffffff;
@@ -87,21 +96,26 @@
     --secondary: #ffffff;
     --third: #000000;
     --background: #000000;
-    --background-highlighter: #000000;
+    --bh: #000000;
 
     --text-1: #ffffff;
     --text-2: #ffffff;
-    --text-3: #000000;
+    --text-3: #ffffff;
 
     --border-radius: 10px;
     --border-color: #ffffff;
-    --border-width: 3px;
+    --border-width: 2px;
 
     --title: #ffffff;
     --description: #ffffff;
     --border: #ffffff;
     --icon: #ffffff;
     --disabled: #7a7a7a;
+
+    --credit-card: #da3434;
+    --bank: #2d62d4;
+    --company: #8d33d6;
+    --category: #2cadad;
 
     --error: #d34848;
     --warning: #d89f36;

@@ -9,14 +9,28 @@
     width: 100%;
 }
 
+.bill-list {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 32%);
+    gap: 2%;
+    row-gap: 20px;
+}
+
+.bill-item {
+    width: 100%;
+    min-height: 150px;
+    background-color: var(--bh);
+    border-radius: var(--border-radius);
+    border: var(--border-width) solid var(--bh);
+    &.binary {
+        border: var(--border-width) solid var(--secondary);
+    }
+}
+
 .margin {
     display: flex;
     margin: 10px 0px 20px auto;
-}
-
-.monthly-container {
-    display: flex;
-    flex-direction: row;
 }
 
 .bill-expansion {
@@ -121,4 +135,8 @@
     border-bottom: 12px solid transparent;
     border-right: 12px solid transparent;
     box-shadow: 2px 0px 1px 0px rgba(0, 0, 0, 0.2);
+}
+
+.binary {
+    background-color: transparent !important;
 }

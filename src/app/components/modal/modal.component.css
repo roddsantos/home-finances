@@ -59,11 +59,11 @@
     border-radius: 5px 5px 0px 0px;
     & .icon-close {
         margin: auto -10px auto auto;
-        color: var(--text-1);
+        color: var(--text-3);
         cursor: pointer;
     }
     & h3 {
-        color: var(--text-1);
+        color: var(--text-3);
         margin: auto auto auto 0px;
     }
 }

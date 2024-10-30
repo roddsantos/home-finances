@@ -41,9 +41,7 @@ export class CardComponent {
         });
         this.style = getComputedStyle(document.body);
         this.background = this.style.getPropertyValue("--background");
-        this.backgroundHighlighter = this.style.getPropertyValue(
-            "--background-highlighter"
-        );
+        this.backgroundHighlighter = this.style.getPropertyValue("--bh");
         this.secondary = this.style.getPropertyValue("--secondary");
     }
 

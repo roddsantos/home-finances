@@ -2,14 +2,14 @@
     &.mat-mdc-button:not(:disabled) {
         border-radius: var(--border-radius);
         background-color: var(--primary);
-        color: var(--text-1) !important;
+        color: var(--text-3) !important;
         border: solid var(--border-width) var(--border-color);
         padding: 1rem 0.8rem;
     }
 
     & p,
     span {
-        color: var(--text-1) !important;
+        color: var(--text-3) !important;
         font-weight: bold !important;
     }
 
