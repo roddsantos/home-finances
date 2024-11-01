@@ -41,7 +41,7 @@ import { EditBillModalType } from "src/app/core/types/modal";
 @Component({
     selector: "modal-new-bill",
     templateUrl: "./edit-bill.modal.html",
-    styleUrls: ["./edit-bill.modal.css"],
+    styleUrls: ["./edit-bill.modal.css", "../modal.component.css"],
     standalone: true,
     providers: [provideNativeDateAdapter()],
     imports: [
@@ -93,7 +93,7 @@ export class ModalEditBill {
             }
         ),
         settled: new FormControl<boolean>(
-            { value: true, disabled: this.data.bill.settled },
+            { value: false, disabled: this.data.bill.settled },
             { nonNullable: false }
         ),
         due: new FormControl<Date>(
@@ -101,8 +101,27 @@ export class ModalEditBill {
             { nonNullable: true }
         ),
         paid: new FormControl<Date>(
-            { value: new Date(), disabled: this.data.bill.settled },
+            {
+                value: new Date(),
+                disabled:
+                    this.data.bill.settled ||
+                    (!this.data.bill.settled && Boolean(!this.data.bill.paid)),
+            },
             { nonNullable: false }
+        ),
+        isPayment: new FormControl<boolean>(
+            { value: true, disabled: this.data.bill.settled },
+            {
+                nonNullable: true,
+                validators: [Validators.required],
+            }
+        ),
+        isRefund: new FormControl<boolean>(
+            { value: true, disabled: this.data.bill.settled },
+            {
+                nonNullable: true,
+                validators: [Validators.required],
+            }
         ),
         type: new FormControl<PaymentTypes>(
             { value: "money" as PaymentTypes, disabled: this.data.bill.settled },
@@ -126,6 +145,8 @@ export class ModalEditBill {
             paid: this.data.bill.paid ? new Date(this.data.bill.paid) : null,
             type: this.data.bill.type as PaymentTypes,
             category: this.data.bill.category,
+            isPayment: this.data.bill.isPayment,
+            isRefund: this.data.bill.isRefund,
         });
         this.modalState.changeFooter({
             type: "submit",
@@ -193,6 +214,7 @@ export class ModalEditBill {
             due: billFormValue.due!,
             paid: billFormValue.paid!,
             groupId: this.data.bill.groupId,
+            isPayment: billFormValue.isPayment,
             id: this.data.bill.id,
         };
         var observer;
@@ -204,7 +226,6 @@ export class ModalEditBill {
                     ...defaultData,
                     bank1Id: bankFormValue.bank1!.id,
                     bank2Id: bankFormValue.bank2?.id,
-                    isPayment: bankFormValue.isPayment!,
                     companyId: bankFormValue.company?.id,
                 });
                 break;

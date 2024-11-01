@@ -18,6 +18,11 @@ const routes: Routes = [
             ),
     },
     {
+        path: "banks",
+        canActivate: [authGuard],
+        loadComponent: () => import("./pages/banks/pages.banks").then((m) => m.PageBanks),
+    },
+    {
         path: "settings",
         canActivate: [authGuard],
         loadComponent: () =>

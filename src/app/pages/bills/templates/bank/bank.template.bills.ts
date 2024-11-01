@@ -36,6 +36,15 @@ export class BankListTemplateMonthly {
     dateLeft: string = "settled";
     isLineTheme: string = "";
 
+    actions: ActionItem[] = [
+        {
+            name: "",
+            icon: "edit",
+            action: () => this.onEdit(),
+            color: "#00328f",
+        },
+    ];
+
     deleteAction = {
         name: "",
         icon: "delete",
@@ -57,24 +66,31 @@ export class BankListTemplateMonthly {
         color: "#008f18",
     };
 
-    actions: ActionItem[] = [];
-
-    setActions(settled: boolean, due: string) {
+    ngOnInit() {
         if (this.data.settled) this.dateLeft = "settled";
         else if (new Date(this.data.due).getTime() - new Date().getTime() > 0)
             this.dateLeft = "close";
         else this.dateLeft = "late";
 
-        if (!settled)
-            this.actions = [this.editAction, this.deleteAction, this.checkAction];
-        else this.actions = [this.editAction];
-    }
-
-    ngOnInit() {
-        this.setActions(this.data.settled, this.data.due);
         this.general.theme$.subscribe({
             next: (theme) => (this.isLineTheme = theme === "binary" ? "binary" : ""),
         });
+        if (!this.data.settled)
+            this.actions = [
+                ...this.actions,
+                {
+                    name: "",
+                    icon: "delete",
+                    action: () => this.onDelete(),
+                    color: "#8f0000",
+                },
+                {
+                    name: "",
+                    icon: "check_circle",
+                    action: () => this.onCheck(),
+                    color: "#008f18",
+                },
+            ];
     }
 
     onEdit() {
@@ -105,13 +121,11 @@ export class BankListTemplateMonthly {
                     this.billService.getBills().subscribe({
                         next: (bills) => {
                             this.billState.setBills(bills);
-                            this.setActions(true, this.data.due);
                         },
                     });
                     this.snack.openSnackBar("bill successfully updated", "success");
                 },
                 error: () => {
-                    this.setActions(false, this.data.due);
                     this.snack.openSnackBar("error updating bill", "error");
                 },
             });

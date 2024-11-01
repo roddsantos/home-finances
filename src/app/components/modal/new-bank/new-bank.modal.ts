@@ -5,6 +5,7 @@ import {
     EventEmitter,
     inject,
     ViewChild,
+    Inject,
 } from "@angular/core";
 import { ModalComponent } from "../modal.component";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
@@ -22,6 +23,9 @@ import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.c
 import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { BankObject } from "src/app/core/types/services";
 import { Bank } from "src/app/core/types/objects";
+import { DIALOG_DATA } from "@angular/cdk/dialog";
+import { EditBankModalType } from "src/app/core/types/modal";
+import { mergeMap } from "rxjs";
 
 @Component({
     selector: "modal-new-bank",
@@ -44,17 +48,23 @@ export class ModalNewBank implements OnInit {
     public snack = inject(CustomSnackbarComponent);
     @ViewChild(ModalComponent) modalComponent: any;
 
+    constructor(@Inject(DIALOG_DATA) public data: EditBankModalType) {}
+
     bankForm = new FormGroup({
-        name: new FormControl<string>("", {
+        name: new FormControl<string>(this.data.bank?.name || "", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
         }),
-        description: new FormControl<string>("", {
+        description: new FormControl<string>(this.data.bank?.description || "", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
         }),
-        color: new FormControl<string>("#000000", { nonNullable: true }),
-        savings: new FormControl<number>(0, { nonNullable: true }),
+        color: new FormControl<string>(this.data.bank?.color || "#000000", {
+            nonNullable: true,
+        }),
+        savings: new FormControl<number>(this.data.bank?.savings || 0, {
+            nonNullable: true,
+        }),
     });
 
     errorMessage = {
@@ -65,14 +75,37 @@ export class ModalNewBank implements OnInit {
     @Output() submit = new EventEmitter<String>();
     @Output() onClose = new EventEmitter<void>();
 
-    constructor() {}
-
     ngOnInit() {
-        this.modalState.onSubmitFooter("OK", "cancel");
-        this.modalState.changeHeader("new company");
+        this.modalState.onSubmitFooter(this.data.bank ? "edit" : "OK", "cancel");
+        this.modalState.changeHeader(this.data.header || "new bank");
     }
 
-    onSubmit() {
+    onUpdate() {
+        if (!this.bankForm.invalid) {
+            this.bankApi
+                .updateBank({
+                    ...(this.bankForm.value as BankObject),
+                    id: this.data.bank.id,
+                })
+                .pipe(mergeMap(() => this.bankApi.getBanks()))
+                .subscribe({
+                    next: (banks) => {
+                        this.bankState.setBanks(banks as Bank[]);
+                        this.bankState.changeStatus(
+                            (banks as Bank[]).length === 0 ? "empty" : "none",
+                            "no banks"
+                        );
+                        this.snack.openSnackBar("bank successfully updated", "success");
+                        this.modalComponent.onClose();
+                    },
+                    error: () => {
+                        this.snack.openSnackBar("error updating bank", "error");
+                    },
+                });
+        }
+    }
+
+    onCreate() {
         if (!this.bankForm.invalid) {
             this.bankApi
                 .createBank({
@@ -81,16 +114,18 @@ export class ModalNewBank implements OnInit {
                 .subscribe({
                     next: (data) => {
                         this.bankState.addBank(data as Bank);
-                        this.snack.openSnackBar(
-                            "company successfully created",
-                            "success"
-                        );
+                        this.snack.openSnackBar("bank successfully created", "success");
                         this.modalComponent.onClose();
                     },
-                    error: (err) => {
+                    error: () => {
                         this.snack.openSnackBar("error creating bank", "error");
                     },
                 });
         } else this.onClose.emit();
+    }
+
+    onSubmit() {
+        if (this.data.bank) this.onUpdate();
+        else this.onCreate();
     }
 }

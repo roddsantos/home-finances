@@ -1,0 +1,22 @@
+<div class="bank">
+    <h1 class="page-title">banks</h1>
+    <feedback-container
+        *ngIf="(bankState.banks$ | async)?.length === 0"
+        [info]="(bankState.status$ | async)!"
+    ></feedback-container>
+    <div class="bank-infos"></div>
+    <div class="bank-grid">
+        <li class="bank-li" *ngFor="let bank of (bankState.banks$ | async)">
+            <div [ngClass]="['bank-container', generalState.theme$ | async]">
+                <div class="bank-color" [style.backgroundColor]="bank.color"></div>
+                <h2 class="bank-title">{{bank.name}}</h2>
+                <p class="bank-description">{{bank.description}}</p>
+                <div class="bank-savings">
+                    <p class="secondary-text">value on bank:</p>
+                    <p>{{bank.savings| currency: "R$ "}}</p>
+                </div>
+                <actions class="bank-buttons" [data]="bank" [actions]="actions"></actions>
+            </div>
+        </li>
+    </div>
+</div>

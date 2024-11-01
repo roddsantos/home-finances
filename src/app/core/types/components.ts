@@ -66,7 +66,7 @@ export type PaginationType = {
 export type ActionItem = {
     name: string;
     icon: string;
-    action: () => void;
+    action: (data: any) => void;
     color: string;
 };
 

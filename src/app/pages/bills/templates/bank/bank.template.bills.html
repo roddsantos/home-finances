@@ -17,6 +17,13 @@
         ></mat-icon>
         <p class="bank-name">{{data.category.name}}</p>
     </div>
+    <actions
+        class="bank-buttons"
+        [vertical]="true"
+        [transparent]="false"
+        [data]="data"
+        [actions]="actions"
+    ></actions>
     <p class="title">{{ data.name }}</p>
     <p class="description">{{ data.description }}</p>
     <div [ngClass]="['date-container', dateLeft, isLineTheme]">

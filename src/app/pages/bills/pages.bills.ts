@@ -80,9 +80,7 @@ export class PageBills {
     getBills() {
         this.billService.getBills().subscribe({
             next: (bills) => {
-                if (bills.data.length === 0)
-                    this.billState.changeStatus("empty", "no bills");
-                else this.billState.setBills(bills);
+                this.billState.setBills(bills);
             },
             error: () => {
                 this.snack.openSnackBar("error fetching bills", "error");

@@ -8,6 +8,7 @@
     <div class="cc-grid">
         <li class="cc-li" *ngFor="let creditCard of (ccState.creditCards$ | async)">
             <div [ngClass]="['cc-container', generalState.theme$ | async]">
+                <div class="cc-color" [style.backgroundColor]="creditCard.color"></div>
                 <h2 class="cc-title">{{creditCard.name}}</h2>
                 <p class="cc-description">{{creditCard.description}}</p>
                 <p class="cc-month">
@@ -21,20 +22,25 @@
                 />
                 <div class="cc-invoice">
                     <p class="secondary-text">limit:</p>
-                    <p>{{creditCard.limitLeft | currency: "R$ "}}</p>
+                    <div class="limit">
+                        <p>{{creditCard.limitLeft | currency: "R$ "}}</p>
+                        <p class="total">{{"/"+ (creditCard.limit| currency: "R$ ")}}</p>
+                    </div>
                 </div>
-                <!-- <div class="cc-limit">
-                    <p>limit:</p>
-                    <p>{{creditCard.limit | currency: "R$ "}}</p>
-                </div> -->
 
-                <actions class="icons-buttons" [actions]="actions"></actions>
+                <actions
+                    class="cc-buttons"
+                    [data]="creditCard"
+                    [actions]="actions"
+                    [vertical]="true"
+                    [transparent]="false"
+                ></actions>
 
                 <!-- <div
                     class="cc-color-container"
                     [style.backgroundColor]="creditCard.color"
                 ></div> -->
-                <div class="cc-progress-container" [style.borderColor]="creditCard.color">
+                <!-- <div class="cc-progress-container" [style.borderColor]="creditCard.color">
                     <div
                         class="cc-progress-bar"
                         [ngStyle]="{
@@ -42,7 +48,7 @@
                             backgroundColor: creditCard.color
                         }"
                     ></div>
-                </div>
+                </div> -->
             </div>
             <!-- <div class="cc-highlighter"></div> -->
         </li>

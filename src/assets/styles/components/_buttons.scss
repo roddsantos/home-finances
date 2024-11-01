@@ -38,3 +38,8 @@
         font-weight: bold !important;
     }
 }
+
+.mat-mdc-icon-button.mat-mdc-button-base {
+    padding: 8px !important;
+    --mdc-icon-button-state-layer-size: 40px !important;
+}

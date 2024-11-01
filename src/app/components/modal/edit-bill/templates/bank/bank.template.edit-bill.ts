@@ -46,10 +46,6 @@ export class BankTemplateEditBill {
             validators: [Validators.required],
         }),
         bank2: new FormControl<Bank | null>(null, { nonNullable: false }),
-        isPayment: new FormControl<boolean>(true, {
-            nonNullable: true,
-            validators: [Validators.required],
-        }),
         company: new FormControl<Company | null>(null, {
             nonNullable: false,
         }),
@@ -59,13 +55,11 @@ export class BankTemplateEditBill {
         this.bankForm.patchValue({
             bank1: this.bill.bank1,
             bank2: this.bill.bank2,
-            isPayment: this.bill.isPayment,
             company: this.bill.company,
         });
         if (this.bill.settled) {
             this.bankForm.controls["bank1"].disable();
             this.bankForm.controls["bank2"].disable();
-            this.bankForm.controls["isPayment"].disable();
         }
     }
 

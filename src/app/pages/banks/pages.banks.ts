@@ -4,23 +4,22 @@ import { MatButton, MatIconButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
-import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { LocalStorageService } from "src/app/services/local-storage.service";
-import { CreditCard } from "src/app/core/types/objects";
-import { CreditCardState } from "src/app/core/subjects//subjects.credit-card";
+import { Bank } from "src/app/core/types/objects";
 import { UserState } from "src/app/core/subjects//subjects.user";
-import { mergeMap } from "rxjs";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ActionItem } from "src/app/core/types/components";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ROUTES } from "src/utils/route";
-import { ModalNewCreditCard } from "src/app/components/modal/new-credit-card/new-credit-card.modal";
+import { ServiceBank } from "src/app/services/bank.service";
+import { BankState } from "src/app/core/subjects/subjects.bank";
 import { Dialog } from "@angular/cdk/dialog";
+import { ModalNewBank } from "src/app/components/modal/new-bank/new-bank.modal";
 
 @Component({
-    selector: "page-credit-cards",
-    templateUrl: "./pages.credit-cards.html",
-    styleUrls: ["./pages.credit-cards.css"],
+    selector: "page-banks",
+    templateUrl: "./pages.banks.html",
+    styleUrls: ["./pages.banks.css"],
     standalone: true,
     imports: [
         MatIcon,
@@ -31,9 +30,9 @@ import { Dialog } from "@angular/cdk/dialog";
         ActionsComponent,
     ],
 })
-export class PageCreditCards {
-    public ccApi = inject(ServiceCreditCard);
-    public ccState = inject(CreditCardState);
+export class PageBanks {
+    public bankService = inject(ServiceBank);
+    public bankState = inject(BankState);
     public userState = inject(UserState);
     public storage = inject(LocalStorageService);
     private snack = inject(CustomSnackbarComponent);
@@ -53,45 +52,42 @@ export class PageCreditCards {
         },
     ];
 
-    getCreditCards(reloaded?: boolean) {
-        this.userState.user$
-            .pipe(mergeMap((user) => this.ccApi.getCreditCards({})))
-            .subscribe({
-                next: (ccs) => {
-                    this.ccState.setCreditCards(ccs as CreditCard[]);
-                    this.ccState.changeStatus(
-                        (ccs as CreditCard[]).length === 0 ? "empty" : "none",
-                        "no companies"
-                    );
-                },
-                error: () => {
-                    if (reloaded)
-                        this.snack.openSnackBar("error fetching credit cards", "error");
-                    this.ccState.changeStatus("error", "error fetching credit cards");
-                },
-            });
+    getBanks(reloaded?: boolean) {
+        this.bankService.getBanks().subscribe({
+            next: (banks) => {
+                this.bankState.setBanks(banks as Bank[]);
+                this.bankState.changeStatus(
+                    (banks as Bank[]).length === 0 ? "empty" : "none",
+                    "no banks"
+                );
+            },
+            error: () => {
+                if (reloaded) this.snack.openSnackBar("error fetching banks", "error");
+                this.bankState.changeStatus("error", "error fetching banks");
+            },
+        });
     }
 
     ngOnInit() {
-        this.ccState.setAction(() => this.onReload());
+        this.bankState.setAction(() => this.onReload());
     }
 
     onReload() {
-        this.ccState.changeStatus("loading", "loading");
-        this.getCreditCards(true);
+        this.bankState.changeStatus("loading", "loading");
+        this.getBanks(true);
     }
 
-    onEdit(creditCard: CreditCard) {
+    onEdit(bank: any) {
         let options = {
             data: {
-                header: "edit credit card",
+                header: "edit bank",
                 size: "md",
-                creditCard,
+                bank,
             },
             hasBackdrop: true,
             backdropClass: "modal-backdrop",
         };
-        this.dialog.open(ModalNewCreditCard, options);
+        this.dialog.open(ModalNewBank, options);
     }
 
     onDelete() {

@@ -5,6 +5,7 @@ import {
     EventEmitter,
     inject,
     ViewChild,
+    Inject,
 } from "@angular/core";
 import { ModalComponent } from "../modal.component";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
@@ -27,6 +28,9 @@ import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { MONTHS } from "src/utils/constants/general";
 import { NO_DESCRIPTION, NO_NAME } from "src/utils/constants/forms";
 import { CommonModule } from "@angular/common";
+import { DIALOG_DATA } from "@angular/cdk/dialog";
+import { EditCreditCardModalType } from "src/app/core/types/modal";
+import { mergeMap } from "rxjs";
 
 @Component({
     selector: "modal-new-credit-card",
@@ -52,44 +56,54 @@ export class ModalNewCreditCard implements OnInit {
     public snack = inject(CustomSnackbarComponent);
     @ViewChild(ModalComponent) modalComponent: any;
 
+    constructor(@Inject(DIALOG_DATA) public data: EditCreditCardModalType) {}
+
     months = MONTHS;
 
     creditCardForm = new FormGroup({
-        name: new FormControl<string>("", {
+        name: new FormControl<string>(this.data.creditCard?.name || "", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
         }),
-        description: new FormControl<string>("", {
+        description: new FormControl<string>(this.data.creditCard?.description || "", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
         }),
-        color: new FormControl<string>("#000000", {
+        color: new FormControl<string>(this.data.creditCard?.color || "#000000", {
             nonNullable: true,
             validators: [Validators.required],
         }),
-        limit: new FormControl<number>(0, {
+        limit: new FormControl<number>(this.data.creditCard?.limit || 0, {
             nonNullable: true,
             validators: [Validators.required, Validators.min(0)],
         }),
-        year: new FormControl<number>(new Date().getFullYear(), {
-            nonNullable: true,
-            validators: [Validators.min(2023), Validators.required],
+        year: new FormControl<number>(
+            this.data.creditCard?.year || new Date().getFullYear(),
+            {
+                nonNullable: true,
+                validators: [Validators.min(2023), Validators.required],
+            }
+        ),
+        month: new FormControl<MonthType>(
+            this.data.creditCard?.month
+                ? MONTHS[this.data.creditCard.month]
+                : MONTHS[new Date().getMonth()],
+            {
+                nonNullable: true,
+                validators: [Validators.required],
+            }
+        ),
+        day: new FormControl<number>(this.data.creditCard?.day || 1, {
+            validators: [Validators.required, Validators.max(28), Validators.min(1)],
         }),
-        month: new FormControl<MonthType>(MONTHS[new Date().getMonth()], {
+        due: new FormControl<number>(this.data.creditCard?.due || 1, {
+            validators: [Validators.required, Validators.max(28), Validators.min(1)],
+        }),
+        flag: new FormControl<string | null>(this.data.creditCard.flag || null, {
             nonNullable: true,
             validators: [Validators.required],
         }),
-        day: new FormControl<number>(1, {
-            validators: [Validators.required, Validators.max(28), Validators.min(1)],
-        }),
-        due: new FormControl<number>(1, {
-            validators: [Validators.required, Validators.max(28), Validators.min(1)],
-        }),
-        flag: new FormControl<string | null>(null, {
-            nonNullable: true,
-            validators: [Validators.required],
-        }),
-        isClosed: new FormControl<boolean>(false),
+        isClosed: new FormControl<boolean>(this.data.creditCard?.isClosed || false),
     });
 
     errorMessage = {
@@ -105,14 +119,41 @@ export class ModalNewCreditCard implements OnInit {
     @Output() submit = new EventEmitter<String>();
     @Output() onClose = new EventEmitter<void>();
 
-    constructor() {}
-
     ngOnInit() {
-        this.modalState.onSubmitFooter("OK", "cancel");
-        this.modalState.changeHeader("new credit card");
+        this.modalState.onSubmitFooter(this.data.creditCard ? "edit" : "OK", "cancel");
+        this.modalState.changeHeader(this.data.header || "new credit card");
     }
 
-    onSubmit() {
+    onUpdate() {
+        if (!this.creditCardForm.invalid) {
+            this.ccApi
+                .updateCreditCard({
+                    ...(this.creditCardForm.value as Omit<CreditCardObject, "month">),
+                    month: this.creditCardForm.value.month!.order,
+                    id: this.data.creditCard.id,
+                })
+                .pipe(mergeMap(() => this.ccApi.getCreditCards({})))
+                .subscribe({
+                    next: (cc) => {
+                        this.ccState.setCreditCards(cc as CreditCard[]);
+                        this.ccState.changeStatus(
+                            (cc as CreditCard[]).length === 0 ? "empty" : "none",
+                            "no credit cards"
+                        );
+                        this.snack.openSnackBar(
+                            "credit card successfully updated",
+                            "success"
+                        );
+                        this.modalComponent.onClose();
+                    },
+                    error: () => {
+                        this.snack.openSnackBar("error updating credit card", "error");
+                    },
+                });
+        }
+    }
+
+    onCreate() {
         if (!this.creditCardForm.invalid) {
             this.ccApi
                 .createCreditCard({
@@ -133,5 +174,10 @@ export class ModalNewCreditCard implements OnInit {
                     },
                 });
         } else this.onClose.emit();
+    }
+
+    onSubmit() {
+        if (this.data.creditCard) this.onUpdate();
+        else this.onCreate();
     }
 }

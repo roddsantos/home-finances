@@ -16,6 +16,19 @@
         &.mat-button-toggle-checked {
             background-color: var(--primary);
             height: calc(2 * var(--input-unit)) !important;
+            color: var(--text-3) !important;
+            & :disabled {
+                background-color: var(--disabled);
+            }
+            & .mat-button-toggle-label-content {
+                &
+                    .mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked.mat-pseudo-checkbox-disabled::after,
+                .mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-disabled::after {
+                    --mat-minimal-pseudo-checkbox-disabled-selected-checkmark-color: var(
+                        --text-3
+                    ) !important;
+                }
+            }
         }
         &.mat-button-toggle-appearance-standard + .mat-button-toggle-appearance-standard {
             border: none !important;
