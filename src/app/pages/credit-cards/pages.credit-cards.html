@@ -28,7 +28,13 @@
                     </div>
                 </div>
 
-                <actions class="icons-buttons" [actions]="actions"></actions>
+                <actions
+                    class="cc-buttons"
+                    [data]="creditCard"
+                    [actions]="actions"
+                    [vertical]="true"
+                    [transparent]="false"
+                ></actions>
 
                 <!-- <div
                     class="cc-color-container"

@@ -22,12 +22,9 @@
     position: relative;
     margin: auto 0px auto auto;
     border: 0px;
-    height: 40px;
-    width: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0px;
 }
 
 .animate {

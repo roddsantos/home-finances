@@ -34,6 +34,6 @@ export class ServiceCreditCard {
     }
 
     updateCreditCard(data: Omit<CreditCardObject, "userId"> & { id: string }) {
-        return this.http.put(CREDIT_CARD, data);
+        return this.http.patch(CREDIT_CARD, data);
     }
 }

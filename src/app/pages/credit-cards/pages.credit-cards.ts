@@ -14,6 +14,8 @@ import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ActionItem } from "src/app/core/types/components";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ROUTES } from "src/utils/route";
+import { ModalNewCreditCard } from "src/app/components/modal/new-credit-card/new-credit-card.modal";
+import { Dialog } from "@angular/cdk/dialog";
 
 @Component({
     selector: "page-credit-cards",
@@ -36,12 +38,13 @@ export class PageCreditCards {
     public storage = inject(LocalStorageService);
     private snack = inject(CustomSnackbarComponent);
     public generalState = inject(GeneralState);
+    public dialog = inject(Dialog);
 
     public actualPage = window.location.pathname;
     public page = ROUTES.find((r) => r.page === this.actualPage);
 
     actions: ActionItem[] = [
-        { name: "", icon: "edit", action: () => this.onEdit(), color: "#00328f" },
+        { name: "", icon: "edit", action: (data) => this.onEdit(data), color: "#00328f" },
         {
             name: "",
             icon: "delete",
@@ -78,8 +81,17 @@ export class PageCreditCards {
         this.getCreditCards(true);
     }
 
-    onEdit() {
-        console.log("EDIT");
+    onEdit(creditCard: CreditCard) {
+        let options = {
+            data: {
+                header: "edit credit card",
+                size: "md",
+                creditCard,
+            },
+            hasBackdrop: true,
+            backdropClass: "modal-backdrop",
+        };
+        this.dialog.open(ModalNewCreditCard, options);
     }
 
     onDelete() {
