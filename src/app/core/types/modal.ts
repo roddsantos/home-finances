@@ -25,6 +25,12 @@ export type EditCreditCardModalType = {
     size?: SizeType;
 };
 
+export type ViewItemModalType = {
+    header: string;
+    item: any;
+    size?: SizeType;
+};
+
 export type FooterModal = {
     type: "none" | "submit" | "alert";
     submit?: String;

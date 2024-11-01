@@ -1,0 +1,30 @@
+<div class="credit-card">
+    <div class="day-invoice-container">
+        <h5>best day</h5>
+        <p>{{creditCard.day}}</p>
+    </div>
+    <div class="day-due-container">
+        <h5>due day</h5>
+        <p>{{creditCard.due}}</p>
+    </div>
+    <div class="month-year-container">
+        <h5>month/year related</h5>
+        <p>{{months[creditCard.month].short + '/' + creditCard.year}}</p>
+    </div>
+    <div class="flag">
+        <h5>flag</h5>
+        <img
+            class="flag-icon"
+            *ngIf="creditCard.flag && creditCard.flag !== 'other'"
+            [src]="'assets/images/'+creditCard.flag+'.svg'"
+        />
+    </div>
+    <div class="limit-container">
+        <h5>limit total</h5>
+        <h2>{{creditCard.limit | currency: "R$ "}}</h2>
+    </div>
+    <div class="limit-left-container">
+        <h5>limit left</h5>
+        <h2>{{creditCard.limitLeft | currency: "R$ "}}</h2>
+    </div>
+</div>
