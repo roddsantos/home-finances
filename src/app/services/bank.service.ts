@@ -30,6 +30,6 @@ export class ServiceBank {
     }
 
     updateBank(data: Omit<BankObject, "userId"> & { id: string }) {
-        return this.http.put(BANK, data);
+        return this.http.patch(BANK, data);
     }
 }

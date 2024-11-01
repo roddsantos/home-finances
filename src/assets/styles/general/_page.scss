@@ -1,9 +1,10 @@
 .page-content {
-    min-height: calc(100vh - 80px);
-    padding: 20px 0px 40px;
-    width: 100%;
+    height: calc(100vh - 80px);
+    padding: 20px 20px 40px 0px;
+    width: calc(100% + 20px);
     margin: 0px auto;
     background-color: var(--background);
+    overflow-y: auto;
 }
 
 .page-title {

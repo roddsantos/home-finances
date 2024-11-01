@@ -22,9 +22,7 @@ export class PaginationTemplate {
     getBills() {
         this.billService.getBills().subscribe({
             next: (bills) => {
-                if (bills.data.length === 0)
-                    this.billsState.changeStatus("empty", "no bills");
-                else this.billsState.setBills(bills);
+                this.billsState.setBills(bills);
             },
             error: () => {
                 this.snack.openSnackBar("error fetching bills", "error");

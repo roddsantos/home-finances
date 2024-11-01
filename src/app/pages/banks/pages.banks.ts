@@ -4,18 +4,17 @@ import { MatButton, MatIconButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
-import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { Bank } from "src/app/core/types/objects";
-import { CreditCardState } from "src/app/core/subjects//subjects.credit-card";
 import { UserState } from "src/app/core/subjects//subjects.user";
-import { mergeMap } from "rxjs";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ActionItem } from "src/app/core/types/components";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ROUTES } from "src/utils/route";
 import { ServiceBank } from "src/app/services/bank.service";
 import { BankState } from "src/app/core/subjects/subjects.bank";
+import { Dialog } from "@angular/cdk/dialog";
+import { ModalNewBank } from "src/app/components/modal/new-bank/new-bank.modal";
 
 @Component({
     selector: "page-banks",
@@ -38,12 +37,13 @@ export class PageBanks {
     public storage = inject(LocalStorageService);
     private snack = inject(CustomSnackbarComponent);
     public generalState = inject(GeneralState);
+    public dialog = inject(Dialog);
 
     public actualPage = window.location.pathname;
     public page = ROUTES.find((r) => r.page === this.actualPage);
 
     actions: ActionItem[] = [
-        { name: "", icon: "edit", action: () => this.onEdit(), color: "#00328f" },
+        { name: "", icon: "edit", action: (data) => this.onEdit(data), color: "#00328f" },
         {
             name: "",
             icon: "delete",
@@ -77,8 +77,17 @@ export class PageBanks {
         this.getBanks(true);
     }
 
-    onEdit() {
-        console.log("EDIT");
+    onEdit(bank: any) {
+        let options = {
+            data: {
+                header: "edit bank",
+                size: "md",
+                bank,
+            },
+            hasBackdrop: true,
+            backdropClass: "modal-backdrop",
+        };
+        this.dialog.open(ModalNewBank, options);
     }
 
     onDelete() {

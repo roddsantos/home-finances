@@ -1,4 +1,4 @@
-<div class="bill-container-cc">
+<div class="bill-container-card">
     <div [ngClass]="['card-container', isLineTheme]">
         <mat-icon
             class="material-symbols-outlined card-icon"
@@ -17,6 +17,13 @@
         ></mat-icon>
         <p class="card-name">{{data.category.name}}</p>
     </div>
+    <actions
+        class="card-buttons"
+        [vertical]="true"
+        [transparent]="false"
+        [data]="data"
+        [actions]="actions"
+    ></actions>
     <p class="title">{{ data.name }}</p>
     <p class="description">{{ data.description }}</p>
     <div [ngClass]="['date-container', dateLeft, isLineTheme]">
@@ -29,7 +36,10 @@
         <p>{{(data.settled ? data.paid : data.due) | date: "mediumDate"}}</p>
     </div>
     <div class="value-container">
-        <div class="parcel"><p>{{data.parcel + 1}}</p></div>
+        <div class="parcel">
+            <p>{{data.parcel + 1}}</p>
+            <h5>{{"/" + data.parcels}}</h5>
+        </div>
         <p class="value">{{data.totalParcel | currency: "R$ "}}</p>
     </div>
 </div>

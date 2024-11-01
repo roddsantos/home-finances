@@ -19,10 +19,10 @@
 .bank-container {
     display: grid;
     grid-template-areas:
-        "bank-color bank-title"
-        "bank-description bank-description"
-        "bank-savings bank-buttons";
-    grid-template-columns: 5% 95%;
+        "bank-color bank-title bank-title"
+        "bank-description bank-description bank-description"
+        "bank-savings bank-savings bank-buttons";
+    grid-template-columns: 5% 60% 35%;
     flex-direction: row;
     width: 100%;
     height: 150px;

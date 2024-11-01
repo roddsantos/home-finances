@@ -21,12 +21,12 @@
 .cc-container {
     display: grid;
     grid-template-areas:
-        "cc-title cc-flag"
-        "cc-description cc-description"
-        "cc-month cc-month"
-        "cc-invoice cc-invoice"
-        "cc-progress-container cc-progress-container";
-    grid-template-columns: 70% 30%;
+        "cc-color cc-title cc-flag"
+        "cc-description cc-description cc-description"
+        "cc-month cc-month cc-month"
+        "cc-invoice cc-invoice cc-invoice"
+        "cc-progress-container cc-progress-container cc-progress-container";
+    grid-template-columns: 5% 65% 30%;
     flex-direction: row;
     width: 100%;
     height: 200px;
@@ -54,6 +54,12 @@
     margin: 0px auto;
     border-radius: 0px 0px 10px 10px;
     background-color: var(--secondary);
+}
+
+.cc-color {
+    width: 10px;
+    height: 30px;
+    margin: auto auto auto 0px;
 }
 
 .cc-limit {
@@ -110,8 +116,18 @@
 .cc-invoice {
     grid-area: cc-invoice;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 2rem;
     margin: auto 10px auto 0px;
+    & .limit {
+        display: flex;
+        flex-direction: row;
+        & .total {
+            margin: auto;
+            color: var(--text-2);
+            font-size: 1rem;
+            font-weight: normal;
+        }
+    }
 }
 
 .secondary-text {

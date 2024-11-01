@@ -4,6 +4,14 @@
     position: absolute;
     /* right: 30px; */
     height: auto;
+    background-color: var(--bh);
+    border-radius: var(--border-radius);
+    &.transparent {
+        background-color: transparent;
+    }
+    &.vertical {
+        flex-direction: column;
+    }
 }
 
 .left {

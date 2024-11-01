@@ -1,12 +1,22 @@
-.bill-container-cc {
+.bill-container-card {
     display: grid;
     padding: 16px;
     grid-template-areas:
-        "card-container card-container card-category"
+        "card-container card-category card-buttons"
         "title title title"
         "description description description"
         "value-container value-container date-container";
     grid-template-rows: 1.5fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 0.5fr;
+    @media screen and (max-width: 1500px) {
+        grid-template-areas:
+            "card-container card-category card-buttons"
+            "title title title"
+            "description description description"
+            "value-container value-container value-container"
+            "date-container date-container date-container";
+        grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr;
+    }
 }
 
 .title {
@@ -63,6 +73,20 @@
     }
 }
 
+.card-buttons {
+    grid-area: card-buttons;
+    display: none;
+    margin-left: auto;
+    margin-right: 4px;
+    /* position: relative;
+  bottom: 70px;
+  right: 15px; */
+}
+
+.bill-container-card:hover .card-buttons {
+    display: flex;
+}
+
 .date-container {
     grid-area: date-container;
     display: flex;
@@ -96,14 +120,22 @@
     & .parcel {
         border: 2px solid var(--text-1);
         border-radius: var(--border-radius);
-        width: 25px;
+        width: max-content;
         height: 25px;
         display: flex;
+        padding: 0px 5px;
         & p {
             margin: auto;
+            color: var(--text-1);
+            font-weight: bold;
+        }
+        & h5 {
+            color: var(--text-2);
         }
     }
     & .value {
         margin-left: 10px;
+        color: var(--text-1);
+        font-weight: bold;
     }
 }

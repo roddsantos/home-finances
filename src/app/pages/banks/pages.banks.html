@@ -15,7 +15,7 @@
                     <p class="secondary-text">value on bank:</p>
                     <p>{{bank.savings| currency: "R$ "}}</p>
                 </div>
-                <actions class="bank-buttons" [actions]="actions"></actions>
+                <actions class="bank-buttons" [data]="bank" [actions]="actions"></actions>
             </div>
         </li>
     </div>

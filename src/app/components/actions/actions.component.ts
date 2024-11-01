@@ -13,7 +13,10 @@ import { ActionItem } from "src/app/core/types/components";
     imports: [CommonModule, MatIconModule, MatIconButton, MatTooltipModule],
 })
 export class ActionsComponent {
+    @Input() transparent: boolean = true;
+    @Input() vertical: boolean = false;
     @Input() actions: ActionItem[];
+    @Input() data: any;
     @Output() onEdit = new EventEmitter<void>();
     @Output() onDelete = new EventEmitter<void>();
     @Output() onCheck = new EventEmitter<void>();

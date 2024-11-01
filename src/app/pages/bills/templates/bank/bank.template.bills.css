@@ -2,11 +2,21 @@
     display: grid;
     padding: 16px;
     grid-template-areas:
-        "bank-container bank-container bank-category"
+        "bank-container bank-category bank-buttons"
         "title title title"
         "description description description"
         "value-container value-container date-container";
     grid-template-rows: 1.5fr 1fr 1fr 1fr;
+    grid-template-columns: 1.5fr 1fr 0.5fr;
+    @media screen and (max-width: 1500px) {
+        grid-template-areas:
+            "bank-container bank-category bank-buttons"
+            "title title title"
+            "description description description"
+            "value-container value-container value-container"
+            "date-container date-container date-container";
+        grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr;
+    }
 }
 
 .title {
@@ -63,6 +73,20 @@
     }
 }
 
+.bank-buttons {
+    grid-area: bank-buttons;
+    display: none;
+    margin-left: auto;
+    margin-right: 4px;
+    /* position: relative;
+    bottom: 70px;
+    right: 15px; */
+}
+
+.bill-container-bank:hover .bank-buttons {
+    display: flex;
+}
+
 .date-container {
     grid-area: date-container;
     display: flex;
@@ -101,9 +125,13 @@
         display: flex;
         & p {
             margin: auto;
+            color: var(--text-1);
+            font-weight: bold;
         }
     }
     & .value {
         margin-left: 10px;
+        color: var(--text-1);
+        font-weight: bold;
     }
 }

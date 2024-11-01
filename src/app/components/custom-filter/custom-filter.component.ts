@@ -92,7 +92,7 @@ export class CustomFilterComponent {
         if (hasMin) this.minCtrl.patchValue(hasMin.id as number);
 
         const hasMax = filters.find((filter) => filter.identifier === "max");
-        if (hasMax) this.minCtrl.patchValue(hasMax.id as number);
+        if (hasMax) this.maxCtrl.patchValue(hasMax.id as number);
 
         const hasYear = filters.find((filter) => filter.identifier === "year");
         if (hasYear) this.yearCtrl.patchValue(hasYear.id as number);
@@ -149,8 +149,7 @@ export class CustomFilterComponent {
                 name: selectedFilter.name,
             },
         ]);
-        if (filtersFromState.find((filter) => filter.identifier === "year"))
-            this.getBills();
+        this.getBills();
     }
 
     addYear(event: any) {
@@ -160,9 +159,8 @@ export class CustomFilterComponent {
             selectedFilter === "" || !Boolean(selectedFilter)
                 ? null
                 : parseInt(selectedFilter, 10);
-        let filtersFromState: FilterDisplay[] = [];
+        let filtersFromState: FilterDisplay[] = this.getFilters();
         if (selectedFilter) {
-            filtersFromState = this.getFilters();
             const filterIndex = filtersFromState.findIndex(
                 (filter) => filter.identifier === "year"
             );
@@ -178,10 +176,8 @@ export class CustomFilterComponent {
                     name: selectedFilter,
                 },
             ]);
-            if (filtersFromState.find((filter) => filter.identifier === "month"))
-                this.getBills();
+            this.getBills();
         }
-        this.year.focus();
     }
 
     addStatus(event: MatSelectChange) {
@@ -201,7 +197,7 @@ export class CustomFilterComponent {
     }
 
     addLimit(event: any, identifier: "min" | "max") {
-        let filtersFromState: FilterDisplay[] = [];
+        let filtersFromState: FilterDisplay[] = this.getFilters();
         let value: string | number | null = (event.target as HTMLInputElement).value;
         value = value === "" ? null : parseFloat(value);
         if (value !== null) {
@@ -216,12 +212,8 @@ export class CustomFilterComponent {
                         f.identifier === "max" &&
                         (f.name as number) < value)
             );
-            if (hasFilter) {
-                if (identifier === hasFilter.identifier)
-                    this.snack.openSnackBar("only one " + identifier + " value allowed");
-                else if ((hasFilter.name as number) !== value)
-                    this.snack.openSnackBar(identifier + " value not allowed");
-            } else
+            if (hasFilter) this.filterState.removeFilter(hasFilter);
+            if (value !== 0 || Boolean(value))
                 this.filterState.addFilters([
                     {
                         id: value,
@@ -229,7 +221,11 @@ export class CustomFilterComponent {
                         name: value,
                     },
                 ]);
+        } else {
+            const hasFilter = filtersFromState.find((f) => f.identifier === identifier);
+            if (hasFilter) this.filterState.removeFilter(hasFilter);
         }
+        this.getBills();
     }
 
     addType(event: MatSelectChange) {
@@ -245,14 +241,13 @@ export class CustomFilterComponent {
                     name: filter,
                 },
             ]);
+        this.getBills();
     }
 
     getBills() {
         this.billService.getBills().subscribe({
             next: (bills) => {
-                if (bills.data.length === 0)
-                    this.billState.changeStatus("empty", "no bills");
-                else this.billState.setBills(bills);
+                this.billState.setBills(bills);
             },
             error: () => {
                 this.snack.openSnackBar("error fetching bills", "error");
@@ -281,21 +276,11 @@ export class CustomFilterComponent {
         }
         if (filter) {
             this.filterState.removeFilter(filter);
-            this.billService.getBills().subscribe({
-                next: (bills) => {
-                    if (bills.data.length === 0)
-                        this.billState.changeStatus("empty", "no bills");
-                    else this.billState.setBills(bills);
-                },
-                error: () => {
-                    this.snack.openSnackBar("error fetching bills", "error");
-                    this.billState.changeStatus("error", "error fetching bills");
-                },
-            });
         } else {
             this.filterState.removeAll();
             this.clearAllFiltersForms();
         }
+        this.getBills();
     }
 
     clearAllFiltersForms() {
