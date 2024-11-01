@@ -6,7 +6,7 @@ import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { ViewItemModalType } from "src/app/core/types/modal";
 import { SectorPipe } from "src/utils/pipes/sector";
 import { MONTHS } from "src/utils/constants/general";
-import { TemplateCreditCard } from "./templates/credit-card.template";
+import { TemplateCreditCard } from "./templates/credit-card/credit-card.template";
 
 @Component({
     selector: "modal-view-item",
