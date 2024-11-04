@@ -20,6 +20,12 @@
     <ng-container *ngIf="data.item.sector === 'credit-card'">
         <template-view-credit-card [creditCard]="data.item" />
     </ng-container>
+    <ng-container *ngIf="data.item.sector === 'bank'">
+        <template-view-bank [bank]="data.item" />
+    </ng-container>
+    <ng-container *ngIf="data.item.sector === 'bill'">
+        <template-view-bill [bill]="data.item" />
+    </ng-container>
     <div class="updated-container">
         <h5>last time updated</h5>
         <p>

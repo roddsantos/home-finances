@@ -1,0 +1,40 @@
+.bill {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-areas:
+        "parcels paid-bill refund payment"
+        "due-date payment-date payment-date payment-date";
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    row-gap: 1rem;
+    & .paid-bill {
+        & .settled {
+            color: var(--success);
+        }
+        & .close {
+            color: var(--warning);
+        }
+        & .late {
+            color: var(--error);
+        }
+    }
+    & .parcels,
+    .refund,
+    .payment,
+    .paid-bill,
+    .due-date,
+    .payment-date {
+        & h2,
+        p {
+            color: var(--text-1);
+            font-weight: bold;
+        }
+        & h5 {
+            color: var(--text-2);
+        }
+        & mat-icon {
+            font-size: 2rem;
+            width: auto;
+            height: auto;
+        }
+    }
+}

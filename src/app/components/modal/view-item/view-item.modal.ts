@@ -7,6 +7,8 @@ import { ViewItemModalType } from "src/app/core/types/modal";
 import { SectorPipe } from "src/utils/pipes/sector";
 import { MONTHS } from "src/utils/constants/general";
 import { TemplateCreditCard } from "./templates/credit-card/credit-card.template";
+import { TemplateBank } from "./templates/bank/bank.template";
+import { TemplateBill } from "./templates/bill/bill.template";
 
 @Component({
     selector: "modal-view-item",
@@ -20,18 +22,21 @@ import { TemplateCreditCard } from "./templates/credit-card/credit-card.template
         CurrencyPipe,
         DatePipe,
         TemplateCreditCard,
+        TemplateBank,
+        TemplateBill,
     ],
 })
-export class ModalViewItem implements OnInit {
+export class ModalViewItem {
     public modalState = inject(ModalState);
     public style = getComputedStyle(document.body);
     public defaultColor = this.style.getPropertyValue("--default");
-    constructor(@Inject(DIALOG_DATA) public data: ViewItemModalType) {}
+    constructor(@Inject(DIALOG_DATA) public data: ViewItemModalType) {
+        this.modalState.changeHeader(this.data.header || "view item");
+    }
 
     public months = MONTHS;
 
     ngOnInit(): void {
         console.log("OK", this.data);
-        this.modalState.changeHeader(this.data.header || "view item");
     }
 }

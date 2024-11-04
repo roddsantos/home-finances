@@ -1,0 +1,44 @@
+<div class="bill">
+    <div class="parcels">
+        <h5>parcel/total</h5>
+        <h2>{{(bill.parcel + 1) + "/" + bill.parcels}}</h2>
+    </div>
+    <div class="paid-bill">
+        <h5>paid bill?</h5>
+        <mat-icon
+            class="selection-icon"
+            aria-hidden="false"
+            aria-label="icon"
+            [style.color]="bill.isPayment ? errorColor : successColor"
+            [fontIcon]="bill.settled ? 'check' : 'close'"
+        ></mat-icon>
+    </div>
+    <div class="refund">
+        <h5>refund?</h5>
+        <mat-icon
+            class="selection-icon"
+            aria-hidden="false"
+            aria-label="icon"
+            [style.color]="bill.isRefund ? successColor : warningColor"
+            [fontIcon]="bill.isRefund ? 'check' : 'close'"
+        ></mat-icon>
+    </div>
+    <div class="payment">
+        <h5>money flux</h5>
+        <mat-icon
+            class="selection-icon"
+            aria-hidden="false"
+            aria-label="icon"
+            [style.color]="bill.isPayment ? errorColor : successColor"
+            [fontIcon]="bill.isPayment ? 'receipt' : 'savings'"
+        ></mat-icon>
+    </div>
+    <div class="due-date">
+        <h5>due date</h5>
+        <p>{{bill.due | date: "mediumDate"}}</p>
+    </div>
+    <div *ngIf="bill.paid" class="payment-date">
+        <h5>payment date</h5>
+        <p>{{bill.paid | date: "mediumDate"}}</p>
+    </div>
+</div>
