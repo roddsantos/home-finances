@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, Input } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
-import { Bill } from "src/app/core/types/objects";
+import { Bill, BillData } from "src/app/core/types/objects";
 import { MONTHS } from "src/utils/constants/general";
 
 @Component({
@@ -12,7 +12,7 @@ import { MONTHS } from "src/utils/constants/general";
     imports: [CommonModule, MatIconModule],
 })
 export class TemplateBill {
-    @Input() bill: Bill;
+    @Input() bill: Bill & BillData;
     public months = MONTHS;
     public style = getComputedStyle(document.body);
     public errorColor = this.style.getPropertyValue("--error");

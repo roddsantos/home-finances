@@ -7,11 +7,15 @@
     grid-template-columns: 1fr 2fr 2fr;
     row-gap: 1rem;
     & .limit-container,
-    .limit-left-container {
+    .limit-left-container,
+    .month-year-container,
+    .day-due-container,
+    .day-invoice-container {
         & h5 {
             color: var(--text-2);
         }
-        & h2 {
+        & h2,
+        p {
             color: var(--text-1);
             font-weight: bold;
         }

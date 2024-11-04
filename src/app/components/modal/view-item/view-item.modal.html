@@ -26,6 +26,16 @@
     <ng-container *ngIf="data.item.sector === 'bill'">
         <template-view-bill [bill]="data.item" />
     </ng-container>
+    <div class="category-container" *ngIf="data.item.sector === 'category'">
+        <h5>icon</h5>
+        <p>{{data.item.name}}</p>
+        <mat-icon
+            class="selection-icon"
+            aria-hidden="false"
+            aria-label="icon"
+            [fontIcon]="data.item.icon"
+        ></mat-icon>
+    </div>
     <div class="updated-container">
         <h5>last time updated</h5>
         <p>

@@ -9,6 +9,7 @@ import { MONTHS } from "src/utils/constants/general";
 import { TemplateCreditCard } from "./templates/credit-card/credit-card.template";
 import { TemplateBank } from "./templates/bank/bank.template";
 import { TemplateBill } from "./templates/bill/bill.template";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
     selector: "modal-view-item",
@@ -24,6 +25,7 @@ import { TemplateBill } from "./templates/bill/bill.template";
         TemplateCreditCard,
         TemplateBank,
         TemplateBill,
+        MatIconModule,
     ],
 })
 export class ModalViewItem {

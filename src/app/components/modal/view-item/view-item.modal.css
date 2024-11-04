@@ -88,6 +88,23 @@
     }
 }
 
+.category-container {
+    margin-top: 1rem;
+    & h5 {
+        color: var(--text-2);
+    }
+    & p {
+        color: var(--text-1);
+        font-weight: bold;
+    }
+    & mat-icon {
+        color: var(--text-1);
+        font-size: 1.8rem;
+        width: auto;
+        height: auto;
+    }
+}
+
 .updated-container {
     margin-top: 1rem;
     & h5 {

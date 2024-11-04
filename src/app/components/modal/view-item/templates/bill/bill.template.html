@@ -1,5 +1,30 @@
 <div class="bill">
-    <div class="parcels">
+    <div class="conditional-container">
+        <div class="bank-bill" *ngIf="bill.bank1">
+            <h5>transaction bank</h5>
+            <div class="banks">
+                <p>{{bill.bank1.name}}</p>
+                <mat-icon
+                    *ngIf="bill.bank2"
+                    class="selection-icon"
+                    aria-hidden="false"
+                    aria-label="icon"
+                    [style.color]="bill.isRefund ? successColor : warningColor"
+                    [fontIcon]="bill.isPayment ? 'arrow_forward' : 'arrow_back'"
+                ></mat-icon>
+                <p *ngIf="bill.bank2">{{bill.bank2.name}}</p>
+            </div>
+        </div>
+        <div class="company-bill" *ngIf="bill.company">
+            <h5>company</h5>
+            <p>{{bill.company.name}}</p>
+        </div>
+        <div class="credit-card-bill" *ngIf="bill.creditCard">
+            <h5>credit card</h5>
+            <p>{{bill.creditCard.name}}</p>
+        </div>
+    </div>
+    <div class="parcels" *ngIf="bill.type !== 'money'">
         <h5>parcel/total</h5>
         <h2>{{(bill.parcel + 1) + "/" + bill.parcels}}</h2>
     </div>
@@ -9,7 +34,7 @@
             class="selection-icon"
             aria-hidden="false"
             aria-label="icon"
-            [style.color]="bill.isPayment ? errorColor : successColor"
+            [style.color]="bill.settled ? successColor : errorColor"
             [fontIcon]="bill.settled ? 'check' : 'close'"
         ></mat-icon>
     </div>
@@ -30,8 +55,20 @@
             aria-hidden="false"
             aria-label="icon"
             [style.color]="bill.isPayment ? errorColor : successColor"
-            [fontIcon]="bill.isPayment ? 'receipt' : 'savings'"
+            [fontIcon]="bill.isPayment ? 'arrow_circle_up' : 'arrow_circle_down'"
         ></mat-icon>
+    </div>
+    <div class="category-container">
+        <h5>category</h5>
+        <div class="category">
+            <p>{{bill.category.name}}</p>
+            <mat-icon
+                class="selection-icon"
+                aria-hidden="false"
+                aria-label="icon"
+                [fontIcon]="bill.category.icon"
+            ></mat-icon>
+        </div>
     </div>
     <div class="due-date">
         <h5>due date</h5>

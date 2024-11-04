@@ -26,7 +26,14 @@
             >
                 <div [ngClass]="['indicator', option.sector]"></div>
                 <p class="name">
-                    {{ option["name"] + " - " + (option["sector"] | sector) }}
+                    {{
+                        option["name"] +
+                            " - " +
+                            (option["sector"] | sector) +
+                            (option.sector === "bill" && option.type !== "money"
+                                ? " (" + (option.parcel + 1) + "/" + option.parcels + ")"
+                                : "")
+                    }}
                 </p>
                 <p class="description">{{ option["description"] }}</p>
             </mat-option>
