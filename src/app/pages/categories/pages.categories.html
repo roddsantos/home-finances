@@ -1,0 +1,34 @@
+<div class="category">
+    <h1 class="page-title">categories</h1>
+    <feedback-container
+        *ngIf="(categoryState.categories$ | async)?.length === 0"
+        [info]="(categoryState.status$ | async)!"
+    ></feedback-container>
+    <div class="category-infos"></div>
+    <div class="category-grid">
+        <li
+            class="category-li"
+            *ngFor="let category of (categoryState.categories$ | async)"
+        >
+            <div [ngClass]="['category-container', generalState.theme$ | async]">
+                <div
+                    class="category-color"
+                    [style.backgroundColor]="category.color"
+                ></div>
+                <h2 class="category-title">{{category.name}}</h2>
+                <p class="category-description">{{category.description}}</p>
+                <mat-icon
+                    class="category-icon"
+                    aria-hidden="false"
+                    aria-label="icon"
+                    [fontIcon]="category.icon"
+                ></mat-icon>
+                <actions
+                    class="category-buttons"
+                    [data]="category"
+                    [actions]="actions"
+                ></actions>
+            </div>
+        </li>
+    </div>
+</div>

@@ -6,6 +6,7 @@ import {
     EventEmitter,
     inject,
     ViewChild,
+    Inject,
 } from "@angular/core";
 import { ModalComponent } from "../modal.component";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
@@ -27,8 +28,10 @@ import { ServiceCategory } from "src/app/services/category.service";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { MatIconModule } from "@angular/material/icon";
 import { IconSelection } from "../icon-selection/icon-selection-modal";
-import { Dialog } from "@angular/cdk/dialog";
+import { Dialog, DIALOG_DATA } from "@angular/cdk/dialog";
 import { MatButtonModule } from "@angular/material/button";
+import { EditCategoryModalType } from "src/app/core/types/modal";
+import { mergeMap } from "rxjs";
 
 export interface DialogData {
     username: string;
@@ -60,23 +63,25 @@ export class ModalNewCategory implements OnInit {
     @ViewChild(ModalComponent) modalComponent: any;
     @ViewChild(IconSelection) iconSelection: IconSelection;
 
+    constructor(@Inject(DIALOG_DATA) public data: EditCategoryModalType) {}
+
     categoryForm = new FormGroup({
-        name: new FormControl<string>("", {
+        name: new FormControl<string>(this.data.category?.name || "", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
         }),
-        description: new FormControl<string>("", {
+        description: new FormControl<string>(this.data.category?.description || "", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
         }),
-        color: new FormControl<string>("#000000", { nonNullable: true }),
-        icon: new FormControl<string>("", {
+        color: new FormControl<string>(this.data.category?.color || "#000000", {
+            nonNullable: true,
+        }),
+        icon: new FormControl<string>(this.data.category?.icon || "", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
         }),
     });
-
-    constructor() {}
 
     errorMessage = {
         name: NO_NAME,
@@ -86,23 +91,59 @@ export class ModalNewCategory implements OnInit {
     @Output() submit = new EventEmitter<String>();
     @Output() onClose = new EventEmitter<void>();
 
-    onSubmit() {
+    onUpdate() {
+        if (!this.categoryForm.invalid) {
+            this.catApi
+                .updateCategory({
+                    ...(this.categoryForm.value as CategoryObject),
+                    id: this.data.category.id,
+                })
+                .pipe(mergeMap(() => this.catApi.getCategories()))
+                .subscribe({
+                    next: (categories) => {
+                        this.catState.setCategory(categories as Category[]);
+                        this.catState.changeStatus(
+                            (categories as Category[]).length === 0 ? "empty" : "none",
+                            "no categories"
+                        );
+                        this.snack.openSnackBar(
+                            "category successfully updated",
+                            "success"
+                        );
+                        this.modalComponent.onClose();
+                    },
+                    error: () => {
+                        this.snack.openSnackBar("error updating category", "error");
+                    },
+                });
+        }
+    }
+
+    onCreate() {
         if (!this.categoryForm.invalid) {
             this.catApi
                 .createCategory({
                     ...(this.categoryForm.value as CategoryObject),
                 })
                 .subscribe({
-                    next: (data) => {
-                        this.catState.addCategory(data as Category);
+                    next: (categories) => {
+                        this.catState.setCategory(categories as Category[]);
                         this.snack.openSnackBar(
-                            "company successfully created",
+                            "category successfully created",
                             "success"
                         );
                         this.modalComponent.onClose();
                     },
+                    error: () => {
+                        this.snack.openSnackBar("error creating category", "error");
+                    },
                 });
         } else this.onClose.emit();
+    }
+
+    onSubmit() {
+        if (this.data.category) this.onUpdate();
+        else this.onCreate();
     }
 
     openDialog(): void {
@@ -121,11 +162,7 @@ export class ModalNewCategory implements OnInit {
     }
 
     ngOnInit() {
-        this.modalState.changeFooter({
-            type: "submit",
-            submit: "OK",
-            alert: "cancel",
-        });
-        this.modalState.changeHeader("new category");
+        this.modalState.onSubmitFooter(this.data.category ? "edit" : "OK", "cancel");
+        this.modalState.changeHeader(this.data.header || "new company");
     }
 }

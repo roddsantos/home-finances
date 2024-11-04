@@ -1,5 +1,5 @@
 import { SizeType } from "./components";
-import { Bank, Bill, BillData, CreditCard } from "./objects";
+import { Bank, Bill, BillData, Category, Company, CreditCard } from "./objects";
 
 export type ProfileDialogType = {
     header: string;
@@ -22,6 +22,18 @@ export type EditBankModalType = {
 export type EditCreditCardModalType = {
     header: string;
     creditCard: CreditCard;
+    size?: SizeType;
+};
+
+export type EditCompanyModalType = {
+    header: string;
+    company: Company;
+    size?: SizeType;
+};
+
+export type EditCategoryModalType = {
+    header: string;
+    category: Category;
     size?: SizeType;
 };
 
