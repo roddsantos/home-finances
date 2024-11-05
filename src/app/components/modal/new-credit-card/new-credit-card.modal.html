@@ -1,6 +1,7 @@
 <modal-component
     [disabled]="creditCardForm.invalid"
     (actionPrimary)="onSubmit()"
+    (actionSecondary)="modalComponent.onClose()"
     [bodyTemplate]="newCreditCard"
 ></modal-component>
 

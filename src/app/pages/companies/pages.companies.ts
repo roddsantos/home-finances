@@ -15,6 +15,7 @@ import { Dialog } from "@angular/cdk/dialog";
 import { ServiceCompany } from "src/app/services/company.service";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { ModalNewCompany } from "src/app/components/modal/new-company/new-company.modal";
+import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 
 @Component({
     selector: "page-companies",
@@ -93,6 +94,20 @@ export class PageCompanies {
 
     onDelete() {
         console.log("DELETE");
+    }
+
+    openDetails(company: Company, e: any) {
+        const className = e.target.className;
+        if (className !== "mat-mdc-button-touch-target") {
+            const option = {
+                data: {
+                    item: { ...company, sector: "company" },
+                    header: "view item: " + company.name,
+                    size: "md",
+                },
+            };
+            this.dialog.open(ModalViewItem, option);
+        }
     }
 
     getColorContrast(color: string) {

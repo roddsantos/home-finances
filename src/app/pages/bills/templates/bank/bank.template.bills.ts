@@ -11,6 +11,7 @@ import { BillState } from "src/app/core/subjects/subjects.bill";
 import { ActionItem } from "src/app/core/types/components";
 import { Bill, BillData } from "src/app/core/types/objects";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
+import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 
 @Component({
     selector: "bank-list-template",
@@ -106,6 +107,20 @@ export class BankListTemplateMonthly {
 
     onDelete() {
         console.log("DELETE");
+    }
+
+    openDetails(bill: Bill, e: any) {
+        const className = e.target.className;
+        if (className !== "mat-mdc-button-touch-target") {
+            const option = {
+                data: {
+                    item: { ...bill, sector: "bill" },
+                    header: "view item: " + bill.name,
+                    size: "md",
+                },
+            };
+            this.dialog.open(ModalViewItem, option);
+        }
     }
 
     onCheck() {

@@ -11,7 +11,6 @@ export class ColorPipe implements PipeTransform {
     transform(value: string, format: string): string {
         const formatStringLength = format.length;
         const treatedString = value.split("#")[1];
-        console.log(treatedString);
         if (!treatedString) return value;
 
         let r = parseInt(treatedString.substring(0, 2), 16); // hexToR - max 76,245
@@ -22,17 +21,9 @@ export class ColorPipe implements PipeTransform {
         if (format === "contrast")
             return r * 0.299 + g * 0.587 + b * 0.114 > 186 ? this.text1 : this.text3;
         if (format === "darker") {
-            console.log(r, g, b, treatedString.substring(0, 2));
             r = r - 20 < 0 ? 0 : r - 20;
             g = g - 20 < 0 ? 0 : g - 20;
             b = b - 20 < 0 ? 0 : b - 20;
-            console.log(
-                r,
-                g,
-                b,
-                treatedString,
-                r.toString(16) + g.toString(16) + b.toString(16)
-            );
             return "#" + r.toString(16) + g.toString(16) + b.toString(16);
         }
         return value;

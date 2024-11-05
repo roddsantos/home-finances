@@ -1,4 +1,4 @@
-<div class="bill-container-bank">
+<div class="bill-container-bank" (click)="openDetails(data, $event)">
     <div [ngClass]="['bank-container', isLineTheme]">
         <mat-icon
             class="material-symbols-outlined card-icon"

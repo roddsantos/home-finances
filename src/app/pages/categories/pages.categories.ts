@@ -15,6 +15,7 @@ import { Dialog } from "@angular/cdk/dialog";
 import { ServiceCategory } from "src/app/services/category.service";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { ModalNewCategory } from "src/app/components/modal/new-category/new-category.modal";
+import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 
 @Component({
     selector: "page-categories",
@@ -93,6 +94,20 @@ export class PageCategories {
 
     onDelete() {
         console.log("DELETE");
+    }
+
+    openDetails(category: Category, e: any) {
+        const className = e.target.className;
+        if (className !== "mat-mdc-button-touch-target") {
+            const option = {
+                data: {
+                    item: { ...category, sector: "category" },
+                    header: "view item: " + category.name,
+                    size: "md",
+                },
+            };
+            this.dialog.open(ModalViewItem, option);
+        }
     }
 
     getColorContrast(color: string) {

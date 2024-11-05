@@ -7,7 +7,10 @@
     <div class="bank-infos"></div>
     <div class="bank-grid">
         <li class="bank-li" *ngFor="let bank of (bankState.banks$ | async)">
-            <div [ngClass]="['bank-container', generalState.theme$ | async]">
+            <div
+                [ngClass]="['bank-container', generalState.theme$ | async]"
+                (click)="openDetails(bank)"
+            >
                 <div class="bank-color" [style.backgroundColor]="bank.color"></div>
                 <h2 class="bank-title">{{bank.name}}</h2>
                 <p class="bank-description">{{bank.description}}</p>

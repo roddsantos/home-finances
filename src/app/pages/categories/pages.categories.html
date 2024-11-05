@@ -10,7 +10,10 @@
             class="category-li"
             *ngFor="let category of (categoryState.categories$ | async)"
         >
-            <div [ngClass]="['category-container', generalState.theme$ | async]">
+            <div
+                [ngClass]="['category-container', generalState.theme$ | async]"
+                (click)="openDetails(category, $event)"
+            >
                 <div
                     class="category-color"
                     [style.backgroundColor]="category.color"

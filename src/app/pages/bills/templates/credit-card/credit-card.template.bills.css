@@ -1,6 +1,7 @@
 .bill-container-card {
     display: grid;
     padding: 16px;
+    cursor: pointer;
     grid-template-areas:
         "card-container card-category card-buttons"
         "title title title"

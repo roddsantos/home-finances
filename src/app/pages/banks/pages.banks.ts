@@ -15,6 +15,7 @@ import { ServiceBank } from "src/app/services/bank.service";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import { Dialog } from "@angular/cdk/dialog";
 import { ModalNewBank } from "src/app/components/modal/new-bank/new-bank.modal";
+import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 
 @Component({
     selector: "page-banks",
@@ -78,7 +79,7 @@ export class PageBanks {
     }
 
     onEdit(bank: any) {
-        let options = {
+        const options = {
             data: {
                 header: "edit bank",
                 size: "md",
@@ -88,6 +89,17 @@ export class PageBanks {
             backdropClass: "modal-backdrop",
         };
         this.dialog.open(ModalNewBank, options);
+    }
+
+    openDetails(bank: Bank) {
+        const option = {
+            data: {
+                item: { ...bank, sector: "bank" },
+                header: "view item: " + bank.name,
+                size: "md",
+            },
+        };
+        this.dialog.open(ModalViewItem, option);
     }
 
     onDelete() {
