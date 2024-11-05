@@ -16,6 +16,7 @@ import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ROUTES } from "src/utils/route";
 import { ModalNewCreditCard } from "src/app/components/modal/new-credit-card/new-credit-card.modal";
 import { Dialog } from "@angular/cdk/dialog";
+import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 
 @Component({
     selector: "page-credit-cards",
@@ -96,6 +97,20 @@ export class PageCreditCards {
 
     onDelete() {
         console.log("DELETE");
+    }
+
+    openDetails(creditCard: CreditCard, e: any) {
+        const className = e.target.className;
+        if (className !== "mat-mdc-button-touch-target") {
+            const option = {
+                data: {
+                    item: { ...creditCard, sector: "credit-card" },
+                    header: "view item: " + creditCard.name,
+                    size: "md",
+                },
+            };
+            this.dialog.open(ModalViewItem, option);
+        }
     }
 
     getColorContrast(color: string) {

@@ -1,6 +1,7 @@
 .bill-container-service {
     display: grid;
     padding: 16px;
+    cursor: pointer;
     grid-template-areas:
         "service-container service-container service-category"
         "title title title"

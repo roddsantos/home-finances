@@ -29,7 +29,7 @@ export class ServiceCompany {
         return this.http.delete(COMPANY + `/${id}`);
     }
 
-    updateCompany(data: Omit<CompanyObject, "userId"> & { id: string }) {
-        return this.http.put(COMPANY, data);
+    updateCompany(data: CompanyObject & { id: string }) {
+        return this.http.patch(COMPANY, data);
     }
 }

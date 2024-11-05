@@ -5,6 +5,7 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { MatIconModule } from "@angular/material/icon";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ModalEditBill } from "src/app/components/modal/edit-bill/edit-bill.modal";
+import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ActionItem } from "src/app/core/types/components";
 import { Bill, BillData } from "src/app/core/types/objects";
@@ -72,6 +73,20 @@ export class ServiceTemplateMonthly {
 
     onDelete() {
         console.log("DELETE");
+    }
+
+    openDetails(bill: Bill, e: any) {
+        const className = e.target.className;
+        if (className !== "mat-mdc-button-touch-target") {
+            const option = {
+                data: {
+                    item: { ...bill, sector: "bill" },
+                    header: "view item: " + bill.name,
+                    size: "md",
+                },
+            };
+            this.dialog.open(ModalViewItem, option);
+        }
     }
 
     onCheck() {

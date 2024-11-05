@@ -1,0 +1,25 @@
+<div class="company">
+    <h1 class="page-title">companies</h1>
+    <feedback-container
+        *ngIf="(companyState.company$ | async)?.length === 0"
+        [info]="(companyState.status$ | async)!"
+    ></feedback-container>
+    <div class="company-infos"></div>
+    <div class="company-grid">
+        <li class="company-li" *ngFor="let company of (companyState.company$ | async)">
+            <div
+                [ngClass]="['company-container', generalState.theme$ | async]"
+                (click)="openDetails(company, $event)"
+            >
+                <div class="company-color" [style.backgroundColor]="company.color"></div>
+                <h2 class="company-title">{{company.name}}</h2>
+                <p class="company-description">{{company.description}}</p>
+                <actions
+                    class="company-buttons"
+                    [data]="company"
+                    [actions]="actions"
+                ></actions>
+            </div>
+        </li>
+    </div>
+</div>

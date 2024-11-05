@@ -7,7 +7,10 @@
     <div class="cc-infos"></div>
     <div class="cc-grid">
         <li class="cc-li" *ngFor="let creditCard of (ccState.creditCards$ | async)">
-            <div [ngClass]="['cc-container', generalState.theme$ | async]">
+            <div
+                [ngClass]="['cc-container', generalState.theme$ | async]"
+                (click)="openDetails(creditCard, $event)"
+            >
                 <div class="cc-color" [style.backgroundColor]="creditCard.color"></div>
                 <h2 class="cc-title">{{creditCard.name}}</h2>
                 <p class="cc-description">{{creditCard.description}}</p>

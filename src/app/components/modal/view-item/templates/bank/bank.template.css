@@ -1,0 +1,18 @@
+.bank {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-areas:
+        "day-invoice-container day-due-container month-year-container"
+        "flag limit-container limit-left-container";
+    grid-template-columns: 1fr 2fr 2fr;
+    row-gap: 1rem;
+    & .savings-container {
+        & h5 {
+            color: var(--text-2);
+        }
+        & h2 {
+            color: var(--text-1);
+            font-weight: bold;
+        }
+    }
+}

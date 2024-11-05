@@ -1,4 +1,4 @@
-<div class="bill-container-service">
+<div class="bill-container-service" (click)="openDetails(data, $event)">
     <div [ngClass]="['service-container', isLineTheme]">
         <mat-icon
             class="material-symbols-outlined service-icon"

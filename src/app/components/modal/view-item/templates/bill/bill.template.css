@@ -1,0 +1,99 @@
+.bill {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-areas:
+        "conditional-container conditional-container conditional-container conditional-container"
+        "parcels paid-bill refund payment"
+        "category-container due-date payment-date payment-date";
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    row-gap: 1rem;
+    & .paid-bill {
+        & .settled {
+            color: var(--success);
+        }
+        & .close {
+            color: var(--warning);
+        }
+        & .late {
+            color: var(--error);
+        }
+    }
+    & .parcels,
+    .refund,
+    .payment,
+    .paid-bill,
+    .due-date,
+    .payment-date {
+        & h2,
+        p {
+            color: var(--text-1);
+            font-weight: bold;
+        }
+        & h5 {
+            color: var(--text-2);
+        }
+        & mat-icon {
+            font-size: 1.8rem;
+            width: auto;
+            height: auto;
+        }
+    }
+}
+
+.conditional-container {
+    grid-area: conditional-container;
+    display: grid;
+    grid-template-areas: "bank-bill company-bill credit-card-bill";
+    & .company-bill {
+        grid-area: company-bill;
+    }
+    & .credit-card-bill {
+        grid-area: credit-card-bill;
+    }
+    & .bank-bill {
+        grid-area: bank-bill;
+        & h5 {
+            color: var(--text-2);
+        }
+        & .banks {
+            & p {
+                color: var(--text-1);
+                font-weight: bold;
+            }
+            & mat-icon {
+                font-size: 2rem;
+                width: auto;
+                height: auto;
+            }
+        }
+    }
+    & .credit-card-bill,
+    .company-bill {
+        & h5 {
+            color: var(--text-2);
+        }
+        & p {
+            color: var(--text-1);
+            font-weight: bold;
+        }
+    }
+}
+
+.category-container {
+    grid-area: category-container;
+    & h5 {
+        color: var(--text-2);
+    }
+    & .category {
+        & p {
+            color: var(--text-1);
+            font-weight: bold;
+        }
+        & mat-icon {
+            color: var(--text-1);
+            font-size: 2rem;
+            width: auto;
+            height: auto;
+        }
+    }
+}

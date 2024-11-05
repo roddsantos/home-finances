@@ -1,0 +1,46 @@
+<modal-component [bodyTemplate]="viewItem"></modal-component>
+
+<ng-template #viewItem>
+    <div class="view-container">
+        <div [ngClass]="['color', data.item.sector]" class="color"></div>
+        <div class="title-container">
+            <h2
+                class="title"
+                [style.textDecorationColor]="data.item.color || 'transparent'"
+            >
+                {{data.item.name}}
+            </h2>
+            <p class="sector">{{ (data.item.sector | sector) }}</p>
+        </div>
+        <div class="description-container">
+            <h5>description</h5>
+            <p>{{data.item.description}}</p>
+        </div>
+    </div>
+    <ng-container *ngIf="data.item.sector === 'credit-card'">
+        <template-view-credit-card [creditCard]="data.item" />
+    </ng-container>
+    <ng-container *ngIf="data.item.sector === 'bank'">
+        <template-view-bank [bank]="data.item" />
+    </ng-container>
+    <ng-container *ngIf="data.item.sector === 'bill'">
+        <template-view-bill [bill]="data.item" />
+    </ng-container>
+    <div class="category-container" *ngIf="data.item.sector === 'category'">
+        <h5>icon</h5>
+        <p>{{data.item.name}}</p>
+        <mat-icon
+            class="selection-icon"
+            aria-hidden="false"
+            aria-label="icon"
+            [fontIcon]="data.item.icon"
+        ></mat-icon>
+    </div>
+    <div class="updated-container">
+        <h5>last time updated</h5>
+        <p>
+            {{(data.item.updatedAt | date: "mediumDate") + ', ' + ((data.item.updatedAt) |
+            date: "shortTime")}}
+        </p>
+    </div>
+</ng-template>

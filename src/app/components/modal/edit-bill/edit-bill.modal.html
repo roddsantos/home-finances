@@ -1,6 +1,7 @@
 <modal-component
     [disabled]="onDisableButton()"
     (actionPrimary)="onSubmit()"
+    (actionSecondary)="modalComponent.onClose()"
     [bodyTemplate]="editBill"
 ></modal-component>
 

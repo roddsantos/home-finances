@@ -1,6 +1,7 @@
 <modal-component
     [disabled]="categoryForm.invalid"
     (actionPrimary)="onSubmit()"
+    (actionSecondary)="modalComponent.onClose()"
     [bodyTemplate]="newCompany"
 ></modal-component>
 

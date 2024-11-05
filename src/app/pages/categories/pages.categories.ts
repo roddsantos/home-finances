@@ -5,22 +5,22 @@ import { MatIcon } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
-import { Bank } from "src/app/core/types/objects";
+import { Bank, Category, Company } from "src/app/core/types/objects";
 import { UserState } from "src/app/core/subjects//subjects.user";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ActionItem } from "src/app/core/types/components";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ROUTES } from "src/utils/route";
-import { ServiceBank } from "src/app/services/bank.service";
-import { BankState } from "src/app/core/subjects/subjects.bank";
 import { Dialog } from "@angular/cdk/dialog";
-import { ModalNewBank } from "src/app/components/modal/new-bank/new-bank.modal";
+import { ServiceCategory } from "src/app/services/category.service";
+import { CategoryState } from "src/app/core/subjects/subjects.category";
+import { ModalNewCategory } from "src/app/components/modal/new-category/new-category.modal";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 
 @Component({
-    selector: "page-banks",
-    templateUrl: "./pages.banks.html",
-    styleUrls: ["./pages.banks.css"],
+    selector: "page-categories",
+    templateUrl: "./pages.categories.html",
+    styleUrls: ["./pages.categories.css"],
     standalone: true,
     imports: [
         MatIcon,
@@ -31,9 +31,9 @@ import { ModalViewItem } from "src/app/components/modal/view-item/view-item.moda
         ActionsComponent,
     ],
 })
-export class PageBanks {
-    public bankService = inject(ServiceBank);
-    public bankState = inject(BankState);
+export class PageCategories {
+    public categoryService = inject(ServiceCategory);
+    public categoryState = inject(CategoryState);
     public userState = inject(UserState);
     public storage = inject(LocalStorageService);
     private snack = inject(CustomSnackbarComponent);
@@ -53,57 +53,61 @@ export class PageBanks {
         },
     ];
 
-    getBanks(reloaded?: boolean) {
-        this.bankService.getBanks().subscribe({
-            next: (banks) => {
-                this.bankState.setBanks(banks as Bank[]);
-                this.bankState.changeStatus(
-                    (banks as Bank[]).length === 0 ? "empty" : "none",
-                    "no banks"
+    getCompanies(reloaded?: boolean) {
+        this.categoryService.getCategories().subscribe({
+            next: (categories) => {
+                this.categoryState.setCategory(categories as Category[]);
+                this.categoryState.changeStatus(
+                    (categories as Company[]).length === 0 ? "empty" : "none",
+                    "no categories"
                 );
             },
             error: () => {
-                if (reloaded) this.snack.openSnackBar("error fetching banks", "error");
-                this.bankState.changeStatus("error", "error fetching banks");
+                if (reloaded)
+                    this.snack.openSnackBar("error fetching categories", "error");
+                this.categoryState.changeStatus("error", "error fetching categories");
             },
         });
     }
 
     ngOnInit() {
-        this.bankState.setAction(() => this.onReload());
+        this.categoryState.setAction(() => this.onReload());
     }
 
     onReload() {
-        this.bankState.changeStatus("loading", "loading");
-        this.getBanks(true);
+        this.categoryState.changeStatus("loading", "loading");
+        this.getCompanies(true);
     }
 
-    onEdit(bank: any) {
-        const options = {
+    onEdit(category: any) {
+        let options = {
             data: {
-                header: "edit bank",
+                header: "edit category",
                 size: "md",
-                bank,
+                category,
             },
             hasBackdrop: true,
             backdropClass: "modal-backdrop",
         };
-        this.dialog.open(ModalNewBank, options);
-    }
-
-    openDetails(bank: Bank) {
-        const option = {
-            data: {
-                item: { ...bank, sector: "bank" },
-                header: "view item: " + bank.name,
-                size: "md",
-            },
-        };
-        this.dialog.open(ModalViewItem, option);
+        this.dialog.open(ModalNewCategory, options);
     }
 
     onDelete() {
         console.log("DELETE");
+    }
+
+    openDetails(category: Category, e: any) {
+        const className = e.target.className;
+        if (className !== "mat-mdc-button-touch-target") {
+            const option = {
+                data: {
+                    item: { ...category, sector: "category" },
+                    header: "view item: " + category.name,
+                    size: "md",
+                },
+            };
+            this.dialog.open(ModalViewItem, option);
+        }
     }
 
     getColorContrast(color: string) {

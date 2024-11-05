@@ -1,0 +1,117 @@
+.view-container {
+    display: grid;
+    grid-template-areas:
+        "color title-container title-container"
+        "description-container description-container description-container";
+    grid-template-columns: 3% 52% 45%;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 1rem;
+    width: 100%;
+}
+
+.title-container {
+    grid-area: title-container;
+    display: flex;
+    & .sector {
+        margin: auto 5px 3px 0px;
+        color: var(--text-2);
+    }
+    & .title {
+        color: var(--text-1);
+        margin: auto 5px 0px 0px;
+        text-decoration-style: solid;
+        text-decoration-line: underline;
+        text-decoration-thickness: 4px;
+    }
+}
+
+.description-container {
+    grid-area: description-container;
+    & h5 {
+        color: var(--text-2);
+    }
+    & p {
+        color: var(--text-1);
+        font-weight: bold;
+    }
+}
+
+.color {
+    grid-area: color;
+    width: 10px;
+    height: 30px;
+    &.credit-card {
+        background-color: var(--error);
+    }
+    &.category {
+        background-color: var(--info);
+    }
+    &.bank {
+        background-color: var(--success);
+    }
+    &.company {
+        background-color: var(--default);
+    }
+    &.bill {
+        background-color: var(--warning);
+    }
+}
+
+.limit {
+    width: 100%;
+}
+
+.credit-card {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-areas:
+        "day-invoice-container day-due-container month-year-container"
+        "flag limit-container limit-left-container";
+    grid-template-columns: 1fr 2fr 2fr;
+    row-gap: 1rem;
+    & .limit-container,
+    .limit-left-container {
+        & h5 {
+            color: var(--text-2);
+        }
+        & h2 {
+            color: var(--text-1);
+            font-weight: bold;
+        }
+    }
+    & .flag {
+        & img {
+            width: 50px;
+            margin: 0px 0px auto;
+            text-align: center;
+        }
+    }
+}
+
+.category-container {
+    margin-top: 1rem;
+    & h5 {
+        color: var(--text-2);
+    }
+    & p {
+        color: var(--text-1);
+        font-weight: bold;
+    }
+    & mat-icon {
+        color: var(--text-1);
+        font-size: 1.8rem;
+        width: auto;
+        height: auto;
+    }
+}
+
+.updated-container {
+    margin-top: 1rem;
+    & h5 {
+        color: var(--text-2);
+    }
+    & p {
+        color: var(--text-1);
+        font-weight: bold;
+    }
+}

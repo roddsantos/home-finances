@@ -30,6 +30,6 @@ export class ServiceCategory {
     }
 
     updateCategory(data: Omit<CategoryObject, "userId"> & { id: string }) {
-        return this.http.put(CATEGORY, data);
+        return this.http.patch(CATEGORY, data);
     }
 }

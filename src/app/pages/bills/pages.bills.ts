@@ -18,6 +18,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { PaginationTemplate } from "./templates/pagination/pagination.template.bills";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
+import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 
 @Component({
     selector: "page-bills",
@@ -87,6 +88,17 @@ export class PageBills {
                 this.billState.changeStatus("error", "error fetching bills");
             },
         });
+    }
+
+    openDetails(bill: Bill) {
+        const option = {
+            data: {
+                item: { ...bill, sector: "bill" },
+                header: "view item: " + bill.name,
+                size: "md",
+            },
+        };
+        this.dialog.open(ModalViewItem, option);
     }
 
     onReload() {

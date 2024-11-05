@@ -13,9 +13,9 @@
         <ng-container *ngTemplateOutlet="bodyTemplate || defaultBody"> </ng-container>
         <ng-template #defaultBody></ng-template>
     </div>
-    <div class="modal-footer" [ngSwitch]="(modalState.footer$ | async)?.type">
+    <div class="modal-footer">
         <button
-            *ngSwitchCase="'submit'"
+            *ngIf="this.actionSecondary.observed"
             mat-button
             class="button-secondary"
             (click)="this.onSecondary()"
@@ -23,7 +23,7 @@
             {{ (modalState.footer$ | async)?.alert }}
         </button>
         <button
-            *ngSwitchCase="'submit'"
+            *ngIf="this.actionPrimary.observed"
             [disabled]="disableButton"
             mat-button
             class="button-primary add-margin-left"
@@ -33,13 +33,12 @@
             {{ (modalState.footer$ | async)?.submit }}
         </button>
         <button
-            *ngSwitchCase="'alert'"
+            *ngIf="!this.actionPrimary.observed && !this.actionSecondary.observed"
             mat-button
             class="modal-button-close"
             (click)="dialogRef.close()"
         >
-            {{ (modalState.footer$ | async)?.alert }}
+            close
         </button>
-        <div *ngSwitchCase="'none'"></div>
     </div>
 </div>

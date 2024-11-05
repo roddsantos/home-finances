@@ -1,6 +1,7 @@
 .bill-container-bank {
     display: grid;
     padding: 16px;
+    cursor: pointer;
     grid-template-areas:
         "bank-container bank-category bank-buttons"
         "title title title"

@@ -23,6 +23,7 @@ import { ModalNewBill } from "src/app/components/modal/new-bill/new-bill.modal";
 import { ModalNewCreditCard } from "src/app/components/modal/new-credit-card/new-credit-card.modal";
 import { ModalNewCompany } from "src/app/components/modal/new-company/new-company.modal";
 import { ModalNewCategory } from "src/app/components/modal/new-category/new-category.modal";
+import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 
 @Component({
     standalone: true,
@@ -174,7 +175,14 @@ export class HeaderLayoutComponent {
     }
 
     onSelect(e: any) {
-        console.log(e);
+        const option = {
+            data: {
+                item: e,
+                header: "view item: " + e.name,
+                size: "md",
+            },
+        };
+        this.dialog.open(ModalViewItem, option);
     }
 
     getOptionName(option: any) {
@@ -200,7 +208,7 @@ export class HeaderLayoutComponent {
         };
         switch (this.actualPage as RoutesType) {
             case "/bills":
-                this.dialog.open(ModalNewBill, options);
+                this.dialog.open(ModalNewBill, options).close();
                 break;
             case "/banks":
                 this.dialog.open(ModalNewBank, options);
