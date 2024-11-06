@@ -113,3 +113,8 @@ export type AllSettledHttpConnection = {
     value?: any;
     error?: any;
 };
+
+export type FetchHomeData = {
+    monthSpent: number;
+    countSpent: number;
+};

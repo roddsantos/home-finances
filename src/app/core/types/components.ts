@@ -80,3 +80,9 @@ export type IconType = {
     tags: string[];
     sizes_px: number[];
 };
+
+export type CardActionType = {
+    icon: string;
+    tooltip: string;
+    action: (data?: any) => void;
+};

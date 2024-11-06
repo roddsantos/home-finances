@@ -1,1 +1,31 @@
-<div class="page"></div>
+<div class="home">
+    <h1 class="page-title">{{"welcome, " + (userState.user$| async)?.name + " :)"}}</h1>
+    <div class="home-container">
+        <card-component
+            id="home-date"
+            class="home-date"
+            [title]="(date | date :'EEEE')?.toLowerCase()"
+        >
+            <p class="month">{{(date | date :'MMM')?.toLowerCase()}}</p>
+            <h1 class="day">{{date | date :'d'}}</h1></card-component
+        >
+        <card-component
+            [actions]="actions"
+            [noDivisor]="true"
+            id="home-total-expenses"
+            class="home-total-expenses"
+            title="total expenses"
+        >
+            <div class="total">
+                <h1>{{homeData.monthSpent | currency: 'R$ '}}</h1>
+                <p>{{"in " + homeData.countSpent + " bills"}}</p>
+            </div>
+        </card-component>
+        <card-component [actions]="actions" id="home-1" class="home-1" title="1">
+        </card-component>
+        <card-component [actions]="actions" id="home-2" class="home-2" title="2">
+        </card-component>
+        <card-component [actions]="actions" id="home-3" class="home-3" title="3">
+        </card-component>
+    </div>
+</div>

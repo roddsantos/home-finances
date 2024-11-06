@@ -4,6 +4,7 @@ import {
     BillObjectCompanyUpdate,
     BillObjectCredtCard,
     BillObjectCredtCardUpdate,
+    FetchHomeData,
     FetchPaginatedData,
 } from "src/app/core/types/services";
 import { inject, Injectable } from "@angular/core";
@@ -46,6 +47,12 @@ export class ServiceBill {
                     },
                 })
             )
+        );
+    }
+
+    getHomeInfo() {
+        return this.user.user$.pipe(
+            mergeMap((user) => this.http.get<FetchHomeData>(BILL + "/home/" + user?.id))
         );
     }
 

@@ -8,6 +8,7 @@ import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ThemeType } from "src/app/core/types/general";
 import { THEMES } from "src/utils/constants/general";
 import { ColorPipe } from "src/utils/pipes/colors";
+import { Router } from "@angular/router";
 
 @Component({
     selector: "themes-settings",
@@ -19,6 +20,7 @@ import { ColorPipe } from "src/utils/pipes/colors";
 export class ThemeSettingsComponent implements OnInit {
     @Input() selectedTheme: ThemeType;
     @Output() onSelect = new EventEmitter<ThemeType>();
+    public router = inject(Router);
 
     public general = inject(GeneralState);
     public storage = inject(LocalStorageService);

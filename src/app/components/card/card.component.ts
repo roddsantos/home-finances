@@ -4,13 +4,17 @@ import { LocalStorageService } from "src/app/services/local-storage.service";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ThemeType } from "src/app/core/types/general";
 import { ColorPipe } from "src/utils/pipes/colors";
+import { CardActionType } from "src/app/core/types/components";
+import { MatTooltip } from "@angular/material/tooltip";
+import { MatIconModule } from "@angular/material/icon";
+import { MatButtonModule } from "@angular/material/button";
 
 @Component({
     standalone: true,
     selector: "card-component",
     templateUrl: "./card.component.html",
     styleUrls: ["./card.component.css"],
-    imports: [CommonModule, ColorPipe],
+    imports: [CommonModule, MatTooltip, MatIconModule, MatButtonModule, ColorPipe],
 })
 export class CardComponent {
     public storage = inject(LocalStorageService);
@@ -22,7 +26,8 @@ export class CardComponent {
     @Input() shadow?: boolean;
     @Input() border?: boolean;
     @Input() backgroundColor?: string;
-    @Input() noDivisor?: number;
+    @Input() noDivisor?: boolean;
+    @Input() actions?: CardActionType[];
 
     public actualTheme: ThemeType;
     public cardHeight: number;
