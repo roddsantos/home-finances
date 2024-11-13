@@ -4,8 +4,8 @@ import {
     BillObjectCompanyUpdate,
     BillObjectCredtCard,
     BillObjectCredtCardUpdate,
-    FetchHomeData,
     FetchPaginatedData,
+    SumAndCountData,
 } from "src/app/core/types/services";
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
@@ -52,7 +52,7 @@ export class ServiceBill {
 
     getHomeInfo() {
         return this.user.user$.pipe(
-            mergeMap((user) => this.http.get<FetchHomeData>(BILL + "/home/" + user?.id))
+            mergeMap((user) => this.http.get<SumAndCountData>(BILL + "/home/" + user?.id))
         );
     }
 

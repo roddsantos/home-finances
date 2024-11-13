@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BANK } from "src/utils/constants/services";
-import { BankObject } from "src/app/core/types/services";
+import { BankObject, SumAndCountData } from "src/app/core/types/services";
 import { UserState } from "src/app/core/subjects/subjects.user";
 import { mergeMap } from "rxjs";
 import { Bank } from "src/app/core/types/objects";
@@ -16,6 +16,14 @@ export class ServiceBank {
     getBanks() {
         return this.user.user$.pipe(
             mergeMap((user) => this.http.get<Bank[]>(BANK + `/${user?.id}`))
+        );
+    }
+
+    getSavings() {
+        return this.user.user$.pipe(
+            mergeMap((user) =>
+                this.http.get<SumAndCountData>(BANK + `/savings/${user?.id}`)
+            )
         );
     }
 

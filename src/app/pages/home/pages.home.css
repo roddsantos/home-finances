@@ -6,8 +6,8 @@
     display: grid;
     grid-template-areas:
         "home-date home-total-expenses home-total-expenses home-1 home-1 home-1"
-        "home-2 home-2 home-2 home-1 home-1 home-1"
-        "home-3 home-3 home-3 home-1 home-1 home-1";
+        "home-savings home-savings home-savings home-1 home-1 home-1"
+        "home-3 home-3 home-3 home-3 home-3 home-3";
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: repeat(3, 180px);
     width: 100%;
@@ -45,8 +45,18 @@
     grid-area: home-1;
 }
 
-.home-2 {
-    grid-area: home-2;
+.home-savings {
+    grid-area: home-savings;
+    & .total {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 80px;
+        & h1 {
+            color: var(--info);
+            font-size: 2rem;
+        }
+    }
 }
 
 .home-3 {

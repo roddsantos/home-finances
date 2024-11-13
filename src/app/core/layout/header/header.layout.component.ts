@@ -208,7 +208,7 @@ export class HeaderLayoutComponent {
         };
         switch (this.actualPage as RoutesType) {
             case "/bills":
-                this.dialog.open(ModalNewBill, options).close();
+                this.dialog.open(ModalNewBill, options);
                 break;
             case "/banks":
                 this.dialog.open(ModalNewBank, options);

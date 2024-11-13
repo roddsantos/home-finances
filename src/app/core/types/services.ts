@@ -114,7 +114,7 @@ export type AllSettledHttpConnection = {
     error?: any;
 };
 
-export type FetchHomeData = {
-    monthSpent: number;
-    countSpent: number;
+export type SumAndCountData = {
+    total: number;
+    count: number;
 };

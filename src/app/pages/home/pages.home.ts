@@ -2,9 +2,11 @@ import { CommonModule, CurrencyPipe } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { CardComponent } from "src/app/components/card/card.component";
+import { HomeState } from "src/app/core/subjects/subjects.home";
 import { UserState } from "src/app/core/subjects/subjects.user";
 import { CardActionType } from "src/app/core/types/components";
-import { FetchHomeData } from "src/app/core/types/services";
+import { SumAndCountData } from "src/app/core/types/services";
+import { ServiceBank } from "src/app/services/bank.service";
 import { ServiceBill } from "src/app/services/bill.service";
 
 @Component({
@@ -16,18 +18,21 @@ import { ServiceBill } from "src/app/services/bill.service";
 })
 export class PageHome {
     public userState = inject(UserState);
+    public homeState = inject(HomeState);
     public billService = inject(ServiceBill);
+    public bankService = inject(ServiceBank);
     public date = new Date();
     public router = new Router();
-    public homeData: FetchHomeData = {
-        monthSpent: 0,
-        countSpent: 0,
-    };
 
     ngOnInit() {
         this.billService.getHomeInfo().subscribe({
             next: (data) => {
-                this.homeData = { ...data };
+                this.homeState.updateExpenses(data);
+            },
+        });
+        this.bankService.getSavings().subscribe({
+            next: (data) => {
+                this.homeState.updateSavings(data);
             },
         });
     }
@@ -37,6 +42,14 @@ export class PageHome {
             icon: "north_east",
             tooltip: "go to bills",
             action: () => this.router.navigate(["/bills"]),
+        },
+    ];
+
+    public bankActions: CardActionType[] = [
+        {
+            icon: "north_east",
+            tooltip: "go to banks",
+            action: () => this.router.navigate(["/banks"]),
         },
     ];
 }

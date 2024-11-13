@@ -11,19 +11,27 @@
         >
         <card-component
             [actions]="actions"
-            [noDivisor]="true"
             id="home-total-expenses"
             class="home-total-expenses"
             title="total expenses"
         >
             <div class="total">
-                <h1>{{homeData.monthSpent | currency: 'R$ '}}</h1>
-                <p>{{"in " + homeData.countSpent + " bills"}}</p>
+                <h1>{{(homeState.expenses$ | async)?.total | currency: 'R$ '}}</h1>
+                <p>{{"in " + (homeState.expenses$ | async)?.count + " bills"}}</p>
             </div>
         </card-component>
         <card-component [actions]="actions" id="home-1" class="home-1" title="1">
         </card-component>
-        <card-component [actions]="actions" id="home-2" class="home-2" title="2">
+        <card-component
+            [actions]="bankActions"
+            id="home-savings"
+            class="home-savings"
+            title="savings"
+        >
+            <div class="total">
+                <h1>{{(homeState.savings$ | async)?.total | currency: 'R$ '}}</h1>
+                <p>{{"in " + (homeState.savings$ | async)?.count + " banks"}}</p>
+            </div>
         </card-component>
         <card-component [actions]="actions" id="home-3" class="home-3" title="3">
         </card-component>
