@@ -52,7 +52,11 @@ export class ServiceBill {
 
     getHomeInfo() {
         return this.user.user$.pipe(
-            mergeMap((user) => this.http.get<SumAndCountData>(BILL + "/home/" + user?.id))
+            mergeMap((user) =>
+                this.http.get<SumAndCountData & { delta: number }>(
+                    BILL + "/home/" + user?.id
+                )
+            )
         );
     }
 
