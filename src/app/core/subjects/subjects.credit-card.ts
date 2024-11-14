@@ -35,10 +35,10 @@ export class CreditCardState {
         this._creditCards$.next(creditCards);
     }
 
-    addCreditCard(cc: CreditCard, index?: number) {
+    addCreditCard(cc: CreditCard) {
         let auxCompanies = [...this._creditCards$.getValue()];
-        const existingCompany = this._creditCards$.getValue().find((c) => c.id === cc.id);
-        if (existingCompany && index !== undefined) auxCompanies[index] = cc;
+        const indexCc = this._creditCards$.getValue().findIndex((c) => c.id === cc.id);
+        if (indexCc >= 0) auxCompanies[indexCc] = cc;
         else auxCompanies = [cc, ...auxCompanies];
 
         this._creditCards$.next(auxCompanies);
