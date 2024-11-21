@@ -32,7 +32,6 @@ import { ModalViewItem } from "src/app/components/modal/view-item/view-item.moda
     styleUrls: ["./header.layout.component.css"],
     imports: [
         CommonModule,
-        ColorPipe,
         PagePipe,
         SectorPipe,
         MatInputModule,
@@ -208,7 +207,7 @@ export class HeaderLayoutComponent {
         };
         switch (this.actualPage as RoutesType) {
             case "/bills":
-                this.dialog.open(ModalNewBill, options).close();
+                this.dialog.open(ModalNewBill, options);
                 break;
             case "/banks":
                 this.dialog.open(ModalNewBank, options);

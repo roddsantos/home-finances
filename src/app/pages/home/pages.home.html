@@ -1,1 +1,104 @@
-<div class="page"></div>
+<div class="home">
+    <h1 class="page-title">{{"welcome, " + (userState.user$| async)?.name + " :)"}}</h1>
+    <div class="home-container">
+        <card-component
+            id="home-date"
+            class="home-date"
+            [title]="(date | date :'EEEE')?.toLowerCase()"
+        >
+            <p class="month">{{(date | date :'MMM')?.toLowerCase()}}</p>
+            <h1 class="day">{{date | date :'d'}}</h1></card-component
+        >
+        <card-component
+            [actions]="actions"
+            id="home-total-expenses"
+            class="home-total-expenses"
+            title="total expenses"
+        >
+            <div class="total">
+                <mat-icon
+                    class="material-symbols-outlined icon"
+                    fontIcon="receipt_long"
+                ></mat-icon>
+                <div class="data">
+                    <h1>{{(homeState.expenses$ | async)?.total | currency: 'R$ '}}</h1>
+                    <p>{{"in " + (homeState.expenses$ | async)?.count + " bills"}}</p>
+                </div>
+                <div
+                    [ngClass]="['home-delta', (homeState.expenses$ | async)!.delta >= 0 ? 'green' : 'red']"
+                >
+                    <mat-icon
+                        class="material-symbols-outlined icon-trending"
+                        [fontIcon]="(homeState.expenses$ | async)!.delta >= 0 ? 'trending_down' : 'trending_up'"
+                    ></mat-icon>
+                    <p>
+                        {{((homeState.expenses$ | async)!.delta * 100 *
+                        ((homeState.expenses$ | async)!.delta < 0 ? -1 : 1)) + "%" }}
+                    </p>
+                </div>
+            </div>
+        </card-component>
+        <card-component
+            [actions]="actions"
+            id="home-recents"
+            class="home-recents"
+            title="recent bills"
+        >
+            <div
+                *ngFor="let bill of (homeState.recentBills$ | async)"
+                class="list-item"
+                (click)="openBill(bill)"
+            >
+                <div class="category">
+                    <mat-icon
+                        class="material-symbols-outlined icon"
+                        [fontIcon]="bill.category.icon"
+                        [style.color]="bill.category.color"
+                    ></mat-icon>
+                </div>
+                <h4 class="name">{{ bill.name }}</h4>
+                <p class="type">{{ bill | bills: 'type' }}</p>
+                <p class="description">{{ bill.description }}</p>
+                <p class="parcel">{{ bill | bills: 'parcels' }}</p>
+            </div>
+        </card-component>
+        <card-component [actions]="actions" id="home-3" class="home-3" title="3">
+        </card-component>
+        <card-component
+            [actions]="bankActions"
+            id="home-savings"
+            class="home-savings"
+            title="savings"
+        >
+            <div class="total">
+                <mat-icon
+                    class="material-symbols-outlined icon"
+                    fontIcon="wallet"
+                ></mat-icon>
+                <div class="data">
+                    <h1>{{(homeState.savings$ | async)?.total | currency: 'R$ '}}</h1>
+                    <p>{{"in " + (homeState.savings$ | async)?.count + " banks"}}</p>
+                </div>
+            </div>
+        </card-component>
+        <card-component
+            [actions]="actions"
+            id="home-credit-card"
+            class="home-credit-card"
+            title="credit cards"
+        >
+            <div class="total">
+                <mat-icon
+                    class="material-symbols-outlined icon"
+                    fontIcon="credit_card"
+                ></mat-icon>
+                <div class="data">
+                    <h1>{{(homeState.invoices$ | async)?.total | currency: 'R$ '}}</h1>
+                    <p>
+                        {{"in " + (homeState.invoices$ | async)?.count + " credit cards"}}
+                    </p>
+                </div>
+            </div>
+        </card-component>
+    </div>
+</div>

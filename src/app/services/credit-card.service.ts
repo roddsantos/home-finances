@@ -1,7 +1,11 @@
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { CREDIT_CARD } from "src/utils/constants/services";
-import { CreditCardObject, GetCreditCard } from "src/app/core/types/services";
+import {
+    CreditCardObject,
+    GetCreditCard,
+    SumAndCountData,
+} from "src/app/core/types/services";
 import { mergeMap } from "rxjs";
 import { UserState } from "src/app/core/subjects/subjects.user";
 import { CreditCard } from "src/app/core/types/objects";
@@ -19,6 +23,14 @@ export class ServiceCreditCard {
                 this.http.get<CreditCard[]>(CREDIT_CARD, {
                     params: { ...data, userId: user!.id },
                 })
+            )
+        );
+    }
+
+    getTotalInvoices() {
+        return this.user.user$.pipe(
+            mergeMap((user) =>
+                this.http.get<SumAndCountData>(CREDIT_CARD + "/invoice/" + user?.id)
             )
         );
     }

@@ -1,9 +1,11 @@
 h1 {
     font-family: Open-Sans-Bold;
+    color: var(--text-1);
 }
 
 h2 {
     font-family: Open-Sans-Regular;
+    color: var(--text-1);
 }
 
 h3,
@@ -11,10 +13,12 @@ h4,
 h5,
 h6 {
     font-family: Roboto-Regular;
+    color: var(--text-1);
 }
 
 p {
     font-family: Roboto-Regular;
+    color: var(--text-1);
 }
 
 @font-face {

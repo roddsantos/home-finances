@@ -5,6 +5,7 @@ import {
     BillObjectCredtCard,
     BillObjectCredtCardUpdate,
     FetchPaginatedData,
+    SumAndCountData,
 } from "src/app/core/types/services";
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
@@ -45,6 +46,26 @@ export class ServiceBill {
                         userId: user!.id,
                     },
                 })
+            )
+        );
+    }
+
+    getHomeInfo() {
+        return this.user.user$.pipe(
+            mergeMap((user) =>
+                this.http.get<SumAndCountData & { delta: number }>(
+                    BILL + "/home/" + user?.id
+                )
+            )
+        );
+    }
+
+    getRecentBills() {
+        return this.user.user$.pipe(
+            mergeMap((user) =>
+                this.http.get<{ bills: (Bill & BillData)[] }>(
+                    BILL + "/recents/" + user?.id
+                )
             )
         );
     }

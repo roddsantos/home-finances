@@ -9,7 +9,7 @@ import { LocalStorageService } from "src/app/services/local-storage.service";
 import { CreditCard } from "src/app/core/types/objects";
 import { CreditCardState } from "src/app/core/subjects//subjects.credit-card";
 import { UserState } from "src/app/core/subjects//subjects.user";
-import { mergeMap } from "rxjs";
+import { mergeMap, zip } from "rxjs";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ActionItem } from "src/app/core/types/components";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
@@ -33,24 +33,41 @@ import { ModalViewItem } from "src/app/components/modal/view-item/view-item.moda
     ],
 })
 export class PageCreditCards {
-    public ccApi = inject(ServiceCreditCard);
     public ccState = inject(CreditCardState);
+    public generalState = inject(GeneralState);
     public userState = inject(UserState);
     public storage = inject(LocalStorageService);
+
     private snack = inject(CustomSnackbarComponent);
-    public generalState = inject(GeneralState);
     public dialog = inject(Dialog);
 
+    public ccApi = inject(ServiceCreditCard);
+
+    public style = getComputedStyle(document.body);
+    public errorColor = this.style.getPropertyValue("--error");
+    public successColor = this.style.getPropertyValue("--success");
+    public infoColor = this.style.getPropertyValue("--info");
     public actualPage = window.location.pathname;
     public page = ROUTES.find((r) => r.page === this.actualPage);
 
     actions: ActionItem[] = [
-        { name: "", icon: "edit", action: (data) => this.onEdit(data), color: "#00328f" },
+        {
+            name: "",
+            icon: "edit",
+            action: (data) => this.onEdit(data),
+            color: this.infoColor,
+        },
         {
             name: "",
             icon: "delete",
             action: () => this.onDelete(),
-            color: "#8f0000",
+            color: this.errorColor,
+        },
+        {
+            name: "end invoice",
+            icon: "check_circle",
+            action: (data) => this.onFinishInvoice(data),
+            color: this.successColor,
         },
     ];
 
@@ -93,6 +110,34 @@ export class PageCreditCards {
             backdropClass: "modal-backdrop",
         };
         this.dialog.open(ModalNewCreditCard, options);
+    }
+
+    onFinishInvoice(creditCard: CreditCard) {
+        zip(
+            this.ccApi.updateCreditCard({
+                ...creditCard,
+                isClosed: true,
+            }),
+            this.ccApi.createCreditCard({
+                name: creditCard.name,
+                description: creditCard.description,
+                color: creditCard.color,
+                day: creditCard.day,
+                due: creditCard.due,
+                month: creditCard.month === 11 ? 0 : creditCard.month + 1,
+                year: creditCard.month === 11 ? creditCard.year + 1 : creditCard.year,
+                isClosed: false,
+            })
+        ).subscribe({
+            next: ([update, created]) => {
+                this.ccState.addCreditCard(update as CreditCard);
+                this.ccState.addCreditCard(created as CreditCard);
+                this.snack.openSnackBar("invoice closed successfully", "success");
+            },
+            error: () => {
+                this.snack.openSnackBar("error updating credit card", "error");
+            },
+        });
     }
 
     onDelete() {

@@ -113,3 +113,8 @@ export type AllSettledHttpConnection = {
     value?: any;
     error?: any;
 };
+
+export type SumAndCountData = {
+    total: number;
+    count: number;
+};

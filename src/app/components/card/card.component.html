@@ -8,8 +8,28 @@
         actualTheme !== 'binary' ? backgroundColor || backgroundHighlighter : secondary
     "
 >
-    <h2 *ngIf="title">{{ title }}</h2>
-    <p *ngIf="description">{{ description }}</p>
+    <div class="card-header">
+        <div class="card-data">
+            <h2 *ngIf="title">{{ title }}</h2>
+            <p *ngIf="description">{{ description }}</p>
+        </div>
+        <div class="card-actions" *ngIf="actions">
+            <button
+                *ngFor="let a of actions"
+                (click)="a.action()"
+                [matTooltip]="a.tooltip"
+                matTooltipPosition="above"
+                class="icon-button"
+                mat-icon-button
+                aria-label="action page button"
+            >
+                <mat-icon
+                    class="material-symbols-outlined icon"
+                    [fontIcon]="a.icon"
+                ></mat-icon>
+            </button>
+        </div>
+    </div>
     <div class="card-divisor" *ngIf="!noDivisor"></div>
     <div class="card-content">
         <ng-content></ng-content>

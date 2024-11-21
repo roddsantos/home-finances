@@ -6,6 +6,7 @@
     margin-bottom: 20px;
     position: relative;
     z-index: 3;
+    height: 100%;
 }
 
 .card-shadow {
@@ -26,4 +27,20 @@
     height: 1px;
     background-color: var(--text-1);
     margin: 10px 0px;
+}
+
+.card-header {
+    display: grid;
+    width: 100%;
+    grid-template-areas: "card-data card-actions";
+    grid-template-columns: 5fr 1fr;
+    & .card-actions {
+        margin: auto 0px auto auto;
+        & .icon-button {
+            /* border: var(--border-width) solid var(--border-color); */
+            & .icon {
+                margin: auto;
+            }
+        }
+    }
 }
