@@ -32,7 +32,6 @@ import { ModalViewItem } from "src/app/components/modal/view-item/view-item.moda
     styleUrls: ["./header.layout.component.css"],
     imports: [
         CommonModule,
-        ColorPipe,
         PagePipe,
         SectorPipe,
         MatInputModule,

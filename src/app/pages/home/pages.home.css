@@ -5,8 +5,8 @@
 .home-container {
     display: grid;
     grid-template-areas:
-        "home-date home-total-expenses home-total-expenses home-3 home-1 home-1"
-        "home-savings home-savings home-credit-card home-credit-card home-1 home-1";
+        "home-date home-total-expenses home-total-expenses home-3 home-recents home-recents"
+        "home-savings home-savings home-credit-card home-credit-card home-recents home-recents";
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: repeat(2, 220px);
     width: 100%;
@@ -16,8 +16,8 @@
         grid-template-areas:
             "home-date home-total-expenses home-total-expenses home-3"
             "home-savings home-savings home-credit-card home-credit-card"
-            "home-1 home-1 home-1 home-1"
-            "home-1 home-1 home-1 home-1";
+            "home-recents home-recents home-recents home-recents"
+            "home-recents home-recents home-recents home-recents";
         grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-template-rows: repeat(4, 180px);
     }
@@ -40,7 +40,7 @@
     & .total {
         display: flex;
         flex-direction: row;
-        height: 120px;
+        height: 13vh;
         & .data {
             margin: auto auto auto 0px;
         }
@@ -58,8 +58,43 @@
     }
 }
 
-.home-1 {
-    grid-area: home-1;
+.home-recents {
+    grid-area: home-recents;
+    & .list-item {
+        cursor: pointer;
+        display: grid;
+        grid-template-areas: "category name parcel" "category description type";
+        grid-template-columns: 40px 2fr 1fr;
+        column-gap: 0.5rem;
+        row-gap: 0.25rem;
+        margin-bottom: 1rem;
+        & .name {
+            grid-area: name;
+            color: var(--text-1);
+        }
+        & .description {
+            grid-area: description;
+            color: var(--text-2);
+        }
+        & .category {
+            grid-area: category;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            border: var(--border-width) solid var(--secondary);
+        }
+        & .type {
+            grid-area: type;
+            text-align: end;
+        }
+        & .parcel {
+            grid-area: parcel;
+            text-align: end;
+        }
+    }
 }
 
 .home-savings {
@@ -67,7 +102,7 @@
     & .total {
         display: flex;
         flex-direction: row;
-        height: 120px;
+        height: 13vh;
         & .data {
             margin: auto auto auto 0px;
         }
@@ -90,7 +125,7 @@
     & .total {
         display: flex;
         flex-direction: row;
-        height: 120px;
+        height: 13vh;
         & .data {
             margin: auto auto auto 0px;
         }
