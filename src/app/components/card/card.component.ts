@@ -58,6 +58,10 @@ export class CardComponent {
         }
     }
 
+    isString(icon: string | string[]): icon is string {
+        return typeof icon === "string";
+    }
+
     @HostListener("window:resize", ["$event"])
     onResize() {
         if (this.shadow) {

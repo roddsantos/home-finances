@@ -2,6 +2,31 @@
     <h1 class="page-title">dashboard</h1>
     <div class="dashboard-container">
         <card-component
+            id="dashboard-month-span"
+            class="dashboard-month-span"
+            [title]="'monthly bills - ' + ((this.dashboardState.monthSpan$ | async) === 1 ? 'this month' : (this.dashboardState.monthSpan$ | async) + ' months')"
+        >
+            <canvas id="billsPerMonth" class="billsPerMonth" height="200"
+                >{{billsPerMonthChart}}</canvas
+            >
+            <div class="dashboard-indicator" (click)="handleMonthSpan()">
+                <mat-icon
+                    class="material-symbols-outlined icon"
+                    [fontIcon]="'date_range'"
+                ></mat-icon>
+                <mat-icon
+                    class="material-symbols-outlined icon"
+                    [fontIcon]="'counter_'+ (this.dashboardState.monthSpan$ | async)"
+                ></mat-icon>
+            </div>
+        </card-component>
+        <card-component id="dashboard-1" class="dashboard-1" [title]="'dashboard-1'">
+        </card-component>
+        <card-component id="dashboard-2" class="dashboard-2" [title]="'dashboard-2'">
+        </card-component>
+        <card-component id="dashboard-3" class="dashboard-3" [title]="'dashboard-3'">
+        </card-component>
+        <!-- <card-component
             id="dashboard-date"
             class="dashboard-date"
             [title]="(date | date :'EEEE')?.toLowerCase()"
@@ -104,6 +129,6 @@
                     </p>
                 </div>
             </div>
-        </card-component>
+        </card-component> -->
     </div>
 </div>

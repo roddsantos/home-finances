@@ -82,7 +82,7 @@ export type IconType = {
 };
 
 export type CardActionType = {
-    icon: string;
+    icon: string | string[];
     tooltip: string;
     action: (data?: any) => void;
 };

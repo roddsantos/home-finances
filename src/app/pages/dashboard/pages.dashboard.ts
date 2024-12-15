@@ -1,10 +1,14 @@
 import { Dialog } from "@angular/cdk/dialog";
 import { CommonModule, CurrencyPipe } from "@angular/common";
 import { Component, inject } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { Router } from "@angular/router";
+import { Chart } from "chart.js/auto";
 import { CardComponent } from "src/app/components/card/card.component";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
+import { DashboardState } from "src/app/core/subjects/subjects.dashboard";
+import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { HomeState } from "src/app/core/subjects/subjects.home";
 import { UserState } from "src/app/core/subjects/subjects.user";
 import { CardActionType } from "src/app/core/types/components";
@@ -12,6 +16,9 @@ import { Bill, BillData } from "src/app/core/types/objects";
 import { ServiceBank } from "src/app/services/bank.service";
 import { ServiceBill } from "src/app/services/bill.service";
 import { ServiceCreditCard } from "src/app/services/credit-card.service";
+import { DashboardService } from "src/app/services/dashboard.service";
+import { tint } from "src/utils/color";
+import { MONTHS } from "src/utils/constants/general";
 import { BillsPipe } from "src/utils/pipes/bills";
 
 @Component({
@@ -19,49 +26,128 @@ import { BillsPipe } from "src/utils/pipes/bills";
     templateUrl: "./pages.dashboard.html",
     styleUrls: ["./pages.dashboard.css"],
     standalone: true,
-    imports: [CommonModule, CardComponent, CurrencyPipe, BillsPipe, MatIconModule],
+    imports: [
+        CommonModule,
+        CardComponent,
+        CurrencyPipe,
+        BillsPipe,
+        MatIconModule,
+        MatIconModule,
+        MatButtonModule,
+    ],
 })
 export class PageDashboard {
     public userState = inject(UserState);
-    public homeState = inject(HomeState);
+    public dashboardState = inject(DashboardState);
+    public generalState = inject(GeneralState);
+
     public billService = inject(ServiceBill);
     public bankService = inject(ServiceBank);
+    public dashboardService = inject(DashboardService);
     public creditCardService = inject(ServiceCreditCard);
     public dialog = inject(Dialog);
 
     public date = new Date();
     public router = new Router();
+    public billsPerMonthChart: Chart;
+
+    public style = getComputedStyle(document.body);
+    public secondaryColor = this.style.getPropertyValue("--secondary");
+    public thirdColor = this.style.getPropertyValue("--third");
+
+    public theme = "default";
+    public monthSpan = 1;
 
     ngOnInit() {
-        this.billService.getHomeInfo().subscribe({
-            next: (data) => {
-                this.homeState.updateExpenses(data);
+        this.dashboardState.monthSpan$.subscribe({
+            next: (monthSpan) => {
+                this.monthSpan = monthSpan;
+                this.dashboardService.getBillsPerMonth(monthSpan).subscribe({
+                    next: (data) => {
+                        this.dashboardState.updateBillsCounters(data);
+                        console.log(data);
+                        this.setBillsPerMonthChart();
+                    },
+                });
             },
         });
-        this.bankService.getSavings().subscribe({
-            next: (data) => {
-                this.homeState.updateSavings(data);
-            },
+        this.generalState.theme$.subscribe({
+            next: (theme) => (this.theme = theme),
         });
-        this.creditCardService.getTotalInvoices().subscribe({
-            next: (data) => {
-                this.homeState.updateInvoices(data);
-            },
-        });
-        this.billService.getRecentBills().subscribe({
-            next: (data) => {
-                this.homeState.updateRecentBills(data.bills);
+    }
+
+    setBillsPerMonthChart() {
+        this.dashboardState.billsCounters$.subscribe({
+            next: (billsCounters) => {
+                this.billsPerMonthChart = new Chart("billsPerMonth", {
+                    type: "bar",
+                    data: {
+                        labels: billsCounters
+                            .map((bc) => MONTHS[bc.month].short)
+                            .reverse(),
+                        datasets: [
+                            {
+                                label: "total bill value (R$)",
+                                data: billsCounters.map((bc) => bc.total).reverse(),
+                                borderWidth: 2,
+                                borderRadius: 10,
+                                backgroundColor:
+                                    this.theme === "binary"
+                                        ? "transparent"
+                                        : billsCounters
+                                              .map((_, index) =>
+                                                  tint(index * 0.1, this.secondaryColor)
+                                              )
+                                              .reverse(),
+                                borderColor: this.secondaryColor,
+                                categoryPercentage: 1,
+                                barPercentage: 1,
+                            },
+                        ],
+                    },
+                    options: {
+                        responsive: true,
+                    },
+                });
             },
         });
     }
 
-    public actions: CardActionType[] = [
-        {
-            icon: "north_east",
-            tooltip: "go to bills",
-            action: () => this.router.navigate(["/bills"]),
-        },
-    ];
+    handleMonthSpan() {
+        this.dashboardState.updateMonthSpan(
+            this.monthSpan === 5 ? 1 : this.monthSpan + 1
+        );
+        this.dashboardState.billsCounters$.subscribe({
+            next: (billsCounters) => {
+                this.billsPerMonthChart.data.labels = billsCounters
+                    .map((bc) => MONTHS[bc.month].short)
+                    .reverse();
+                this.billsPerMonthChart.data.datasets.forEach((dataset) => {
+                    dataset.data = billsCounters.map((bc) => bc.total).reverse();
+                    dataset.backgroundColor =
+                        this.theme === "binary"
+                            ? "transparent"
+                            : billsCounters
+                                  .map((_, index) =>
+                                      tint(index * 0.1, this.secondaryColor)
+                                  )
+                                  .reverse();
+                });
+                this.billsPerMonthChart.update();
+            },
+        });
+    }
+
+    // public monthSpanActions: CardActionType[] = [
+    //     {
+    //         icon: ["date_range", "counter_" + this.monthSpan],
+    //         tooltip: this.monthSpan + " month span",
+    //         action: () =>
+    //             this.dashboardState.updateMonthSpan(
+    //                 this.monthSpan === 5 ? 1 : this.monthSpan + 1
+    //             ),
+    //     },
+    // ];
 
     public bankActions: CardActionType[] = [
         {

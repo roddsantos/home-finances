@@ -37,10 +37,17 @@
     & .card-actions {
         margin: auto 0px auto auto;
         & .icon-button {
-            /* border: var(--border-width) solid var(--border-color); */
+            width: max-content;
             & .icon {
                 margin: auto;
+                width: max-content;
             }
         }
     }
+}
+
+.card-multiple-icons {
+    display: flex;
+    flex-direction: row;
+    width: max-content;
 }

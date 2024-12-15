@@ -23,10 +23,20 @@
                 mat-icon-button
                 aria-label="action page button"
             >
+                @if (isString(a.icon)) {
                 <mat-icon
                     class="material-symbols-outlined icon"
                     [fontIcon]="a.icon"
                 ></mat-icon>
+                } @if(!isString(a.icon)) {
+                <div class="card-multiple-icons">
+                    <mat-icon
+                        *ngFor="let icon of a.icon"
+                        class="material-symbols-outlined icon"
+                        [fontIcon]="icon"
+                    ></mat-icon>
+                </div>
+                }
             </button>
         </div>
     </div>
