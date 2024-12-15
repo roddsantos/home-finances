@@ -1,0 +1,184 @@
+.dashboard {
+    width: 95%;
+}
+
+.dashboard-container {
+    display: grid;
+    grid-template-areas:
+        "dashboard-date dashboard-total-expenses dashboard-total-expenses dashboard-3 dashboard-recents dashboard-recents"
+        "dashboard-savings dashboard-savings dashboard-credit-card dashboard-credit-card dashboard-recents dashboard-recents";
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: repeat(2, 220px);
+    width: 100%;
+    row-gap: 1rem;
+    column-gap: 1rem;
+    @media screen and (max-width: 1400px) {
+        grid-template-areas:
+            "dashboard-date dashboard-total-expenses dashboard-total-expenses dashboard-3"
+            "dashboard-savings dashboard-savings dashboard-credit-card dashboard-credit-card"
+            "dashboard-recents dashboard-recents dashboard-recents dashboard-recents"
+            "dashboard-recents dashboard-recents dashboard-recents dashboard-recents";
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: repeat(4, 180px);
+    }
+}
+
+.dashboard-date {
+    grid-area: dashboard-date;
+    width: 100%;
+    height: 100%;
+    & h1 {
+        font-size: 3rem;
+    }
+    & p {
+        margin: auto 0.5rem auto auto;
+    }
+}
+
+.dashboard-total-expenses {
+    grid-area: dashboard-total-expenses;
+    & .total {
+        display: flex;
+        flex-direction: row;
+        height: 13vh;
+        & .data {
+            margin: auto auto auto 0px;
+        }
+        & .icon {
+            color: var(--text-2);
+            font-size: 3rem;
+            height: 3rem;
+            width: 3rem;
+            margin: auto 0.75rem auto 0px;
+        }
+        & h1 {
+            color: var(--error);
+            font-size: 2rem;
+        }
+    }
+}
+
+.dashboard-recents {
+    grid-area: dashboard-recents;
+    & .list-item {
+        cursor: pointer;
+        display: grid;
+        grid-template-areas: "category name parcel" "category description type";
+        grid-template-columns: 40px 2fr 1fr;
+        column-gap: 0.5rem;
+        row-gap: 0.25rem;
+        margin-bottom: 1rem;
+        & .name {
+            grid-area: name;
+            color: var(--text-1);
+        }
+        & .description {
+            grid-area: description;
+            color: var(--text-2);
+        }
+        & .category {
+            grid-area: category;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            border: var(--border-width) solid var(--secondary);
+        }
+        & .type {
+            grid-area: type;
+            text-align: end;
+        }
+        & .parcel {
+            grid-area: parcel;
+            text-align: end;
+        }
+    }
+}
+
+.dashboard-savings {
+    grid-area: dashboard-savings;
+    & .total {
+        display: flex;
+        flex-direction: row;
+        height: 13vh;
+        & .data {
+            margin: auto auto auto 0px;
+        }
+        & .icon {
+            color: var(--text-2);
+            font-size: 3rem;
+            height: 3rem;
+            width: 3rem;
+            margin: auto 0.75rem auto 0px;
+        }
+        & h1 {
+            color: var(--info);
+            font-size: 2rem;
+        }
+    }
+}
+
+.dashboard-credit-card {
+    grid-area: dashboard-credit-card;
+    & .total {
+        display: flex;
+        flex-direction: row;
+        height: 13vh;
+        & .data {
+            margin: auto auto auto 0px;
+        }
+        & .icon {
+            color: var(--text-2);
+            font-size: 3rem;
+            height: 3rem;
+            width: 3rem;
+            margin: auto 0.75rem auto 0px;
+        }
+        & h1 {
+            color: var(--error);
+            font-size: 2rem;
+        }
+    }
+}
+
+.dashboard-delta {
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    border-radius: var(--border-radius);
+    margin: auto 0px auto auto;
+    padding: 0.4rem;
+    & .icon-trending {
+        color: var(--text-3);
+        font-size: 1rem;
+        height: 1rem;
+        width: 1rem;
+    }
+    p {
+        font-size: 0.75rem;
+    }
+    &.green {
+        border: var(--border-width) solid var(--success);
+        & p {
+            color: var(--success);
+        }
+        & .icon-trending {
+            color: var(--success);
+        }
+    }
+    &.red {
+        border: var(--border-width) solid var(--error-lighter);
+        & p {
+            color: var(--error);
+        }
+        & .icon-trending {
+            color: var(--error);
+        }
+    }
+}
+
+.dashboard-3 {
+    grid-area: dashboard-3;
+}

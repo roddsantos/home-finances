@@ -10,6 +10,12 @@ const routes: Routes = [
         loadComponent: () => import("./pages/home/pages.home").then((m) => m.PageHome),
     },
     {
+        path: "dashboard",
+        canActivate: [authGuard],
+        loadComponent: () =>
+            import("./pages/dashboard/pages.dashboard").then((m) => m.PageDashboard),
+    },
+    {
         path: "credit-cards",
         canActivate: [authGuard],
         loadComponent: () =>
