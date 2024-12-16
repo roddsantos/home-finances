@@ -5,10 +5,37 @@
             id="dashboard-month-span"
             class="dashboard-month-span"
             [title]="'monthly bills - ' + ((this.dashboardState.monthSpan$ | async) === 1 ? 'this month' : (this.dashboardState.monthSpan$ | async) + ' months')"
+            [border]="true"
         >
-            <canvas id="billsPerMonth" class="billsPerMonth" height="200"
-                >{{billsPerMonthChart}}</canvas
-            >
+            <div class="content">
+                <canvas id="billsPerMonth" class="billsPerMonth" height="200"
+                    >{{billsPerMonthChart}}</canvas
+                >
+                <div class="bill-progression">
+                    <h3>month progression</h3>
+                    <div class="grid-content">
+                        <div
+                            class="item"
+                            *ngFor="let bill of (this.dashboardState.billsCounters$ | async) as bills; let i = index"
+                        >
+                            <p class="month">{{ months[bills[i].month].short }}</p>
+                            <mat-icon
+                                class="material-symbols-outlined icon"
+                                [ngClass]="[i + 1 === bills.length || bills[i + 1].total === 0 ? 'blue' : bills[i].total - bills[i + 1].total < 0 ? 'green' : 'red']"
+                                [fontIcon]="i + 1 === bills.length || bills[i + 1].total === 0 ? 'trending_flat' : bills[i].total - bills[i + 1].total < 0 ? 'trending_down' : 'trending_up'"
+                            ></mat-icon>
+                            <h5
+                                class="percentage"
+                                [ngClass]="[i + 1 === bills.length ? 'blue' : bills[i].total - bills[i + 1].total < 0 ? 'green' : 'red']"
+                            >
+                                {{ i + 1 === bills.length || bills[i + 1].total === 0 ? 0
+                                : ((bills[i].total / bills[i + 1].total - 1) *
+                                100).toFixed(2) }}%
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="dashboard-indicator" (click)="handleMonthSpan()">
                 <mat-icon
                     class="material-symbols-outlined icon"
@@ -20,115 +47,26 @@
                 ></mat-icon>
             </div>
         </card-component>
-        <card-component id="dashboard-1" class="dashboard-1" [title]="'dashboard-1'">
-        </card-component>
-        <card-component id="dashboard-2" class="dashboard-2" [title]="'dashboard-2'">
-        </card-component>
-        <card-component id="dashboard-3" class="dashboard-3" [title]="'dashboard-3'">
-        </card-component>
-        <!-- <card-component
-            id="dashboard-date"
-            class="dashboard-date"
-            [title]="(date | date :'EEEE')?.toLowerCase()"
-        >
-            <p class="month">{{(date | date :'MMM')?.toLowerCase()}}</p>
-            <h1 class="day">{{date | date :'d'}}</h1></card-component
-        >
         <card-component
-            [actions]="actions"
-            id="dashboard-total-expenses"
-            class="dashboard-total-expenses"
-            title="total expenses"
+            id="dashboard-1"
+            class="dashboard-1"
+            [title]="'dashboard-1'"
+            [border]="true"
         >
-            <div class="total">
-                <mat-icon
-                    class="material-symbols-outlined icon"
-                    fontIcon="receipt_long"
-                ></mat-icon>
-                <div class="data">
-                    <h1>{{(homeState.expenses$ | async)?.total | currency: 'R$ '}}</h1>
-                    <p>{{"in " + (homeState.expenses$ | async)?.count + " bills"}}</p>
-                </div>
-                <div
-                    [ngClass]="['dashboard-delta', (homeState.expenses$ | async)!.delta >= 0 ? 'green' : 'red']"
-                >
-                    <mat-icon
-                        class="material-symbols-outlined icon-trending"
-                        [fontIcon]="(homeState.expenses$ | async)!.delta >= 0 ? 'trending_down' : 'trending_up'"
-                    ></mat-icon>
-                    <p>
-                        {{((homeState.expenses$ | async)!.delta * 100 *
-                        ((homeState.expenses$ | async)!.delta < 0 ? -1 : 1)) + "%" }}
-                    </p>
-                </div>
-            </div>
         </card-component>
         <card-component
-            [actions]="actions"
-            id="dashboard-recents"
-            class="dashboard-recents"
-            title="recent bills"
+            id="dashboard-2"
+            class="dashboard-2"
+            [title]="'dashboard-2'"
+            [border]="true"
         >
-            <div
-                *ngFor="let bill of (homeState.recentBills$ | async)"
-                class="list-item"
-                (click)="openBill(bill)"
-            >
-                <div class="category">
-                    <mat-icon
-                        class="material-symbols-outlined icon"
-                        [fontIcon]="bill.category.icon"
-                        [style.color]="bill.category.color"
-                    ></mat-icon>
-                </div>
-                <h4 class="name">{{ bill.name }}</h4>
-                <p class="type">{{ bill | bills: 'type' }}</p>
-                <p class="description">{{ bill.description }}</p>
-                <p class="parcel">{{ bill | bills: 'parcels' }}</p>
-            </div>
         </card-component>
         <card-component
-            [actions]="actions"
             id="dashboard-3"
             class="dashboard-3"
-            title="3"
+            [title]="'dashboard-3'"
+            [border]="true"
         >
         </card-component>
-        <card-component
-            [actions]="bankActions"
-            id="dashboard-savings"
-            class="dashboard-savings"
-            title="savings"
-        >
-            <div class="total">
-                <mat-icon
-                    class="material-symbols-outlined icon"
-                    fontIcon="wallet"
-                ></mat-icon>
-                <div class="data">
-                    <h1>{{(homeState.savings$ | async)?.total | currency: 'R$ '}}</h1>
-                    <p>{{"in " + (homeState.savings$ | async)?.count + " banks"}}</p>
-                </div>
-            </div>
-        </card-component>
-        <card-component
-            [actions]="actions"
-            id="dashboard-credit-card"
-            class="dashboard-credit-card"
-            title="credit cards"
-        >
-            <div class="total">
-                <mat-icon
-                    class="material-symbols-outlined icon"
-                    fontIcon="credit_card"
-                ></mat-icon>
-                <div class="data">
-                    <h1>{{(homeState.invoices$ | async)?.total | currency: 'R$ '}}</h1>
-                    <p>
-                        {{"in " + (homeState.invoices$ | async)?.count + " credit cards"}}
-                    </p>
-                </div>
-            </div>
-        </card-component> -->
     </div>
 </div>

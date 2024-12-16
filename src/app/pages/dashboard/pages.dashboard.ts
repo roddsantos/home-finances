@@ -9,7 +9,6 @@ import { CardComponent } from "src/app/components/card/card.component";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 import { DashboardState } from "src/app/core/subjects/subjects.dashboard";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
-import { HomeState } from "src/app/core/subjects/subjects.home";
 import { UserState } from "src/app/core/subjects/subjects.user";
 import { CardActionType } from "src/app/core/types/components";
 import { Bill, BillData } from "src/app/core/types/objects";
@@ -19,22 +18,13 @@ import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { DashboardService } from "src/app/services/dashboard.service";
 import { tint } from "src/utils/color";
 import { MONTHS } from "src/utils/constants/general";
-import { BillsPipe } from "src/utils/pipes/bills";
 
 @Component({
     selector: "page-dashboard",
     templateUrl: "./pages.dashboard.html",
     styleUrls: ["./pages.dashboard.css"],
     standalone: true,
-    imports: [
-        CommonModule,
-        CardComponent,
-        CurrencyPipe,
-        BillsPipe,
-        MatIconModule,
-        MatIconModule,
-        MatButtonModule,
-    ],
+    imports: [CommonModule, CardComponent, MatIconModule, MatIconModule, MatButtonModule],
 })
 export class PageDashboard {
     public userState = inject(UserState);
@@ -56,6 +46,7 @@ export class PageDashboard {
     public thirdColor = this.style.getPropertyValue("--third");
 
     public theme = "default";
+    public months = MONTHS;
     public monthSpan = 1;
 
     ngOnInit() {
@@ -65,7 +56,6 @@ export class PageDashboard {
                 this.dashboardService.getBillsPerMonth(monthSpan).subscribe({
                     next: (data) => {
                         this.dashboardState.updateBillsCounters(data);
-                        console.log(data);
                         this.setBillsPerMonthChart();
                     },
                 });
@@ -100,13 +90,20 @@ export class PageDashboard {
                                               )
                                               .reverse(),
                                 borderColor: this.secondaryColor,
-                                categoryPercentage: 1,
+                                categoryPercentage: 0.8,
                                 barPercentage: 1,
                             },
                         ],
                     },
                     options: {
                         responsive: true,
+                        scales: {
+                            y: {
+                                ticks: {
+                                    stepSize: 30,
+                                },
+                            },
+                        },
                     },
                 });
             },
@@ -136,6 +133,24 @@ export class PageDashboard {
                 this.billsPerMonthChart.update();
             },
         });
+    }
+
+    getMonthPercentage(index: number) {
+        if (index === 0) return 0;
+        let percentage = 0;
+        this.dashboardState.billsCounters$.subscribe({
+            next: (billsCounters) => {
+                console.log(billsCounters, index);
+                percentage = parseFloat(
+                    (
+                        billsCounters[billsCounters.length - index - 1].total /
+                            billsCounters[billsCounters.length - index].total -
+                        1
+                    ).toFixed(4)
+                );
+            },
+        });
+        return percentage;
     }
 
     // public monthSpanActions: CardActionType[] = [

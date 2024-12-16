@@ -93,7 +93,9 @@
                     fontIcon="credit_card"
                 ></mat-icon>
                 <div class="data">
-                    <h1>{{(homeState.invoices$ | async)?.total | currency: 'R$ '}}</h1>
+                    <h1>
+                        {{(homeState.invoices$ | async)?.total || 0 | currency: 'R$ '}}
+                    </h1>
                     <p>
                         {{"in " + (homeState.invoices$ | async)?.count + " credit cards"}}
                     </p>

@@ -42,12 +42,12 @@ export class CardComponent {
         this.general.theme$.subscribe({
             next: (theme) => {
                 this.actualTheme = theme as ThemeType;
+                this.style = getComputedStyle(document.body);
+                this.background = this.style.getPropertyValue("--background");
+                this.backgroundHighlighter = this.style.getPropertyValue("--bh");
+                this.secondary = this.style.getPropertyValue("--secondary");
             },
         });
-        this.style = getComputedStyle(document.body);
-        this.background = this.style.getPropertyValue("--background");
-        this.backgroundHighlighter = this.style.getPropertyValue("--bh");
-        this.secondary = this.style.getPropertyValue("--secondary");
     }
 
     ngAfterViewInit() {

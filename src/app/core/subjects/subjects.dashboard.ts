@@ -8,7 +8,7 @@ import { BillsMonthCount } from "../types/dashboard";
     providedIn: "root",
 })
 export class DashboardState {
-    private _monthSpan$ = new BehaviorSubject<number>(3);
+    private _monthSpan$ = new BehaviorSubject<number>(5);
     private _billsCounters$ = new BehaviorSubject<BillsMonthCount[]>([]);
     private _billsGroups$ = new BehaviorSubject<Array<Bill & BillData>[]>([]);
 

@@ -5,7 +5,9 @@
         actualTheme === 'binary' ? '#000000' : backgroundColor || backgroundHighlighter
     "
     [style.borderColor]="
-        actualTheme !== 'binary' ? backgroundColor || backgroundHighlighter : secondary
+        border || actualTheme === 'binary'
+            ? secondary
+            : backgroundColor || backgroundHighlighter
     "
 >
     <div class="card-header">
