@@ -1,0 +1,37 @@
+.calendar {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, calc(14.28% - 0.25rem));
+    column-gap: 0.25rem;
+    margin-bottom: 0.25rem;
+    & .weekday {
+        margin: auto;
+        padding: 0.25rem 0.5rem;
+        border: var(--border-width) solid var(--primary);
+        border-radius: var(--border-radius);
+        width: 100%;
+        text-align: center;
+        color: var(--text-1);
+        font-weight: bold;
+    }
+}
+
+.calendar-dates {
+    display: grid;
+    grid-template-columns: repeat(7, calc(14.28% - 0.25rem));
+    column-gap: 0.25rem;
+    row-gap: 0.25rem;
+    & .date {
+        margin: auto;
+        padding: 0.3rem 0.5rem;
+        border-style: solid;
+        border-width: var(--border-width);
+        border-radius: var(--border-radius);
+        width: 100%;
+    }
+}

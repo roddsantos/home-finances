@@ -5,6 +5,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { Router } from "@angular/router";
 import { Chart } from "chart.js/auto";
+import { CalendarComponent } from "src/app/components/calendar/calendar.component";
 import { CardComponent } from "src/app/components/card/card.component";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 import { DashboardState } from "src/app/core/subjects/subjects.dashboard";
@@ -24,7 +25,14 @@ import { MONTHS } from "src/utils/constants/general";
     templateUrl: "./pages.dashboard.html",
     styleUrls: ["./pages.dashboard.css"],
     standalone: true,
-    imports: [CommonModule, CardComponent, MatIconModule, MatIconModule, MatButtonModule],
+    imports: [
+        CommonModule,
+        CardComponent,
+        MatIconModule,
+        MatIconModule,
+        MatButtonModule,
+        CalendarComponent,
+    ],
 })
 export class PageDashboard {
     public userState = inject(UserState);

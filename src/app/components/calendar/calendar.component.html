@@ -1,0 +1,14 @@
+<div class="calendar">
+    <div class="calendar-weekdays">
+        <div class="weekday" *ngFor="let weekday of weekdays">{{ weekday.short }}</div>
+    </div>
+    <div class="calendar-dates">
+        <div
+            class="date"
+            *ngFor="let date of dates"
+            [style.borderColor]="date.thisMonth ? secondaryColor : 'transparent'"
+        >
+            {{ date.day }}
+        </div>
+    </div>
+</div>

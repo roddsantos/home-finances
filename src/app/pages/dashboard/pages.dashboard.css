@@ -6,9 +6,9 @@
     display: grid;
     grid-template-areas:
         "dashboard-month-span dashboard-month-span dashboard-month-span dashboard-1 dashboard-1 dashboard-1"
-        "dashboard-2 dashboard-2 dashboard-3 dashboard-3 dashboard-3 dashboard-3";
+        "dashboard-calendar dashboard-calendar dashboard-3 dashboard-3 dashboard-3 dashboard-3";
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: repeat(2, 300px);
+    grid-template-rows: repeat(2, 350px);
     width: 100%;
     row-gap: 1rem;
     column-gap: 1rem;
@@ -16,7 +16,7 @@
         grid-template-areas:
             "dashboard-month-span dashboard-month-span dashboard-month-span dashboard-month-span"
             "dashboard-1 dashboard-1 dashboard-1 dashboard-1"
-            "dashboard-2 dashboard-2 dashboard-2 dashboard-2"
+            "dashboard-calendar dashboard-calendar dashboard-calendar dashboard-calendar"
             "dashboard-3 dashboard-3 dashboard-3 dashboard-3";
         grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-template-rows: repeat(4, 300px);
@@ -92,8 +92,8 @@
     grid-area: dashboard-1;
 }
 
-.dashboard-2 {
-    grid-area: dashboard-2;
+.dashboard-calendar {
+    grid-area: dashboard-calendar;
 }
 
 .dashboard-3 {

@@ -13,6 +13,16 @@ export const MONTHS = [
     { name: "December", order: 11, short: "dec" },
 ];
 
+export const WEEKDAYS = [
+    { name: "Sunday", order: 0, short: "sun" },
+    { name: "Monday", order: 1, short: "mon" },
+    { name: "Tuesday", order: 2, short: "tue" },
+    { name: "Wednesday", order: 3, short: "wed" },
+    { name: "Thursday", order: 4, short: "thu" },
+    { name: "Friday", order: 5, short: "fri" },
+    { name: "Saturday", order: 6, short: "sat" },
+];
+
 export const THEMES = [
     {
         title: "default",
