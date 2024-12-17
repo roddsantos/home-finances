@@ -57,10 +57,10 @@
         <card-component
             id="dashboard-calendar"
             class="dashboard-calendar"
-            [title]="'bill calendar'"
+            [title]="'bill calendar - ' + month.name.toLowerCase()"
             [border]="true"
         >
-            <calendar-component />
+            <calendar-component [key]="'due'" [events]="bills" />
         </card-component>
         <card-component
             id="dashboard-3"

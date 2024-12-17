@@ -1,5 +1,5 @@
 import { Dialog } from "@angular/cdk/dialog";
-import { CommonModule, CurrencyPipe } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
@@ -29,7 +29,6 @@ import { MONTHS } from "src/utils/constants/general";
         CommonModule,
         CardComponent,
         MatIconModule,
-        MatIconModule,
         MatButtonModule,
         CalendarComponent,
     ],
@@ -48,6 +47,7 @@ export class PageDashboard {
     public date = new Date();
     public router = new Router();
     public billsPerMonthChart: Chart;
+    public bills: Array<Bill & BillData> = [];
 
     public style = getComputedStyle(document.body);
     public secondaryColor = this.style.getPropertyValue("--secondary");
@@ -56,8 +56,25 @@ export class PageDashboard {
     public theme = "default";
     public months = MONTHS;
     public monthSpan = 1;
+    public month = MONTHS[new Date().getMonth()];
 
     ngOnInit() {
+        this.billService
+            .getBills(1, 0, [
+                {
+                    id: new Date().getMonth(),
+                    identifier: "month",
+                    name: MONTHS[new Date().getMonth()].name,
+                },
+                {
+                    id: new Date().getFullYear(),
+                    identifier: "year",
+                    name: new Date().getFullYear(),
+                },
+            ])
+            .subscribe({
+                next: (bills) => (this.bills = bills.data),
+            });
         this.dashboardState.monthSpan$.subscribe({
             next: (monthSpan) => {
                 this.monthSpan = monthSpan;

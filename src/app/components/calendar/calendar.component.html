@@ -1,14 +1,45 @@
 <div class="calendar">
     <div class="calendar-weekdays">
-        <div class="weekday" *ngFor="let weekday of weekdays">{{ weekday.short }}</div>
+        <div
+            class="weekday"
+            *ngFor="let weekday of weekdays"
+            [style.color]="
+                weekday.order === 0 || weekday.order === 6 ? errorColor : primaryColor
+            "
+            [style.borderColor]="
+                weekday.order === 0 || weekday.order === 6 ? errorColor : primaryColor
+            "
+        >
+            {{ weekday.short }}
+        </div>
     </div>
     <div class="calendar-dates">
         <div
-            class="date"
             *ngFor="let date of dates"
-            [style.borderColor]="date.thisMonth ? secondaryColor : 'transparent'"
+            class="date"
+            [style.borderColor]="
+                date.day === today
+                    ? primaryColor
+                    : date.thisMonth
+                    ? secondaryColor
+                    : 'transparent'
+            "
+            [style.cursor]="date.events.length > 0 ? 'pointer' : 'default'"
+            [ngClass]="[date.day === today ? 'today' : '']"
+            (click)="onDateClick(date)"
+            [matTooltip]="date.events.length > 0 ? 'go to bills page' : ''"
+            [matTooltipPosition]="'above'"
         >
-            {{ date.day }}
+            <p>{{ date.day }}</p>
+            <mat-icon
+                *ngIf="date.events.length > 0"
+                class="material-symbols-outlined icon"
+                [fontIcon]="
+                    date.events.length <= 9
+                        ? 'filter_' + date.events.length
+                        : 'filter_9_plus'
+                "
+            ></mat-icon>
         </div>
     </div>
 </div>
