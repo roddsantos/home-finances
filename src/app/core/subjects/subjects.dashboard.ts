@@ -11,10 +11,16 @@ export class DashboardState {
     private _monthSpan$ = new BehaviorSubject<number>(5);
     private _billsCounters$ = new BehaviorSubject<BillsMonthCount[]>([]);
     private _billsGroups$ = new BehaviorSubject<Array<Bill & BillData>[]>([]);
+    private _monthBills$ = new BehaviorSubject<Array<Bill & BillData>>([]);
 
     public readonly monthSpan$ = this._monthSpan$.asObservable();
     public readonly billsCounters$ = this._billsCounters$.asObservable();
-    public readonly bills$ = this._billsGroups$.asObservable();
+    public readonly billsGroups$ = this._billsGroups$.asObservable();
+    public readonly monthBills$ = this._monthBills$.asObservable();
+
+    public updateMonthBills(bills: Array<Bill & BillData>) {
+        this._monthBills$.next(bills);
+    }
 
     public updateBillsCounters(billsGroups: Array<Bill & BillData>[]) {
         let res: BillsMonthCount[] = billsGroups.map((bills, index) => ({

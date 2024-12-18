@@ -162,3 +162,24 @@ export const tint = (
         // If no Alpha, we remove the last 2 hex digits
         .slice(0, hasAlpha ? undefined : -2)}`;
 };
+
+/**
+ * Function to get a contrast color between 2 available colors
+ * based on the param color
+ * @param {string} color The color to be verified
+ * @returns {string} The contrast color
+ */
+export function contrastText(color: string) {
+    const style = getComputedStyle(document.body);
+    const text1 = style.getPropertyValue("--text-1");
+    const text3 = style.getPropertyValue("--text-3");
+
+    const treatedString = color.split("#")[1];
+    if (!treatedString) return color;
+
+    let r = parseInt(treatedString.substring(0, 2), 16); // hexToR - max 76,245
+    let g = parseInt(treatedString.substring(2, 4), 16); // hexToG - max 149,685
+    let b = parseInt(treatedString.substring(4, 6), 16); // hexToB - max 29,07
+
+    return r * 0.299 + g * 0.587 + b * 0.114 > 186 ? text1 : text3;
+}
