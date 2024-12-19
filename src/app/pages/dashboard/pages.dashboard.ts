@@ -52,8 +52,10 @@ export class PageDashboard {
     public billsPerMonthChart: Chart;
     public categoryChart: Chart;
     public categories: Category[] = [];
+    public savingsChart: Chart;
 
     public style = getComputedStyle(document.body);
+    public primaryColor = this.style.getPropertyValue("--primary");
     public secondaryColor = this.style.getPropertyValue("--secondary");
     public thirdColor = this.style.getPropertyValue("--third");
     public text1Color = this.style.getPropertyValue("--text-1");
@@ -74,32 +76,25 @@ export class PageDashboard {
 
     ngOnInit() {
         Chart.register(ChartDataLabels);
-        this.billService
-            .getBills(1, 0, [
-                {
-                    id: this.month.order,
-                    identifier: "month",
-                    name: this.month.name,
-                },
-                {
-                    id: new Date().getFullYear(),
-                    identifier: "year",
-                    name: new Date().getFullYear(),
-                },
-            ])
-            .subscribe({
-                next: (bills) => {
-                    this.dashboardState.updateMonthBills(bills.data);
-                    this.setCategoryChart();
-                },
-                error: () => {
-                    this.snack.openSnackBar("error fetching bills", "error");
-                },
-            });
+        this.dashboardService.getSavingsInfo().subscribe({
+            next: (savings) => {
+                this.dashboardState.updateSavings(savings);
+                this.setSavingsChart(savings);
+            },
+        });
+        this.dashboardService.getMonthBills().subscribe({
+            next: (bills) => {
+                this.dashboardState.updateMonthBills(bills);
+                this.setCategoryChart();
+            },
+            error: () => {
+                this.snack.openSnackBar("error fetching bills", "error");
+            },
+        });
         this.dashboardState.monthSpan$.subscribe({
             next: (monthSpan) => {
                 this.monthSpan = monthSpan;
-                this.dashboardService.getBillsPerMonth(monthSpan).subscribe({
+                this.dashboardService.getMonthSpanBills(monthSpan).subscribe({
                     next: (data) => {
                         this.dashboardState.updateBillsCounters(data);
                         this.setBillsPerMonthChart();
@@ -115,8 +110,8 @@ export class PageDashboard {
     setBillsPerMonthChart() {
         this.dashboardState.billsCounters$.subscribe({
             next: (billsCounters) => {
-                this.billsPerMonthChart = new Chart("billsPerMonth", {
-                    type: "bar",
+                this.billsPerMonthChart = new Chart("bills-per-month", {
+                    type: "line",
                     data: {
                         labels: billsCounters
                             .map((bc) => MONTHS[bc.month].short)
@@ -125,8 +120,7 @@ export class PageDashboard {
                             {
                                 label: "total bill value (R$)",
                                 data: billsCounters.map((bc) => bc.total).reverse(),
-                                borderWidth: 2,
-                                borderRadius: 10,
+                                tension: 0.3,
                                 backgroundColor:
                                     this.theme === "binary"
                                         ? "transparent"
@@ -136,17 +130,26 @@ export class PageDashboard {
                                               )
                                               .reverse(),
                                 borderColor: this.secondaryColor,
-                                categoryPercentage: 0.8,
-                                barPercentage: 1,
+                                fill: true,
                             },
                         ],
                     },
                     options: {
                         responsive: true,
+                        plugins: {
+                            datalabels: {
+                                anchor: "end",
+                                align: "top",
+                                color: this.text1Color,
+                                font: { weight: "bold" },
+                                formatter: (v) => v + " R$",
+                            },
+                        },
                         scales: {
-                            y: {
+                            y: { display: false },
+                            x: {
                                 ticks: {
-                                    stepSize: 30,
+                                    font: { weight: "bold", size: 12 },
                                 },
                             },
                         },
@@ -223,17 +226,13 @@ export class PageDashboard {
                     options: {
                         responsive: true,
                         devicePixelRatio: 4,
-                        layout: {
-                            padding: 0,
-                        },
+                        layout: { padding: 0 },
                         plugins: {
                             legend: {
                                 position: "bottom",
                                 labels: {
                                     boxWidth: 10,
-                                    font: {
-                                        size: 12,
-                                    },
+                                    font: { size: 12 },
                                 },
                                 fullSize: false,
                             },
@@ -253,6 +252,53 @@ export class PageDashboard {
                         },
                     },
                 });
+            },
+        });
+    }
+
+    setSavingsChart(savings: (Bill & BillData)[]) {
+        let incomings: number = 0;
+        let outcomings: number = 0;
+        savings.forEach((bill) => {
+            if (bill.isPayment) outcomings += bill.total;
+            else incomings += bill.total;
+        });
+        this.savingsChart = new Chart("savings-chart", {
+            type: "bar",
+            data: {
+                labels: ["incomings", "outcomings"],
+                datasets: [
+                    {
+                        label: "",
+                        data: [incomings, outcomings],
+                        backgroundColor:
+                            this.theme === "binary"
+                                ? "transparent"
+                                : [this.primaryColor, this.secondaryColor],
+                        borderColor:
+                            this.theme === "binary"
+                                ? [this.primaryColor, this.secondaryColor]
+                                : "transparent",
+                        categoryPercentage: 0.8,
+                        barPercentage: 1,
+                        borderRadius: 10,
+                    },
+                ],
+            },
+            options: {
+                layout: { padding: { top: 30 } },
+                scales: { y: { display: false } },
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    datalabels: {
+                        anchor: "end",
+                        align: "top",
+                        color: this.text1Color,
+                        font: { weight: "bold" },
+                        formatter: (v) => v + " R$",
+                    },
+                },
             },
         });
     }

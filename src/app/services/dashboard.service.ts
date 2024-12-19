@@ -12,11 +12,31 @@ export class DashboardService {
     private http = inject(HttpClient);
     private user = inject(UserState);
 
-    getBillsPerMonth(monthSpan: number) {
+    getMonthSpanBills(monthSpan: number) {
         return this.user.user$.pipe(
             mergeMap((user) =>
                 this.http.get<Array<Bill & BillData>[]>(DASHBOARD + "/months", {
                     params: { monthSpan, userId: user!.id },
+                })
+            )
+        );
+    }
+
+    getMonthBills() {
+        return this.user.user$.pipe(
+            mergeMap((user) =>
+                this.http.get<Array<Bill & BillData>>(DASHBOARD + "/bills", {
+                    params: { userId: user!.id },
+                })
+            )
+        );
+    }
+
+    getSavingsInfo() {
+        return this.user.user$.pipe(
+            mergeMap((user) =>
+                this.http.get<Array<Bill & BillData>>(DASHBOARD + "/savings", {
+                    params: { userId: user!.id },
                 })
             )
         );

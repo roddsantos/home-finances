@@ -55,7 +55,6 @@ import { ConfigTemplate } from "./templates/config/config.template.new-bill";
     standalone: true,
     providers: [provideNativeDateAdapter()],
     imports: [
-        MatOption,
         CommonModule,
         ModalComponent,
         MatFormFieldModule,
@@ -66,7 +65,6 @@ import { ConfigTemplate } from "./templates/config/config.template.new-bill";
         BankTemplateNewBill,
         CompanyTemplateNewBill,
         CreditCardTemplateNewBill,
-        ServiceTemplateNewBill,
         MatSelectModule,
         MatDatepickerModule,
         MatCheckboxModule,
@@ -128,7 +126,7 @@ export class ModalNewBill implements OnInit {
             validators: [Validators.required],
         }),
         bank2: new FormControl<Bank | null>(null, { nonNullable: false }),
-        isPayment: new FormControl<boolean>(true, {
+        isPayment: new FormControl<boolean>(false, {
             nonNullable: true,
         }),
         company: new FormControl<Company | null>(null, {

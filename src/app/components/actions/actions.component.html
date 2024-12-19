@@ -15,6 +15,13 @@
         class="icon-button"
         mat-icon-button
         aria-label="action company button"
+        [style.display]="
+            !a.hidden
+                ? 'flex'
+                : !a.hidden(data) || a.hidden === undefined
+                ? 'flex'
+                : 'none'
+        "
     >
         <mat-icon
             class="material-symbols-outlined"

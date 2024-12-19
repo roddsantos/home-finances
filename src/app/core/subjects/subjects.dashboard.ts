@@ -12,11 +12,13 @@ export class DashboardState {
     private _billsCounters$ = new BehaviorSubject<BillsMonthCount[]>([]);
     private _billsGroups$ = new BehaviorSubject<Array<Bill & BillData>[]>([]);
     private _monthBills$ = new BehaviorSubject<Array<Bill & BillData>>([]);
+    private _savings$ = new BehaviorSubject<Array<Bill & BillData>>([]);
 
     public readonly monthSpan$ = this._monthSpan$.asObservable();
     public readonly billsCounters$ = this._billsCounters$.asObservable();
     public readonly billsGroups$ = this._billsGroups$.asObservable();
     public readonly monthBills$ = this._monthBills$.asObservable();
+    public readonly savings$ = this._savings$.asObservable();
 
     public updateMonthBills(bills: Array<Bill & BillData>) {
         this._monthBills$.next(bills);
@@ -44,5 +46,9 @@ export class DashboardState {
 
     public updateMonthSpan(monthSpan: number) {
         this._monthSpan$.next(monthSpan);
+    }
+
+    public updateSavings(savings: Array<Bill & BillData>) {
+        this._savings$.next(savings);
     }
 }

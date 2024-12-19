@@ -8,7 +8,7 @@
             [border]="true"
         >
             <div class="content">
-                <canvas id="billsPerMonth" class="billsPerMonth" height="200"
+                <canvas id="bills-per-month" class="bills-per-month" height="200"
                     >{{billsPerMonthChart}}</canvas
                 >
                 <div class="bill-progression">
@@ -74,11 +74,16 @@
         >
         </card-component>
         <card-component
-            id="dashboard-4"
-            class="dashboard-4"
-            [title]="'dashboard-4'"
+            id="dashboard-savings"
+            class="dashboard-savings"
+            [title]="'savings'"
             [border]="true"
         >
+            <div class="savings-container">
+                <canvas height="200" id="savings-chart" class="savings-chart"
+                    >{{savingsChart}}</canvas
+                >
+            </div>
         </card-component>
     </div>
 </div>

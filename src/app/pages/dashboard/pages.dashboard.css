@@ -5,7 +5,7 @@
 .dashboard-container {
     display: grid;
     grid-template-areas:
-        "dashboard-month-span dashboard-month-span dashboard-month-span dashboard-month-span dashboard-categories dashboard-categories dashboard-4 dashboard-4"
+        "dashboard-month-span dashboard-month-span dashboard-month-span dashboard-month-span dashboard-categories dashboard-categories dashboard-savings dashboard-savings"
         "dashboard-calendar dashboard-calendar dashboard-calendar dashboard-3 dashboard-3 dashboard-3 dashboard-3 dashboard-3";
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: repeat(2, 350px);
@@ -15,7 +15,7 @@
     @media screen and (max-width: 1400px) {
         grid-template-areas:
             "dashboard-month-span dashboard-month-span dashboard-month-span dashboard-month-span"
-            "dashboard-categories dashboard-categories dashboard-4 dashboard-4"
+            "dashboard-categories dashboard-categories dashboard-savings dashboard-savings"
             "dashboard-calendar dashboard-calendar dashboard-calendar dashboard-calendar"
             "dashboard-3 dashboard-3 dashboard-3 dashboard-3";
         grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -45,12 +45,13 @@
     & .content {
         display: flex;
         flex-direction: row;
-        & .billsPerMonth {
-            height: 200px !important;
-            width: 50%;
+        height: 100%;
+        & .bills-per-month {
+            height: 100% !important;
+            width: 60% !important;
         }
         & .bill-progression {
-            width: 50%;
+            width: 40%;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -172,29 +173,6 @@
     }
 }
 
-.dashboard-savings {
-    grid-area: dashboard-savings;
-    & .total {
-        display: flex;
-        flex-direction: row;
-        height: 13vh;
-        & .data {
-            margin: auto auto auto 0px;
-        }
-        & .icon {
-            color: var(--text-2);
-            font-size: 3rem;
-            height: 3rem;
-            width: 3rem;
-            margin: auto 0.75rem auto 0px;
-        }
-        & h1 {
-            color: var(--info);
-            font-size: 2rem;
-        }
-    }
-}
-
 .dashboard-credit-card {
     grid-area: dashboard-credit-card;
     & .total {
@@ -258,6 +236,14 @@
     grid-area: dashboard-3;
 }
 
-.dashboard-4 {
-    grid-area: dashboard-4;
+.dashboard-savings {
+    grid-area: dashboard-savings;
+    & .savings-container {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        & .savings-chart {
+            height: fit-content !important;
+        }
+    }
 }

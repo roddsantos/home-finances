@@ -20,7 +20,6 @@ import { MatIconModule } from "@angular/material/icon";
         CommonModule,
         ModalComponent,
         SectorPipe,
-        CurrencyPipe,
         DatePipe,
         TemplateCreditCard,
         TemplateBank,
@@ -38,7 +37,5 @@ export class ModalViewItem {
 
     public months = MONTHS;
 
-    ngOnInit(): void {
-        console.log("OK", this.data);
-    }
+    ngOnInit(): void {}
 }

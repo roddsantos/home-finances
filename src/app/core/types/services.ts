@@ -20,6 +20,8 @@ export type CreditCardObject = {
     due: number;
     month: number;
     year: number;
+    flag: string;
+    limit: number;
     isClosed: boolean;
 };
 
