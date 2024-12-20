@@ -61,10 +61,7 @@
             [title]="'bill calendar - ' + month.name.toLowerCase()"
             [border]="true"
         >
-            <calendar-component
-                [key]="'due'"
-                [events]="(dashboardState.monthBills$ | async) || []"
-            />
+            <calendar-component [creditCards]="creditCards" [monthBills]="monthBills" />
         </card-component>
         <card-component
             id="dashboard-3"
@@ -80,7 +77,7 @@
             [border]="true"
         >
             <div class="savings-container">
-                <canvas height="200" id="savings-chart" class="savings-chart"
+                <canvas height="" id="savings-chart" class="savings-chart"
                     >{{savingsChart}}</canvas
                 >
             </div>

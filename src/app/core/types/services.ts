@@ -89,7 +89,7 @@ export type BillObjectCredtCardUpdate = {
 };
 
 export type GetCreditCard = {
-    month?: string;
+    month?: number;
     year?: number;
     isClosed?: boolean;
 };

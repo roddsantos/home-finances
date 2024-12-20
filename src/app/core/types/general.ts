@@ -1,4 +1,4 @@
-import { Bill, BillData } from "./objects";
+import { Bill, BillData, CreditCard } from "./objects";
 
 export type ListStatus = "data" | "empty" | "error" | "loading";
 
@@ -52,5 +52,5 @@ export type DateObject = {
     weekDay: number;
     thisMonth: boolean;
     thisYear: boolean;
-    events: Array<Bill & BillData>;
+    events: Array<(Bill & BillData) | CreditCard>;
 };

@@ -58,6 +58,7 @@
                 </div>
                 <h4 class="name">{{ bill.name }}</h4>
                 <p class="type">{{ bill | bills: 'type' }}</p>
+                <p class="updated-at">{{ bill.updatedAt| date: 'short' }}</p>
                 <p class="description">{{ bill.description }}</p>
                 <p class="parcel">{{ bill | bills: 'parcels' }}</p>
             </div>

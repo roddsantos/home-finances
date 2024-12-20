@@ -1,4 +1,4 @@
-import { BillData } from "./../types/objects";
+import { BillData, CreditCard } from "./../types/objects";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { Bill } from "../types/objects";
@@ -13,12 +13,14 @@ export class DashboardState {
     private _billsGroups$ = new BehaviorSubject<Array<Bill & BillData>[]>([]);
     private _monthBills$ = new BehaviorSubject<Array<Bill & BillData>>([]);
     private _savings$ = new BehaviorSubject<Array<Bill & BillData>>([]);
+    private _creditCards$ = new BehaviorSubject<Array<CreditCard>>([]);
 
     public readonly monthSpan$ = this._monthSpan$.asObservable();
     public readonly billsCounters$ = this._billsCounters$.asObservable();
     public readonly billsGroups$ = this._billsGroups$.asObservable();
     public readonly monthBills$ = this._monthBills$.asObservable();
     public readonly savings$ = this._savings$.asObservable();
+    public readonly creditCards$ = this._creditCards$.asObservable();
 
     public updateMonthBills(bills: Array<Bill & BillData>) {
         this._monthBills$.next(bills);
@@ -50,5 +52,9 @@ export class DashboardState {
 
     public updateSavings(savings: Array<Bill & BillData>) {
         this._savings$.next(savings);
+    }
+
+    public updateCreditCards(creditCards: CreditCard[]) {
+        this._creditCards$.next(creditCards);
     }
 }

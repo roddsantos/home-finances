@@ -9,6 +9,11 @@ import { Router } from "@angular/router";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { ServiceBill } from "src/app/services/bill.service";
 import { CustomSnackbarComponent } from "../custom-snackbar/custom-snackbar.component";
+import { DashboardState } from "src/app/core/subjects/subjects.dashboard";
+import { Subscription } from "rxjs";
+import { Bill, BillData, CreditCard } from "src/app/core/types/objects";
+import { ModalEventsList } from "../modal/events-list/events-list.modal";
+import { Dialog } from "@angular/cdk/dialog";
 
 @Component({
     selector: "calendar-component",
@@ -19,13 +24,16 @@ import { CustomSnackbarComponent } from "../custom-snackbar/custom-snackbar.comp
 })
 export class CalendarComponent implements OnChanges {
     public filterState = inject(CustomFilterState);
+    public dashboardState = inject(DashboardState);
     public billApi = inject(ServiceBill);
     public billState = inject(BillState);
     private snack = inject(CustomSnackbarComponent);
     public router = new Router();
+    public dialog = inject(Dialog);
 
-    @Input() key: string;
-    @Input() events: any[];
+    @Input() monthBills: (Bill & BillData)[];
+    @Input() creditCards: CreditCard[];
+
     public dates: DateObject[] = [];
     public previousDates: DateObject[] = [];
     public today = new Date().getDate();
@@ -41,13 +49,22 @@ export class CalendarComponent implements OnChanges {
     public thirdColor = this.style.getPropertyValue("--third");
     public errorColor = this.style.getPropertyValue("--error");
 
+    public monthBillsSubscriber: Subscription;
+    public creditCardSubscriber: Subscription;
+
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes["events"]) {
-            this.allEvents = changes["events"].currentValue;
-            this.allEvents.forEach((event) => {
-                const eventDate = new Date(event[this.key]);
-                if (!isNaN(eventDate.valueOf()))
-                    this.dates[eventDate.getDate() - 1].events.push(event);
+        if (changes["creditCards"]) {
+            const creditCards = changes["creditCards"].currentValue;
+            creditCards.forEach((creditCard: CreditCard) => {
+                const eventDate = creditCard["due"];
+                if (!isNaN(eventDate)) this.dates[eventDate - 1].events.push(creditCard);
+            });
+        }
+        if (changes["monthBills"]) {
+            const monthBills = changes["monthBills"].currentValue;
+            monthBills.forEach((bill: Bill & BillData) => {
+                const eventDate = new Date(bill["due"]).getDate();
+                if (!isNaN(eventDate)) this.dates[eventDate - 1].events.push(bill);
             });
         }
     }
@@ -82,29 +99,25 @@ export class CalendarComponent implements OnChanges {
         }
     }
 
+    isBill(event: (Bill & BillData) | CreditCard): event is Bill & BillData {
+        return (event as Bill & BillData).type !== undefined;
+    }
+
     onDateClick(date: DateObject) {
-        this.filterState.setFilters([
-            {
-                id: new Date(this.year, this.month, date.day).toISOString(),
-                identifier: "date1",
-                name: new Date(this.year, this.month, date.day).toLocaleDateString(),
+        const option = {
+            data: {
+                events: [
+                    ...date.events.map((event) => ({
+                        ...event,
+                        sector: this.isBill(event) ? "bill" : "credit-card",
+                    })),
+                ],
+                header:
+                    "all events of " +
+                    new Date(this.year, this.month, date.day).toLocaleDateString(),
+                size: "sm",
             },
-            {
-                id: new Date(this.year, this.month, date.day + 1).toISOString(),
-                identifier: "date2",
-                name: new Date(this.year, this.month, date.day + 1).toLocaleDateString(),
-            },
-        ]);
-        this.billApi.getBills().subscribe({
-            next: (bills) => {
-                if (bills.count === 0) this.billState.changeStatus("empty", "no bills");
-                else this.billState.setBills(bills);
-                this.router.navigate(["/bills"]);
-            },
-            error: () => {
-                this.snack.openSnackBar("error fetching bills", "error");
-                this.billState.changeStatus("error", "error fetching bills");
-            },
-        });
+        };
+        this.dialog.open(ModalEventsList, option);
     }
 }

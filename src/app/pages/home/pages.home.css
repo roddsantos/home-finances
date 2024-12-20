@@ -63,8 +63,8 @@
     & .list-item {
         cursor: pointer;
         display: grid;
-        grid-template-areas: "category name parcel" "category description type";
-        grid-template-columns: 40px 2fr 1fr;
+        grid-template-areas: "category name parcel updated-at" "category description description type";
+        grid-template-columns: 40px 2fr 0.5fr 1.5fr;
         column-gap: 0.5rem;
         row-gap: 0.25rem;
         margin-bottom: 1rem;
@@ -92,6 +92,11 @@
         }
         & .parcel {
             grid-area: parcel;
+            text-align: end;
+            font-weight: bold;
+        }
+        & .updated-at {
+            grid-area: updated-at;
             text-align: end;
         }
     }
