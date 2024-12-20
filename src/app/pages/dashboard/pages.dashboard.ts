@@ -176,13 +176,15 @@ export class PageDashboard {
 
     setCategoryChart(monthBills: Array<Bill & BillData>) {
         let categorySets: any = {};
-        this.categories = [...new Set(monthBills.map((bill) => bill.category))];
         monthBills.forEach((monthBill) => {
             categorySets[monthBill.categoryId] = [
                 ...(categorySets[monthBill.categoryId] || []),
                 monthBill,
             ];
         });
+        this.categories = Object.keys(categorySets).map(
+            (id) => categorySets[id][0].category
+        );
 
         this.categoryChart = new Chart("categories-chart", {
             plugins: [ChartDataLabels],
@@ -195,7 +197,7 @@ export class PageDashboard {
                         data: Object.keys(categorySets).map((category) =>
                             categorySets[category].reduce(
                                 (acc: number, value: Bill & BillData) =>
-                                    acc + value.totalParcel!,
+                                    parseFloat((acc + value.totalParcel!).toFixed(2)),
                                 0
                             )
                         ),
