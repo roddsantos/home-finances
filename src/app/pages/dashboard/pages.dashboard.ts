@@ -167,11 +167,10 @@ export class PageDashboard {
                                 backgroundColor:
                                     this.theme === "binary"
                                         ? "transparent"
-                                        : billsCounters
-                                              .map((_, index) =>
-                                                  tint(index * 0.1, this.secondaryColor)
-                                              )
-                                              .reverse(),
+                                        : tint(
+                                              0.1 * (this.theme === "dark" ? -0.1 : 0.1),
+                                              this.secondaryColor
+                                          ),
                                 borderColor: this.secondaryColor,
                                 fill: true,
                             },
@@ -286,13 +285,14 @@ export class PageDashboard {
                             this.theme === "binary"
                                 ? "transparent"
                                 : [this.primaryColor, this.secondaryColor],
+                        borderWidth: 3,
+                        borderRadius: 10,
                         borderColor:
                             this.theme === "binary"
-                                ? [this.primaryColor, this.secondaryColor]
+                                ? [this.secondaryColor, this.secondaryColor]
                                 : "transparent",
                         categoryPercentage: 0.8,
                         barPercentage: 1,
-                        borderRadius: 10,
                     },
                 ],
             },
@@ -383,9 +383,11 @@ export class PageDashboard {
                                         (mth: any) => creditCards[name][mth]?.color
                                     )[0] || this.primaryColor,
                                 backgroundColor:
-                                    Object.keys(creditCards[name]).map(
-                                        (mth: any) => creditCards[name][mth]?.color
-                                    )[0] + "77" || this.primaryColor,
+                                    this.theme === "binary"
+                                        ? "transparent"
+                                        : Object.keys(creditCards[name]).map(
+                                              (mth: any) => creditCards[name][mth]?.color
+                                          )[0] + "77" || this.primaryColor,
                             }))
                             .sort(
                                 (a, b) =>

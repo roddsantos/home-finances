@@ -4,10 +4,18 @@
             class="weekday"
             *ngFor="let weekday of weekdays"
             [style.color]="
-                weekday.order === 0 || weekday.order === 6 ? errorColor : primaryColor
+                weekday.order === 0 || weekday.order === 6
+                    ? errorColor
+                    : theme === 'binary'
+                    ? secondaryColor
+                    : primaryColor
             "
             [style.borderColor]="
-                weekday.order === 0 || weekday.order === 6 ? errorColor : primaryColor
+                weekday.order === 0 || weekday.order === 6
+                    ? errorColor
+                    : theme === 'binary'
+                    ? secondaryColor
+                    : primaryColor
             "
         >
             {{ weekday.short }}
@@ -19,7 +27,9 @@
             class="date"
             [style.borderColor]="
                 date.day === today
-                    ? primaryColor
+                    ? theme === 'binary'
+                        ? infoColor
+                        : primaryColor
                     : date.thisMonth
                     ? secondaryColor
                     : 'transparent'

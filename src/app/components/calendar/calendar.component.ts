@@ -14,6 +14,7 @@ import { Subscription } from "rxjs";
 import { Bill, BillData, CreditCard } from "src/app/core/types/objects";
 import { ModalEventsList } from "../modal/events-list/events-list.modal";
 import { Dialog } from "@angular/cdk/dialog";
+import { GeneralState } from "src/app/core/subjects/subjects.general";
 
 @Component({
     selector: "calendar-component",
@@ -25,6 +26,7 @@ import { Dialog } from "@angular/cdk/dialog";
 export class CalendarComponent implements OnChanges {
     public filterState = inject(CustomFilterState);
     public dashboardState = inject(DashboardState);
+    public generalState = inject(GeneralState);
     public billApi = inject(ServiceBill);
     public billState = inject(BillState);
     private snack = inject(CustomSnackbarComponent);
@@ -40,6 +42,7 @@ export class CalendarComponent implements OnChanges {
     public month = new Date().getMonth();
     public year = new Date().getFullYear();
     public allEvents: any[] = [];
+    public theme: string;
 
     public weekdays = WEEKDAYS;
 
@@ -48,6 +51,7 @@ export class CalendarComponent implements OnChanges {
     public secondaryColor = this.style.getPropertyValue("--secondary");
     public thirdColor = this.style.getPropertyValue("--third");
     public errorColor = this.style.getPropertyValue("--error");
+    public infoColor = this.style.getPropertyValue("--info");
 
     public monthBillsSubscriber: Subscription;
     public creditCardSubscriber: Subscription;
@@ -70,6 +74,9 @@ export class CalendarComponent implements OnChanges {
     }
 
     ngOnInit() {
+        this.generalState.theme$.subscribe({
+            next: (theme) => (this.theme = theme),
+        });
         const firstDay = new Date(this.year, this.month, 1).getDay();
         const daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
 

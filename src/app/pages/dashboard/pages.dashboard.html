@@ -17,6 +17,7 @@
                     <div class="grid-content">
                         <div
                             class="item"
+                            [style.borderColor]="theme === 'binary' ? secondaryColor : thirdColor"
                             *ngFor="let bill of (this.dashboardState.billsCounters$ | async) as bills; let i = index"
                         >
                             <p class="month">{{ months[bills[i].month].short }}</p>
