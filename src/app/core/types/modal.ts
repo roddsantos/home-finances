@@ -43,6 +43,12 @@ export type ViewItemModalType = {
     size?: SizeType;
 };
 
+export type EventsListModalType = {
+    header: string;
+    events: Array<((Bill & BillData) | CreditCard) & { sector: string }>;
+    size: SizeType;
+};
+
 export type FooterModal = {
     type: "none" | "submit" | "alert";
     submit?: String;

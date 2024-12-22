@@ -68,6 +68,7 @@ export type ActionItem = {
     icon: string;
     action: (data: any) => void;
     color: string;
+    hidden?: (data: any) => boolean;
 };
 
 export type IconType = {
@@ -82,7 +83,7 @@ export type IconType = {
 };
 
 export type CardActionType = {
-    icon: string;
+    icon: string | string[];
     tooltip: string;
     action: (data?: any) => void;
 };

@@ -1,3 +1,5 @@
+import { Bill, BillData, CreditCard } from "./objects";
+
 export type ListStatus = "data" | "empty" | "error" | "loading";
 
 export type ManagerTabs = "0" | "1" | "2" | "3";
@@ -43,4 +45,12 @@ export type RouteItemType = {
     icon: string;
     title: string;
     actions: boolean;
+};
+
+export type DateObject = {
+    day: number;
+    weekDay: number;
+    thisMonth: boolean;
+    thisYear: boolean;
+    events: Array<(Bill & BillData) | CreditCard>;
 };

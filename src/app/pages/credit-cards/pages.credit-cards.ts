@@ -1,7 +1,5 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
-import { MatButton, MatIconButton } from "@angular/material/button";
-import { MatIcon } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { ServiceCreditCard } from "src/app/services/credit-card.service";
@@ -9,7 +7,7 @@ import { LocalStorageService } from "src/app/services/local-storage.service";
 import { CreditCard } from "src/app/core/types/objects";
 import { CreditCardState } from "src/app/core/subjects//subjects.credit-card";
 import { UserState } from "src/app/core/subjects//subjects.user";
-import { mergeMap, zip } from "rxjs";
+import { zip } from "rxjs";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ActionItem } from "src/app/core/types/components";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
@@ -23,14 +21,7 @@ import { ModalViewItem } from "src/app/components/modal/view-item/view-item.moda
     templateUrl: "./pages.credit-cards.html",
     styleUrls: ["./pages.credit-cards.css"],
     standalone: true,
-    imports: [
-        MatIcon,
-        MatButton,
-        FeedbackContainerComponent,
-        CommonModule,
-        MatIconButton,
-        ActionsComponent,
-    ],
+    imports: [FeedbackContainerComponent, CommonModule, ActionsComponent],
 })
 export class PageCreditCards {
     public ccState = inject(CreditCardState);
@@ -72,22 +63,20 @@ export class PageCreditCards {
     ];
 
     getCreditCards(reloaded?: boolean) {
-        this.userState.user$
-            .pipe(mergeMap((user) => this.ccApi.getCreditCards({})))
-            .subscribe({
-                next: (ccs) => {
-                    this.ccState.setCreditCards(ccs as CreditCard[]);
-                    this.ccState.changeStatus(
-                        (ccs as CreditCard[]).length === 0 ? "empty" : "none",
-                        "no companies"
-                    );
-                },
-                error: () => {
-                    if (reloaded)
-                        this.snack.openSnackBar("error fetching credit cards", "error");
-                    this.ccState.changeStatus("error", "error fetching credit cards");
-                },
-            });
+        this.ccApi.getCreditCards({}).subscribe({
+            next: (ccs) => {
+                this.ccState.setCreditCards(ccs as CreditCard[]);
+                this.ccState.changeStatus(
+                    (ccs as CreditCard[]).length === 0 ? "empty" : "none",
+                    "no companies"
+                );
+            },
+            error: () => {
+                if (reloaded)
+                    this.snack.openSnackBar("error fetching credit cards", "error");
+                this.ccState.changeStatus("error", "error fetching credit cards");
+            },
+        });
     }
 
     ngOnInit() {
@@ -113,11 +102,10 @@ export class PageCreditCards {
     }
 
     onFinishInvoice(creditCard: CreditCard) {
+        const updatedCreditCard: CreditCard = { ...creditCard, isClosed: true };
+
         zip(
-            this.ccApi.updateCreditCard({
-                ...creditCard,
-                isClosed: true,
-            }),
+            this.ccApi.updateCreditCard(updatedCreditCard),
             this.ccApi.createCreditCard({
                 name: creditCard.name,
                 description: creditCard.description,
@@ -126,11 +114,13 @@ export class PageCreditCards {
                 due: creditCard.due,
                 month: creditCard.month === 11 ? 0 : creditCard.month + 1,
                 year: creditCard.month === 11 ? creditCard.year + 1 : creditCard.year,
+                flag: creditCard.flag,
+                limit: creditCard.limit,
                 isClosed: false,
             })
         ).subscribe({
             next: ([update, created]) => {
-                this.ccState.addCreditCard(update as CreditCard);
+                this.ccState.addCreditCard(updatedCreditCard as CreditCard);
                 this.ccState.addCreditCard(created as CreditCard);
                 this.snack.openSnackBar("invoice closed successfully", "success");
             },

@@ -1,4 +1,5 @@
 import { PaymentTypes } from "./general";
+import { CreditCard } from "./objects";
 
 export type UserObject = {
     name: string;
@@ -20,6 +21,8 @@ export type CreditCardObject = {
     due: number;
     month: number;
     year: number;
+    flag: string;
+    limit: number;
     isClosed: boolean;
 };
 
@@ -87,7 +90,7 @@ export type BillObjectCredtCardUpdate = {
 };
 
 export type GetCreditCard = {
-    month?: string;
+    month?: number;
     year?: number;
     isClosed?: boolean;
 };
@@ -117,4 +120,10 @@ export type AllSettledHttpConnection = {
 export type SumAndCountData = {
     total: number;
     count: number;
+};
+
+export type CreditCardDashboardType = {
+    [name: string]: {
+        [month: number]: CreditCard | null;
+    };
 };

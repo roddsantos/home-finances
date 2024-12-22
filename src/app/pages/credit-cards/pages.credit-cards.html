@@ -34,7 +34,7 @@
                 <actions
                     class="cc-buttons"
                     [data]="creditCard"
-                    [actions]="actions"
+                    [actions]="creditCard.isClosed ? [] : actions"
                     [vertical]="true"
                     [transparent]="false"
                 ></actions>

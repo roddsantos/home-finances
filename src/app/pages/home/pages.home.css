@@ -40,7 +40,7 @@
     & .total {
         display: flex;
         flex-direction: row;
-        height: 13vh;
+        height: 100%;
         & .data {
             margin: auto auto auto 0px;
         }
@@ -63,8 +63,8 @@
     & .list-item {
         cursor: pointer;
         display: grid;
-        grid-template-areas: "category name parcel" "category description type";
-        grid-template-columns: 40px 2fr 1fr;
+        grid-template-areas: "category name parcel updated-at" "category description description type";
+        grid-template-columns: 40px 2fr 0.5fr 1.5fr;
         column-gap: 0.5rem;
         row-gap: 0.25rem;
         margin-bottom: 1rem;
@@ -75,6 +75,7 @@
         & .description {
             grid-area: description;
             color: var(--text-2);
+            font-size: 0.75rem;
         }
         & .category {
             grid-area: category;
@@ -93,6 +94,13 @@
         & .parcel {
             grid-area: parcel;
             text-align: end;
+            font-weight: bold;
+        }
+        & .updated-at {
+            grid-area: updated-at;
+            text-align: end;
+            font-size: 0.75rem;
+            margin: auto 0px;
         }
     }
 }
@@ -102,7 +110,7 @@
     & .total {
         display: flex;
         flex-direction: row;
-        height: 13vh;
+        height: 100%;
         & .data {
             margin: auto auto auto 0px;
         }
@@ -125,7 +133,7 @@
     & .total {
         display: flex;
         flex-direction: row;
-        height: 13vh;
+        height: 100%;
         & .data {
             margin: auto auto auto 0px;
         }
