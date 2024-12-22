@@ -1,12 +1,12 @@
 .item-container {
     display: grid;
     grid-template: "page-icon page-title" / 20% 80%;
-    min-height: 45px;
+    min-height: 40px;
     width: 100%;
     text-align: center;
     border-radius: 10px;
     margin-bottom: 10px;
-    padding: 8px 10px;
+    padding: 6px 10px;
     &:hover {
         cursor: pointer;
     }
@@ -14,7 +14,6 @@
 
 .item-selected {
     border: solid var(--border-width) var(--primary);
-    /* background-color: var(--secondary); */
     border-radius: 10px;
 }
 

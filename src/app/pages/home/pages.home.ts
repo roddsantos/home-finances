@@ -33,6 +33,8 @@ export class PageHome {
     public date = new Date();
     public router = new Router();
 
+    public todayBills: (Bill & BillData)[] = [];
+
     ngOnInit() {
         this.billService.getHomeInfo().subscribe({
             next: (data) => {
@@ -51,6 +53,9 @@ export class PageHome {
         });
         this.billService.getRecentBills().subscribe({
             next: (data) => {
+                this.todayBills = data.bills.filter(
+                    (bill) => new Date(bill.due).getDate() === new Date().getDate()
+                );
                 this.homeState.updateRecentBills(data.bills);
             },
         });
@@ -69,6 +74,14 @@ export class PageHome {
             icon: "north_east",
             tooltip: "go to banks",
             action: () => this.router.navigate(["/banks"]),
+        },
+    ];
+
+    public creditCardActions: CardActionType[] = [
+        {
+            icon: "north_east",
+            tooltip: "go to credit cards",
+            action: () => this.router.navigate(["/credit-cards"]),
         },
     ];
 

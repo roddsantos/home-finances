@@ -4,7 +4,7 @@ import { LocalStorageService } from "src/app/services/local-storage.service";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ThemeType } from "src/app/core/types/general";
 import { ColorPipe } from "src/utils/pipes/colors";
-import { CardActionType } from "src/app/core/types/components";
+import { CardActionType, CardOptionsType } from "src/app/core/types/components";
 import { MatTooltip } from "@angular/material/tooltip";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
@@ -28,6 +28,8 @@ export class CardComponent {
     @Input() backgroundColor?: string;
     @Input() noDivisor?: boolean;
     @Input() actions?: CardActionType[];
+    @Input() hideHeader?: boolean;
+    @Input() options?: CardOptionsType;
 
     public actualTheme: ThemeType;
     public cardHeight: number;

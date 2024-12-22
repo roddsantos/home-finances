@@ -5,7 +5,7 @@
 .home-container {
     display: grid;
     grid-template-areas:
-        "home-date home-total-expenses home-total-expenses home-3 home-recents home-recents"
+        "home-date home-total-expenses home-total-expenses home-bill-quantity home-recents home-recents"
         "home-savings home-savings home-credit-card home-credit-card home-recents home-recents";
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: repeat(2, 220px);
@@ -14,7 +14,7 @@
     column-gap: 1rem;
     @media screen and (max-width: 1400px) {
         grid-template-areas:
-            "home-date home-total-expenses home-total-expenses home-3"
+            "home-date home-total-expenses home-total-expenses home-bill-quantity"
             "home-savings home-savings home-credit-card home-credit-card"
             "home-recents home-recents home-recents home-recents"
             "home-recents home-recents home-recents home-recents";
@@ -27,11 +27,13 @@
     grid-area: home-date;
     width: 100%;
     height: 100%;
+    text-align: center;
     & h1 {
-        font-size: 3rem;
+        font-size: 4rem;
+        text-align: end;
     }
     & p {
-        margin: auto 0.5rem auto auto;
+        text-align: end;
     }
 }
 
@@ -45,11 +47,10 @@
             margin: auto auto auto 0px;
         }
         & .icon {
-            color: var(--text-2);
             font-size: 3rem;
             height: 3rem;
             width: 3rem;
-            margin: auto 0.75rem auto 0px;
+            margin: auto;
         }
         & h1 {
             color: var(--error);
@@ -63,7 +64,7 @@
     & .list-item {
         cursor: pointer;
         display: grid;
-        grid-template-areas: "category name parcel updated-at" "category description description type";
+        grid-template-areas: "category name name parcel" "category type updated-at updated-at";
         grid-template-columns: 40px 2fr 0.5fr 1.5fr;
         column-gap: 0.5rem;
         row-gap: 0.25rem;
@@ -72,24 +73,19 @@
             grid-area: name;
             color: var(--text-1);
         }
-        & .description {
-            grid-area: description;
-            color: var(--text-2);
-            font-size: 0.75rem;
-        }
         & .category {
             grid-area: category;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
+            border-radius: var(--border-radius);
             width: 40px;
             height: 40px;
             border: var(--border-width) solid var(--secondary);
         }
         & .type {
             grid-area: type;
-            text-align: end;
+            text-align: left;
         }
         & .parcel {
             grid-area: parcel;
@@ -115,11 +111,10 @@
             margin: auto auto auto 0px;
         }
         & .icon {
-            color: var(--text-2);
             font-size: 3rem;
             height: 3rem;
             width: 3rem;
-            margin: auto 0.75rem auto 0px;
+            margin: auto;
         }
         & h1 {
             color: var(--info);
@@ -138,11 +133,10 @@
             margin: auto auto auto 0px;
         }
         & .icon {
-            color: var(--text-2);
             font-size: 3rem;
             height: 3rem;
             width: 3rem;
-            margin: auto 0.75rem auto 0px;
+            margin: auto;
         }
         & h1 {
             color: var(--error);
@@ -187,6 +181,47 @@
     }
 }
 
-.home-3 {
-    grid-area: home-3;
+.home-bill-quantity {
+    grid-area: home-bill-quantity;
+    & .container {
+        display: grid;
+        grid-template-areas: "icon-container day" "icon-container label";
+        grid-template-columns: 1fr 1fr;
+        padding: 1rem;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        & .icon {
+            font-size: 3rem;
+            height: 3rem;
+            width: 3rem;
+            margin: auto;
+        }
+        & .day {
+            grid-area: day;
+            font-size: 5rem;
+            margin: auto 0px 0px auto;
+        }
+        & .label {
+            grid-area: label;
+            margin: 0px 0px auto auto;
+        }
+    }
+}
+
+.icon-container {
+    width: max-content;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.75rem;
+    border-radius: var(--border-radius);
+    background-color: var(--primary);
+    margin: auto 2rem auto 0px;
+    & .icon {
+        color: var(--text-3);
+    }
 }

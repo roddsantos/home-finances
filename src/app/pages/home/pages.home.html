@@ -16,20 +16,22 @@
             title="total expenses"
         >
             <div class="total">
-                <mat-icon
-                    class="material-symbols-outlined icon"
-                    fontIcon="receipt_long"
-                ></mat-icon>
+                <div class="icon-container">
+                    <mat-icon
+                        class="material-symbols-outlined icon"
+                        fontIcon="receipt_long"
+                    ></mat-icon>
+                </div>
                 <div class="data">
                     <h1>{{(homeState.expenses$ | async)?.total | currency: 'R$ '}}</h1>
                     <p>{{"in " + (homeState.expenses$ | async)?.count + " bills"}}</p>
                 </div>
                 <div
-                    [ngClass]="['home-delta', (homeState.expenses$ | async)!.delta >= 0 ? 'green' : 'red']"
+                    [ngClass]="['home-delta', (homeState.expenses$ | async)!.delta > 0 ? 'red' : 'green']"
                 >
                     <mat-icon
                         class="material-symbols-outlined icon-trending"
-                        [fontIcon]="(homeState.expenses$ | async)!.delta >= 0 ? 'trending_down' : 'trending_up'"
+                        [fontIcon]="(homeState.expenses$ | async)!.delta > 0 ? 'trending_up' : 'trending_down'"
                     ></mat-icon>
                     <p>
                         {{((homeState.expenses$ | async)!.delta * 100 *
@@ -58,12 +60,26 @@
                 </div>
                 <h4 class="name">{{ bill.name }}</h4>
                 <p class="type">{{ bill | bills: 'type' }}</p>
-                <p class="updated-at">{{ bill.updatedAt| date: 'short' }}</p>
-                <p class="description">{{ bill.description }}</p>
+                <p class="updated-at">{{ bill.updatedAt| date: 'medium' }}</p>
                 <p class="parcel">{{ bill | bills: 'parcels' }}</p>
             </div>
         </card-component>
-        <card-component [actions]="actions" id="home-3" class="home-3" title="3">
+        <card-component
+            [actions]="actions"
+            id="home-bill-quantity"
+            class="home-bill-quantity"
+            [hideHeader]="true"
+        >
+            <div class="container">
+                <div class="icon-container" [style.margin]="'auto auto 0px 0px'">
+                    <mat-icon
+                        class="material-symbols-outlined icon"
+                        fontIcon="shopping_cart"
+                    ></mat-icon>
+                </div>
+                <h1 class="day">{{todayBills.length}}</h1>
+                <p class="label">bills today</p>
+            </div>
         </card-component>
         <card-component
             [actions]="bankActions"
@@ -72,10 +88,12 @@
             title="savings"
         >
             <div class="total">
-                <mat-icon
-                    class="material-symbols-outlined icon"
-                    fontIcon="wallet"
-                ></mat-icon>
+                <div class="icon-container">
+                    <mat-icon
+                        class="material-symbols-outlined icon"
+                        fontIcon="savings"
+                    ></mat-icon>
+                </div>
                 <div class="data">
                     <h1>{{(homeState.savings$ | async)?.total | currency: 'R$ '}}</h1>
                     <p>{{"in " + (homeState.savings$ | async)?.count + " banks"}}</p>
@@ -83,16 +101,18 @@
             </div>
         </card-component>
         <card-component
-            [actions]="actions"
+            [actions]="creditCardActions"
             id="home-credit-card"
             class="home-credit-card"
             title="credit cards"
         >
             <div class="total">
-                <mat-icon
-                    class="material-symbols-outlined icon"
-                    fontIcon="credit_card"
-                ></mat-icon>
+                <div class="icon-container">
+                    <mat-icon
+                        class="material-symbols-outlined icon"
+                        fontIcon="credit_card"
+                    ></mat-icon>
+                </div>
                 <div class="data">
                     <h1>
                         {{(homeState.invoices$ | async)?.total || 0 | currency: 'R$ '}}
