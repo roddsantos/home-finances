@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { Bill } from "../types/objects";
 import { BillsMonthCount } from "../types/dashboard";
+import { CreditCardDashboardType } from "../types/services";
 
 @Injectable({
     providedIn: "root",
@@ -13,7 +14,8 @@ export class DashboardState {
     private _billsGroups$ = new BehaviorSubject<Array<Bill & BillData>[]>([]);
     private _monthBills$ = new BehaviorSubject<Array<Bill & BillData>>([]);
     private _savings$ = new BehaviorSubject<Array<Bill & BillData>>([]);
-    private _creditCards$ = new BehaviorSubject<Array<CreditCard>>([]);
+    private _creditCards$ = new BehaviorSubject<CreditCard[]>([]);
+    private _creditCardsSpan$ = new BehaviorSubject<CreditCardDashboardType>({});
 
     public readonly monthSpan$ = this._monthSpan$.asObservable();
     public readonly billsCounters$ = this._billsCounters$.asObservable();
@@ -21,6 +23,7 @@ export class DashboardState {
     public readonly monthBills$ = this._monthBills$.asObservable();
     public readonly savings$ = this._savings$.asObservable();
     public readonly creditCards$ = this._creditCards$.asObservable();
+    public readonly creditCardsSpan$ = this._creditCardsSpan$.asObservable();
 
     public updateMonthBills(bills: Array<Bill & BillData>) {
         this._monthBills$.next(bills);
@@ -56,5 +59,9 @@ export class DashboardState {
 
     public updateCreditCards(creditCards: CreditCard[]) {
         this._creditCards$.next(creditCards);
+    }
+
+    public updateCreditCardsSpan(creditCards: CreditCardDashboardType) {
+        this._creditCardsSpan$.next(creditCards);
     }
 }

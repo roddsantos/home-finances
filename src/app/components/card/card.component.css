@@ -7,6 +7,7 @@
     position: relative;
     z-index: 3;
     height: 100%;
+    width: 100%;
 }
 
 .card-shadow {
@@ -37,6 +38,11 @@
     height: 50px;
     grid-template-areas: "card-data card-actions";
     grid-template-columns: 5fr 1fr;
+    & .card-data {
+        & h2 {
+            font: normal 1.5rem Open-Sans-Extra-Bold;
+        }
+    }
     & .card-actions {
         margin: auto 0px auto auto;
         & .icon-button {

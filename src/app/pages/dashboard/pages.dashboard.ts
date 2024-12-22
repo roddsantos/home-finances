@@ -53,18 +53,22 @@ export class PageDashboard {
     public categoryChart: Chart;
     public categories: Category[] = [];
     public savingsChart: Chart;
+    public creditCardsChart: Chart;
 
     public style = getComputedStyle(document.body);
     public primaryColor = this.style.getPropertyValue("--primary");
     public secondaryColor = this.style.getPropertyValue("--secondary");
     public thirdColor = this.style.getPropertyValue("--third");
     public text1Color = this.style.getPropertyValue("--text-1");
+    public text3Color = this.style.getPropertyValue("--text-3");
 
     public theme = "default";
     public months = MONTHS;
     public monthSpan = 1;
     public month = MONTHS[new Date().getMonth()];
     public year = new Date().getFullYear();
+    public incomings = 0;
+    public outcomings = 0;
 
     public monthBills: (Bill & BillData)[] = [];
     public creditCards: CreditCard[] = [];
@@ -76,6 +80,27 @@ export class PageDashboard {
             action: () => this.router.navigate(["/banks"]),
         },
     ];
+
+    public lineOptions: any = {
+        responsive: true,
+        plugins: {
+            datalabels: {
+                anchor: "end",
+                align: "top",
+                color: this.text1Color,
+                font: { weight: "bold" },
+                formatter: (v: number) => v + " R$",
+            },
+        },
+        scales: {
+            y: { display: false },
+            x: {
+                ticks: {
+                    font: { weight: "bold", size: 12 },
+                },
+            },
+        },
+    };
 
     ngOnInit() {
         Chart.register(ChartDataLabels);
@@ -90,6 +115,9 @@ export class PageDashboard {
                     this.creditCards = creditCards;
                 },
             });
+        this.dashboardService.getCreditCards().subscribe({
+            next: () => this.setCreditCardsChart(),
+        });
         this.dashboardService.getSavingsInfo().subscribe({
             next: (savings) => {
                 this.dashboardState.updateSavings(savings);
@@ -149,26 +177,7 @@ export class PageDashboard {
                             },
                         ],
                     },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            datalabels: {
-                                anchor: "end",
-                                align: "top",
-                                color: this.text1Color,
-                                font: { weight: "bold" },
-                                formatter: (v) => v + " R$",
-                            },
-                        },
-                        scales: {
-                            y: { display: false },
-                            x: {
-                                ticks: {
-                                    font: { weight: "bold", size: 12 },
-                                },
-                            },
-                        },
-                    },
+                    options: this.lineOptions,
                 });
             },
         });
@@ -261,11 +270,9 @@ export class PageDashboard {
     }
 
     setSavingsChart(savings: (Bill & BillData)[]) {
-        let incomings: number = 0;
-        let outcomings: number = 0;
         savings.forEach((bill) => {
-            if (bill.isPayment) outcomings += bill.total;
-            else incomings += bill.total;
+            if (bill.isPayment) this.outcomings += bill.total;
+            else this.incomings += bill.total;
         });
         this.savingsChart = new Chart("savings-chart", {
             type: "bar",
@@ -274,7 +281,7 @@ export class PageDashboard {
                 datasets: [
                     {
                         label: "",
-                        data: [incomings, outcomings],
+                        data: [this.incomings, this.outcomings],
                         backgroundColor:
                             this.theme === "binary"
                                 ? "transparent"
@@ -347,6 +354,49 @@ export class PageDashboard {
             },
         });
         return percentage;
+    }
+
+    setCreditCardsChart() {
+        const monthsArray = [
+            new Date().getMonth() - 4,
+            new Date().getMonth() - 3,
+            new Date().getMonth() - 2,
+            new Date().getMonth() - 1,
+            new Date().getMonth(),
+        ];
+        this.dashboardState.creditCardsSpan$.subscribe({
+            next: (creditCards) => {
+                this.creditCardsChart = new Chart("credit-cards-chart", {
+                    type: "line",
+                    data: {
+                        labels: monthsArray.map((mth) => MONTHS[mth].short),
+                        datasets: Object.keys(creditCards)
+                            .map((name) => ({
+                                label: name,
+                                data: monthsArray.map(
+                                    (month) => creditCards[name][month]?.invoice || 0
+                                ),
+                                tension: 0.3,
+                                fill: true,
+                                borderColor:
+                                    Object.keys(creditCards[name]).map(
+                                        (mth: any) => creditCards[name][mth]?.color
+                                    )[0] || this.primaryColor,
+                                backgroundColor:
+                                    Object.keys(creditCards[name]).map(
+                                        (mth: any) => creditCards[name][mth]?.color
+                                    )[0] + "77" || this.primaryColor,
+                            }))
+                            .sort(
+                                (a, b) =>
+                                    a.data.reduce((acc, total) => acc + total, 0) -
+                                    b.data.reduce((acc, total) => acc + total, 0)
+                            ),
+                    },
+                    options: this.lineOptions,
+                });
+            },
+        });
     }
 
     openBill(bill: Bill & BillData) {

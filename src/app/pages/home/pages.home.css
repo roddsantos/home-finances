@@ -75,6 +75,7 @@
         & .description {
             grid-area: description;
             color: var(--text-2);
+            font-size: 0.75rem;
         }
         & .category {
             grid-area: category;
@@ -98,6 +99,8 @@
         & .updated-at {
             grid-area: updated-at;
             text-align: end;
+            font-size: 0.75rem;
+            margin: auto 0px;
         }
     }
 }

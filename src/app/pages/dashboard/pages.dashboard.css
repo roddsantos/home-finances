@@ -5,8 +5,8 @@
 .dashboard-container {
     display: grid;
     grid-template-areas:
-        "dashboard-month-span dashboard-month-span dashboard-month-span dashboard-month-span dashboard-categories dashboard-categories dashboard-savings dashboard-savings"
-        "dashboard-calendar dashboard-calendar dashboard-calendar dashboard-3 dashboard-3 dashboard-3 dashboard-3 dashboard-3";
+        "dashboard-month-span dashboard-month-span dashboard-month-span dashboard-month-span dashboard-month-span dashboard-calendar dashboard-calendar dashboard-calendar"
+        "dashboard-categories dashboard-categories dashboard-savings dashboard-savings dashboard-credit-cards dashboard-credit-cards dashboard-credit-cards dashboard-credit-cards";
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: repeat(2, 350px);
     width: 100%;
@@ -17,7 +17,7 @@
             "dashboard-month-span dashboard-month-span dashboard-month-span dashboard-month-span"
             "dashboard-categories dashboard-categories dashboard-savings dashboard-savings"
             "dashboard-calendar dashboard-calendar dashboard-calendar dashboard-calendar"
-            "dashboard-3 dashboard-3 dashboard-3 dashboard-3";
+            "dashboard-credit-cards dashboard-credit-cards dashboard-credit-cards dashboard-credit-cards";
         grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-template-rows: repeat(4, 350px);
     }
@@ -97,9 +97,6 @@
         height: 100% !important;
         width: fit-content !important;
         margin: auto;
-        /* position: relative;
-        top: -25%; */
-        /* left: 12px; */
     }
 }
 
@@ -107,128 +104,12 @@
     grid-area: dashboard-calendar;
 }
 
-.dashboard-3 {
-    grid-area: dashboard-3;
-}
-
-.dashboard-total-expenses {
-    grid-area: dashboard-total-expenses;
-    & .total {
-        display: flex;
-        flex-direction: row;
-        height: 13vh;
-        & .data {
-            margin: auto auto auto 0px;
-        }
-        & .icon {
-            color: var(--text-2);
-            font-size: 3rem;
-            height: 3rem;
-            width: 3rem;
-            margin: auto 0.75rem auto 0px;
-        }
-        & h1 {
-            color: var(--error);
-            font-size: 2rem;
-        }
-    }
-}
-
-.dashboard-recents {
-    grid-area: dashboard-recents;
-    & .list-item {
-        cursor: pointer;
-        display: grid;
-        grid-template-areas: "category name parcel" "category description type";
-        grid-template-columns: 40px 2fr 1fr;
-        column-gap: 0.5rem;
-        row-gap: 0.25rem;
-        margin-bottom: 1rem;
-        & .name {
-            grid-area: name;
-            color: var(--text-1);
-        }
-        & .description {
-            grid-area: description;
-            color: var(--text-2);
-        }
-        & .category {
-            grid-area: category;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            border: var(--border-width) solid var(--secondary);
-        }
-        & .type {
-            grid-area: type;
-            text-align: end;
-        }
-        & .parcel {
-            grid-area: parcel;
-            text-align: end;
-        }
-    }
-}
-
-.dashboard-credit-card {
-    grid-area: dashboard-credit-card;
-    & .total {
-        display: flex;
-        flex-direction: row;
-        height: 13vh;
-        & .data {
-            margin: auto auto auto 0px;
-        }
-        & .icon {
-            color: var(--text-2);
-            font-size: 3rem;
-            height: 3rem;
-            width: 3rem;
-            margin: auto 0.75rem auto 0px;
-        }
-        & h1 {
-            color: var(--error);
-            font-size: 2rem;
-        }
-    }
-}
-
-.dashboard-delta {
-    display: flex;
-    align-items: center;
-    height: fit-content;
-    border-radius: var(--border-radius);
-    margin: auto 0px auto auto;
-    padding: 0.4rem;
-    & .icon-trending {
-        color: var(--text-3);
-        font-size: 1rem;
-        height: 1rem;
-        width: 1rem;
-    }
-    p {
-        font-size: 0.75rem;
-    }
-    &.green {
-        border: var(--border-width) solid var(--success);
-        & p {
-            color: var(--success);
-        }
-        & .icon-trending {
-            color: var(--success);
-        }
-    }
-    &.red {
-        border: var(--border-width) solid var(--error-lighter);
-        & p {
-            color: var(--error);
-        }
-        & .icon-trending {
-            color: var(--error);
-        }
+.dashboard-credit-cards {
+    grid-area: dashboard-credit-cards;
+    & .credit-cards-chart {
+        height: 100% !important;
+        width: fit-content !important;
+        margin: auto;
     }
 }
 
@@ -238,12 +119,27 @@
 
 .dashboard-savings {
     grid-area: dashboard-savings;
+    display: flex;
     & .savings-container {
         display: flex;
+        flex-direction: column;
         align-items: center;
         height: 100%;
         & .savings-chart {
             height: fit-content !important;
+        }
+        & .savings-diff {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            border-style: solid;
+            border-width: var(--border-width);
+            margin-top: 1rem;
+            width: 50%;
+            height: max-content;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            background-color: var(--primary);
         }
     }
 }

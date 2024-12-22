@@ -4,7 +4,8 @@
         <card-component
             id="dashboard-month-span"
             class="dashboard-month-span"
-            [title]="'monthly bills - ' + ((this.dashboardState.monthSpan$ | async) === 1 ? 'this month' : (this.dashboardState.monthSpan$ | async) + ' months')"
+            [title]="'monthly bills' "
+            [description]="'last ' + ((this.dashboardState.monthSpan$ | async) === 1 ? 'this month' : (this.dashboardState.monthSpan$ | async) + ' months')"
             [border]="true"
         >
             <div class="content">
@@ -36,7 +37,7 @@
                     </div>
                 </div>
             </div>
-            <div class="dashboard-indicator" (click)="handleMonthSpan()">
+            <!-- <div class="dashboard-indicator" (click)="handleMonthSpan()">
                 <mat-icon
                     class="material-symbols-outlined icon"
                     [fontIcon]="'date_range'"
@@ -45,12 +46,13 @@
                     class="material-symbols-outlined icon"
                     [fontIcon]="'counter_'+ (this.dashboardState.monthSpan$ | async)"
                 ></mat-icon>
-            </div>
+            </div> -->
         </card-component>
         <card-component
             id="dashboard-categories"
             class="dashboard-categories"
             [title]="'bills per category'"
+            [description]="month.name.toLowerCase()"
             [border]="true"
         >
             <canvas id="categories-chart" class="categories-chart"></canvas>
@@ -58,29 +60,46 @@
         <card-component
             id="dashboard-calendar"
             class="dashboard-calendar"
-            [title]="'bill calendar - ' + month.name.toLowerCase()"
+            [title]="'bill calendar'"
+            [description]="month.name.toLowerCase()"
             [border]="true"
         >
             <calendar-component [creditCards]="creditCards" [monthBills]="monthBills" />
         </card-component>
         <card-component
-            id="dashboard-3"
-            class="dashboard-3"
-            [title]="'dashboard-3'"
-            [border]="true"
-        >
-        </card-component>
-        <card-component
             id="dashboard-savings"
             class="dashboard-savings"
             [title]="'savings'"
+            [description]="month.name.toLowerCase()"
             [border]="true"
         >
             <div class="savings-container">
                 <canvas height="" id="savings-chart" class="savings-chart"
                     >{{savingsChart}}</canvas
                 >
+                <div
+                    class="savings-diff"
+                    [style.borderColor]="theme === 'binary' ? secondaryColor : primaryColor"
+                >
+                    <mat-icon
+                        class="material-symbols-outlined icon"
+                        [fontIcon]="'difference'"
+                        [style.color]="theme === 'binary' ? text1Color : text3Color"
+                    ></mat-icon>
+                    <h3 [style.color]="theme === 'binary' ? text1Color : text3Color">
+                        {{(incomings - outcomings) | currency : "R$ "}}
+                    </h3>
+                </div>
             </div>
+        </card-component>
+        <card-component
+            id="dashboard-credit-cards"
+            class="dashboard-credit-cards"
+            [title]="'credit cards'"
+            [description]="'last 5 months'"
+            [border]="true"
+        >
+            <canvas id="credit-cards-chart" class="credit-cards-chart"></canvas>
         </card-component>
     </div>
 </div>

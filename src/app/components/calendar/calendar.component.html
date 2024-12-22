@@ -27,7 +27,7 @@
             [style.cursor]="date.events.length > 0 ? 'pointer' : 'default'"
             [ngClass]="[date.day === today ? 'today' : '']"
             (click)="onDateClick(date)"
-            [matTooltip]="date.events.length > 0 ? 'go to bills page' : ''"
+            [matTooltip]="date.events.length > 0 ? date.events.length + ' bills' : ''"
             [matTooltipPosition]="'above'"
         >
             <p>{{ date.day }}</p>
