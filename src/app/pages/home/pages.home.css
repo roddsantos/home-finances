@@ -79,9 +79,14 @@
             align-items: center;
             justify-content: center;
             border-radius: var(--border-radius);
+            border-width: var(--border-width);
+            border-style: solid;
+            background-color: var(--primary);
             width: 40px;
             height: 40px;
-            border: var(--border-width) solid var(--secondary);
+            & .icon {
+                color: var(--text-3);
+            }
         }
         & .type {
             grid-area: type;

@@ -51,11 +51,13 @@
                 class="list-item"
                 (click)="openBill(bill)"
             >
-                <div class="category">
+                <div
+                    class="category"
+                    [style.borderColor]="theme === 'binary' ? secondaryColor : primaryColor"
+                >
                     <mat-icon
                         class="material-symbols-outlined icon"
                         [fontIcon]="bill.category.icon"
-                        [style.color]="bill.category.color"
                     ></mat-icon>
                 </div>
                 <h4 class="name">{{ bill.name }}</h4>

@@ -12,6 +12,7 @@ import { ServiceBill } from "src/app/services/bill.service";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 import { Router } from "@angular/router";
+import { GeneralService } from "src/app/services/general.service";
 
 @Component({
     selector: "modal-events-list",
@@ -23,6 +24,7 @@ import { Router } from "@angular/router";
 export class ModalEventsList {
     public modalState = inject(ModalState);
     public filterState = inject(CustomFilterState);
+    private generalService = inject(GeneralService);
     public billApi = inject(ServiceBill);
     public billState = inject(BillState);
     private snack = inject(CustomSnackbarComponent);
@@ -75,7 +77,7 @@ export class ModalEventsList {
                     if (bills.count === 0)
                         this.billState.changeStatus("empty", "no bills");
                     else this.billState.setBills(bills);
-                    this.router.navigate(["/bills"]);
+                    this.generalService.navigateTo("/bills");
                     this.modalComponent.onClose();
                 },
                 error: () => {
@@ -84,7 +86,7 @@ export class ModalEventsList {
                 },
             });
         } else {
-            this.router.navigate(["/credit-cards"]);
+            this.generalService.navigateTo("/credit-cards");
             this.modalComponent.onClose();
         }
     }

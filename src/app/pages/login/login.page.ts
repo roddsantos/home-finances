@@ -14,6 +14,7 @@ import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/cust
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ServiceUser } from "src/app/services/user.service";
 import { UserState } from "src/app/core/subjects/subjects.user";
+import { GeneralService } from "src/app/services/general.service";
 
 @Component({
     templateUrl: "./login.page.html",
@@ -32,12 +33,13 @@ export class PageLogin implements OnInit {
     public userState = inject(UserState);
     public userService = inject(ServiceUser);
     public snack = inject(CustomSnackbarComponent);
+    private generalService = inject(GeneralService);
     public router = inject(Router);
 
     ngOnInit() {
         this.userState.user$.subscribe({
             next: (user) => {
-                if (user) this.router.navigate(["/monthly"]);
+                if (user) this.generalService.navigateTo("/");
             },
         });
     }
@@ -63,7 +65,7 @@ export class PageLogin implements OnInit {
                 this.userState.setUser(user);
                 this.storage.setUser(user);
                 this.snack.openSnackBar("login successful", "success");
-                this.router.navigate(["/"]);
+                this.generalService.navigateTo("/");
             },
             error: () => {
                 this.snack.openSnackBar("login error, try again", "error");

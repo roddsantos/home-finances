@@ -38,7 +38,8 @@ export type RoutesType =
     | "/categories"
     | "/bills"
     | "/dashboard"
-    | "/";
+    | "/"
+    | "";
 
 export type RouteItemType = {
     page: RoutesType;

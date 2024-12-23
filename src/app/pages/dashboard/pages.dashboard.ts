@@ -19,6 +19,7 @@ import { ServiceBank } from "src/app/services/bank.service";
 import { ServiceBill } from "src/app/services/bill.service";
 import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { DashboardService } from "src/app/services/dashboard.service";
+import { GeneralService } from "src/app/services/general.service";
 import { tint } from "src/utils/color";
 import { MONTHS } from "src/utils/constants/general";
 
@@ -40,6 +41,7 @@ export class PageDashboard {
     public bankService = inject(ServiceBank);
     public dashboardService = inject(DashboardService);
     public creditCardService = inject(ServiceCreditCard);
+    private generalService = inject(GeneralService);
 
     public userState = inject(UserState);
     public dashboardState = inject(DashboardState);
@@ -77,7 +79,7 @@ export class PageDashboard {
         {
             icon: "north_east",
             tooltip: "go to banks",
-            action: () => this.router.navigate(["/banks"]),
+            action: () => this.generalService.navigateTo("/banks"),
         },
     ];
 

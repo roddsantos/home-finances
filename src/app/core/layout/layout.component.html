@@ -29,10 +29,11 @@
         >
             <mat-icon
                 [ngClass]="{
-                    'material-symbols-outlined': '/' !== actualPage,
+                    'material-symbols-outlined': '/' !== (generalState.page$ | async),
                     'home-icon': true,
                     'icon-route':
-                        '/' !== actualPage && (generalState.theme$ | async) !== 'binary'
+                        '/' !== (generalState.page$ | async) &&
+                        (generalState.theme$ | async) !== 'binary'
                 }"
                 aria-hidden="false"
                 aria-label="Example home icon"
@@ -50,7 +51,6 @@
             class="item"
             *ngFor="let item of items"
             [item]="item"
-            [actualPage]="actualPage"
             (onClick)="onChangeRoute($event)"
         />
         <!-- <div class="icon-container">
