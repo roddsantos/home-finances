@@ -7,7 +7,7 @@ import {
 } from "src/app/core/types/components";
 import { Dialog } from "@angular/cdk/dialog";
 import { DialogCustomList } from "./dialog/custom-filter.dialog.component";
-import { MatButton, MatIconButton } from "@angular/material/button";
+import { MatButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
 import { CommonModule } from "@angular/common";
 import { MatExpansionModule } from "@angular/material/expansion";
@@ -24,6 +24,10 @@ import { MatSelectChange, MatSelectModule } from "@angular/material/select";
 import { MonthType, PaymentTypes } from "src/app/core/types/general";
 import { MONTHS } from "src/utils/constants/general";
 import { MatInput, MatInputModule } from "@angular/material/input";
+import {
+    MatButtonToggleChange,
+    MatButtonToggleModule,
+} from "@angular/material/button-toggle";
 
 @Injectable({
     providedIn: "root",
@@ -44,7 +48,7 @@ import { MatInput, MatInputModule } from "@angular/material/input";
         MatSelectModule,
         ReactiveFormsModule,
         MatInputModule,
-        MatIconButton,
+        MatButtonToggleModule,
         MatTooltipModule,
     ],
 })
@@ -79,6 +83,9 @@ export class CustomFilterComponent {
     public typeCtrl = new FormControl<"all" | PaymentTypes>("all", {
         nonNullable: true,
     });
+    public style = getComputedStyle(document.body);
+    public primaryColor = this.style.getPropertyValue("--primary");
+    public secondaryColor = this.style.getPropertyValue("--secondary");
 
     ngOnInit() {
         const filters: FilterDisplay[] = this.storage.getFilters();
@@ -180,7 +187,7 @@ export class CustomFilterComponent {
         }
     }
 
-    addStatus(event: MatSelectChange) {
+    addStatus(event: MatButtonToggleChange) {
         const value = event.value;
         let filtersFromState: FilterDisplay[] = this.getFilters();
         const hasFilter = filtersFromState.find((f) => f.identifier === "status");

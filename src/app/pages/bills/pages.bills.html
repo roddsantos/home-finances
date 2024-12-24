@@ -16,14 +16,14 @@
             <p>open filters</p>
         </button>
     </div>
-    <div class="monthly-container">
+    <div class="bill-container">
         <div class="bill-list-container">
-            <custom-filter></custom-filter>
             <feedback-container
+                [style.width]="'100%'"
                 *ngIf="(billState.bills$| async)?.length === 0"
                 [info]="(billState.status$ | async)!"
             ></feedback-container>
-            <div class="bill-list">
+            <div class="bill-list" *ngIf="(billState.bills$| async)!.length > 0">
                 <ng-template
                     ngFor
                     let-item
@@ -48,6 +48,7 @@
                     ></service-list-template>
                 </ng-template>
             </div>
+            <custom-filter></custom-filter>
         </div>
     </div>
 </div>

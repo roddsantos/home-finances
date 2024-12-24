@@ -8,6 +8,7 @@
 @import "../styles/layout/responsive";
 @import "../styles/layout/theme";
 @import "../styles/material/chip";
+@import "../styles/material/select";
 @import "../styles/material/snackbar";
 @import "../styles/material/tabs";
 @import "../styles/material/textfield";
@@ -42,6 +43,10 @@
     --company: #622991;
     --category: #2a8a8a;
 
+    --input-unit: 1rem;
+    --input-position: 0.85rem;
+    --input-font: 0.75rem;
+
     --item-list: rgb(135, 147, 192);
     --item-list-border: rgb(135, 147, 192);
     --title: #e4e4e4;
@@ -74,6 +79,10 @@
     --info: #0b3d9b;
     --success: #248133;
     --default: #474141;
+
+    --input-unit: 1rem;
+    --input-position: 0.85rem;
+    --input-font: 0.75rem;
 
     --error-lighter: #df7575;
     --warning-lighter: #d8b574;
@@ -122,6 +131,10 @@
     --bank: #2d62d4;
     --company: #8d33d6;
     --category: #2cadad;
+
+    --input-unit: 1rem;
+    --input-position: 0.85rem;
+    --input-font: 0.75rem;
 
     --error: #d34848;
     --warning: #d89f36;
@@ -187,6 +200,7 @@ body {
 .mat-mdc-form-field-error {
     color: var(--error) !important;
     caret-color: var(--error) !important;
+    font-size: var(--input-font);
 }
 
 .tab-container {

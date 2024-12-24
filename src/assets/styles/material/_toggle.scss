@@ -1,6 +1,4 @@
 .mat-button-toggle-group-appearance-standard {
-    --input-unit: 20px;
-    --input-font: 1rem;
     border: solid var(--border-width) var(--border-color) !important;
     border-radius: var(--border-radius) !important;
     height: calc(2 * var(--input-unit)) !important;
@@ -11,6 +9,7 @@
         & .mat-button-toggle-button {
             & .mat-button-toggle-label-content {
                 line-height: calc(2 * var(--input-unit)) !important;
+                font-size: var(--input-font);
             }
         }
         &.mat-button-toggle-checked {

@@ -220,23 +220,7 @@
                     <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
             </div>
-            <button
-                [disabled]="selectedFilters.length === 0"
-                mat-button
-                class="button-primary reset-button"
-            >
-                <mat-icon
-                    class="material-symbols-outlined"
-                    aria-hidden="false"
-                    aria-label="remove icon"
-                    fontIcon="delete_sweep"
-                ></mat-icon>
-                <p>remove all filters</p>
-            </button>
-            <!-- <p class="chip-grid-title">choosed filters</p>
-            <div class="divider"></div> -->
-            <!-- <mat-chip-grid #chipGrid aria-label="filters selected"> -->
-            <!-- <div class="chip-grid">
+            <div class="filters-container">
                 @for (chip of selectedFilters; track chip; let i = $index) {
                 <mat-chip-row
                     [ngClass]="[
@@ -257,8 +241,21 @@
                     </button>
                 </mat-chip-row>
                 }
-            </div> -->
-            <!-- </mat-chip-grid> -->
+            </div>
+            <button
+                [disabled]="selectedFilters.length === 0"
+                mat-button
+                class="button-primary reset-button"
+                (click)="removeAllFilters()"
+            >
+                <mat-icon
+                    class="material-symbols-outlined"
+                    aria-hidden="false"
+                    aria-label="remove icon"
+                    fontIcon="delete_sweep"
+                ></mat-icon>
+                <p>remove all filters</p>
+            </button>
         </div>
     </form>
 </ng-template>

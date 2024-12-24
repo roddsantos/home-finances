@@ -9,17 +9,28 @@
     width: 100%;
 }
 
+.bill-container {
+    width: 100%;
+}
+
+.bill-list-container {
+    display: flex;
+    flex-direction: row;
+}
+
 .bill-list {
     margin-top: 20px;
     display: grid;
     grid-template-columns: repeat(3, 32%);
+    grid-template-rows: max-content;
     gap: 2%;
     row-gap: 20px;
+    width: 100%;
 }
 
 .bill-item {
     width: 100%;
-    min-height: 150px;
+    height: fit-content;
     background-color: var(--bh);
     border-radius: var(--border-radius);
     border: var(--border-width) solid var(--bh);

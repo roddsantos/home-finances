@@ -229,6 +229,10 @@ export class DialogCustomList implements OnInit {
             this[removed[0].identifier].nativeElement.disabled = false;
     }
 
+    removeAllFilters() {
+        this.selectedFilters = [];
+    }
+
     onSubmit() {
         let countMonths = 0;
         let countYears = 0;
