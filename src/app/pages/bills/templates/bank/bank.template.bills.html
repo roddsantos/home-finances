@@ -1,40 +1,42 @@
-<div class="bill-container-bank" (click)="openDetails(data, $event)">
-    <div [ngClass]="['bank-container', isLineTheme]">
-        <mat-icon
-            class="material-symbols-outlined card-icon"
-            aria-hidden="false"
-            aria-label="icon"
-            fontIcon="payments"
-        ></mat-icon>
-        <p class="bank-name">{{data.bank1?.name}}</p>
-    </div>
-    <div [ngClass]="['bank-category', isLineTheme]">
-        <mat-icon
-            class="material-symbols-outlined bank-icon"
-            aria-hidden="false"
-            aria-label="icon"
-            [fontIcon]="data.category.icon"
-        ></mat-icon>
-        <p class="bank-name">{{data.category.name}}</p>
-    </div>
-    <actions
-        class="bank-buttons"
-        [vertical]="true"
-        [transparent]="false"
-        [data]="data"
-        [actions]="actions"
-    ></actions>
-    <p class="title">{{ data.name }}</p>
-    <p class="description">{{ data.description }}</p>
+<div class="bill-container-item" (click)="openDetails(data, $event)">
     <div [ngClass]="['date-container', dateLeft, isLineTheme]">
         <mat-icon
-            class="material-symbols-outlined card-icon"
+            class="material-symbols-outlined date-icon"
             aria-hidden="false"
             aria-label="icon"
             fontIcon="event"
         ></mat-icon>
         <p>{{(data.settled ? data.paid : data.due) | date: "mediumDate"}}</p>
     </div>
+    <div class="bill-tags">
+        <div [ngClass]="['type-container', 'bank', isLineTheme]">
+            <mat-icon
+                class="material-symbols-outlined type-icon"
+                aria-hidden="false"
+                aria-label="icon"
+                fontIcon="payments"
+            ></mat-icon>
+            <p class="type-name">{{data.bank1?.name}}</p>
+        </div>
+        <div [ngClass]="['category-container','bank', isLineTheme]">
+            <mat-icon
+                class="material-symbols-outlined category-icon"
+                aria-hidden="false"
+                aria-label="icon"
+                [fontIcon]="data.category.icon"
+            ></mat-icon>
+            <p class="category-name">{{data.category.name}}</p>
+        </div>
+    </div>
+    <actions
+        class="bill-buttons"
+        [vertical]="true"
+        [transparent]="false"
+        [data]="data"
+        [actions]="actions"
+    ></actions>
+    <h3 class="title">{{ data.name }}</h3>
+    <p class="description">{{ data.description }}</p>
     <div class="value-container">
         <div class="parcel"><p>$</p></div>
         <p class="value">{{data.total | currency: "R$ "}}</p>

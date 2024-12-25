@@ -1,6 +1,6 @@
 import { DIALOG_DATA } from "@angular/cdk/dialog";
-import { CommonModule, CurrencyPipe, DatePipe } from "@angular/common";
-import { Component, inject, Inject, OnInit } from "@angular/core";
+import { CommonModule, DatePipe } from "@angular/common";
+import { Component, inject, Inject } from "@angular/core";
 import { ModalComponent } from "../modal.component";
 import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { ViewItemModalType } from "src/app/core/types/modal";
@@ -10,6 +10,7 @@ import { TemplateCreditCard } from "./templates/credit-card/credit-card.template
 import { TemplateBank } from "./templates/bank/bank.template";
 import { TemplateBill } from "./templates/bill/bill.template";
 import { MatIconModule } from "@angular/material/icon";
+import { GeneralState } from "src/app/core/subjects/subjects.general";
 
 @Component({
     selector: "modal-view-item",
@@ -29,6 +30,7 @@ import { MatIconModule } from "@angular/material/icon";
 })
 export class ModalViewItem {
     public modalState = inject(ModalState);
+    public generalState = inject(GeneralState);
     public style = getComputedStyle(document.body);
     public defaultColor = this.style.getPropertyValue("--default");
     constructor(@Inject(DIALOG_DATA) public data: ViewItemModalType) {

@@ -15,13 +15,14 @@ import { ROUTES } from "src/utils/route";
 import { ModalNewCreditCard } from "src/app/components/modal/new-credit-card/new-credit-card.modal";
 import { Dialog } from "@angular/cdk/dialog";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
+import { CreditCardPipe } from "src/utils/pipes/creditCard";
 
 @Component({
     selector: "page-credit-cards",
     templateUrl: "./pages.credit-cards.html",
     styleUrls: ["./pages.credit-cards.css"],
     standalone: true,
-    imports: [FeedbackContainerComponent, CommonModule, ActionsComponent],
+    imports: [FeedbackContainerComponent, CommonModule, ActionsComponent, CreditCardPipe],
 })
 export class PageCreditCards {
     public ccState = inject(CreditCardState);
@@ -35,11 +36,15 @@ export class PageCreditCards {
     public ccApi = inject(ServiceCreditCard);
 
     public style = getComputedStyle(document.body);
+    public bhColor = this.style.getPropertyValue("--bh");
+    public primaryColor = this.style.getPropertyValue("--primary");
+    public secondaryColor = this.style.getPropertyValue("--secondary");
     public errorColor = this.style.getPropertyValue("--error");
     public successColor = this.style.getPropertyValue("--success");
     public infoColor = this.style.getPropertyValue("--info");
     public actualPage = window.location.pathname;
     public page = ROUTES.find((r) => r.page === this.actualPage);
+    public theme = "default";
 
     actions: ActionItem[] = [
         {
@@ -81,6 +86,9 @@ export class PageCreditCards {
 
     ngOnInit() {
         this.ccState.setAction(() => this.onReload());
+        this.generalState.theme$.subscribe({
+            next: (theme) => (this.theme = theme),
+        });
     }
 
     onReload() {

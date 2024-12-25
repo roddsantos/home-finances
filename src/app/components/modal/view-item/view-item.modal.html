@@ -18,7 +18,10 @@
         </div>
     </div>
     <ng-container *ngIf="data.item.sector === 'credit-card'">
-        <template-view-credit-card [creditCard]="data.item" />
+        <template-view-credit-card
+            [creditCard]="data.item"
+            [theme]="(generalState.theme$ | async)!"
+        />
     </ng-container>
     <ng-container *ngIf="data.item.sector === 'bank'">
         <template-view-bank [bank]="data.item" />
