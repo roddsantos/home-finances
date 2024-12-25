@@ -14,7 +14,7 @@ import { MatInputModule } from "@angular/material/input";
 import { FormsModule } from "@angular/forms";
 import { User } from "src/app/core/types/objects";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
-import { ServiceUser } from "src/app/services/user.service";
+import { UserService } from "src/app/services/user.service";
 import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { UserState } from "src/app/core/subjects/subjects.user";
 import { AsyncPipe } from "@angular/common";
@@ -33,7 +33,7 @@ export interface DialogData {
 })
 export class ModalProfile implements OnInit {
     private storage = inject(LocalStorageService);
-    private userService = inject(ServiceUser);
+    private userService = inject(UserService);
     public modalState = inject(ModalState);
     public userState = inject(UserState);
     private snack = inject(CustomSnackbarComponent);

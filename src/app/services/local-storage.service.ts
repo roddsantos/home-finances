@@ -1,5 +1,4 @@
 import { inject, Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
 import { User } from "src/app/core/types/objects";
 import { ThemeType } from "src/app/core/types/general";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
@@ -10,7 +9,7 @@ import { GeneralState } from "src/app/core/subjects/subjects.general";
 export class LocalStorageService {
     public generalState = inject(GeneralState);
 
-    setUser(user: Object) {
+    setUser(user: User) {
         let str = JSON.stringify(user);
         localStorage.setItem("user", str);
     }

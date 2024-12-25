@@ -39,6 +39,13 @@
     &.binary {
         border: solid var(--border-width) var(--secondary);
     }
+    @media screen and (max-width: 1366px) {
+        grid-template-areas:
+            "cc-color cc-title-container cc-title-container cc-title-container"
+            "cc-description cc-description cc-description cc-buttons"
+            "cc-month cc-month cc-month cc-buttons"
+            "cc-invoice cc-invoice cc-flag cc-flag";
+    }
 
     /* &:hover {
           border-width: 3px 3px 8px 3px;
@@ -135,6 +142,16 @@
             color: var(--text-2);
             font-size: 1rem;
             font-weight: normal;
+        }
+    }
+
+    @media screen and (max-width: 1366px) {
+        & .limit {
+            display: flex;
+            flex-direction: column;
+            & .left {
+                font-size: 1.25rem;
+            }
         }
     }
 }

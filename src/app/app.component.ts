@@ -6,6 +6,7 @@ import { ServiceCategory } from "./services/category.service";
 import { CustomFilterState } from "./components/custom-filter/custom-filter.subjects.component";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ThemeType } from "src/app/core/types/general";
+import { UserService } from "./services/user.service";
 
 @Component({
     selector: "app-root",
@@ -20,6 +21,7 @@ export class AppComponent {
     public catState = inject(CategoryState);
     public catService = inject(ServiceCategory);
     public filterState = inject(CustomFilterState);
+    public userService = inject(UserService);
 
     title = "bills-app";
     theme = this.storage.getTheme();

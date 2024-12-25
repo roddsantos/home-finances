@@ -26,13 +26,21 @@
     column-gap: 0.5rem;
     flex-direction: row;
     width: 100%;
-    height: 120px;
+    min-height: 120px;
     padding: 20px;
     border-radius: 10px;
     background-color: var(--bh);
     border: solid var(--border-width) var(--bh);
     z-index: 2;
     cursor: pointer;
+    @media screen and (max-width: 1366px) {
+        grid-template-areas:
+            "category-color category-title category-title"
+            "category-description category-description category-description"
+            "category-icon category-buttons category-buttons";
+        grid-template-columns: 1fr 12fr 2fr;
+        grid-template-rows: 1fr 1fr 1fr;
+    }
 
     &.binary {
         border: solid var(--border-width) var(--secondary);
@@ -69,6 +77,11 @@
 .category-buttons {
     grid-area: category-buttons;
     display: none;
+    justify-content: center;
+    align-items: center;
+    @media screen and (max-width: 1366px) {
+        margin: auto 0px;
+    }
 }
 
 .category-container:hover .category-buttons {
@@ -81,4 +94,8 @@
 
 .category-icon {
     margin: auto 0px auto auto;
+    color: var(--text-1);
+    font-size: 2rem;
+    width: max-content;
+    height: max-content;
 }

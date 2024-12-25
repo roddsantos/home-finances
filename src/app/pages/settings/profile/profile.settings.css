@@ -56,6 +56,10 @@
     }
 }
 
+.update {
+    margin-right: 1rem;
+}
+
 .logout {
     width: 100px;
     border: solid 1px var(--error);

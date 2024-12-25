@@ -1,12 +1,15 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { ListStatus } from "src/app/core/types/general";
 import { User } from "src/app/core/types/objects";
+import { LocalStorageService } from "src/app/services/local-storage.service";
 
 @Injectable({
     providedIn: "root",
 })
 export class UserState {
+    private storageService = inject(LocalStorageService);
+
     private _user$ = new BehaviorSubject<User | null>(null);
     private _status$ = new BehaviorSubject<ListStatus>("empty");
 
@@ -19,5 +22,11 @@ export class UserState {
 
     setUser(u: User | null) {
         this._user$.next(u);
+        if (u !== null) this.storageService.setUser(u);
+    }
+
+    remove() {
+        this._user$.next(null);
+        this.storageService.removeUser();
     }
 }
