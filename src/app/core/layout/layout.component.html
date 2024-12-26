@@ -29,11 +29,9 @@
         >
             <mat-icon
                 [ngClass]="{
-                    'material-symbols-outlined': '/' !== (generalState.page$ | async),
                     'home-icon': true,
-                    'icon-route':
-                        '/' !== (generalState.page$ | async) &&
-                        (generalState.theme$ | async) !== 'binary'
+                    'material-symbols-outlined': '/' !== (generalState.page$ | async),
+                    binary: (generalState.theme$ | async) === 'binary'
                 }"
                 aria-hidden="false"
                 aria-label="Example home icon"
@@ -42,7 +40,7 @@
             <span
                 [ngClass]="{
                     'home-title': true,
-                    'background-color': (generalState.theme$ | async) !== 'binary'
+                    binary: (generalState.theme$ | async) === 'binary'
                 }"
                 >finances</span
             >

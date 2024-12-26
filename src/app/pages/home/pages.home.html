@@ -5,6 +5,7 @@
             id="home-date"
             class="home-date"
             [title]="(date | date :'EEEE')?.toLowerCase()"
+            [backgroundColor]="thirdColor"
         >
             <p class="month">{{(date | date :'MMM')?.toLowerCase()}}</p>
             <h1 class="day">{{date | date :'d'}}</h1></card-component

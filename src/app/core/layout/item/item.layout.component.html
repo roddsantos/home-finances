@@ -2,29 +2,28 @@
     *ngIf="page !== '/'"
     [ngClass]="{
         'item-container': true,
-        'item-selected': page === (generalState.page$ | async),
-        top: '/settings' === page
+        'item-selected': item.page === (generalState.page$ | async),
+        top: item.page === '/settings'
     }"
-    [style.backgroundColor]="
-        page !== (generalState.page$ | async) || !isLineThemed ? 'transparent' : secColor
+    [style.borderColor]="
+        'binary' === (generalState.theme$ | async) ? text1Color : 'transparent'
     "
-    [style.borderColor]="page === (generalState.page$ | async) ? secColor : 'transparent'"
     (click)="onClickItem(page)"
 >
     <mat-icon
         [ngClass]="{
-            'material-symbols-outlined': page !== (generalState.page$ | async),
             'item-icon': true,
-            'icon-route': page !== (generalState.page$ | async) && isLineThemed
+            'material-symbols-outlined': item.page !== (generalState.page$ | async),
+            'item-selected': item.page === (generalState.page$ | async),
         }"
         aria-hidden="false"
         aria-label="Example home icon"
-        fontIcon="{{ icon }}"
+        [fontIcon]="icon"
     ></mat-icon>
     <span
         [ngClass]="{
             'item-title': true,
-            'background-color': isLineThemed
+            'item-selected': item.page === (generalState.page$ | async),
         }"
         >{{ title }}</span
     >

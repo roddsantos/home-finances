@@ -115,14 +115,18 @@
 
 .home-title {
     font-weight: bold;
-    font-family: Helvetica, sans-serif;
-    color: var(--text-1);
+    font-family: Ougkeh-Regular;
+    text-decoration: underline;
+    color: var(--primary);
     font-size: 1.4rem;
     margin: auto auto auto 10px;
+    &.binary {
+        color: var(--secondary);
+    }
 }
 
 .home-icon {
-    color: var(--third);
+    color: var(--primary);
     height: auto;
     width: 60px;
     font-size: 3.1rem;

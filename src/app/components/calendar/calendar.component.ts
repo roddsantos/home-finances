@@ -52,6 +52,7 @@ export class CalendarComponent implements OnChanges {
     public thirdColor = this.style.getPropertyValue("--third");
     public errorColor = this.style.getPropertyValue("--error");
     public infoColor = this.style.getPropertyValue("--info");
+    public disabledColor = this.style.getPropertyValue("--disabled");
 
     public monthBillsSubscriber: Subscription;
     public creditCardSubscriber: Subscription;

@@ -1,15 +1,13 @@
 <div
     id="card-{{ id }}"
     class="card"
-    [style.background]="
-        actualTheme === 'binary'
-            ? '#000000'
-            : options?.backgroundColor || backgroundHighlighter
+    [style.backgroundColor]="
+        actualTheme === 'binary' ? '#000000' : backgroundColor || backgroundHighlighter
     "
     [style.borderColor]="
         border || actualTheme === 'binary'
             ? secondary
-            : options?.backgroundColor || backgroundHighlighter
+            : backgroundColor || backgroundHighlighter
     "
 >
     <div
@@ -64,9 +62,7 @@
     [style.backgroundColor]="
         border
             ? 'transparent'
-            : (options?.backgroundColor || backgroundHighlighter | color : 'darker')
+            : (backgroundColor || backgroundHighlighter | color : 'darker')
     "
-    [style.borderColor]="
-        options?.backgroundColor || backgroundHighlighter | color : 'darker'
-    "
+    [style.borderColor]="backgroundColor || backgroundHighlighter | color : 'darker'"
 ></div>

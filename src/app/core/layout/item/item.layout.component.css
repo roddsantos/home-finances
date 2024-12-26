@@ -12,11 +12,6 @@
     }
 }
 
-.item-selected {
-    border: solid var(--border-width) var(--primary);
-    border-radius: 10px;
-}
-
 .item-title {
     font-size: 0.875rem;
     font-weight: bold;
@@ -25,8 +20,14 @@
     margin: auto auto auto 8px;
 }
 
+.item-selected {
+    color: var(--text-3);
+    background-color: var(--primary);
+    border: solid var(--border-width) var(--primary);
+    border-radius: var(--border-radius);
+}
+
 .item-icon {
-    color: var(--text-1);
     height: auto;
     width: 30px;
     font-size: 20px;
@@ -35,6 +36,10 @@
     &.profile {
         margin: auto 0px;
     }
+}
+
+.icon-selected {
+    color: var(--text-3);
 }
 
 .top {

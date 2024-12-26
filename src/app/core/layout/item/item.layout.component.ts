@@ -4,7 +4,7 @@ import { RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
-import { RouteItemType, RoutesType, ThemeType } from "src/app/core/types/general";
+import { RouteItemType, RoutesType } from "src/app/core/types/general";
 
 @Component({
     standalone: true,
@@ -26,7 +26,9 @@ export class ItemLayoutComponent {
     public style = getComputedStyle(document.body);
     public isLineThemed: boolean = false;
     public secondaryColor = this.style.getPropertyValue("--secondary");
-    public secColor = this.style.getPropertyValue("--secondary");
+    public primaryColor = this.style.getPropertyValue("--primary");
+    public text1Color = this.style.getPropertyValue("--text-1");
+    public text3Color = this.style.getPropertyValue("--text-3");
 
     constructor() {
         this.generalState.theme$.subscribe({

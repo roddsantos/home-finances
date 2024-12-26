@@ -46,11 +46,6 @@
             "cc-month cc-month cc-month cc-buttons"
             "cc-invoice cc-invoice cc-flag cc-flag";
     }
-
-    /* &:hover {
-          border-width: 3px 3px 8px 3px;
-          min-height: 205px;
-      } */
 }
 
 .cc-highlighter {
@@ -90,7 +85,7 @@
         height: max-content;
         border-radius: var(--border-radius);
         margin: auto 0px auto auto;
-        color: var(--text-3);
+        color: var(--background);
         padding: 4px 8px;
     }
 }
