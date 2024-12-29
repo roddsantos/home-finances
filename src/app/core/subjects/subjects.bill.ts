@@ -25,10 +25,12 @@ export class BillState {
         limit: 10,
         total: 0,
     });
+    private _billVisualization$ = new BehaviorSubject<"list" | "grid">("grid");
 
     public readonly status$ = this._status$.asObservable();
     public readonly bills$ = this._bills$.asObservable();
     public readonly billsPagination$ = this._billsPagination$.asObservable();
+    public readonly billVisualization$ = this._billVisualization$.asObservable();
 
     changeStatus(variant: FeedbackVariant, title: string) {
         this._status$.next({ ...this._status$.getValue(), variant, title });
@@ -83,5 +85,9 @@ export class BillState {
 
     autoPage(increase: boolean) {
         this.setPage(this._billsPagination$.getValue().page + 1 * (increase ? 1 : -1));
+    }
+
+    changeVisualization(visualization: "list" | "grid") {
+        this._billVisualization$.next(visualization);
     }
 }

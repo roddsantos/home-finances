@@ -1,4 +1,7 @@
-<div class="bill-container-item" (click)="openDetails(data, $event)">
+<div
+    [ngClass]="['bill-container-item', billState.billVisualization$ | async]"
+    (click)="openDetails(data, $event)"
+>
     <div [ngClass]="['date-container', dateLeft, isLineTheme]">
         <mat-icon
             class="material-symbols-outlined date-icon"
@@ -30,7 +33,7 @@
     </div>
     <actions
         class="bill-buttons"
-        [vertical]="true"
+        [vertical]="(billState.billVisualization$ | async) === 'grid'"
         [transparent]="false"
         [data]="data"
         [actions]="actions"

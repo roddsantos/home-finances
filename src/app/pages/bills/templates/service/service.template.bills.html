@@ -1,4 +1,7 @@
-<div class="bill-container-item" (click)="openDetails(data, $event)">
+<div
+    [ngClass]="['bill-container-item', billsState.billVisualization$ | async]"
+    (click)="openDetails(data, $event)"
+>
     <div class="bill-tags">
         <div [ngClass]="['type-container', 'company', isLineTheme]">
             <mat-icon
@@ -30,6 +33,13 @@
         ></mat-icon>
         <p>{{(data.settled ? data.paid : data.due) | date: "mediumDate"}}</p>
     </div>
+    <actions
+        class="bill-buttons"
+        [vertical]="(billsState.billVisualization$ | async) === 'grid'"
+        [transparent]="false"
+        [data]="data"
+        [actions]="actions"
+    ></actions>
     <div class="value-container">
         <div class="parcel"><p>{{data.parcel + 1}}</p></div>
         <p class="value">{{data.totalParcel | currency: "R$ "}}</p>

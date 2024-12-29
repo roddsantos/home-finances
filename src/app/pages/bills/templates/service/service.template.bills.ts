@@ -6,6 +6,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ModalEditBill } from "src/app/components/modal/edit-bill/edit-bill.modal";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
+import { BillState } from "src/app/core/subjects/subjects.bill";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ActionItem } from "src/app/core/types/components";
 import { Bill, BillData } from "src/app/core/types/objects";
@@ -18,6 +19,7 @@ import { Bill, BillData } from "src/app/core/types/objects";
     imports: [CommonModule, MatExpansionModule, ActionsComponent, MatIconModule],
 })
 export class ServiceTemplateMonthly {
+    public billsState = inject(BillState);
     public dialog = inject(Dialog);
     public general = inject(GeneralState);
     @Input() data: Bill & BillData;
