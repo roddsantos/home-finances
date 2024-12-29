@@ -112,7 +112,7 @@
 .value {
     font-weight: normal;
     font-size: 16px;
-    color: var(--description);
+    color: var(--text-2);
 }
 
 .width-50 {
@@ -188,6 +188,7 @@
     & .date-icon {
         font-size: 1rem;
         height: auto;
+        color: var(--text-1);
     }
     &.late {
         border: var(--border-width) solid var(--error);
@@ -240,6 +241,9 @@
     border-style: solid;
     border-width: var(--border-width);
     border-radius: var(--border-radius);
+    & .type-icon {
+        color: var(--text-1);
+    }
     &.credit-card {
         border-color: var(--credit-card);
         background-color: var(--credit-card);
@@ -273,6 +277,9 @@
     border-width: var(--border-width);
     border-radius: var(--border-radius);
     margin: auto 0.75rem;
+    & .category-icon {
+        color: var(--text-1);
+    }
     &.credit-card {
         border-color: var(--credit-card);
         background-color: var(--credit-card);

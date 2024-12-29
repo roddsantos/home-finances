@@ -9,16 +9,16 @@
     width: 30%;
     min-height: 180px;
     height: 180px;
-    border: solid 1px var(--border);
+    border: solid 1px var(--border-color);
     margin: 10px;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     cursor: pointer;
 
     &.selected {
-        border: solid 6px var(--border);
+        border: solid 6px var(--border-color);
         & .type-icon {
-            color: var(--border);
+            color: var(--text-1);
         }
     }
 }
@@ -67,16 +67,16 @@
     width: 100px;
     height: 100px;
     font-size: 100px;
-    color: var(--border);
+    color: var(--text-1);
 }
 
 .type-name {
     font-size: 18px;
-    color: var(--title);
+    color: var(--text-1);
 }
 
 .type-description {
     /* transition: all 0.5s; */
     font-size: 14px;
-    color: var(--description);
+    color: var(--text-2);
 }

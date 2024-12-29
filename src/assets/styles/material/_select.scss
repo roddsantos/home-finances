@@ -3,8 +3,12 @@
         height: calc(1.4 * var(--input-unit)) !important;
         & .mat-mdc-select-trigger {
             height: calc(1.4 * var(--input-unit)) !important;
+            & .mat-mdc-select-arrow-wrapper .mat-mdc-select-arrow {
+                color: var(--text-1) !important;
+            }
             & .mat-mdc-select-value {
                 font-size: var(--input-font) !important;
+                color: var(--text-1);
                 & .mat-mdc-select-placeholder {
                     font-size: var(--input-font) !important;
                 }

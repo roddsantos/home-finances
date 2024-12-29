@@ -64,7 +64,7 @@
     grid-area: bank-description;
     font-weight: normal;
     font-size: 14px;
-    color: var(--description);
+    color: var(--text-2);
     margin: auto 0px;
     width: 50%;
 }

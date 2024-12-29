@@ -6,7 +6,9 @@
         top: item.page === '/settings'
     }"
     [style.borderColor]="
-        'binary' === (generalState.theme$ | async) ? text1Color : 'transparent'
+        'binary' === (generalState.theme$ | async)
+            ? (generalState.themeObject$ | async)!['--secondary']
+            : 'transparent'
     "
     (click)="onClickItem(page)"
 >

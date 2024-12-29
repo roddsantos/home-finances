@@ -172,16 +172,6 @@ export class LayoutComponent implements OnChanges {
         dialogRef.closed.subscribe();
     }
 
-    toggleDarkMode() {
-        document.body.classList.toggle("dark-theme");
-    }
-
-    changeLayout(layout: ThemeType) {
-        document.body.className = "";
-        document.body.className = layout === "default" ? "" : layout;
-        this.storage.setTheme(layout);
-    }
-
     onLogout() {
         this.storage.removeUser();
         this.modal.close();
