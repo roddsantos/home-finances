@@ -29,10 +29,9 @@
         >
             <mat-icon
                 [ngClass]="{
-                    'material-symbols-outlined': '/' !== actualPage,
                     'home-icon': true,
-                    'icon-route':
-                        '/' !== actualPage && (generalState.theme$ | async) !== 'binary'
+                    'material-symbols-outlined': '/' !== (generalState.page$ | async),
+                    binary: (generalState.theme$ | async) === 'binary'
                 }"
                 aria-hidden="false"
                 aria-label="Example home icon"
@@ -41,7 +40,7 @@
             <span
                 [ngClass]="{
                     'home-title': true,
-                    'background-color': (generalState.theme$ | async) !== 'binary'
+                    binary: (generalState.theme$ | async) === 'binary'
                 }"
                 >finances</span
             >
@@ -50,7 +49,6 @@
             class="item"
             *ngFor="let item of items"
             [item]="item"
-            [actualPage]="actualPage"
             (onClick)="onChangeRoute($event)"
         />
         <!-- <div class="icon-container">

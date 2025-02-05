@@ -1,7 +1,30 @@
 <div class="bills">
     <div class="bills-header">
         <h1 class="page-title">bills</h1>
-        <pagination-template [style.margin]="'auto 0px auto auto'"></pagination-template>
+        <button
+            aria-label="bills list visualization"
+            matTooltip="list visualization"
+            matTooltipPosition="above"
+            mat-button
+            [ngClass]="[(billState.billVisualization$ | async) === 'list' ? 'button-primary' : 'button-secondary']"
+            [style.margin]="'auto 0.5rem auto auto'"
+            (click)="billState.changeVisualization('list')"
+        >
+            <mat-icon class="material-symbols-outlined">view_list</mat-icon>
+        </button>
+        <button
+            aria-label="bills grid visualization"
+            matTooltip="grid visualization"
+            matTooltipPosition="above"
+            mat-button
+            [style.margin]="'auto 0px auto 0px'"
+            [ngClass]="[(billState.billVisualization$ | async) === 'grid' ? 'button-primary' : 'button-secondary']"
+            (click)="billState.changeVisualization('grid')"
+        >
+            <mat-icon class="icon material-symbols-outlined">grid_view</mat-icon>
+        </button>
+
+        <pagination-template [style.margin]="'auto 0px auto 1rem'"></pagination-template>
         <button
             *ngIf="!(generalState.filterContainer$ | async)"
             aria-label="open filter selector"
@@ -16,14 +39,17 @@
             <p>open filters</p>
         </button>
     </div>
-    <div class="monthly-container">
+    <div [ngClass]="['bill-container', billState.billVisualization$ | async]">
         <div class="bill-list-container">
-            <custom-filter></custom-filter>
             <feedback-container
+                [style.width]="'100%'"
                 *ngIf="(billState.bills$| async)?.length === 0"
                 [info]="(billState.status$ | async)!"
             ></feedback-container>
-            <div class="bill-list">
+            <div
+                [ngClass]="['bill-list', billState.billVisualization$ | async]"
+                *ngIf="(billState.bills$| async)!.length > 0"
+            >
                 <ng-template
                     ngFor
                     let-item
@@ -48,6 +74,7 @@
                     ></service-list-template>
                 </ng-template>
             </div>
+            <custom-filter></custom-filter>
         </div>
     </div>
 </div>

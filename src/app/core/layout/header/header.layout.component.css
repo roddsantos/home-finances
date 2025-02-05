@@ -1,5 +1,6 @@
 .header {
-    display: grid;
+    display: flex;
+    flex-direction: row;
     grid-template-areas: "header-search header-action header-notifications";
     grid-template-columns: 70% 25% 5%;
     width: 100%;
@@ -24,15 +25,16 @@
 
 .header-notifications {
     grid-area: header-notifications;
-    margin: auto;
+    margin: auto 0px auto 10px;
     position: relative;
     border: 0px;
-    height: 40px;
+    height: min-content;
     width: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 0px;
+    font-size: 1.5rem;
     & .icon {
         margin: auto;
         color: var(--third);
@@ -40,13 +42,14 @@
 }
 
 .header-action {
-    margin: auto;
+    margin: auto 0px auto auto;
     grid-area: header-action;
 }
 
 .header-input {
     & .mat-mdc-form-field-has-icon-prefix.mat-mdc-text-field-wrapper {
         background-color: var(--primary) !important;
+        color: var(--text-1);
     }
 }
 

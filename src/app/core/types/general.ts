@@ -28,7 +28,35 @@ export type OptionalKeys<T> = {
     [K in keyof T]-?: {} extends Pick<T, K> ? K : never;
 }[keyof T];
 
-export type ThemeType = "default" | "dark" | "binary";
+export type ThemeType = "default" | "dark" | "binary" | "pastel" | "dark-grey" | "blues";
+
+export type ThemeObjectType = {
+    title: string;
+    id: ThemeType;
+    description: string;
+    "--primary": string;
+    "--secondary": string;
+    "--third": string;
+    "--background": string;
+    "--bh": string;
+    "--text-1": string;
+    "--text-2": string;
+    "--text-3": string;
+    "--border-radius": string;
+    "--border-color": string;
+    "--border-width": string;
+    "--disabled": string;
+    "--error": string;
+    "--warning": string;
+    "--info": string;
+    "--success": string;
+    "--default": string;
+    "--credit-card": string;
+    "--bank": string;
+    "--company": string;
+    "--category": string;
+    "--bill": string;
+};
 
 export type RoutesType =
     | "/settings"
@@ -38,7 +66,8 @@ export type RoutesType =
     | "/categories"
     | "/bills"
     | "/dashboard"
-    | "/";
+    | "/"
+    | "";
 
 export type RouteItemType = {
     page: RoutesType;

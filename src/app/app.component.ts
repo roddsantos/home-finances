@@ -5,7 +5,9 @@ import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { ServiceCategory } from "./services/category.service";
 import { CustomFilterState } from "./components/custom-filter/custom-filter.subjects.component";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
-import { ThemeType } from "src/app/core/types/general";
+import { ThemeObjectType, ThemeType } from "src/app/core/types/general";
+import { UserService } from "./services/user.service";
+import { THEMES } from "src/utils/constants/general";
 
 @Component({
     selector: "app-root",
@@ -20,6 +22,7 @@ export class AppComponent {
     public catState = inject(CategoryState);
     public catService = inject(ServiceCategory);
     public filterState = inject(CustomFilterState);
+    public userService = inject(UserService);
 
     title = "bills-app";
     theme = this.storage.getTheme();
@@ -33,8 +36,16 @@ export class AppComponent {
         else this.filterState.setFilters([]);
 
         const theme = this.storage.getTheme();
-        this.generalState.changeTheme((theme || "default") as ThemeType);
         if (theme) {
+            const selectedTheme = THEMES.find((th) => th.id === theme);
+            this.generalState.changeTheme((theme || "default") as ThemeType);
+            this.generalState.changeThemeObject(selectedTheme!);
+            Object.keys(selectedTheme!).forEach((key) => {
+                document.documentElement.style.setProperty(
+                    key,
+                    selectedTheme![key as keyof ThemeObjectType]
+                );
+            });
             document.body.className = "";
             document.body.className = theme === "default" ? "" : theme;
         }

@@ -1,33 +1,21 @@
 import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
-import { ModalComponent } from "src/app/components/modal/modal.component";
-import { ModalProfile } from "src/app/components/modal/profile/profile.modal";
 import { RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
-import { RouteItemType, RoutesType, ThemeType } from "src/app/core/types/general";
-import { ColorPipe } from "src/utils/pipes/colors";
+import { RouteItemType, RoutesType } from "src/app/core/types/general";
 
 @Component({
     standalone: true,
     selector: "item-layout-component",
     templateUrl: "./item.layout.component.html",
     styleUrls: ["./item.layout.component.css"],
-    imports: [
-        ColorPipe,
-        MatIconModule,
-        ModalComponent,
-        ModalProfile,
-        RouterModule,
-        CommonModule,
-        MatTooltipModule,
-    ],
+    imports: [MatIconModule, RouterModule, CommonModule, MatTooltipModule],
 })
 export class ItemLayoutComponent {
     public generalState = inject(GeneralState);
     @Input() item: RouteItemType;
-    @Input() actualPage: string;
     @Output() onClick = new EventEmitter<RoutesType>();
 
     public page: RoutesType;
@@ -38,7 +26,9 @@ export class ItemLayoutComponent {
     public style = getComputedStyle(document.body);
     public isLineThemed: boolean = false;
     public secondaryColor = this.style.getPropertyValue("--secondary");
-    public secColor = this.style.getPropertyValue("--secondary");
+    public primaryColor = this.style.getPropertyValue("--primary");
+    public text1Color = this.style.getPropertyValue("--text-1");
+    public text3Color = this.style.getPropertyValue("--text-3");
 
     constructor() {
         this.generalState.theme$.subscribe({

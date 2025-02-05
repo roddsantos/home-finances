@@ -30,7 +30,9 @@
                     ? theme === 'binary'
                         ? infoColor
                         : primaryColor
-                    : date.thisMonth
+                    : !date.thisMonth
+                    ? disabledColor
+                    : date.events.length > 0
                     ? secondaryColor
                     : 'transparent'
             "

@@ -5,21 +5,36 @@
 .bills-header {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     width: 100%;
+}
+
+.bill-container {
+    width: 100%;
+}
+
+.bill-list-container {
+    display: flex;
+    flex-direction: row;
 }
 
 .bill-list {
     margin-top: 20px;
     display: grid;
-    grid-template-columns: repeat(3, 32%);
+    grid-template-rows: max-content;
     gap: 2%;
     row-gap: 20px;
+    width: 100%;
+    &.list {
+        grid-template-columns: repeat(1, 100%);
+    }
+    &.grid {
+        grid-template-columns: repeat(3, 32%);
+    }
 }
 
 .bill-item {
     width: 100%;
-    min-height: 150px;
+    height: fit-content;
     background-color: var(--bh);
     border-radius: var(--border-radius);
     border: var(--border-width) solid var(--bh);
@@ -101,7 +116,7 @@
 .value {
     font-weight: normal;
     font-size: 16px;
-    color: var(--description);
+    color: var(--text-2);
 }
 
 .width-50 {
@@ -139,4 +154,225 @@
 
 .binary {
     background-color: transparent !important;
+}
+
+.bill-container-item {
+    display: grid;
+    padding: 16px;
+    cursor: pointer;
+    grid-template-areas:
+        "date-container date-container date-container bill-buttons"
+        "title title title bill-buttons"
+        "description description description bill-buttons"
+        "bill-tags bill-tags bill-tags bill-buttons"
+        "value-container value-container value-container bill-buttons";
+    grid-template-rows: repeat(5, max-content);
+    grid-template-columns: 1.5fr 1fr 1fr 0.1fr;
+    row-gap: 4px;
+    @media screen and (max-width: 1500px) {
+        grid-template-areas:
+            "date-container date-container date-container bill-buttons"
+            "title title title bill-buttons"
+            "description description description bill-buttons"
+            "bill-tags bill-tags bill-tags bill-buttons"
+            "value-container value-container value-container bill-buttons";
+        grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr;
+    }
+    &.list {
+        grid-template-areas:
+            "title title bill-tags bill-tags date-container"
+            "description description value-container bill-buttons bill-buttons";
+        grid-template-rows: repeat(2, max-content);
+        grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+        row-gap: 4px;
+        @media screen and (max-width: 1500px) {
+            grid-template-areas:
+                "date-container date-container date-container bill-buttons"
+                "title title title bill-buttons"
+                "description description description bill-buttons"
+                "bill-tags bill-tags bill-tags bill-buttons"
+                "value-container value-container value-container bill-buttons";
+            grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr;
+        }
+        .bill-buttons {
+            grid-area: bill-buttons;
+            display: none;
+            margin: 0px auto;
+        }
+    }
+    &.grid {
+        width: 100%;
+        grid-template-areas:
+            "date-container date-container date-container bill-buttons"
+            "title title title bill-buttons"
+            "description description description bill-buttons"
+            "bill-tags bill-tags bill-tags bill-buttons"
+            "value-container value-container value-container bill-buttons";
+        grid-template-rows: repeat(5, max-content);
+        grid-template-columns: 1.5fr 1fr 1fr 0.1fr;
+        row-gap: 4px;
+        @media screen and (max-width: 1500px) {
+            grid-template-areas:
+                "date-container date-container date-container bill-buttons"
+                "title title title bill-buttons"
+                "description description description bill-buttons"
+                "bill-tags bill-tags bill-tags bill-buttons"
+                "value-container value-container value-container bill-buttons";
+            grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr;
+        }
+    }
+}
+
+.date-container {
+    grid-area: date-container;
+    display: flex;
+    align-items: center;
+    width: max-content;
+    height: fit-content;
+    padding: 0.25rem 8px;
+    border-radius: var(--border-radius);
+    font-size: 0.75rem;
+    & .date-icon {
+        font-size: 1rem;
+        height: auto;
+        color: var(--text-1);
+    }
+    &.late {
+        border: var(--border-width) solid var(--error);
+        background-color: var(--error);
+    }
+    &.settled {
+        border: var(--border-width) solid var(--success);
+        background-color: var(--success);
+    }
+    &.close {
+        border: var(--border-width) solid var(--warning);
+        background-color: var(--warning);
+    }
+}
+
+.value-container {
+    grid-area: value-container;
+    display: flex;
+    align-items: center;
+    margin: 0.5rem auto 0px 0px;
+    & .parcel {
+        border: 2px solid var(--text-1);
+        border-radius: var(--border-radius);
+        height: 25px;
+        padding: 0px 5px;
+        display: flex;
+        & p {
+            margin: auto;
+            color: var(--text-1);
+            font-weight: bold;
+        }
+        & h5 {
+            color: var(--text-2);
+        }
+    }
+    & .value {
+        margin-left: 10px;
+        color: var(--text-1);
+        font-weight: bold;
+    }
+}
+
+.type-container {
+    grid-area: card-container;
+    display: flex;
+    width: max-content;
+    align-items: center;
+    padding: 0.25rem 8px;
+    height: 30px;
+    border-style: solid;
+    border-width: var(--border-width);
+    border-radius: var(--border-radius);
+    & .type-icon {
+        color: var(--text-1);
+    }
+    &.credit-card {
+        border-color: var(--credit-card);
+        background-color: var(--credit-card);
+    }
+    &.bank {
+        border-color: var(--bank);
+        background-color: var(--bank);
+    }
+    &.company {
+        border-color: var(--company);
+        background-color: var(--company);
+    }
+    & .type-icon {
+        font-size: 1rem;
+        height: auto;
+    }
+    & .type-name {
+        color: var(--text-1);
+        font-size: 0.75rem;
+    }
+}
+
+.category-container {
+    grid-area: bank-category;
+    display: flex;
+    width: max-content;
+    align-items: center;
+    padding: 8px;
+    height: 30px;
+    border-style: solid;
+    border-width: var(--border-width);
+    border-radius: var(--border-radius);
+    margin: auto 0.75rem;
+    & .category-icon {
+        color: var(--text-1);
+    }
+    &.credit-card {
+        border-color: var(--credit-card);
+        background-color: var(--credit-card);
+    }
+    &.bank {
+        border-color: var(--bank);
+        background-color: var(--bank);
+    }
+    &.company {
+        border-color: var(--company);
+        background-color: var(--company);
+    }
+    & .category-icon {
+        font-size: 1rem;
+        height: auto;
+    }
+    & .category-name {
+        color: var(--text-1);
+        font-size: 0.75rem;
+    }
+}
+
+.bill-buttons {
+    grid-area: bill-buttons;
+    display: none;
+    margin-left: auto;
+    margin-right: 4px;
+}
+
+.title {
+    grid-area: title;
+    color: var(--text-1);
+    font-family: Open-Sans-Bold;
+}
+
+.description {
+    grid-area: description;
+    color: var(--text-2);
+}
+
+.bill-tags {
+    grid-area: bill-tags;
+    display: flex;
+    flex-direction: row;
+}
+
+.bill-container-item:hover .bill-buttons {
+    display: flex;
 }

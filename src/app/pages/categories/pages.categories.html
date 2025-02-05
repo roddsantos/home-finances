@@ -11,7 +11,8 @@
             *ngFor="let category of (categoryState.categories$ | async)"
         >
             <div
-                [ngClass]="['category-container', generalState.theme$ | async]"
+                class="category-container"
+                [ngClass]="[ generalState.theme$ | async]"
                 (click)="openDetails(category, $event)"
             >
                 <div

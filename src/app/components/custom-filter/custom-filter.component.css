@@ -33,6 +33,9 @@
 .filter-main {
     display: flex;
     flex-direction: column;
+    width: 300px;
+    margin-top: 20px;
+    margin-left: 2rem;
 }
 
 .filter-button-container {
@@ -49,12 +52,24 @@
 .filter-container {
     width: 100%;
     min-height: 100px;
+    padding: 0px 10px;
     background-color: var(--bh);
     border-radius: var(--border-radius);
     /* box-shadow: 2px 2px 4px 0px var(--text-3); */
     display: grid;
-    grid-template-areas: "filter-date divider-1 filter-status divider-2 filter-min-max divider-3 filter-type divider-4 filter-buttons";
-    grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px 0.5fr;
+    grid-template-areas:
+        "filter-date"
+        "divider-1"
+        "filter-status"
+        "divider-2"
+        "filter-min-max"
+        "divider-3"
+        "filter-type"
+        "filter-buttons"
+        "divider-4"
+        "filter-list";
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content 1px min-content 1px min-content 1px min-content min-content 1px max-content;
     &.binary {
         border: var(--border-width) solid var(--secondary);
     }
@@ -64,9 +79,9 @@
 .divider-2,
 .divider-3,
 .divider-4 {
-    height: 60px;
-    width: 2px;
-    background-color: var(--third);
+    height: 1px;
+    width: 100%;
+    background-color: var(--secondary);
     margin: auto;
 }
 
@@ -108,6 +123,7 @@
     row-gap: 3px;
     column-gap: 5px;
     grid-template-areas: "month-label month-label year-label" "month-input slash year-input";
+    grid-template-columns: repeat(3, min-content);
     grid-area: filter-date;
     & .month-label {
         grid-area: month-label;
@@ -115,6 +131,7 @@
     }
     & .month-input {
         grid-area: month-input;
+        width: 100px;
     }
     & .year-label {
         grid-area: year-label;
@@ -122,6 +139,7 @@
     }
     & .year-input {
         grid-area: year-input;
+        width: 100px;
     }
     & .slash {
         margin: 8px auto auto;
@@ -132,7 +150,8 @@
 .filter-status {
     display: grid;
     grid-area: filter-status;
-    row-gap: 3px;
+    height: fit-content;
+    row-gap: 6px;
     grid-template-areas: "status-label" "status-input";
     padding: 12px 16px;
 }
@@ -141,6 +160,7 @@
     display: grid;
     grid-area: filter-min-max;
     grid-template-areas: "min-label max-label" "min-input max-input";
+    grid-template-columns: repeat(2, min-content);
     column-gap: 5px;
     padding: 12px 16px;
     grid-template-columns: 1fr 1fr;
@@ -150,6 +170,7 @@
     }
     & .min-input {
         grid-area: min-input;
+        min-width: 100px;
     }
     & .max-label {
         grid-area: max-label;
@@ -157,6 +178,7 @@
     }
     & .max-input {
         grid-area: max-input;
+        min-width: 100px;
     }
 }
 
@@ -166,38 +188,36 @@
     grid-template-areas: "type-label" "type-input";
     padding: 12px 16px;
     row-gap: 3px;
+    & .type-input {
+        min-width: 200px;
+    }
 }
 
 .filter-buttons {
     grid-area: filter-buttons;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    & .icon-container {
-        display: flex;
-        cursor: pointer;
-        width: 2.4rem;
-        height: 2.4rem;
-        & mat-icon {
-            font-size: 1.6rem;
-            margin: auto;
-            color: var(--third);
+    flex-direction: row;
+    padding: 0px 16px 12px;
+    & .icon {
+        width: max-content;
+        font-size: 1.25rem;
+        color: var(--text-3);
+        margin: 0px;
+    }
+    & p {
+        font-size: 1rem;
+    }
+    & .remove {
+        margin-left: 1rem;
+        border: var(--border-width) solid var(--error);
+        & .icon {
+            color: var(--error);
+            margin: 0px;
         }
-        &.binary mat-icon {
-            color: var(--secondary);
-        }
     }
-    & .actions {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        width: 100%;
-    }
-    & .collapse {
-        cursor: pointer;
-        width: 2rem;
-        height: 2rem;
-        margin: 0px 0px 0px auto;
-        padding: 5px;
-    }
+}
+
+.filter-list {
+    display: block;
+    padding: 1rem 0.75rem;
 }

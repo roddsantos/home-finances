@@ -19,12 +19,35 @@
             [src]="'assets/images/'+creditCard.flag+'.svg'"
         />
     </div>
-    <div class="limit-container">
-        <h5>limit total</h5>
-        <h2>{{creditCard.limit | currency: "R$ "}}</h2>
+    <div class="invoice">
+        <h5>invoice</h5>
+        <div class="row">
+            <h1>{{creditCard.invoice | currency: "R$ "}}</h1>
+            <div
+                *ngIf="(creditCard | creditCard : 'status') !== 'current'"
+                class="status"
+                [style.backgroundColor]="(creditCard | creditCard : 'status') === 'paid' ? successColor : errorColor"
+            >
+                {{creditCard | creditCard : 'status'}}
+            </div>
+        </div>
     </div>
-    <div class="limit-left-container">
-        <h5>limit left</h5>
-        <h2>{{creditCard.limitLeft | currency: "R$ "}}</h2>
+
+    <div class="limit-container">
+        <h5>limit</h5>
+        <div class="numbers">
+            <h2>{{creditCard.limitLeft | currency: "R$ "}}/</h2>
+            <h2 class="limit">{{creditCard.limit | currency: "R$ "}}</h2>
+        </div>
+    </div>
+    <div
+        class="progress-container"
+        [style.borderColor]="theme === 'binary' ? secondaryColor : bhColor"
+    >
+        <div
+            class="bar"
+            [style.width]="(creditCard.limitLeft / creditCard.limit) * 100 + '%'"
+            [style.backgroundColor]="theme === 'binary' ? secondaryColor : primaryColor"
+        ></div>
     </div>
 </div>

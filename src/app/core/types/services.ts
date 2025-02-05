@@ -127,3 +127,10 @@ export type CreditCardDashboardType = {
         [month: number]: CreditCard | null;
     };
 };
+
+export type UserUpdateType = {
+    affected: number;
+    generatedMaps: any[];
+    raw: any[];
+    user: UserObject & { id: string };
+};

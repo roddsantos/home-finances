@@ -5,14 +5,15 @@ import { MatIconModule } from "@angular/material/icon";
 import { Router } from "@angular/router";
 import { CardComponent } from "src/app/components/card/card.component";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
+import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { HomeState } from "src/app/core/subjects/subjects.home";
 import { UserState } from "src/app/core/subjects/subjects.user";
 import { CardActionType } from "src/app/core/types/components";
 import { Bill, BillData } from "src/app/core/types/objects";
-import { SumAndCountData } from "src/app/core/types/services";
 import { ServiceBank } from "src/app/services/bank.service";
 import { ServiceBill } from "src/app/services/bill.service";
 import { ServiceCreditCard } from "src/app/services/credit-card.service";
+import { GeneralService } from "src/app/services/general.service";
 import { BillsPipe } from "src/utils/pipes/bills";
 
 @Component({
@@ -25,13 +26,24 @@ import { BillsPipe } from "src/utils/pipes/bills";
 export class PageHome {
     public userState = inject(UserState);
     public homeState = inject(HomeState);
+    public generalState = inject(GeneralState);
     public billService = inject(ServiceBill);
     public bankService = inject(ServiceBank);
     public creditCardService = inject(ServiceCreditCard);
+    private generalService = inject(GeneralService);
     public dialog = inject(Dialog);
 
     public date = new Date();
     public router = new Router();
+
+    public todayBills: (Bill & BillData)[] = [];
+    public theme = "default";
+    public style = getComputedStyle(document.body);
+    public primaryColor = this.style.getPropertyValue("--primary");
+    public secondaryColor = this.style.getPropertyValue("--secondary");
+    public thirdColor = this.style.getPropertyValue("--third");
+    public text1Color = this.style.getPropertyValue("--text-1");
+    public text3Color = this.style.getPropertyValue("--text-3");
 
     ngOnInit() {
         this.billService.getHomeInfo().subscribe({
@@ -51,8 +63,14 @@ export class PageHome {
         });
         this.billService.getRecentBills().subscribe({
             next: (data) => {
+                this.todayBills = data.bills.filter(
+                    (bill) => new Date(bill.due).getDate() === new Date().getDate()
+                );
                 this.homeState.updateRecentBills(data.bills);
             },
+        });
+        this.generalState.theme$.subscribe({
+            next: (theme) => (this.theme = theme),
         });
     }
 
@@ -60,7 +78,7 @@ export class PageHome {
         {
             icon: "north_east",
             tooltip: "go to bills",
-            action: () => this.router.navigate(["/bills"]),
+            action: () => this.generalService.navigateTo("/bills"),
         },
     ];
 
@@ -68,7 +86,15 @@ export class PageHome {
         {
             icon: "north_east",
             tooltip: "go to banks",
-            action: () => this.router.navigate(["/banks"]),
+            action: () => this.generalService.navigateTo("/banks"),
+        },
+    ];
+
+    public creditCardActions: CardActionType[] = [
+        {
+            icon: "north_east",
+            tooltip: "go to credit cards",
+            action: () => this.generalService.navigateTo("/credit-cards"),
         },
     ];
 

@@ -12,16 +12,16 @@
 
 .company-grid {
     display: grid;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: repeat(4, 25%);
     column-gap: 30px;
 }
 
 .company-container {
     display: grid;
     grid-template-areas:
-        "company-color company-title company-title"
+        "company-color company-title company-buttons"
         "company-description company-description company-buttons";
-    grid-template-columns: 1fr 12fr 6fr;
+    grid-template-columns: 1fr 12fr 1fr;
     flex-direction: row;
     column-gap: 0.5rem;
     width: 100%;
@@ -54,7 +54,7 @@
     grid-area: company-description;
     font-weight: normal;
     font-size: 14px;
-    color: var(--description);
+    color: var(--text-2);
     margin: auto 0px;
     width: 100%;
 }
@@ -68,6 +68,8 @@
 .company-buttons {
     grid-area: company-buttons;
     display: none;
+    justify-content: center;
+    align-items: center;
 }
 
 .company-container:hover .company-buttons {

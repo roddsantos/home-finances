@@ -8,128 +8,17 @@
 @import "../styles/layout/responsive";
 @import "../styles/layout/theme";
 @import "../styles/material/chip";
+@import "../styles/material/select";
 @import "../styles/material/snackbar";
 @import "../styles/material/tabs";
 @import "../styles/material/textfield";
 @import "../styles/material/toggle";
 
-:root .dark {
-    @include mat.all-component-themes(app-theme.$app-dark-theme);
-    --primary: #878cec;
-    --secondary: #4f1790;
-    --third: #8c2bdd;
-    --background: #030311;
-    --bh: #080831;
-
-    --border-radius: 10px;
-    --border-color: #878cec;
-    --border-width: 2px;
-
-    --text-1: #dddef9;
-    --text-2: #696996;
-    --text-3: #030311;
-
-    --disabled: #7a7a7a;
-
-    --error: #a01313;
-    --warning: #ca8215;
-    --info: #1346b4;
-    --success: #0d8844;
-    --default: #474141;
-
-    --credit-card: #a73f3f;
-    --bank: #1346b4;
-    --company: #622991;
-    --category: #2a8a8a;
-
-    --item-list: rgb(135, 147, 192);
-    --item-list-border: rgb(135, 147, 192);
-    --title: #e4e4e4;
-    --description: #ffe0e0;
-    --border: #8ea4d2ff;
-    --icon: var(--primary);
-}
-
 :root {
     @include mat.all-component-themes(app-theme.$app-light-theme);
-
-    --primary: #131876;
-    --secondary: #a76ee7;
-    --third: #8322d3;
-    --background: #ebe7ff;
-    --bh: #dcd4ff;
-
-    --border-radius: 10px;
-    --border-color: #131876;
-    --border-width: 2px;
-
-    --text-1: #000d55;
-    --text-2: #3c3e5c;
-    --text-3: #d5d6f1;
-
-    --disabled: #7c7c7c;
-
-    --error: #bb3232;
-    --warning: #b9882d;
-    --info: #0b3d9b;
-    --success: #248133;
-    --default: #474141;
-
-    --error-lighter: #df7575;
-    --warning-lighter: #d8b574;
-    --info-lighter: #4875ca;
-    --success-lighter: #87cc93;
-    --default-lighter: #9b9b9b;
-
-    --credit-card: #da3434;
-    --bank: #5c84da;
-    --company: #a369d3;
-    --category: #44acac;
-
-    --black: #000000;
-    --white: #ffffff;
-    --item-list: lightsteelblue;
-    --item-list-border: lightsteelblue;
-    --title: #222222;
-    --description: #535353;
-    --border: #6665dd;
-    --icon: var(--primary);
-}
-
-:root .binary {
-    @include mat.all-component-themes(app-theme.$app-binary-dark-theme);
-    --primary: #000000;
-    --secondary: #ffffff;
-    --third: #000000;
-    --background: #000000;
-    --bh: #000000;
-
-    --text-1: #ffffff;
-    --text-2: #ffffff;
-    --text-3: #ffffff;
-
-    --border-radius: 10px;
-    --border-color: #ffffff;
-    --border-width: 2px;
-
-    --title: #ffffff;
-    --description: #ffffff;
-    --border: #ffffff;
-    --icon: #ffffff;
-    --disabled: #7a7a7a;
-
-    --credit-card: #da3434;
-    --bank: #2d62d4;
-    --company: #8d33d6;
-    --category: #2cadad;
-
-    --error: #d34848;
-    --warning: #d89f36;
-    --info: #275ab9;
-    --success: #24b43c;
-    --default: #5f5959;
-    --item-list: #000000;
-    --item-list-border: #ffffff;
+    --input-unit: 1rem;
+    --input-position: 0.85rem;
+    --input-font: 0.75rem;
 }
 
 * {
@@ -143,7 +32,7 @@
     }
     &::-webkit-scrollbar-track {
         background-color: var(--background);
-        border: solid 1px var(--border);
+        border: solid 1px var(--border-color);
         border-radius: 3px;
     }
     &::-webkit-scrollbar-thumb {
@@ -187,9 +76,20 @@ body {
 .mat-mdc-form-field-error {
     color: var(--error) !important;
     caret-color: var(--error) !important;
+    font-size: var(--input-font);
 }
 
 .tab-container {
     width: 100%;
     min-height: 500px;
+}
+
+.binary {
+    & .material-symbols-outlined {
+        color: var(--secondary);
+    }
+}
+
+.material-symbols-outlined {
+    color: var(--third);
 }

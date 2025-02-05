@@ -1,7 +1,7 @@
 <div
     id="card-{{ id }}"
     class="card"
-    [style.background]="
+    [style.backgroundColor]="
         actualTheme === 'binary' ? '#000000' : backgroundColor || backgroundHighlighter
     "
     [style.borderColor]="
@@ -10,9 +10,15 @@
             : backgroundColor || backgroundHighlighter
     "
 >
-    <div class="card-header">
+    <div
+        class="card-header"
+        *ngIf="!hideHeader"
+        [style.height]="noDivisor ? '70px' : '50px'"
+    >
         <div class="card-data">
-            <h2 *ngIf="title">{{ title }}</h2>
+            <h2 *ngIf="title">
+                {{ title }}
+            </h2>
             <p *ngIf="description">{{ description }}</p>
         </div>
         <div class="card-actions" *ngIf="actions">
@@ -42,13 +48,13 @@
             </button>
         </div>
     </div>
-    <div class="card-divisor" *ngIf="!noDivisor"></div>
-    <div class="card-content">
+    <div class="card-divisor" *ngIf="!noDivisor && !hideHeader"></div>
+    <div class="card-content" [style.height]="hideHeader ? '100%' : 'calc(100% - 70px)'">
         <ng-content></ng-content>
     </div>
 </div>
 <div
-    *ngIf="shadow"
+    *ngIf="options?.shadow"
     class="card-shadow"
     [style.height]="cardHeight + 'px'"
     [style.width]="cardWidth + 'px'"
@@ -58,5 +64,5 @@
             ? 'transparent'
             : (backgroundColor || backgroundHighlighter | color : 'darker')
     "
-    [style.borderColor]="backgroundColor! | color : 'darker'"
+    [style.borderColor]="backgroundColor || backgroundHighlighter | color : 'darker'"
 ></div>

@@ -21,7 +21,6 @@
 
 .card-content {
     padding: 5px 0px;
-    height: calc(100% - 70px);
 }
 
 .card-divisor {
@@ -35,12 +34,12 @@
     display: grid;
     align-items: center;
     width: 100%;
-    height: 50px;
     grid-template-areas: "card-data card-actions";
     grid-template-columns: 5fr 1fr;
     & .card-data {
         & h2 {
             font: normal 1.5rem Open-Sans-Extra-Bold;
+            width: fit-content;
         }
     }
     & .card-actions {

@@ -1,16 +1,7 @@
 import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
-import {
-    FormControl,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from "@angular/forms";
-import { MatFormFieldControl, MatFormFieldModule } from "@angular/material/form-field";
-import { Bank, Company, CreditCard } from "src/app/core/types/objects";
-import { MatOption } from "@angular/material/core";
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatFormFieldModule } from "@angular/material/form-field";
 import { CommonModule } from "@angular/common";
-import { MatSelectModule } from "@angular/material/select";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { MatInputModule } from "@angular/material/input";
 import { BankState } from "src/app/core/subjects/subjects.bank";
@@ -21,12 +12,7 @@ import {
     UNNECESSARY_CC,
 } from "src/utils/constants/forms";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
-import {
-    BankBillForm,
-    CompanyBillForm,
-    ConfigForm,
-    ErrorsBillForm,
-} from "src/app/core/types/forms";
+import { ConfigForm } from "src/app/core/types/forms";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 
@@ -43,7 +29,6 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
         CommonModule,
         MatButtonToggleModule,
         MatDatepickerModule,
-        MatInputModule,
     ],
     exportAs: "templateConfig",
 })

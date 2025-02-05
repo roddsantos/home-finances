@@ -38,7 +38,7 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { ItemLayoutComponent } from "./item/item.layout.component";
 import { ROUTES } from "src/utils/route";
 import { HeaderLayoutComponent } from "./header/header.layout.component";
-import { ColorPipe } from "src/utils/pipes/colors";
+import { GeneralService } from "src/app/services/general.service";
 
 @Component({
     standalone: true,
@@ -48,8 +48,6 @@ import { ColorPipe } from "src/utils/pipes/colors";
     imports: [
         MatToolbarModule,
         MatIconModule,
-        ModalComponent,
-        ModalProfile,
         RouterModule,
         CommonModule,
         MatTooltipModule,
@@ -58,7 +56,6 @@ import { ColorPipe } from "src/utils/pipes/colors";
         MatSidenavModule,
         ItemLayoutComponent,
         HeaderLayoutComponent,
-        ColorPipe,
     ],
 })
 export class LayoutComponent implements OnChanges {
@@ -66,12 +63,16 @@ export class LayoutComponent implements OnChanges {
     @ViewChild(ModalProfile) profile: any;
     @Input() theme: string | null;
 
+    public generalState = inject(GeneralState);
+
+    constructor() {}
+
     public storage = inject(LocalStorageService);
     public dialog = inject(Dialog);
     public overlay = inject(Overlay);
     private snack = inject(CustomSnackbarComponent);
     public filtersState = inject(CustomFilterState);
-    public router = inject(Router);
+    private generalService = inject(GeneralService);
 
     public billApi = inject(ServiceBill);
     public billState = inject(BillState);
@@ -88,18 +89,14 @@ export class LayoutComponent implements OnChanges {
 
     public catApi = inject(ServiceCategory);
     public catState = inject(CategoryState);
-
-    public generalState = inject(GeneralState);
     public innerWidth: number;
 
-    actualPage = window.location.pathname;
     themeUsed: string | null;
     public style = getComputedStyle(document.body);
     public thirdColor = this.style.getPropertyValue("--third");
 
     onChangeRoute(route: RoutesType) {
-        this.actualPage = route;
-        this.router.navigate([route]);
+        this.generalService.navigateTo(route);
     }
 
     items: RouteItemType[] = ROUTES;
@@ -116,6 +113,7 @@ export class LayoutComponent implements OnChanges {
     }
 
     ngOnInit() {
+        this.generalState.changePage(window.location.pathname);
         this.billApi.getBills().subscribe({
             next: (bills) => {
                 if (bills.count === 0) this.billState.changeStatus("empty", "no bills");
@@ -172,16 +170,6 @@ export class LayoutComponent implements OnChanges {
         });
 
         dialogRef.closed.subscribe();
-    }
-
-    toggleDarkMode() {
-        document.body.classList.toggle("dark-theme");
-    }
-
-    changeLayout(layout: ThemeType) {
-        document.body.className = "";
-        document.body.className = layout === "default" ? "" : layout;
-        this.storage.setTheme(layout);
     }
 
     onLogout() {

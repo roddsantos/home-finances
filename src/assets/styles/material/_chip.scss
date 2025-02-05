@@ -2,7 +2,7 @@
     border-radius: 10px !important;
     /* border: solid 1px #ffffff; */
     & .mdc-evolution-chip__text-label {
-        font-size: 16px !important;
+        font-size: var(--input-font) !important;
         & .typebill.creditcard {
             color: #ffffff !important;
         }
@@ -23,9 +23,9 @@
     &.creditcard {
         &.binary {
             background-color: var(--background) !important;
-            border: solid 3px var(--description) !important;
+            border: solid 3px var(--text-2) !important;
         }
-        background-color: var(--description) !important;
+        background-color: var(--text-2) !important;
         & .mdc-evolution-chip__text-label {
             color: #ffffff !important;
         }

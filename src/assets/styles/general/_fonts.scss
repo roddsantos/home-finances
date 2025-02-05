@@ -31,6 +31,15 @@ p {
 }
 
 @font-face {
+    font-family: "Ougkeh-Round-Regular";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: local("OugkehRoundRegular"), local("OugkehRoundRegular.otf"),
+        url("../../../assets/fonts/ougkeh/OugkehRoundRegular.otf") format("opentype");
+}
+
+@font-face {
     font-family: "Open-Sans-Light";
     font-style: normal;
     font-weight: 300;

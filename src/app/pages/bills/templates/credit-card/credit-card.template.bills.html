@@ -1,34 +1,39 @@
-<div class="bill-container-card" (click)="openDetails(data, $event)">
-    <div [ngClass]="['card-container', isLineTheme]">
-        <mat-icon
-            class="material-symbols-outlined card-icon"
-            aria-hidden="false"
-            aria-label="icon"
-            fontIcon="credit_card"
-        ></mat-icon>
-        <p class="card-name">{{data.creditCard?.name}}</p>
-    </div>
-    <div [ngClass]="['card-category', isLineTheme]">
-        <mat-icon
-            class="material-symbols-outlined card-icon"
-            aria-hidden="false"
-            aria-label="icon"
-            [fontIcon]="data.category.icon"
-        ></mat-icon>
-        <p class="card-name">{{data.category.name}}</p>
+<div
+    [ngClass]="['bill-container-item', billState.billVisualization$ | async]"
+    (click)="openDetails(data, $event)"
+>
+    <div class="bill-tags">
+        <div [ngClass]="['type-container', 'credit-card', isLineTheme]">
+            <mat-icon
+                class="material-symbols-outlined type-icon"
+                aria-hidden="false"
+                aria-label="icon"
+                fontIcon="credit_card"
+            ></mat-icon>
+            <p class="type-name">{{data.creditCard?.name}}</p>
+        </div>
+        <div [ngClass]="['category-container','credit-card', isLineTheme]">
+            <mat-icon
+                class="material-symbols-outlined category-icon"
+                aria-hidden="false"
+                aria-label="icon"
+                [fontIcon]="data.category.icon"
+            ></mat-icon>
+            <p class="category-name">{{data.category.name}}</p>
+        </div>
     </div>
     <actions
-        class="card-buttons"
-        [vertical]="true"
+        class="bill-buttons"
+        [vertical]="(billState.billVisualization$ | async) === 'grid'"
         [transparent]="false"
         [data]="data"
         [actions]="actions"
     ></actions>
-    <p class="title">{{ data.name }}</p>
+    <h3 class="title">{{ data.name }}</h3>
     <p class="description">{{ data.description }}</p>
     <div [ngClass]="['date-container', dateLeft, isLineTheme]">
         <mat-icon
-            class="material-symbols-outlined card-icon"
+            class="material-symbols-outlined date-icon"
             aria-hidden="false"
             aria-label="icon"
             fontIcon="event"

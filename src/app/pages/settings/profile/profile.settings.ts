@@ -8,16 +8,18 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
-import { MatFormField, MatLabel } from "@angular/material/form-field";
+import { MatFormField } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { debounceTime, distinctUntilChanged } from "rxjs";
 import { CardComponent } from "src/app/components/card/card.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
-import { ServiceUser } from "src/app/services/user.service";
+import { UserService } from "src/app/services/user.service";
 import { UserState } from "src/app/core/subjects/subjects.user";
-import { User } from "src/app/core/types/objects";
 import { ColorPipe } from "src/utils/pipes/colors";
+import { UserPipe } from "src/utils/pipes/user";
+import { UserObject } from "src/app/core/types/services";
+import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 
 @Component({
     selector: "profile-settings",
@@ -31,18 +33,18 @@ import { ColorPipe } from "src/utils/pipes/colors";
         ReactiveFormsModule,
         FormsModule,
         MatFormField,
-        MatLabel,
+        UserPipe,
         MatInputModule,
         MatIconModule,
         MatButtonModule,
     ],
 })
 export class ProfileSettingsComponent {
-    @Input() user: any;
-    @Output() changed = new EventEmitter<boolean>();
-    @Output() setProfile = new EventEmitter<Partial<User>>();
+    public userState = inject(UserState);
+    public changed: boolean = false;
     public storage = inject(LocalStorageService);
-    public userService = inject(ServiceUser);
+    public userService = inject(UserService);
+    public snackBar = inject(CustomSnackbarComponent);
     private style = getComputedStyle(document.body);
     public errorColor = this.style.getPropertyValue("--error");
 
@@ -83,15 +85,36 @@ export class ProfileSettingsComponent {
                         },
                     });
                 }
-                this.setProfile.emit({ ...data });
             });
     }
 
     ngOnInit() {
-        this.profileForm.patchValue({ ...this.user });
+        const user = this.storage.getUser();
+
+        this.profileForm.patchValue({
+            username: user?.username || "",
+            surname: user?.surname || "",
+            name: user?.name || "",
+        });
     }
 
     onLogout() {
         this.storage.removeUser();
+    }
+
+    onUpdate() {
+        const user = this.storage.getUser();
+        this.userService.updateUser(this.profileForm.value as UserObject).subscribe({
+            next: (res) => {
+                if (user) this.userState.setUser({ ...user, ...res.user });
+                this.snackBar.openSnackBar("user successfully updated", "success");
+                this.profileForm.reset({
+                    name: res.user.name,
+                    username: res.user.username,
+                    surname: res.user.surname,
+                });
+            },
+            error: () => this.snackBar.openSnackBar("error updating user", "error"),
+        });
     }
 }

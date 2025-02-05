@@ -19,10 +19,10 @@
 .bank-container {
     display: grid;
     grid-template-areas:
-        "bank-color bank-title bank-title"
-        "bank-description bank-description bank-description"
-        "bank-savings bank-savings bank-buttons";
-    grid-template-columns: 5% 60% 35%;
+        "bank-color bank-title bank-savings bank-buttons"
+        "bank-description bank-description bank-savings bank-buttons";
+    grid-template-columns: 5% 45% 45% 5%;
+    grid-template-rows: 1fr 1fr;
     flex-direction: row;
     width: 100%;
     height: 150px;
@@ -32,7 +32,13 @@
     border: solid var(--border-width) var(--bh);
     z-index: 2;
     cursor: pointer;
-
+    @media screen and (max-width: 1366px) {
+        grid-template-areas:
+            "bank-color bank-title bank-buttons"
+            "bank-description bank-description bank-buttons"
+            "bank-savings bank-savings bank-buttons";
+        grid-template-columns: 5% 90% 5%;
+    }
     &.binary {
         border: solid var(--border-width) var(--secondary);
     }
@@ -47,33 +53,44 @@
     grid-area: bank-title;
     font-weight: bold;
     width: 50%;
-    margin: auto 10px auto 0px;
+    margin: auto 0px 0px;
+
+    @media screen and (max-width: 1366px) {
+        margin: auto 10px auto 0px;
+    }
 }
 
 .bank-description {
     grid-area: bank-description;
     font-weight: normal;
     font-size: 14px;
-    color: var(--description);
+    color: var(--text-2);
     margin: auto 0px;
     width: 50%;
 }
 
 .bank-color {
+    grid-area: bank-color;
     width: 10px;
     height: 30px;
+    margin: auto auto 0px;
 }
 
 .bank-savings {
     grid-area: bank-savings;
     font-weight: bold;
     font-size: 30px;
-    margin: auto 10px auto 0px;
+    margin: auto 10px auto auto;
+    @media screen and (max-width: 1366px) {
+        margin: auto 10px auto 0px;
+    }
 }
 
 .bank-buttons {
     grid-area: bank-buttons;
     display: none;
+    justify-content: center;
+    align-items: center;
 }
 
 .bank-container:hover .bank-buttons {

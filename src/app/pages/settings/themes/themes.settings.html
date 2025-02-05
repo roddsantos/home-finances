@@ -7,7 +7,7 @@
         <div
             class="theme-container"
             *ngFor="let th of themes"
-            (click)="clickedTheme(th.id)"
+            (click)="clickedTheme(th)"
             [ngClass]="{
                   'theme-container': true,
                   selected: selectedTheme === th.id
@@ -18,16 +18,16 @@
             <div class="theme-pallete">
                 <div
                     class="pallete-color"
-                    [style.backgroundColor]="th.primaryColor"
+                    [style.backgroundColor]="th['--primary']"
                 ></div>
                 <div
                     class="pallete-color"
-                    [style.backgroundColor]="th.secondaryColor"
+                    [style.backgroundColor]="th['--secondary']"
                 ></div>
-                <div class="pallete-color" [style.backgroundColor]="th.thirdColor"></div>
+                <div class="pallete-color" [style.backgroundColor]="th['--third']"></div>
                 <div
                     class="pallete-color"
-                    [style.backgroundColor]="th.backgroundColor"
+                    [style.backgroundColor]="th['--background']"
                 ></div>
             </div>
         </div>

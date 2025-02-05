@@ -87,3 +87,9 @@ export type CardActionType = {
     tooltip: string;
     action: (data?: any) => void;
 };
+
+export type CardOptionsType = {
+    border?: boolean;
+    backgroundColor?: string;
+    shadow?: boolean;
+};
