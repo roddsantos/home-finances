@@ -49,6 +49,7 @@
 .header-input {
     & .mat-mdc-form-field-has-icon-prefix.mat-mdc-text-field-wrapper {
         background-color: var(--primary) !important;
+        color: var(--text-1);
     }
 }
 

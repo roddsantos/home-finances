@@ -145,7 +145,7 @@ export const THEMES: ThemeObjectType[] = [
         "--background": "#060b0e",
         "--bh": "#a094d133",
         "--text-1": "#d5d6f1",
-        "--text-2": "#3c3e5c",
+        "--text-2": "#5d6199",
         "--text-3": "#000d55",
         "--border-radius": "10px",
         "--border-color": "#4b84af",
