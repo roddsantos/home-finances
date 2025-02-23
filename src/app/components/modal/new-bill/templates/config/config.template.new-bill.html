@@ -63,6 +63,13 @@
                     <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
             </div>
+
+            <div class="new-bill-field" *ngIf="configData.type === 'companyCredit'">
+                <p>
+                    bills created this month will start to appear next month, to appear
+                    this month, choose a date in a previous month
+                </p>
+            </div>
         </div>
     </form>
 </div>

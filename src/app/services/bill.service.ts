@@ -112,7 +112,9 @@ export class ServiceBill {
         );
     }
 
-    updateBillCompany(data: BillObject & BillObjectCompany & BillObjectCompanyUpdate) {
+    updateBillCompany(
+        data: Partial<BillObject & BillObjectCompany & BillObjectCompanyUpdate>
+    ) {
         return this.user.user$.pipe(
             mergeMap((user) =>
                 this.http.patch(BILL + "/company", { ...data, userId: user!.id })

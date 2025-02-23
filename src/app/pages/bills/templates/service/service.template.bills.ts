@@ -4,12 +4,14 @@ import { Component, inject, Input } from "@angular/core";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatIconModule } from "@angular/material/icon";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
+import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { ModalEditBill } from "src/app/components/modal/edit-bill/edit-bill.modal";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ActionItem } from "src/app/core/types/components";
 import { Bill, BillData } from "src/app/core/types/objects";
+import { ServiceBill } from "src/app/services/bill.service";
 
 @Component({
     selector: "service-list-template",
@@ -20,8 +22,11 @@ import { Bill, BillData } from "src/app/core/types/objects";
 })
 export class ServiceTemplateMonthly {
     public billsState = inject(BillState);
+    public billService = inject(ServiceBill);
     public dialog = inject(Dialog);
     public general = inject(GeneralState);
+    public snack = inject(CustomSnackbarComponent);
+
     @Input() data: Bill & BillData;
     dateLeft: string = "settled";
     isLineTheme: string = "";
@@ -92,6 +97,24 @@ export class ServiceTemplateMonthly {
     }
 
     onCheck() {
-        console.log("DELETE");
+        console.log("CHECK");
+        this.billService
+            .updateBillCompany({
+                id: this.data.id,
+                creditCardId: this.data.creditCardId,
+                bank1Id: this.data.bank1Id,
+                settled: true,
+            })
+            .subscribe({
+                next: () => {
+                    this.billService.getBills().subscribe({
+                        next: (bills) => this.billsState.setBills(bills),
+                    });
+                    this.snack.openSnackBar("bill successfully updated", "success");
+                },
+                error: () => {
+                    this.snack.openSnackBar("error updating bill", "error");
+                },
+            });
     }
 }
