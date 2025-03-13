@@ -20,6 +20,8 @@ import { ColorPipe } from "src/utils/pipes/colors";
 import { UserPipe } from "src/utils/pipes/user";
 import { UserObject } from "src/app/core/types/services";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
+import { GeneralState } from "src/app/core/subjects/subjects.general";
+import { Router } from "@angular/router";
 
 @Component({
     selector: "profile-settings",
@@ -41,10 +43,12 @@ import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/cust
 })
 export class ProfileSettingsComponent {
     public userState = inject(UserState);
+    public generalState = inject(GeneralState);
     public changed: boolean = false;
     public storage = inject(LocalStorageService);
     public userService = inject(UserService);
     public snackBar = inject(CustomSnackbarComponent);
+    public router = inject(Router);
     private style = getComputedStyle(document.body);
     public errorColor = this.style.getPropertyValue("--error");
 
@@ -99,7 +103,9 @@ export class ProfileSettingsComponent {
     }
 
     onLogout() {
-        this.storage.removeUser();
+        this.userState.removeUser();
+        this.generalState.changePage("/login");
+        this.router.navigate(["/login"]);
     }
 
     onUpdate() {

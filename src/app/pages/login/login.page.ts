@@ -17,6 +17,7 @@ import { UserState } from "src/app/core/subjects/subjects.user";
 import { GeneralService } from "src/app/services/general.service";
 
 @Component({
+    selector: "login-page",
     templateUrl: "./login.page.html",
     styleUrls: ["./login.page.css"],
     standalone: true,

@@ -8,6 +8,7 @@ import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ThemeObjectType, ThemeType } from "src/app/core/types/general";
 import { UserService } from "./services/user.service";
 import { THEMES } from "src/utils/constants/general";
+import { PageLogin } from "./pages/login/login.page";
 
 @Component({
     selector: "app-root",

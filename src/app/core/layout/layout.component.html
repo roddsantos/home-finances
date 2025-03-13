@@ -1,4 +1,8 @@
-<mat-toolbar class="toolbar mobile" color="secondary">
+<mat-toolbar
+    *ngIf="(generalState.page$ | async) !== '/login'"
+    class="toolbar mobile"
+    color="secondary"
+>
     <mat-toolbar-row class="toolbar-row">
         <mat-icon
             [ngClass]="{
