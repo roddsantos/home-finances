@@ -20,8 +20,8 @@ import { ColorPipe } from "src/utils/pipes/colors";
 import { UserPipe } from "src/utils/pipes/user";
 import { UserObject } from "src/app/core/types/services";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
-import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { Router } from "@angular/router";
+import { GeneralService } from "src/app/services/general.service";
 
 @Component({
     selector: "profile-settings",
@@ -43,7 +43,7 @@ import { Router } from "@angular/router";
 })
 export class ProfileSettingsComponent {
     public userState = inject(UserState);
-    public generalState = inject(GeneralState);
+    public generalService = inject(GeneralService);
     public changed: boolean = false;
     public storage = inject(LocalStorageService);
     public userService = inject(UserService);
@@ -104,8 +104,7 @@ export class ProfileSettingsComponent {
 
     onLogout() {
         this.userState.removeUser();
-        this.generalState.changePage("/login");
-        this.router.navigate(["/login"]);
+        this.generalService.navigateTo("/login");
     }
 
     onUpdate() {
