@@ -11,7 +11,13 @@ export function authGuard() {
     userState.user$.subscribe({
         next: (user) => {
             if (user) return true;
-            else return generalState.changePage("login");
+            else {
+                generalState.page$.subscribe({
+                    next: (page) => console.log("ok", page),
+                });
+                router.navigate(["/login"]);
+                return generalState.changePage("/login");
+            }
         },
     });
 }

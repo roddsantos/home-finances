@@ -67,6 +67,7 @@ export type RoutesType =
     | "/bills"
     | "/dashboard"
     | "/"
+    | "/login"
     | "";
 
 export type RouteItemType = {

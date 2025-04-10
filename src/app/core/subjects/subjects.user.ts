@@ -25,7 +25,7 @@ export class UserState {
         if (u !== null) this.storageService.setUser(u);
     }
 
-    remove() {
+    removeUser() {
         this._user$.next(null);
         this.storageService.removeUser();
     }

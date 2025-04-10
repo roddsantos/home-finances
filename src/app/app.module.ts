@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ModalComponent } from "./components/modal/modal.component";
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
+import { PageLogin } from "./pages/login/login.page";
 
 @NgModule({
     declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { HttpClientModule } from "@angular/common/http";
         CommonModule,
         LayoutComponent,
         ModalComponent,
+        PageLogin,
     ],
     providers: [],
     bootstrap: [AppComponent],
