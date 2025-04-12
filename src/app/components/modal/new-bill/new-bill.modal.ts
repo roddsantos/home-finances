@@ -250,6 +250,11 @@ export class ModalNewBill implements OnInit {
         };
     }
 
+    setType(type: PaymentTypes) {
+        if (type === "companyCredit") this.billForm.controls["settled"].patchValue(false);
+        this.billForm.controls["type"].setValue(type);
+    }
+
     onDisableButton() {
         const formErrors = this.billForm.controls;
         switch (this.step) {

@@ -99,7 +99,7 @@ export class ModalNewCreditCard implements OnInit {
         due: new FormControl<number>(this.data.creditCard?.due || 1, {
             validators: [Validators.required, Validators.max(28), Validators.min(1)],
         }),
-        flag: new FormControl<string | null>(this.data.creditCard.flag || null, {
+        flag: new FormControl<string | null>(this.data.creditCard?.flag || null, {
             nonNullable: true,
             validators: [Validators.required],
         }),
