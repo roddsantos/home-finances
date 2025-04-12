@@ -32,26 +32,27 @@
                 name="settled"
                 aria-label="Font Style"
                 class="margin"
+                (change)="settledChange($event)"
             >
                 <mat-button-toggle [value]="true">yes</mat-button-toggle>
                 <mat-button-toggle [value]="false">no</mat-button-toggle>
             </mat-button-toggle-group>
             <div class="new-bill-field">
-                <mat-form-field class="half" appearance="outline" color="primary">
-                    <mat-label>date of payment</mat-label>
-                    <input
-                        [matDatepicker]="picker1"
-                        matInput
-                        formControlName="paid"
-                        [disabled]="!configForm.value.settled"
-                    />
-                    <mat-hint class="hint">MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle
-                        matIconSuffix
-                        [for]="picker1"
-                    ></mat-datepicker-toggle>
-                    <mat-datepicker #picker1></mat-datepicker>
-                </mat-form-field>
+                <ng-container *ngIf="configForm.value.settled">
+                    <mat-form-field class="half" appearance="outline" color="primary">
+                        <mat-label>date of payment</mat-label>
+                        <input
+                            [matDatepicker]="picker1"
+                            matInput
+                            formControlName="paid"
+                        />
+                        <mat-hint class="hint">MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle
+                            matIconSuffix
+                            [for]="picker1"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker> </mat-form-field
+                ></ng-container>
                 <mat-form-field class="half" appearance="outline">
                     <mat-label>date due</mat-label>
                     <input [matDatepicker]="picker2" matInput formControlName="due" />

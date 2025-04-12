@@ -13,7 +13,10 @@ import {
 } from "src/utils/constants/forms";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { ConfigForm } from "src/app/core/types/forms";
-import { MatButtonToggleModule } from "@angular/material/button-toggle";
+import {
+    MatButtonToggleChange,
+    MatButtonToggleModule,
+} from "@angular/material/button-toggle";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 
 @Component({
@@ -35,10 +38,6 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 export class ConfigTemplate {
     constructor() {
         this.configForm.valueChanges.subscribe((data) => {
-            if (!data.settled) {
-                this.setConfigData.emit({ ...data, paid: null });
-                this.configForm.patchValue({ paid: null });
-            }
             this.setConfigData.emit({ ...data });
         });
     }
@@ -50,7 +49,7 @@ export class ConfigTemplate {
     @Output() setConfigData = new EventEmitter<Partial<ConfigForm>>();
 
     configForm = new FormGroup({
-        isPayment: new FormControl<boolean>(false, {
+        isPayment: new FormControl<boolean>(true, {
             nonNullable: true,
         }),
         isRefund: new FormControl<boolean>(false, {
@@ -67,4 +66,20 @@ export class ConfigTemplate {
         noCC: UNNECESSARY_CC,
         parcels: INVALID_PARCEL,
     };
+
+    settledChange(event: MatButtonToggleChange) {
+        if (!event.value) {
+            this.setConfigData.emit({ ...this.configForm.getRawValue(), paid: null });
+            this.configForm.patchValue({ paid: null });
+        }
+    }
+
+    ngOnInit() {
+        if (this.configData.type === "companyCredit") {
+            this.configForm.controls["paid"].patchValue(null);
+            this.configForm.get("paid")?.disable();
+            this.configForm.controls["settled"].patchValue(false);
+            this.configForm.get("settled")?.disable();
+        }
+    }
 }
