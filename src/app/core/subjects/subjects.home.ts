@@ -16,9 +16,10 @@ export class HomeState {
         delta: 0,
         settled: 0,
     });
-    private _savings$ = new BehaviorSubject<SumAndCountData>({
+    private _savings$ = new BehaviorSubject<SumAndCountData & { toReceive: number }>({
         total: 0,
         count: 0,
+        toReceive: 0,
     });
     private _invoices$ = new BehaviorSubject<SumAndCountData>({
         total: 0,
@@ -37,7 +38,7 @@ export class HomeState {
         this._expenses$.next(expenses);
     }
 
-    public updateSavings(savings: SumAndCountData) {
+    public updateSavings(savings: SumAndCountData & { toReceive: number }) {
         this._savings$.next(savings);
     }
 

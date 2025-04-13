@@ -116,10 +116,16 @@
     grid-area: home-savings;
     & .total {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         height: 100%;
+        & .row {
+            display: flex;
+            flex-direction: row;
+        }
         & .data {
-            margin: auto auto auto 0px;
+            display: flex;
+            flex-direction: column;
+            margin: 10px auto auto 0px;
         }
         & .icon {
             font-size: 3rem;
@@ -127,7 +133,8 @@
             width: 3rem;
             margin: auto;
         }
-        & h1 {
+        & h1,
+        h2 {
             color: var(--info);
             font-size: 2rem;
         }
@@ -140,6 +147,10 @@
         display: flex;
         flex-direction: row;
         height: 100%;
+        & .row {
+            display: flex;
+            flex-direction: row;
+        }
         & .data {
             margin: auto auto auto 0px;
         }

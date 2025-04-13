@@ -107,15 +107,21 @@
             title="savings"
         >
             <div class="total">
-                <div class="icon-container">
-                    <mat-icon
-                        class="material-symbols-outlined icon"
-                        fontIcon="savings"
-                    ></mat-icon>
+                <div class="row">
+                    <div class="icon-container">
+                        <mat-icon
+                            class="material-symbols-outlined icon"
+                            fontIcon="savings"
+                        ></mat-icon>
+                    </div>
+                    <div class="data">
+                        <h2>{{(homeState.savings$ | async)?.total | currency: 'R$ '}}</h2>
+                        <p>{{"in " + (homeState.savings$ | async)?.count + " banks"}}</p>
+                    </div>
                 </div>
                 <div class="data">
-                    <h1>{{(homeState.savings$ | async)?.total | currency: 'R$ '}}</h1>
-                    <p>{{"in " + (homeState.savings$ | async)?.count + " banks"}}</p>
+                    <h5>{{(homeState.savings$ | async)?.toReceive| currency: 'R$ '}}</h5>
+                    <p>{{"to receive"}}</p>
                 </div>
             </div>
         </card-component>

@@ -26,7 +26,9 @@ export class HomeService {
 
     getSavingsInfo() {
         const user = this.localStorageService.getUser();
-        return this.http.get<SumAndCountData>(HOME + `savings/${user?.id}`);
+        return this.http.get<SumAndCountData & { toReceive: number }>(
+            HOME + `savings/${user?.id}`
+        );
     }
 
     getCreditCardsInfo() {
