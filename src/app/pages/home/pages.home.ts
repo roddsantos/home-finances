@@ -58,7 +58,7 @@ export class PageHome {
                 this.homeState.updateSavings(data);
             },
         });
-        this.creditCardService.getTotalInvoices().subscribe({
+        this.homeService.getCreditCardsInfo().subscribe({
             next: (data) => {
                 this.homeState.updateInvoices(data);
             },

@@ -28,4 +28,9 @@ export class HomeService {
         const user = this.localStorageService.getUser();
         return this.http.get<SumAndCountData>(HOME + `savings/${user?.id}`);
     }
+
+    getCreditCardsInfo() {
+        const user = this.localStorageService.getUser();
+        return this.http.get<SumAndCountData>(HOME + `invoices/${user?.id}`);
+    }
 }
