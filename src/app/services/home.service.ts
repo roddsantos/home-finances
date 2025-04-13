@@ -1,0 +1,31 @@
+import { HttpClient } from "@angular/common/http";
+import { inject, Injectable } from "@angular/core";
+import { UserState } from "../core/subjects/subjects.user";
+import { HomeState } from "../core/subjects/subjects.home";
+import { LocalStorageService } from "./local-storage.service";
+import { SumAndCountData } from "../core/types/services";
+import { HOME } from "src/utils/constants/services";
+
+@Injectable({
+    providedIn: "root",
+})
+export class HomeService {
+    private http = inject(HttpClient);
+    private user = inject(UserState);
+
+    private homeState = inject(HomeState);
+    private localStorageService = inject(LocalStorageService);
+
+    getBillsInfo() {
+        const user = this.localStorageService.getUser();
+
+        return this.http.get<SumAndCountData & { delta: number; settled: number }>(
+            HOME + `expenses/${user?.id}`
+        );
+    }
+
+    getSavingsInfo() {
+        const user = this.localStorageService.getUser();
+        return this.http.get<SumAndCountData>(HOME + `savings/${user?.id}`);
+    }
+}

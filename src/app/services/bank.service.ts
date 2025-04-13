@@ -19,14 +19,6 @@ export class ServiceBank {
         );
     }
 
-    getSavings() {
-        return this.user.user$.pipe(
-            mergeMap((user) =>
-                this.http.get<SumAndCountData>(BANK + `/savings/${user?.id}`)
-            )
-        );
-    }
-
     createBank(data: BankObject) {
         return this.user.user$.pipe(
             mergeMap((user) => this.http.post(BANK, { ...data, userId: user!.id }))

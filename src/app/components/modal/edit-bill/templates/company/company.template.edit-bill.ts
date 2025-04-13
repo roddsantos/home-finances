@@ -46,11 +46,11 @@ export class CompanyTemplateEditBill {
     @Input() bill!: Bill & BillData;
 
     compForm = new FormGroup({
-        company: new FormControl<Company | null>(null, {
+        company: new FormControl<string | null>(null, {
             nonNullable: false,
             validators: [Validators.required],
         }),
-        bank: new FormControl<Bank | null>(null, {
+        bank: new FormControl<string | null>(null, {
             nonNullable: false,
         }),
         creditcard: new FormControl<string | null>(null, {
@@ -73,9 +73,9 @@ export class CompanyTemplateEditBill {
 
     ngOnInit() {
         this.compForm.patchValue({
-            company: this.bill.company,
-            bank: this.bill.bank1,
-            creditcard: this.bill.creditCard?.id || null,
+            company: this.bill.companyId,
+            bank: this.bill.bank1Id,
+            creditcard: this.bill.creditCardId || null,
             taxes: this.bill.taxes,
             parcels: this.bill.parcels,
             delta: this.bill.delta,

@@ -14,6 +14,7 @@ import { ServiceBank } from "src/app/services/bank.service";
 import { ServiceBill } from "src/app/services/bill.service";
 import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { GeneralService } from "src/app/services/general.service";
+import { HomeService } from "src/app/services/home.service";
 import { BillsPipe } from "src/utils/pipes/bills";
 
 @Component({
@@ -29,6 +30,7 @@ export class PageHome {
     public generalState = inject(GeneralState);
     public billService = inject(ServiceBill);
     public bankService = inject(ServiceBank);
+    public homeService = inject(HomeService);
     public creditCardService = inject(ServiceCreditCard);
     private generalService = inject(GeneralService);
     public dialog = inject(Dialog);
@@ -46,12 +48,12 @@ export class PageHome {
     public text3Color = this.style.getPropertyValue("--text-3");
 
     ngOnInit() {
-        this.billService.getHomeInfo().subscribe({
+        this.homeService.getBillsInfo().subscribe({
             next: (data) => {
                 this.homeState.updateExpenses(data);
             },
         });
-        this.bankService.getSavings().subscribe({
+        this.homeService.getSavingsInfo().subscribe({
             next: (data) => {
                 this.homeState.updateSavings(data);
             },

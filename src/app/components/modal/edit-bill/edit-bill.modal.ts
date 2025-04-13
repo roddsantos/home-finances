@@ -244,8 +244,8 @@ export class ModalEditBill {
                 observer = this.billService.updateBillCompany({
                     ...defaultData,
                     creditCardId: companyFormValue.creditcard!,
-                    companyId: companyFormValue.company!.id,
-                    bank1Id: companyFormValue.bank?.id,
+                    companyId: companyFormValue.company!,
+                    bank1Id: companyFormValue.bank!,
                     parcels: companyFormValue.parcels!,
                     taxes: companyFormValue.taxes,
                     delta: companyFormValue.delta,
