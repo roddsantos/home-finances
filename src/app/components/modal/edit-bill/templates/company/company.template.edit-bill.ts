@@ -80,10 +80,12 @@ export class CompanyTemplateEditBill {
             parcels: this.bill.parcels,
             delta: this.bill.delta,
         });
+        this.compForm.controls["parcels"].disable();
+        if (this.bill.parcels - 1 !== this.bill.parcel)
+            this.compForm.controls["delta"].disable();
         if (this.bill.settled) {
             this.compForm.controls["bank"].disable();
             this.compForm.controls["creditcard"].disable();
-            this.compForm.controls["parcels"].disable();
             this.compForm.controls["taxes"].disable();
             this.compForm.controls["delta"].disable();
         }

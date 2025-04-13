@@ -76,6 +76,9 @@
     }
 
     &.mdc-text-field--disabled {
+        & .mdc-text-field__input {
+            color: var(--disabled) !important;
+        }
         & .mdc-notched-outline--upgraded {
             & .mdc-floating-label--float-above {
                 font-size: var(--input-font) !important;

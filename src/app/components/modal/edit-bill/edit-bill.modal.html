@@ -67,7 +67,6 @@
                         payment processed?
                     </p>
                     <mat-button-toggle-group
-                        [disabled]="type.value === 'companyCredit'"
                         formControlName="settled"
                         name="settled"
                         aria-label="Font Style"
@@ -115,24 +114,27 @@
                 </div>
             </div>
             <div class="new-bill-container-split">
-                <mat-form-field class="savings-input new-bill-field" appearance="outline">
-                    <mat-label>date of payment</mat-label>
-                    <input
-                        [matDatepicker]="picker1"
-                        matInput
-                        formControlName="paid"
-                        [disabled]="!billForm.value.settled"
-                    />
-                    <mat-hint
-                        [ngClass]="['label', !billForm.value.settled ? 'disabled'  : '']"
-                        >MM/DD/YYYY</mat-hint
+                <ng-container *ngIf="billForm.value.settled">
+                    <mat-form-field
+                        class="savings-input new-bill-field"
+                        appearance="outline"
                     >
-                    <mat-datepicker-toggle
-                        matIconSuffix
-                        [for]="picker1"
-                    ></mat-datepicker-toggle>
-                    <mat-datepicker #picker1></mat-datepicker>
-                </mat-form-field>
+                        <mat-label>date of payment</mat-label>
+                        <input
+                            [matDatepicker]="picker1"
+                            matInput
+                            formControlName="paid"
+                        />
+                        <mat-hint
+                            [ngClass]="['label', !billForm.value.settled ? 'disabled'  : '']"
+                            >MM/DD/YYYY</mat-hint
+                        >
+                        <mat-datepicker-toggle
+                            matIconSuffix
+                            [for]="picker1"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker> </mat-form-field
+                ></ng-container>
                 <mat-form-field class="savings-input new-bill-field" appearance="outline">
                     <mat-label>date due</mat-label>
                     <input [matDatepicker]="picker2" matInput formControlName="due" />

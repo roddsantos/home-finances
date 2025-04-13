@@ -86,7 +86,7 @@ export class ModalEditBill {
             nonNullable: true,
         }),
         total: new FormControl<number>(
-            { value: 0, disabled: this.data.bill.settled },
+            { value: 0, disabled: true },
             {
                 nonNullable: true,
                 validators: [Validators.required, Validators.min(0.01)],
@@ -103,9 +103,7 @@ export class ModalEditBill {
         paid: new FormControl<Date>(
             {
                 value: new Date(),
-                disabled:
-                    this.data.bill.settled ||
-                    (!this.data.bill.settled && Boolean(!this.data.bill.paid)),
+                disabled: this.data.bill.settled,
             },
             { nonNullable: false }
         ),
@@ -124,7 +122,7 @@ export class ModalEditBill {
             }
         ),
         type: new FormControl<PaymentTypes>(
-            { value: "money" as PaymentTypes, disabled: this.data.bill.settled },
+            { value: "money" as PaymentTypes, disabled: true },
             {
                 nonNullable: true,
             }
@@ -193,11 +191,9 @@ export class ModalEditBill {
     }
 
     onSetSettled(event: MatSelectChange) {
-        if (event.value === "companyCredit") {
-            this.billForm.patchValue({ settled: false });
+        if (!event.value) {
             this.billForm.patchValue({ paid: null });
         } else {
-            this.billForm.patchValue({ settled: true });
             this.billForm.patchValue({ paid: new Date() });
         }
     }
