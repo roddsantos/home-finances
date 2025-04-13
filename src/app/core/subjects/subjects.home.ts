@@ -8,10 +8,13 @@ import { Bill } from "../types/objects";
     providedIn: "root",
 })
 export class HomeState {
-    private _expenses$ = new BehaviorSubject<SumAndCountData & { delta: number }>({
+    private _expenses$ = new BehaviorSubject<
+        SumAndCountData & { delta: number; settled: number }
+    >({
         total: 0,
         count: 0,
         delta: 0,
+        settled: 0,
     });
     private _savings$ = new BehaviorSubject<SumAndCountData>({
         total: 0,
@@ -28,7 +31,9 @@ export class HomeState {
     public readonly invoices$ = this._invoices$.asObservable();
     public readonly recentBills$ = this._recentBills$.asObservable();
 
-    public updateExpenses(expenses: SumAndCountData & { delta: number }) {
+    public updateExpenses(
+        expenses: SumAndCountData & { delta: number; settled: number }
+    ) {
         this._expenses$.next(expenses);
     }
 

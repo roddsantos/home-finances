@@ -1,6 +1,7 @@
 <div class="home">
     <h1 class="page-title">{{"welcome, " + (userState.user$| async)?.name + " :)"}}</h1>
     <div class="home-container">
+        <!-- CURRENT DATE -->
         <card-component
             id="home-date"
             class="home-date"
@@ -10,37 +11,50 @@
             <p class="month">{{(date | date :'MMM')?.toLowerCase()}}</p>
             <h1 class="day">{{date | date :'d'}}</h1></card-component
         >
+        <!-- EXPENSES -->
         <card-component
             [actions]="actions"
             id="home-total-expenses"
             class="home-total-expenses"
-            title="total expenses"
+            title="monthly expenses"
         >
             <div class="total">
-                <div class="icon-container">
-                    <mat-icon
-                        class="material-symbols-outlined icon"
-                        fontIcon="receipt_long"
-                    ></mat-icon>
+                <div class="row">
+                    <div class="icon-container">
+                        <mat-icon
+                            class="material-symbols-outlined icon"
+                            fontIcon="receipt_long"
+                        ></mat-icon>
+                    </div>
+                    <div class="data">
+                        <h2>
+                            {{(homeState.expenses$ | async)?.total | currency: 'R$ '}}
+                        </h2>
+                        <p>
+                            {{"total in " + (homeState.expenses$ | async)?.count + "
+                            bills"}}
+                        </p>
+                    </div>
+                    <div
+                        [ngClass]="['home-delta', (homeState.expenses$ | async)!.delta > 0 ? 'red' : 'green']"
+                    >
+                        <mat-icon
+                            class="material-symbols-outlined icon-trending"
+                            [fontIcon]="(homeState.expenses$ | async)!.delta > 0 ? 'trending_up' : 'trending_down'"
+                        ></mat-icon>
+                        <p>
+                            {{((homeState.expenses$ | async)!.delta * 100 *
+                            ((homeState.expenses$ | async)!.delta < 0 ? -1 : 1)) + "%" }}
+                        </p>
+                    </div>
                 </div>
                 <div class="data">
-                    <h1>{{(homeState.expenses$ | async)?.total | currency: 'R$ '}}</h1>
-                    <p>{{"in " + (homeState.expenses$ | async)?.count + " bills"}}</p>
-                </div>
-                <div
-                    [ngClass]="['home-delta', (homeState.expenses$ | async)!.delta > 0 ? 'red' : 'green']"
-                >
-                    <mat-icon
-                        class="material-symbols-outlined icon-trending"
-                        [fontIcon]="(homeState.expenses$ | async)!.delta > 0 ? 'trending_up' : 'trending_down'"
-                    ></mat-icon>
-                    <p>
-                        {{((homeState.expenses$ | async)!.delta * 100 *
-                        ((homeState.expenses$ | async)!.delta < 0 ? -1 : 1)) + "%" }}
-                    </p>
+                    <h5>{{(homeState.expenses$ | async)?.settled| currency: 'R$ '}}</h5>
+                    <p>{{"paid"}}</p>
                 </div>
             </div>
         </card-component>
+        <!-- RECENT BILLS -->
         <card-component
             [actions]="actions"
             id="home-recents"
@@ -67,6 +81,7 @@
                 <p class="parcel">{{ bill | bills: 'parcels' }}</p>
             </div>
         </card-component>
+        <!-- DAILY BILLS QUANTITY -->
         <card-component
             [actions]="actions"
             id="home-bill-quantity"
@@ -84,6 +99,7 @@
                 <p class="label">bills today</p>
             </div>
         </card-component>
+        <!-- BANK SAVINGS -->
         <card-component
             [actions]="bankActions"
             id="home-savings"
@@ -103,6 +119,7 @@
                 </div>
             </div>
         </card-component>
+        <!-- CREDIT CARD INVOICES -->
         <card-component
             [actions]="creditCardActions"
             id="home-credit-card"
