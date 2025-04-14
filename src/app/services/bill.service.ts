@@ -50,16 +50,6 @@ export class ServiceBill {
         );
     }
 
-    getRecentBills() {
-        return this.user.user$.pipe(
-            mergeMap((user) =>
-                this.http.get<{ bills: (Bill & BillData)[] }>(
-                    BILL + "/recents/" + user?.id
-                )
-            )
-        );
-    }
-
     createBillBank(data: BillObject & BillObjectBank) {
         return this.user.user$.pipe(
             mergeMap((user) =>

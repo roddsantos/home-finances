@@ -71,7 +71,7 @@ export class PageHome {
                 this.homeState.updateInvoices(data);
             },
         });
-        this.billService.getRecentBills().subscribe({
+        this.homeService.getRecentBills().subscribe({
             next: (data) => {
                 this.todayBills = data.bills.filter(
                     (bill) => new Date(bill.due).getDate() === new Date().getDate()

@@ -5,6 +5,7 @@ import { HomeState } from "../core/subjects/subjects.home";
 import { LocalStorageService } from "./local-storage.service";
 import { SumAndCountData } from "../core/types/services";
 import { HOME } from "src/utils/constants/services";
+import { Bill, BillData } from "../core/types/objects";
 
 @Injectable({
     providedIn: "root",
@@ -34,5 +35,12 @@ export class HomeService {
     getCreditCardsInfo() {
         const user = this.localStorageService.getUser();
         return this.http.get<SumAndCountData>(HOME + `invoices/${user?.id}`);
+    }
+
+    getRecentBills() {
+        const user = this.localStorageService.getUser();
+        return this.http.get<{ bills: (Bill & BillData)[] }>(
+            HOME + "recents/" + user?.id
+        );
     }
 }
