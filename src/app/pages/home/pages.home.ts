@@ -2,6 +2,7 @@ import { Dialog } from "@angular/cdk/dialog";
 import { CommonModule, CurrencyPipe } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
+import { MatTooltip } from "@angular/material/tooltip";
 import { Router } from "@angular/router";
 import { CardComponent } from "src/app/components/card/card.component";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
@@ -22,7 +23,14 @@ import { BillsPipe } from "src/utils/pipes/bills";
     templateUrl: "./pages.home.html",
     styleUrls: ["./pages.home.css"],
     standalone: true,
-    imports: [CommonModule, CardComponent, CurrencyPipe, BillsPipe, MatIconModule],
+    imports: [
+        CommonModule,
+        CardComponent,
+        CurrencyPipe,
+        BillsPipe,
+        MatIconModule,
+        MatTooltip,
+    ],
 })
 export class PageHome {
     public userState = inject(UserState);

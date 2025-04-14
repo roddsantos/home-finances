@@ -19,7 +19,18 @@
             "home-recents home-recents home-recents home-recents"
             "home-recents home-recents home-recents home-recents";
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-rows: repeat(4, 180px);
+        grid-template-rows: repeat(4, 250px);
+    }
+    @media screen and (max-width: 1150px) {
+        grid-template-areas:
+            "home-date home-date home-bill-quantity home-bill-quantity"
+            "home-total-expenses home-total-expenses home-total-expenses home-total-expenses"
+            "home-savings home-savings home-savings home-savings"
+            "home-credit-card home-credit-card home-credit-card home-credit-card"
+            "home-recents home-recents home-recents home-recents"
+            "home-recents home-recents home-recents home-recents";
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: repeat(6, 250px);
     }
 }
 

@@ -69,16 +69,20 @@
                 <div
                     class="category"
                     [style.borderColor]="theme === 'binary' ? secondaryColor : primaryColor"
+                    [matTooltip]="bill.category.name"
+                    matTooltipPosition="above"
                 >
                     <mat-icon
                         class="material-symbols-outlined icon"
                         [fontIcon]="bill.category.icon"
                     ></mat-icon>
                 </div>
-                <h4 class="name">{{ bill.name }}</h4>
+                <h6 class="name">{{ bill.name }}</h6>
                 <p class="type">{{ bill | bills: 'type' }}</p>
                 <p class="updated-at">{{ bill.updatedAt| date: 'medium' }}</p>
-                <p class="parcel">{{ bill | bills: 'parcels' }}</p>
+                <p *ngIf="bill.type !== 'money'" class="parcel">
+                    {{ bill | bills: 'parcels' }}
+                </p>
             </div>
         </card-component>
         <!-- DAILY BILLS QUANTITY -->

@@ -1,8 +1,19 @@
 <div class="header">
+    <button class="header-menu" mat-icon-button aria-label="action company button">
+        <mat-icon
+            [ngClass]="{
+                    'material-symbols-outlined': true,
+                    'app-icon': true,
+                }"
+            aria-hidden="false"
+            aria-label="Example menu icon"
+            fontIcon="menu"
+        ></mat-icon>
+    </button>
     <mat-form-field [ngClass]="['header-search', actualPage]" appearance="outline">
         <mat-icon
             matPrefix
-            class="header-notifications"
+            class="header-search"
             aria-hidden="false"
             aria-label="Example home icon"
             fontIcon="search"
