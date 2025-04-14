@@ -8,7 +8,7 @@
         "home-date home-total-expenses home-total-expenses home-bill-quantity home-recents home-recents"
         "home-savings home-savings home-credit-card home-credit-card home-recents home-recents";
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: repeat(2, 220px);
+    grid-template-rows: repeat(2, 250px);
     width: 100%;
     row-gap: 1rem;
     column-gap: 1rem;
@@ -19,7 +19,18 @@
             "home-recents home-recents home-recents home-recents"
             "home-recents home-recents home-recents home-recents";
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-rows: repeat(4, 180px);
+        grid-template-rows: repeat(4, 250px);
+    }
+    @media screen and (max-width: 1150px) {
+        grid-template-areas:
+            "home-date home-date home-bill-quantity home-bill-quantity"
+            "home-total-expenses home-total-expenses home-total-expenses home-total-expenses"
+            "home-savings home-savings home-savings home-savings"
+            "home-credit-card home-credit-card home-credit-card home-credit-card"
+            "home-recents home-recents home-recents home-recents"
+            "home-recents home-recents home-recents home-recents";
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: repeat(6, 250px);
     }
 }
 
@@ -41,10 +52,16 @@
     grid-area: home-total-expenses;
     & .total {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         height: 100%;
+        & .row {
+            display: flex;
+            flex-direction: row;
+        }
         & .data {
-            margin: auto auto auto 0px;
+            display: flex;
+            flex-direction: column;
+            margin: 10px auto auto 0px;
         }
         & .icon {
             font-size: 3rem;
@@ -52,9 +69,9 @@
             width: 3rem;
             margin: auto;
         }
-        & h1 {
+        & h1,
+        h2 {
             color: var(--error);
-            font-size: 2rem;
         }
     }
 }
@@ -110,10 +127,16 @@
     grid-area: home-savings;
     & .total {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         height: 100%;
+        & .row {
+            display: flex;
+            flex-direction: row;
+        }
         & .data {
-            margin: auto auto auto 0px;
+            display: flex;
+            flex-direction: column;
+            margin: 10px auto auto 0px;
         }
         & .icon {
             font-size: 3rem;
@@ -121,7 +144,8 @@
             width: 3rem;
             margin: auto;
         }
-        & h1 {
+        & h1,
+        h2 {
             color: var(--info);
             font-size: 2rem;
         }
@@ -134,6 +158,10 @@
         display: flex;
         flex-direction: row;
         height: 100%;
+        & .row {
+            display: flex;
+            flex-direction: row;
+        }
         & .data {
             margin: auto auto auto 0px;
         }

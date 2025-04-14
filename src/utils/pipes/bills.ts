@@ -13,7 +13,7 @@ export class BillsPipe implements PipeTransform {
             if (value.type === "money") return "money";
         }
         if (format === "parcels") {
-            return value.parcel + 1 + "/" + value.parcels;
+            return `${value.parcel + 1}/${value.parcels}`;
         }
         return value;
     }

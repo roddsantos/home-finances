@@ -16,9 +16,9 @@
         [style.height]="noDivisor ? '70px' : '50px'"
     >
         <div class="card-data">
-            <h2 *ngIf="title">
+            <h6 *ngIf="title">
                 {{ title }}
-            </h2>
+            </h6>
             <p *ngIf="description">{{ description }}</p>
         </div>
         <div class="card-actions" *ngIf="actions">

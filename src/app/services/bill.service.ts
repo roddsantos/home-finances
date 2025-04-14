@@ -50,26 +50,6 @@ export class ServiceBill {
         );
     }
 
-    getHomeInfo() {
-        return this.user.user$.pipe(
-            mergeMap((user) =>
-                this.http.get<SumAndCountData & { delta: number }>(
-                    BILL + "/home/" + user?.id
-                )
-            )
-        );
-    }
-
-    getRecentBills() {
-        return this.user.user$.pipe(
-            mergeMap((user) =>
-                this.http.get<{ bills: (Bill & BillData)[] }>(
-                    BILL + "/recents/" + user?.id
-                )
-            )
-        );
-    }
-
     createBillBank(data: BillObject & BillObjectBank) {
         return this.user.user$.pipe(
             mergeMap((user) =>

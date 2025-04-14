@@ -27,14 +27,6 @@ export class ServiceCreditCard {
         );
     }
 
-    getTotalInvoices() {
-        return this.user.user$.pipe(
-            mergeMap((user) =>
-                this.http.get<SumAndCountData>(CREDIT_CARD + "/invoice/" + user?.id)
-            )
-        );
-    }
-
     createCreditCard(data: CreditCardObject) {
         return this.user.user$.pipe(
             mergeMap((user) => this.http.post(CREDIT_CARD, { ...data, userId: user!.id }))

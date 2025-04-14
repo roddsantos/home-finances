@@ -18,3 +18,5 @@ export const BILL_CC = "/cc";
 export const BILL_COMPANY = "/company";
 
 export const DASHBOARD = URL + "/dashboard";
+
+export const HOME = URL + "/home/";

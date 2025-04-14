@@ -7,7 +7,7 @@ import {
     ViewChild,
     inject,
 } from "@angular/core";
-import { Router, RouterModule } from "@angular/router";
+import { RouterModule } from "@angular/router";
 import { ModalProfile } from "src/app/components/modal/profile/profile.modal";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ModalComponent } from "src/app/components/modal/modal.component";
