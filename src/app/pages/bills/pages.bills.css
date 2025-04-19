@@ -48,66 +48,6 @@
     margin: 10px 0px 20px auto;
 }
 
-.bill-expansion {
-    margin-bottom: 15px;
-    border-radius: 7px;
-    border: solid 1px var(--item-list-border);
-
-    &.mat-expansion-panel {
-        box-shadow: none;
-    }
-    & .mat-expanded {
-        border-radius: 10px 10px 0px 0px;
-        border: solid 1px var(--item-list-border);
-    }
-    & .mat-expansion-panel-body {
-        display: flex;
-        flex-direction: row !important;
-        justify-content: space-between;
-        background-color: var(--item-list);
-        padding-top: 16px;
-    }
-    & .mat-expansion-panel-body:hover .icons-container {
-        display: flex;
-        align-items: center;
-        z-index: 3;
-        background-color: var(--item-list);
-    }
-}
-
-.icons-container {
-    display: none;
-}
-
-.bill-expansion-container {
-    min-height: 55px;
-    background-color: var(--item-list) !important;
-    &:hover {
-        background-color: var(--item-list) !important;
-    }
-}
-
-.bill-title-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.bill-expanded-container {
-    display: grid;
-    grid-template-areas: "desc parcels total transaction icons-container";
-    width: 100%;
-}
-
-.bill-expanded-container.bank {
-    display: grid;
-    grid-template-areas: "desc bank2 transaction icons-container";
-    grid-template-columns: auto;
-    width: 100%;
-}
-
 .label {
     font-weight: normal;
     font-size: 12px;
@@ -161,21 +101,21 @@
     padding: 16px;
     cursor: pointer;
     grid-template-areas:
-        "date-container date-container date-container bill-buttons"
-        "title title title bill-buttons"
-        "description description description bill-buttons"
-        "bill-tags bill-tags bill-tags bill-buttons"
-        "value-container value-container value-container bill-buttons";
+        "date-container date-container bill-buttons bill-buttons"
+        "title title title title"
+        "description description description description"
+        "bill-tags bill-tags bill-tags bill-tags"
+        "value-container value-container value-container value-container";
     grid-template-rows: repeat(5, max-content);
-    grid-template-columns: 1.5fr 1fr 1fr 0.1fr;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
     row-gap: 4px;
     @media screen and (max-width: 1500px) {
         grid-template-areas:
             "date-container date-container date-container bill-buttons"
-            "title title title bill-buttons"
-            "description description description bill-buttons"
-            "bill-tags bill-tags bill-tags bill-buttons"
-            "value-container value-container value-container bill-buttons";
+            "title title title title"
+            "description description description description"
+            "bill-tags bill-tags bill-tags bill-tags"
+            "value-container value-container value-container value-container";
         grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr;
     }
     &.list {
@@ -196,18 +136,18 @@
         }
         .bill-buttons {
             grid-area: bill-buttons;
-            display: none;
+            display: flex;
             margin: 0px auto;
         }
     }
     &.grid {
         width: 100%;
         grid-template-areas:
-            "date-container date-container date-container bill-buttons"
-            "title title title bill-buttons"
-            "description description description bill-buttons"
-            "bill-tags bill-tags bill-tags bill-buttons"
-            "value-container value-container value-container bill-buttons";
+            "date-container date-container bill-buttons bill-buttons"
+            "title title title title"
+            "description description description description"
+            "bill-tags bill-tags bill-tags bill-tags"
+            "value-container value-container value-container value-container";
         grid-template-rows: repeat(5, max-content);
         grid-template-columns: 1.5fr 1fr 1fr 0.1fr;
         row-gap: 4px;
@@ -351,7 +291,7 @@
 
 .bill-buttons {
     grid-area: bill-buttons;
-    display: none;
+    display: flex;
     margin-left: auto;
     margin-right: 4px;
 }
@@ -371,8 +311,4 @@
     grid-area: bill-tags;
     display: flex;
     flex-direction: row;
-}
-
-.bill-container-item:hover .bill-buttons {
-    display: flex;
 }

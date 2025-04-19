@@ -9,3 +9,5 @@ export type SubjectSavingsType = SumAndCountData & {
     toReceive: number;
     income: number;
 };
+
+export type BillsLayoutType = "grid" | "list";

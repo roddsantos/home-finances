@@ -29,13 +29,16 @@ export class AppComponent {
     theme = this.storage.getTheme();
 
     ngOnInit() {
+        // GET USER INFO
         const user = this.storage.getUser();
         if (user) this.userState.setUser(user);
 
+        // GET FILTERS
         const filters = this.storage.getFilters();
         if (filters) this.filterState.setFilters(filters);
         else this.filterState.setFilters([]);
 
+        // GET THEME
         const theme = this.storage.getTheme();
         if (theme) {
             const selectedTheme = THEMES.find((th) => th.id === theme);
@@ -51,6 +54,11 @@ export class AppComponent {
             document.body.className = theme === "default" ? "" : theme;
         }
 
+        // GET BILLS LAYOUT
+        const billsView = this.storage.getBillsLayout();
+        this.generalState.changeBillsLayout(billsView);
+
+        // GET FILTER CONTAINER
         const filterContainer = this.storage.getFilterContainerStatus();
         if (filterContainer === undefined || filterContainer === null)
             this.generalState.changeFilterContainer(true);

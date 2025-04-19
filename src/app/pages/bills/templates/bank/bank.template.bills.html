@@ -1,5 +1,5 @@
 <div
-    [ngClass]="['bill-container-item', billState.billVisualization$ | async]"
+    [ngClass]="['bill-container-item', general.billsLayout$ | async]"
     (click)="openDetails(data, $event)"
 >
     <div [ngClass]="['date-container', dateLeft, isLineTheme]">
@@ -33,12 +33,11 @@
     </div>
     <actions
         class="bill-buttons"
-        [vertical]="(billState.billVisualization$ | async) === 'grid'"
         [transparent]="false"
         [data]="data"
         [actions]="actions"
     ></actions>
-    <h3 class="title">{{ data.name }}</h3>
+    <h6 class="title">{{ data.name }}</h6>
     <p class="description">{{ data.description }}</p>
     <div class="value-container">
         <div class="parcel"><p>$</p></div>

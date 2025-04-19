@@ -1,7 +1,7 @@
 .buttons-container {
     display: flex;
     flex-direction: row;
-    position: absolute;
+    position: relative;
     z-index: 10;
     height: auto;
     background-color: var(--bh);
@@ -20,7 +20,6 @@
 
 .icon-button {
     position: relative;
-    margin: auto 0px auto auto;
     border: 0px;
     display: flex;
     justify-content: center;

@@ -19,6 +19,7 @@ import { PaginationTemplate } from "./templates/pagination/pagination.template.b
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
+import { GeneralService } from "src/app/services/general.service";
 
 @Component({
     selector: "page-bills",
@@ -45,6 +46,7 @@ export class PageBills {
     public billService = inject(ServiceBill);
     public snack = inject(CustomSnackbarComponent);
     public generalState = inject(GeneralState);
+    public generalService = inject(GeneralService);
     public storage = inject(LocalStorageService);
 
     titleItems: Partial<keyof Bill>[] = ["name", "updatedAt"];

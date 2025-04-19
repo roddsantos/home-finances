@@ -6,9 +6,9 @@
             matTooltip="list visualization"
             matTooltipPosition="above"
             mat-button
-            [ngClass]="[(billState.billVisualization$ | async) === 'list' ? 'button-primary' : 'button-secondary']"
+            [ngClass]="[(generalState.billsLayout$ | async) === 'list' ? 'button-primary' : 'button-secondary']"
             [style.margin]="'auto 0.5rem auto auto'"
-            (click)="billState.changeVisualization('list')"
+            (click)="generalService.changeVisualization('list')"
         >
             <mat-icon class="material-symbols-outlined">view_list</mat-icon>
         </button>
@@ -18,8 +18,8 @@
             matTooltipPosition="above"
             mat-button
             [style.margin]="'auto 0px auto 0px'"
-            [ngClass]="[(billState.billVisualization$ | async) === 'grid' ? 'button-primary' : 'button-secondary']"
-            (click)="billState.changeVisualization('grid')"
+            [ngClass]="[(generalState.billsLayout$ | async) === 'grid' ? 'button-primary' : 'button-secondary']"
+            (click)="generalService.changeVisualization('grid')"
         >
             <mat-icon class="icon material-symbols-outlined">grid_view</mat-icon>
         </button>
@@ -39,7 +39,7 @@
             <p>open filters</p>
         </button>
     </div>
-    <div [ngClass]="['bill-container', billState.billVisualization$ | async]">
+    <div [ngClass]="['bill-container', generalState.billsLayout$ | async]">
         <div class="bill-list-container">
             <feedback-container
                 [style.width]="'100%'"
@@ -47,7 +47,7 @@
                 [info]="(billState.status$ | async)!"
             ></feedback-container>
             <div
-                [ngClass]="['bill-list', billState.billVisualization$ | async]"
+                [ngClass]="['bill-list', generalState.billsLayout$ | async]"
                 *ngIf="(billState.bills$| async)!.length > 0"
             >
                 <ng-template
