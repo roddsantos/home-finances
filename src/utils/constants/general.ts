@@ -69,7 +69,7 @@ export const THEMES: ThemeObjectType[] = [
         "--border-color": "#878cec",
         "--border-width": "2px",
         "--disabled": "#7a7a7a67",
-        "--error": "#a01313",
+        "--error": "#bd5252",
         "--warning": "#ca8215",
         "--info": "#1346b4",
         "--success": "#0d8844",

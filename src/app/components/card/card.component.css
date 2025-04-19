@@ -3,7 +3,6 @@
     border-width: var(--border-width);
     border-radius: var(--border-radius);
     padding: 10px 15px;
-    margin-bottom: 20px;
     position: relative;
     z-index: 3;
     height: 100%;
@@ -21,6 +20,7 @@
 
 .card-content {
     padding: 5px 0px;
+    display: flex;
 }
 
 .card-divisor {

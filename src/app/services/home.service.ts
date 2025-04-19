@@ -6,6 +6,7 @@ import { LocalStorageService } from "./local-storage.service";
 import { SumAndCountData } from "../core/types/services";
 import { HOME } from "src/utils/constants/services";
 import { Bill, BillData } from "../core/types/objects";
+import { SubjectExpensesType, SubjectSavingsType } from "../core/types/subjects";
 
 @Injectable({
     providedIn: "root",
@@ -20,16 +21,12 @@ export class HomeService {
     getBillsInfo() {
         const user = this.localStorageService.getUser();
 
-        return this.http.get<SumAndCountData & { delta: number; settled: number }>(
-            HOME + `expenses/${user?.id}`
-        );
+        return this.http.get<SubjectExpensesType>(HOME + `expenses/${user?.id}`);
     }
 
     getSavingsInfo() {
         const user = this.localStorageService.getUser();
-        return this.http.get<SumAndCountData & { toReceive: number }>(
-            HOME + `savings/${user?.id}`
-        );
+        return this.http.get<SubjectSavingsType>(HOME + `savings/${user?.id}`);
     }
 
     getCreditCardsInfo() {

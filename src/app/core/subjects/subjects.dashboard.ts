@@ -9,6 +9,7 @@ import { CreditCardDashboardType } from "../types/services";
     providedIn: "root",
 })
 export class DashboardState {
+    private _month$ = new BehaviorSubject<number>(new Date().getMonth());
     private _monthSpan$ = new BehaviorSubject<number>(5);
     private _billsCounters$ = new BehaviorSubject<BillsMonthCount[]>([]);
     private _billsGroups$ = new BehaviorSubject<Array<Bill & BillData>[]>([]);
@@ -24,6 +25,11 @@ export class DashboardState {
     public readonly savings$ = this._savings$.asObservable();
     public readonly creditCards$ = this._creditCards$.asObservable();
     public readonly creditCardsSpan$ = this._creditCardsSpan$.asObservable();
+    public readonly month$ = this._month$.asObservable();
+
+    public updateMonth(month: number) {
+        this._month$.next(month);
+    }
 
     public updateMonthBills(bills: Array<Bill & BillData>) {
         this._monthBills$.next(bills);
