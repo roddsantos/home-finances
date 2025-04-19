@@ -17,7 +17,7 @@
             <mat-icon
                 [ngClass]="{
                     'home-icon': true,
-                    'material-symbols-outlined': '/' !== (generalState.page$ | async),
+                    'material-symbols-rounded': '/' !== (generalState.page$ | async),
                     binary: (generalState.theme$ | async) === 'binary'
                 }"
                 aria-hidden="false"

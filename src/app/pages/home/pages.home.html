@@ -3,41 +3,41 @@
     <div class="home-container">
         <!-- CURRENT DATE -->
         <card-component
-            id="home-date"
-            class="home-date"
-            [title]="(date | date :'EEEE')?.toLowerCase()"
+            id="hd"
+            class="hd"
+            [hideHeader]="true"
             [backgroundColor]="thirdColor"
         >
-            <p class="month">{{(date | date :'MMM')?.toLowerCase()}}</p>
-            <h1 class="day">{{date | date :'d'}}</h1></card-component
+            <div class="col" [style.width]="'100%'">
+                <p>{{(date | date :'MMM')?.toLowerCase()}}</p>
+                <h1 class="day" [style.left]="date.getDate() < 10 ? '46%': '40%'">
+                    {{date.getDate()}}
+                </h1>
+                <mat-icon
+                    class="material-symbols-rounded icon"
+                    fontIcon="calendar_today"
+                ></mat-icon>
+                <p>{{(date | date :'EEEE')?.toLowerCase()}}</p>
+            </div>
+        </card-component>
         >
         <!-- EXPENSES -->
-        <card-component
-            [actions]="actions"
-            id="home-total-expenses"
-            class="home-total-expenses"
-            title="monthly expenses"
-        >
-            <div class="total">
-                <div class="row">
-                    <div class="icon-container">
-                        <mat-icon
-                            class="material-symbols-outlined icon"
-                            fontIcon="receipt_long"
-                        ></mat-icon>
-                    </div>
-                    <div class="data">
-                        <h2>
-                            {{(homeState.expenses$ | async)?.total | currency: 'R$ '}}
-                        </h2>
-                        <p>
-                            {{"total in " + (homeState.expenses$ | async)?.count + "
-                            bills"}}
-                        </p>
-                    </div>
-                    <div
-                        [ngClass]="['home-delta', (homeState.expenses$ | async)!.delta > 0 ? 'red' : 'green']"
-                    >
+        <card-component id="hte" class="hte" [noDivisor]="true" [hideHeader]="true">
+            <div class="col" [style.margin]="'auto 0px'">
+                <div class="icon-container transparent">
+                    <mat-icon
+                        class="material-symbols-rounded icon"
+                        fontIcon="receipt_long"
+                    ></mat-icon>
+                </div>
+                <h3>{{(homeState.expenses$ | async)?.total | currency: 'R$ '}}</h3>
+                <p [style.marginTop]="'0.5rem'">
+                    {{"total in " + (homeState.expenses$ | async)?.count + " bills"}}
+                </p>
+                <div
+                    [ngClass]="['home-delta', (homeState.expenses$ | async)!.delta > 0 ? 'red' : 'green']"
+                >
+                    <div class="row">
                         <mat-icon
                             class="material-symbols-outlined icon-trending"
                             [fontIcon]="(homeState.expenses$ | async)!.delta > 0 ? 'trending_up' : 'trending_down'"
@@ -48,52 +48,40 @@
                         </p>
                     </div>
                 </div>
-                <div class="data">
-                    <h5>{{(homeState.expenses$ | async)?.settled| currency: 'R$ '}}</h5>
-                    <p>{{"paid"}}</p>
+            </div>
+        </card-component>
+        <!-- TOTAL PAID -->
+        <card-component id="htp" class="htp" [noDivisor]="true" [hideHeader]="true">
+            <div class="col" [style.margin]="'auto 0px'">
+                <div class="icon-container transparent">
+                    <mat-icon
+                        class="material-symbols-rounded icon"
+                        fontIcon="price_check"
+                    ></mat-icon>
+                </div>
+                <p>{{"paid expenses"}}</p>
+                <div class="row">
+                    <h3>{{(homeState.expenses$ | async)?.settled| currency: 'R$ '}}</h3>
                 </div>
             </div>
         </card-component>
-        <!-- RECENT BILLS -->
-        <card-component
-            [actions]="actions"
-            id="home-recents"
-            class="home-recents"
-            title="recent bills"
-        >
-            <div
-                *ngFor="let bill of (homeState.recentBills$ | async)"
-                class="list-item"
-                (click)="openBill(bill)"
-            >
-                <div
-                    class="category"
-                    [style.borderColor]="theme === 'binary' ? secondaryColor : primaryColor"
-                    [matTooltip]="bill.category.name"
-                    matTooltipPosition="above"
-                >
+        <!-- CREDIT CARD INVOICES -->
+        <card-component id="hcc" class="hcc" [hideHeader]="true">
+            <div class="col" [style.margin]="'auto 0px'">
+                <div class="icon-container transparent">
                     <mat-icon
-                        class="material-symbols-outlined icon"
-                        [fontIcon]="bill.category.icon"
+                        class="material-symbols-rounded icon"
+                        fontIcon="credit_card"
                     ></mat-icon>
                 </div>
-                <h6 class="name">{{ bill.name }}</h6>
-                <p class="type">{{ bill | bills: 'type' }}</p>
-                <p class="updated-at">{{ bill.updatedAt| date: 'medium' }}</p>
-                <p *ngIf="bill.type !== 'money'" class="parcel">
-                    {{ bill | bills: 'parcels' }}
-                </p>
+                <h3>{{(homeState.invoices$ | async)?.total || 0 | currency: 'R$ '}}</h3>
+                <p>{{"in " + (homeState.invoices$ | async)?.count + " credit cards"}}</p>
             </div>
         </card-component>
         <!-- DAILY BILLS QUANTITY -->
-        <card-component
-            [actions]="actions"
-            id="home-bill-quantity"
-            class="home-bill-quantity"
-            [hideHeader]="true"
-        >
-            <div class="container">
-                <div class="icon-container" [style.margin]="'auto auto 0px 0px'">
+        <card-component [actions]="actions" id="hbq" class="hbq" [hideHeader]="true">
+            <div class="col" [style.margin]="'auto 0px'">
+                <div class="icon-container transparent">
                     <mat-icon
                         class="material-symbols-outlined icon"
                         fontIcon="shopping_cart"
@@ -103,54 +91,92 @@
                 <p class="label">bills today</p>
             </div>
         </card-component>
-        <!-- BANK SAVINGS -->
-        <card-component
-            [actions]="bankActions"
-            id="home-savings"
-            class="home-savings"
-            title="savings"
-        >
-            <div class="total">
-                <div class="row">
-                    <div class="icon-container">
+        <!-- RECENT BILLS -->
+        <card-component [actions]="actions" id="hr" class="hr" title="recent bills">
+            <div class="col">
+                <div
+                    *ngFor="let bill of (homeState.recentBills$ | async)"
+                    class="list-item"
+                    (click)="openBill(bill)"
+                >
+                    <div
+                        class="category"
+                        [style.borderColor]="theme === 'binary' ? secondaryColor : primaryColor"
+                        [matTooltip]="bill.category.name"
+                        matTooltipPosition="above"
+                    >
                         <mat-icon
-                            class="material-symbols-outlined icon"
-                            fontIcon="savings"
+                            class="material-icons-outlined icon"
+                            [fontIcon]="bill.category.icon"
                         ></mat-icon>
                     </div>
-                    <div class="data">
-                        <h2>{{(homeState.savings$ | async)?.total | currency: 'R$ '}}</h2>
-                        <p>{{"in " + (homeState.savings$ | async)?.count + " banks"}}</p>
-                    </div>
-                </div>
-                <div class="data">
-                    <h5>{{(homeState.savings$ | async)?.toReceive| currency: 'R$ '}}</h5>
-                    <p>{{"to receive"}}</p>
+                    <p class="name">{{ bill.name }}</p>
+                    <p class="type">{{ bill | bills: 'type' }}</p>
+                    <p class="updated-at">{{ bill.updatedAt| date: 'medium' }}</p>
+                    <p *ngIf="bill.type !== 'money'" class="parcel">
+                        {{ bill | bills: 'parcels' }}
+                    </p>
                 </div>
             </div>
         </card-component>
-        <!-- CREDIT CARD INVOICES -->
-        <card-component
-            [actions]="creditCardActions"
-            id="home-credit-card"
-            class="home-credit-card"
-            title="credit cards"
-        >
-            <div class="total">
-                <div class="icon-container">
+        <!--  -->
+        <card-component id="hsl" class="hsl" [noDivisor]="true" [hideHeader]="true">
+            <div class="col" [style.margin]="'auto 0px'">
+                <div class="icon-container transparent">
                     <mat-icon
                         class="material-symbols-outlined icon"
-                        fontIcon="credit_card"
+                        fontIcon="savings"
                     ></mat-icon>
                 </div>
-                <div class="data">
-                    <h1>
-                        {{(homeState.invoices$ | async)?.total || 0 | currency: 'R$ '}}
-                    </h1>
-                    <p>
-                        {{"in " + (homeState.invoices$ | async)?.count + " credit cards"}}
-                    </p>
+                <h3
+                    [ngClass]="[(homeState.savings$ | async)!.total > 0 ? 'positive' : 'negative']"
+                >
+                    {{(homeState.savings$ | async)?.total | currency: 'R$ '}}
+                </h3>
+                <p>
+                    {{"total left in " + (homeState.savings$ | async)?.count + " banks"}}
+                </p>
+            </div>
+        </card-component>
+        <!-- TOTAL INCOME SAVINGS -->
+        <card-component id="hsi" class="hsi" [noDivisor]="true" [hideHeader]="true">
+            <div class="col" [style.margin]="'auto 0px'">
+                <div class="icon-container transparent">
+                    <mat-icon
+                        class="material-symbols-rounded icon"
+                        fontIcon="savings"
+                    ></mat-icon>
+                    <mat-icon
+                        class="material-symbols-filled icon-right"
+                        fontIcon="arrow_circle_down"
+                    ></mat-icon>
                 </div>
+                <div class="row">
+                    <h3>{{(homeState.savings$ | async)?.income| currency: 'R$ '}}</h3>
+                </div>
+                <p>{{"total income"}}</p>
+            </div>
+        </card-component>
+        <!-- BANK SAVINGS -->
+        <card-component id="hs" class="hs" title="savings" [hideHeader]="true">
+            <div class="col" [style.margin]="'auto 0px'">
+                <div class="icon-container transparent">
+                    <mat-icon
+                        class="material-symbols-rounded icon"
+                        fontIcon="savings"
+                    ></mat-icon>
+                    <mat-icon
+                        class="material-symbols-rounded icon-right"
+                        fontIcon="calendar_month"
+                    ></mat-icon>
+                </div>
+                <h3
+                    [ngClass]="[(homeState.savings$ | async)!.total > 0 ? 'positive' : 'negative']"
+                >
+                    {{((homeState.savings$ | async)!.income - (homeState.expenses$ |
+                    async)!.total)| currency: 'R$ '}}
+                </h3>
+                <p>month savings preview</p>
             </div>
         </card-component>
     </div>

@@ -1,83 +1,115 @@
 .home {
     width: 95%;
+    @media screen and (max-width: 900px) {
+        width: 100%;
+    }
 }
 
 .home-container {
     display: grid;
     grid-template-areas:
-        "home-date home-total-expenses home-total-expenses home-bill-quantity home-recents home-recents"
-        "home-savings home-savings home-credit-card home-credit-card home-recents home-recents";
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: repeat(2, 250px);
+        "hd hte htp hcc hr"
+        "hbq hsl hsi hs hr";
+    grid-template-columns: 0.7fr 1fr 1fr 1fr 1.5fr;
+    grid-template-rows: repeat(2, 200px);
     width: 100%;
     row-gap: 1rem;
     column-gap: 1rem;
-    @media screen and (max-width: 1400px) {
+    @media screen and (max-width: 1500px) {
         grid-template-areas:
-            "home-date home-total-expenses home-total-expenses home-bill-quantity"
-            "home-savings home-savings home-credit-card home-credit-card"
-            "home-recents home-recents home-recents home-recents"
-            "home-recents home-recents home-recents home-recents";
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-rows: repeat(4, 250px);
+            "hd hd hte hte htp htp"
+            "hbq hbq hsl hsl hsi hsi"
+            "hr hr hr hr hcc hcc"
+            "hr hr hr hr hs hs";
+        grid-template-columns: 0.7fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: repeat(4, 200px);
     }
-    @media screen and (max-width: 1150px) {
+    @media screen and (max-width: 900px) {
         grid-template-areas:
-            "home-date home-date home-bill-quantity home-bill-quantity"
-            "home-total-expenses home-total-expenses home-total-expenses home-total-expenses"
-            "home-savings home-savings home-savings home-savings"
-            "home-credit-card home-credit-card home-credit-card home-credit-card"
-            "home-recents home-recents home-recents home-recents"
-            "home-recents home-recents home-recents home-recents";
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-rows: repeat(6, 250px);
+            "hd hbq"
+            "hte htp"
+            "hsl hsi"
+            "hcc hs"
+            "hr hr"
+            "hr hr";
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(6, 200px);
     }
 }
 
-.home-date {
-    grid-area: home-date;
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    height: 100%;
-    text-align: center;
+}
+
+.mt {
+    margin: 10px auto auto 0px;
+}
+
+.hd {
+    display: flex;
+    grid-area: hd;
     & h1 {
-        font-size: 4rem;
+        font-size: 2.5rem;
         text-align: end;
+        position: absolute;
+        top: 85px;
+    }
+    & .icon {
+        font-size: 7rem;
+        height: 7rem;
+        width: 7rem;
+        margin: 0px auto 0px auto;
+        color: var(--text-1);
     }
     & p {
-        text-align: end;
+        text-align: center;
     }
 }
 
-.home-total-expenses {
-    grid-area: home-total-expenses;
-    & .total {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        & .row {
-            display: flex;
-            flex-direction: row;
-        }
-        & .data {
-            display: flex;
-            flex-direction: column;
-            margin: 10px auto auto 0px;
-        }
-        & .icon {
-            font-size: 3rem;
-            height: 3rem;
-            width: 3rem;
-            margin: auto;
-        }
-        & h1,
-        h2 {
-            color: var(--error);
-        }
+.hte {
+    grid-area: hte;
+    & h3 {
+        color: var(--error);
     }
 }
 
-.home-recents {
-    grid-area: home-recents;
+.htp {
+    grid-area: htp;
+}
+
+.hsl {
+    grid-area: hsl;
+    & h3.positive {
+        color: var(--success);
+    }
+    & h3.negative {
+        color: var(--error);
+    }
+    & p {
+        margin-top: 0.5rem;
+    }
+}
+
+.hsi {
+    grid-area: hsi;
+    & h3 {
+        color: var(--info);
+    }
+    & p {
+        margin-top: 0.5rem;
+    }
+}
+
+.hr {
+    grid-area: hr;
     & .list-item {
         cursor: pointer;
         display: grid;
@@ -87,6 +119,7 @@
         row-gap: 0.25rem;
         margin-bottom: 1rem;
         & .name {
+            font-weight: bold;
             grid-area: name;
             color: var(--text-1);
         }
@@ -123,68 +156,41 @@
     }
 }
 
-.home-savings {
-    grid-area: home-savings;
-    & .total {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        & .row {
-            display: flex;
-            flex-direction: row;
-        }
-        & .data {
-            display: flex;
-            flex-direction: column;
-            margin: 10px auto auto 0px;
-        }
-        & .icon {
-            font-size: 3rem;
-            height: 3rem;
-            width: 3rem;
-            margin: auto;
-        }
-        & h1,
-        h2 {
-            color: var(--info);
-            font-size: 2rem;
-        }
+.hs {
+    grid-area: hs;
+    & h3.positive {
+        color: var(--success);
+    }
+    & h3.negative {
+        color: var(--error);
+    }
+    & p {
+        margin-top: 0.5rem;
     }
 }
 
-.home-credit-card {
-    grid-area: home-credit-card;
-    & .total {
-        display: flex;
-        flex-direction: row;
-        height: 100%;
-        & .row {
-            display: flex;
-            flex-direction: row;
-        }
-        & .data {
-            margin: auto auto auto 0px;
-        }
-        & .icon {
-            font-size: 3rem;
-            height: 3rem;
-            width: 3rem;
-            margin: auto;
-        }
-        & h1 {
-            color: var(--error);
-            font-size: 2rem;
-        }
+.hcc {
+    grid-area: hcc;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    & h3 {
+        color: var(--error);
+    }
+    & p {
+        margin-top: 0.5rem;
     }
 }
 
 .home-delta {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     height: fit-content;
+    width: fit-content;
     border-radius: var(--border-radius);
-    margin: auto 0px auto auto;
     padding: 0.4rem;
+    opacity: 0.5;
     & .icon-trending {
         color: var(--text-3);
         font-size: 1rem;
@@ -195,52 +201,28 @@
         font-size: 0.75rem;
     }
     &.green {
-        border: var(--border-width) solid var(--success);
-        & p {
-            color: var(--success);
-        }
-        & .icon-trending {
+        background-color: rgb(from var(--success) r g b / 0.2);
+        & p,
+        .icon-trending {
             color: var(--success);
         }
     }
     &.red {
-        border: var(--border-width) solid var(--error-lighter);
-        & p {
-            color: var(--error);
-        }
-        & .icon-trending {
+        background-color: rgb(from var(--error) r g b / 0.2);
+        & p,
+        .icon-trending {
             color: var(--error);
         }
     }
 }
 
-.home-bill-quantity {
-    grid-area: home-bill-quantity;
-    & .container {
-        display: grid;
-        grid-template-areas: "icon-container day" "icon-container label";
-        grid-template-columns: 1fr 1fr;
-        padding: 1rem;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        & .icon {
-            font-size: 3rem;
-            height: 3rem;
-            width: 3rem;
-            margin: auto;
-        }
-        & .day {
-            grid-area: day;
-            font-size: 5rem;
-            margin: auto 0px 0px auto;
-        }
-        & .label {
-            grid-area: label;
-            margin: 0px 0px auto auto;
-        }
+.hbq {
+    grid-area: hbq;
+    & h1 {
+        color: var(--warning);
+    }
+    & p {
+        margin-top: 0.5rem;
     }
 }
 
@@ -253,8 +235,40 @@
     padding: 0.75rem;
     border-radius: var(--border-radius);
     background-color: var(--primary);
-    margin: auto 2rem auto 0px;
+    margin: auto 1rem auto 0px;
     & .icon {
+        font-size: 2.5rem;
+        height: 2.5rem;
+        width: 2.5rem;
+        margin: auto;
         color: var(--text-3);
+    }
+    & .icon-right {
+        font-size: 1rem;
+        height: 1rem;
+        width: 1rem;
+        margin: auto;
+        color: var(--text-3);
+    }
+    &.transparent {
+        background-color: transparent;
+        padding: 0rem 0rem 0.75rem;
+        & .icon {
+            font-size: 2.5rem;
+            height: 2.5rem;
+            width: 2.5rem;
+            margin: auto;
+            color: var(--text-1);
+        }
+        & .icon-right {
+            font-size: 1.5rem;
+            height: 1.5rem;
+            width: 1.5rem;
+            position: relative;
+            left: -14px;
+            top: 10px;
+            margin: auto;
+            color: var(--text-1);
+        }
     }
 }
