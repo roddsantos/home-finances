@@ -40,6 +40,10 @@
 }
 
 .mat-mdc-icon-button.mat-mdc-button-base {
-    padding: 8px !important;
-    --mdc-icon-button-state-layer-size: 40px !important;
+    padding: 6px !important;
+    --mdc-icon-button-state-layer-size: 32px !important;
+    & .mat-mdc-button-touch-target {
+        width: 32px !important;
+        height: 32px !important;
+    }
 }

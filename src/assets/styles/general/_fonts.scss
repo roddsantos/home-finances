@@ -1,43 +1,43 @@
 h1 {
     font-family: Ougkeh-Regular;
     color: var(--text-1);
-    font-size: 2.75rem;
+    font-size: calc(2.75 * var(--text-gen));
     height: 2.75rem;
 }
 
 h2 {
     font-family: Open-Sans-Regular;
     color: var(--text-1);
-    font-size: 2.2rem;
+    font-size: calc(2.2 * var(--text-gen));
 }
 
 h3 {
     font-family: Roboto-Regular;
     color: var(--text-1);
-    font-size: 1.8rem;
+    font-size: calc(1.8 * var(--text-gen));
 }
 
 h4 {
     font-family: Roboto-Regular;
     color: var(--text-1);
-    font-size: 1.6rem;
+    font-size: calc(1.6 * var(--text-gen));
 }
 h5 {
     font-family: Roboto-Regular;
     color: var(--text-1);
-    font-size: 1.4rem;
+    font-size: calc(1.4 * var(--text-gen));
 }
 
 h6 {
     font-family: Roboto-Regular;
     color: var(--text-1);
-    font-size: 1.2rem;
+    font-size: calc(1.2 * var(--text-gen));
 }
 
 p {
     font-family: Roboto-Regular;
     color: var(--text-1);
-    font-size: 1rem;
+    font-size: calc(1 * var(--text-gen));
 }
 
 @font-face {
