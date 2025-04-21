@@ -1,5 +1,5 @@
 <div
-    [ngClass]="['bill-container-item', billsState.billVisualization$ | async]"
+    [ngClass]="['bill-container-item', general.billsLayout$ | async]"
     (click)="openDetails(data, $event)"
 >
     <div class="bill-tags">
@@ -14,7 +14,7 @@
         </div>
         <div [ngClass]="['category-container','company', isLineTheme]">
             <mat-icon
-                class="material-symbols-outlined category-icon"
+                class="material-icons-outlined category-icon"
                 aria-hidden="false"
                 aria-label="icon"
                 [fontIcon]="data.category.icon"
@@ -22,7 +22,7 @@
             <p class="category-name">{{data.category.name}}</p>
         </div>
     </div>
-    <h3 class="title">{{ data.name }}</h3>
+    <h6 class="title">{{ data.name }}</h6>
     <p class="description">{{ data.description }}</p>
     <div [ngClass]="['date-container', dateLeft, isLineTheme]">
         <mat-icon
@@ -35,13 +35,12 @@
     </div>
     <actions
         class="bill-buttons"
-        [vertical]="(billsState.billVisualization$ | async) === 'grid'"
         [transparent]="false"
         [data]="data"
         [actions]="actions"
     ></actions>
     <div class="value-container">
         <div class="parcel"><p>{{data.parcel + 1}}</p></div>
-        <p class="value">{{data.totalParcel | currency: "R$ "}}</p>
+        <h6 class="value">{{data.totalParcel | currency: "R$ "}}</h6>
     </div>
 </div>

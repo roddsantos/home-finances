@@ -7,6 +7,7 @@ import {
     ThemeType,
 } from "src/app/core/types/general";
 import { THEMES } from "src/utils/constants/general";
+import { BillsLayoutType } from "../types/subjects";
 
 @Injectable({
     providedIn: "root",
@@ -17,12 +18,14 @@ export class GeneralState {
     private _themeObject$ = new BehaviorSubject<ThemeObjectType>(THEMES[0]);
     private _filterContainer$ = new BehaviorSubject<boolean>(true);
     private _page$ = new BehaviorSubject<RoutesType | string>(window.location.pathname);
+    private _billsLayout$ = new BehaviorSubject<BillsLayoutType>("grid");
 
     public readonly managerTabs$ = this._managerTab$.asObservable();
     public readonly theme$ = this._theme$.asObservable();
     public readonly themeObject$ = this._themeObject$.asObservable();
     public readonly filterContainer$ = this._filterContainer$.asObservable();
     public readonly page$ = this._page$.asObservable();
+    public readonly billsLayout$ = this._billsLayout$.asObservable();
 
     changeTab(tab: ManagerTabs) {
         this._managerTab$.next(tab);
@@ -42,5 +45,9 @@ export class GeneralState {
 
     changePage(page: RoutesType | string) {
         this._page$.next(page);
+    }
+
+    changeBillsLayout(view: BillsLayoutType) {
+        this._billsLayout$.next(view);
     }
 }

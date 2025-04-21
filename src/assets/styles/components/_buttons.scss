@@ -23,6 +23,10 @@
         width: 1.5rem !important;
         height: fit-content;
     }
+    & mat-icon {
+        color: var(--text-3);
+        margin: 0px !important;
+    }
 }
 
 .button-secondary {
@@ -37,9 +41,47 @@
         color: var(--text-1) !important;
         font-weight: bold !important;
     }
+    & mat-icon {
+        margin: 0px !important;
+    }
+}
+
+.button-outlined {
+    &.mat-mdc-button:not(:disabled) {
+        border-radius: var(--border-radius);
+        background-color: transparent;
+        color: var(--text-1) !important;
+        border: solid var(--border-width) var(--border-color);
+        padding: 1rem 0.8rem;
+    }
+
+    & p,
+    span {
+        color: var(--text-3) !important;
+        font-weight: bold !important;
+    }
+
+    &:disabled {
+        color: var(--text-1) !important;
+        background-color: var(--disabled) !important;
+        border-radius: var(--border-radius) !important;
+    }
+
+    & .spinner {
+        width: 1.5rem !important;
+        height: fit-content;
+    }
+    & mat-icon {
+        color: var(--text-3);
+        margin: 0px !important;
+    }
 }
 
 .mat-mdc-icon-button.mat-mdc-button-base {
-    padding: 8px !important;
-    --mdc-icon-button-state-layer-size: 40px !important;
+    padding: 6px !important;
+    --mdc-icon-button-state-layer-size: 32px !important;
+    & .mat-mdc-button-touch-target {
+        width: 32px !important;
+        height: 32px !important;
+    }
 }

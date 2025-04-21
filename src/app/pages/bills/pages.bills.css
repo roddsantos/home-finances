@@ -1,5 +1,4 @@
 .bills {
-    width: 100%;
 }
 
 .bills-header {
@@ -19,16 +18,19 @@
 
 .bill-list {
     margin-top: 20px;
-    display: grid;
-    grid-template-rows: max-content;
-    gap: 2%;
-    row-gap: 20px;
     width: 100%;
     &.list {
+        display: flex;
+        flex-direction: column;
         grid-template-columns: repeat(1, 100%);
+        row-gap: 20px;
     }
     &.grid {
+        display: grid;
         grid-template-columns: repeat(3, 32%);
+        grid-template-rows: max-content;
+        gap: 2%;
+        row-gap: 20px;
     }
 }
 
@@ -41,102 +43,6 @@
     &.binary {
         border: var(--border-width) solid var(--secondary);
     }
-}
-
-.margin {
-    display: flex;
-    margin: 10px 0px 20px auto;
-}
-
-.bill-expansion {
-    margin-bottom: 15px;
-    border-radius: 7px;
-    border: solid 1px var(--item-list-border);
-
-    &.mat-expansion-panel {
-        box-shadow: none;
-    }
-    & .mat-expanded {
-        border-radius: 10px 10px 0px 0px;
-        border: solid 1px var(--item-list-border);
-    }
-    & .mat-expansion-panel-body {
-        display: flex;
-        flex-direction: row !important;
-        justify-content: space-between;
-        background-color: var(--item-list);
-        padding-top: 16px;
-    }
-    & .mat-expansion-panel-body:hover .icons-container {
-        display: flex;
-        align-items: center;
-        z-index: 3;
-        background-color: var(--item-list);
-    }
-}
-
-.icons-container {
-    display: none;
-}
-
-.bill-expansion-container {
-    min-height: 55px;
-    background-color: var(--item-list) !important;
-    &:hover {
-        background-color: var(--item-list) !important;
-    }
-}
-
-.bill-title-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.bill-expanded-container {
-    display: grid;
-    grid-template-areas: "desc parcels total transaction icons-container";
-    width: 100%;
-}
-
-.bill-expanded-container.bank {
-    display: grid;
-    grid-template-areas: "desc bank2 transaction icons-container";
-    grid-template-columns: auto;
-    width: 100%;
-}
-
-.label {
-    font-weight: normal;
-    font-size: 12px;
-    color: var(--title);
-}
-.value {
-    font-weight: normal;
-    font-size: 16px;
-    color: var(--text-2);
-}
-
-.width-50 {
-    width: 50%;
-}
-
-.width-25 {
-    width: 25%;
-}
-
-.width-30 {
-    width: 30%;
-}
-
-.width-15 {
-    width: 15%;
-}
-
-.width-40 {
-    width: 40%;
 }
 
 .bill-color-container {
@@ -158,67 +64,54 @@
 
 .bill-container-item {
     display: grid;
-    padding: 16px;
+    padding: 0.75rem;
     cursor: pointer;
-    grid-template-areas:
-        "date-container date-container date-container bill-buttons"
-        "title title title bill-buttons"
-        "description description description bill-buttons"
-        "bill-tags bill-tags bill-tags bill-buttons"
-        "value-container value-container value-container bill-buttons";
-    grid-template-rows: repeat(5, max-content);
-    grid-template-columns: 1.5fr 1fr 1fr 0.1fr;
-    row-gap: 4px;
-    @media screen and (max-width: 1500px) {
-        grid-template-areas:
-            "date-container date-container date-container bill-buttons"
-            "title title title bill-buttons"
-            "description description description bill-buttons"
-            "bill-tags bill-tags bill-tags bill-buttons"
-            "value-container value-container value-container bill-buttons";
-        grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr;
-    }
     &.list {
-        grid-template-areas:
-            "title title bill-tags bill-tags date-container"
-            "description description value-container bill-buttons bill-buttons";
-        grid-template-rows: repeat(2, max-content);
-        grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
-        row-gap: 4px;
+        grid-template-areas: "title description bill-tags date-container value-container bill-buttons";
+        grid-template-rows: repeat(1, max-content);
+        grid-template-columns: 15% 30% 20% 13% 12% 10%;
+        column-gap: 4px;
+        padding: 0.5rem 1rem;
         @media screen and (max-width: 1500px) {
             grid-template-areas:
-                "date-container date-container date-container bill-buttons"
-                "title title title bill-buttons"
-                "description description description bill-buttons"
-                "bill-tags bill-tags bill-tags bill-buttons"
-                "value-container value-container value-container bill-buttons";
-            grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr;
+                "title title bill-tags bill-tags"
+                "description description bill-tags bill-tags"
+                "value-container value-container date-container bill-buttons";
+            grid-template-columns: 30% 25% 23% 22%;
+            grid-template-rows: repeat(3, max-content);
         }
-        .bill-buttons {
-            grid-area: bill-buttons;
-            display: none;
-            margin: 0px auto;
+        @media screen and (max-width: 1200px) {
+            grid-template-areas:
+                "date-container date-container bill-buttons bill-buttons"
+                "title title title title"
+                "description description description description"
+                "bill-tags bill-tags bill-tags bill-tags"
+                "value-container value-container value-container value-container";
+            grid-template-rows: repeat(5, max-content);
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
         }
     }
     &.grid {
         width: 100%;
         grid-template-areas:
-            "date-container date-container date-container bill-buttons"
-            "title title title bill-buttons"
-            "description description description bill-buttons"
-            "bill-tags bill-tags bill-tags bill-buttons"
-            "value-container value-container value-container bill-buttons";
+            "date-container date-container bill-buttons bill-buttons"
+            "title title title title"
+            "description description description description"
+            "bill-tags bill-tags bill-tags bill-tags"
+            "value-container value-container value-container value-container";
         grid-template-rows: repeat(5, max-content);
-        grid-template-columns: 1.5fr 1fr 1fr 0.1fr;
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
         row-gap: 4px;
         @media screen and (max-width: 1500px) {
             grid-template-areas:
-                "date-container date-container date-container bill-buttons"
-                "title title title bill-buttons"
-                "description description description bill-buttons"
-                "bill-tags bill-tags bill-tags bill-buttons"
-                "value-container value-container value-container bill-buttons";
-            grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr;
+                "date-container"
+                "title"
+                "description"
+                "bill-tags"
+                "value-container"
+                "bill-buttons";
+            grid-template-rows: repeat(6, auto);
+            grid-template-columns: 100%;
         }
     }
 }
@@ -229,9 +122,13 @@
     align-items: center;
     width: max-content;
     height: fit-content;
-    padding: 0.25rem 8px;
+    margin: auto 0px;
+    padding: 6px;
     border-radius: var(--border-radius);
     font-size: 0.75rem;
+    & p {
+        font-size: 0.75rem;
+    }
     & .date-icon {
         font-size: 1rem;
         height: auto;
@@ -255,7 +152,7 @@
     grid-area: value-container;
     display: flex;
     align-items: center;
-    margin: 0.5rem auto 0px 0px;
+    margin: auto 0px;
     & .parcel {
         border: 2px solid var(--text-1);
         border-radius: var(--border-radius);
@@ -283,7 +180,7 @@
     display: flex;
     width: max-content;
     align-items: center;
-    padding: 0.25rem 8px;
+    padding: 6px;
     height: 30px;
     border-style: solid;
     border-width: var(--border-width);
@@ -318,12 +215,12 @@
     display: flex;
     width: max-content;
     align-items: center;
-    padding: 8px;
+    padding: 6px;
     height: 30px;
     border-style: solid;
     border-width: var(--border-width);
     border-radius: var(--border-radius);
-    margin: auto 0.75rem;
+    margin: 0px 0.75rem;
     & .category-icon {
         color: var(--text-1);
     }
@@ -351,28 +248,25 @@
 
 .bill-buttons {
     grid-area: bill-buttons;
-    display: none;
-    margin-left: auto;
-    margin-right: 4px;
+    display: flex;
+    margin: auto;
 }
 
 .title {
     grid-area: title;
     color: var(--text-1);
-    font-family: Open-Sans-Bold;
+    margin: auto 0px;
 }
 
 .description {
     grid-area: description;
     color: var(--text-2);
+    margin: auto 0px;
 }
 
 .bill-tags {
     grid-area: bill-tags;
     display: flex;
     flex-direction: row;
-}
-
-.bill-container-item:hover .bill-buttons {
-    display: flex;
+    margin: auto 0px;
 }

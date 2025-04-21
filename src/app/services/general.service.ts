@@ -19,4 +19,9 @@ export class GeneralService {
         this.generalState.changeTheme(theme);
         localStorage.setItem("theme", theme);
     }
+
+    changeVisualization(view: "grid" | "list") {
+        localStorage.setItem("bills-view", view);
+        this.generalState.changeBillsLayout(view);
+    }
 }

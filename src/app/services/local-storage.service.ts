@@ -2,6 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { User } from "src/app/core/types/objects";
 import { ThemeType } from "src/app/core/types/general";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
+import { BillsLayoutType } from "../core/types/subjects";
 
 @Injectable({
     providedIn: "root",
@@ -57,5 +58,10 @@ export class LocalStorageService {
     removeTheme() {
         localStorage.removeItem("theme");
         this.generalState.changeTheme("default");
+    }
+
+    getBillsLayout() {
+        let billsView = localStorage.getItem("bills-view");
+        return (billsView || "grid") as BillsLayoutType;
     }
 }

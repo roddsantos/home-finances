@@ -1,9 +1,9 @@
 .buttons-container {
     display: flex;
     flex-direction: row;
-    position: absolute;
     z-index: 10;
-    height: auto;
+    height: max-content;
+    width: max-content;
     background-color: var(--bh);
     border-radius: var(--border-radius);
     &.transparent {
@@ -19,12 +19,14 @@
 }
 
 .icon-button {
-    position: relative;
-    margin: auto 0px auto auto;
     border: 0px;
     display: flex;
     justify-content: center;
     align-items: center;
+    & .icon {
+        font-size: 20px;
+        margin: auto auto 0px 0px;
+    }
 }
 
 .animate {
