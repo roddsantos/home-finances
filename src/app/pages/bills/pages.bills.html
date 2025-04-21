@@ -21,7 +21,7 @@
             [ngClass]="[(generalState.billsLayout$ | async) === 'grid' ? 'button-primary' : 'button-secondary']"
             (click)="generalService.changeVisualization('grid')"
         >
-            <mat-icon class="icon material-symbols-outlined">grid_view</mat-icon>
+            <mat-icon class="material-symbols-outlined">grid_view</mat-icon>
         </button>
 
         <pagination-template [style.margin]="'auto 0px auto 1rem'"></pagination-template>

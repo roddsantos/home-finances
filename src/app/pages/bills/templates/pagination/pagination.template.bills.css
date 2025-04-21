@@ -17,7 +17,7 @@
 .input-page-container {
     border-radius: var(--border-radius);
     height: 36px;
-    width: 60px;
+    width: 64px;
     background-color: var(--secondary);
     border: var(--border-width) solid var(--secondary);
     color: var(--text-1);

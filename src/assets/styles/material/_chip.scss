@@ -10,22 +10,36 @@
     &.category {
         &.binary {
             background-color: var(--background) !important;
-            border: solid 3px var(--warning) !important;
+            border: solid 3px var(--category) !important;
         }
-        background-color: var(--warning) !important;
+        background-color: var(--category) !important;
         & .mdc-evolution-chip__text-label {
-            color: #ffffff !important;
+            color: var(--text-1) !important;
         }
         & .mdc-evolution-chip__icon--trailing {
-            color: #ffffff !important;
+            color: var(--text-1) !important;
+        }
+    }
+    &.company {
+        &.binary {
+            background-color: var(--background) !important;
+            border: solid 3px var(--company) !important;
+        }
+        background-color: var(--company) !important;
+        & .mdc-evolution-chip__text-label {
+            color: var(--text-1) !important;
+        }
+        & .mdc-evolution-chip__icon--trailing {
+            color: var(--text-1) !important;
         }
     }
     &.creditcard {
         &.binary {
             background-color: var(--background) !important;
-            border: solid 3px var(--text-2) !important;
+            border: solid 3px var(--credit-card) !important;
+            color: var(--text-1);
         }
-        background-color: var(--text-2) !important;
+        background-color: var(--credit-card) !important;
         & .mdc-evolution-chip__text-label {
             color: #ffffff !important;
         }
@@ -37,9 +51,10 @@
     &.month {
         &.binary {
             background-color: var(--background) !important;
-            border: solid 3px #c97c7c !important;
+            border: solid 3px var(--bill) !important;
+            color: var(--text-1);
         }
-        background-color: #c97c7c !important;
+        background-color: var(--bill) !important;
         & .mdc-evolution-chip__text-label {
             color: var(--title) !important;
         }
@@ -50,9 +65,9 @@
     &.bank {
         &.binary {
             background-color: var(--background) !important;
-            border: solid 3px var(--info) !important;
+            border: solid 3px var(--bank) !important;
         }
-        background-color: var(--info) !important;
+        background-color: var(--bank) !important;
         & .mdc-evolution-chip__text-label {
             color: #ffffff !important;
         }
@@ -76,9 +91,9 @@
     &.status {
         &.binary {
             background-color: var(--background) !important;
-            border: solid 3px var(--secondary) !important;
+            border: solid 3px var(--default) !important;
         }
-        background-color: var(--secondary) !important;
+        background-color: var(--default) !important;
         & .mdc-evolution-chip__text-label {
             color: #ffffff !important;
         }
@@ -87,7 +102,9 @@
         }
     }
     &.min,
-    &.max {
+    &.max,
+    &.date1,
+    &.date2 {
         &.binary {
             background-color: var(--background) !important;
             border: solid 3px var(--default) !important;

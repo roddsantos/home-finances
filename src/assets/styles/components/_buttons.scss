@@ -23,6 +23,10 @@
         width: 1.5rem !important;
         height: fit-content;
     }
+    & mat-icon {
+        color: var(--text-3);
+        margin: 0px !important;
+    }
 }
 
 .button-secondary {
@@ -36,6 +40,40 @@
     span {
         color: var(--text-1) !important;
         font-weight: bold !important;
+    }
+    & mat-icon {
+        margin: 0px !important;
+    }
+}
+
+.button-outlined {
+    &.mat-mdc-button:not(:disabled) {
+        border-radius: var(--border-radius);
+        background-color: transparent;
+        color: var(--text-1) !important;
+        border: solid var(--border-width) var(--border-color);
+        padding: 1rem 0.8rem;
+    }
+
+    & p,
+    span {
+        color: var(--text-3) !important;
+        font-weight: bold !important;
+    }
+
+    &:disabled {
+        color: var(--text-1) !important;
+        background-color: var(--disabled) !important;
+        border-radius: var(--border-radius) !important;
+    }
+
+    & .spinner {
+        width: 1.5rem !important;
+        height: fit-content;
+    }
+    & mat-icon {
+        color: var(--text-3);
+        margin: 0px !important;
     }
 }
 

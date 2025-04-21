@@ -255,7 +255,6 @@
 .title {
     grid-area: title;
     color: var(--text-1);
-    font-family: Open-Sans-Bold;
     margin: auto 0px;
 }
 
