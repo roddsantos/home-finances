@@ -112,7 +112,7 @@ export class ModalNewBank implements OnInit {
         if (!this.bankForm.invalid) {
             this.bankApi
                 .createBank({
-                    ...(this.bankForm.value as BankObject),
+                    ...(this.bankForm.getRawValue() as Omit<BankObject, "userId">),
                 })
                 .subscribe({
                     next: (data) => {
