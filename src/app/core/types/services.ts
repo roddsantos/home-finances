@@ -37,7 +37,6 @@ export type BankObject = {
     name: string;
     description: string;
     color: string;
-    savings: number;
     userId: string;
 };
 
@@ -56,6 +55,7 @@ export type BillObjectBank = {
     bank1Id: string;
     bank2Id?: string;
     companyId?: string;
+    totalParcel?: number;
     isPayment: boolean;
 };
 

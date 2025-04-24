@@ -90,7 +90,7 @@ export type Bill = {
     updatedAt: string;
     createdAt: string;
     deletedAt: string | null;
-    totalParcel: number | null;
+    totalParcel: number;
     parcel: number;
 };
 

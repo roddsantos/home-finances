@@ -19,7 +19,7 @@ export class ServiceBank {
         );
     }
 
-    createBank(data: BankObject) {
+    createBank(data: Omit<BankObject, "userId">) {
         return this.user.user$.pipe(
             mergeMap((user) => this.http.post(BANK, { ...data, userId: user!.id }))
         );

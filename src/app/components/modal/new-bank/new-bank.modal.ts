@@ -26,6 +26,7 @@ import { Bank } from "src/app/core/types/objects";
 import { DIALOG_DATA } from "@angular/cdk/dialog";
 import { EditBankModalType } from "src/app/core/types/modal";
 import { mergeMap } from "rxjs";
+import { CommonModule } from "@angular/common";
 
 @Component({
     selector: "modal-new-bank",
@@ -39,6 +40,7 @@ import { mergeMap } from "rxjs";
         MatLabel,
         MatInputModule,
         ReactiveFormsModule,
+        CommonModule,
     ],
 })
 export class ModalNewBank implements OnInit {
@@ -78,6 +80,7 @@ export class ModalNewBank implements OnInit {
     ngOnInit() {
         this.modalState.onSubmitFooter(this.data.bank ? "edit" : "OK", "cancel");
         this.modalState.changeHeader(this.data.header || "new bank");
+        this.bankForm.controls.savings.disable();
     }
 
     onUpdate() {
@@ -109,7 +112,7 @@ export class ModalNewBank implements OnInit {
         if (!this.bankForm.invalid) {
             this.bankApi
                 .createBank({
-                    ...(this.bankForm.value as BankObject),
+                    ...(this.bankForm.getRawValue() as Omit<BankObject, "userId">),
                 })
                 .subscribe({
                     next: (data) => {

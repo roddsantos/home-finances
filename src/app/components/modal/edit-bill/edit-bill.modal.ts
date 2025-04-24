@@ -86,7 +86,7 @@ export class ModalEditBill {
             nonNullable: true,
         }),
         total: new FormControl<number>(
-            { value: 0, disabled: true },
+            { value: 0, disabled: false },
             {
                 nonNullable: true,
                 validators: [Validators.required, Validators.min(0.01)],
@@ -146,6 +146,8 @@ export class ModalEditBill {
             isPayment: this.data.bill.isPayment,
             isRefund: this.data.bill.isRefund,
         });
+        if (this.data.bill.settled || this.data.bill.type !== "money")
+            this.billForm.get("total")?.disable();
         this.modalState.changeFooter({
             type: "submit",
             submit: "update",
@@ -223,6 +225,7 @@ export class ModalEditBill {
                     bank1Id: bankFormValue.bank1!.id,
                     bank2Id: bankFormValue.bank2?.id,
                     companyId: bankFormValue.company?.id,
+                    totalParcel: billFormValue.total!,
                 });
                 break;
             case "creditCard":
