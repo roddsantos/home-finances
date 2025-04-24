@@ -37,7 +37,6 @@ export type BankObject = {
     name: string;
     description: string;
     color: string;
-    savings: number;
     userId: string;
 };
 
