@@ -56,6 +56,7 @@ export type BillObjectBank = {
     bank1Id: string;
     bank2Id?: string;
     companyId?: string;
+    totalParcel?: number;
     isPayment: boolean;
 };
 
