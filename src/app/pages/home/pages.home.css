@@ -61,16 +61,18 @@
         text-align: end;
         position: absolute;
         top: 85px;
+        color: var(--text-3);
     }
     & .icon {
         font-size: 7rem;
         height: 7rem;
         width: 7rem;
         margin: 0px auto 0px auto;
-        color: var(--text-1);
+        color: var(--text-3);
     }
-    & p {
+    & h4 {
         text-align: center;
+        color: var(--text-3);
     }
 }
 
