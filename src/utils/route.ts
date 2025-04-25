@@ -16,7 +16,7 @@ export const ROUTES: RouteItemType[] = [
     {
         page: "/bills",
         title: "bills",
-        icon: "calendar_month",
+        icon: "receipt_long",
         actions: true,
     },
     {

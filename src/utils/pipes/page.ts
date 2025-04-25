@@ -6,7 +6,7 @@ import { RoutesType } from "src/app/core/types/general";
     standalone: true,
 })
 export class PagePipe implements PipeTransform {
-    transform(page: RoutesType | "", format?: "plural" | "singular") {
+    transform(page: RoutesType | undefined, format?: "plural" | "singular") {
         switch (page) {
             case "/":
                 return "home";

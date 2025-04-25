@@ -9,17 +9,17 @@
         <li class="bank-li" *ngFor="let bank of (bankState.banks$ | async)">
             <div
                 [ngClass]="['bank-container', generalState.theme$ | async]"
-                (click)="openDetails(bank)"
+                (click)="openDetails(bank, $event)"
             >
                 <div class="bank-color" [style.backgroundColor]="bank.color"></div>
                 <h2 class="bank-title">{{bank.name}}</h2>
                 <p class="bank-description">{{bank.description}}</p>
                 <div class="bank-savings">
-                    <p class="secondary-text">value on bank:</p>
-                    <p>{{bank.savings| currency: "R$ "}}</p>
+                    <p class="secondary-text">savings</p>
+                    <h3>{{bank.savings| currency: "R$ "}}</h3>
                 </div>
                 <actions
-                    [vertical]="true"
+                    [transparent]="false"
                     class="bank-buttons"
                     [data]="bank"
                     [actions]="actions"

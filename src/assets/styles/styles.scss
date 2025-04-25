@@ -16,12 +16,14 @@
 
 :root {
     @include mat.all-component-themes(app-theme.$app-light-theme);
-    --input-unit: 1rem;
-    --input-position: 0.85rem;
+    --input-unit: 1.25rem;
+    --input-position: 1.2rem;
     --input-font: 0.75rem;
 
     --text-gen: 0.8rem;
-    --padding-gen: 0.5rem;
+    --padding-gen: 0.75rem;
+    --border-radius: 0.625rem;
+    --border-width: 1px;
 }
 
 * {
@@ -48,7 +50,7 @@
 
 body {
     min-height: 100dvh;
-    min-width: 100dvw;
+    width: 100dvw;
     background-color: var(--background);
     font-family: "Open-Sans-Regular";
 }
@@ -91,6 +93,7 @@ body {
     & .material-symbols-outlined {
         color: var(--secondary);
     }
+    --border-width: 2px;
 }
 
 .material-symbols-outlined,

@@ -22,14 +22,7 @@ import { ModalViewItem } from "src/app/components/modal/view-item/view-item.moda
     templateUrl: "./pages.banks.html",
     styleUrls: ["./pages.banks.css"],
     standalone: true,
-    imports: [
-        MatIcon,
-        MatButton,
-        FeedbackContainerComponent,
-        CommonModule,
-        MatIconButton,
-        ActionsComponent,
-    ],
+    imports: [FeedbackContainerComponent, CommonModule, ActionsComponent],
 })
 export class PageBanks {
     public bankService = inject(ServiceBank);
@@ -91,15 +84,18 @@ export class PageBanks {
         this.dialog.open(ModalNewBank, options);
     }
 
-    openDetails(bank: Bank) {
-        const option = {
-            data: {
-                item: { ...bank, sector: "bank" },
-                header: "view item: " + bank.name,
-                size: "md",
-            },
-        };
-        this.dialog.open(ModalViewItem, option);
+    openDetails(bank: Bank, event: any) {
+        const className = event.target.className;
+        if (className !== "mat-mdc-button-touch-target") {
+            const option = {
+                data: {
+                    item: { ...bank, sector: "bank" },
+                    header: "view item: " + bank.name,
+                    size: "md",
+                },
+            };
+            this.dialog.open(ModalViewItem, option);
+        }
     }
 
     onDelete() {

@@ -1,8 +1,7 @@
 .drawer-main {
-    min-width: 100vw;
-    max-height: 100vh;
-    min-width: 100dvw;
-    max-height: 100dvh;
+    width: 100dvw;
+    height: 100dvh;
+    overflow-x: hidden;
     background-color: var(--background);
 }
 
@@ -24,6 +23,8 @@
 
 .drawer-content {
     padding: 20px 20px 20px 40px;
+    margin-left: 18.25rem !important;
+    width: calc(100dvw - 18.25rem);
 }
 
 .toolbar {

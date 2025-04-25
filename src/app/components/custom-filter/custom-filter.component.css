@@ -127,7 +127,7 @@
     grid-area: filter-date;
     & .month-label {
         grid-area: month-label;
-        color: var(--text-2);
+        color: var(--text-1);
     }
     & .month-input {
         grid-area: month-input;
@@ -135,7 +135,7 @@
     }
     & .year-label {
         grid-area: year-label;
-        color: var(--text-2);
+        color: var(--text-1);
     }
     & .year-input {
         grid-area: year-input;
@@ -166,7 +166,7 @@
     grid-template-columns: 1fr 1fr;
     & .min-label {
         grid-area: min-label;
-        color: var(--text-2);
+        color: var(--text-1);
     }
     & .min-input {
         grid-area: min-input;
@@ -174,7 +174,7 @@
     }
     & .max-label {
         grid-area: max-label;
-        color: var(--text-2);
+        color: var(--text-1);
     }
     & .max-input {
         grid-area: max-input;
