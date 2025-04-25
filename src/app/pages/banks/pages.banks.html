@@ -5,10 +5,10 @@
         [info]="(bankState.status$ | async)!"
     ></feedback-container>
     <div class="bank-infos"></div>
-    <div class="bank-grid">
+    <div class="bank-grid grid">
         <li class="bank-li" *ngFor="let bank of (bankState.banks$ | async)">
             <div
-                [ngClass]="['bank-container', generalState.theme$ | async]"
+                [ngClass]="['bank-container', 'grid-item', generalState.theme$ | async]"
                 (click)="openDetails(bank, $event)"
             >
                 <div class="bank-color" [style.backgroundColor]="bank.color"></div>

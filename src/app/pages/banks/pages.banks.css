@@ -1,5 +1,5 @@
 .bank {
-    width: 90%;
+    width: 100%;
 }
 
 .bank-li {
@@ -11,9 +11,7 @@
 }
 
 .bank-grid {
-    display: grid;
-    grid-template-columns: 33% 33% 33%;
-    column-gap: 30px;
+    grid-template-columns: repeat(3, auto);
 }
 
 .bank-container {
@@ -22,15 +20,11 @@
         "bank-color bank-title bank-title bank-buttons"
         "bank-description bank-description bank-description bank-description"
         "bank-savings bank-savings bank-savings bank-savings";
-    grid-template-columns: 5% 40% 30% 25%;
+    grid-template-columns: 1fr 8fr 6fr 5fr;
     grid-template-rows: repeat(3, auto);
-    width: 100%;
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
     min-height: 150px;
-    padding: var(--padding-gen) 1rem;
-    border-radius: var(--border-radius);
-    background-color: var(--bh);
-    border: solid var(--border-width) var(--bh);
-    cursor: pointer;
     @media screen and (max-width: 900px) {
         grid-template-areas:
             "bank-color bank-title"

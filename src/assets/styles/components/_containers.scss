@@ -33,3 +33,18 @@
         border-style: none;
     }
 }
+
+.grid {
+    display: grid;
+    column-gap: 2rem;
+    row-gap: 2rem;
+}
+
+.grid-item {
+    width: 100%;
+    padding: var(--padding-gen);
+    border-radius: var(--border-radius);
+    background-color: var(--bh);
+    border: solid var(--border-width) var(--bh);
+    cursor: pointer;
+}

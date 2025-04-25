@@ -5,10 +5,10 @@
         [info]="(ccState.status$ | async)!"
     ></feedback-container>
     <div class="cc-infos"></div>
-    <div class="cc-grid">
+    <div class="cc-grid grid">
         <li class="cc-li" *ngFor="let creditCard of (ccState.creditCards$ | async)">
             <div
-                [ngClass]="['cc-container', generalState.theme$ | async]"
+                [ngClass]="['cc-container', 'grid-item', generalState.theme$ | async]"
                 (click)="openDetails(creditCard, $event)"
             >
                 <div class="cc-color" [style.backgroundColor]="creditCard.color"></div>
