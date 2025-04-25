@@ -5,28 +5,33 @@
         [info]="(ccState.status$ | async)!"
     ></feedback-container>
     <div class="cc-infos"></div>
-    <div class="cc-grid">
+    <div class="cc-grid grid">
         <li class="cc-li" *ngFor="let creditCard of (ccState.creditCards$ | async)">
             <div
-                [ngClass]="['cc-container', generalState.theme$ | async]"
+                [ngClass]="['cc-container', 'grid-item', generalState.theme$ | async]"
                 (click)="openDetails(creditCard, $event)"
             >
                 <div class="cc-color" [style.backgroundColor]="creditCard.color"></div>
                 <div class="cc-title-container">
                     <h2 class="title">{{creditCard.name}}</h2>
+                </div>
+                <div [ngClass]="['cc-tags']">
+                    <div class="cc-month tag no-border">
+                        <p>
+                            {{(creditCard.month > 8 ? "" : "0") + (creditCard.month + 1)+
+                            '/' + creditCard.year }}
+                        </p>
+                    </div>
                     <div
                         *ngIf="(creditCard | creditCard : 'status') !== 'current'"
-                        class="status"
-                        [style.backgroundColor]="(creditCard | creditCard : 'status') === 'paid' ? successColor : errorColor"
+                        [ngClass]="['cc-status', 'tag', 'no-border', (creditCard | creditCard : 'status') === 'paid' ? 'paid' : 'pending']"
+                        class="cc-status"
                     >
-                        {{creditCard | creditCard : 'status'}}
+                        <p>{{creditCard | creditCard : 'status'}}</p>
                     </div>
                 </div>
                 <p class="cc-description">{{creditCard.description}}</p>
-                <p class="cc-month">
-                    {{(creditCard.month > 8 ? "" : "0") + (creditCard.month + 1)+ '/' +
-                    creditCard.year }}
-                </p>
+
                 <img
                     class="cc-flag"
                     *ngIf="creditCard.flag !== 'other'"
@@ -35,7 +40,7 @@
                 <div class="cc-invoice">
                     <p class="secondary-text">limit:</p>
                     <div class="limit">
-                        <p class="left">{{creditCard.limitLeft | currency: "R$ "}}</p>
+                        <h3 class="left">{{creditCard.limitLeft | currency: "R$ "}}</h3>
                         <p class="total">{{"/"+ (creditCard.limit| currency: "R$ ")}}</p>
                     </div>
                 </div>
@@ -44,25 +49,9 @@
                     class="cc-buttons"
                     [data]="creditCard"
                     [actions]="creditCard.isClosed ? [] : actions"
-                    [vertical]="true"
                     [transparent]="false"
                 ></actions>
-
-                <!-- <div
-                    class="cc-color-container"
-                    [style.backgroundColor]="creditCard.color"
-                ></div> -->
-                <!-- <div class="cc-progress-container" [style.borderColor]="creditCard.color">
-                    <div
-                        class="cc-progress-bar"
-                        [ngStyle]="{
-                            width: (creditCard.limitLeft / creditCard.limit) * 100 + '%',
-                            backgroundColor: creditCard.color
-                        }"
-                    ></div>
-                </div> -->
             </div>
-            <!-- <div class="cc-highlighter"></div> -->
         </li>
     </div>
 </div>

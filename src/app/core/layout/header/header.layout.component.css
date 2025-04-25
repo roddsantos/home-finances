@@ -3,11 +3,14 @@
     flex-direction: row;
     grid-template-areas: "header-search header-action header-notifications";
     grid-template-columns: 70% 25% 5%;
-    width: 100%;
+    width: calc(100% - 22.25rem);
     min-height: 50px;
     border-radius: 10px;
     align-items: center;
-    padding: 20px 0px 0px;
+    padding: 20px 0px;
+    position: fixed;
+    z-index: 10;
+    background-color: var(--background);
 }
 
 .header-search {
@@ -51,6 +54,9 @@
 .header-action {
     margin: auto 0px auto auto;
     grid-area: header-action;
+    & .icon {
+        margin-right: 0.5rem !important;
+    }
 }
 
 .header-input {

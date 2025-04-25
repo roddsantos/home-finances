@@ -52,13 +52,26 @@
         </mat-autocomplete>
     </mat-form-field>
     <button
-        *ngIf="getPageObject()?.actions || false"
+        *ngIf="screen?.actions || false"
         mat-button
         class="header-action button-primary"
         aria-label="action company button"
         (click)="openModal()"
     >
-        {{ "new " + (getPageObject()?.page || "" | page) }}
+        <mat-icon
+            matPrefix
+            aria-hidden="false"
+            aria-label="Add icon"
+            fontIcon="add"
+        ></mat-icon>
+        <mat-icon
+            matPrefix
+            class="icon"
+            aria-hidden="false"
+            aria-label="Add icon"
+            [fontIcon]="screen?.icon || ''"
+        ></mat-icon>
+        <p>{{ "new " + (screen?.page | page) }}</p>
     </button>
     <button
         class="header-notifications"

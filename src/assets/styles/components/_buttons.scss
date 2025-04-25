@@ -1,4 +1,5 @@
 .button-primary {
+    width: max-content;
     &.mat-mdc-button:not(:disabled) {
         border-radius: var(--border-radius);
         background-color: var(--primary);
@@ -11,6 +12,7 @@
     span {
         color: var(--text-3) !important;
         font-weight: bold !important;
+        font-family: GT-Eesti-Text-Regular;
     }
 
     &:disabled {
@@ -30,6 +32,7 @@
 }
 
 .button-secondary {
+    width: max-content;
     &.mat-mdc-button:not(:disabled) {
         border-radius: var(--border-radius);
         background-color: transparent;
@@ -40,6 +43,7 @@
     span {
         color: var(--text-1) !important;
         font-weight: bold !important;
+        font-family: GT-Eesti-Text-Regular;
     }
     & mat-icon {
         margin: 0px !important;
@@ -47,6 +51,7 @@
 }
 
 .button-outlined {
+    width: max-content;
     &.mat-mdc-button:not(:disabled) {
         border-radius: var(--border-radius);
         background-color: transparent;
@@ -59,6 +64,7 @@
     span {
         color: var(--text-3) !important;
         font-weight: bold !important;
+        font-family: GT-Eesti-Text-Regular;
     }
 
     &:disabled {

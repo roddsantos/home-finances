@@ -17,3 +17,34 @@
 .icons-buttons {
     display: none;
 }
+
+.tag {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    justify-content: center;
+    height: max-content;
+    text-align: center;
+    padding: 0.25rem 0.5rem;
+    border-style: solid;
+    border-width: var(--border-width);
+    border-radius: var(--border-radius);
+    &.no-border {
+        border-style: none;
+    }
+}
+
+.grid {
+    display: grid;
+    column-gap: 2rem;
+    row-gap: 2rem;
+}
+
+.grid-item {
+    width: 100%;
+    padding: var(--padding-gen);
+    border-radius: var(--border-radius);
+    background-color: var(--bh);
+    border: solid var(--border-width) var(--bh);
+    cursor: pointer;
+}

@@ -3,7 +3,7 @@
     title="themes"
     description="choose a theme for the application"
 >
-    <div class="themes">
+    <div class="themes grid">
         <div
             class="theme-container"
             *ngFor="let th of themes"
@@ -13,7 +13,7 @@
                   selected: selectedTheme === th.id
                 }"
         >
-            <h3>{{th.title}}</h3>
+            <h4>{{th.title}}</h4>
             <p>{{th.description}}</p>
             <div class="theme-pallete">
                 <div

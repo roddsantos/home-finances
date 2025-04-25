@@ -8,9 +8,10 @@
             }
             & .mat-mdc-select-value {
                 font-size: var(--input-font) !important;
-                color: var(--text-1);
+                color: var(--text-1) !important;
                 & .mat-mdc-select-placeholder {
                     font-size: var(--input-font) !important;
+                    color: var(--text-1) !important;
                 }
             }
         }

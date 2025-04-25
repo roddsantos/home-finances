@@ -5,13 +5,13 @@
         [info]="(categoryState.status$ | async)!"
     ></feedback-container>
     <div class="category-infos"></div>
-    <div class="category-grid">
+    <div class="category-grid grid">
         <li
             class="category-li"
             *ngFor="let category of (categoryState.categories$ | async)"
         >
             <div
-                class="category-container"
+                class="category-container grid-item"
                 [ngClass]="[ generalState.theme$ | async]"
                 (click)="openDetails(category, $event)"
             >
@@ -19,7 +19,7 @@
                     class="category-color"
                     [style.backgroundColor]="category.color"
                 ></div>
-                <h2 class="category-title">{{category.name}}</h2>
+                <h3 class="category-title">{{category.name}}</h3>
                 <p class="category-description">{{category.description}}</p>
                 <mat-icon
                     class="category-icon"

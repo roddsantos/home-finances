@@ -11,7 +11,6 @@ import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { FilterDisplay } from "src/app/core/types/components";
-import { ColorPipe } from "src/utils/pipes/colors";
 import { SectorPipe } from "src/utils/pipes/sector";
 import { ROUTES } from "src/utils/route";
 import { removeDiacritics } from "src/utils/validators";
@@ -24,6 +23,7 @@ import { ModalNewCreditCard } from "src/app/components/modal/new-credit-card/new
 import { ModalNewCompany } from "src/app/components/modal/new-company/new-company.modal";
 import { ModalNewCategory } from "src/app/components/modal/new-category/new-category.modal";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
+import { GeneralState } from "../../subjects/subjects.general";
 
 @Component({
     standalone: true,
@@ -47,6 +47,7 @@ export class HeaderLayoutComponent {
     public categories = inject(CategoryState);
     public banks = inject(BankState);
     public companies = inject(CompanyState);
+    public generalState = inject(GeneralState);
     public billService = inject(ServiceBill);
     public dialog = inject(Dialog);
 
@@ -166,6 +167,13 @@ export class HeaderLayoutComponent {
         this.screen = ROUTES.find((r) => {
             return r.page === window.location.pathname;
         });
+        this.generalState.page$.subscribe({
+            next: (page) => {
+                this.screen = ROUTES.find((route) => {
+                    return route.page === page;
+                });
+            },
+        });
     }
 
     onType(e: Event) {
@@ -188,13 +196,7 @@ export class HeaderLayoutComponent {
         return option.name;
     }
 
-    getPageObject() {
-        this.actualPage = window.location.pathname;
-        this.screen = ROUTES.find((r) => {
-            return r.page === window.location.pathname;
-        });
-        return this.screen;
-    }
+    getPageObject() {}
 
     openModal() {
         let options = {

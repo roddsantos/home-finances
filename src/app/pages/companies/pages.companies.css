@@ -1,52 +1,52 @@
 .company {
-    width: 90%;
+    width: 100%;
 }
 
 .company-li {
     list-style: none;
 }
 
-.company-infos {
-    width: 100%;
-}
-
 .company-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 25%);
-    column-gap: 30px;
+    grid-template-columns: repeat(4, auto);
+    @media screen and (max-width: 1366px) {
+        grid-template-columns: repeat(3, auto);
+    }
+    @media screen and (max-width: 900px) {
+        grid-template-columns: repeat(2, auto);
+    }
+    @media screen and (max-width: 600px) {
+        grid-template-columns: repeat(1, auto);
+    }
 }
 
 .company-container {
     display: grid;
     grid-template-areas:
         "company-color company-title company-buttons"
-        "company-description company-description company-buttons";
-    grid-template-columns: 1fr 12fr 1fr;
-    flex-direction: row;
+        "company-description company-description company-description";
+    grid-template-columns: 1fr 12fr 3fr;
+    grid-template-rows: repeat(2, auto);
     column-gap: 0.5rem;
-    width: 100%;
-    height: 120px;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: var(--bh);
-    border: solid var(--border-width) var(--bh);
-    z-index: 2;
-    cursor: pointer;
-
+    row-gap: 0.5rem;
+    min-height: 120px;
+    @media screen and (max-width: 1366px) {
+        grid-template-areas:
+            "company-color company-title company-title"
+            "category-description category-description category-description"
+            "category-icon category-icon category-buttons";
+        grid-template-columns: 1fr 12fr 3fr;
+        row-gap: 0.5rem;
+        grid-template-rows: repeat(3, auto);
+    }
     &.binary {
         border: solid var(--border-width) var(--secondary);
     }
-
-    /* &:hover {
-          border-width: 3px 3px 8px 3px;
-          min-height: 205px;
-      } */
 }
 
 .company-title {
     grid-area: company-title;
     font-weight: bold;
-    width: 50%;
+    width: 100%;
     margin: auto 10px auto 0px;
 }
 
@@ -61,19 +61,15 @@
 
 .company-color {
     width: 10px;
-    height: 30px;
+    height: 100%;
     margin: auto;
 }
 
 .company-buttons {
     grid-area: company-buttons;
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.company-container:hover .company-buttons {
-    display: flex;
 }
 
 .secondary-text {
