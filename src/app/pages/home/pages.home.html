@@ -9,7 +9,7 @@
             [backgroundColor]="thirdColor"
         >
             <div class="col" [style.width]="'100%'">
-                <p>{{(date | date :'MMM')?.toLowerCase()}}</p>
+                <h4>{{(date | date :'MMM')?.toLowerCase()}}</h4>
                 <h1 class="day" [style.left]="date.getDate() < 10 ? '46%': '40%'">
                     {{date.getDate()}}
                 </h1>
@@ -17,10 +17,9 @@
                     class="material-symbols-rounded icon"
                     fontIcon="calendar_today"
                 ></mat-icon>
-                <p>{{(date | date :'EEEE')?.toLowerCase()}}</p>
+                <h4>{{(date | date :'EEEE')?.toLowerCase()}}</h4>
             </div>
         </card-component>
-        >
         <!-- EXPENSES -->
         <card-component id="hte" class="hte" [noDivisor]="true" [hideHeader]="true">
             <div class="col" [style.margin]="'auto 0px'">
