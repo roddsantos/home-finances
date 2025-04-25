@@ -3,10 +3,10 @@
     title="profile"
     description="view and edit your personal info"
 >
-    <div>
+    <div class="profile">
         <form [formGroup]="profileForm">
             <div class="profile-form">
-                <h3 class="profile-name">name</h3>
+                <h4 class="profile-name">name</h4>
                 <p class="profile-name-description">your first name</p>
                 <div class="profile-name-input">
                     <mat-form-field class="input" appearance="outline">
@@ -17,7 +17,7 @@
                         }
                     </mat-form-field>
                 </div>
-                <h3 class="profile-surname">surname</h3>
+                <h4 class="profile-surname">surname</h4>
                 <p class="profile-surname-description">your last name</p>
                 <div class="profile-surname-input">
                     <mat-form-field class="input" appearance="outline">
@@ -33,7 +33,7 @@
                         }
                     </mat-form-field>
                 </div>
-                <h3 class="profile-username">username</h3>
+                <h4 class="profile-username">username</h4>
                 <p class="profile-username-description">
                     your username to access the app
                 </p>
@@ -55,35 +55,34 @@
                 </div>
             </div>
         </form>
+
+        <button
+            *ngIf="!((profileForm.valueChanges | async)! | user: 'compare')"
+            (click)="onUpdate()"
+            mat-button
+            class="button-primary update"
+        >
+            <mat-icon
+                aria-hidden="false"
+                aria-label="Example home icon"
+                fontIcon="save"
+            ></mat-icon>
+            <p>update</p>
+        </button>
+        <button
+            (click)="onLogout()"
+            [disabled]="!((profileForm.valueChanges | async)! | user: 'compare')"
+            mat-button
+            class="button-secondary logout"
+            [style.opacity]="!((profileForm.valueChanges | async)! | user: 'compare') ? 0.4 : 1"
+            [style.backgroundColor]="(errorColor | color:'33')"
+        >
+            <mat-icon
+                aria-hidden="false"
+                aria-label="Example home icon"
+                fontIcon="logout"
+            ></mat-icon>
+            <p>logout</p>
+        </button>
     </div>
-
-    <button
-        *ngIf="!((profileForm.valueChanges | async)! | user: 'compare')"
-        (click)="onUpdate()"
-        mat-button
-        class="button-primary update"
-    >
-        <mat-icon
-            aria-hidden="false"
-            aria-label="Example home icon"
-            fontIcon="save"
-        ></mat-icon>
-        <p>update</p>
-    </button>
-
-    <button
-        (click)="onLogout()"
-        [disabled]="!((profileForm.valueChanges | async)! | user: 'compare')"
-        mat-button
-        class="button-secondary logout"
-        [style.opacity]="!((profileForm.valueChanges | async)! | user: 'compare') ? 0.4 : 1"
-        [style.backgroundColor]="(errorColor | color:'33')"
-    >
-        <mat-icon
-            aria-hidden="false"
-            aria-label="Example home icon"
-            fontIcon="logout"
-        ></mat-icon>
-        <p>logout</p>
-    </button>
 </card-component>
