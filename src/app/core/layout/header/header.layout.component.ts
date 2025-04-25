@@ -40,6 +40,7 @@ import { GeneralState } from "../../subjects/subjects.general";
         MatButtonModule,
         MatIconButton,
     ],
+    providers: [PagePipe],
 })
 export class HeaderLayoutComponent {
     @ViewChild("action", { read: ViewContainerRef }) action: ViewContainerRef;
@@ -50,6 +51,7 @@ export class HeaderLayoutComponent {
     public generalState = inject(GeneralState);
     public billService = inject(ServiceBill);
     public dialog = inject(Dialog);
+    public pagePipe = inject(PagePipe);
 
     public search$ = new BehaviorSubject<string>("");
     public actualPage: string;
@@ -201,13 +203,13 @@ export class HeaderLayoutComponent {
     openModal() {
         let options = {
             data: {
-                header: "new " + (this.screen?.title || "").substring(-1),
+                header: `new ${this.pagePipe.transform(this.screen?.page)}`,
                 size: "md",
             },
             hasBackdrop: true,
             backdropClass: "modal-backdrop",
         };
-        switch (this.actualPage as RoutesType) {
+        switch (this.screen?.page) {
             case "/bills":
                 this.dialog.open(ModalNewBill, options);
                 break;

@@ -39,3 +39,11 @@
 .third {
     width: 31%;
 }
+
+.step-title {
+    margin: auto auto 0rem 0px;
+}
+
+.step-desc {
+    margin: auto auto 1rem 0px;
+}
