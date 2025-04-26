@@ -22,7 +22,8 @@
 
     --text-gen: 0.8rem;
     --padding-gen: 0.75rem;
-    --border-radius: 0.625rem;
+
+    --border-radius: 0.5rem;
     --border-width: 1px;
 }
 
@@ -30,7 +31,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Inter", sans-serif;
+    font-family: "GT-Eesti-Text-Book";
     &::-webkit-scrollbar {
         width: 15px;
         border-radius: 3px;

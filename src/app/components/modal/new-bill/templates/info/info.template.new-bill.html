@@ -1,33 +1,50 @@
 <div class="modal-content">
-    <h1>main info</h1>
-    <form [formGroup]="infoForm">
-        <div class="form-container">
-            <mat-form-field class="new-bill-field" appearance="outline">
+    <h3 class="step-title">main info</h3>
+    <p class="step-desc">general info of the bill</p>
+    <form [formGroup]="infoForm" class="form-container">
+        <mat-form-field class="new-bill-field" appearance="outline">
+            <mat-label>title</mat-label>
+            <input formControlName="name" maxlength="100" required matInput />
+            @if (infoErrors.name?.["required"]) {
+            <mat-error>{{errorMessage.name}}</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field class="new-bill-field" appearance="outline">
+            <mat-label>description</mat-label>
+            <input formControlName="description" maxlength="100" matInput />
+            @if (infoErrors.description?.["required"]) {
+            <mat-error>{{errorMessage.description}}</mat-error>
+            }
+        </mat-form-field>
+        <div class="new-bill-field">
+            <mat-form-field class="new-bill-field half" appearance="outline">
                 <mat-label>category</mat-label>
                 <mat-select formControlName="category">
                     @for (cat of catState.categories$ | async; track $index) {
-                    <mat-option [value]="cat" [value]="cat">{{cat.name}}</mat-option>
+                    <mat-option [value]="cat" [value]="cat">
+                        <mat-icon
+                            class="material-icons-outlined"
+                            [fontIcon]="cat.icon"
+                        ></mat-icon>
+                        <p>{{cat.name}}</p>
+                    </mat-option>
                     }
+                    <mat-select-trigger
+                        class="selected-trigger"
+                        *ngIf="infoForm.value.category"
+                    >
+                        <mat-icon
+                            class="material-icons-outlined icon"
+                            [fontIcon]="infoForm.value.category!.icon"
+                        ></mat-icon>
+                        <p>{{infoForm.value.category!.name}}</p>
+                    </mat-select-trigger>
                 </mat-select>
                 @if (infoErrors.category?.["required"]) {
                 <mat-error>{{errorMessage.category}}</mat-error>
                 }
             </mat-form-field>
-            <mat-form-field class="new-bill-field" appearance="outline">
-                <mat-label>title</mat-label>
-                <input formControlName="name" maxlength="100" required matInput />
-                @if (infoErrors.name?.["required"]) {
-                <mat-error>{{errorMessage.name}}</mat-error>
-                }
-            </mat-form-field>
-            <mat-form-field class="new-bill-field" appearance="outline">
-                <mat-label>description</mat-label>
-                <input formControlName="description" maxlength="100" matInput />
-                @if (infoErrors.description?.["required"]) {
-                <mat-error>{{errorMessage.description}}</mat-error>
-                }
-            </mat-form-field>
-            <mat-form-field class="new-bill-field" appearance="outline">
+            <mat-form-field class="new-bill-field half" appearance="outline">
                 <mat-label>bill value</mat-label>
                 <input formControlName="total" matInput type="number" />
                 @if (infoErrors.total !== null) {
