@@ -1,0 +1,8 @@
+.mat-mdc-text-field-wrapper {
+    & .mat-mdc-form-field-icon-suffix {
+        margin-right: 0.5rem;
+        & .mat-mdc-icon-button {
+            color: var(--text-1);
+        }
+    }
+}

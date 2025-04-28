@@ -1,76 +1,71 @@
 <div class="modal-content">
-    <h1>final setup</h1>
-    <form [formGroup]="configForm">
-        <div class="form-container">
-            <ng-container *ngIf="configData.type === 'money'">
-                <p>money flow</p>
-                <mat-button-toggle-group
-                    formControlName="isPayment"
-                    name="moneyy flow"
-                    aria-label="Font Style"
-                    class="margin"
-                >
-                    <mat-button-toggle [value]="true">outcome</mat-button-toggle>
-                    <mat-button-toggle [value]="false">income</mat-button-toggle>
-                </mat-button-toggle-group></ng-container
-            >
-            <ng-container *ngIf="configData.type === 'creditCard'">
-                <p>is refund?</p>
-                <mat-button-toggle-group
-                    formControlName="isRefund"
-                    name="refund"
-                    aria-label="Font Style"
-                    class="margin"
-                >
-                    <mat-button-toggle [value]="true">yes</mat-button-toggle>
-                    <mat-button-toggle [value]="false">no</mat-button-toggle>
-                </mat-button-toggle-group></ng-container
-            >
-            <p>payment processed?</p>
+    <h3 class="step-title">final setup</h3>
+    <p class="step-desc">config of the date and money flow</p>
+    <form [formGroup]="configForm" class="form-container">
+        <ng-container *ngIf="configData.type === 'money'">
+            <p>money flow</p>
             <mat-button-toggle-group
-                formControlName="settled"
-                name="settled"
+                formControlName="isPayment"
+                name="moneyy flow"
                 aria-label="Font Style"
                 class="margin"
-                (change)="settledChange($event)"
+            >
+                <mat-button-toggle [value]="true">outcome</mat-button-toggle>
+                <mat-button-toggle [value]="false">income</mat-button-toggle>
+            </mat-button-toggle-group></ng-container
+        >
+        <ng-container *ngIf="configData.type === 'creditCard'">
+            <p>is refund?</p>
+            <mat-button-toggle-group
+                formControlName="isRefund"
+                name="refund"
+                aria-label="Font Style"
+                class="margin"
             >
                 <mat-button-toggle [value]="true">yes</mat-button-toggle>
                 <mat-button-toggle [value]="false">no</mat-button-toggle>
-            </mat-button-toggle-group>
-            <div class="new-bill-field">
-                <ng-container *ngIf="configForm.value.settled">
-                    <mat-form-field class="half" appearance="outline" color="primary">
-                        <mat-label>date of payment</mat-label>
-                        <input
-                            [matDatepicker]="picker1"
-                            matInput
-                            formControlName="paid"
-                        />
-                        <mat-hint class="hint">MM/DD/YYYY</mat-hint>
-                        <mat-datepicker-toggle
-                            matIconSuffix
-                            [for]="picker1"
-                        ></mat-datepicker-toggle>
-                        <mat-datepicker #picker1></mat-datepicker> </mat-form-field
-                ></ng-container>
-                <mat-form-field class="half" appearance="outline">
-                    <mat-label>date due</mat-label>
-                    <input [matDatepicker]="picker2" matInput formControlName="due" />
+            </mat-button-toggle-group></ng-container
+        >
+        <p>payment processed?</p>
+        <mat-button-toggle-group
+            formControlName="settled"
+            name="settled"
+            aria-label="Font Style"
+            class="margin"
+            (change)="settledChange($event)"
+        >
+            <mat-button-toggle [value]="true">yes</mat-button-toggle>
+            <mat-button-toggle [value]="false">no</mat-button-toggle>
+        </mat-button-toggle-group>
+        <div class="new-bill-field">
+            <ng-container *ngIf="configForm.value.settled">
+                <mat-form-field class="half" appearance="outline" color="primary">
+                    <mat-label>date of payment</mat-label>
+                    <input [matDatepicker]="picker1" matInput formControlName="paid" />
                     <mat-hint class="hint">MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle
                         matIconSuffix
-                        [for]="picker2"
+                        [for]="picker1"
                     ></mat-datepicker-toggle>
-                    <mat-datepicker #picker2></mat-datepicker>
-                </mat-form-field>
-            </div>
+                    <mat-datepicker #picker1></mat-datepicker> </mat-form-field
+            ></ng-container>
+            <mat-form-field class="half" appearance="outline">
+                <mat-label>date due</mat-label>
+                <input [matDatepicker]="picker2" matInput formControlName="due" />
+                <mat-hint class="hint">MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="picker2"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+        </div>
 
-            <div class="new-bill-field" *ngIf="configData.type === 'companyCredit'">
-                <p>
-                    bills created this month will start to appear next month, to appear
-                    this month, choose a date in a previous month
-                </p>
-            </div>
+        <div class="new-bill-field" *ngIf="configData.type === 'companyCredit'">
+            <p>
+                bills created this month will start to appear next month, to appear this
+                month, choose a date in a previous month
+            </p>
         </div>
     </form>
 </div>
