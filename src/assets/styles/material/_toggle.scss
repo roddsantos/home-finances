@@ -1,5 +1,5 @@
 .mat-button-toggle-group-appearance-standard {
-    border: solid var(--border-width) var(--border-color) !important;
+    border: solid var(--border-width) transparent !important;
     border-radius: var(--border-radius) !important;
     height: calc(2 * var(--input-unit)) !important;
     width: min-content !important;
@@ -16,6 +16,7 @@
         &.mat-button-toggle-checked {
             background-color: var(--primary);
             height: calc(1.8 * var(--input-unit)) !important;
+            border-radius: var(--border-radius);
             color: var(--text-3) !important;
             & :disabled {
                 background-color: var(--disabled);
@@ -31,11 +32,12 @@
             }
         }
         &.mat-button-toggle-appearance-standard + .mat-button-toggle-appearance-standard {
-            border: none !important;
+            border: solid 4px transparent !important;
+            border-radius: var(--border-radius);
             height: calc(1.8 * var(--input-unit)) !important;
             & .mat-button-toggle-button {
                 & .mat-button-toggle-label-content {
-                    line-height: calc(1.8 * var(--input-unit)) !important;
+                    line-height: calc(1.3 * var(--input-unit)) !important;
                 }
             }
         }

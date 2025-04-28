@@ -69,7 +69,7 @@
     &.list {
         grid-template-areas: "title description bill-tags date-container value-container bill-buttons";
         grid-template-rows: repeat(1, max-content);
-        grid-template-columns: 15% 30% 20% 13% 12% 10%;
+        grid-template-columns: 15% 26% 24% 13% 12% 10%;
         column-gap: 4px;
         padding: 0.5rem 1rem;
         @media screen and (max-width: 1500px) {
@@ -175,16 +175,22 @@
     }
 }
 
-.type-container {
-    grid-area: card-container;
-    display: flex;
-    width: max-content;
-    align-items: center;
-    padding: 6px;
+.flow-container {
+    grid-area: flow-container;
     height: 30px;
-    border-style: solid;
-    border-width: var(--border-width);
-    border-radius: var(--border-radius);
+    &.outcome {
+        border-color: var(--error);
+        background-color: var(--error);
+    }
+    &.income {
+        border-color: var(--success);
+        background-color: var(--success);
+    }
+}
+
+.type-container {
+    grid-area: type-container;
+    margin: 0px 0.5rem;
     & .type-icon {
         color: var(--text-1);
     }
@@ -211,16 +217,8 @@
 }
 
 .category-container {
-    grid-area: bank-category;
-    display: flex;
-    width: max-content;
-    align-items: center;
-    padding: 6px;
-    height: 30px;
-    border-style: solid;
-    border-width: var(--border-width);
-    border-radius: var(--border-radius);
-    margin: 0px 0.75rem;
+    grid-area: category-category;
+    margin: 0px 0rem;
     & .category-icon {
         color: var(--text-1);
     }
