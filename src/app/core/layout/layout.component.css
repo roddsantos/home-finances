@@ -25,6 +25,7 @@
     padding: 20px 20px 20px 40px;
     margin-left: 18.25rem !important;
     width: calc(100dvw - 18.25rem);
+    scrollbar-gutter: stable;
 }
 
 .toolbar {

@@ -42,8 +42,7 @@
                             [fontIcon]="(homeState.expenses$ | async)!.delta > 0 ? 'trending_up' : 'trending_down'"
                         ></mat-icon>
                         <p>
-                            {{((homeState.expenses$ | async)!.delta * 100 *
-                            ((homeState.expenses$ | async)!.delta < 0 ? -1 : 1)) + "%" }}
+                            {{((homeState.expenses$ | async)!.delta.toFixed(2)) + "%" }}
                         </p>
                     </div>
                 </div>

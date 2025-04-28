@@ -3,7 +3,15 @@
     (click)="openDetails(data, $event)"
 >
     <div class="bill-tags">
-        <div [ngClass]="['type-container', 'company', isLineTheme]">
+        <div [ngClass]="['tag', 'flow-container', data.isPayment ? 'outcome' : 'income']">
+            <mat-icon
+                class="material-symbols-outlined type-icon"
+                aria-hidden="false"
+                aria-label="icon"
+                [fontIcon]="data.isPayment ? 'arrow_circle_up' : 'arrow_circle_down'"
+            ></mat-icon>
+        </div>
+        <div [ngClass]="['type-container', 'tag','company', isLineTheme]">
             <mat-icon
                 class="material-symbols-outlined type-icon"
                 aria-hidden="false"
@@ -12,7 +20,7 @@
             ></mat-icon>
             <p class="type-name">{{data.company?.name}}</p>
         </div>
-        <div [ngClass]="['category-container','company', isLineTheme]">
+        <div [ngClass]="['category-container','tag','company', isLineTheme]">
             <mat-icon
                 class="material-icons-outlined category-icon"
                 aria-hidden="false"

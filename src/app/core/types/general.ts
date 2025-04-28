@@ -42,9 +42,7 @@ export type ThemeObjectType = {
     "--text-1": string;
     "--text-2": string;
     "--text-3": string;
-    "--border-radius": string;
     "--border-color": string;
-    "--border-width": string;
     "--disabled": string;
     "--error": string;
     "--warning": string;

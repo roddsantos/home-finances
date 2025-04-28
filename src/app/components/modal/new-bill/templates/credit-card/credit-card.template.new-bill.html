@@ -1,62 +1,61 @@
 <div class="modal-content">
-    <h1>credit card info</h1>
-    <form [formGroup]="ccForm">
-        <div class="form-container">
-            <mat-form-field class="new-bill-field" appearance="outline">
-                <mat-label>credit card</mat-label>
-                <mat-select formControlName="creditcard">
-                    <mat-option
-                        *ngIf="(creditCards.creditCards$ | async)!.length === 0"
-                        [disabled]="true"
-                        >no credit cards</mat-option
-                    >
-                    @for (c of (creditCards.creditCards$ | async); track c) {
-                    <mat-option [value]="c">{{ c.name }}</mat-option>
-                    }
-                </mat-select>
-                @if (ccForm.controls.creditcard.invalid) {
-                <mat-error>{{errorMessage.creditCard}}</mat-error>
+    <h3 class="step-title">credit card info</h3>
+    <p class="step-desc">credit card selection and bill values</p>
+    <form [formGroup]="ccForm" class="form-container">
+        <mat-form-field class="new-bill-field" appearance="outline">
+            <mat-label>credit card</mat-label>
+            <mat-select formControlName="creditcard">
+                <mat-option
+                    *ngIf="(creditCards.creditCards$ | async)!.length === 0"
+                    [disabled]="true"
+                    >no credit cards</mat-option
+                >
+                @for (c of (creditCards.creditCards$ | async); track c) {
+                <mat-option [value]="c">{{ c.name }}</mat-option>
+                }
+            </mat-select>
+            @if (ccForm.controls.creditcard.invalid) {
+            <mat-error>{{errorMessage.creditCard}}</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field
+            *ngIf="(companies.company$ | async)!.length > 0"
+            class="new-bill-field"
+            appearance="outline"
+        >
+            <mat-label>company</mat-label>
+            <mat-select formControlName="company">
+                <mat-option
+                    *ngIf="(companies.company$ | async)!.length === 0"
+                    [disabled]="true"
+                    >no companies</mat-option
+                >
+                <mat-option
+                    *ngIf="(companies.company$ | async)!.length > 0"
+                    [value]="null"
+                    >none</mat-option
+                >
+                @for (c of (companies.company$ | async); track c) {
+                <mat-option [value]="c">{{ c.name }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        <div class="new-bill-field">
+            <mat-form-field class="third" appearance="outline">
+                <mat-label>parcels</mat-label>
+                <input matInput type="number" formControlName="parcels" />
+                @if (ccForm.controls.parcels.invalid) {
+                <mat-error>{{errorMessage.parcels}}</mat-error>
                 }
             </mat-form-field>
-            <mat-form-field
-                *ngIf="(companies.company$ | async)!.length > 0"
-                class="new-bill-field"
-                appearance="outline"
-            >
-                <mat-label>company</mat-label>
-                <mat-select formControlName="company">
-                    <mat-option
-                        *ngIf="(companies.company$ | async)!.length === 0"
-                        [disabled]="true"
-                        >no companies</mat-option
-                    >
-                    <mat-option
-                        *ngIf="(companies.company$ | async)!.length > 0"
-                        [value]="null"
-                        >none</mat-option
-                    >
-                    @for (c of (companies.company$ | async); track c) {
-                    <mat-option [value]="c">{{ c.name }}</mat-option>
-                    }
-                </mat-select>
+            <mat-form-field class="third" appearance="outline">
+                <mat-label>delta</mat-label>
+                <input matInput type="number" formControlName="delta" />
             </mat-form-field>
-            <div class="new-bill-field">
-                <mat-form-field class="third" appearance="outline">
-                    <mat-label>parcels</mat-label>
-                    <input matInput type="number" formControlName="parcels" />
-                    @if (ccForm.controls.parcels.invalid) {
-                    <mat-error>{{errorMessage.parcels}}</mat-error>
-                    }
-                </mat-form-field>
-                <mat-form-field class="third" appearance="outline">
-                    <mat-label>delta</mat-label>
-                    <input matInput type="number" formControlName="delta" />
-                </mat-form-field>
-                <mat-form-field class="third" appearance="outline">
-                    <mat-label>taxes</mat-label>
-                    <input matInput type="number" formControlName="taxes" />
-                </mat-form-field>
-            </div>
+            <mat-form-field class="third" appearance="outline">
+                <mat-label>taxes</mat-label>
+                <input matInput type="number" formControlName="taxes" />
+            </mat-form-field>
         </div>
     </form>
 </div>

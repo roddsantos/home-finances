@@ -25,7 +25,6 @@ import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { CommonModule } from "@angular/common";
 import { CompanyTemplateNewBill } from "./templates/company/company.template.new-bill";
 import { CreditCardTemplateNewBill } from "./templates/credit-card/credit-card.template.new-bill";
-import { ServiceTemplateNewBill } from "./templates/service/service.template.new-bill";
 import {
     NEGATIVE_TOTAL,
     NO_BILL_VALUE,
@@ -37,15 +36,12 @@ import {
 import { ServiceBill } from "src/app/services/bill.service";
 import { MonthType, PaymentTypes, RequiredKeys } from "src/app/core/types/general";
 import { MONTHS } from "src/utils/constants/general";
-import { MatOption } from "@angular/material/core";
 import { MatSelectChange, MatSelectModule } from "@angular/material/select";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { provideNativeDateAdapter } from "@angular/material/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
-import { BillObject } from "src/app/core/types/services";
 import { TypeTemplate } from "./templates/type/type.template.new-bill";
 import { InfoTemplate } from "./templates/info/info.template.new-bill";
-import { ErrorsBillForm, InfoBillForm } from "src/app/core/types/forms";
 import { ConfigTemplate } from "./templates/config/config.template.new-bill";
 
 @Component({
