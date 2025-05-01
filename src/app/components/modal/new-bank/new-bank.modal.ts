@@ -78,8 +78,7 @@ export class ModalNewBank implements OnInit {
     @Output() onClose = new EventEmitter<void>();
 
     ngOnInit() {
-        this.modalState.onSubmitFooter(this.data.bank ? "edit" : "OK", "cancel");
-        this.modalState.changeHeader(this.data.header || "new bank");
+        this.modalState.onSubmitFooter(this.data.bank ? "edit" : "create bank", "cancel");
         this.bankForm.controls.savings.disable();
     }
 

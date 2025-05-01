@@ -10,7 +10,7 @@
             fontIcon="menu"
         ></mat-icon>
     </button>
-    <mat-form-field [ngClass]="['header-search', actualPage]" appearance="outline">
+    <mat-form-field [ngClass]="['header-search', screen?.page]" appearance="outline">
         <mat-icon
             matPrefix
             class="header-search"
@@ -51,39 +51,22 @@
             }
         </mat-autocomplete>
     </mat-form-field>
-    <button
-        *ngIf="screen?.actions || false"
-        mat-button
-        class="header-action button-primary"
-        aria-label="action company button"
-        (click)="openModal()"
-    >
-        <mat-icon
-            matPrefix
-            aria-hidden="false"
-            aria-label="Add icon"
-            fontIcon="add"
-        ></mat-icon>
-        <mat-icon
-            matPrefix
-            class="icon"
-            aria-hidden="false"
-            aria-label="Add icon"
-            [fontIcon]="screen?.icon || ''"
-        ></mat-icon>
-        <p>{{ "new " + (screen?.page | page) }}</p>
-    </button>
-    <button
-        class="header-notifications"
-        mat-icon-button
-        aria-label="action company button"
-    >
-        <mat-icon
-            class="material-symbols-outlined"
-            class="icon"
-            aria-hidden="false"
-            aria-label="Example home icon"
-            fontIcon="notifications"
-        ></mat-icon>
-    </button>
+    <div class="header-action">
+        <button
+            *ngFor="let action of screen?.actions"
+            mat-button
+            class="button-primary button"
+            aria-label="action company button"
+            (click)="openModal(action)"
+        >
+            <mat-icon
+                *ngFor="let icon of action.icons"
+                matPrefix
+                aria-hidden="false"
+                aria-label="Add icon"
+                [fontIcon]="icon"
+            ></mat-icon>
+            <p>{{ action.title }}</p>
+        </button>
+    </div>
 </div>

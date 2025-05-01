@@ -43,6 +43,7 @@ export class ModalComponent implements OnChanges {
     disableButton = false;
 
     ngOnInit() {
+        console.log(this.data);
         this.disableButton = this.disabled;
     }
 

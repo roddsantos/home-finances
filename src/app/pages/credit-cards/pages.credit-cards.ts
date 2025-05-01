@@ -73,7 +73,7 @@ export class PageCreditCards {
                 this.ccState.setCreditCards(ccs as CreditCard[]);
                 this.ccState.changeStatus(
                     (ccs as CreditCard[]).length === 0 ? "empty" : "none",
-                    "no companies"
+                    "no credit cards"
                 );
             },
             error: () => {

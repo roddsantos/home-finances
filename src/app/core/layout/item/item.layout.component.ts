@@ -21,7 +21,6 @@ export class ItemLayoutComponent {
     public page: RoutesType;
     public title: string;
     public icon: string;
-    public onClickAction: (ref: string) => void;
 
     public style = getComputedStyle(document.body);
     public isLineThemed: boolean = false;

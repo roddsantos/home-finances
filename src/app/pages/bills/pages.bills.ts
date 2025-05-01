@@ -69,17 +69,6 @@ export class PageBills {
         this.storage.setFilterContainer(true);
     }
 
-    openDialog(): void {
-        this.dialog.open<string>(ModalNewBill, {
-            data: {
-                header: "new bill",
-                size: "md",
-            },
-            hasBackdrop: true,
-            backdropClass: "modal-backdrop",
-        });
-    }
-
     getBills() {
         this.billService.getBills().subscribe({
             next: (bills) => {

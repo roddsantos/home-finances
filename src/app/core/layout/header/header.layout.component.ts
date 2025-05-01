@@ -4,7 +4,13 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatButtonModule, MatIconButton } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
-import { BehaviorSubject, debounceTime, distinctUntilChanged } from "rxjs";
+import {
+    BehaviorSubject,
+    debounceTime,
+    distinctUntilChanged,
+    Observable,
+    Subscription,
+} from "rxjs";
 import { ServiceBill } from "src/app/services/bill.service";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
@@ -14,7 +20,7 @@ import { FilterDisplay } from "src/app/core/types/components";
 import { SectorPipe } from "src/utils/pipes/sector";
 import { ROUTES } from "src/utils/route";
 import { removeDiacritics } from "src/utils/validators";
-import { RouteItemType, RoutesType } from "../../types/general";
+import { RouteItemActionType, RouteItemType, RoutesType } from "../../types/general";
 import { PagePipe } from "src/utils/pipes/page";
 import { Dialog } from "@angular/cdk/dialog";
 import { ModalNewBank } from "src/app/components/modal/new-bank/new-bank.modal";
@@ -32,7 +38,6 @@ import { GeneralState } from "../../subjects/subjects.general";
     styleUrls: ["./header.layout.component.css"],
     imports: [
         CommonModule,
-        PagePipe,
         SectorPipe,
         MatInputModule,
         MatIconModule,
@@ -61,6 +66,13 @@ export class HeaderLayoutComponent {
     public backgroundColor = this.style.getPropertyValue("--background");
     public filteredOptions: any[] = [];
 
+    public page$: Subscription;
+    public creditCard$: Subscription;
+    public categories$: Subscription;
+    public banks$: Subscription;
+    public company$: Subscription;
+    public bill$: Subscription;
+
     constructor() {
         this.search$
             .pipe(debounceTime(300), distinctUntilChanged())
@@ -74,7 +86,7 @@ export class HeaderLayoutComponent {
     }
 
     creditCardSubscriber(term: string) {
-        this.creditCards.creditCards$.subscribe({
+        this.creditCard$ = this.creditCards.creditCards$.subscribe({
             next: (ccs) => {
                 this.filteredOptions = [
                     ...(term === "" || term.length < 2
@@ -89,7 +101,7 @@ export class HeaderLayoutComponent {
     }
 
     categoriesSubscriber(term: string) {
-        this.categories.categories$.subscribe({
+        this.categories$ = this.categories.categories$.subscribe({
             next: (cats) => {
                 this.filteredOptions = [
                     ...this.filteredOptions,
@@ -105,7 +117,7 @@ export class HeaderLayoutComponent {
     }
 
     banksSubscriber(term: string) {
-        this.banks.banks$.subscribe({
+        this.banks$ = this.banks.banks$.subscribe({
             next: (banks) => {
                 this.filteredOptions = [
                     ...this.filteredOptions,
@@ -121,7 +133,7 @@ export class HeaderLayoutComponent {
     }
 
     companySubscriber(term: string) {
-        this.companies.company$.subscribe({
+        this.company$ = this.companies.company$.subscribe({
             next: (companies) => {
                 this.filteredOptions = [
                     ...this.filteredOptions,
@@ -146,7 +158,7 @@ export class HeaderLayoutComponent {
                 name: term,
             },
         ];
-        this.billService
+        this.bill$ = this.billService
             .getBills(1, 25, filter)
             .pipe(debounceTime(300), distinctUntilChanged())
             .subscribe({
@@ -166,10 +178,7 @@ export class HeaderLayoutComponent {
 
     ngOnInit() {
         this.actualPage = window.location.pathname;
-        this.screen = ROUTES.find((r) => {
-            return r.page === window.location.pathname;
-        });
-        this.generalState.page$.subscribe({
+        this.page$ = this.generalState.page$.subscribe({
             next: (page) => {
                 this.screen = ROUTES.find((route) => {
                     return route.page === page;
@@ -198,12 +207,10 @@ export class HeaderLayoutComponent {
         return option.name;
     }
 
-    getPageObject() {}
-
-    openModal() {
+    openModal(selectedEvent: RouteItemActionType) {
         let options = {
             data: {
-                header: `new ${this.pagePipe.transform(this.screen?.page)}`,
+                header: selectedEvent.title,
                 size: "md",
             },
             hasBackdrop: true,
@@ -214,7 +221,9 @@ export class HeaderLayoutComponent {
                 this.dialog.open(ModalNewBill, options);
                 break;
             case "/banks":
-                this.dialog.open(ModalNewBank, options);
+                if (selectedEvent.event === "creating")
+                    this.dialog.open(ModalNewBank, options);
+                else console.log("OK");
                 break;
             case "/credit-cards":
                 this.dialog.open(ModalNewCreditCard, options);
@@ -232,5 +241,11 @@ export class HeaderLayoutComponent {
 
     ngOnDestroy() {
         this.search$.unsubscribe();
+        this.page$.unsubscribe();
+        this.creditCard$.unsubscribe();
+        this.company$.unsubscribe();
+        this.banks$.unsubscribe();
+        this.categories$.unsubscribe();
+        this.bill$.unsubscribe();
     }
 }
