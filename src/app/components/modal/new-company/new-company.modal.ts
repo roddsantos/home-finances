@@ -133,7 +133,7 @@ export class ModalNewCompany implements OnInit {
     }
 
     ngOnInit() {
-        this.modalState.onSubmitFooter(this.data.company ? "edit" : "OK", "cancel");
+        this.modalState.changeSubmitFooter(this.data.company ? "edit" : "OK", "cancel");
         this.modalState.changeHeader(this.data.header || "new company");
     }
 }

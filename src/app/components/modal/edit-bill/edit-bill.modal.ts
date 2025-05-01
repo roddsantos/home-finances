@@ -150,8 +150,8 @@ export class ModalEditBill {
             this.billForm.get("total")?.disable();
         this.modalState.changeFooter({
             type: "submit",
-            submit: "update",
-            alert: "cancel",
+            submitLabel: "update",
+            alertLabel: "cancel",
         });
         this.modalState.changeHeader("edit bill");
     }

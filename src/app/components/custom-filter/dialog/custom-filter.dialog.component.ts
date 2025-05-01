@@ -106,7 +106,7 @@ export class DialogCustomList implements OnInit {
     selectedFilters: FilterDisplay[] = [];
 
     ngOnInit() {
-        this.modalState.onSubmitFooter("OK", "cancel");
+        this.modalState.changeSubmitFooter("OK", "cancel");
         this.modalState.changeHeader("add filters");
 
         this.filterState.filters$.subscribe({

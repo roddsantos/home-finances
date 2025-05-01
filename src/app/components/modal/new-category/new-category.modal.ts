@@ -162,7 +162,7 @@ export class ModalNewCategory implements OnInit {
     }
 
     ngOnInit() {
-        this.modalState.onSubmitFooter(this.data.category ? "edit" : "OK", "cancel");
+        this.modalState.changeSubmitFooter(this.data.category ? "edit" : "OK", "cancel");
         this.modalState.changeHeader(this.data.header || "new company");
     }
 }
