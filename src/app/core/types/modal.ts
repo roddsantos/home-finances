@@ -59,7 +59,5 @@ export type SetupModalType = {
     header: string | false;
     size?: SizeType;
     footerType: "none" | "submit" | "alert";
-    actionPrimary: VoidFunction;
-    actionSecondary: VoidFunction;
     disabled?: boolean;
 };

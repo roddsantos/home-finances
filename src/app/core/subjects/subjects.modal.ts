@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { FooterModal } from "src/app/core/types/modal";
+import { FooterModal, SetupModalType } from "src/app/core/types/modal";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { SizeType } from "../types/components";
 
@@ -14,9 +14,10 @@ export class ModalState {
         submitLabel: "ok",
         alertLabel: "cancel",
     });
-    private _actionPrimary$ = new Subject<Observable<any>>();
-    private _actionSecondary$ = new Subject<Observable<any>>();
+    private _actionPrimary$ = new BehaviorSubject<VoidFunction | null>(null);
+    private _actionSecondary$ = new BehaviorSubject<VoidFunction | null>(null);
     private _disabled$ = new BehaviorSubject<boolean>(true);
+    private _data$ = new BehaviorSubject<any>(null);
 
     public header$ = this._header$.asObservable();
     public size$ = this._size$.asObservable();
@@ -24,6 +25,7 @@ export class ModalState {
     public actionPrimary$ = this._actionPrimary$.asObservable();
     public actionSecondary$ = this._actionSecondary$.asObservable();
     public disabled$ = this._disabled$.asObservable();
+    public data$ = this._data$.asObservable();
 
     changeHeader(header: string | false) {
         this._header$.next(header);
@@ -37,11 +39,11 @@ export class ModalState {
         this._footer$.next(footer);
     }
 
-    changeActionPrimary(action: Observable<any>) {
+    changeActionPrimary(action: VoidFunction | null) {
         this._actionPrimary$.next(action);
     }
 
-    changeActionSecondary(action: Observable<any>) {
+    changeActionSecondary(action: VoidFunction | null) {
         this._actionSecondary$.next(action);
     }
 
@@ -73,7 +75,22 @@ export class ModalState {
         });
     }
 
-    setupModal() {
-        this._header$.next;
+    setupModal(modal: SetupModalType) {
+        this._header$.next(modal.header);
+        this._size$.next(modal.size || "md");
+        this._disabled$.next(modal.disabled || true);
+        // if (modal.footerType === "none") this.changeAlertFooter("ok", "cancel");
+        // if (modal.footerType === "submit") this.changeAlertFooter("ok", "cancel");
+    }
+
+    changeData(data: any) {
+        this._data$.next(data);
+    }
+
+    resetModal() {
+        this._header$.next("");
+        this._size$.next("md");
+        this._disabled$.next(true);
+        this._data$.next(false);
     }
 }

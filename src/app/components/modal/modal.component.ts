@@ -65,5 +65,6 @@ export class ModalComponent implements OnChanges {
 
     onClose(data?: any) {
         this.dialogRef.close(data);
+        this.modalState.resetModal();
     }
 }

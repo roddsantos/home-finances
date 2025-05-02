@@ -30,6 +30,7 @@ import { ModalNewCompany } from "src/app/components/modal/new-company/new-compan
 import { ModalNewCategory } from "src/app/components/modal/new-category/new-category.modal";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 import { GeneralState } from "../../subjects/subjects.general";
+import { ModalNewSaving } from "src/app/components/modal/new-saving/new-saving.modal";
 
 @Component({
     standalone: true,
@@ -223,7 +224,7 @@ export class HeaderLayoutComponent {
             case "/banks":
                 if (selectedEvent.event === "creating")
                     this.dialog.open(ModalNewBank, options);
-                else console.log("OK");
+                else this.dialog.open(ModalNewSaving, options);
                 break;
             case "/credit-cards":
                 this.dialog.open(ModalNewCreditCard, options);

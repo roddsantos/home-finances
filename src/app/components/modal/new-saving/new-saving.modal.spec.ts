@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { NewSavingModal } from "./new-saving.modal";
+import { ModalNewSaving } from "./new-saving.modal";
 
 describe("NewSavingModal", () => {
-    let component: NewSavingModal;
-    let fixture: ComponentFixture<NewSavingModal>;
+    let component: ModalNewSaving;
+    let fixture: ComponentFixture<ModalNewSaving>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [NewSavingModal],
+            imports: [ModalNewSaving],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(NewSavingModal);
+        fixture = TestBed.createComponent(ModalNewSaving);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

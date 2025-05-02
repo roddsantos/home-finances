@@ -1,4 +1,4 @@
-<div [ngClass]="['modal-container', data.size]">
+<div [ngClass]="['modal-container', modalState.size$ | async]">
     <div mat-dialog-title class="modal-header">
         <h3>{{ (modalState.header$ | async) || data.header }}</h3>
     </div>

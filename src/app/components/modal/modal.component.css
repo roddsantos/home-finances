@@ -4,14 +4,10 @@
     background-color: var(--background);
     position: relative;
     min-height: 150px;
-    width: 700px;
     z-index: 3;
     padding: 80px 20px 20px;
     border-radius: var(--border-radius);
     border: solid var(--border-width) var(--border-color);
-    @media screen and (max-width: 1200px) {
-        width: 100%;
-    }
     &.xl {
         width: 1200px;
         @media screen and (max-width: 1200px) {
@@ -21,6 +17,12 @@
     &.lg {
         width: 900px;
         @media screen and (max-width: 900px) {
+            width: 100%;
+        }
+    }
+    &.md {
+        width: 700px;
+        @media screen and (max-width: 700px) {
             width: 100%;
         }
     }
