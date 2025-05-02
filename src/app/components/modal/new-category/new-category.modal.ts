@@ -134,8 +134,8 @@ export class ModalNewCategory implements OnInit {
                         );
                         this.modalComponent.onClose();
                     },
-                    error: () => {
-                        this.snack.openSnackBar("error creating category", "error");
+                    error: (err) => {
+                        this.snack.openSnackBar(err.error.message, "error");
                     },
                 });
         } else this.onClose.emit();

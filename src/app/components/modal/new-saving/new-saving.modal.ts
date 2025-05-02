@@ -13,7 +13,7 @@ import { INVALID_TOTAL, NO_BANK, YEAR_OUT_OF_RANGE } from "src/utils/constants/f
 import { MONTHS } from "src/utils/constants/general";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { ModalComponent } from "../modal.component";
-import { MatFormField, MatFormFieldModule } from "@angular/material/form-field";
+import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import { CommonModule } from "@angular/common";
@@ -22,6 +22,7 @@ import {
     MatButtonToggleChange,
     MatButtonToggleModule,
 } from "@angular/material/button-toggle";
+import { ServiceSaving } from "src/app/services/saving.service";
 
 @Component({
     selector: "app-new-saving",
@@ -40,6 +41,7 @@ import {
 })
 export class ModalNewSaving implements OnInit {
     public modalState = inject(ModalState);
+    public savingsService = inject(ServiceSaving);
     public snack = inject(CustomSnackbarComponent);
     public banks = inject(BankState);
     @ViewChild(ModalComponent) modalComponent: any;
@@ -88,7 +90,23 @@ export class ModalNewSaving implements OnInit {
 
     onCreate() {
         if (!this.savingsForm.invalid) {
-            console.log(this.savingsForm.value);
+            this.savingsService
+                .createSaving({
+                    total: this.savingsForm.value.total!,
+                    year: this.savingsForm.value.year!,
+                    month: this.savingsForm.value.month!.order,
+                    type: this.savingsForm.value.type!,
+                    bankId: this.savingsForm.value.bank!.id,
+                })
+                .subscribe({
+                    next: () => {
+                        this.snack.openSnackBar("saving successfully set!", "success");
+                        this.modalComponent.onClose();
+                    },
+                    error: (err) => {
+                        this.snack.openSnackBar(err.error.message, "error");
+                    },
+                });
         }
     }
 
