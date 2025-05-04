@@ -4,3 +4,7 @@
         <h2>{{bank.savings | currency: "R$ "}}</h2>
     </div>
 </div>
+<div>
+    <p>month savings</p>
+    <savings-template [bank]="bank" />
+</div>

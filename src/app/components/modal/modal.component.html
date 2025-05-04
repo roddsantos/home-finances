@@ -1,14 +1,14 @@
-<div [ngClass]="['modal-container', data.size]">
+<div [ngClass]="['modal-container', modalState.size$ | async]">
     <div mat-dialog-title class="modal-header">
         <h3>{{ (modalState.header$ | async) || data.header }}</h3>
-        <mat-icon
-            class="icon-close"
-            aria-hidden="false"
-            aria-label="Example home icon"
-            fontIcon="close"
-            (click)="dialogRef.close()"
-        ></mat-icon>
     </div>
+    <mat-icon
+        class="modal-close-icon"
+        aria-hidden="false"
+        aria-label="Example home icon"
+        fontIcon="close"
+        (click)="dialogRef.close()"
+    ></mat-icon>
     <div class="modal-body">
         <ng-container *ngTemplateOutlet="bodyTemplate || defaultBody"> </ng-container>
         <ng-template #defaultBody></ng-template>
@@ -20,7 +20,7 @@
             class="button-secondary"
             (click)="this.onSecondary()"
         >
-            {{ (modalState.footer$ | async)?.alert }}
+            {{ (modalState.footer$ | async)?.alertLabel }}
         </button>
         <button
             *ngIf="this.actionPrimary.observed"
@@ -30,7 +30,7 @@
             (click)="this.onPrimary()"
             cdkFocusInitial
         >
-            {{ (modalState.footer$ | async)?.submit }}
+            {{ (modalState.footer$ | async)?.submitLabel }}
         </button>
         <button
             *ngIf="!this.actionPrimary.observed && !this.actionSecondary.observed"

@@ -1,0 +1,68 @@
+<modal-component
+    [disabled]="savingsForm.invalid"
+    (actionPrimary)="onCreate()"
+    (actionSecondary)="modalComponent.onClose()"
+    [bodyTemplate]="newSaving"
+></modal-component>
+
+<ng-template #newSaving>
+    <form [formGroup]="savingsForm">
+        <div class="new-saving-container">
+            <mat-form-field class="full" appearance="outline">
+                <mat-label>bank</mat-label>
+                <mat-select formControlName="bank" (valueChange)="enableTotal($event)">
+                    <mat-option
+                        *ngIf="(banks.banks$ | async)!.length === 0"
+                        [disabled]="true"
+                    >
+                        no banks
+                    </mat-option>
+                    @for (b1 of (banks.banks$ | async); track b1) {
+                    <mat-option [value]="b1">{{ b1.name }}</mat-option>
+                    }
+                </mat-select>
+                @if (savingsForm.controls.bank.errors) {
+                <mat-error>{{errorMessage.bank}}</mat-error>
+                }
+            </mat-form-field>
+
+            <div class="full">
+                <mat-form-field class="half" appearance="outline">
+                    <mat-label>month</mat-label>
+                    <mat-select formControlName="month">
+                        @for (m of this.months; track m) {
+                        <mat-option [value]="m">{{m.name}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="half" appearance="outline">
+                    <mat-label>year</mat-label>
+                    <input matInput type="number" formControlName="year" />
+                    @if (savingsForm.controls.year.errors?.["min"]) {
+                    <mat-error>{{errorMessage.year}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+            <p>use actual bank saving value?</p>
+            <mat-button-toggle-group
+                formControlName="bankValue"
+                aria-label="Font Style"
+                class="full"
+                [style.marginBottom]="'20px'"
+                (change)="useBankSaving($event)"
+            >
+                <mat-button-toggle [value]="true">yes</mat-button-toggle>
+                <mat-button-toggle [value]="false">no</mat-button-toggle>
+            </mat-button-toggle-group>
+
+            <mat-form-field class="half" appearance="outline">
+                <mat-label>total</mat-label>
+                <input matInput type="number" formControlName="total" />
+                @if (savingsForm.controls.total.errors?.["required"]) {
+                <mat-error>{{errorMessage.total}}</mat-error>
+                }
+            </mat-form-field>
+        </div>
+    </form>
+</ng-template>

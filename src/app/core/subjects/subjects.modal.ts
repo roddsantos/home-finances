@@ -1,63 +1,96 @@
 import { Injectable } from "@angular/core";
-import { FooterModal } from "src/app/core/types/modal";
+import { FooterModal, SetupModalType } from "src/app/core/types/modal";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
+import { SizeType } from "../types/components";
 
 @Injectable({
     providedIn: "root",
 })
 export class ModalState {
+    private _header$ = new BehaviorSubject<string | false>("");
+    private _size$ = new BehaviorSubject<SizeType>("md");
     private _footer$ = new BehaviorSubject<FooterModal>({
         type: "submit",
-        submit: "ok",
-        alert: "cancel",
+        submitLabel: "ok",
+        alertLabel: "cancel",
     });
+    private _actionPrimary$ = new BehaviorSubject<VoidFunction | null>(null);
+    private _actionSecondary$ = new BehaviorSubject<VoidFunction | null>(null);
+    private _disabled$ = new BehaviorSubject<boolean>(true);
+    private _data$ = new BehaviorSubject<any>(null);
 
-    private _header$ = new BehaviorSubject<string>("");
-    private _actionPrimary$ = new Subject<Observable<any>>();
-    private _actionSecondary$ = new Subject<any>();
-
-    public footer$ = this._footer$.asObservable();
     public header$ = this._header$.asObservable();
+    public size$ = this._size$.asObservable();
+    public footer$ = this._footer$.asObservable();
     public actionPrimary$ = this._actionPrimary$.asObservable();
     public actionSecondary$ = this._actionSecondary$.asObservable();
+    public disabled$ = this._disabled$.asObservable();
+    public data$ = this._data$.asObservable();
+
+    changeHeader(header: string | false) {
+        this._header$.next(header);
+    }
+
+    changeSize(size: SizeType) {
+        this._size$.next(size);
+    }
 
     changeFooter(footer: FooterModal) {
         this._footer$.next(footer);
     }
 
-    changeHeader(header: string) {
-        this._header$.next(header);
-    }
-
-    useActionPrimary(action: Observable<any>) {
+    changeActionPrimary(action: VoidFunction | null) {
         this._actionPrimary$.next(action);
     }
 
-    changeActionSecondary(action: any) {
+    changeActionSecondary(action: VoidFunction | null) {
         this._actionSecondary$.next(action);
     }
 
-    onSubmitFooter(submit?: string, alert?: string): void {
+    changeDisabled(disabled: boolean) {
+        this._disabled$.next(disabled);
+    }
+
+    changeSubmitFooter(submitLabel?: string, alertLabel?: string): void {
         this._footer$.next({
             type: "submit",
-            submit,
-            alert,
+            submitLabel,
+            alertLabel,
         });
     }
 
-    onAlertFooter(submit?: string, alert?: string): void {
+    changeAlertFooter(submitLabel?: string, alertLabel?: string): void {
         this._footer$.next({
             type: "alert",
-            submit,
-            alert,
+            submitLabel,
+            alertLabel,
         });
     }
 
-    onNoFooter(submit?: string, alert?: string): void {
+    changeNoFooter(): void {
         this._footer$.next({
             type: "none",
-            submit,
-            alert,
+            submitLabel: "",
+            alertLabel: "",
         });
+    }
+
+    setupModal(modal: SetupModalType) {
+        this._header$.next(modal.header);
+        this._size$.next(modal.size || "md");
+        this._disabled$.next(modal.disabled || true);
+        // if (modal.footerType === "none") this.changeAlertFooter("ok", "cancel");
+        // if (modal.footerType === "submit") this.changeAlertFooter("ok", "cancel");
+    }
+
+    changeData(data: any) {
+        this._data$.next(data);
+    }
+
+    resetModal() {
+        this._header$.next("");
+        this._size$.next("md");
+        this._disabled$.next(true);
+        this._data$.next(false);
     }
 }

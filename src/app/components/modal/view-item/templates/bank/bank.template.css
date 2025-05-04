@@ -16,3 +16,23 @@
         }
     }
 }
+
+.savings-container {
+    display: inline-flex;
+    width: 100%;
+    gap: 0.5rem;
+}
+
+.saving-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--bh);
+    border-radius: var(--border-radius);
+    padding: var(--padding-gen);
+    width: 24%;
+    &.more {
+        cursor: pointer;
+        width: max-content;
+    }
+}

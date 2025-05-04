@@ -51,6 +51,13 @@ export type EventsListModalType = {
 
 export type FooterModal = {
     type: "none" | "submit" | "alert";
-    submit?: String;
-    alert?: String;
+    submitLabel?: String;
+    alertLabel?: String;
+};
+
+export type SetupModalType = {
+    header: string | false;
+    size?: SizeType;
+    footerType: "none" | "submit" | "alert";
+    disabled?: boolean;
 };

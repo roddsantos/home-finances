@@ -49,7 +49,7 @@ export class ModalProfile implements OnInit {
     ngOnInit() {
         this.userState.user$.subscribe({
             next: (user) =>
-                this.modalState.onSubmitFooter(
+                this.modalState.changeSubmitFooter(
                     user ? "OK" : "login",
                     user ? "logout" : "cancel"
                 ),
@@ -80,11 +80,11 @@ export class ModalProfile implements OnInit {
                 this.userState.setUser(user as User);
                 this.storage.setUser(user);
                 this.snack.openSnackBar("login successful", "success");
-                this.modalState.onSubmitFooter("OK", "logout");
+                this.modalState.changeSubmitFooter("OK", "logout");
             },
             error: () => {
                 this.snack.openSnackBar("login error, try again", "error");
-                this.modalState.onSubmitFooter("login", "cancel");
+                this.modalState.changeSubmitFooter("login", "cancel");
             },
         });
     }
@@ -96,6 +96,6 @@ export class ModalProfile implements OnInit {
     onLogout() {
         this.storage.removeUser();
         this.userState.setUser(null);
-        this.modalState.onSubmitFooter("login", "cancel");
+        this.modalState.changeSubmitFooter("login", "cancel");
     }
 }

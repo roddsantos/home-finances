@@ -134,8 +134,8 @@ export class ModalNewCategory implements OnInit {
                         );
                         this.modalComponent.onClose();
                     },
-                    error: () => {
-                        this.snack.openSnackBar("error creating category", "error");
+                    error: (err) => {
+                        this.snack.openSnackBar(err.error.message, "error");
                     },
                 });
         } else this.onClose.emit();
@@ -162,7 +162,7 @@ export class ModalNewCategory implements OnInit {
     }
 
     ngOnInit() {
-        this.modalState.onSubmitFooter(this.data.category ? "edit" : "OK", "cancel");
+        this.modalState.changeSubmitFooter(this.data.category ? "edit" : "OK", "cancel");
         this.modalState.changeHeader(this.data.header || "new company");
     }
 }

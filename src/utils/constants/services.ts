@@ -20,3 +20,5 @@ export const BILL_COMPANY = "/company";
 export const DASHBOARD = URL + "/dashboard";
 
 export const HOME = URL + "/home/";
+
+export const SAVINGS = URL + "/savings";

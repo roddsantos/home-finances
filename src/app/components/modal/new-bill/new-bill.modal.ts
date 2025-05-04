@@ -83,8 +83,8 @@ export class ModalNewBill implements OnInit {
     ngOnInit() {
         this.modalState.changeFooter({
             type: "submit",
-            submit: "advance",
-            alert: "cancel",
+            submitLabel: "advance",
+            alertLabel: "cancel",
         });
     }
 
@@ -300,8 +300,8 @@ export class ModalNewBill implements OnInit {
         this.step = this.step + 1;
         this.modalState.changeFooter({
             type: "submit",
-            submit: this.step === 4 ? "create" : "advance",
-            alert: this.step === 1 ? "cancel" : "back",
+            submitLabel: this.step === 4 ? "create" : "advance",
+            alertLabel: this.step === 1 ? "cancel" : "back",
         });
     }
 
@@ -309,8 +309,8 @@ export class ModalNewBill implements OnInit {
         this.step = this.step - 1;
         this.modalState.changeFooter({
             type: "submit",
-            submit: this.step === 4 ? "create" : "advance",
-            alert: this.step === 1 ? "cancel" : "back",
+            submitLabel: this.step === 4 ? "create" : "advance",
+            alertLabel: this.step === 1 ? "cancel" : "back",
         });
     }
 

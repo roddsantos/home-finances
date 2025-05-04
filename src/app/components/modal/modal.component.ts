@@ -43,6 +43,7 @@ export class ModalComponent implements OnChanges {
     disableButton = false;
 
     ngOnInit() {
+        console.log(this.data);
         this.disableButton = this.disabled;
     }
 
@@ -64,5 +65,6 @@ export class ModalComponent implements OnChanges {
 
     onClose(data?: any) {
         this.dialogRef.close(data);
+        this.modalState.resetModal();
     }
 }

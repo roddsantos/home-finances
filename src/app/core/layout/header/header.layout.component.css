@@ -52,10 +52,12 @@
 }
 
 .header-action {
+    display: flex;
     margin: auto 0px auto auto;
     grid-area: header-action;
-    & .icon {
-        margin-right: 0.5rem !important;
+    gap: 1rem;
+    & .button {
+        gap: 0.25rem;
     }
 }
 

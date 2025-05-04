@@ -120,7 +120,10 @@ export class ModalNewCreditCard implements OnInit {
     @Output() onClose = new EventEmitter<void>();
 
     ngOnInit() {
-        this.modalState.onSubmitFooter(this.data.creditCard ? "edit" : "OK", "cancel");
+        this.modalState.changeSubmitFooter(
+            this.data.creditCard ? "edit" : "OK",
+            "cancel"
+        );
         this.modalState.changeHeader(this.data.header || "new credit card");
     }
 

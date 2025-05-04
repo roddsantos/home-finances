@@ -68,11 +68,17 @@ export type RoutesType =
     | "/login"
     | "";
 
+export type RouteItemActionType = {
+    icons: string[];
+    title: string;
+    event: string;
+};
+
 export type RouteItemType = {
     page: RoutesType;
     icon: string;
     title: string;
-    actions: boolean;
+    actions: RouteItemActionType[];
 };
 
 export type DateObject = {
