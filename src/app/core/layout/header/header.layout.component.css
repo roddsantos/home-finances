@@ -24,6 +24,9 @@
     & .mat-mdc-text-field-wrapper {
         border-color: var(--secondary) !important;
     }
+    & .header-clear-search {
+        cursor: pointer;
+    }
 }
 
 .header-menu {
@@ -62,20 +65,12 @@
 }
 
 .header-input {
+    &.mat-mdc-form-field-input-control::placeholder {
+        color: var(--text-1) !important;
+    }
     & .mat-mdc-form-field-has-icon-prefix.mat-mdc-text-field-wrapper {
         background-color: var(--primary) !important;
         color: var(--text-1);
-    }
-}
-
-.header-option {
-    padding: 4px 16px;
-    & span {
-        display: grid;
-        width: 100%;
-        grid-template-areas: "indicator name" "indicator description";
-        grid-template-columns: 5% 95%;
-        row-gap: 3px;
     }
 }
 
@@ -104,4 +99,19 @@
 .name {
     grid-area: name;
     font-weight: bold;
+}
+
+::ng-deep .header-autocomplete {
+    background-color: var(--background) !important;
+    & .header-option {
+        padding: 4px 16px;
+        background-color: var(--bh) !important;
+        & span {
+            display: grid;
+            width: 100%;
+            grid-template-areas: "indicator name" "indicator description";
+            grid-template-columns: 5% 95%;
+            row-gap: 3px;
+        }
+    }
 }

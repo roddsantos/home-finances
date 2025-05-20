@@ -20,6 +20,7 @@ export class HomeState {
         count: 0,
         toReceive: 0,
         income: 0,
+        preview: 0,
     });
     private _invoices$ = new BehaviorSubject<SumAndCountData>({
         total: 0,

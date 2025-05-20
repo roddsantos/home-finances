@@ -78,11 +78,13 @@ export class HeaderLayoutComponent {
         this.search$
             .pipe(debounceTime(300), distinctUntilChanged())
             .subscribe((value) => {
-                this.creditCardSubscriber(value);
-                this.categoriesSubscriber(value);
-                this.banksSubscriber(value);
-                this.companySubscriber(value);
-                this.billSubscriber(value);
+                if (value.length > 1) {
+                    this.creditCardSubscriber(value);
+                    this.categoriesSubscriber(value);
+                    this.banksSubscriber(value);
+                    this.companySubscriber(value);
+                    this.billSubscriber(value);
+                }
             });
     }
 
@@ -94,8 +96,7 @@ export class HeaderLayoutComponent {
                         ? []
                         : ccs.filter((cc) =>
                               removeDiacritics(cc.name).includes(removeDiacritics(term))
-                          )
-                    ).map((cc) => ({ ...cc, sector: "credit-card" })),
+                          )),
                 ];
             },
         });
@@ -110,8 +111,7 @@ export class HeaderLayoutComponent {
                         ? []
                         : cats.filter((cat) =>
                               removeDiacritics(cat.name).includes(removeDiacritics(term))
-                          )
-                    ).map((cat) => ({ ...cat, sector: "category" })),
+                          )),
                 ];
             },
         });
@@ -126,8 +126,7 @@ export class HeaderLayoutComponent {
                         ? []
                         : banks.filter((bank) =>
                               removeDiacritics(bank.name).includes(removeDiacritics(term))
-                          )
-                    ).map((bank) => ({ ...bank, sector: "bank" })),
+                          )),
                 ];
             },
         });
@@ -144,8 +143,7 @@ export class HeaderLayoutComponent {
                               removeDiacritics(company.name).includes(
                                   removeDiacritics(term)
                               )
-                          )
-                    ).map((company) => ({ ...company, sector: "company" })),
+                          )),
                 ];
             },
         });
@@ -166,12 +164,7 @@ export class HeaderLayoutComponent {
                 next: (bills) => {
                     this.filteredOptions = [
                         ...this.filteredOptions,
-                        ...(term === "" || term.length < 2 ? [] : bills.data).map(
-                            (bill) => ({
-                                ...bill,
-                                sector: "bill",
-                            })
-                        ),
+                        ...(term === "" || term.length < 2 ? [] : bills.data),
                     ];
                 },
             });
@@ -188,16 +181,19 @@ export class HeaderLayoutComponent {
         });
     }
 
-    onType(e: Event) {
-        const term = (<HTMLTextAreaElement>e.target).value;
+    onTypeSearch(e: Event) {
+        const term = (<HTMLTextAreaElement>e.target).value.trim();
         this.search$.next(term);
+    }
+
+    onClearSearch() {
+        this.search$.next("");
     }
 
     onSelect(e: any) {
         const option = {
             data: {
                 item: e,
-                header: "view item: " + e.name,
                 size: "md",
             },
         };

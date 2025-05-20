@@ -1,5 +1,5 @@
-<div [ngClass]="['modal-container', modalState.size$ | async]">
-    <div mat-dialog-title class="modal-header">
+<div [ngClass]="['modal-container', size, hideHeader ? 'no-header' : '']">
+    <div mat-dialog-title class="modal-header" *ngIf="!hideHeader">
         <h3>{{ (modalState.header$ | async) || data.header }}</h3>
     </div>
     <mat-icon

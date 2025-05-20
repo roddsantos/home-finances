@@ -1,39 +1,88 @@
-.view-container {
-    display: grid;
-    grid-template-areas:
-        "color title-container title-container"
-        "description-container description-container description-container";
-    grid-template-columns: 3% 52% 45%;
-    grid-template-rows: 1fr 1fr;
-    row-gap: 1rem;
-    width: 100%;
+.view-item-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
-.title-container {
-    grid-area: title-container;
-    display: flex;
-    & .sector {
-        margin: auto 5px 3px 0px;
+.info-card {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    width: 100%;
+    & .date {
+        min-width: 33%;
+    }
+}
+
+.color-decorator {
+    text-decoration-style: solid;
+    text-decoration-line: underline;
+    text-decoration-thickness: 4px;
+}
+
+.label-value {
+    > h5 {
+        color: var(--text-1);
+        font-weight: bold;
+    }
+    > p,
+    mat-icon {
         color: var(--text-2);
     }
+}
+
+.lvi {
+    display: grid;
+    grid-template-areas: "label label" "icon value";
+    grid-template-columns: 1.4rem 95%;
+    column-gap: 0.4rem;
+    align-items: center;
+    > p {
+        grid-area: label;
+    }
+    > h5 {
+        grid-area: value;
+        width: max-content;
+        text-align: left;
+        width: auto;
+    }
+    > mat-icon {
+        grid-area: icon;
+        width: 1.4rem;
+        font-size: 1.4rem;
+        height: max-content;
+    }
+}
+
+.main-info-container {
+    display: grid;
+    grid-template-areas:
+        "color sector"
+        "color title";
+    grid-template-columns: 10px auto;
+    grid-template-rows: repeat(2, auto);
+    column-gap: 0.4rem;
+    align-items: center;
+    width: 100%;
+    & .color {
+        grid-area: color;
+        width: 10px;
+        height: 100%;
+    }
+    & .sector {
+        grid-area: sector;
+        margin: auto 0px;
+    }
     & .title {
+        grid-area: title;
         color: var(--text-1);
-        margin: auto 5px 0px 0px;
-        text-decoration-style: solid;
-        text-decoration-line: underline;
-        text-decoration-thickness: 4px;
+        margin: auto 0px;
     }
 }
 
 .description-container {
     grid-area: description-container;
-    & h5 {
-        color: var(--text-2);
-    }
-    & p {
-        color: var(--text-1);
-        font-weight: bold;
-    }
+    max-width: 100%;
 }
 
 .color {
@@ -90,6 +139,7 @@
 
 .category-container {
     margin-top: 1rem;
+    margin-bottom: 1rem;
     & h5 {
         color: var(--text-2);
     }
@@ -102,16 +152,5 @@
         font-size: 1.8rem;
         width: auto;
         height: auto;
-    }
-}
-
-.updated-container {
-    margin-top: 1rem;
-    & h5 {
-        color: var(--text-2);
-    }
-    & p {
-        color: var(--text-1);
-        font-weight: bold;
     }
 }

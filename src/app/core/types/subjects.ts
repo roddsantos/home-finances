@@ -8,6 +8,7 @@ export type SubjectExpensesType = SumAndCountData & {
 export type SubjectSavingsType = SumAndCountData & {
     toReceive: number;
     income: number;
+    preview: number;
 };
 
 export type BillsLayoutType = "grid" | "list";

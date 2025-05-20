@@ -11,6 +11,7 @@ import { TemplateBank } from "./templates/bank/bank.template";
 import { TemplateBill } from "./templates/bill/bill.template";
 import { MatIconModule } from "@angular/material/icon";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
+import { CardComponent } from "../../card/card.component";
 
 @Component({
     selector: "modal-view-item",
@@ -26,6 +27,7 @@ import { GeneralState } from "src/app/core/subjects/subjects.general";
         TemplateBank,
         TemplateBill,
         MatIconModule,
+        CardComponent,
     ],
 })
 export class ModalViewItem {

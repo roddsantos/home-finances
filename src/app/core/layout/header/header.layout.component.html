@@ -21,26 +21,31 @@
         <input
             class="header-input"
             placeholder="search in the application"
-            (input)="onType($event)"
+            (input)="onTypeSearch($event)"
             [value]="search$ | async"
             maxlength="100"
             required
             matInput
             [matAutocomplete]="auto"
         />
-        <mat-autocomplete [displayWith]="getOptionName" #auto="matAutocomplete">
+        <mat-autocomplete
+            id="header-autocomplete"
+            class="header-autocomplete"
+            [displayWith]="getOptionName"
+            #auto="matAutocomplete"
+        >
             @for (option of filteredOptions; track option) {
             <mat-option
                 class="header-option"
                 (onSelectionChange)="onSelect(option)"
                 [value]="option"
             >
-                <div [ngClass]="['indicator', option.sector]"></div>
+                <div [ngClass]="['indicator', option | sector]"></div>
                 <p class="name">
                     {{
                         option["name"] +
                             " - " +
-                            (option["sector"] | sector) +
+                            (option | sector) +
                             (option.sector === "bill" && option.type !== "money"
                                 ? " (" + (option.parcel + 1) + "/" + option.parcels + ")"
                                 : "")
@@ -50,6 +55,15 @@
             </mat-option>
             }
         </mat-autocomplete>
+        <mat-icon
+            *ngIf="(search$ | async)?.length"
+            (click)="onClearSearch()"
+            matSuffix
+            class="header-clear-search"
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="close"
+        ></mat-icon>
     </mat-form-field>
     <div class="header-action">
         <button

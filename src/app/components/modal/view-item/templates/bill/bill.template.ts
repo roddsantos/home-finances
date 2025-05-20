@@ -3,13 +3,15 @@ import { Component, Input } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { Bill, BillData } from "src/app/core/types/objects";
 import { MONTHS } from "src/utils/constants/general";
+import { BillsPipe } from "src/utils/pipes/bills";
+import { CardComponent } from "../../../../card/card.component";
 
 @Component({
     selector: "template-view-bill",
     templateUrl: "./bill.template.html",
-    styleUrls: ["./bill.template.css"],
+    styleUrls: ["./bill.template.css", "../../view-item.modal.css"],
     standalone: true,
-    imports: [CommonModule, MatIconModule],
+    imports: [CommonModule, MatIconModule, BillsPipe, CardComponent],
 })
 export class TemplateBill {
     @Input() bill: Bill & BillData;
