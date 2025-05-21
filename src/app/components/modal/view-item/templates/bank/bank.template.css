@@ -6,21 +6,10 @@
         "flag limit-container limit-left-container";
     grid-template-columns: 1fr 2fr 2fr;
     row-gap: 1rem;
-    & .savings-container {
-        & h5 {
-            color: var(--text-2);
-        }
-        & h2 {
-            color: var(--text-1);
-            font-weight: bold;
-        }
-    }
 }
 
 .savings-container {
-    display: inline-flex;
     width: 100%;
-    gap: 0.5rem;
 }
 
 .saving-item {
