@@ -56,54 +56,49 @@ export class ModalNewCreditCard implements OnInit {
     public snack = inject(CustomSnackbarComponent);
     @ViewChild(ModalComponent) modalComponent: any;
 
-    constructor(@Inject(DIALOG_DATA) public data: EditCreditCardModalType) {}
+    constructor(@Inject(DIALOG_DATA) public data: CreditCard) {}
 
     months = MONTHS;
 
     creditCardForm = new FormGroup({
-        name: new FormControl<string>(this.data.creditCard?.name || "", {
+        name: new FormControl<string>(this.data?.name || "", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
         }),
-        description: new FormControl<string>(this.data.creditCard?.description || "", {
+        description: new FormControl<string>(this.data?.description || "", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
         }),
-        color: new FormControl<string>(this.data.creditCard?.color || "#000000", {
+        color: new FormControl<string>(this.data?.color || "#000000", {
             nonNullable: true,
             validators: [Validators.required],
         }),
-        limit: new FormControl<number>(this.data.creditCard?.limit || 0, {
+        limit: new FormControl<number>(this.data?.limit || 0, {
             nonNullable: true,
             validators: [Validators.required, Validators.min(0)],
         }),
-        year: new FormControl<number>(
-            this.data.creditCard?.year || new Date().getFullYear(),
-            {
-                nonNullable: true,
-                validators: [Validators.min(2023), Validators.required],
-            }
-        ),
+        year: new FormControl<number>(this.data?.year || new Date().getFullYear(), {
+            nonNullable: true,
+            validators: [Validators.min(2023), Validators.required],
+        }),
         month: new FormControl<MonthType>(
-            this.data.creditCard?.month
-                ? MONTHS[this.data.creditCard.month]
-                : MONTHS[new Date().getMonth()],
+            this.data?.month ? MONTHS[this.data.month] : MONTHS[new Date().getMonth()],
             {
                 nonNullable: true,
                 validators: [Validators.required],
             }
         ),
-        day: new FormControl<number>(this.data.creditCard?.day || 1, {
+        day: new FormControl<number>(this.data?.day || 1, {
             validators: [Validators.required, Validators.max(28), Validators.min(1)],
         }),
-        due: new FormControl<number>(this.data.creditCard?.due || 1, {
+        due: new FormControl<number>(this.data?.due || 1, {
             validators: [Validators.required, Validators.max(28), Validators.min(1)],
         }),
-        flag: new FormControl<string | null>(this.data.creditCard?.flag || null, {
+        flag: new FormControl<string | null>(this.data?.flag || null, {
             nonNullable: true,
             validators: [Validators.required],
         }),
-        isClosed: new FormControl<boolean>(this.data.creditCard?.isClosed || false),
+        isClosed: new FormControl<boolean>(this.data?.isClosed || false),
     });
 
     errorMessage = {
@@ -120,11 +115,8 @@ export class ModalNewCreditCard implements OnInit {
     @Output() onClose = new EventEmitter<void>();
 
     ngOnInit() {
-        this.modalState.changeSubmitFooter(
-            this.data.creditCard ? "edit" : "OK",
-            "cancel"
-        );
-        this.modalState.changeHeader(this.data.header || "new credit card");
+        this.modalState.changeSubmitFooter(this.data ? "edit" : "OK", "cancel");
+        this.modalState.changeHeader(this.data ? "edit credit card" : "new credit card");
     }
 
     onUpdate() {
@@ -133,7 +125,7 @@ export class ModalNewCreditCard implements OnInit {
                 .updateCreditCard({
                     ...(this.creditCardForm.value as Omit<CreditCardObject, "month">),
                     month: this.creditCardForm.value.month!.order,
-                    id: this.data.creditCard.id,
+                    id: this.data.id,
                 })
                 .pipe(mergeMap(() => this.ccApi.getCreditCards({})))
                 .subscribe({
@@ -180,7 +172,7 @@ export class ModalNewCreditCard implements OnInit {
     }
 
     onSubmit() {
-        if (this.data.creditCard) this.onUpdate();
+        if (this.data) this.onUpdate();
         else this.onCreate();
     }
 }

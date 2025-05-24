@@ -12,6 +12,7 @@ import { ActionItem } from "src/app/core/types/components";
 import { Bill, BillData } from "src/app/core/types/objects";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
+import { GeneralService } from "src/app/services/general.service";
 
 @Component({
     selector: "bank-list-template",
@@ -30,6 +31,7 @@ import { ModalViewItem } from "src/app/components/modal/view-item/view-item.moda
 export class BankListTemplateMonthly {
     public dialog = inject(Dialog);
     public general = inject(GeneralState);
+    private generalService = inject(GeneralService);
     public billService = inject(ServiceBill);
     public billState = inject(BillState);
     public snack = inject(CustomSnackbarComponent);
@@ -96,12 +98,7 @@ export class BankListTemplateMonthly {
 
     onEdit() {
         this.dialog.open(ModalEditBill, {
-            data: {
-                bill: this.data,
-                size: "md",
-            },
-            hasBackdrop: true,
-            backdropClass: "modal-backdrop",
+            data: this.data,
         });
     }
 
@@ -113,11 +110,7 @@ export class BankListTemplateMonthly {
         const className = e.target.className;
         if (className !== "mat-mdc-button-touch-target") {
             const option = {
-                data: {
-                    item: { ...bill, sector: "bill" },
-                    header: "view item: " + bill.name,
-                    size: "md",
-                },
+                data: bill,
             };
             this.dialog.open(ModalViewItem, option);
         }

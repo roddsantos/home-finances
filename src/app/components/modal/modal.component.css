@@ -8,6 +8,12 @@
     padding: 80px 20px 20px;
     border-radius: var(--border-radius);
     border: solid var(--border-width) var(--border-color);
+    &.no-header {
+        padding-top: 20px;
+        & .modal-close-icon {
+            color: var(--text-1);
+        }
+    }
     &.xl {
         width: 1200px;
         @media screen and (max-width: 1200px) {
@@ -87,7 +93,7 @@
     right: 1rem;
     color: var(--text-3);
     cursor: pointer;
-    z-index: 3;
+    z-index: 4;
 }
 
 .modal-footer {

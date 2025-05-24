@@ -63,21 +63,21 @@ export class ModalNewCategory implements OnInit {
     @ViewChild(ModalComponent) modalComponent: any;
     @ViewChild(IconSelection) iconSelection: IconSelection;
 
-    constructor(@Inject(DIALOG_DATA) public data: EditCategoryModalType) {}
+    constructor(@Inject(DIALOG_DATA) public data: Category) {}
 
     categoryForm = new FormGroup({
-        name: new FormControl<string>(this.data.category?.name || "", {
+        name: new FormControl<string>(this.data?.name || "", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
         }),
-        description: new FormControl<string>(this.data.category?.description || "", {
+        description: new FormControl<string>(this.data?.description || "", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
         }),
-        color: new FormControl<string>(this.data.category?.color || "#000000", {
+        color: new FormControl<string>(this.data?.color || "#000000", {
             nonNullable: true,
         }),
-        icon: new FormControl<string>(this.data.category?.icon || "", {
+        icon: new FormControl<string>(this.data?.icon || "", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
         }),
@@ -96,7 +96,7 @@ export class ModalNewCategory implements OnInit {
             this.catApi
                 .updateCategory({
                     ...(this.categoryForm.value as CategoryObject),
-                    id: this.data.category.id,
+                    id: this.data.id,
                 })
                 .pipe(mergeMap(() => this.catApi.getCategories()))
                 .subscribe({
@@ -142,7 +142,7 @@ export class ModalNewCategory implements OnInit {
     }
 
     onSubmit() {
-        if (this.data.category) this.onUpdate();
+        if (this.data) this.onUpdate();
         else this.onCreate();
     }
 
@@ -162,7 +162,7 @@ export class ModalNewCategory implements OnInit {
     }
 
     ngOnInit() {
-        this.modalState.changeSubmitFooter(this.data.category ? "edit" : "OK", "cancel");
-        this.modalState.changeHeader(this.data.header || "new company");
+        this.modalState.changeSubmitFooter(this.data ? "edit" : "OK", "cancel");
+        this.modalState.changeHeader(this.data ? "edit category" : "new category");
     }
 }

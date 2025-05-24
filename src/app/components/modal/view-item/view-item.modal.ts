@@ -11,6 +11,7 @@ import { TemplateBank } from "./templates/bank/bank.template";
 import { TemplateBill } from "./templates/bill/bill.template";
 import { MatIconModule } from "@angular/material/icon";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
+import { CardComponent } from "../../card/card.component";
 
 @Component({
     selector: "modal-view-item",
@@ -26,6 +27,7 @@ import { GeneralState } from "src/app/core/subjects/subjects.general";
         TemplateBank,
         TemplateBill,
         MatIconModule,
+        CardComponent,
     ],
 })
 export class ModalViewItem {
@@ -33,9 +35,7 @@ export class ModalViewItem {
     public generalState = inject(GeneralState);
     public style = getComputedStyle(document.body);
     public defaultColor = this.style.getPropertyValue("--default");
-    constructor(@Inject(DIALOG_DATA) public data: ViewItemModalType) {
-        this.modalState.changeHeader(this.data.header || "view item");
-    }
+    constructor(@Inject(DIALOG_DATA) public data: any) {}
 
     public months = MONTHS;
 

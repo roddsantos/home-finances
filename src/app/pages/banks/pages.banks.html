@@ -8,11 +8,20 @@
     <div class="bank-grid grid">
         <li class="bank-li" *ngFor="let bank of (bankState.banks$ | async)">
             <div
-                [ngClass]="['bank-container', 'grid-item', generalState.theme$ | async]"
+                [ngClass]="['bank-container', 'grid-item', bank.isPiggyBank ? 'piggybank' : '', generalState.theme$ | async]"
                 (click)="openDetails(bank, $event)"
             >
                 <div class="bank-color" [style.backgroundColor]="bank.color"></div>
-                <h2 class="bank-title">{{bank.name}}</h2>
+                <h2 class="bank-title">
+                    {{bank.name}}
+                    <mat-icon
+                        *ngIf="bank.isPiggyBank"
+                        class="material-symbols-outlined piggy"
+                        aria-hidden="false"
+                        aria-label="icon"
+                        fontIcon="savings"
+                    ></mat-icon>
+                </h2>
                 <p class="bank-description">{{bank.description}}</p>
                 <div class="bank-savings">
                     <p class="secondary-text">savings</p>

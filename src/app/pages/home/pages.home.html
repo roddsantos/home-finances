@@ -29,9 +29,10 @@
                         fontIcon="receipt_long"
                     ></mat-icon>
                 </div>
-                <h3>{{(homeState.expenses$ | async)?.total | currency: 'R$ '}}</h3>
+                <h3>{{(homeState.expenses$ | async)?.sumOfBills| currency: 'R$ '}}</h3>
                 <p [style.marginTop]="'0.5rem'">
-                    {{"total in " + (homeState.expenses$ | async)?.count + " bills"}}
+                    {{"total in " + (homeState.expenses$ | async)?.numberOfBills + '
+                    bills'}}
                 </p>
                 <div
                     [ngClass]="['home-delta', (homeState.expenses$ | async)!.delta > 0 ? 'red' : 'green']"
@@ -59,7 +60,7 @@
                 </div>
                 <p>{{"paid expenses"}}</p>
                 <div class="row">
-                    <h3>{{(homeState.expenses$ | async)?.settled| currency: 'R$ '}}</h3>
+                    <h3>{{(homeState.expenses$ | async)?.paidBills| currency: 'R$ '}}</h3>
                 </div>
             </div>
         </card-component>
@@ -117,7 +118,7 @@
                 </div>
             </div>
         </card-component>
-        <!--  -->
+        <!-- TOTAL SAVINGS -->
         <card-component id="hsl" class="hsl" [noDivisor]="true" [hideHeader]="true">
             <div class="col" [style.margin]="'auto 0px'">
                 <div class="icon-container transparent">
@@ -127,12 +128,13 @@
                     ></mat-icon>
                 </div>
                 <h3
-                    [ngClass]="[(homeState.savings$ | async)!.total > 0 ? 'positive' : 'negative']"
+                    [ngClass]="[(homeState.savings$ | async)!.totalSavings > 0 ? 'positive' : 'negative']"
                 >
-                    {{(homeState.savings$ | async)?.total | currency: 'R$ '}}
+                    {{(homeState.savings$ | async)?.totalSavings | currency: 'R$ '}}
                 </h3>
                 <p>
-                    {{"total left in " + (homeState.savings$ | async)?.count + " banks"}}
+                    {{"total left in " + (homeState.savings$ | async)?.totalBanks + "
+                    banks"}}
                 </p>
             </div>
         </card-component>
@@ -150,7 +152,9 @@
                     ></mat-icon>
                 </div>
                 <div class="row">
-                    <h3>{{(homeState.savings$ | async)?.income| currency: 'R$ '}}</h3>
+                    <h3>
+                        {{(homeState.savings$ | async)?.moneyIncome| currency: 'R$ '}}
+                    </h3>
                 </div>
                 <p>{{"total income"}}</p>
             </div>
@@ -169,10 +173,10 @@
                     ></mat-icon>
                 </div>
                 <h3
-                    [ngClass]="[(homeState.savings$ | async)!.total > 0 ? 'positive' : 'negative']"
+                    [ngClass]="[(homeState.savings$ | async)!.totalSavings > 0 ? 'positive' : 'negative']"
                 >
-                    {{((homeState.savings$ | async)!.income - (homeState.expenses$ |
-                    async)!.total)| currency: 'R$ '}}
+                    {{((homeState.savings$ | async)!.moneyIncome - (homeState.expenses$ |
+                    async)!.sumOfBills)| currency: 'R$ '}}
                 </h3>
                 <p>month savings preview</p>
             </div>

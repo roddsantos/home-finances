@@ -10,17 +10,11 @@ import {
 } from "@angular/core";
 import { MatIcon } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
-import { ProfileDialogType } from "src/app/core/types/modal";
+import { ModalDataType } from "src/app/core/types/modal";
 import { DIALOG_DATA, DialogRef } from "@angular/cdk/dialog";
-import {
-    AsyncPipe,
-    CommonModule,
-    NgClass,
-    NgSwitch,
-    NgSwitchCase,
-    NgTemplateOutlet,
-} from "@angular/common";
+import { AsyncPipe, CommonModule, NgTemplateOutlet } from "@angular/common";
 import { ModalState } from "src/app/core/subjects/subjects.modal";
+import { SizeType } from "src/app/core/types/components";
 
 @Component({
     selector: "modal-component",
@@ -33,17 +27,19 @@ export class ModalComponent implements OnChanges {
     constructor(
         public dialogRef: DialogRef,
         public modalState: ModalState,
-        @Inject(DIALOG_DATA) public data: ProfileDialogType
+        @Inject(DIALOG_DATA) public data: ModalDataType
     ) {}
 
     @Input() bodyTemplate!: TemplateRef<any>;
     @Input() disabled: boolean;
+    @Input() hideHeader: boolean = false;
+    @Input() size: SizeType = "md";
     @Output() actionSecondary = new EventEmitter<void>();
     @Output() actionPrimary = new EventEmitter<Object>();
     disableButton = false;
 
     ngOnInit() {
-        console.log(this.data);
+        console.log("OKKKKKKKKKKK", this.hideHeader, this.size);
         this.disableButton = this.disabled;
     }
 

@@ -1,7 +1,13 @@
 <div class="bank">
-    <div class="savings-container">
-        <h5>bank savings</h5>
-        <h2>{{bank.savings | currency: "R$ "}}</h2>
+    <div class="savings-container lvi label-value">
+        <mat-icon
+            class="material-symbols-outlined"
+            aria-hidden="false"
+            aria-label="icon"
+            fontIcon="local_atm"
+        ></mat-icon>
+        <p>bank savings</p>
+        <h1>{{bank.savings | currency: "R$ "}}</h1>
     </div>
 </div>
 <div>

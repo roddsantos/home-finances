@@ -60,6 +60,7 @@ export type Bank = {
     color: string;
     savings: number;
     userId: string;
+    isPiggyBank: boolean;
     updatedAt: string;
     createdAt: string;
     deletedAt: string | null;

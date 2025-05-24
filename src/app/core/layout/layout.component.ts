@@ -135,7 +135,9 @@ export class LayoutComponent implements OnChanges {
 
         this.catApi.getCategories().subscribe({
             next: (cats) => {
-                this.catState.setCategory(cats);
+                this.catState.setCategory(
+                    cats.sort((cat1, cat2) => (cat1.name > cat2.name ? 1 : -1))
+                );
                 this.catState.changeVariant(cats.length > 0 ? "none" : "empty");
             },
             error: () => this.catState.changeStatus("http", "error fetching categories"),

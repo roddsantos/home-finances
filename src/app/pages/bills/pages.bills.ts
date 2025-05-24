@@ -83,11 +83,7 @@ export class PageBills {
 
     openDetails(bill: Bill) {
         const option = {
-            data: {
-                item: { ...bill, sector: "bill" },
-                header: "view item: " + bill.name,
-                size: "md",
-            },
+            data: bill,
         };
         this.dialog.open(ModalViewItem, option);
     }

@@ -17,10 +17,10 @@
 .bank-container {
     display: grid;
     grid-template-areas:
-        "bank-color bank-title bank-title bank-buttons"
-        "bank-description bank-description bank-description bank-description"
-        "bank-savings bank-savings bank-savings bank-savings";
-    grid-template-columns: 1fr 8fr 6fr 5fr;
+        "bank-color bank-title bank-buttons"
+        "bank-description bank-description bank-description"
+        "bank-savings bank-savings bank-savings";
+    grid-template-columns: 1fr 14fr 5fr;
     grid-template-rows: repeat(3, auto);
     column-gap: 0.5rem;
     row-gap: 0.5rem;
@@ -42,7 +42,7 @@
 .bank-title {
     grid-area: bank-title;
     font-weight: bold;
-    width: 50%;
+    width: 100%;
     margin: auto 0px 0px 1rem;
 
     @media screen and (max-width: 1366px) {
@@ -86,4 +86,13 @@
 
 .secondary-text {
     font-size: 14px;
+}
+
+.piggybank {
+    & .bank-title .piggy {
+        color: var(--success);
+    }
+    & .bank-savings h3 {
+        color: var(--success);
+    }
 }

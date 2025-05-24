@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatButton, MatIconButton } from "@angular/material/button";
-import { MatIcon } from "@angular/material/icon";
+import { MatIcon, MatIconModule } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
@@ -22,7 +22,7 @@ import { ModalViewItem } from "src/app/components/modal/view-item/view-item.moda
     templateUrl: "./pages.banks.html",
     styleUrls: ["./pages.banks.css"],
     standalone: true,
-    imports: [FeedbackContainerComponent, CommonModule, ActionsComponent],
+    imports: [FeedbackContainerComponent, CommonModule, ActionsComponent, MatIconModule],
 })
 export class PageBanks {
     public bankService = inject(ServiceBank);
@@ -73,13 +73,7 @@ export class PageBanks {
 
     onEdit(bank: any) {
         const options = {
-            data: {
-                header: "edit bank",
-                size: "md",
-                bank,
-            },
-            hasBackdrop: true,
-            backdropClass: "modal-backdrop",
+            data: bank,
         };
         this.dialog.open(ModalNewBank, options);
     }
@@ -88,11 +82,7 @@ export class PageBanks {
         const className = event.target.className;
         if (className !== "mat-mdc-button-touch-target") {
             const option = {
-                data: {
-                    item: { ...bank, sector: "bank" },
-                    header: "view item: " + bank.name,
-                    size: "md",
-                },
+                data: bank,
             };
             this.dialog.open(ModalViewItem, option);
         }

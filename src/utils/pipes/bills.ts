@@ -6,7 +6,7 @@ import { Bill, BillData } from "src/app/core/types/objects";
     standalone: true,
 })
 export class BillsPipe implements PipeTransform {
-    transform(value: Bill & BillData, format: "type" | "parcels") {
+    transform(value: Bill & BillData, format: "type" | "parcels" | "settled" | "flux") {
         if (format === "type") {
             if (value.type === "creditCard") return "credit card";
             if (value.type === "companyCredit") return "company credit";
@@ -14,6 +14,16 @@ export class BillsPipe implements PipeTransform {
         }
         if (format === "parcels") {
             return `${value.parcel + 1}/${value.parcels}`;
+        }
+        if (format === "settled") {
+            return value.settled
+                ? !value.isPayment
+                    ? "received"
+                    : "paid"
+                : "pending payment";
+        }
+        if (format === "flux") {
+            return value.isPayment ? "outcome" : "income";
         }
         return value;
     }

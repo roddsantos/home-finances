@@ -22,14 +22,7 @@ import { ModalViewItem } from "src/app/components/modal/view-item/view-item.moda
     templateUrl: "./pages.categories.html",
     styleUrls: ["./pages.categories.css"],
     standalone: true,
-    imports: [
-        MatIcon,
-        MatButton,
-        FeedbackContainerComponent,
-        CommonModule,
-        MatIconButton,
-        ActionsComponent,
-    ],
+    imports: [MatIcon, FeedbackContainerComponent, CommonModule, ActionsComponent],
 })
 export class PageCategories {
     public categoryService = inject(ServiceCategory);
@@ -81,13 +74,7 @@ export class PageCategories {
 
     onEdit(category: any) {
         let options = {
-            data: {
-                header: "edit category",
-                size: "md",
-                category,
-            },
-            hasBackdrop: true,
-            backdropClass: "modal-backdrop",
+            data: category,
         };
         this.dialog.open(ModalNewCategory, options);
     }
@@ -100,11 +87,7 @@ export class PageCategories {
         const className = e.target.className;
         if (className !== "mat-mdc-button-touch-target") {
             const option = {
-                data: {
-                    item: { ...category, sector: "category" },
-                    header: "view item: " + category.name,
-                    size: "md",
-                },
+                data: category,
             };
             this.dialog.open(ModalViewItem, option);
         }

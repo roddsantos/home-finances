@@ -1,81 +1,105 @@
 <div class="bill">
-    <div class="conditional-container">
-        <div class="bank-bill" *ngIf="bill.bank1">
-            <h5>transaction bank</h5>
-            <div class="banks">
-                <p>{{bill.bank1.name}}</p>
-                <mat-icon
-                    *ngIf="bill.bank2"
-                    class="selection-icon"
-                    aria-hidden="false"
-                    aria-label="icon"
-                    [style.color]="bill.isRefund ? successColor : warningColor"
-                    [fontIcon]="bill.isPayment ? 'arrow_forward' : 'arrow_back'"
-                ></mat-icon>
-                <p *ngIf="bill.bank2">{{bill.bank2.name}}</p>
-            </div>
-        </div>
-        <div class="company-bill" *ngIf="bill.company">
-            <h5>company</h5>
-            <p>{{bill.company.name}}</p>
-        </div>
-        <div class="credit-card-bill" *ngIf="bill.creditCard">
-            <h5>credit card</h5>
-            <p>{{bill.creditCard.name}}</p>
-        </div>
-    </div>
-    <div class="parcels" *ngIf="bill.type !== 'money'">
-        <h5>parcel/total</h5>
-        <h2>{{(bill.parcel + 1) + "/" + bill.parcels}}</h2>
-    </div>
-    <div class="paid-bill">
-        <h5>paid bill?</h5>
-        <mat-icon
-            class="selection-icon"
-            aria-hidden="false"
-            aria-label="icon"
-            [style.color]="bill.settled ? successColor : errorColor"
-            [fontIcon]="bill.settled ? 'check' : 'close'"
-        ></mat-icon>
-    </div>
-    <div class="refund">
-        <h5>refund?</h5>
-        <mat-icon
-            class="selection-icon"
-            aria-hidden="false"
-            aria-label="icon"
-            [style.color]="bill.isRefund ? successColor : warningColor"
-            [fontIcon]="bill.isRefund ? 'check' : 'close'"
-        ></mat-icon>
-    </div>
-    <div class="payment">
-        <h5>money flux</h5>
-        <mat-icon
-            class="selection-icon"
-            aria-hidden="false"
-            aria-label="icon"
-            [style.color]="bill.isPayment ? errorColor : successColor"
-            [fontIcon]="bill.isPayment ? 'arrow_circle_up' : 'arrow_circle_down'"
-        ></mat-icon>
-    </div>
-    <div class="category-container">
-        <h5>category</h5>
-        <div class="category">
-            <p>{{bill.category.name}}</p>
+    <div class="bill-tags">
+        <div [ngClass]="['payment', 'tag', bill.isPayment ? 'outcome' : 'income']">
             <mat-icon
-                class="selection-icon"
+                class="material-symbols-outlined"
                 aria-hidden="false"
                 aria-label="icon"
-                [fontIcon]="bill.category.icon"
+                [fontIcon]="bill.isPayment ? 'arrow_circle_up' : 'arrow_circle_down'"
             ></mat-icon>
+            <h6>{{ bill | bills : 'flux' }}</h6>
+        </div>
+        <div [ngClass]="['paid-bill', 'tag', bill.settled ? 'settled' : 'late']">
+            <mat-icon
+                class="material-symbols-outlined"
+                aria-hidden="false"
+                aria-label="icon"
+                [fontIcon]="bill.settled ? 'check' : 'close'"
+            ></mat-icon>
+            <h6>{{ bill | bills : 'settled' }}</h6>
         </div>
     </div>
-    <div class="due-date">
-        <h5>due date</h5>
-        <p>{{bill.due | date: "mediumDate"}}</p>
-    </div>
-    <div *ngIf="bill.paid" class="payment-date">
-        <h5>payment date</h5>
-        <p>{{bill.paid | date: "mediumDate"}}</p>
+    <card-component class="section-data" [hideHeader]="true">
+        <div class="conditional-container info-card">
+            <div class="bank-bill lvi label-value" *ngIf="bill.bank1">
+                <mat-icon
+                    class="material-symbols-outlined"
+                    aria-hidden="false"
+                    aria-label="icon"
+                    fontIcon="savings"
+                ></mat-icon>
+                <p>transaction bank</p>
+                <div class="banks">
+                    <h5
+                        class="color-decorator"
+                        [style.textDecorationColor]="bill.bank1.color"
+                    >
+                        {{bill.bank1.name}}
+                    </h5>
+                    <mat-icon
+                        *ngIf="bill.bank2"
+                        class="selection-icon"
+                        aria-hidden="false"
+                        aria-label="icon"
+                        [style.color]="bill.isRefund ? successColor : warningColor"
+                        [fontIcon]="bill.isPayment ? 'arrow_forward' : 'arrow_back'"
+                    ></mat-icon>
+                    <h5
+                        class="color-decorator"
+                        [style.textDecorationColor]="bill.bank2.color"
+                        *ngIf="bill.bank2"
+                    >
+                        {{bill.bank2.name}}
+                    </h5>
+                </div>
+            </div>
+            <div class="company-bill lvi label-value" *ngIf="bill.company">
+                <p>company</p>
+                <mat-icon
+                    class="material-symbols-outlined"
+                    aria-hidden="false"
+                    aria-label="icon"
+                    fontIcon="store"
+                ></mat-icon>
+                <h5
+                    class="color-decorator"
+                    [style.textDecorationColor]="bill.company.color"
+                >
+                    {{bill.company.name}}
+                </h5>
+            </div>
+            <div class="credit-card-bill lvi label-value" *ngIf="bill.creditCard">
+                <p>credit card</p>
+                <mat-icon
+                    class="material-symbols-outlined"
+                    aria-hidden="false"
+                    aria-label="icon"
+                    fontIcon="credit-card"
+                ></mat-icon>
+                <h5>{{bill.creditCard.name}}</h5>
+            </div>
+            <div class="category-bill lvi label-value">
+                <p>category</p>
+                <mat-icon
+                    class="material-icons-outlined"
+                    aria-hidden="false"
+                    aria-label="icon"
+                    [fontIcon]="bill.category.icon"
+                ></mat-icon>
+                <h5
+                    class="color-decorator"
+                    [style.textDecorationColor]="bill.category.color"
+                >
+                    {{bill.category.name}}
+                </h5>
+            </div>
+        </div>
+    </card-component>
+    <div class="bill-value">
+        <h5>
+            {{ bill.parcels + "x " + "(" + (bill.parcel + 1) + "/" + bill.parcels + ")" }}
+        </h5>
+        <h1>{{ bill.totalParcel | currency : "R$ " }}</h1>
+        <p>{{ "total " + (bill.total | currency : "R$ ") }}</p>
     </div>
 </div>

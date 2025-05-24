@@ -50,21 +50,21 @@ export class ModalNewBank implements OnInit {
     public snack = inject(CustomSnackbarComponent);
     @ViewChild(ModalComponent) modalComponent: any;
 
-    constructor(@Inject(DIALOG_DATA) public data: EditBankModalType) {}
+    constructor(@Inject(DIALOG_DATA) public data: Bank) {}
 
     bankForm = new FormGroup({
-        name: new FormControl<string>(this.data.bank?.name || "", {
+        name: new FormControl<string>(this.data?.name || "", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
         }),
-        description: new FormControl<string>(this.data.bank?.description || "", {
+        description: new FormControl<string>(this.data?.description || "", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
         }),
-        color: new FormControl<string>(this.data.bank?.color || "#000000", {
+        color: new FormControl<string>(this.data?.color || "#000000", {
             nonNullable: true,
         }),
-        savings: new FormControl<number>(this.data.bank?.savings || 0, {
+        savings: new FormControl<number>(this.data?.savings || 0, {
             nonNullable: true,
         }),
     });
@@ -78,10 +78,8 @@ export class ModalNewBank implements OnInit {
     @Output() onClose = new EventEmitter<void>();
 
     ngOnInit() {
-        this.modalState.changeSubmitFooter(
-            this.data.bank ? "edit" : "create bank",
-            "cancel"
-        );
+        this.modalState.changeSubmitFooter(this.data ? "edit" : "create bank", "cancel");
+        this.modalState.changeHeader(this.data ? "edit bank" : "new bank");
         this.bankForm.controls.savings.disable();
     }
 
@@ -90,7 +88,7 @@ export class ModalNewBank implements OnInit {
             this.bankApi
                 .updateBank({
                     ...(this.bankForm.value as BankObject),
-                    id: this.data.bank.id,
+                    id: this.data.id,
                 })
                 .pipe(mergeMap(() => this.bankApi.getBanks()))
                 .subscribe({
@@ -130,7 +128,7 @@ export class ModalNewBank implements OnInit {
     }
 
     onSubmit() {
-        if (this.data.bank) this.onUpdate();
+        if (this.data) this.onUpdate();
         else this.onCreate();
     }
 }

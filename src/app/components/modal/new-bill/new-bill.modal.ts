@@ -81,6 +81,7 @@ export class ModalNewBill implements OnInit {
     step: number = 1;
 
     ngOnInit() {
+        this.modalState.changeHeader("new bill");
         this.modalState.changeFooter({
             type: "submit",
             submitLabel: "advance",
