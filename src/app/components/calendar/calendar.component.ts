@@ -46,14 +46,6 @@ export class CalendarComponent implements OnChanges {
 
     public weekdays = WEEKDAYS;
 
-    public style = getComputedStyle(document.body);
-    public primaryColor = this.style.getPropertyValue("--primary");
-    public secondaryColor = this.style.getPropertyValue("--secondary");
-    public thirdColor = this.style.getPropertyValue("--third");
-    public errorColor = this.style.getPropertyValue("--error");
-    public infoColor = this.style.getPropertyValue("--info");
-    public disabledColor = this.style.getPropertyValue("--disabled");
-
     public monthBillsSubscriber: Subscription;
     public creditCardSubscriber: Subscription;
 
@@ -67,9 +59,11 @@ export class CalendarComponent implements OnChanges {
         }
         if (changes["monthBills"]) {
             const monthBills = changes["monthBills"].currentValue;
+            const dayOfWeek = new Date(this.year, this.month, 1).getDay();
             monthBills.forEach((bill: Bill & BillData) => {
                 const eventDate = new Date(bill["due"]).getDate();
-                if (!isNaN(eventDate)) this.dates[eventDate - 1].events.push(bill);
+                if (!isNaN(eventDate))
+                    this.dates[eventDate + dayOfWeek - 1].events.push(bill);
             });
         }
     }
@@ -78,13 +72,13 @@ export class CalendarComponent implements OnChanges {
         this.generalState.theme$.subscribe({
             next: (theme) => (this.theme = theme),
         });
-        const firstDay = new Date(this.year, this.month, 1).getDay();
+        const dayOfWeek = new Date(this.year, this.month, 1).getDay();
         const daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
 
-        for (let i = firstDay; i > 0; i--) {
+        for (let i = dayOfWeek; i > 0; i--) {
             this.previousDates.push({
                 day: new Date(this.year, this.month, 1 - i).getDate(),
-                weekDay: firstDay - i,
+                weekDay: dayOfWeek - i,
                 thisMonth: false,
                 thisYear:
                     new Date(this.year, this.month - 1, 1).getFullYear() ===
@@ -92,6 +86,7 @@ export class CalendarComponent implements OnChanges {
                 events: [],
             });
         }
+        this.dates = [...this.previousDates];
         for (let i = 1; i <= daysInMonth; i++) {
             this.dates.push({
                 day: new Date(this.year, this.month, i).getDate(),
@@ -120,10 +115,6 @@ export class CalendarComponent implements OnChanges {
                         sector: this.isBill(event) ? "bill" : "credit-card",
                     })),
                 ],
-                header:
-                    "all events of " +
-                    new Date(this.year, this.month, date.day).toLocaleDateString(),
-                size: "sm",
             },
         };
         this.dialog.open(ModalEventsList, option);

@@ -6,7 +6,7 @@
 
 .calendar-weekdays {
     display: grid;
-    grid-template-columns: repeat(7, calc(14.28% - 0.25rem));
+    grid-template-columns: repeat(7, calc(15.28% - 0.25rem));
     column-gap: 0.25rem;
     margin-bottom: 0.25rem;
     & .weekday {
@@ -19,12 +19,24 @@
         text-align: center;
         color: var(--text-1);
         font-weight: bold;
+        &.workday {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+        &.binary {
+            color: var(--secondary);
+            border-color: var(--secondary);
+        }
+        &.dayoff {
+            color: var(--error);
+            border-color: var(--error);
+        }
     }
 }
 
 .calendar-dates {
     display: grid;
-    grid-template-columns: repeat(7, calc(14.28% - 0.25rem));
+    grid-template-columns: repeat(7, calc(15.28% - 0.25rem));
     column-gap: 0.25rem;
     row-gap: 0.25rem;
     & .date {
@@ -36,11 +48,30 @@
         border-width: var(--border-width);
         border-radius: var(--border-radius);
         width: 100%;
-        &.today p {
-            font-weight: bolder;
-        }
         & p {
             font-size: 1rem;
+        }
+        &.bills {
+            cursor: pointer;
+        }
+        &.this-month {
+            border-color: var(--text-1);
+            color: var(--text-1);
+        }
+        &.today {
+            border-color: var(--error);
+            border-width: 2px;
+            font-weight: bolder;
+            & p,
+            .icon {
+                color: var(--error);
+            }
+        }
+        &.last-month {
+            border-color: var(--bh);
+            & p {
+                color: var(--disabled);
+            }
         }
         & .icon {
             font-size: 1.25rem;
