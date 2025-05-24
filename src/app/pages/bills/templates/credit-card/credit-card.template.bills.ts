@@ -71,12 +71,7 @@ export class CreditCardTemplateMonthly {
 
     onEdit() {
         this.dialog.open(ModalEditBill, {
-            data: {
-                bill: this.data,
-                size: "md",
-            },
-            hasBackdrop: true,
-            backdropClass: "modal-backdrop",
+            data: this.data,
         });
     }
 
@@ -88,11 +83,7 @@ export class CreditCardTemplateMonthly {
         const className = e.target.className;
         if (className !== "mat-mdc-button-touch-target") {
             const option = {
-                data: {
-                    item: { ...bill, sector: "bill" },
-                    header: "view item: " + bill.name,
-                    size: "md",
-                },
+                data: bill,
             };
             this.dialog.open(ModalViewItem, option);
         }

@@ -73,13 +73,7 @@ export class PageBanks {
 
     onEdit(bank: any) {
         const options = {
-            data: {
-                header: "edit bank",
-                size: "md",
-                bank,
-            },
-            hasBackdrop: true,
-            backdropClass: "modal-backdrop",
+            data: bank,
         };
         this.dialog.open(ModalNewBank, options);
     }
@@ -88,11 +82,7 @@ export class PageBanks {
         const className = event.target.className;
         if (className !== "mat-mdc-button-touch-target") {
             const option = {
-                data: {
-                    item: { ...bank, sector: "bank" },
-                    header: "view item: " + bank.name,
-                    size: "md",
-                },
+                data: bank,
             };
             this.dialog.open(ModalViewItem, option);
         }

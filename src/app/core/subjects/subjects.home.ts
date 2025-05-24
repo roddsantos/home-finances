@@ -3,24 +3,26 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { SumAndCountData } from "../types/services";
 import { Bill } from "../types/objects";
-import { SubjectExpensesType, SubjectSavingsType } from "../types/subjects";
+import {
+    SubjectExpensesType,
+    SubjectSavingsType,
+} from "../types/subjects/home.subjects.types";
 
 @Injectable({
     providedIn: "root",
 })
 export class HomeState {
     private _expenses$ = new BehaviorSubject<SubjectExpensesType>({
-        total: 0,
-        count: 0,
+        sumOfBills: 0,
+        numberOfBills: 0,
         delta: 0,
-        settled: 0,
+        paidBills: 0,
     });
     private _savings$ = new BehaviorSubject<SubjectSavingsType>({
-        total: 0,
-        count: 0,
-        toReceive: 0,
-        income: 0,
-        preview: 0,
+        totalSavings: 0,
+        totalBanks: 0,
+        moneyToReceive: 0,
+        moneyIncome: 0,
     });
     private _invoices$ = new BehaviorSubject<SumAndCountData>({
         total: 0,

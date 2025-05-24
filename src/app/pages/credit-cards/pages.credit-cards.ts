@@ -98,13 +98,7 @@ export class PageCreditCards {
 
     onEdit(creditCard: CreditCard) {
         let options = {
-            data: {
-                header: "edit credit card",
-                size: "md",
-                creditCard,
-            },
-            hasBackdrop: true,
-            backdropClass: "modal-backdrop",
+            data: creditCard,
         };
         this.dialog.open(ModalNewCreditCard, options);
     }
@@ -146,11 +140,7 @@ export class PageCreditCards {
         const className = e.target.className;
         if (className !== "mat-mdc-button-touch-target") {
             const option = {
-                data: {
-                    item: { ...creditCard, sector: "credit-card" },
-                    header: "view item: " + creditCard.name,
-                    size: "md",
-                },
+                data: creditCard,
             };
             this.dialog.open(ModalViewItem, option);
         }

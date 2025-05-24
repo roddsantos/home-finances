@@ -1,4 +1,5 @@
 <modal-component
+    size="md"
     [disabled]="onDisableButton()"
     (actionPrimary)="onSubmit()"
     (actionSecondary)="modalComponent.onClose()"
@@ -76,10 +77,7 @@
                         <mat-button-toggle [value]="false">no</mat-button-toggle>
                     </mat-button-toggle-group>
                 </div>
-                <div
-                    class="new-bill-toggle new-bill-field"
-                    *ngIf="data.bill.type === 'money'"
-                >
+                <div class="new-bill-toggle new-bill-field" *ngIf="data.type === 'money'">
                     <p [ngClass]="['label', !billForm.value.settled ? 'disabled'  : '']">
                         money flow
                     </p>
@@ -96,7 +94,7 @@
                 </div>
                 <div
                     class="new-bill-toggle new-bill-field"
-                    *ngIf="data.bill.type === 'creditCard'"
+                    *ngIf="data.type === 'creditCard'"
                 >
                     <p [ngClass]="['label', !billForm.value.settled ? 'disabled'  : '']">
                         is refund
@@ -155,20 +153,20 @@
     <template-edit-banks
         *ngIf="type.value ==='money'"
         #banks="templateEditBanks"
-        [bill]="data.bill"
+        [bill]="data"
         #bankTemplate
     ></template-edit-banks>
     <template-edit-companies
         *ngIf="type.value ==='companyCredit'"
-        [bill]="data.bill"
+        [bill]="data"
         #companyTemplate
     ></template-edit-companies>
     <template-edit-credit-card
         *ngIf="type.value ==='creditCard'"
-        [bill]="data.bill"
+        [bill]="data"
         #ccTemplate
     ></template-edit-credit-card>
-    <p class="disclaimer" *ngIf="data.bill.settled">
+    <p class="disclaimer" *ngIf="data.settled">
         some fields are disabled due to the bill settled
     </p>
 </ng-template>

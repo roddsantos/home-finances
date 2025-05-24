@@ -54,18 +54,18 @@ export class ModalNewCompany implements OnInit {
     public snack = inject(CustomSnackbarComponent);
     @ViewChild(ModalComponent) modalComponent: any;
 
-    constructor(@Inject(DIALOG_DATA) public data: EditCompanyModalType) {}
+    constructor(@Inject(DIALOG_DATA) public data: Company) {}
 
     companyForm = new FormGroup({
-        name: new FormControl<string>(this.data.company?.name || "", {
+        name: new FormControl<string>(this.data?.name || "", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
         }),
-        description: new FormControl<string>(this.data.company?.description || "", {
+        description: new FormControl<string>(this.data?.description || "", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
         }),
-        color: new FormControl<string>(this.data.company?.color || "#000000", {
+        color: new FormControl<string>(this.data?.color || "#000000", {
             nonNullable: true,
         }),
     });
@@ -82,7 +82,7 @@ export class ModalNewCompany implements OnInit {
             this.companyApi
                 .updateCompany({
                     ...(this.companyForm.value as CompanyObject),
-                    id: this.data.company.id,
+                    id: this.data.id,
                 })
                 .pipe(mergeMap(() => this.companyApi.getCompanies()))
                 .subscribe({
@@ -128,12 +128,12 @@ export class ModalNewCompany implements OnInit {
     }
 
     onSubmit() {
-        if (this.data.company) this.onUpdate();
+        if (this.data) this.onUpdate();
         else this.onCreate();
     }
 
     ngOnInit() {
-        this.modalState.changeSubmitFooter(this.data.company ? "edit" : "OK", "cancel");
-        this.modalState.changeHeader(this.data.header || "new company");
+        this.modalState.changeSubmitFooter(this.data ? "edit" : "OK", "cancel");
+        this.modalState.changeHeader(this.data ? "edit company" : "new company");
     }
 }

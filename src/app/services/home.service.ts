@@ -6,7 +6,10 @@ import { LocalStorageService } from "./local-storage.service";
 import { SumAndCountData } from "../core/types/services";
 import { HOME } from "src/utils/constants/services";
 import { Bill, BillData } from "../core/types/objects";
-import { SubjectExpensesType, SubjectSavingsType } from "../core/types/subjects";
+import {
+    SubjectExpensesType,
+    SubjectSavingsType,
+} from "../core/types/subjects/home.subjects.types";
 
 @Injectable({
     providedIn: "root",

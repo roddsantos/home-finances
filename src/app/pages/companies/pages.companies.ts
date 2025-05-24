@@ -22,14 +22,7 @@ import { ModalViewItem } from "src/app/components/modal/view-item/view-item.moda
     templateUrl: "./pages.companies.html",
     styleUrls: ["./pages.companies.css"],
     standalone: true,
-    imports: [
-        MatIcon,
-        MatButton,
-        FeedbackContainerComponent,
-        CommonModule,
-        MatIconButton,
-        ActionsComponent,
-    ],
+    imports: [FeedbackContainerComponent, CommonModule, ActionsComponent],
 })
 export class PageCompanies {
     public companyService = inject(ServiceCompany);
@@ -81,13 +74,7 @@ export class PageCompanies {
 
     onEdit(company: any) {
         let options = {
-            data: {
-                header: "edit company",
-                size: "md",
-                company,
-            },
-            hasBackdrop: true,
-            backdropClass: "modal-backdrop",
+            data: company,
         };
         this.dialog.open(ModalNewCompany, options);
     }
@@ -100,11 +87,7 @@ export class PageCompanies {
         const className = e.target.className;
         if (className !== "mat-mdc-button-touch-target") {
             const option = {
-                data: {
-                    item: { ...company, sector: "company" },
-                    header: "view item: " + company.name,
-                    size: "md",
-                },
+                data: company,
             };
             this.dialog.open(ModalViewItem, option);
         }

@@ -13,7 +13,7 @@ import { BillState } from "src/app/core/subjects/subjects.bill";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
-import { Category } from "src/app/core/types/objects";
+import { Bill, BillData, Category } from "src/app/core/types/objects";
 import { BankTemplateEditBill } from "./templates/bank/bank.template.edit-bill";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { CommonModule } from "@angular/common";
@@ -68,7 +68,7 @@ export class ModalEditBill {
     public catState = inject(CategoryState);
     public snack = inject(CustomSnackbarComponent);
 
-    constructor(@Inject(DIALOG_DATA) public data: EditBillModalType) {}
+    constructor(@Inject(DIALOG_DATA) public data: Bill & BillData) {}
 
     @ViewChild(ModalComponent) modalComponent: ModalComponent;
     @ViewChild(BankTemplateEditBill) bankTemplate: BankTemplateEditBill;
@@ -93,29 +93,29 @@ export class ModalEditBill {
             }
         ),
         settled: new FormControl<boolean>(
-            { value: false, disabled: this.data.bill.settled },
+            { value: false, disabled: this.data.settled },
             { nonNullable: false }
         ),
         due: new FormControl<Date>(
-            { value: new Date(), disabled: this.data.bill.settled },
+            { value: new Date(), disabled: this.data.settled },
             { nonNullable: true }
         ),
         paid: new FormControl<Date>(
             {
                 value: new Date(),
-                disabled: this.data.bill.settled,
+                disabled: this.data.settled,
             },
             { nonNullable: false }
         ),
         isPayment: new FormControl<boolean>(
-            { value: true, disabled: this.data.bill.settled },
+            { value: true, disabled: this.data.settled },
             {
                 nonNullable: true,
                 validators: [Validators.required],
             }
         ),
         isRefund: new FormControl<boolean>(
-            { value: true, disabled: this.data.bill.settled },
+            { value: true, disabled: this.data.settled },
             {
                 nonNullable: true,
                 validators: [Validators.required],
@@ -135,18 +135,18 @@ export class ModalEditBill {
 
     ngOnInit() {
         this.billForm.patchValue({
-            name: this.data.bill.name,
-            description: this.data.bill.description,
-            total: this.data.bill.total,
-            settled: this.data.bill.settled,
-            due: new Date(this.data.bill.due),
-            paid: this.data.bill.paid ? new Date(this.data.bill.paid) : null,
-            type: this.data.bill.type as PaymentTypes,
-            category: this.data.bill.category,
-            isPayment: this.data.bill.isPayment,
-            isRefund: this.data.bill.isRefund,
+            name: this.data.name,
+            description: this.data.description,
+            total: this.data.total,
+            settled: this.data.settled,
+            due: new Date(this.data.due),
+            paid: this.data.paid ? new Date(this.data.paid) : null,
+            type: this.data.type as PaymentTypes,
+            category: this.data.category,
+            isPayment: this.data.isPayment,
+            isRefund: this.data.isRefund,
         });
-        if (this.data.bill.settled || this.data.bill.type !== "money")
+        if (this.data.settled || this.data.type !== "money")
             this.billForm.get("total")?.disable();
         this.modalState.changeFooter({
             type: "submit",
@@ -169,7 +169,7 @@ export class ModalEditBill {
     };
 
     onDisableButton() {
-        switch (this.data.bill.type) {
+        switch (this.data.type) {
             case "money":
                 return (
                     this.billForm.invalid ||
@@ -211,13 +211,13 @@ export class ModalEditBill {
             total: billFormValue.total!,
             due: billFormValue.due!,
             paid: billFormValue.paid!,
-            groupId: this.data.bill.groupId,
+            groupId: this.data.groupId,
             isPayment: billFormValue.isPayment,
-            id: this.data.bill.id,
+            id: this.data.id,
         };
         var observer;
 
-        switch (this.data.bill.type) {
+        switch (this.data.type) {
             case "money":
                 const bankFormValue = this.bankTemplate.bankForm.getRawValue();
                 observer = this.billService.updateBillBank({
@@ -236,8 +236,8 @@ export class ModalEditBill {
                     creditCardId: creditCardFormValue.creditCard!.id,
                     companyId: creditCardFormValue.company?.id,
                     parcels: creditCardFormValue.parcels!,
-                    parcel: this.data.bill.parcel,
-                    totalParcel: this.data.bill.totalParcel,
+                    parcel: this.data.parcel,
+                    totalParcel: this.data.totalParcel,
                     taxes: creditCardFormValue.taxes,
                     delta: creditCardFormValue.delta,
                 });
@@ -252,7 +252,7 @@ export class ModalEditBill {
                     parcels: companyFormValue.parcels!,
                     taxes: companyFormValue.taxes,
                     delta: companyFormValue.delta,
-                    totalParcel: this.data.bill.totalParcel,
+                    totalParcel: this.data.totalParcel,
                 });
                 break;
             default:

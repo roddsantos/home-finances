@@ -190,12 +190,9 @@ export class HeaderLayoutComponent {
         this.search$.next("");
     }
 
-    onSelect(e: any) {
+    onSelect(item: any) {
         const option = {
-            data: {
-                item: e,
-                size: "md",
-            },
+            data: item,
         };
         this.dialog.open(ModalViewItem, option);
     }
@@ -205,14 +202,7 @@ export class HeaderLayoutComponent {
     }
 
     openModal(selectedEvent: RouteItemActionType) {
-        let options = {
-            data: {
-                header: selectedEvent.title,
-                size: "md",
-            },
-            hasBackdrop: true,
-            backdropClass: "modal-backdrop",
-        };
+        let options = {};
         switch (this.screen?.page) {
             case "/bills":
                 this.dialog.open(ModalNewBill, options);

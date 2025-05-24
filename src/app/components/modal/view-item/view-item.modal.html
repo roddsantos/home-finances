@@ -8,16 +8,13 @@
     <div class="view-item-main">
         <div class="main-info-container">
             <div
-                [style.backgroundColor]="(data.item | sector : 'color')"
+                [style.backgroundColor]="(data | sector : 'color')"
                 [ngClass]="['color' ]"
                 class="color"
             ></div>
-            <p class="sector">{{ (data.item | sector) }}</p>
-            <h1
-                class="title"
-                [style.textDecorationColor]="data.item.color || 'transparent'"
-            >
-                {{data.item.name}}
+            <p class="sector">{{ (data | sector) }}</p>
+            <h1 class="title" [style.textDecorationColor]="data.color || 'transparent'">
+                {{data.name}}
             </h1>
         </div>
         <div class="description-container label-value lvi">
@@ -28,29 +25,29 @@
                 fontIcon="clarify"
             ></mat-icon>
             <p>description</p>
-            <h5>{{data.item.description}}</h5>
+            <h5>{{data.description}}</h5>
         </div>
-        <div class="category-container" *ngIf="data.item.sector === 'category'">
+        <div class="category-container" *ngIf="(data | sector) === 'category'">
             <p>icon</p>
-            <h5>{{data.item.icon}}</h5>
+            <h5>{{data.icon}}</h5>
             <mat-icon
                 class="selection-icon"
                 aria-hidden="false"
                 aria-label="icon"
-                [fontIcon]="data.item.icon"
+                [fontIcon]="data.icon"
             ></mat-icon>
         </div>
-        <ng-container *ngIf="data.item.sector === 'credit-card'">
+        <ng-container *ngIf="(data | sector) === 'credit card'">
             <template-view-credit-card
-                [creditCard]="data.item"
+                [creditCard]="data"
                 [theme]="(generalState.theme$ | async)!"
             />
         </ng-container>
-        <ng-container *ngIf="data.item.sector === 'bank'">
-            <template-view-bank [bank]="data.item" />
+        <ng-container *ngIf="(data | sector) === 'bank'">
+            <template-view-bank [bank]="data" />
         </ng-container>
-        <ng-container *ngIf="data.item.sector === 'bill'">
-            <template-view-bill [bill]="data.item" />
+        <ng-container *ngIf="(data | sector) === 'bill'">
+            <template-view-bill [bill]="data" />
         </ng-container>
         <card-component [hideHeader]="true">
             <div class="info-card">
@@ -63,11 +60,11 @@
                         fontIcon="calendar_clock"
                     ></mat-icon>
                     <h5>
-                        {{(data.item.updatedAt | date: "mediumDate") + ', ' +
-                        ((data.item.updatedAt) | date: "shortTime")}}
+                        {{(data.updatedAt | date: "mediumDate") + ', ' + ((data.updatedAt)
+                        | date: "shortTime")}}
                     </h5>
                 </div>
-                <div *ngIf="data.item.due" class="date label-value lvi">
+                <div *ngIf="data.due" class="date label-value lvi">
                     <p>due date</p>
                     <mat-icon
                         class="material-symbols-outlined"
@@ -75,9 +72,9 @@
                         aria-label="icon"
                         fontIcon="calendar_clock"
                     ></mat-icon>
-                    <h5>{{(data.item.due | date: "mediumDate")}}</h5>
+                    <h5>{{(data.due | date: "mediumDate")}}</h5>
                 </div>
-                <div *ngIf="data.item.paid" class="label-value lvi">
+                <div *ngIf="data.paid" class="label-value lvi">
                     <p>payment date</p>
                     <mat-icon
                         class="material-symbols-outlined"
@@ -85,7 +82,7 @@
                         aria-label="icon"
                         fontIcon="calendar_clock"
                     ></mat-icon>
-                    <h5>{{(data.item.paid | date: "mediumDate") }}</h5>
+                    <h5>{{(data.paid | date: "mediumDate") }}</h5>
                 </div>
             </div>
         </card-component>
