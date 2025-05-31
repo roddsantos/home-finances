@@ -9,45 +9,8 @@
             [border]="true"
         >
             <div class="content">
-                <canvas id="bills-per-month" class="bills-per-month" height="200"
-                    >{{billsPerMonthChart}}</canvas
-                >
-                <div class="bill-progression">
-                    <h3>month progression</h3>
-                    <div class="grid-content">
-                        <div
-                            class="item"
-                            [style.borderColor]="theme === 'binary' ? secondaryColor : thirdColor"
-                            *ngFor="let bill of (this.dashboardState.billsCounters$ | async) as bills; let i = index"
-                        >
-                            <p class="month">{{ months[bills[i].month].short }}</p>
-                            <mat-icon
-                                class="material-symbols-outlined icon"
-                                [ngClass]="[i + 1 === bills.length || bills[i + 1].total === 0 ? 'blue' : bills[i].total - bills[i + 1].total < 0 ? 'green' : 'red']"
-                                [fontIcon]="i + 1 === bills.length || bills[i + 1].total === 0 ? 'trending_flat' : bills[i].total - bills[i + 1].total < 0 ? 'trending_down' : 'trending_up'"
-                            ></mat-icon>
-                            <h5
-                                class="percentage"
-                                [ngClass]="[i + 1 === bills.length ? 'blue' : bills[i].total - bills[i + 1].total < 0 ? 'green' : 'red']"
-                            >
-                                {{ i + 1 === bills.length || bills[i + 1].total === 0 ? 0
-                                : ((bills[i].total / bills[i + 1].total - 1) *
-                                100).toFixed(2) }}%
-                            </h5>
-                        </div>
-                    </div>
-                </div>
+                <canvas id="bills-per-month" class="bills-per-month"></canvas>
             </div>
-            <!-- <div class="dashboard-indicator" (click)="handleMonthSpan()">
-                <mat-icon
-                    class="material-symbols-outlined icon"
-                    [fontIcon]="'date_range'"
-                ></mat-icon>
-                <mat-icon
-                    class="material-symbols-outlined icon"
-                    [fontIcon]="'counter_'+ (this.dashboardState.monthSpan$ | async)"
-                ></mat-icon>
-            </div> -->
         </card-component>
         <card-component
             id="dashboard-categories"
@@ -80,7 +43,11 @@
             [description]="month.name.toLowerCase()"
             [border]="true"
         >
-            <calendar-component [creditCards]="creditCards" [monthBills]="monthBills" />
+            <calendar-component
+                class="calendar"
+                [creditCards]="creditCards"
+                [monthBills]="monthBills"
+            />
         </card-component>
         <card-component
             id="dashboard-savings"

@@ -5,7 +5,8 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { Router } from "@angular/router";
 import { Chart } from "chart.js/auto";
-import ChartDataLabels from "chartjs-plugin-datalabels";
+import ChartDataLabels, { Context } from "chartjs-plugin-datalabels";
+import { Subscription } from "rxjs";
 import { CalendarComponent } from "src/app/components/calendar/calendar.component";
 import { CardComponent } from "src/app/components/card/card.component";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
@@ -76,6 +77,10 @@ export class PageDashboard {
     public monthBills: (Bill & BillData)[] = [];
     public creditCards: CreditCard[] = [];
 
+    public fetchBillsProgression$: Subscription;
+    public fetchTopCategories$: Subscription;
+    public fetchCalendarBills$: Subscription;
+
     public bankActions: CardActionType[] = [
         {
             icon: "north_east",
@@ -84,26 +89,71 @@ export class PageDashboard {
         },
     ];
 
-    public lineOptions: any = {
-        responsive: true,
-        plugins: {
-            datalabels: {
-                anchor: "end",
-                align: "top",
-                color: this.text1Color,
-                font: { weight: "bold" },
-                formatter: (v: number) => v + " R$",
-            },
-        },
-        scales: {
-            y: { display: false },
-            x: {
-                ticks: {
-                    font: { weight: "bold", size: 12 },
+    public lineOptions: any = (dataOfChart: any[]) => {
+        return {
+            layout: { autoPadding: true, padding: { top: 0, right: 40, left: 40 } },
+            clip: false,
+            responsive: true,
+            plugins: {
+                datalabels: {
+                    anchor: "end",
+                    align: "top",
+                    color: this.text1Color,
+                    font: { weight: "bold" },
+                    formatter: (v: number, context: Context) => {
+                        return v + " R$\n" + dataOfChart[context.dataIndex].delta + "%";
+                    },
+                },
+                tooltip: {
+                    callbacks: {
+                        footer: (x: any) => {
+                            return "qty: " + dataOfChart[x[0].dataIndex].count + " bills";
+                        },
+                    },
                 },
             },
-        },
+            scales: {
+                y: { display: false },
+                x: {
+                    ticks: {
+                        font: { weight: "bold", size: 12 },
+                    },
+                },
+            },
+        };
     };
+
+    fetchBillsProgression() {
+        this.fetchBillsProgression$ = this.dashboardService
+            .getBillsProgression()
+            .subscribe({
+                next: (data) => {
+                    this.dashboardState.updateBillsProgression(data);
+                    this.setBillsProgressionChart();
+                },
+            });
+    }
+
+    fetchTopCategories() {
+        this.fetchTopCategories$ = this.dashboardService.getTopCategories().subscribe({
+            next: (summary) => {
+                this.setCategoryChart(summary);
+                this.dashboardState.updateCategoriesSummary(summary);
+            },
+        });
+    }
+
+    fetchCalendarBills() {
+        this.fetchCalendarBills$ = this.dashboardService.getMonthBills().subscribe({
+            next: (bills) => {
+                this.dashboardState.updateMonthBills(bills);
+                this.monthBills = bills;
+            },
+            error: () => {
+                this.snack.openSnackBar("error fetching bills", "error");
+            },
+        });
+    }
 
     ngOnInit() {
         Chart.register(ChartDataLabels);
@@ -127,64 +177,36 @@ export class PageDashboard {
                 this.setSavingsChart(savings);
             },
         });
-        this.dashboardService.getMonthBills().subscribe({
-            next: (bills) => {
-                this.dashboardState.updateMonthBills(bills);
-                this.monthBills = bills;
-            },
-            error: () => {
-                this.snack.openSnackBar("error fetching bills", "error");
-            },
-        });
-        this.dashboardService.getTopCategories().subscribe({
-            next: (summary) => {
-                this.setCategoryChart(summary);
-                this.dashboardState.updateCategoriesSummary(summary);
-            },
-        });
-        this.dashboardState.monthSpan$.subscribe({
-            next: (monthSpan) => {
-                this.monthSpan = monthSpan;
-                this.dashboardService.getMonthSpanBills(monthSpan).subscribe({
-                    next: (data) => {
-                        this.dashboardState.updateBillsCounters(data);
-                        this.setBillsPerMonthChart();
-                    },
-                });
-            },
-        });
         this.generalState.theme$.subscribe({
             next: (theme) => (this.theme = theme),
         });
+        this.fetchBillsProgression();
+        this.fetchTopCategories();
+        this.fetchCalendarBills();
     }
 
-    setBillsPerMonthChart() {
-        this.dashboardState.billsCounters$.subscribe({
-            next: (billsCounters) => {
+    setBillsProgressionChart() {
+        this.dashboardState.billsProgression$.subscribe({
+            next: (billsProgression) => {
                 this.billsPerMonthChart = new Chart("bills-per-month", {
                     type: "line",
                     data: {
-                        labels: billsCounters
-                            .map((bc) => MONTHS[bc.month].short)
-                            .reverse(),
+                        labels: billsProgression.map((bc) => MONTHS[bc.month].short),
                         datasets: [
                             {
-                                label: "total bill value (R$)",
-                                data: billsCounters.map((bc) => bc.total).reverse(),
+                                label: "total value (R$)",
+                                data: billsProgression.map((bm) => bm.total),
                                 tension: 0.3,
                                 backgroundColor:
                                     this.theme === "binary"
                                         ? "transparent"
-                                        : tint(
-                                              0.1 * (this.theme === "dark" ? -0.1 : 0.1),
-                                              this.secondaryColor
-                                          ),
+                                        : tint(0.1, this.secondaryColor),
                                 borderColor: this.secondaryColor,
                                 fill: true,
                             },
                         ],
                     },
-                    options: this.lineOptions,
+                    options: this.lineOptions(billsProgression),
                 });
             },
         });
@@ -295,42 +317,8 @@ export class PageDashboard {
         this.dashboardState.updateMonthSpan(
             this.monthSpan === 5 ? 1 : this.monthSpan + 1
         );
-        this.dashboardState.billsCounters$.subscribe({
-            next: (billsCounters) => {
-                this.billsPerMonthChart.data.labels = billsCounters
-                    .map((bc) => MONTHS[bc.month].short)
-                    .reverse();
-                this.billsPerMonthChart.data.datasets.forEach((dataset) => {
-                    dataset.data = billsCounters.map((bc) => bc.total).reverse();
-                    dataset.backgroundColor =
-                        this.theme === "binary"
-                            ? "transparent"
-                            : billsCounters
-                                  .map((_, index) =>
-                                      tint(index * 0.1, this.secondaryColor)
-                                  )
-                                  .reverse();
-                });
-                this.billsPerMonthChart.update();
-            },
-        });
-    }
-
-    getMonthPercentage(index: number) {
-        if (index === 0) return 0;
-        let percentage = 0;
-        this.dashboardState.billsCounters$.subscribe({
-            next: (billsCounters) => {
-                percentage = parseFloat(
-                    (
-                        billsCounters[billsCounters.length - index - 1].total /
-                            billsCounters[billsCounters.length - index].total -
-                        1
-                    ).toFixed(4)
-                );
-            },
-        });
-        return percentage;
+        this.fetchBillsProgression();
+        this.billsPerMonthChart.update();
     }
 
     setCreditCardsChart() {
@@ -387,5 +375,11 @@ export class PageDashboard {
             },
         };
         this.dialog.open(ModalViewItem, option);
+    }
+
+    ngOnDestroy() {
+        this.fetchBillsProgression$.unsubscribe();
+        this.fetchTopCategories$.unsubscribe();
+        this.fetchCalendarBills$.unsubscribe();
     }
 }

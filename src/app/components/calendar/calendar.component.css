@@ -6,7 +6,7 @@
 
 .calendar-weekdays {
     display: grid;
-    grid-template-columns: repeat(7, calc(15.28% - 0.25rem));
+    grid-template-columns: repeat(7, calc(14.28% - 0.25rem));
     column-gap: 0.25rem;
     margin-bottom: 0.25rem;
     & .weekday {
@@ -36,7 +36,7 @@
 
 .calendar-dates {
     display: grid;
-    grid-template-columns: repeat(7, calc(15.28% - 0.25rem));
+    grid-template-columns: repeat(7, calc(14.28% - 0.25rem));
     column-gap: 0.25rem;
     row-gap: 0.25rem;
     & .date {

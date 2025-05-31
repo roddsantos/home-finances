@@ -11,7 +11,7 @@ export class Service {
     public httpClient = inject(HttpClient);
     public userState = inject(UserState);
 
-    private user$: Subscription;
+    public user$: Subscription;
     private _user: User | null = null;
 
     getUser(): User | null {

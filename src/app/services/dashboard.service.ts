@@ -1,23 +1,30 @@
 import { inject, Injectable } from "@angular/core";
-import { concatMap, map } from "rxjs";
+import { concatMap, map, Subscription } from "rxjs";
 import { Bill, BillData, CreditCard } from "../core/types/objects";
 import { DASHBOARD } from "src/utils/constants/services";
 import { DashboardState } from "../core/subjects/subjects.dashboard";
 import { CreditCardDashboardType } from "../core/types/services";
 import { Service } from "./service";
 import { CategoriesSummaryType } from "../core/types/services/dashboard.services.types";
+import { DashboardBillsPerMonth } from "../core/types/subjects/dashboard.subjects";
 
 @Injectable({
     providedIn: "root",
 })
 export class DashboardService extends Service {
     private user = this.getUser();
-
     private dashboardState = inject(DashboardState);
+    private monthSpan: number = 4;
 
-    getMonthSpanBills(monthSpan: number) {
-        return this.httpClient.get<Array<Bill & BillData>[]>(DASHBOARD + "/months", {
-            params: { monthSpan, userId: this.user?.id || "" },
+    private monthSpan$: Subscription = this.dashboardState.monthSpan$.subscribe({
+        next: (ms) => {
+            this.monthSpan = ms;
+        },
+    });
+
+    getBillsProgression() {
+        return this.httpClient.get<DashboardBillsPerMonth[]>(DASHBOARD + "/months", {
+            params: { span: this.monthSpan, userId: this.user?.id || "" },
         });
     }
 
@@ -62,5 +69,9 @@ export class DashboardService extends Service {
                 return creditCardSets;
             })
         );
+    }
+    override ngOnDestroy(): void {
+        this.user$.unsubscribe();
+        this.monthSpan$.unsubscribe();
     }
 }

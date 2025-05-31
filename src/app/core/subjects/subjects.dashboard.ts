@@ -2,9 +2,9 @@ import { BillData, CreditCard } from "./../types/objects";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { Bill } from "../types/objects";
-import { BillsMonthCount } from "../types/dashboard";
 import { CreditCardDashboardType } from "../types/services";
 import { CategoriesSummaryType } from "../types/services/dashboard.services.types";
+import { DashboardBillsPerMonth } from "../types/subjects/dashboard.subjects";
 
 @Injectable({
     providedIn: "root",
@@ -12,7 +12,7 @@ import { CategoriesSummaryType } from "../types/services/dashboard.services.type
 export class DashboardState {
     private _month$ = new BehaviorSubject<number>(new Date().getMonth());
     private _monthSpan$ = new BehaviorSubject<number>(5);
-    private _billsCounters$ = new BehaviorSubject<BillsMonthCount[]>([]);
+    private _billsProgression$ = new BehaviorSubject<DashboardBillsPerMonth[]>([]);
     private _billsGroups$ = new BehaviorSubject<Array<Bill & BillData>[]>([]);
     private _monthBills$ = new BehaviorSubject<Array<Bill & BillData>>([]);
     private _savings$ = new BehaviorSubject<Array<Bill & BillData>>([]);
@@ -24,7 +24,7 @@ export class DashboardState {
     });
 
     public readonly monthSpan$ = this._monthSpan$.asObservable();
-    public readonly billsCounters$ = this._billsCounters$.asObservable();
+    public readonly billsProgression$ = this._billsProgression$.asObservable();
     public readonly billsGroups$ = this._billsGroups$.asObservable();
     public readonly monthBills$ = this._monthBills$.asObservable();
     public readonly savings$ = this._savings$.asObservable();
@@ -41,20 +41,8 @@ export class DashboardState {
         this._monthBills$.next(bills);
     }
 
-    public updateBillsCounters(billsGroups: Array<Bill & BillData>[]) {
-        let res: BillsMonthCount[] = billsGroups.map((bills, index) => ({
-            total: bills.reduce((sum, bill) => sum + (bill.totalParcel || bill.total), 0),
-            count: bills.length,
-            month:
-                new Date().getMonth() - index < 0
-                    ? 12 - (index - new Date().getMonth())
-                    : new Date().getMonth() - index,
-            year:
-                new Date().getMonth() - index < 0
-                    ? new Date().getFullYear() - 1
-                    : new Date().getFullYear(),
-        }));
-        this._billsCounters$.next(res);
+    public updateBillsProgression(billsProgression: DashboardBillsPerMonth[]) {
+        this._billsProgression$.next(billsProgression);
     }
 
     public updateBillsGroups(billsGroups: Array<Bill & BillData>[]) {
