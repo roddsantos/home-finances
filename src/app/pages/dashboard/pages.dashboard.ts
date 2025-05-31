@@ -15,6 +15,7 @@ import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { UserState } from "src/app/core/subjects/subjects.user";
 import { CardActionType } from "src/app/core/types/components";
 import { Bill, BillData, Category, CreditCard } from "src/app/core/types/objects";
+import { CategoriesSummaryType } from "src/app/core/types/services/dashboard.services.types";
 import { ServiceBank } from "src/app/services/bank.service";
 import { ServiceBill } from "src/app/services/bill.service";
 import { ServiceCreditCard } from "src/app/services/credit-card.service";
@@ -129,11 +130,16 @@ export class PageDashboard {
         this.dashboardService.getMonthBills().subscribe({
             next: (bills) => {
                 this.dashboardState.updateMonthBills(bills);
-                this.setCategoryChart(bills);
                 this.monthBills = bills;
             },
             error: () => {
                 this.snack.openSnackBar("error fetching bills", "error");
+            },
+        });
+        this.dashboardService.getTopCategories().subscribe({
+            next: (summary) => {
+                this.setCategoryChart(summary);
+                this.dashboardState.updateCategoriesSummary(summary);
             },
         });
         this.dashboardState.monthSpan$.subscribe({
@@ -184,86 +190,55 @@ export class PageDashboard {
         });
     }
 
-    setCategoryChart(monthBills: Array<Bill & BillData>) {
-        let categorySets: any = {};
-        monthBills.forEach((monthBill) => {
-            categorySets[monthBill.categoryId] = [
-                ...(categorySets[monthBill.categoryId] || []),
-                monthBill,
-            ];
-        });
-        this.categories = Object.keys(categorySets).map(
-            (id) => categorySets[id][0].category
-        );
-
+    setCategoryChart(summary: CategoriesSummaryType) {
         this.categoryChart = new Chart("categories-chart", {
             plugins: [ChartDataLabels],
-            type: "pie",
+            type: "bar",
             data: {
-                labels: this.categories.map((category) => category.name),
+                labels: summary.topCategories.map((tc) => tc.category!.name),
                 datasets: [
                     {
-                        label: "value R$",
-                        data: Object.keys(categorySets).map((category) =>
-                            categorySets[category].reduce(
-                                (acc: number, value: Bill & BillData) =>
-                                    parseFloat((acc + value.totalParcel!).toFixed(2)),
-                                0
-                            )
-                        ),
-                        spacing: 3,
+                        label: "",
+                        data: summary.topCategories.map((tc) => tc.total),
+                        spacing: 1,
                         borderWidth: 3,
                         borderRadius: 10,
                         borderColor:
                             this.theme === "binary"
-                                ? this.categories.map((category) => category.color)
+                                ? summary.topCategories.map((tc) => tc.category!.color)
                                 : "transparent",
                         backgroundColor:
                             this.theme === "binary"
                                 ? "transparent"
-                                : this.categories.map((category) => category.color),
-                    },
-                    { data: [], weight: 0.1 },
-                    {
-                        label: "number of bills",
-                        data: Object.keys(categorySets).map(
-                            (category) => categorySets[category].length
-                        ),
-                        borderWidth: 2,
-                        borderColor:
-                            this.theme === "binary"
-                                ? this.categories.map((category) => category.color)
-                                : "transparent",
-                        backgroundColor:
-                            this.theme === "binary"
-                                ? "transparent"
-                                : this.categories.map((category) => category.color),
+                                : summary.topCategories.map((tc) => tc.category!.color),
                     },
                 ],
             },
             options: {
+                clip: false,
+                layout: { padding: { top: 10 } },
+                scales: {
+                    y: { display: false, max: summary.topCategories[0].total * 1.1 },
+                },
+                maintainAspectRatio: true,
                 responsive: true,
-                devicePixelRatio: 4,
-                layout: { padding: 0 },
                 plugins: {
-                    legend: {
-                        position: "bottom",
-                        labels: {
-                            boxWidth: 10,
-                            font: { size: 12 },
+                    tooltip: {
+                        callbacks: {
+                            footer: (x) => {
+                                return (
+                                    "qty: " + summary.topCategories[x[0].dataIndex].count
+                                );
+                            },
                         },
-                        fullSize: false,
                     },
+                    legend: { display: false },
                     datalabels: {
-                        backgroundColor:
-                            this.theme === "binary" ? "transparent" : this.secondaryColor,
-                        borderRadius: 10,
+                        anchor: "end",
+                        align: "top",
                         color: this.text1Color,
-                        formatter: (value, ctx) => {
-                            return ctx.dataset.label === "value R$"
-                                ? value + "R$"
-                                : value;
-                        },
+                        font: { weight: "bold", family: "GT-Eesti-Text-Book", size: 14 },
+                        formatter: (v) => v + " R$",
                     },
                 },
             },

@@ -4,6 +4,7 @@ import { BehaviorSubject } from "rxjs";
 import { Bill } from "../types/objects";
 import { BillsMonthCount } from "../types/dashboard";
 import { CreditCardDashboardType } from "../types/services";
+import { CategoriesSummaryType } from "../types/services/dashboard.services.types";
 
 @Injectable({
     providedIn: "root",
@@ -17,6 +18,10 @@ export class DashboardState {
     private _savings$ = new BehaviorSubject<Array<Bill & BillData>>([]);
     private _creditCards$ = new BehaviorSubject<CreditCard[]>([]);
     private _creditCardsSpan$ = new BehaviorSubject<CreditCardDashboardType>({});
+    private _categoriesSummary$ = new BehaviorSubject<CategoriesSummaryType>({
+        topCategories: [],
+        otherCategories: null,
+    });
 
     public readonly monthSpan$ = this._monthSpan$.asObservable();
     public readonly billsCounters$ = this._billsCounters$.asObservable();
@@ -26,6 +31,7 @@ export class DashboardState {
     public readonly creditCards$ = this._creditCards$.asObservable();
     public readonly creditCardsSpan$ = this._creditCardsSpan$.asObservable();
     public readonly month$ = this._month$.asObservable();
+    public readonly categoriesSummary$ = this._categoriesSummary$.asObservable();
 
     public updateMonth(month: number) {
         this._month$.next(month);
@@ -69,5 +75,9 @@ export class DashboardState {
 
     public updateCreditCardsSpan(creditCards: CreditCardDashboardType) {
         this._creditCardsSpan$.next(creditCards);
+    }
+
+    public updateCategoriesSummary(categoriesSummary: CategoriesSummaryType) {
+        this._categoriesSummary$.next(categoriesSummary);
     }
 }

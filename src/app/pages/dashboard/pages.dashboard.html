@@ -52,11 +52,26 @@
         <card-component
             id="dashboard-categories"
             class="dashboard-categories"
-            [title]="'bills per category'"
+            [title]="'top category bills'"
             [description]="month.name.toLowerCase()"
             [border]="true"
         >
-            <canvas id="categories-chart" class="categories-chart"></canvas>
+            <div class="container">
+                <canvas height="" id="categories-chart" class="chart"></canvas>
+                <div class="others">
+                    <p>other categories:</p>
+                    <h5>
+                        {{ ((dashboardState.categoriesSummary$ |
+                        async)?.otherCategories?.total) | currency: "R$ " }}
+                    </h5>
+                    <p>in</p>
+                    <h5>
+                        {{ (dashboardState.categoriesSummary$ |
+                        async)?.otherCategories?.count }}
+                    </h5>
+                    <p>bills</p>
+                </div>
+            </div>
         </card-component>
         <card-component
             id="dashboard-calendar"
