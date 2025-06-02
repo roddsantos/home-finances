@@ -1,8 +1,8 @@
 export type SubjectSavingsType = {
-    totalSavings: number;
-    moneyToReceive: number;
-    moneyIncome: number;
     totalBanks: number;
+    totalSavingsPreview: number;
+    totalIncome: number;
+    countBanks: number;
 };
 
 export type SubjectExpensesType = {

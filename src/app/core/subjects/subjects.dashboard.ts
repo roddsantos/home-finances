@@ -4,7 +4,10 @@ import { BehaviorSubject } from "rxjs";
 import { Bill } from "../types/objects";
 import { CreditCardDashboardType } from "../types/services";
 import { CategoriesSummaryType } from "../types/services/dashboard.services.types";
-import { DashboardBillsPerMonth } from "../types/subjects/dashboard.subjects";
+import {
+    DashboardBillsPerMonthType,
+    DashboardSavingsType,
+} from "../types/subjects/dashboard.subjects";
 
 @Injectable({
     providedIn: "root",
@@ -12,10 +15,17 @@ import { DashboardBillsPerMonth } from "../types/subjects/dashboard.subjects";
 export class DashboardState {
     private _month$ = new BehaviorSubject<number>(new Date().getMonth());
     private _monthSpan$ = new BehaviorSubject<number>(5);
-    private _billsProgression$ = new BehaviorSubject<DashboardBillsPerMonth[]>([]);
+    private _billsProgression$ = new BehaviorSubject<DashboardBillsPerMonthType[]>([]);
     private _billsGroups$ = new BehaviorSubject<Array<Bill & BillData>[]>([]);
     private _monthBills$ = new BehaviorSubject<Array<Bill & BillData>>([]);
-    private _savings$ = new BehaviorSubject<Array<Bill & BillData>>([]);
+    private _savings$ = new BehaviorSubject<DashboardSavingsType>({
+        totalIncome: 0,
+        totalBanks: 0,
+        totalSettled: 0,
+        totalSavings: 0,
+        totalPending: 0,
+        totalPreview: 0,
+    });
     private _creditCards$ = new BehaviorSubject<CreditCard[]>([]);
     private _creditCardsSpan$ = new BehaviorSubject<CreditCardDashboardType>({});
     private _categoriesSummary$ = new BehaviorSubject<CategoriesSummaryType>({
@@ -41,7 +51,7 @@ export class DashboardState {
         this._monthBills$.next(bills);
     }
 
-    public updateBillsProgression(billsProgression: DashboardBillsPerMonth[]) {
+    public updateBillsProgression(billsProgression: DashboardBillsPerMonthType[]) {
         this._billsProgression$.next(billsProgression);
     }
 
@@ -53,7 +63,7 @@ export class DashboardState {
         this._monthSpan$.next(monthSpan);
     }
 
-    public updateSavings(savings: Array<Bill & BillData>) {
+    public updateSavings(savings: DashboardSavingsType) {
         this._savings$.next(savings);
     }
 

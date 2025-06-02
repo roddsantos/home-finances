@@ -6,7 +6,10 @@ import { DashboardState } from "../core/subjects/subjects.dashboard";
 import { CreditCardDashboardType } from "../core/types/services";
 import { Service } from "./service";
 import { CategoriesSummaryType } from "../core/types/services/dashboard.services.types";
-import { DashboardBillsPerMonth } from "../core/types/subjects/dashboard.subjects";
+import {
+    DashboardBillsPerMonthType,
+    DashboardSavingsType,
+} from "../core/types/subjects/dashboard.subjects";
 
 @Injectable({
     providedIn: "root",
@@ -23,7 +26,7 @@ export class DashboardService extends Service {
     });
 
     getBillsProgression() {
-        return this.httpClient.get<DashboardBillsPerMonth[]>(DASHBOARD + "/months", {
+        return this.httpClient.get<DashboardBillsPerMonthType[]>(DASHBOARD + "/months", {
             params: { span: this.monthSpan, userId: this.user?.id || "" },
         });
     }
@@ -35,7 +38,7 @@ export class DashboardService extends Service {
     }
 
     getSavingsInfo() {
-        return this.httpClient.get<Array<Bill & BillData>>(DASHBOARD + "/savings", {
+        return this.httpClient.get<DashboardSavingsType>(DASHBOARD + "/savings", {
             params: { userId: this.user?.id || "" },
         });
     }

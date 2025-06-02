@@ -17,6 +17,7 @@ import { UserState } from "src/app/core/subjects/subjects.user";
 import { CardActionType } from "src/app/core/types/components";
 import { Bill, BillData, Category, CreditCard } from "src/app/core/types/objects";
 import { CategoriesSummaryType } from "src/app/core/types/services/dashboard.services.types";
+import { DashboardSavingsType } from "src/app/core/types/subjects/dashboard.subjects";
 import { ServiceBank } from "src/app/services/bank.service";
 import { ServiceBill } from "src/app/services/bill.service";
 import { ServiceCreditCard } from "src/app/services/credit-card.service";
@@ -62,6 +63,7 @@ export class PageDashboard {
     public style = getComputedStyle(document.body);
     public primaryColor = this.style.getPropertyValue("--primary");
     public secondaryColor = this.style.getPropertyValue("--secondary");
+    public bhColor = this.style.getPropertyValue("--bh");
     public thirdColor = this.style.getPropertyValue("--third");
     public text1Color = this.style.getPropertyValue("--text-1");
     public text3Color = this.style.getPropertyValue("--text-3");
@@ -73,6 +75,8 @@ export class PageDashboard {
     public year = new Date().getFullYear();
     public incomings = 0;
     public outcomings = 0;
+    public savingsLabels = ["income", "savings", "settled", "pending", "preview"];
+    public savingsColors = ["#00E226", "#005BE2", "#008905", "#DBE200", "#00E288"];
 
     public monthBills: (Bill & BillData)[] = [];
     public creditCards: CreditCard[] = [];
@@ -80,6 +84,7 @@ export class PageDashboard {
     public fetchBillsProgression$: Subscription;
     public fetchTopCategories$: Subscription;
     public fetchCalendarBills$: Subscription;
+    public fetchSavings$: Subscription;
 
     public bankActions: CardActionType[] = [
         {
@@ -155,6 +160,15 @@ export class PageDashboard {
         });
     }
 
+    fetchSavings() {
+        this.fetchSavings$ = this.dashboardService.getSavingsInfo().subscribe({
+            next: (savings) => {
+                this.dashboardState.updateSavings(savings);
+                this.setSavingsChart(savings);
+            },
+        });
+    }
+
     ngOnInit() {
         Chart.register(ChartDataLabels);
         this.creditCardService
@@ -171,18 +185,13 @@ export class PageDashboard {
         this.dashboardService.getCreditCards().subscribe({
             next: () => this.setCreditCardsChart(),
         });
-        this.dashboardService.getSavingsInfo().subscribe({
-            next: (savings) => {
-                this.dashboardState.updateSavings(savings);
-                this.setSavingsChart(savings);
-            },
-        });
         this.generalState.theme$.subscribe({
             next: (theme) => (this.theme = theme),
         });
         this.fetchBillsProgression();
         this.fetchTopCategories();
         this.fetchCalendarBills();
+        this.fetchSavings();
     }
 
     setBillsProgressionChart() {
@@ -267,47 +276,59 @@ export class PageDashboard {
         });
     }
 
-    setSavingsChart(savings: (Bill & BillData)[]) {
-        savings.forEach((bill) => {
-            if (bill.isPayment) this.outcomings += bill.total;
-            else this.incomings += bill.total;
-        });
+    setSavingsChart(savings: DashboardSavingsType) {
+        const ARC = 120;
         this.savingsChart = new Chart("savings-chart", {
-            type: "bar",
+            type: "doughnut",
             data: {
-                labels: ["incomings", "outcomings"],
                 datasets: [
                     {
-                        label: "",
-                        data: [this.incomings, this.outcomings],
+                        weight: 1.5,
+                        data: [savings.totalIncome, savings.totalSavings],
                         backgroundColor:
                             this.theme === "binary"
                                 ? "transparent"
-                                : [this.primaryColor, this.secondaryColor],
-                        borderWidth: 3,
-                        borderRadius: 10,
+                                : ["#00E226", "#005BE2"],
                         borderColor:
                             this.theme === "binary"
-                                ? [this.secondaryColor, this.secondaryColor]
-                                : "transparent",
-                        categoryPercentage: 0.8,
-                        barPercentage: 1,
+                                ? ["#00E226", "#005BE2"]
+                                : "transparency",
+                        borderRadius: 10,
+                    },
+                    {
+                        weight: 1.5,
+                        data: [
+                            savings.totalSettled,
+                            savings.totalPending,
+                            savings.totalPreview,
+                        ],
+                        backgroundColor:
+                            this.theme === "binary"
+                                ? "transparent"
+                                : ["#008905", "#DBE200", "#00E288"],
+                        borderColor:
+                            this.theme === "binary"
+                                ? ["#008905", "#DBE200", "#00E288"]
+                                : "transparency",
+                        borderRadius: 10,
                     },
                 ],
             },
             options: {
-                layout: { padding: { top: 30 } },
-                scales: { y: { display: false } },
+                circumference: 360 - ARC,
+                rotation: -1 * ARC,
+                cutout: 40,
                 responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
-                    legend: { display: false },
+                    legend: { display: true },
                     datalabels: {
-                        anchor: "end",
-                        align: "top",
                         color: this.text1Color,
+                        backgroundColor: this.bhColor,
                         font: { weight: "bold" },
                         formatter: (v) => v + " R$",
                     },
+                    tooltip: { enabled: false },
                 },
             },
         });

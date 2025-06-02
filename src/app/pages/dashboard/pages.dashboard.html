@@ -56,22 +56,18 @@
             [description]="month.name.toLowerCase()"
             [border]="true"
         >
-            <div class="savings-container">
-                <canvas height="" id="savings-chart" class="savings-chart"
+            <div class="container">
+                <canvas height="" id="savings-chart" class="chart"
                     >{{savingsChart}}</canvas
                 >
-                <div
-                    class="savings-diff"
-                    [style.borderColor]="theme === 'binary' ? secondaryColor : primaryColor"
-                >
-                    <mat-icon
-                        class="material-symbols-outlined icon"
-                        [fontIcon]="'difference'"
-                        [style.color]="theme === 'binary' ? text1Color : text3Color"
-                    ></mat-icon>
-                    <h3 [style.color]="theme === 'binary' ? text1Color : text3Color">
-                        {{(incomings - outcomings) | currency : "R$ "}}
-                    </h3>
+                <div class="legend">
+                    <div *ngFor="let item of savingsLabels; index as i" class="container">
+                        <div
+                            [style.backgroundColor]="savingsColors[i]"
+                            class="indicator"
+                        ></div>
+                        <p class="label">{{ item }}</p>
+                    </div>
                 </div>
             </div>
         </card-component>
