@@ -128,12 +128,12 @@
                     ></mat-icon>
                 </div>
                 <h3
-                    [ngClass]="[(homeState.savings$ | async)!.totalSavings > 0 ? 'positive' : 'negative']"
+                    [ngClass]="[(homeState.savings$ | async)!.totalBanks > 0 ? 'positive' : 'negative']"
                 >
-                    {{(homeState.savings$ | async)?.totalSavings | currency: 'R$ '}}
+                    {{(homeState.savings$ | async)?.totalBanks | currency: 'R$ '}}
                 </h3>
                 <p>
-                    {{"total left in " + (homeState.savings$ | async)?.totalBanks + "
+                    {{"total left in " + (homeState.savings$ | async)?.countBanks + "
                     banks"}}
                 </p>
             </div>
@@ -153,7 +153,7 @@
                 </div>
                 <div class="row">
                     <h3>
-                        {{(homeState.savings$ | async)?.moneyIncome| currency: 'R$ '}}
+                        {{(homeState.savings$ | async)?.totalIncome| currency: 'R$ '}}
                     </h3>
                 </div>
                 <p>{{"total income"}}</p>
@@ -173,10 +173,10 @@
                     ></mat-icon>
                 </div>
                 <h3
-                    [ngClass]="[(homeState.savings$ | async)!.totalSavings > 0 ? 'positive' : 'negative']"
+                    [ngClass]="[(homeState.savings$ | async)!.totalBanks > 0 ? 'positive' : 'negative']"
                 >
-                    {{((homeState.savings$ | async)!.moneyIncome - (homeState.expenses$ |
-                    async)!.sumOfBills)| currency: 'R$ '}}
+                    {{((homeState.savings$ | async)!.totalSavingsPreview -
+                    (homeState.expenses$ | async)!.sumOfBills) | currency: 'R$ '}}
                 </h3>
                 <p>month savings preview</p>
             </div>

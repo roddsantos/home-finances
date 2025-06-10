@@ -1,62 +1,59 @@
-import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { UserState } from "../core/subjects/subjects.user";
-import { concatMap, map, mergeMap, Observable } from "rxjs";
+import { concatMap, map, Subscription } from "rxjs";
 import { Bill, BillData, CreditCard } from "../core/types/objects";
-import { BILL, DASHBOARD } from "src/utils/constants/services";
+import { DASHBOARD } from "src/utils/constants/services";
 import { DashboardState } from "../core/subjects/subjects.dashboard";
 import { CreditCardDashboardType } from "../core/types/services";
+import { Service } from "./service";
+import { CategoriesSummaryType } from "../core/types/services/dashboard.services.types";
+import {
+    DashboardBillsPerMonthType,
+    DashboardSavingsType,
+    MonthBillsType,
+} from "../core/types/subjects/dashboard.subjects";
 
 @Injectable({
     providedIn: "root",
 })
-export class DashboardService {
-    private http = inject(HttpClient);
-    private user = inject(UserState);
-
+export class DashboardService extends Service {
+    private user = this.getUser();
     private dashboardState = inject(DashboardState);
-    //  = {
-    //     [new Date().getMonth() - 4]: [] as CreditCard[],
-    //     [new Date().getMonth() - 3]: [] as CreditCard[],
-    //     [new Date().getMonth() - 2]: [] as CreditCard[],
-    //     [new Date().getMonth() - 1]: [] as CreditCard[],
-    //     [new Date().getMonth()]: [] as CreditCard[],
-    // };
+    private monthSpan: number = 4;
 
-    getMonthSpanBills(monthSpan: number) {
-        return this.user.user$.pipe(
-            mergeMap((user) =>
-                this.http.get<Array<Bill & BillData>[]>(DASHBOARD + "/months", {
-                    params: { monthSpan, userId: user!.id },
-                })
-            )
-        );
+    private monthSpan$: Subscription = this.dashboardState.monthSpan$.subscribe({
+        next: (ms) => {
+            this.monthSpan = ms;
+        },
+    });
+
+    getBillsProgression() {
+        return this.httpClient.get<DashboardBillsPerMonthType[]>(DASHBOARD + "/months", {
+            params: { span: this.monthSpan, userId: this.user?.id || "" },
+        });
     }
 
     getMonthBills() {
-        return this.user.user$.pipe(
-            mergeMap((user) =>
-                this.http.get<Array<Bill & BillData>>(DASHBOARD + "/bills", {
-                    params: { userId: user!.id },
-                })
-            )
-        );
+        return this.httpClient.get<MonthBillsType[]>(DASHBOARD + "/bills", {
+            params: { userId: this.user?.id || "" },
+        });
     }
 
     getSavingsInfo() {
-        return this.user.user$.pipe(
-            mergeMap((user) =>
-                this.http.get<Array<Bill & BillData>>(DASHBOARD + "/savings", {
-                    params: { userId: user!.id },
-                })
-            )
-        );
+        return this.httpClient.get<DashboardSavingsType>(DASHBOARD + "/savings", {
+            params: { userId: this.user?.id || "" },
+        });
+    }
+
+    getTopCategories() {
+        return this.httpClient.get<CategoriesSummaryType>(DASHBOARD + "/categories", {
+            params: { userId: this.user?.id || "", categories: 5 },
+        });
     }
 
     getCreditCards() {
-        return this.user.user$.pipe(
+        return this.userState.user$.pipe(
             concatMap((user) =>
-                this.http.get<Array<CreditCard>>(DASHBOARD + "/credit-cards", {
+                this.httpClient.get<Array<CreditCard>>(DASHBOARD + "/credit-cards", {
                     params: { userId: user!.id },
                 })
             ),
@@ -76,5 +73,9 @@ export class DashboardService {
                 return creditCardSets;
             })
         );
+    }
+    override ngOnDestroy(): void {
+        this.user$.unsubscribe();
+        this.monthSpan$.unsubscribe();
     }
 }

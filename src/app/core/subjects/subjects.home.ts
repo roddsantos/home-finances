@@ -19,10 +19,10 @@ export class HomeState {
         paidBills: 0,
     });
     private _savings$ = new BehaviorSubject<SubjectSavingsType>({
-        totalSavings: 0,
         totalBanks: 0,
-        moneyToReceive: 0,
-        moneyIncome: 0,
+        countBanks: 0,
+        totalSavingsPreview: 0,
+        totalIncome: 0,
     });
     private _invoices$ = new BehaviorSubject<SumAndCountData>({
         total: 0,

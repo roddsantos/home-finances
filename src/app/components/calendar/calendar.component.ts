@@ -1,5 +1,12 @@
 import { CommonModule } from "@angular/common";
-import { Component, inject, Input, OnChanges, SimpleChanges } from "@angular/core";
+import {
+    Component,
+    inject,
+    Input,
+    OnChanges,
+    OnDestroy,
+    SimpleChanges,
+} from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { DateObject } from "src/app/core/types/general";
@@ -11,10 +18,11 @@ import { ServiceBill } from "src/app/services/bill.service";
 import { CustomSnackbarComponent } from "../custom-snackbar/custom-snackbar.component";
 import { DashboardState } from "src/app/core/subjects/subjects.dashboard";
 import { Subscription } from "rxjs";
-import { Bill, BillData, CreditCard } from "src/app/core/types/objects";
-import { ModalEventsList } from "../modal/events-list/events-list.modal";
 import { Dialog } from "@angular/cdk/dialog";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
+import { MonthBillsType } from "src/app/core/types/subjects/dashboard.subjects";
+import { MONTHBILLSTYPE_INITIALIZER } from "src/utils/constants/mocks";
+import { GeneralService } from "src/app/services/general.service";
 
 @Component({
     selector: "calendar-component",
@@ -23,75 +31,57 @@ import { GeneralState } from "src/app/core/subjects/subjects.general";
     standalone: true,
     imports: [CommonModule, MatIconModule, MatTooltipModule],
 })
-export class CalendarComponent implements OnChanges {
+export class CalendarComponent implements OnChanges, OnDestroy {
     public filterState = inject(CustomFilterState);
     public dashboardState = inject(DashboardState);
     public generalState = inject(GeneralState);
-    public billApi = inject(ServiceBill);
     public billState = inject(BillState);
+
+    private generalService = inject(GeneralService);
+    private billsService = inject(ServiceBill);
+
     private snack = inject(CustomSnackbarComponent);
-    public router = new Router();
     public dialog = inject(Dialog);
 
-    @Input() monthBills: (Bill & BillData)[];
-    @Input() creditCards: CreditCard[];
+    @Input() monthBills: MonthBillsType[];
 
     public dates: DateObject[] = [];
     public previousDates: DateObject[] = [];
     public today = new Date().getDate();
     public month = new Date().getMonth();
     public year = new Date().getFullYear();
-    public allEvents: any[] = [];
-    public theme: string;
+    public router = new Router();
 
     public weekdays = WEEKDAYS;
 
-    public style = getComputedStyle(document.body);
-    public primaryColor = this.style.getPropertyValue("--primary");
-    public secondaryColor = this.style.getPropertyValue("--secondary");
-    public thirdColor = this.style.getPropertyValue("--third");
-    public errorColor = this.style.getPropertyValue("--error");
-    public infoColor = this.style.getPropertyValue("--info");
-    public disabledColor = this.style.getPropertyValue("--disabled");
-
-    public monthBillsSubscriber: Subscription;
-    public creditCardSubscriber: Subscription;
+    public getBills$: Subscription;
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes["creditCards"]) {
-            const creditCards = changes["creditCards"].currentValue;
-            creditCards.forEach((creditCard: CreditCard) => {
-                const eventDate = creditCard["due"];
-                if (!isNaN(eventDate)) this.dates[eventDate - 1].events.push(creditCard);
-            });
-        }
         if (changes["monthBills"]) {
             const monthBills = changes["monthBills"].currentValue;
-            monthBills.forEach((bill: Bill & BillData) => {
-                const eventDate = new Date(bill["due"]).getDate();
-                if (!isNaN(eventDate)) this.dates[eventDate - 1].events.push(bill);
+            const dayOfWeek = new Date(this.year, this.month, 1).getDay();
+            monthBills.forEach((bill: MonthBillsType) => {
+                this.dates[bill.day + dayOfWeek - 1].events = bill;
             });
         }
     }
 
     ngOnInit() {
-        this.generalState.theme$.subscribe({
-            next: (theme) => (this.theme = theme),
-        });
-        const firstDay = new Date(this.year, this.month, 1).getDay();
+        const dayOfWeek = new Date(this.year, this.month, 1).getDay();
         const daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
 
-        for (let i = firstDay; i > 0; i--) {
+        for (let i = dayOfWeek; i > 0; i--) {
             this.previousDates.push({
                 day: new Date(this.year, this.month, 1 - i).getDate(),
-                weekDay: firstDay - i,
+                weekDay: dayOfWeek - i,
                 thisMonth: false,
                 thisYear:
                     new Date(this.year, this.month - 1, 1).getFullYear() ===
                     new Date(this.year, this.month, 1).getFullYear(),
-                events: [],
+                events: { ...MONTHBILLSTYPE_INITIALIZER },
             });
         }
+        this.dates = [...this.previousDates];
         for (let i = 1; i <= daysInMonth; i++) {
             this.dates.push({
                 day: new Date(this.year, this.month, i).getDate(),
@@ -102,30 +92,44 @@ export class CalendarComponent implements OnChanges {
                 ).getDay(),
                 thisMonth: true,
                 thisYear: true,
-                events: [],
+                events: { ...MONTHBILLSTYPE_INITIALIZER },
             });
         }
     }
 
-    isBill(event: (Bill & BillData) | CreditCard): event is Bill & BillData {
-        return (event as Bill & BillData).type !== undefined;
+    onDateClick(date: DateObject) {
+        if (date.events.count === 0) return;
+
+        const refYear = date.thisYear ? this.year : this.year - 1;
+        const refMonth = date.thisYear ? this.month : this.month - 1;
+
+        this.filterState.setFilters([
+            {
+                id: new Date(refYear, refMonth, date.day).toISOString(),
+                identifier: "date1",
+                name: new Date(refYear, refMonth, date.day).toLocaleDateString(),
+            },
+            {
+                id: new Date(refYear, refMonth, date.day + 1).toISOString(),
+                identifier: "date2",
+                name: new Date(refYear, refMonth, date.day + 1).toLocaleDateString(),
+            },
+        ]);
+
+        this.getBills$ = this.billsService.getBills().subscribe({
+            next: (bills) => {
+                if (bills.count === 0) this.billState.changeStatus("empty", "no bills");
+                else this.billState.setBills(bills);
+                this.generalService.navigateTo("/bills");
+            },
+            error: () => {
+                this.snack.openSnackBar("error fetching bills", "error");
+                this.billState.changeStatus("error", "error fetching bills");
+            },
+        });
     }
 
-    onDateClick(date: DateObject) {
-        const option = {
-            data: {
-                events: [
-                    ...date.events.map((event) => ({
-                        ...event,
-                        sector: this.isBill(event) ? "bill" : "credit-card",
-                    })),
-                ],
-                header:
-                    "all events of " +
-                    new Date(this.year, this.month, date.day).toLocaleDateString(),
-                size: "sm",
-            },
-        };
-        this.dialog.open(ModalEventsList, option);
+    ngOnDestroy() {
+        if (this.getBills$) this.getBills$.unsubscribe();
     }
 }

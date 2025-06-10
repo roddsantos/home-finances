@@ -9,87 +9,116 @@
             [border]="true"
         >
             <div class="content">
-                <canvas id="bills-per-month" class="bills-per-month" height="200"
-                    >{{billsPerMonthChart}}</canvas
-                >
-                <div class="bill-progression">
-                    <h3>month progression</h3>
-                    <div class="grid-content">
-                        <div
-                            class="item"
-                            [style.borderColor]="theme === 'binary' ? secondaryColor : thirdColor"
-                            *ngFor="let bill of (this.dashboardState.billsCounters$ | async) as bills; let i = index"
-                        >
-                            <p class="month">{{ months[bills[i].month].short }}</p>
-                            <mat-icon
-                                class="material-symbols-outlined icon"
-                                [ngClass]="[i + 1 === bills.length || bills[i + 1].total === 0 ? 'blue' : bills[i].total - bills[i + 1].total < 0 ? 'green' : 'red']"
-                                [fontIcon]="i + 1 === bills.length || bills[i + 1].total === 0 ? 'trending_flat' : bills[i].total - bills[i + 1].total < 0 ? 'trending_down' : 'trending_up'"
-                            ></mat-icon>
-                            <h5
-                                class="percentage"
-                                [ngClass]="[i + 1 === bills.length ? 'blue' : bills[i].total - bills[i + 1].total < 0 ? 'green' : 'red']"
-                            >
-                                {{ i + 1 === bills.length || bills[i + 1].total === 0 ? 0
-                                : ((bills[i].total / bills[i + 1].total - 1) *
-                                100).toFixed(2) }}%
-                            </h5>
-                        </div>
-                    </div>
-                </div>
+                <canvas id="bills-per-month" class="bills-per-month"></canvas>
             </div>
-            <!-- <div class="dashboard-indicator" (click)="handleMonthSpan()">
-                <mat-icon
-                    class="material-symbols-outlined icon"
-                    [fontIcon]="'date_range'"
-                ></mat-icon>
-                <mat-icon
-                    class="material-symbols-outlined icon"
-                    [fontIcon]="'counter_'+ (this.dashboardState.monthSpan$ | async)"
-                ></mat-icon>
-            </div> -->
         </card-component>
         <card-component
             id="dashboard-categories"
             class="dashboard-categories"
-            [title]="'bills per category'"
+            [title]="'top category bills'"
             [description]="month.name.toLowerCase()"
             [border]="true"
         >
-            <canvas id="categories-chart" class="categories-chart"></canvas>
+            <div class="container">
+                <canvas height="" id="categories-chart" class="chart"></canvas>
+                <div class="others">
+                    <p>other categories:</p>
+                    <h5>
+                        {{ ((dashboardState.categoriesSummary$ |
+                        async)?.otherCategories?.total) | currency: "R$ " }}
+                    </h5>
+                    <p>in</p>
+                    <h5>
+                        {{ (dashboardState.categoriesSummary$ |
+                        async)?.otherCategories?.count }}
+                    </h5>
+                    <p>bills</p>
+                </div>
+            </div>
         </card-component>
         <card-component
             id="dashboard-calendar"
             class="dashboard-calendar"
             [title]="'bill calendar'"
-            [description]="month.name.toLowerCase()"
             [border]="true"
         >
-            <calendar-component [creditCards]="creditCards" [monthBills]="monthBills" />
+            <calendar-component class="calendar" [monthBills]="monthBills" />
         </card-component>
         <card-component
-            id="dashboard-savings"
-            class="dashboard-savings"
-            [title]="'savings'"
+            id="dashboard-money"
+            class="dashboard-money"
+            [title]="'money overview'"
             [description]="month.name.toLowerCase()"
             [border]="true"
         >
-            <div class="savings-container">
-                <canvas height="" id="savings-chart" class="savings-chart"
-                    >{{savingsChart}}</canvas
-                >
-                <div
-                    class="savings-diff"
-                    [style.borderColor]="theme === 'binary' ? secondaryColor : primaryColor"
-                >
-                    <mat-icon
-                        class="material-symbols-outlined icon"
-                        [fontIcon]="'difference'"
-                        [style.color]="theme === 'binary' ? text1Color : text3Color"
-                    ></mat-icon>
-                    <h3 [style.color]="theme === 'binary' ? text1Color : text3Color">
-                        {{(incomings - outcomings) | currency : "R$ "}}
-                    </h3>
+            <div class="dashboard-money">
+                <div class="money-container" [style.flexDirection]="'row'">
+                    <!-- <canvas id="savings-income-chart" class="chart"></canvas> -->
+                    <div class="money-item">
+                        <div
+                            class="icon-container"
+                            [style.transform]="'scale(' + moneyReserve.scaleIncome + ')'"
+                            [style.color]="'black'"
+                        >
+                            <mat-icon
+                                class="material-symbols-rounded icon"
+                                fontIcon="savings"
+                                [style.color]="'var(--success)'"
+                            ></mat-icon>
+                            <mat-icon
+                                class="material-symbols-filled icon-right"
+                                fontIcon="arrow_circle_down"
+                                [style.color]="'var(--success)'"
+                            ></mat-icon>
+                        </div>
+                        <h5>
+                            {{ (dashboardState.savings$ | async)?.totalIncome | currency:
+                            'R$ ' }}
+                        </h5>
+                        <h6>income</h6>
+                    </div>
+                    <div class="money-item">
+                        <div
+                            class="icon-container"
+                            [style.transform]="'scale(' + moneyReserve.scaleSavings + ')'"
+                        >
+                            <mat-icon
+                                class="material-symbols-rounded icon"
+                                fontIcon="savings"
+                                [style.color]="'var(--info)'"
+                            ></mat-icon>
+                            <mat-icon
+                                class="material-symbols-rounded icon-right"
+                                fontIcon="calendar_month"
+                                [style.color]="'var(--info)'"
+                            ></mat-icon>
+                        </div>
+                        <h5>
+                            {{ (dashboardState.savings$ | async)?.totalSavings | currency:
+                            'R$ ' }}
+                        </h5>
+                        <h6>from last month</h6>
+                    </div>
+                </div>
+                <div class="container">
+                    <canvas height="" id="money-chart" class="chart"
+                        >{{savingsChart}}</canvas
+                    >
+                    <div class="legend">
+                        <div
+                            *ngFor="let item of savingsLabels; index as i"
+                            class="container"
+                        >
+                            <div
+                                [style.backgroundColor]="savingsColors[i]"
+                                class="indicator"
+                            ></div>
+                            <p class="label">{{ item }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <canvas id="piggy-banks-progression"></canvas>
                 </div>
             </div>
         </card-component>

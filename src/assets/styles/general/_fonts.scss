@@ -1,61 +1,79 @@
 h1 {
-    font-family: GT-Eesti-Text-Bold;
+    font-family: ReemKufi-Bold;
     color: var(--text-1);
     font-size: calc(2.75 * var(--text-gen));
 }
 
 h2 {
-    font-family: GT-Eesti-Text-Bold;
+    font-family: ReemKufi-Bold;
     color: var(--text-1);
     font-size: calc(2.2 * var(--text-gen));
 }
 
 h3 {
-    font-family: GT-Eesti-Text-Medium;
+    font-family: ReemKufi-Bold;
     color: var(--text-1);
     font-size: calc(1.8 * var(--text-gen));
 }
 
 h4 {
-    font-family: GT-Eesti-Text-Regular;
+    font-family: ReemKufi-Bold;
     color: var(--text-1);
     font-size: calc(1.6 * var(--text-gen));
 }
 
 h5 {
-    font-family: GT-Eesti-Text-Regular;
+    font-family: ReemKufi-SemiBold;
     color: var(--text-1);
     font-size: calc(1.4 * var(--text-gen));
 }
 
 h6 {
-    font-family: GT-Eesti-Text-Regular;
+    font-family: ReemKufi-SemiBold;
     color: var(--text-1);
     font-size: calc(1.2 * var(--text-gen));
 }
 
 p {
-    font-family: GT-Eesti-Text-Book;
+    font-family: ReemKufi-Regular;
     color: var(--text-1);
     font-size: calc(1 * var(--text-gen));
 }
 
 @font-face {
-    font-family: "Ougkeh-Regular";
-    font-style: normal;
-    font-weight: 700;
+    font-family: "ReemKufi-Bold";
+    font-style: bold;
+    font-weight: 800;
     font-display: swap;
-    src: local("OugkehRegular"), local("OugkehRegular.otf"),
-        url("../../../assets/fonts/ougkeh/OugkehRegular.otf") format("opentype");
+    src: local("ReemKufi-Bold"), local("ReemKufi-Bold.ttf"),
+        url("../../../assets/fonts/reem-kufi/ReemKufi-Bold.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: "Ougkeh-Round-Regular";
-    font-style: normal;
-    font-weight: 700;
+    font-family: "ReemKufi-SemiBold";
+    font-style: bold;
+    font-weight: 600;
     font-display: swap;
-    src: local("OugkehRoundRegular"), local("OugkehRoundRegular.otf"),
-        url("../../../assets/fonts/ougkeh/OugkehRoundRegular.otf") format("opentype");
+    src: local("ReemKufi-SemiBold"), local("ReemKufi-SemiBold.ttf"),
+        url("../../../assets/fonts/reem-kufi/ReemKufi-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "ReemKufi-Medium";
+    font-style: bold;
+    font-weight: 500;
+    font-display: swap;
+    src: local("ReemKufi-Medium"), local("ReemKufi-Medium.ttf"),
+        url("../../../assets/fonts/reem-kufi/ReemKufi-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "ReemKufi-Regular";
+    font-style: bold;
+    font-weight: 400;
+    font-display: swap;
+    src: local("ReemKufi-Regular"), local("ReemKufi-Regular.ttf"),
+        url("../../../assets/fonts/reem-kufi/ReemKufi-Regular.ttf") format("truetype");
 }
 
 @font-face {

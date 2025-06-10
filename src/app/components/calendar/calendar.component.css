@@ -11,7 +11,7 @@
     margin-bottom: 0.25rem;
     & .weekday {
         margin: auto;
-        padding: 0.25rem 0.5rem;
+        padding: 0rem 0.5rem;
         border-width: var(--border-width);
         border-style: solid;
         border-radius: var(--border-radius);
@@ -19,6 +19,18 @@
         text-align: center;
         color: var(--text-1);
         font-weight: bold;
+        &.workday {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+        &.binary {
+            color: var(--secondary);
+            border-color: var(--secondary);
+        }
+        &.dayoff {
+            color: var(--error);
+            border-color: var(--error);
+        }
     }
 }
 
@@ -36,17 +48,38 @@
         border-width: var(--border-width);
         border-radius: var(--border-radius);
         width: 100%;
-        &.today p {
-            font-weight: bolder;
+        &.bills {
+            cursor: pointer;
         }
-        & p {
-            font-size: 1rem;
+        &.this-month {
+            border-color: var(--text-1);
+            color: var(--text-1);
+        }
+        &.today {
+            border-color: var(--error);
+            border-width: 2px;
+            font-weight: bolder;
+            & p,
+            .icon {
+                color: var(--error);
+            }
+        }
+        &.last-month {
+            border-color: var(--bh);
+            & p {
+                color: var(--disabled);
+            }
         }
         & .icon {
             font-size: 1.25rem;
             width: 1.25rem;
             height: 1.25rem;
-            color: var(--info);
+            &.yellow {
+                color: var(--warning);
+            }
+            &.red {
+                color: var(--error);
+            }
         }
     }
 }

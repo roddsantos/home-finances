@@ -183,3 +183,35 @@ export function contrastText(color: string) {
 
     return r * 0.299 + g * 0.587 + b * 0.114 > 186 ? text1 : text3;
 }
+
+export function currentPallete() {
+    const style = getComputedStyle(document.body);
+
+    const primary = style.getPropertyValue("--primary");
+    const secondary = style.getPropertyValue("--secondary");
+    const third = style.getPropertyValue("--third");
+
+    const bh = style.getPropertyValue("--bh");
+    const info = style.getPropertyValue("--info");
+    const warning = style.getPropertyValue("--warning");
+    const error = style.getPropertyValue("--error");
+    const success = style.getPropertyValue("--error");
+
+    const text1 = style.getPropertyValue("--text-1");
+    const text2 = style.getPropertyValue("--text-2");
+    const text3 = style.getPropertyValue("--text-3");
+
+    return {
+        primary,
+        secondary,
+        third,
+        bh,
+        info,
+        warning,
+        error,
+        success,
+        text1,
+        text2,
+        text3,
+    };
+}

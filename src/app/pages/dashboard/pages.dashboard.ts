@@ -6,6 +6,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { Router } from "@angular/router";
 import { Chart } from "chart.js/auto";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import { Subscription } from "rxjs";
 import { CalendarComponent } from "src/app/components/calendar/calendar.component";
 import { CardComponent } from "src/app/components/card/card.component";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
@@ -14,14 +15,27 @@ import { DashboardState } from "src/app/core/subjects/subjects.dashboard";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { UserState } from "src/app/core/subjects/subjects.user";
 import { CardActionType } from "src/app/core/types/components";
-import { Bill, BillData, Category, CreditCard } from "src/app/core/types/objects";
+import { Bill, BillData, Category } from "src/app/core/types/objects";
+import { CategoriesSummaryType } from "src/app/core/types/services/dashboard.services.types";
+import {
+    DashboardBillsPerMonthType,
+    DashboardSavingsType,
+    MonthBillsType,
+    PiggyBanksProgressionType,
+} from "src/app/core/types/subjects/dashboard.subjects";
 import { ServiceBank } from "src/app/services/bank.service";
 import { ServiceBill } from "src/app/services/bill.service";
 import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { DashboardService } from "src/app/services/dashboard.service";
 import { GeneralService } from "src/app/services/general.service";
-import { tint } from "src/utils/color";
+import { currentPallete } from "src/utils/color";
 import { MONTHS } from "src/utils/constants/general";
+import { billsProgressionChart } from "./charts/bills-progression.charts.dashboard";
+import { ChartConfigType } from "src/app/core/types/pages/dashboard";
+import { categoriesChart } from "./charts/category.charts.dashboard";
+import { savingsChart } from "./charts/savings.charts.dashboard";
+import { piggyBanksProgressionChart } from "./charts/piggy-banks-progression.charts.dashboard";
+import { creditCardProgressionChart } from "./charts/credit-cards-progression.charts.dashboard";
 
 @Component({
     selector: "page-dashboard",
@@ -57,12 +71,7 @@ export class PageDashboard {
     public savingsChart: Chart;
     public creditCardsChart: Chart;
 
-    public style = getComputedStyle(document.body);
-    public primaryColor = this.style.getPropertyValue("--primary");
-    public secondaryColor = this.style.getPropertyValue("--secondary");
-    public thirdColor = this.style.getPropertyValue("--third");
-    public text1Color = this.style.getPropertyValue("--text-1");
-    public text3Color = this.style.getPropertyValue("--text-3");
+    public pallete = currentPallete();
 
     public theme = "default";
     public months = MONTHS;
@@ -71,9 +80,19 @@ export class PageDashboard {
     public year = new Date().getFullYear();
     public incomings = 0;
     public outcomings = 0;
+    public savingsLabels = ["paid bills", "pending bills", "savings preview"];
+    public savingsColors = [this.pallete.warning, this.pallete.error, this.pallete.info];
+    public ARC = 120;
+    public chartConfig: null | ChartConfigType = null;
 
-    public monthBills: (Bill & BillData)[] = [];
-    public creditCards: CreditCard[] = [];
+    public monthBills: MonthBillsType[] = [];
+
+    public fetchBillsProgression$: Subscription;
+    public fetchTopCategories$: Subscription;
+    public fetchCalendarBills$: Subscription;
+    public fetchSavings$: Subscription;
+    public fetchCreditCardProgression$: Subscription;
+    public theme$: Subscription;
 
     public bankActions: CardActionType[] = [
         {
@@ -82,325 +101,114 @@ export class PageDashboard {
             action: () => this.generalService.navigateTo("/banks"),
         },
     ];
-
-    public lineOptions: any = {
-        responsive: true,
-        plugins: {
-            datalabels: {
-                anchor: "end",
-                align: "top",
-                color: this.text1Color,
-                font: { weight: "bold" },
-                formatter: (v: number) => v + " R$",
-            },
-        },
-        scales: {
-            y: { display: false },
-            x: {
-                ticks: {
-                    font: { weight: "bold", size: 12 },
-                },
-            },
-        },
+    public moneyReserve = {
+        scaleIncome: 0,
+        scaleSavings: 0,
+        colors: [""],
     };
 
-    ngOnInit() {
-        Chart.register(ChartDataLabels);
-        this.creditCardService
-            .getCreditCards({
-                month: this.month.order === 0 ? 11 : this.month.order - 1,
-                year: this.month.order === 0 ? this.year - 1 : this.year,
-            })
+    fetchBillsProgression() {
+        this.fetchBillsProgression$ = this.dashboardService
+            .getBillsProgression()
             .subscribe({
-                next: (creditCards) => {
-                    this.dashboardState.updateCreditCards(creditCards);
-                    this.creditCards = creditCards;
+                next: (data) => {
+                    this.dashboardState.updateBillsProgression(data);
+                    this.setBillsProgressionChart(data);
                 },
             });
-        this.dashboardService.getCreditCards().subscribe({
-            next: () => this.setCreditCardsChart(),
-        });
-        this.dashboardService.getSavingsInfo().subscribe({
-            next: (savings) => {
-                this.dashboardState.updateSavings(savings);
-                this.setSavingsChart(savings);
+    }
+
+    fetchTopCategories() {
+        this.fetchTopCategories$ = this.dashboardService.getTopCategories().subscribe({
+            next: (summary) => {
+                this.setCategoryChart(summary);
+                this.dashboardState.updateCategoriesSummary(summary);
             },
         });
-        this.dashboardService.getMonthBills().subscribe({
+    }
+
+    fetchCalendarBills() {
+        this.fetchCalendarBills$ = this.dashboardService.getMonthBills().subscribe({
             next: (bills) => {
                 this.dashboardState.updateMonthBills(bills);
-                this.setCategoryChart(bills);
                 this.monthBills = bills;
             },
             error: () => {
                 this.snack.openSnackBar("error fetching bills", "error");
             },
         });
-        this.dashboardState.monthSpan$.subscribe({
-            next: (monthSpan) => {
-                this.monthSpan = monthSpan;
-                this.dashboardService.getMonthSpanBills(monthSpan).subscribe({
-                    next: (data) => {
-                        this.dashboardState.updateBillsCounters(data);
-                        this.setBillsPerMonthChart();
-                    },
-                });
-            },
-        });
-        this.generalState.theme$.subscribe({
-            next: (theme) => (this.theme = theme),
-        });
     }
 
-    setBillsPerMonthChart() {
-        this.dashboardState.billsCounters$.subscribe({
-            next: (billsCounters) => {
-                this.billsPerMonthChart = new Chart("bills-per-month", {
-                    type: "line",
-                    data: {
-                        labels: billsCounters
-                            .map((bc) => MONTHS[bc.month].short)
-                            .reverse(),
-                        datasets: [
-                            {
-                                label: "total bill value (R$)",
-                                data: billsCounters.map((bc) => bc.total).reverse(),
-                                tension: 0.3,
-                                backgroundColor:
-                                    this.theme === "binary"
-                                        ? "transparent"
-                                        : tint(
-                                              0.1 * (this.theme === "dark" ? -0.1 : 0.1),
-                                              this.secondaryColor
-                                          ),
-                                borderColor: this.secondaryColor,
-                                fill: true,
-                            },
-                        ],
-                    },
-                    options: this.lineOptions,
-                });
+    fetchSavings() {
+        this.fetchSavings$ = this.dashboardService.getSavingsInfo().subscribe({
+            next: (savings) => {
+                this.dashboardState.updateSavings(savings);
+                this.setSavingsChart(savings);
+                this.setSavingsProgression(savings.piggyBanksProgression);
+                this.setCreditCardsChart(savings.piggyBanksProgression);
+                const total = savings.totalIncome + savings.totalSavings;
+                const scaleIncome = savings.totalIncome / total;
+                const scaleSavings = savings.totalSavings / total;
+                this.moneyReserve = {
+                    scaleIncome,
+                    scaleSavings,
+                    colors: ["#00E226", "#005BE2"],
+                };
             },
         });
     }
 
-    setCategoryChart(monthBills: Array<Bill & BillData>) {
-        let categorySets: any = {};
-        monthBills.forEach((monthBill) => {
-            categorySets[monthBill.categoryId] = [
-                ...(categorySets[monthBill.categoryId] || []),
-                monthBill,
-            ];
+    fetchCreditCardProgression() {
+        // this.fetchCreditCardProgression$ = this.dashboardService
+        //     .getCreditCards()
+        //     .subscribe({
+        //         next: (data) => this.setCreditCardsChart(data),
+        //     });
+    }
+
+    ngOnInit() {
+        Chart.register(ChartDataLabels);
+        this.theme$ = this.generalState.theme$.subscribe({
+            next: (theme) => {
+                this.theme = theme;
+            },
         });
-        this.categories = Object.keys(categorySets).map(
-            (id) => categorySets[id][0].category
+        this.fetchBillsProgression();
+        this.fetchTopCategories();
+        this.fetchCalendarBills();
+        this.fetchSavings();
+        this.fetchCreditCardProgression();
+    }
+
+    setBillsProgressionChart(data: DashboardBillsPerMonthType[]) {
+        this.billsPerMonthChart = billsProgressionChart(data, this.theme);
+    }
+
+    setCategoryChart(summary: CategoriesSummaryType) {
+        this.categoryChart = categoriesChart(summary, this.theme);
+    }
+
+    setSavingsChart(savings: DashboardSavingsType) {
+        this.savingsChart = savingsChart(savings, this.theme);
+    }
+
+    setSavingsProgression(piggyBanksProgression: PiggyBanksProgressionType[]) {
+        this.billsPerMonthChart = piggyBanksProgressionChart(
+            piggyBanksProgression,
+            this.theme
         );
-
-        this.categoryChart = new Chart("categories-chart", {
-            plugins: [ChartDataLabels],
-            type: "pie",
-            data: {
-                labels: this.categories.map((category) => category.name),
-                datasets: [
-                    {
-                        label: "value R$",
-                        data: Object.keys(categorySets).map((category) =>
-                            categorySets[category].reduce(
-                                (acc: number, value: Bill & BillData) =>
-                                    parseFloat((acc + value.totalParcel!).toFixed(2)),
-                                0
-                            )
-                        ),
-                        spacing: 3,
-                        borderWidth: 3,
-                        borderRadius: 10,
-                        borderColor:
-                            this.theme === "binary"
-                                ? this.categories.map((category) => category.color)
-                                : "transparent",
-                        backgroundColor:
-                            this.theme === "binary"
-                                ? "transparent"
-                                : this.categories.map((category) => category.color),
-                    },
-                    { data: [], weight: 0.1 },
-                    {
-                        label: "number of bills",
-                        data: Object.keys(categorySets).map(
-                            (category) => categorySets[category].length
-                        ),
-                        borderWidth: 2,
-                        borderColor:
-                            this.theme === "binary"
-                                ? this.categories.map((category) => category.color)
-                                : "transparent",
-                        backgroundColor:
-                            this.theme === "binary"
-                                ? "transparent"
-                                : this.categories.map((category) => category.color),
-                    },
-                ],
-            },
-            options: {
-                responsive: true,
-                devicePixelRatio: 4,
-                layout: { padding: 0 },
-                plugins: {
-                    legend: {
-                        position: "bottom",
-                        labels: {
-                            boxWidth: 10,
-                            font: { size: 12 },
-                        },
-                        fullSize: false,
-                    },
-                    datalabels: {
-                        backgroundColor:
-                            this.theme === "binary" ? "transparent" : this.secondaryColor,
-                        borderRadius: 10,
-                        color: this.text1Color,
-                        formatter: (value, ctx) => {
-                            return ctx.dataset.label === "value R$"
-                                ? value + "R$"
-                                : value;
-                        },
-                    },
-                },
-            },
-        });
     }
 
-    setSavingsChart(savings: (Bill & BillData)[]) {
-        savings.forEach((bill) => {
-            if (bill.isPayment) this.outcomings += bill.total;
-            else this.incomings += bill.total;
-        });
-        this.savingsChart = new Chart("savings-chart", {
-            type: "bar",
-            data: {
-                labels: ["incomings", "outcomings"],
-                datasets: [
-                    {
-                        label: "",
-                        data: [this.incomings, this.outcomings],
-                        backgroundColor:
-                            this.theme === "binary"
-                                ? "transparent"
-                                : [this.primaryColor, this.secondaryColor],
-                        borderWidth: 3,
-                        borderRadius: 10,
-                        borderColor:
-                            this.theme === "binary"
-                                ? [this.secondaryColor, this.secondaryColor]
-                                : "transparent",
-                        categoryPercentage: 0.8,
-                        barPercentage: 1,
-                    },
-                ],
-            },
-            options: {
-                layout: { padding: { top: 30 } },
-                scales: { y: { display: false } },
-                responsive: true,
-                plugins: {
-                    legend: { display: false },
-                    datalabels: {
-                        anchor: "end",
-                        align: "top",
-                        color: this.text1Color,
-                        font: { weight: "bold" },
-                        formatter: (v) => v + " R$",
-                    },
-                },
-            },
-        });
+    setCreditCardsChart(data: PiggyBanksProgressionType[]) {
+        this.creditCardsChart = creditCardProgressionChart(data, this.theme);
     }
 
     handleMonthSpan() {
         this.dashboardState.updateMonthSpan(
             this.monthSpan === 5 ? 1 : this.monthSpan + 1
         );
-        this.dashboardState.billsCounters$.subscribe({
-            next: (billsCounters) => {
-                this.billsPerMonthChart.data.labels = billsCounters
-                    .map((bc) => MONTHS[bc.month].short)
-                    .reverse();
-                this.billsPerMonthChart.data.datasets.forEach((dataset) => {
-                    dataset.data = billsCounters.map((bc) => bc.total).reverse();
-                    dataset.backgroundColor =
-                        this.theme === "binary"
-                            ? "transparent"
-                            : billsCounters
-                                  .map((_, index) =>
-                                      tint(index * 0.1, this.secondaryColor)
-                                  )
-                                  .reverse();
-                });
-                this.billsPerMonthChart.update();
-            },
-        });
-    }
-
-    getMonthPercentage(index: number) {
-        if (index === 0) return 0;
-        let percentage = 0;
-        this.dashboardState.billsCounters$.subscribe({
-            next: (billsCounters) => {
-                percentage = parseFloat(
-                    (
-                        billsCounters[billsCounters.length - index - 1].total /
-                            billsCounters[billsCounters.length - index].total -
-                        1
-                    ).toFixed(4)
-                );
-            },
-        });
-        return percentage;
-    }
-
-    setCreditCardsChart() {
-        const monthsArray = [
-            new Date().getMonth() - 4,
-            new Date().getMonth() - 3,
-            new Date().getMonth() - 2,
-            new Date().getMonth() - 1,
-            new Date().getMonth(),
-        ];
-        this.dashboardState.creditCardsSpan$.subscribe({
-            next: (creditCards) => {
-                this.creditCardsChart = new Chart("credit-cards-chart", {
-                    type: "line",
-                    data: {
-                        labels: monthsArray.map((mth) => MONTHS[mth].short),
-                        datasets: Object.keys(creditCards)
-                            .map((name) => ({
-                                label: name,
-                                data: monthsArray.map(
-                                    (month) => creditCards[name][month]?.invoice || 0
-                                ),
-                                tension: 0.3,
-                                fill: true,
-                                borderColor:
-                                    Object.keys(creditCards[name]).map(
-                                        (mth: any) => creditCards[name][mth]?.color
-                                    )[0] || this.primaryColor,
-                                backgroundColor:
-                                    this.theme === "binary"
-                                        ? "transparent"
-                                        : Object.keys(creditCards[name]).map(
-                                              (mth: any) => creditCards[name][mth]?.color
-                                          )[0] + "77" || this.primaryColor,
-                            }))
-                            .sort(
-                                (a, b) =>
-                                    a.data.reduce((acc, total) => acc + total, 0) -
-                                    b.data.reduce((acc, total) => acc + total, 0)
-                            ),
-                    },
-                    options: this.lineOptions,
-                });
-            },
-        });
+        this.fetchBillsProgression();
+        this.billsPerMonthChart.update();
     }
 
     openBill(bill: Bill & BillData) {
@@ -412,5 +220,13 @@ export class PageDashboard {
             },
         };
         this.dialog.open(ModalViewItem, option);
+    }
+
+    ngOnDestroy() {
+        this.fetchBillsProgression$.unsubscribe();
+        this.fetchTopCategories$.unsubscribe();
+        this.fetchCalendarBills$.unsubscribe();
+        this.fetchSavings$.unsubscribe();
+        this.theme$.unsubscribe();
     }
 }
