@@ -1,13 +1,15 @@
-import { BillData, CreditCard } from "./../types/objects";
+import { DASHBOARD_SAVINGS_INITIALIZER } from "src/utils/constants/mocks";
+import { BillData, CreditCard } from "src/app/core/types/objects";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { Bill } from "../types/objects";
-import { CreditCardDashboardType } from "../types/services";
-import { CategoriesSummaryType } from "../types/services/dashboard.services.types";
+import { Bill } from "src/app/core/types/objects";
+import { CreditCardDashboardType } from "src/app/core/types/services";
+import { CategoriesSummaryType } from "src/app/core/types/services/dashboard.services.types";
 import {
     DashboardBillsPerMonthType,
     DashboardSavingsType,
-} from "../types/subjects/dashboard.subjects";
+    MonthBillsType,
+} from "src/app/core/types/subjects/dashboard.subjects";
 
 @Injectable({
     providedIn: "root",
@@ -17,14 +19,9 @@ export class DashboardState {
     private _monthSpan$ = new BehaviorSubject<number>(5);
     private _billsProgression$ = new BehaviorSubject<DashboardBillsPerMonthType[]>([]);
     private _billsGroups$ = new BehaviorSubject<Array<Bill & BillData>[]>([]);
-    private _monthBills$ = new BehaviorSubject<Array<Bill & BillData>>([]);
+    private _monthBills$ = new BehaviorSubject<MonthBillsType[]>([]);
     private _savings$ = new BehaviorSubject<DashboardSavingsType>({
-        totalIncome: 0,
-        totalBanks: 0,
-        totalSettled: 0,
-        totalSavings: 0,
-        totalPending: 0,
-        totalPreview: 0,
+        ...DASHBOARD_SAVINGS_INITIALIZER,
     });
     private _creditCards$ = new BehaviorSubject<CreditCard[]>([]);
     private _creditCardsSpan$ = new BehaviorSubject<CreditCardDashboardType>({});
@@ -47,7 +44,7 @@ export class DashboardState {
         this._month$.next(month);
     }
 
-    public updateMonthBills(bills: Array<Bill & BillData>) {
+    public updateMonthBills(bills: MonthBillsType[]) {
         this._monthBills$.next(bills);
     }
 

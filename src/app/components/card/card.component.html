@@ -10,11 +10,7 @@
             : backgroundColor || backgroundHighlighter
     "
 >
-    <div
-        class="card-header"
-        *ngIf="!hideHeader"
-        [style.height]="noDivisor ? '70px' : '50px'"
-    >
+    <div class="card-header" *ngIf="!hideHeader" [style.height]="'50px'">
         <div class="card-data">
             <h3 *ngIf="title">
                 {{ title }}
@@ -49,7 +45,13 @@
         </div>
     </div>
     <div class="card-divisor" *ngIf="!noDivisor && !hideHeader"></div>
-    <div class="card-content" [style.height]="hideHeader ? '100%' : 'calc(100% - 70px)'">
+    <div
+        class="card-content"
+        [style.height]="
+            hideHeader ? '100%' : 'calc(100% - ' + (noDivisor ? '58px' : '70px') + ')'
+        "
+        [style.marginTop]="noDivisor ? '10px' : '0px'"
+    >
         <ng-content></ng-content>
     </div>
 </div>

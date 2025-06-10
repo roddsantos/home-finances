@@ -9,6 +9,7 @@ import { CategoriesSummaryType } from "../core/types/services/dashboard.services
 import {
     DashboardBillsPerMonthType,
     DashboardSavingsType,
+    MonthBillsType,
 } from "../core/types/subjects/dashboard.subjects";
 
 @Injectable({
@@ -32,7 +33,7 @@ export class DashboardService extends Service {
     }
 
     getMonthBills() {
-        return this.httpClient.get<Array<Bill & BillData>>(DASHBOARD + "/bills", {
+        return this.httpClient.get<MonthBillsType[]>(DASHBOARD + "/bills", {
             params: { userId: this.user?.id || "" },
         });
     }

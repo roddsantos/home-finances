@@ -40,34 +40,85 @@
             id="dashboard-calendar"
             class="dashboard-calendar"
             [title]="'bill calendar'"
-            [description]="month.name.toLowerCase()"
             [border]="true"
         >
-            <calendar-component
-                class="calendar"
-                [creditCards]="creditCards"
-                [monthBills]="monthBills"
-            />
+            <calendar-component class="calendar" [monthBills]="monthBills" />
         </card-component>
         <card-component
-            id="dashboard-savings"
-            class="dashboard-savings"
-            [title]="'savings'"
+            id="dashboard-money"
+            class="dashboard-money"
+            [title]="'money overview'"
             [description]="month.name.toLowerCase()"
             [border]="true"
         >
-            <div class="container">
-                <canvas height="" id="savings-chart" class="chart"
-                    >{{savingsChart}}</canvas
-                >
-                <div class="legend">
-                    <div *ngFor="let item of savingsLabels; index as i" class="container">
+            <div class="dashboard-money">
+                <div class="money-container" [style.flexDirection]="'row'">
+                    <!-- <canvas id="savings-income-chart" class="chart"></canvas> -->
+                    <div class="money-item">
                         <div
-                            [style.backgroundColor]="savingsColors[i]"
-                            class="indicator"
-                        ></div>
-                        <p class="label">{{ item }}</p>
+                            class="icon-container"
+                            [style.transform]="'scale(' + moneyReserve.scaleIncome + ')'"
+                            [style.color]="'black'"
+                        >
+                            <mat-icon
+                                class="material-symbols-rounded icon"
+                                fontIcon="savings"
+                                [style.color]="'var(--success)'"
+                            ></mat-icon>
+                            <mat-icon
+                                class="material-symbols-filled icon-right"
+                                fontIcon="arrow_circle_down"
+                                [style.color]="'var(--success)'"
+                            ></mat-icon>
+                        </div>
+                        <h5>
+                            {{ (dashboardState.savings$ | async)?.totalIncome | currency:
+                            'R$ ' }}
+                        </h5>
+                        <h6>income</h6>
                     </div>
+                    <div class="money-item">
+                        <div
+                            class="icon-container"
+                            [style.transform]="'scale(' + moneyReserve.scaleSavings + ')'"
+                        >
+                            <mat-icon
+                                class="material-symbols-rounded icon"
+                                fontIcon="savings"
+                                [style.color]="'var(--info)'"
+                            ></mat-icon>
+                            <mat-icon
+                                class="material-symbols-rounded icon-right"
+                                fontIcon="calendar_month"
+                                [style.color]="'var(--info)'"
+                            ></mat-icon>
+                        </div>
+                        <h5>
+                            {{ (dashboardState.savings$ | async)?.totalSavings | currency:
+                            'R$ ' }}
+                        </h5>
+                        <h6>from last month</h6>
+                    </div>
+                </div>
+                <div class="container">
+                    <canvas height="" id="money-chart" class="chart"
+                        >{{savingsChart}}</canvas
+                    >
+                    <div class="legend">
+                        <div
+                            *ngFor="let item of savingsLabels; index as i"
+                            class="container"
+                        >
+                            <div
+                                [style.backgroundColor]="savingsColors[i]"
+                                class="indicator"
+                            ></div>
+                            <p class="label">{{ item }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <canvas id="piggy-banks-progression"></canvas>
                 </div>
             </div>
         </card-component>

@@ -11,7 +11,7 @@
     margin-bottom: 0.25rem;
     & .weekday {
         margin: auto;
-        padding: 0.25rem 0.5rem;
+        padding: 0rem 0.5rem;
         border-width: var(--border-width);
         border-style: solid;
         border-radius: var(--border-radius);
@@ -48,9 +48,6 @@
         border-width: var(--border-width);
         border-radius: var(--border-radius);
         width: 100%;
-        & p {
-            font-size: 1rem;
-        }
         &.bills {
             cursor: pointer;
         }
@@ -77,7 +74,12 @@
             font-size: 1.25rem;
             width: 1.25rem;
             height: 1.25rem;
-            color: var(--info);
+            &.yellow {
+                color: var(--warning);
+            }
+            &.red {
+                color: var(--error);
+            }
         }
     }
 }
