@@ -37,6 +37,7 @@ import { provideNativeDateAdapter } from "@angular/material/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { DIALOG_DATA } from "@angular/cdk/dialog";
 import { EditBillModalType } from "src/app/core/types/modal";
+import { CardComponent } from "../../card/card.component";
 
 @Component({
     selector: "modal-new-bill",
@@ -59,6 +60,7 @@ import { EditBillModalType } from "src/app/core/types/modal";
         MatSelectModule,
         MatDatepickerModule,
         MatCheckboxModule,
+        CardComponent,
     ],
 })
 export class ModalEditBill {
@@ -134,6 +136,7 @@ export class ModalEditBill {
     });
 
     ngOnInit() {
+        console.log("DATA: ", this.data);
         this.billForm.patchValue({
             name: this.data.name,
             description: this.data.description,

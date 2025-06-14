@@ -21,6 +21,9 @@
     --input-position: 1.2rem;
     --input-font: 0.75rem;
 
+    --font-1: ReemKufi;
+    --font-2: Commissioner;
+
     --text-gen: 0.8rem;
     --padding-gen: 0.75rem;
 
@@ -32,7 +35,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "ReemKufi-Regular";
     &::-webkit-scrollbar {
         width: 15px;
         border-radius: 3px;
@@ -54,7 +56,7 @@ body {
     min-height: 100dvh;
     width: 100dvw;
     background-color: var(--background);
-    font-family: "Open-Sans-Regular";
+    font-family: var(--text-2);
 }
 
 .page {

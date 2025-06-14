@@ -21,46 +21,47 @@
                     <mat-option [value]="'companyCredit'">company credit</mat-option>
                 </mat-select>
             </mat-form-field>
-            <div class="separator"></div>
-            <div class="new-bill-container-split">
-                <mat-form-field class="new-bill-field" appearance="outline">
-                    <mat-label>name</mat-label>
-                    <input maxlength="100" required matInput formControlName="name" />
-                    @if (billForm.controls.name.errors?.["required"]) {
-                    <mat-error>{{errorMessage.name}}</mat-error>
-                    }
-                </mat-form-field>
-                <mat-form-field class="new-bill-field" appearance="outline">
-                    <mat-label>description</mat-label>
-                    <input maxlength="100" matInput formControlName="description" />
-                    @if (billForm.controls.description.errors?.["required"]) {
-                    <mat-error>{{errorMessage.description}}</mat-error>
-                    }
-                </mat-form-field>
-            </div>
-            <div class="new-bill-container-split">
-                <mat-form-field class="new-bill-field" appearance="outline">
-                    <mat-label>category</mat-label>
-                    <mat-select
-                        [compareWith]="compareCategories"
-                        formControlName="category"
-                    >
-                        @for (cat of catState.categories$ | async; track $index) {
-                        <mat-option [value]="cat">{{cat.name}}</mat-option>
+            <card-component [hideHeader]="true">
+                <div class="new-bill-container-split">
+                    <mat-form-field class="new-bill-field" appearance="outline">
+                        <mat-label>name</mat-label>
+                        <input maxlength="100" required matInput formControlName="name" />
+                        @if (billForm.controls.name.errors?.["required"]) {
+                        <mat-error>{{errorMessage.name}}</mat-error>
                         }
-                    </mat-select>
-                    @if (billForm.controls.category.errors?.["required"]) {
-                    <mat-error>{{errorMessage.name}}</mat-error>
-                    }
-                </mat-form-field>
-                <mat-form-field class="new-bill-field" appearance="outline">
-                    <mat-label>total value</mat-label>
-                    <input matInput type="number" formControlName="total" />
-                    @if (billForm.controls.total.invalid) {
-                    <mat-error>{{errorMessage.total}}</mat-error>
-                    }
-                </mat-form-field>
-            </div>
+                    </mat-form-field>
+                    <mat-form-field class="new-bill-field" appearance="outline">
+                        <mat-label>description</mat-label>
+                        <input maxlength="100" matInput formControlName="description" />
+                        @if (billForm.controls.description.errors?.["required"]) {
+                        <mat-error>{{errorMessage.description}}</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+                <div class="new-bill-container-split">
+                    <mat-form-field class="new-bill-field" appearance="outline">
+                        <mat-label>category</mat-label>
+                        <mat-select
+                            [compareWith]="compareCategories"
+                            formControlName="category"
+                        >
+                            @for (cat of catState.categories$ | async; track $index) {
+                            <mat-option [value]="cat">{{cat.name}}</mat-option>
+                            }
+                        </mat-select>
+                        @if (billForm.controls.category.errors?.["required"]) {
+                        <mat-error>{{errorMessage.name}}</mat-error>
+                        }
+                    </mat-form-field>
+                    <mat-form-field class="new-bill-field" appearance="outline">
+                        <mat-label>total value</mat-label>
+                        <input matInput type="number" formControlName="total" />
+                        @if (billForm.controls.total.invalid) {
+                        <mat-error>{{errorMessage.total}}</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </card-component>
             <div class="separator"></div>
             <div class="new-bill-container-split">
                 <div class="new-bill-toggle new-bill-field">

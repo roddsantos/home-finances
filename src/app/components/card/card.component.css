@@ -37,7 +37,8 @@
     grid-template-columns: 5fr 1fr;
     & .card-data {
         & h2 {
-            font: normal 1.5rem Open-Sans-Extra-Bold;
+            font: normal 1.5rem var(--text-2);
+            font-weight: 600;
             width: fit-content;
         }
     }

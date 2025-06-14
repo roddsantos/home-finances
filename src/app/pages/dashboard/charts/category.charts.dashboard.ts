@@ -21,7 +21,7 @@ const barOptions: any = (summary: CategoriesSummaryType) => {
         anchor: "end",
         align: "top",
         color: pallete.text1,
-        font: { weight: "bold", family: "ReemKufi-SemiBold", size: 14 },
+        font: { weight: "bold", family: pallete.font2, size: 14 },
         formatter: (v: any) => v + " R$",
     };
 

@@ -117,7 +117,7 @@
 
 .home-title {
     font-weight: bold;
-    font-family: ReemKufi-Bold;
+    font-family: var(--font-1);
     text-decoration: underline;
     color: var(--primary);
     font-size: 1.4rem;

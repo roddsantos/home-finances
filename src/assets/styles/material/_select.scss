@@ -7,6 +7,7 @@
                 color: var(--text-1) !important;
             }
             & .mat-mdc-select-value {
+                font-family: var(--font-1) !important;
                 font-size: var(--input-font) !important;
                 color: var(--text-1) !important;
                 & .mat-mdc-select-placeholder {
@@ -25,6 +26,7 @@
 
     & mat-option {
         color: var(--text-2);
+        font-family: var(--font-1) !important;
     }
 
     & .mat-mdc-option-active .mdc-list-item__primary-text {

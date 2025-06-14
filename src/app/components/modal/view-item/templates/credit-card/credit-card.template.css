@@ -33,7 +33,7 @@
         grid-area: invoice;
         width: 100%;
         & h1 {
-            font-family: Open-Sans-Extra-Bold;
+            font-family: var(--text-2);
         }
         & .row {
             display: flex;

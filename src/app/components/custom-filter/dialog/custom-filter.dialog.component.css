@@ -7,7 +7,7 @@
 p {
     color: var(--text-1);
     font-size: 1rem;
-    font-family: Open-Sans-Regular;
+    font-family: var(--font-2);
     margin-bottom: 2px;
 }
 
@@ -61,5 +61,5 @@ p {
 .hint {
     color: var(--text-1);
     font-size: 1rem;
-    font-family: Open-Sans-Regular;
+    font-family: var(--text-2);
 }

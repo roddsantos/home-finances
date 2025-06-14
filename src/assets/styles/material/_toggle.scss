@@ -17,6 +17,7 @@
                 line-height: calc(1.8 * var(--input-unit)) !important;
                 font-size: var(--input-font);
                 color: var(--text-1);
+                font-family: var(--font-1);
             }
         }
         &.mat-button-toggle-checked {

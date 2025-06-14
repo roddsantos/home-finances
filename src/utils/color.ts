@@ -201,6 +201,9 @@ export function currentPallete() {
     const text2 = style.getPropertyValue("--text-2");
     const text3 = style.getPropertyValue("--text-3");
 
+    const font1 = style.getPropertyValue("--font-1");
+    const font2 = style.getPropertyValue("--font-2");
+
     return {
         primary,
         secondary,
@@ -213,5 +216,7 @@ export function currentPallete() {
         text1,
         text2,
         text3,
+        font1,
+        font2,
     };
 }

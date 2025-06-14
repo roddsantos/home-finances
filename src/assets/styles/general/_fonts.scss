@@ -1,330 +1,54 @@
+@import "../../fonts/reem-kufi/reemkufi";
+@import "../../fonts/roboto/roboto";
+@import "../../fonts/opensans/opensans";
+@import "../../fonts/gt-eesti/gteestitext";
+@import "../../fonts/commissioner/commissioner";
+
 h1 {
-    font-family: ReemKufi-Bold;
+    font-family: var(--font-1);
+    font-weight: 800;
     color: var(--text-1);
     font-size: calc(2.75 * var(--text-gen));
 }
 
 h2 {
-    font-family: ReemKufi-Bold;
+    font-family: var(--font-1);
+    font-weight: 800;
     color: var(--text-1);
     font-size: calc(2.2 * var(--text-gen));
 }
 
 h3 {
-    font-family: ReemKufi-Bold;
+    font-family: var(--font-1);
+    font-weight: 600;
     color: var(--text-1);
     font-size: calc(1.8 * var(--text-gen));
 }
 
 h4 {
-    font-family: ReemKufi-Bold;
+    font-family: var(--font-1);
+    font-weight: 600;
     color: var(--text-1);
     font-size: calc(1.6 * var(--text-gen));
 }
 
 h5 {
-    font-family: ReemKufi-SemiBold;
+    font-family: var(--font-2);
+    font-weight: 500;
     color: var(--text-1);
     font-size: calc(1.4 * var(--text-gen));
 }
 
 h6 {
-    font-family: ReemKufi-SemiBold;
+    font-family: var(--font-2);
+    font-weight: 500;
     color: var(--text-1);
     font-size: calc(1.2 * var(--text-gen));
 }
 
 p {
-    font-family: ReemKufi-Regular;
+    font-family: var(--font-2);
+    font-weight: 400;
     color: var(--text-1);
     font-size: calc(1 * var(--text-gen));
-}
-
-@font-face {
-    font-family: "ReemKufi-Bold";
-    font-style: bold;
-    font-weight: 800;
-    font-display: swap;
-    src: local("ReemKufi-Bold"), local("ReemKufi-Bold.ttf"),
-        url("../../../assets/fonts/reem-kufi/ReemKufi-Bold.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "ReemKufi-SemiBold";
-    font-style: bold;
-    font-weight: 600;
-    font-display: swap;
-    src: local("ReemKufi-SemiBold"), local("ReemKufi-SemiBold.ttf"),
-        url("../../../assets/fonts/reem-kufi/ReemKufi-SemiBold.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "ReemKufi-Medium";
-    font-style: bold;
-    font-weight: 500;
-    font-display: swap;
-    src: local("ReemKufi-Medium"), local("ReemKufi-Medium.ttf"),
-        url("../../../assets/fonts/reem-kufi/ReemKufi-Medium.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "ReemKufi-Regular";
-    font-style: bold;
-    font-weight: 400;
-    font-display: swap;
-    src: local("ReemKufi-Regular"), local("ReemKufi-Regular.ttf"),
-        url("../../../assets/fonts/reem-kufi/ReemKufi-Regular.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Open-Sans-Light";
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src: local("OpenSans-Light"), local("OpenSans-Light.ttf"),
-        url("../../../assets/fonts/opensans/OpenSans-Light.ttf") format("truetype");
-}
-
-/* font Open Sans Light Italic*/
-@font-face {
-    font-family: "Open-Sans-Light-Italic";
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src: local("OpenSans-LightItalic"), local("OpenSans-LightItalic.ttf"),
-        url("../../../assets/fonts/opensans/OpenSans-LightItalic.ttf") format("truetype");
-}
-
-/* font Open Sans Italic*/
-@font-face {
-    font-family: "Open-Sans-Italic";
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src: local("OpenSans-Italic"), local("OpenSans-Italic.ttf"),
-        url("../../../assets/fonts/opensans/OpenSans-Italic.ttf") format("truetype");
-}
-
-/* font Open Sans Regular */
-@font-face {
-    font-family: "Open-Sans-Regular";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: local("OpenSans-Regular"), local("OpenSans-Regular.ttf"),
-        url("../../../assets/fonts/opensans/OpenSans-Regular.ttf") format("truetype");
-}
-
-/* font Open Sans Regular Italic */
-@font-face {
-    font-family: "Open-Sans-Regular-Italic";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: local("OpenSans-Italic"), local("OpenSans-Italic.ttf"),
-        url("../../../assets/fonts/opensans/OpenSans-Italic.ttf") format("truetype");
-}
-
-/* font Open Sans Bold Italic */
-@font-face {
-    font-family: "Open-Sans-Bold-Italic";
-    font-style: normal;
-    font-weight: 600;
-    font-display: swap;
-    src: local("OpenSans-BoldItalic"), local("OpenSans-BoldItalic.ttf"),
-        url("../../../assets/fonts/opensans/OpenSans-BoldItalic.ttf") format("truetype");
-}
-
-/* font Open Sans Semi Bold */
-@font-face {
-    font-family: "Open-Sans-Semi-Bold";
-    font-style: normal;
-    font-weight: 600;
-    font-display: swap;
-    src: local("OpenSans-SemiBold"), local("OpenSans-SemiBold.ttf"),
-        url("../../../assets/fonts/opensans/OpenSans-SemiBold.ttf") format("truetype");
-}
-
-/* font Open Sans Bold */
-@font-face {
-    font-family: "Open-Sans-Bold";
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: local("OpenSans-Bold"), local("OpenSans-Bold.ttf"),
-        url("../../../assets/fonts/opensans/OpenSans-Bold.ttf") format("truetype");
-}
-
-/* font Open Sans Extra Bold */
-@font-face {
-    font-family: "Open-Sans-Extra-Bold";
-    font-style: normal;
-    font-weight: 800;
-    font-display: swap;
-    src: local("OpenSans-ExtraBold"), local("OpenSans-ExtraBold.ttf"),
-        url("../../../assets/fonts/opensans/OpenSans-ExtraBold.ttf") format("truetype");
-}
-
-/* font Open Sans Extra Bold Italic*/
-@font-face {
-    font-family: "Open-Sans-Extra-Bold-Italic";
-    font-style: normal;
-    font-weight: 800;
-    font-display: swap;
-    src: local("OpenSans-ExtraBoldItalic"), local("OpenSans-ExtraBoldItalic.ttf"),
-        url("../../../assets/fonts/opensans/OpenSans-ExtraBoldItalic.ttf")
-            format("truetype");
-}
-
-@font-face {
-    font-family: "Open-Sans-Semi-Bold-Italic";
-    font-style: normal;
-    font-weight: 800;
-    font-display: swap;
-    src: local("OpenSans-SemiBoldItalic"), local("OpenSans-SemiBoldItalic.ttf"),
-        url("../../../assets/fonts/opensans/OpenSans-SemiBoldItalic.ttf")
-            format("truetype");
-}
-
-@font-face {
-    font-family: "Roboto-Light";
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src: local("Roboto-Light"), local("Roboto-Light.ttf"),
-        url("../../../assets/fonts/roboto/Roboto-Light.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Roboto-Light-Italic";
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src: local("Roboto-LightItalic"), local("Roboto-LightItalic.ttf"),
-        url("../../../assets/fonts/roboto/Roboto-LightItalic.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Roboto-Regular";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: local("Roboto-Regular"), local("Roboto-Regular.ttf"),
-        url("../../../assets/fonts/roboto/Roboto-Regular.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Roboto-Italic";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: local("Roboto-Italic"), local("Roboto-Italic.ttf"),
-        url("../../../assets/fonts/roboto/Roboto-Italic.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Roboto-Bold";
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: local("Roboto-Bold"), local("Roboto-Bold.ttf"),
-        url("../../../assets/fonts/roboto/Roboto-Bold.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Roboto-Bold-Italic";
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: local("Roboto-BoldItalic"), local("Roboto-BoldItalic.ttf"),
-        url("../../../assets/fonts/roboto/Roboto-BoldItalic.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Roboto-Black";
-    font-style: normal;
-    font-weight: 900;
-    font-display: swap;
-    src: local("Roboto-Black"), local("Roboto-Black.ttf"),
-        url("../../../assets/fonts/roboto/Roboto-Black.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Roboto-Black-Italic";
-    font-style: normal;
-    font-weight: 900;
-    font-display: swap;
-    src: local("Roboto-BlackItalic"), local("Roboto-BlackItalic.ttf"),
-        url("../../../assets/fonts/roboto/Roboto-BlackItalic.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "GT-Eesti-Text-Book";
-    font-style: normal;
-    font-weight: 500;
-    font-display: swap;
-    src: local("GT-Eesti-Text-Book-Trial"), local("GT-Eesti-Text-Book-Trial.otf"),
-        url("../../../assets/fonts/gt-eesti/GT-Eesti-Text-Book-Trial.otf")
-            format("opentype");
-}
-
-@font-face {
-    font-family: "GT-Eesti-Text-Bold";
-    font-style: normal;
-    font-weight: 800;
-    font-display: swap;
-    src: local("GT-Eesti-Text-Bold-Trial"), local("GT-Eesti-Text-Bold-Trial.otf"),
-        url("../../../assets/fonts/gt-eesti/GT-Eesti-Text-Bold-Trial.otf")
-            format("opentype");
-}
-
-@font-face {
-    font-family: "GT-Eesti-Text-Medium";
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: local("GT-Eesti-Text-Medium-Trial"), local("GT-Eesti-Text-Medium-Trial.otf"),
-        url("../../../assets/fonts/gt-eesti/GT-Eesti-Text-Medium-Trial.otf")
-            format("opentype");
-}
-
-@font-face {
-    font-family: "GT-Eesti-Text-Regular";
-    font-style: normal;
-    font-weight: 600;
-    font-display: swap;
-    src: local("GT-Eesti-Text-Regular-Trial"), local("GT-Eesti-Text-Regular-Trial.otf"),
-        url("../../../assets/fonts/gt-eesti/GT-Eesti-Text-Regular-Trial.otf")
-            format("opentype");
-}
-
-@font-face {
-    font-family: "GT-Eesti-Text-Light";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: local("GT-Eesti-Text-Light-Trial"), local("GT-Eesti-Text-Light-Trial.otf"),
-        url("../../../assets/fonts/gt-eesti/GT-Eesti-Text-Light-Trial.otf")
-            format("opentype");
-}
-
-@font-face {
-    font-family: "GT-Eesti-Text-Thin";
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src: local("GT-Eesti-Text-Thin-Trial"), local("GT-Eesti-Text-Thin-Trial.otf"),
-        url("../../../assets/fonts/gt-eesti/GT-Eesti-Text-Thin-Trial.otf")
-            format("opentype");
-}
-
-@font-face {
-    font-family: "GT-Eesti-Text-UltraLight";
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src: local("GT-Eesti-Text-UltraLight-Trial"),
-        local("GT-Eesti-Text-UltraLight-Trial.otf"),
-        url("../../../assets/fonts/gt-eesti/GT-Eesti-Text-UltraLight-Trial.otf")
-            format("opentype");
 }

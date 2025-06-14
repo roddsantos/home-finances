@@ -12,7 +12,7 @@ const lineOptions: any = (datasets: any[]) => {
         anchor: "end",
         align: "center",
         color: pallete.text1,
-        font: { weight: "bold", family: "ReemKufi-SemiBold", size: 14 },
+        font: { weight: "bold", family: pallete.font2, size: 14 },
         formatter: (v: number, context: Context) => {
             return (
                 v +

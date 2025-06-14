@@ -35,7 +35,7 @@
     &.mat-mdc-text-field-wrapper {
         & .mat-mdc-form-field-hint {
             & mat-hint {
-                font-family: Open-Sans-Regular;
+                font-family: var(--font-1);
             }
         }
         & .mat-mdc-form-field-input-control {
@@ -95,5 +95,6 @@
         caret-color: var(--text-1) !important;
         font-size: var(--input-font) !important;
         color: var(--text-1) !important;
+        font-family: var(--font-1) !important;
     }
 }
