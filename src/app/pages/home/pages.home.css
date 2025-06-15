@@ -199,19 +199,20 @@
         height: 1rem;
         width: 1rem;
     }
-    p {
-        font-size: 0.75rem;
+    h6 {
+        font-size: calc(1 * var(--text-gen));
+        font-weight: 800;
     }
     &.green {
         background-color: rgb(from var(--success) r g b / 0.2);
-        & p,
+        & h6,
         .icon-trending {
             color: var(--success);
         }
     }
     &.red {
         background-color: rgb(from var(--error) r g b / 0.2);
-        & p,
+        & h6,
         .icon-trending {
             color: var(--error);
         }

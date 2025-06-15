@@ -38,6 +38,33 @@
     }
 }
 
+.item-actions {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    &.hidden {
+        display: none;
+        height: 0px;
+    }
+    & .item-action {
+        display: none;
+        cursor: pointer;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: var(--padding-gen);
+        width: 100px;
+        height: 120px;
+        background-color: var(--primary);
+        border-radius: var(--border-radius);
+        & p {
+            color: var(--text-3);
+        }
+        &.selected {
+            display: flex;
+        }
+    }
+}
+
 .icon-selected {
     color: var(--text-3);
 }

@@ -10,7 +10,10 @@
             fontIcon="menu"
         ></mat-icon>
     </button>
-    <mat-form-field [ngClass]="['header-search', screen?.page]" appearance="outline">
+    <mat-form-field
+        [ngClass]="['header-search', screen?.page || '']"
+        appearance="outline"
+    >
         <mat-icon
             matPrefix
             class="header-search"
@@ -65,7 +68,8 @@
             fontIcon="close"
         ></mat-icon>
     </mat-form-field>
-    <div class="header-action">
+    <!-- TO DO  -->
+    <!-- <div class="header-action">
         <button
             *ngFor="let action of screen?.actions"
             mat-button
@@ -82,5 +86,5 @@
             ></mat-icon>
             <p>{{ action.title }}</p>
         </button>
-    </div>
+    </div> -->
 </div>

@@ -42,9 +42,9 @@
                             class="material-symbols-outlined icon-trending"
                             [fontIcon]="(homeState.expenses$ | async)!.delta > 0 ? 'trending_up' : 'trending_down'"
                         ></mat-icon>
-                        <p>
+                        <h6>
                             {{((homeState.expenses$ | async)!.delta.toFixed(2)) + "%" }}
-                        </p>
+                        </h6>
                     </div>
                 </div>
             </div>

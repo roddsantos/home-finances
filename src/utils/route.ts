@@ -48,7 +48,7 @@ export const ROUTES: RouteItemType[] = [
                 event: "saving",
             },
             {
-                icons: ["add", "credit_card"],
+                icons: ["add", "account_balance"],
                 title: "new bank",
                 event: "creating",
             },
@@ -61,7 +61,7 @@ export const ROUTES: RouteItemType[] = [
         actions: [
             {
                 icons: ["add", "store"],
-                title: "new company/brand",
+                title: "new company / brand",
                 event: "creating",
             },
         ],
