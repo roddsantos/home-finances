@@ -58,7 +58,7 @@ export type ListAction = {
 export type PaginationType = {
     page: number;
     limit: number;
-    total: number;
+    count: number;
 };
 
 // Action items

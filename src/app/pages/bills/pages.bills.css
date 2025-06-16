@@ -12,6 +12,7 @@
     display: flex;
     flex-direction: row;
     margin-top: 20px;
+    gap: 1.5rem;
 }
 
 .bill-list {
@@ -57,6 +58,33 @@
 
 .binary {
     background-color: transparent !important;
+}
+
+.bill-aside {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.bill-infos {
+    display: inline-flex;
+    gap: 1rem;
+    & .total {
+        width: calc(60% - 0.5rem);
+        height: max-content;
+        & .container {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+    & .count {
+        width: calc(40% - 0.5rem);
+        height: max-content;
+        & .container {
+            display: flex;
+            flex-direction: column;
+        }
+    }
 }
 
 .bill-container-item {

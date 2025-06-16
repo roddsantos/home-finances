@@ -74,7 +74,25 @@
                     ></service-list-template>
                 </ng-template>
             </div>
-            <custom-filter></custom-filter>
+            <aside class="bill-aside">
+                <div class="bill-infos">
+                    <card-component [hideHeader]="true" class="count">
+                        <div class="container">
+                            <h5>{{ (billState.billsPagination$ | async)?.count }}</h5>
+                            <p>bills</p>
+                        </div>
+                    </card-component>
+                    <card-component [hideHeader]="true" class="total">
+                        <div class="container">
+                            <h5>
+                                {{ (billState.billsTotal$ | async) | currency : 'R$ ' }}
+                            </h5>
+                            <p>total</p>
+                        </div>
+                    </card-component>
+                </div>
+                <custom-filter></custom-filter>
+            </aside>
         </div>
     </div>
 </div>

@@ -33,13 +33,13 @@ export class PaginationTemplate {
 
     setLimitList() {
         let limit = 10;
-        let total = 0;
+        let count = 0;
         let page = 1;
         this.billsState.billsPagination$.subscribe({
             next: (pagination) => {
                 page = pagination.page;
                 limit = pagination.limit;
-                total = pagination.total;
+                count = pagination.count;
             },
         });
         switch (limit) {
@@ -56,8 +56,8 @@ export class PaginationTemplate {
                 limit = 10;
                 break;
         }
-        if (page > Math.ceil(total / limit))
-            this.billsState.setPage(Math.ceil(total / limit));
+        if (page > Math.ceil(count / limit))
+            this.billsState.setPage(Math.ceil(count / limit));
         this.getBills();
     }
 
@@ -76,8 +76,8 @@ export class PaginationTemplate {
         this.billsState.billsPagination$.subscribe({
             next: (pagination) => {
                 status =
-                    pagination.page === Math.ceil(pagination.total / pagination.limit) ||
-                    pagination.total === 0;
+                    pagination.page === Math.ceil(pagination.count / pagination.limit) ||
+                    pagination.count === 0;
             },
         });
         return status;
