@@ -30,3 +30,33 @@
         >{{ title }}</span
     >
 </div>
+<div
+    [ngClass]="[
+        'item-actions',
+        actions?.length && item.page === (generalState.page$ | async) ? '' : 'hidden'
+    ]"
+>
+    <div
+        *ngFor="let action of actions"
+        [ngClass]="[
+            'item-action',
+            item.page === (generalState.page$ | async) ? 'selected' : ''
+        ]"
+        (click)="openModal(page)"
+    >
+        <div>
+            <mat-icon
+                *ngFor="let icon of action.icons"
+                [ngClass]="{
+            'icon': true,
+            'material-symbols-outlined': item.page !== (generalState.page$ | async),
+            'item-selected': item.page === (generalState.page$ | async),
+        }"
+                aria-hidden="false"
+                aria-label="Example home icon"
+                [fontIcon]="icon"
+            ></mat-icon>
+        </div>
+        <p>{{ action.title }}</p>
+    </div>
+</div>

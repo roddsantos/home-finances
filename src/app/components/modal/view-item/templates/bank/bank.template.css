@@ -10,6 +10,12 @@
 
 .savings-container {
     width: 100%;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    & p {
+        margin: auto 0px;
+    }
 }
 
 .saving-item {
