@@ -149,7 +149,7 @@ export class ModalEditBill {
             isPayment: this.data.isPayment,
             isRefund: this.data.isRefund,
         });
-        if (this.data.settled || this.data.type !== "money")
+        if (this.data.settled && this.data.type !== "money")
             this.billForm.get("total")?.disable();
         this.modalState.changeFooter({
             type: "submit",

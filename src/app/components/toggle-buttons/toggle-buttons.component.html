@@ -1,0 +1,19 @@
+<div class="group" #status [formControl]="formController" ngDefaultControl>
+    <button
+        *ngFor="let item of items"
+        (click)="onClick(item)"
+        [ngClass]="[
+            formController.getRawValue() === item.value
+                ? 'button-primary'
+                : 'button-outlined'
+        ]"
+        [value]="item"
+    >
+        <mat-icon
+            *ngIf="formController.getRawValue() === item.value"
+            class="icon material-symbols-outlined"
+            >check
+        </mat-icon>
+        {{ item.label }}
+    </button>
+</div>

@@ -28,6 +28,9 @@ import {
     MatButtonToggleChange,
     MatButtonToggleModule,
 } from "@angular/material/button-toggle";
+import { ToggleButtonComponent } from "../toggle-buttons/toggle-buttons.component";
+import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
+import { STATUS_ITEMS, TYPE_ITEMS } from "src/utils/constants/bills";
 
 @Injectable({
     providedIn: "root",
@@ -49,7 +52,7 @@ import {
         ReactiveFormsModule,
         MatInputModule,
         MatButtonToggleModule,
-        MatTooltipModule,
+        ToggleButtonComponent,
     ],
 })
 export class CustomFilterComponent {
@@ -63,6 +66,8 @@ export class CustomFilterComponent {
     @ViewChild("year") year: MatInput;
 
     months = MONTHS;
+    public typeItems = TYPE_ITEMS;
+    public statusItems = STATUS_ITEMS;
 
     @Input() availableFilters: AvailableFilters[];
     @Input() data: Array<any> = [];
@@ -187,8 +192,8 @@ export class CustomFilterComponent {
         }
     }
 
-    addStatus(event: MatButtonToggleChange) {
-        const value = event.value;
+    addStatus(item: ToggleButtonItemsType) {
+        const { label, value } = item;
         let filtersFromState: FilterDisplay[] = this.getFilters();
         const hasFilter = filtersFromState.find((f) => f.identifier === "status");
         if (hasFilter) this.filterState.removeFilter(hasFilter);
@@ -197,7 +202,7 @@ export class CustomFilterComponent {
                 {
                     id: value,
                     identifier: "status",
-                    name: value,
+                    name: label,
                 },
             ]);
         this.getBills();
@@ -235,17 +240,17 @@ export class CustomFilterComponent {
         this.getBills();
     }
 
-    addType(event: MatSelectChange) {
-        const filter = event.value;
+    addType(item: ToggleButtonItemsType) {
+        const { label, value } = item;
         let filtersFromState: FilterDisplay[] = this.getFilters();
         const hasFilter = filtersFromState.find((f) => f.identifier === "type");
         if (hasFilter) this.filterState.removeFilter(hasFilter);
-        if (filter !== "all")
+        if (value !== "all")
             this.filterState.addFilters([
                 {
-                    id: filter,
+                    id: value,
                     identifier: "type",
-                    name: filter,
+                    name: label,
                 },
             ]);
         this.getBills();
