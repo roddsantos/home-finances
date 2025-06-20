@@ -60,14 +60,15 @@
         "divider-1"
         "filter-status"
         "divider-2"
-        "filter-min-max"
+        "filter-money-flux"
         "divider-3"
         "filter-type"
-        "filter-buttons"
         "divider-4"
+        "filter-buttons"
+        "divider-5"
         "filter-list";
     grid-template-columns: 1fr;
-    grid-template-rows: min-content 1px min-content 1px min-content 1px min-content min-content 1px max-content;
+    grid-template-rows: min-content 1px min-content 1px min-content 1px min-content 1px min-content 1px max-content;
     &.binary {
         border: var(--border-width) solid var(--secondary);
     }
@@ -76,7 +77,8 @@
 .divider-1,
 .divider-2,
 .divider-3,
-.divider-4 {
+.divider-4,
+.divider-5 {
     height: 1px;
     width: 100%;
     background-color: var(--secondary);
@@ -157,36 +159,22 @@
     }
 }
 
-.filter-min-max {
+.filter-money-flux {
     display: grid;
-    grid-area: filter-min-max;
-    grid-template-areas: "min-label max-label" "min-input max-input";
-    grid-template-columns: repeat(2, min-content);
-    column-gap: 5px;
+    grid-area: filter-money-flux;
+    height: fit-content;
+    row-gap: 6px;
+    grid-template-areas: "money-flux-label" "money-flux-component";
     padding: 12px 16px;
-    grid-template-columns: 1fr 1fr;
-    & .min-label {
-        grid-area: min-label;
-        color: var(--text-1);
-    }
-    & .min-input {
-        grid-area: min-input;
-        min-width: 100px;
-    }
-    & .max-label {
-        grid-area: max-label;
-        color: var(--text-1);
-    }
-    & .max-input {
-        grid-area: max-input;
-        min-width: 100px;
+    & .status-component {
+        margin-top: 0.25rem;
     }
 }
 
 .filter-type {
     display: grid;
     grid-area: filter-type;
-    grid-template-areas: "type-label" "type-input";
+    grid-template-areas: "type-label" "type-component";
     padding: 12px 16px;
     row-gap: 3px;
     & .type-input {
@@ -201,7 +189,7 @@
     grid-area: filter-buttons;
     display: flex;
     flex-direction: row;
-    padding: 0px 16px 12px;
+    padding: 12px 16px;
     & .icon {
         width: max-content;
         font-size: 1.25rem;
@@ -222,6 +210,7 @@
 }
 
 .filter-list {
+    grid-area: filter-list;
     display: inline-flex;
     flex-wrap: wrap;
     padding: 1rem 0.75rem;

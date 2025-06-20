@@ -12,3 +12,9 @@ export const STATUS_ITEMS: ToggleButtonItemsType[] = [
     { label: "pending", value: "pending" },
     { label: "settled", value: "settled" },
 ];
+
+export const PAYMENT_ITEMS: ToggleButtonItemsType[] = [
+    { label: "all", value: "all" },
+    { label: "income", value: "income" },
+    { label: "outcome", value: "outcome" },
+];

@@ -1,5 +1,9 @@
 .mat-mdc-form-field {
     --mat-mdc-form-field-floating-label-scale: 1 !important;
+    & .mat-mdc-form-field-subscript-wrapper .mat-mdc-form-field-hint-wrapper {
+        font-family: var(--font-1) !important;
+        padding: 0px !important;
+    }
 }
 
 .mdc-text-field--outlined {

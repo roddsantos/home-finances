@@ -46,7 +46,8 @@ h6 {
     font-size: calc(1.2 * var(--text-gen));
 }
 
-p {
+p,
+mat-hint {
     font-family: var(--font-2);
     font-weight: 400;
     color: var(--text-1);

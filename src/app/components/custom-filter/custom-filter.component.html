@@ -43,34 +43,14 @@
                 (handleClick)="addStatus($event)"
             />
         </div>
-        <div class="filter-min-max">
-            <h6 class="min-label">min total</h6>
-            <mat-form-field class="min-input" appearance="outline">
-                <input
-                    (keydown.enter)="addLimit($event, 'min')"
-                    matInput
-                    #min
-                    type="number"
-                    [formControl]="minCtrl"
-                />
-                @if (minCtrl.invalid) {
-                <mat-error>invalid min value</mat-error>
-                }
-            </mat-form-field>
-            <!-- max value total -->
-            <h6 class="max-label">max total</h6>
-            <mat-form-field class="max-input" appearance="outline">
-                <input
-                    (keydown.enter)="addLimit($event, 'max')"
-                    matInput
-                    #max
-                    type="number"
-                    [formControl]="maxCtrl"
-                />
-                @if (maxCtrl.invalid) {
-                <mat-error>invalid max value</mat-error>
-                }
-            </mat-form-field>
+        <div class="filter-money-flux">
+            <h6 class="money-flux-label">bill payment</h6>
+            <toggle-button
+                class="money-flux-component"
+                [items]="moneyFluxItems"
+                [formController]="moneyFluxCtrl"
+                (handleClick)="addMoneyFlux($event)"
+            />
         </div>
         <div class="filter-type">
             <h6 class="type-label">bill type</h6>
@@ -109,7 +89,8 @@
         <div class="divider-1"></div>
         <div class="divider-2"></div>
         <div class="divider-3"></div>
-        <div *ngIf="(filterState.filters$ | async)!.length > 0" class="divider-4"></div>
+        <div class="divider-4"></div>
+        <div *ngIf="(filterState.filters$ | async)!.length > 0" class="divider-5"></div>
         <div *ngIf="(filterState.filters$ | async)!.length > 0" class="filter-list">
             @for (chip of filterState.filters$ | async; track chip; let i = $index) {
             <mat-chip-row

@@ -7,8 +7,8 @@
     <form>
         <div class="add-filter-container">
             <!-- categories -->
-            <div class="data-field-1">
-                <p>category</p>
+            <div class="data-field">
+                <h6>category</h6>
                 <mat-form-field class="input" appearance="outline">
                     <mat-select
                         #category
@@ -32,8 +32,8 @@
                 </mat-form-field>
             </div>
             <!-- credit cards -->
-            <div class="data-field-2">
-                <p>credit cards</p>
+            <div class="data-field">
+                <h6>credit cards</h6>
                 <mat-form-field class="input" [formControl]="ccCrtl" appearance="outline">
                     <mat-select
                         #creditcard
@@ -57,7 +57,7 @@
             </div>
             <!-- banks -->
             <div class="data-field">
-                <p>banks</p>
+                <h6>banks</h6>
                 <mat-form-field class="input" [formControl]="bkCtrl" appearance="outline">
                     <mat-select #bank (selectionChange)="addFilter($event, 'bank')">
                         <mat-option
@@ -78,7 +78,7 @@
             </div>
             <!-- companies -->
             <div class="data-field">
-                <p>companies</p>
+                <h6>companies</h6>
                 <mat-form-field class="input" appearance="outline">
                     <mat-select #company (selectionChange)="addFilter($event, 'company')">
                         <mat-option
@@ -97,40 +97,9 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <!-- month -->
-            <!-- <div class="data-field">
-                <p>month</p>
-                <mat-form-field class="input" appearance="outline">
-                    <mat-select
-                        placeholder="select month"
-                        #month
-                        (selectionChange)="addMonth($event)"
-                    >
-                        @for (m of months; track m) {
-                        <mat-option [value]="m">{{ m.name }}</mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
-            </div> -->
-            <!-- year -->
-            <!-- <div class="data-field">
-                <p>year</p>
-                <mat-form-field class="input" appearance="outline">
-                    <input
-                        (keydown.enter)="addYear($event)"
-                        matInput
-                        #year
-                        type="number"
-                        [formControl]="yCtrl"
-                    />
-                    @if (yCtrl.invalid) {
-                    <mat-error>invalid year (2023-2090)</mat-error>
-                    }
-                </mat-form-field>
-            </div> -->
-            <!-- min value total -->
-            <!-- <div class="data-field">
-                <p>min</p>
+            <!-- min max -->
+            <div class="quarter">
+                <h6 class="input">min total</h6>
                 <mat-form-field class="input" appearance="outline">
                     <input
                         (keydown.enter)="addLimit($event, 'min')"
@@ -143,10 +112,10 @@
                     <mat-error>invalid min value</mat-error>
                     }
                 </mat-form-field>
-            </div> -->
+            </div>
             <!-- max value total -->
-            <!-- <div class="data-field">
-                <p>max</p>
+            <div class="quarter">
+                <h6 class="input">max total</h6>
                 <mat-form-field class="input" appearance="outline">
                     <input
                         (keydown.enter)="addLimit($event, 'max')"
@@ -159,32 +128,10 @@
                     <mat-error>invalid max value</mat-error>
                     }
                 </mat-form-field>
-            </div> -->
-            <!-- status -->
-            <!-- <div class="data-field">
-                <p>status</p>
-                <mat-form-field class="input" appearance="outline">
-                    <mat-select #status (selectionChange)="addStatus($event)">
-                        <mat-option [value]="'all'">all</mat-option>
-                        <mat-option [value]="'pending'">pending</mat-option>
-                        <mat-option [value]="'settled'">settled</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div> -->
-            <!-- payment type -->
-            <!-- <div class="data-field">
-                <p>payment type</p>
-                <mat-form-field class="input" appearance="outline">
-                    <mat-select #type (selectionChange)="addFilter($event, 'type')">
-                        <mat-option [value]="'creditCard'">credit card</mat-option>
-                        <mat-option [value]="'money'">money</mat-option>
-                        <mat-option [value]="'companyCredit'">company credit</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div> -->
+            </div>
             <!-- start date -->
             <div class="data-field">
-                <p>from start date</p>
+                <h6>from start date</h6>
                 <mat-form-field class="input" appearance="outline">
                     <input
                         [matDatepicker]="picker1"
@@ -203,7 +150,7 @@
             </div>
             <!-- end date -->
             <div class="data-field">
-                <p>until end date</p>
+                <h6>until end date</h6>
                 <mat-form-field class="input" appearance="outline">
                     <input
                         (dateChange)="addDate($event, false)"

@@ -38,7 +38,8 @@ export type AvailableFilters =
     | "status"
     | "type"
     | "date1"
-    | "date2";
+    | "date2"
+    | "moneyflux";
 
 export type AvailableDataFilters = "category" | "creditcard" | "bank" | "company";
 
