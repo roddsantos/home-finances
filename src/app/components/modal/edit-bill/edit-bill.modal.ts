@@ -20,6 +20,7 @@ import { CommonModule } from "@angular/common";
 import { CompanyTemplateEditBill } from "./templates/company/company.template.edit-bill";
 import { CreditCardTemplateEditBill } from "./templates/credit-card/credit-card.template.edit-bill";
 import {
+    BOOLEAN_FORM,
     NEGATIVE_TOTAL,
     NO_BILL_VALUE,
     NO_CATEGORY,
@@ -38,6 +39,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { DIALOG_DATA } from "@angular/cdk/dialog";
 import { EditBillModalType } from "src/app/core/types/modal";
 import { CardComponent } from "../../card/card.component";
+import { ToggleButtonComponent } from "../../toggle-buttons/toggle-buttons.component";
 
 @Component({
     selector: "modal-new-bill",
@@ -61,6 +63,7 @@ import { CardComponent } from "../../card/card.component";
         MatDatepickerModule,
         MatCheckboxModule,
         CardComponent,
+        ToggleButtonComponent,
     ],
 })
 export class ModalEditBill {
@@ -77,6 +80,8 @@ export class ModalEditBill {
     @ViewChild(CompanyTemplateEditBill) companyTemplate: CompanyTemplateEditBill;
     @ViewChild("ccTemplate") creditCardTemplate: CreditCardTemplateEditBill;
     @ViewChild("type") type: ElementRef;
+
+    public booleanForm = BOOLEAN_FORM;
 
     billForm = new FormGroup({
         name: new FormControl<string>("", {

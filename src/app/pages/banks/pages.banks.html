@@ -1,5 +1,14 @@
 <div class="bank">
-    <h1 class="page-title">banks</h1>
+    <div class="page-header">
+        <h1 class="page-title">banks</h1>
+        <button (click)="onCreate()" class="button-primary extended" mat-button>
+            <div>
+                <mat-icon class="material-symbols-outlined">add</mat-icon>
+                <mat-icon class="material-symbols-outlined">account_balance</mat-icon>
+            </div>
+            <p>new bank</p>
+        </button>
+    </div>
     <feedback-container
         *ngIf="(bankState.banks$ | async)?.length === 0"
         [info]="(bankState.status$ | async)!"

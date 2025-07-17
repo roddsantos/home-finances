@@ -94,4 +94,9 @@ export class PageBills {
         this.billState.changeStatus("loading", "loading");
         this.getBills();
     }
+
+    openModal() {
+        let options = {};
+        this.dialog.open(ModalNewBill, options);
+    }
 }

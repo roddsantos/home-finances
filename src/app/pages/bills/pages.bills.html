@@ -1,6 +1,15 @@
 <div class="bills">
+    <div class="page-header">
+        <h1 [style.marginBottom]="'0px'">bills</h1>
+        <button (click)="openModal()" class="button-primary extended" mat-button>
+            <div>
+                <mat-icon class="material-symbols-outlined">add</mat-icon>
+                <mat-icon class="material-symbols-outlined">receipt_long</mat-icon>
+            </div>
+            <p>new bill</p>
+        </button>
+    </div>
     <div class="bills-header">
-        <h1 class="page-title">bills</h1>
         <button
             aria-label="bills list visualization"
             matTooltip="list visualization"

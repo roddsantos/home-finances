@@ -1,3 +1,4 @@
+import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
 import { PaymentTypesObject } from "src/app/core/types/general";
 
 export const NO_BANK = "you must select a bank";
@@ -16,6 +17,11 @@ export const NO_DESCRIPTION = "you must enter a description";
 export const YEAR_OUT_OF_RANGE = "year must be between 2023 and 2090";
 
 export const INVALID_TOTAL = "invalid total value";
+
+export const BOOLEAN_FORM: ToggleButtonItemsType[] = [
+    { label: "yes", value: "true" },
+    { label: "no", value: "false" },
+];
 
 export const PAYMENT_TYPES: PaymentTypesObject[] = [
     {

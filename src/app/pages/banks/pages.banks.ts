@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
-import { MatButton, MatIconButton } from "@angular/material/button";
-import { MatIcon, MatIconModule } from "@angular/material/icon";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
@@ -22,7 +22,13 @@ import { ModalViewItem } from "src/app/components/modal/view-item/view-item.moda
     templateUrl: "./pages.banks.html",
     styleUrls: ["./pages.banks.css"],
     standalone: true,
-    imports: [FeedbackContainerComponent, CommonModule, ActionsComponent, MatIconModule],
+    imports: [
+        FeedbackContainerComponent,
+        CommonModule,
+        ActionsComponent,
+        MatIconModule,
+        MatButtonModule,
+    ],
 })
 export class PageBanks {
     public bankService = inject(ServiceBank);
@@ -69,6 +75,11 @@ export class PageBanks {
     onReload() {
         this.bankState.changeStatus("loading", "loading");
         this.getBanks(true);
+    }
+
+    onCreate() {
+        let options = {};
+        this.dialog.open(ModalNewBank, options);
     }
 
     onEdit(bank: any) {

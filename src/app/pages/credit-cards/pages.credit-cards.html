@@ -1,5 +1,14 @@
 <div class="cc">
-    <h1 class="page-title">credit card</h1>
+    <div class="page-header">
+        <h1 class="page-title">credit card</h1>
+        <button (click)="onCreate()" class="button-primary extended" mat-button>
+            <div>
+                <mat-icon class="material-symbols-outlined">add</mat-icon>
+                <mat-icon class="material-symbols-outlined">credit_card</mat-icon>
+            </div>
+            <p>new credit card</p>
+        </button>
+    </div>
     <feedback-container
         *ngIf="(ccState.creditCards$ | async)?.length === 0"
         [info]="(ccState.status$ | async)!"

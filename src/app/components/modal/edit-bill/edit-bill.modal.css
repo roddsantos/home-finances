@@ -7,7 +7,12 @@
 
 .new-bill-field {
     width: 48%;
-    margin-bottom: 1rem;
+}
+
+.full {
+    display: grid;
+    gap: 0.75rem;
+    width: 100%;
 }
 
 .new-bill-container-split {

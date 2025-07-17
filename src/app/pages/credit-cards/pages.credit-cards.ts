@@ -16,13 +16,22 @@ import { ModalNewCreditCard } from "src/app/components/modal/new-credit-card/new
 import { Dialog } from "@angular/cdk/dialog";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 import { CreditCardPipe } from "src/utils/pipes/creditCard";
+import { MatIconModule } from "@angular/material/icon";
+import { MatButtonModule } from "@angular/material/button";
 
 @Component({
     selector: "page-credit-cards",
     templateUrl: "./pages.credit-cards.html",
     styleUrls: ["./pages.credit-cards.css"],
     standalone: true,
-    imports: [FeedbackContainerComponent, CommonModule, ActionsComponent, CreditCardPipe],
+    imports: [
+        FeedbackContainerComponent,
+        CommonModule,
+        ActionsComponent,
+        CreditCardPipe,
+        MatIconModule,
+        MatButtonModule,
+    ],
 })
 export class PageCreditCards {
     public ccState = inject(CreditCardState);
@@ -94,6 +103,11 @@ export class PageCreditCards {
     onReload() {
         this.ccState.changeStatus("loading", "loading");
         this.getCreditCards(true);
+    }
+
+    onCreate() {
+        let options = {};
+        this.dialog.open(ModalNewCreditCard, options);
     }
 
     onEdit(creditCard: CreditCard) {

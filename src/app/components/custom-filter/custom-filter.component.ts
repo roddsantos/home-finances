@@ -53,6 +53,7 @@ import { PAYMENT_ITEMS, STATUS_ITEMS, TYPE_ITEMS } from "src/utils/constants/bil
         MatInputModule,
         MatButtonToggleModule,
         ToggleButtonComponent,
+        MatInputModule,
     ],
 })
 export class CustomFilterComponent {
@@ -76,6 +77,7 @@ export class CustomFilterComponent {
     @Input() columnsExp: Array<any>;
     @Output() action: ListAction[];
 
+    public termCtrl = new FormControl<string>("");
     public monthCtrl = new FormControl<MonthType | null>(null);
     public yearCtrl = new FormControl<number | null>(null, {
         validators: [Validators.min(2023), Validators.max(2080)],
@@ -98,6 +100,9 @@ export class CustomFilterComponent {
 
     ngOnInit() {
         const filters: FilterDisplay[] = this.storage.getFilters();
+
+        const hasTerm = filters.find((filter) => filter.identifier === "name");
+        if (hasTerm) this.termCtrl.patchValue(hasTerm.id as string);
 
         const hasPayment = filters.find((filter) => filter.identifier === "moneyflux");
         if (hasPayment)
@@ -150,6 +155,27 @@ export class CustomFilterComponent {
     closeFilterContainer() {
         this.generalState.changeFilterContainer(false);
         this.storage.setFilterContainer(false);
+    }
+
+    addTerm(event: any) {
+        const value = event.target.value;
+        let filtersFromState: FilterDisplay[] = this.getFilters();
+        const filterIndex = filtersFromState.findIndex(
+            (filter) => filter.identifier === "name"
+        );
+        if (filterIndex >= 0) {
+            this.filterState.removeFilter(filtersFromState[filterIndex]);
+            filtersFromState.splice(filterIndex, 1);
+        }
+        this.filterState.setFilters([
+            ...filtersFromState,
+            {
+                id: value,
+                identifier: "name",
+                name: value,
+            },
+        ]);
+        this.getBills();
     }
 
     addMonth(event: any) {

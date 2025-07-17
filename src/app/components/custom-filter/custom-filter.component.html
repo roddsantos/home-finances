@@ -5,6 +5,18 @@
             (generalState.theme$ | async) === 'binary' ? 'binary' : ''
         ]"
     >
+        <div class="filter-term">
+            <h6 class="term-label">term</h6>
+            <mat-form-field class="term-input" appearance="outline">
+                <input
+                    placeholder="bill title"
+                    (keyup.enter)="addTerm($event)"
+                    maxlength="50"
+                    [formControl]="termCtrl"
+                    matInput
+                />
+            </mat-form-field>
+        </div>
         <div class="filter-date">
             <h6 class="month-label">month</h6>
             <mat-form-field class="month-input" appearance="outline">
@@ -29,9 +41,6 @@
                     type="number"
                     [formControl]="yearCtrl"
                 />
-                @if (yearCtrl.invalid) {
-                <mat-error>invalid year (2023-2090)</mat-error>
-                }
             </mat-form-field>
         </div>
         <div class="filter-status">

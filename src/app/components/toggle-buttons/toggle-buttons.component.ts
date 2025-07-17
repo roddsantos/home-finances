@@ -19,6 +19,7 @@ import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-butt
 export class ToggleButtonComponent {
     @Input() items: ToggleButtonItemsType[];
     @Input() formController: FormControl<unknown>;
+    @Input() disabled: boolean;
     @Output() handleClick = new EventEmitter<ToggleButtonItemsType>();
 
     onClick(item: ToggleButtonItemsType) {
