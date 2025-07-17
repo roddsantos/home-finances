@@ -20,6 +20,7 @@ import { LocalStorageService } from "src/app/services/local-storage.service";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 import { GeneralService } from "src/app/services/general.service";
+import { CardComponent } from "../../components/card/card.component";
 
 @Component({
     selector: "page-bills",
@@ -38,6 +39,7 @@ import { GeneralService } from "src/app/services/general.service";
         FeedbackContainerComponent,
         PaginationTemplate,
         MatTooltipModule,
+        CardComponent,
     ],
 })
 export class PageBills {
@@ -91,5 +93,10 @@ export class PageBills {
     onReload() {
         this.billState.changeStatus("loading", "loading");
         this.getBills();
+    }
+
+    openModal() {
+        let options = {};
+        this.dialog.open(ModalNewBill, options);
     }
 }

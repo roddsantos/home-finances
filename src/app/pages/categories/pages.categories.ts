@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
-import { MatButton, MatIconButton } from "@angular/material/button";
+import { MatButtonModule } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
@@ -22,7 +22,13 @@ import { ModalViewItem } from "src/app/components/modal/view-item/view-item.moda
     templateUrl: "./pages.categories.html",
     styleUrls: ["./pages.categories.css"],
     standalone: true,
-    imports: [MatIcon, FeedbackContainerComponent, CommonModule, ActionsComponent],
+    imports: [
+        MatIcon,
+        MatButtonModule,
+        FeedbackContainerComponent,
+        CommonModule,
+        ActionsComponent,
+    ],
 })
 export class PageCategories {
     public categoryService = inject(ServiceCategory);
@@ -76,6 +82,11 @@ export class PageCategories {
         let options = {
             data: category,
         };
+        this.dialog.open(ModalNewCategory, options);
+    }
+
+    onCreate() {
+        let options = {};
         this.dialog.open(ModalNewCategory, options);
     }
 

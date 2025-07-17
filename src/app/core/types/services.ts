@@ -109,6 +109,7 @@ export type GetBillsFilter = {
 export type FetchPaginatedData<T = any> = {
     count: number;
     data: T[];
+    total?: number;
 };
 
 export type AllSettledHttpConnection = {

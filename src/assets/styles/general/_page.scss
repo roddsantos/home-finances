@@ -5,8 +5,10 @@
     background-color: var(--background);
 }
 
-.page-title {
-    font-size: 40px;
-    margin-bottom: 2rem;
-    color: var(--text-1);
+.page-header {
+    & h1 {
+        font-size: 40px;
+        color: var(--text-1);
+    }
+    margin-bottom: 1rem;
 }

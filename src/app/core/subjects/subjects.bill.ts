@@ -23,12 +23,14 @@ export class BillState {
     private _billsPagination$ = new BehaviorSubject<PaginationType>({
         page: 1,
         limit: 10,
-        total: 0,
+        count: 0,
     });
+    private _billsTotal$ = new BehaviorSubject<number>(0);
 
     public readonly status$ = this._status$.asObservable();
     public readonly bills$ = this._bills$.asObservable();
     public readonly billsPagination$ = this._billsPagination$.asObservable();
+    public readonly billsTotal$ = this._billsTotal$.asObservable();
 
     changeStatus(variant: FeedbackVariant, title: string) {
         this._status$.next({ ...this._status$.getValue(), variant, title });
@@ -46,8 +48,9 @@ export class BillState {
         this._billsPagination$.next({
             page: this._billsPagination$.getValue().page,
             limit: this._billsPagination$.getValue().limit,
-            total: bills.count,
+            count: bills.count,
         });
+        this._billsTotal$.next(bills.total || 0);
     }
 
     addBill(bill: Array<Bill & BillData>, index?: number) {
@@ -69,7 +72,7 @@ export class BillState {
         this._billsPagination$.next({
             page,
             limit: this._billsPagination$.getValue().limit,
-            total: this._billsPagination$.getValue().total,
+            count: this._billsPagination$.getValue().count,
         });
     }
 
@@ -77,7 +80,7 @@ export class BillState {
         this._billsPagination$.next({
             page: this._billsPagination$.getValue().page,
             limit,
-            total: this._billsPagination$.getValue().total,
+            count: this._billsPagination$.getValue().count,
         });
     }
 

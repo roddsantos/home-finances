@@ -5,6 +5,18 @@
             (generalState.theme$ | async) === 'binary' ? 'binary' : ''
         ]"
     >
+        <div class="filter-term">
+            <h6 class="term-label">term</h6>
+            <mat-form-field class="term-input" appearance="outline">
+                <input
+                    placeholder="bill title"
+                    (keyup.enter)="addTerm($event)"
+                    maxlength="50"
+                    [formControl]="termCtrl"
+                    matInput
+                />
+            </mat-form-field>
+        </div>
         <div class="filter-date">
             <h6 class="month-label">month</h6>
             <mat-form-field class="month-input" appearance="outline">
@@ -29,92 +41,34 @@
                     type="number"
                     [formControl]="yearCtrl"
                 />
-                @if (yearCtrl.invalid) {
-                <mat-error>invalid year (2023-2090)</mat-error>
-                }
             </mat-form-field>
         </div>
         <div class="filter-status">
             <h6 class="status-label">bill status</h6>
-            <mat-button-toggle-group
-                #status
-                (change)="addStatus($event)"
-                aria-label="Font Style"
-                [formControl]="statusCtrl"
-            >
-                <mat-button-toggle [value]="'all'">all</mat-button-toggle>
-                <mat-button-toggle [value]="'pending'">pending</mat-button-toggle>
-                <mat-button-toggle [value]="'settled'">settled</mat-button-toggle>
-            </mat-button-toggle-group>
-            <!-- </mat-form-field> -->
+            <toggle-button
+                class="status-component"
+                [items]="statusItems"
+                [formController]="statusCtrl"
+                (handleClick)="addStatus($event)"
+            />
         </div>
-        <div class="filter-min-max">
-            <h6 class="min-label">min total</h6>
-            <mat-form-field class="min-input" appearance="outline">
-                <input
-                    (keydown.enter)="addLimit($event, 'min')"
-                    matInput
-                    #min
-                    type="number"
-                    [formControl]="minCtrl"
-                />
-                @if (minCtrl.invalid) {
-                <mat-error>invalid min value</mat-error>
-                }
-            </mat-form-field>
-            <!-- max value total -->
-            <h6 class="max-label">max total</h6>
-            <mat-form-field class="max-input" appearance="outline">
-                <input
-                    (keydown.enter)="addLimit($event, 'max')"
-                    matInput
-                    #max
-                    type="number"
-                    [formControl]="maxCtrl"
-                />
-                @if (maxCtrl.invalid) {
-                <mat-error>invalid max value</mat-error>
-                }
-            </mat-form-field>
+        <div class="filter-money-flux">
+            <h6 class="money-flux-label">bill payment</h6>
+            <toggle-button
+                class="money-flux-component"
+                [items]="moneyFluxItems"
+                [formController]="moneyFluxCtrl"
+                (handleClick)="addMoneyFlux($event)"
+            />
         </div>
         <div class="filter-type">
             <h6 class="type-label">bill type</h6>
-            <mat-form-field class="type-input" appearance="outline">
-                <mat-select
-                    #type
-                    (selectionChange)="addType($event)"
-                    [formControl]="typeCtrl"
-                >
-                    <mat-option [value]="'all'">all</mat-option>
-                    <mat-option [value]="'creditCard'">
-                        <mat-icon
-                            class="material-symbols-outlined"
-                            aria-hidden="false"
-                            aria-label="credit card icon"
-                            fontIcon="credit_card"
-                        ></mat-icon>
-                        credit card</mat-option
-                    >
-                    <mat-option [value]="'money'"
-                        ><mat-icon
-                            class="material-symbols-outlined"
-                            aria-hidden="false"
-                            aria-label="credit card icon"
-                            fontIcon="payments"
-                        ></mat-icon
-                        >money</mat-option
-                    >
-                    <mat-option [value]="'companyCredit'"
-                        ><mat-icon
-                            class="material-symbols-outlined"
-                            aria-hidden="false"
-                            aria-label="credit card icon"
-                            fontIcon="store"
-                        ></mat-icon
-                        >company credit</mat-option
-                    >
-                </mat-select>
-            </mat-form-field>
+            <toggle-button
+                class="type-component"
+                [items]="typeItems"
+                [formController]="typeCtrl"
+                (handleClick)="addType($event)"
+            />
         </div>
         <div class="filter-buttons">
             <button
@@ -141,66 +95,11 @@
                 <mat-icon class="icon material-symbols-outlined">filter_alt</mat-icon>
             </button>
         </div>
-        <!-- <div class="filter-buttons">
-            <mat-icon
-                class="material-symbols-outlined collapse"
-                aria-hidden="false"
-                aria-label="collapse icon"
-                fontIcon="expand_less"
-                [matTooltip]="'collapse filter'"
-                [matTooltipPosition]="'above'"
-                (click)="closeFilterContainer()"
-            ></mat-icon>
-            <div class="filter-counter">
-                <div
-                    [ngClass]="[
-                        'counter',
-                        (generalState.theme$ | async) === 'binary' ? 'binary' : ''
-                    ]"
-                >
-                    <p>{{ (filterState.filters$ | async)?.length }}</p>
-                </div>
-                <p>active</p>
-            </div>
-            <div class="actions">
-                <div
-                    [ngClass]="[
-                        'icon-container',
-                        (generalState.theme$ | async) === 'binary' ? 'binary' : ''
-                    ]"
-                >
-                    <mat-icon
-                        class="material-symbols-outlined"
-                        aria-hidden="false"
-                        aria-label="filter icon"
-                        fontIcon="filter_alt"
-                        [matTooltip]="'more filters'"
-                        [matTooltipPosition]="'above'"
-                        (click)="openDialog()"
-                    ></mat-icon>
-                </div>
-                <div
-                    [ngClass]="[
-                        'icon-container',
-                        (generalState.theme$ | async) === 'binary' ? 'binary' : ''
-                    ]"
-                >
-                    <mat-icon
-                        class="material-symbols-outlined"
-                        aria-hidden="false"
-                        aria-label="remove icon"
-                        fontIcon="delete_sweep"
-                        [matTooltip]="'remove all filters'"
-                        [matTooltipPosition]="'above'"
-                        (click)="removeFilter()"
-                    ></mat-icon>
-                </div>
-            </div>
-        </div> -->
         <div class="divider-1"></div>
         <div class="divider-2"></div>
         <div class="divider-3"></div>
-        <div *ngIf="(filterState.filters$ | async)!.length > 0" class="divider-4"></div>
+        <div class="divider-4"></div>
+        <div *ngIf="(filterState.filters$ | async)!.length > 0" class="divider-5"></div>
         <div *ngIf="(filterState.filters$ | async)!.length > 0" class="filter-list">
             @for (chip of filterState.filters$ | async; track chip; let i = $index) {
             <mat-chip-row
@@ -220,26 +119,4 @@
             }
         </div>
     </div>
-    <!-- <div class="chip-grid">
-        <p class="filter-label">applied filters:</p>
-        <p *ngIf="(filterState.filters$ | async)?.length === 0" class="filter-label">
-            no filters applied
-        </p>
-        @for (chip of filterState.filters$ | async; track chip; let i = $index) {
-        <mat-chip-row
-            [ngClass]="[chip.identifier, 'chip-item', generalState.theme$ | async]"
-            (removed)="removeFilter(chip)"
-        >
-            {{
-                chip.identifier === "min" || chip.identifier === "max"
-                    ? chip.identifier + ":"
-                    : ""
-            }}
-            {{ chip.name }}
-            <button matChipRemove [attr.aria-label]="'remove ' + chip.name">
-                <mat-icon>cancel</mat-icon>
-            </button>
-        </mat-chip-row>
-        }
-    </div> -->
 </div>

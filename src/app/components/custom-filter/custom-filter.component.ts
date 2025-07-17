@@ -28,6 +28,9 @@ import {
     MatButtonToggleChange,
     MatButtonToggleModule,
 } from "@angular/material/button-toggle";
+import { ToggleButtonComponent } from "../toggle-buttons/toggle-buttons.component";
+import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
+import { PAYMENT_ITEMS, STATUS_ITEMS, TYPE_ITEMS } from "src/utils/constants/bills";
 
 @Injectable({
     providedIn: "root",
@@ -49,7 +52,8 @@ import {
         ReactiveFormsModule,
         MatInputModule,
         MatButtonToggleModule,
-        MatTooltipModule,
+        ToggleButtonComponent,
+        MatInputModule,
     ],
 })
 export class CustomFilterComponent {
@@ -63,6 +67,9 @@ export class CustomFilterComponent {
     @ViewChild("year") year: MatInput;
 
     months = MONTHS;
+    public typeItems = TYPE_ITEMS;
+    public statusItems = STATUS_ITEMS;
+    public moneyFluxItems = PAYMENT_ITEMS;
 
     @Input() availableFilters: AvailableFilters[];
     @Input() data: Array<any> = [];
@@ -70,9 +77,13 @@ export class CustomFilterComponent {
     @Input() columnsExp: Array<any>;
     @Output() action: ListAction[];
 
+    public termCtrl = new FormControl<string>("");
     public monthCtrl = new FormControl<MonthType | null>(null);
     public yearCtrl = new FormControl<number | null>(null, {
         validators: [Validators.min(2023), Validators.max(2080)],
+        nonNullable: true,
+    });
+    public moneyFluxCtrl = new FormControl<"all" | "income" | "outcome">("all", {
         nonNullable: true,
     });
     public minCtrl = new FormControl<number>(0, { nonNullable: true });
@@ -89,6 +100,14 @@ export class CustomFilterComponent {
 
     ngOnInit() {
         const filters: FilterDisplay[] = this.storage.getFilters();
+
+        const hasTerm = filters.find((filter) => filter.identifier === "name");
+        if (hasTerm) this.termCtrl.patchValue(hasTerm.id as string);
+
+        const hasPayment = filters.find((filter) => filter.identifier === "moneyflux");
+        if (hasPayment)
+            this.moneyFluxCtrl.patchValue(hasPayment.id as "income" | "all" | "outcome");
+
         const hasMonth = filters.find((filter) => filter.identifier === "month");
         if (hasMonth)
             this.monthCtrl.patchValue(
@@ -136,6 +155,27 @@ export class CustomFilterComponent {
     closeFilterContainer() {
         this.generalState.changeFilterContainer(false);
         this.storage.setFilterContainer(false);
+    }
+
+    addTerm(event: any) {
+        const value = event.target.value;
+        let filtersFromState: FilterDisplay[] = this.getFilters();
+        const filterIndex = filtersFromState.findIndex(
+            (filter) => filter.identifier === "name"
+        );
+        if (filterIndex >= 0) {
+            this.filterState.removeFilter(filtersFromState[filterIndex]);
+            filtersFromState.splice(filterIndex, 1);
+        }
+        this.filterState.setFilters([
+            ...filtersFromState,
+            {
+                id: value,
+                identifier: "name",
+                name: value,
+            },
+        ]);
+        this.getBills();
     }
 
     addMonth(event: any) {
@@ -187,8 +227,8 @@ export class CustomFilterComponent {
         }
     }
 
-    addStatus(event: MatButtonToggleChange) {
-        const value = event.value;
+    addStatus(item: ToggleButtonItemsType) {
+        const { label, value } = item;
         let filtersFromState: FilterDisplay[] = this.getFilters();
         const hasFilter = filtersFromState.find((f) => f.identifier === "status");
         if (hasFilter) this.filterState.removeFilter(hasFilter);
@@ -197,55 +237,39 @@ export class CustomFilterComponent {
                 {
                     id: value,
                     identifier: "status",
-                    name: value,
+                    name: label,
                 },
             ]);
         this.getBills();
     }
 
-    addLimit(event: any, identifier: "min" | "max") {
+    addMoneyFlux(item: ToggleButtonItemsType) {
+        const { label, value } = item;
         let filtersFromState: FilterDisplay[] = this.getFilters();
-        let value: string | number | null = (event.target as HTMLInputElement).value;
-        value = value === "" ? null : parseFloat(value);
-        if (value !== null) {
-            filtersFromState = this.getFilters();
-            const hasFilter = filtersFromState.find(
-                (f) =>
-                    f.identifier === identifier ||
-                    (identifier === "max" &&
-                        f.identifier === "min" &&
-                        (f.name as number) > value) ||
-                    (identifier === "min" &&
-                        f.identifier === "max" &&
-                        (f.name as number) < value)
-            );
-            if (hasFilter) this.filterState.removeFilter(hasFilter);
-            if (value !== 0 || Boolean(value))
-                this.filterState.addFilters([
-                    {
-                        id: value,
-                        identifier,
-                        name: value,
-                    },
-                ]);
-        } else {
-            const hasFilter = filtersFromState.find((f) => f.identifier === identifier);
-            if (hasFilter) this.filterState.removeFilter(hasFilter);
-        }
+        const hasFilter = filtersFromState.find((f) => f.identifier === "moneyflux");
+        if (hasFilter) this.filterState.removeFilter(hasFilter);
+        if (value !== "all")
+            this.filterState.addFilters([
+                {
+                    id: value,
+                    identifier: "moneyflux",
+                    name: label,
+                },
+            ]);
         this.getBills();
     }
 
-    addType(event: MatSelectChange) {
-        const filter = event.value;
+    addType(item: ToggleButtonItemsType) {
+        const { label, value } = item;
         let filtersFromState: FilterDisplay[] = this.getFilters();
         const hasFilter = filtersFromState.find((f) => f.identifier === "type");
         if (hasFilter) this.filterState.removeFilter(hasFilter);
-        if (filter !== "all")
+        if (value !== "all")
             this.filterState.addFilters([
                 {
-                    id: filter,
+                    id: value,
                     identifier: "type",
-                    name: filter,
+                    name: label,
                 },
             ]);
         this.getBills();

@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
-import { MatButton, MatIconButton } from "@angular/material/button";
-import { MatIcon } from "@angular/material/icon";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
@@ -22,7 +22,13 @@ import { ModalViewItem } from "src/app/components/modal/view-item/view-item.moda
     templateUrl: "./pages.companies.html",
     styleUrls: ["./pages.companies.css"],
     standalone: true,
-    imports: [FeedbackContainerComponent, CommonModule, ActionsComponent],
+    imports: [
+        FeedbackContainerComponent,
+        CommonModule,
+        ActionsComponent,
+        MatIconModule,
+        MatButtonModule,
+    ],
 })
 export class PageCompanies {
     public companyService = inject(ServiceCompany);
@@ -76,6 +82,11 @@ export class PageCompanies {
         let options = {
             data: company,
         };
+        this.dialog.open(ModalNewCompany, options);
+    }
+
+    onCreate() {
+        let options = {};
         this.dialog.open(ModalNewCompany, options);
     }
 

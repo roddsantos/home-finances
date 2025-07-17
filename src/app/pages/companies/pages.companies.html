@@ -1,5 +1,14 @@
 <div class="company">
-    <h1 class="page-title">companies</h1>
+    <div class="page-header">
+        <h1 class="page-title">companies</h1>
+        <button (click)="onCreate()" class="button-primary extended" mat-button>
+            <div>
+                <mat-icon class="material-symbols-outlined">add</mat-icon>
+                <mat-icon class="material-symbols-outlined">store</mat-icon>
+            </div>
+            <p>new company</p>
+        </button>
+    </div>
     <feedback-container
         *ngIf="(companyState.company$ | async)?.length === 0"
         [info]="(companyState.status$ | async)!"

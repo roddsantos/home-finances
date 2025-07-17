@@ -1,6 +1,15 @@
 <div class="bills">
+    <div class="page-header">
+        <h1 [style.marginBottom]="'0px'">bills</h1>
+        <button (click)="openModal()" class="button-primary extended" mat-button>
+            <div>
+                <mat-icon class="material-symbols-outlined">add</mat-icon>
+                <mat-icon class="material-symbols-outlined">receipt_long</mat-icon>
+            </div>
+            <p>new bill</p>
+        </button>
+    </div>
     <div class="bills-header">
-        <h1 class="page-title">bills</h1>
         <button
             aria-label="bills list visualization"
             matTooltip="list visualization"
@@ -74,7 +83,25 @@
                     ></service-list-template>
                 </ng-template>
             </div>
-            <custom-filter></custom-filter>
+            <aside class="bill-aside">
+                <div class="bill-infos">
+                    <card-component [hideHeader]="true" class="count">
+                        <div class="container">
+                            <h5>{{ (billState.billsPagination$ | async)?.count }}</h5>
+                            <p>bills</p>
+                        </div>
+                    </card-component>
+                    <card-component [hideHeader]="true" class="total">
+                        <div class="container">
+                            <h5>
+                                {{ (billState.billsTotal$ | async) | currency : 'R$ ' }}
+                            </h5>
+                            <p>total</p>
+                        </div>
+                    </card-component>
+                </div>
+                <custom-filter></custom-filter>
+            </aside>
         </div>
     </div>
 </div>

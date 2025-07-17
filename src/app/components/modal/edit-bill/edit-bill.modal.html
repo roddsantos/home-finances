@@ -22,135 +22,175 @@
                 </mat-select>
             </mat-form-field>
             <card-component [hideHeader]="true">
-                <div class="new-bill-container-split">
-                    <mat-form-field class="new-bill-field" appearance="outline">
-                        <mat-label>name</mat-label>
-                        <input maxlength="100" required matInput formControlName="name" />
-                        @if (billForm.controls.name.errors?.["required"]) {
-                        <mat-error>{{errorMessage.name}}</mat-error>
-                        }
-                    </mat-form-field>
-                    <mat-form-field class="new-bill-field" appearance="outline">
-                        <mat-label>description</mat-label>
-                        <input maxlength="100" matInput formControlName="description" />
-                        @if (billForm.controls.description.errors?.["required"]) {
-                        <mat-error>{{errorMessage.description}}</mat-error>
-                        }
-                    </mat-form-field>
-                </div>
-                <div class="new-bill-container-split">
-                    <mat-form-field class="new-bill-field" appearance="outline">
-                        <mat-label>category</mat-label>
-                        <mat-select
-                            [compareWith]="compareCategories"
-                            formControlName="category"
-                        >
-                            @for (cat of catState.categories$ | async; track $index) {
-                            <mat-option [value]="cat">{{cat.name}}</mat-option>
+                <div class="full">
+                    <div class="new-bill-container-split">
+                        <mat-form-field class="new-bill-field" appearance="outline">
+                            <mat-label>name</mat-label>
+                            <input
+                                maxlength="100"
+                                required
+                                matInput
+                                formControlName="name"
+                            />
+                            @if (billForm.controls.name.errors?.["required"]) {
+                            <mat-error>{{errorMessage.name}}</mat-error>
                             }
-                        </mat-select>
-                        @if (billForm.controls.category.errors?.["required"]) {
-                        <mat-error>{{errorMessage.name}}</mat-error>
-                        }
-                    </mat-form-field>
-                    <mat-form-field class="new-bill-field" appearance="outline">
-                        <mat-label>total value</mat-label>
-                        <input matInput type="number" formControlName="total" />
-                        @if (billForm.controls.total.invalid) {
-                        <mat-error>{{errorMessage.total}}</mat-error>
-                        }
-                    </mat-form-field>
+                        </mat-form-field>
+                        <mat-form-field class="new-bill-field" appearance="outline">
+                            <mat-label>description</mat-label>
+                            <input
+                                maxlength="100"
+                                matInput
+                                formControlName="description"
+                            />
+                            @if (billForm.controls.description.errors?.["required"]) {
+                            <mat-error>{{errorMessage.description}}</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                    <div class="new-bill-container-split">
+                        <mat-form-field class="new-bill-field" appearance="outline">
+                            <mat-label>category</mat-label>
+                            <mat-select
+                                [compareWith]="compareCategories"
+                                formControlName="category"
+                            >
+                                @for (cat of catState.categories$ | async; track $index) {
+                                <mat-option [value]="cat">{{cat.name}}</mat-option>
+                                }
+                            </mat-select>
+                            @if (billForm.controls.category.errors?.["required"]) {
+                            <mat-error>{{errorMessage.name}}</mat-error>
+                            }
+                        </mat-form-field>
+                        <mat-form-field class="new-bill-field" appearance="outline">
+                            <mat-label>total value</mat-label>
+                            <input matInput type="number" formControlName="total" />
+                            @if (billForm.controls.total.invalid) {
+                            <mat-error>{{errorMessage.total}}</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
                 </div>
             </card-component>
-            <div class="separator"></div>
-            <div class="new-bill-container-split">
-                <div class="new-bill-toggle new-bill-field">
-                    <p [ngClass]="['label', !billForm.value.settled ? 'disabled'  : '']">
-                        payment processed?
-                    </p>
-                    <mat-button-toggle-group
-                        formControlName="settled"
-                        name="settled"
-                        aria-label="Font Style"
-                        class="margin"
-                    >
-                        <mat-button-toggle [value]="true">yes</mat-button-toggle>
-                        <mat-button-toggle [value]="false">no</mat-button-toggle>
-                    </mat-button-toggle-group>
-                </div>
-                <div class="new-bill-toggle new-bill-field" *ngIf="data.type === 'money'">
-                    <p [ngClass]="['label', !billForm.value.settled ? 'disabled'  : '']">
-                        money flow
-                    </p>
-                    <mat-button-toggle-group
-                        formControlName="isPayment"
-                        name="money flow"
-                        aria-label="Font Style"
-                        class="margin"
-                        [disabled]="!billForm.value.settled"
-                    >
-                        <mat-button-toggle [value]="true">outcome</mat-button-toggle>
-                        <mat-button-toggle [value]="false">income</mat-button-toggle>
-                    </mat-button-toggle-group>
-                </div>
-                <div
-                    class="new-bill-toggle new-bill-field"
-                    *ngIf="data.type === 'creditCard'"
-                >
-                    <p [ngClass]="['label', !billForm.value.settled ? 'disabled'  : '']">
-                        is refund
-                    </p>
-                    <mat-button-toggle-group
-                        formControlName="isRefund"
-                        name="is refund"
-                        aria-label="is refund"
-                        class="margin"
-                        [disabled]="!billForm.value.settled"
-                    >
-                        <mat-button-toggle [value]="true">yes</mat-button-toggle>
-                        <mat-button-toggle [value]="false">no</mat-button-toggle>
-                    </mat-button-toggle-group>
-                </div>
-            </div>
-            <div class="new-bill-container-split">
-                <ng-container *ngIf="billForm.value.settled">
-                    <mat-form-field
-                        class="savings-input new-bill-field"
-                        appearance="outline"
-                    >
-                        <mat-label>date of payment</mat-label>
-                        <input
-                            [matDatepicker]="picker1"
-                            matInput
-                            formControlName="paid"
-                        />
-                        <mat-hint
-                            [ngClass]="['label', !billForm.value.settled ? 'disabled'  : '']"
-                            >MM/DD/YYYY</mat-hint
+            <card-component [hideHeader]="true">
+                <div class="full">
+                    <div class="new-bill-container-split">
+                        <div class="new-bill-toggle new-bill-field">
+                            <p
+                                [ngClass]="['label', !billForm.value.settled ? 'disabled'  : '']"
+                            >
+                                payment processed?
+                            </p>
+                            <toggle-button
+                                [items]="booleanForm"
+                                [formController]="billForm.controls['isPayment']"
+                                [disabled]="data.settled"
+                            />
+                            <mat-button-toggle-group
+                                formControlName="settled"
+                                name="settled"
+                                aria-label="Font Style"
+                                class="margin"
+                            >
+                                <mat-button-toggle [value]="true">yes</mat-button-toggle>
+                                <mat-button-toggle [value]="false">no</mat-button-toggle>
+                            </mat-button-toggle-group>
+                        </div>
+                        <div
+                            class="new-bill-toggle new-bill-field"
+                            *ngIf="data.type === 'money'"
                         >
-                        <mat-datepicker-toggle
-                            matIconSuffix
-                            [for]="picker1"
-                        ></mat-datepicker-toggle>
-                        <mat-datepicker #picker1></mat-datepicker> </mat-form-field
-                ></ng-container>
-                <mat-form-field class="savings-input new-bill-field" appearance="outline">
-                    <mat-label>date due</mat-label>
-                    <input [matDatepicker]="picker2" matInput formControlName="due" />
-                    <mat-hint
-                        [ngClass]="['label', !billForm.value.settled ? 'disabled'  : '']"
-                        >MM/DD/YYYY</mat-hint
-                    >
-                    <mat-datepicker-toggle
-                        matIconSuffix
-                        [for]="picker2"
-                    ></mat-datepicker-toggle>
-                    <mat-datepicker #picker2></mat-datepicker>
-                </mat-form-field>
-            </div>
+                            <p
+                                [ngClass]="['label', !billForm.value.settled ? 'disabled'  : '']"
+                            >
+                                money flow
+                            </p>
+                            <mat-button-toggle-group
+                                formControlName="isPayment"
+                                name="money flow"
+                                aria-label="Font Style"
+                                class="margin"
+                                [disabled]="!billForm.value.settled"
+                            >
+                                <mat-button-toggle [value]="true"
+                                    >outcome</mat-button-toggle
+                                >
+                                <mat-button-toggle [value]="false"
+                                    >income</mat-button-toggle
+                                >
+                            </mat-button-toggle-group>
+                        </div>
+                        <div
+                            class="new-bill-toggle new-bill-field"
+                            *ngIf="data.type === 'creditCard'"
+                        >
+                            <p
+                                [ngClass]="['label', !billForm.value.settled ? 'disabled'  : '']"
+                            >
+                                is refund
+                            </p>
+                            <mat-button-toggle-group
+                                formControlName="isRefund"
+                                name="is refund"
+                                aria-label="is refund"
+                                class="margin"
+                                [disabled]="!billForm.value.settled"
+                            >
+                                <mat-button-toggle [value]="true">yes</mat-button-toggle>
+                                <mat-button-toggle [value]="false">no</mat-button-toggle>
+                            </mat-button-toggle-group>
+                        </div>
+                    </div>
+                    <div class="new-bill-container-split">
+                        <ng-container *ngIf="billForm.value.settled">
+                            <mat-form-field
+                                class="savings-input new-bill-field"
+                                appearance="outline"
+                            >
+                                <mat-label>date of payment</mat-label>
+                                <input
+                                    [matDatepicker]="picker1"
+                                    matInput
+                                    formControlName="paid"
+                                />
+                                <mat-hint
+                                    [ngClass]="['label', !billForm.value.settled ? 'disabled'  : '']"
+                                    >MM/DD/YYYY</mat-hint
+                                >
+                                <mat-datepicker-toggle
+                                    matIconSuffix
+                                    [for]="picker1"
+                                ></mat-datepicker-toggle>
+                                <mat-datepicker
+                                    #picker1
+                                ></mat-datepicker> </mat-form-field
+                        ></ng-container>
+                        <mat-form-field
+                            class="savings-input new-bill-field"
+                            appearance="outline"
+                        >
+                            <mat-label>date due</mat-label>
+                            <input
+                                [matDatepicker]="picker2"
+                                matInput
+                                formControlName="due"
+                            />
+                            <mat-hint
+                                [ngClass]="['label', !billForm.value.settled ? 'disabled'  : '']"
+                                >MM/DD/YYYY</mat-hint
+                            >
+                            <mat-datepicker-toggle
+                                matIconSuffix
+                                [for]="picker2"
+                            ></mat-datepicker-toggle>
+                            <mat-datepicker #picker2></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </card-component>
         </div>
     </form>
-    <div class="separator"></div>
     <template-edit-banks
         *ngIf="type.value ==='money'"
         #banks="templateEditBanks"
