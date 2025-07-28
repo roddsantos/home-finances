@@ -1,52 +1,19 @@
 <div class="bills">
     <div class="page-header">
         <h1 [style.marginBottom]="'0px'">bills</h1>
-        <button (click)="openModal()" class="button-primary extended" mat-button>
-            <div>
-                <mat-icon class="material-symbols-outlined">add</mat-icon>
-                <mat-icon class="material-symbols-outlined">receipt_long</mat-icon>
-            </div>
-            <p>new bill</p>
-        </button>
-    </div>
-    <div class="bills-header">
-        <button
-            aria-label="bills list visualization"
-            matTooltip="list visualization"
-            matTooltipPosition="above"
-            mat-button
-            [ngClass]="[(generalState.billsLayout$ | async) === 'list' ? 'button-primary' : 'button-secondary']"
-            [style.margin]="'auto 0.5rem auto auto'"
-            (click)="generalService.changeVisualization('list')"
-        >
-            <mat-icon class="material-symbols-outlined">view_list</mat-icon>
-        </button>
-        <button
-            aria-label="bills grid visualization"
-            matTooltip="grid visualization"
-            matTooltipPosition="above"
-            mat-button
-            [style.margin]="'auto 0px auto 0px'"
-            [ngClass]="[(generalState.billsLayout$ | async) === 'grid' ? 'button-primary' : 'button-secondary']"
-            (click)="generalService.changeVisualization('grid')"
-        >
-            <mat-icon class="material-symbols-outlined">grid_view</mat-icon>
-        </button>
-
-        <pagination-template [style.margin]="'auto 0px auto 1rem'"></pagination-template>
-        <button
-            *ngIf="!(generalState.filterContainer$ | async)"
-            aria-label="open filter selector"
-            matTooltip="filter selector"
-            matTooltipPosition="above"
-            mat-button
-            [ngClass]="['button-primary']"
-            [style.margin]="'auto 0px auto 10px'"
-            (click)="openFilterContainer()"
-        >
-            <mat-icon class="filter-icon material-symbols-outlined">filter_alt</mat-icon>
-            <p>open filters</p>
-        </button>
+        <div class="bill-header">
+            <button (click)="openModal()" class="button-primary extended" mat-button>
+                <div>
+                    <mat-icon class="material-symbols-outlined">add</mat-icon>
+                    <mat-icon class="material-symbols-outlined">receipt_long</mat-icon>
+                </div>
+                <p>new bill</p>
+            </button>
+            <pagination-template
+                class="bill-pagination"
+                [style.margin]="'auto 0px auto 1rem'"
+            ></pagination-template>
+        </div>
     </div>
     <div [ngClass]="['bill-container', generalState.billsLayout$ | async]">
         <div class="bill-list-container">
@@ -83,25 +50,23 @@
                     ></service-list-template>
                 </ng-template>
             </div>
-            <aside class="bill-aside">
-                <div class="bill-infos">
-                    <card-component [hideHeader]="true" class="count">
-                        <div class="container">
-                            <h5>{{ (billState.billsPagination$ | async)?.count }}</h5>
-                            <p>bills</p>
-                        </div>
-                    </card-component>
-                    <card-component [hideHeader]="true" class="total">
-                        <div class="container">
-                            <h5>
-                                {{ (billState.billsTotal$ | async) | currency : 'R$ ' }}
-                            </h5>
-                            <p>total</p>
-                        </div>
-                    </card-component>
-                </div>
-                <custom-filter></custom-filter>
-            </aside>
         </div>
     </div>
+    <aside class="bill-aside">
+        <div class="bill-infos">
+            <card-component [hideHeader]="true" class="count">
+                <div class="container">
+                    <h5>{{ (billState.billsPagination$ | async)?.count }}</h5>
+                    <p>bills</p>
+                </div>
+            </card-component>
+            <card-component [hideHeader]="true" class="total">
+                <div class="container">
+                    <h5>{{ (billState.billsTotal$ | async) | currency : 'R$ ' }}</h5>
+                    <p>total</p>
+                </div>
+            </card-component>
+        </div>
+        <custom-filter></custom-filter>
+    </aside>
 </div>

@@ -17,7 +17,7 @@
 .header-search {
     margin: auto auto auto 0px;
     grid-area: header-search;
-    width: 50%;
+    width: 40%;
 
     & .mat-mdc-form-field-subscript-wrapper {
         display: none !important;

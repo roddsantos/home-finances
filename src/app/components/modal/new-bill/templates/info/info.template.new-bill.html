@@ -3,6 +3,13 @@
     <p class="step-desc">general info of the bill</p>
     <form [formGroup]="infoForm" class="form-container">
         <mat-form-field class="new-bill-field" appearance="outline">
+            <mat-icon
+                class="material-symbols-outlined"
+                matPrefix
+                aria-hidden="false"
+                aria-label="title icon"
+                fontIcon="subheader"
+            ></mat-icon>
             <mat-label>title</mat-label>
             <input formControlName="name" maxlength="100" required matInput />
             @if (infoErrors.name?.["required"]) {
@@ -10,6 +17,13 @@
             }
         </mat-form-field>
         <mat-form-field class="new-bill-field" appearance="outline">
+            <mat-icon
+                class="material-symbols-outlined"
+                matPrefix
+                aria-hidden="false"
+                aria-label="title icon"
+                fontIcon="subtitles"
+            ></mat-icon>
             <mat-label>description</mat-label>
             <input formControlName="description" maxlength="100" matInput />
             @if (infoErrors.description?.["required"]) {
@@ -18,6 +32,13 @@
         </mat-form-field>
         <div class="new-bill-field">
             <mat-form-field class="new-bill-field half" appearance="outline">
+                <mat-icon
+                    class="material-symbols-outlined"
+                    matPrefix
+                    aria-hidden="false"
+                    aria-label="title icon"
+                    fontIcon="category"
+                ></mat-icon>
                 <mat-label>category</mat-label>
                 <mat-select formControlName="category">
                     @for (cat of catState.categories$ | async; track $index) {
@@ -45,6 +66,13 @@
                 }
             </mat-form-field>
             <mat-form-field class="new-bill-field half" appearance="outline">
+                <mat-icon
+                    class="material-symbols-outlined"
+                    matPrefix
+                    aria-hidden="false"
+                    aria-label="title icon"
+                    fontIcon="sell"
+                ></mat-icon>
                 <mat-label>bill value</mat-label>
                 <input formControlName="total" matInput type="number" />
                 @if (infoErrors.total !== null) {

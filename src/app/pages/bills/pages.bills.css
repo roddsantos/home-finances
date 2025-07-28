@@ -1,17 +1,32 @@
-.bills-header {
+.bills {
+    display: grid;
+    grid-template-areas: "page-header bill-aside" "bill-container bill-aside";
+    grid-template-columns: 8fr 2fr;
+    grid-template-rows: 1fr 9fr;
+    column-gap: 1rem;
+    height: calc(100vh - 110px);
+}
+
+.page-header .bill-header {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
     width: 100%;
 }
 
+.bill-pagination {
+    grid-area: bill-pagination;
+}
+
 .bill-container {
+    grid-area: bill-container;
     width: 100%;
 }
 
 .bill-list-container {
     display: flex;
     flex-direction: row;
-    margin-top: 20px;
+    overflow-y: auto;
+    height: 63vh;
     gap: 1.5rem;
 }
 
@@ -61,6 +76,7 @@
 }
 
 .bill-aside {
+    grid-area: bill-aside;
     display: flex;
     flex-direction: column;
     gap: 1rem;

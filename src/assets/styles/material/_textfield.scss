@@ -101,4 +101,10 @@
         color: var(--text-1) !important;
         font-family: var(--font-1) !important;
     }
+
+    &.mat-mdc-text-field-wrapper
+        .mat-mdc-form-field-flex
+        .mat-mdc-form-field-icon-prefix {
+        color: var(--text-1) !important;
+    }
 }
