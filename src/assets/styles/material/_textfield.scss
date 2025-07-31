@@ -106,5 +106,8 @@
         .mat-mdc-form-field-flex
         .mat-mdc-form-field-icon-prefix {
         color: var(--text-1) !important;
+        & .custom-icon {
+            padding: 0 12px;
+        }
     }
 }

@@ -17,13 +17,13 @@ import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-butt
     imports: [CommonModule, MatIconModule, MatButtonToggleModule, ReactiveFormsModule],
 })
 export class ToggleButtonComponent {
-    @Input() items: ToggleButtonItemsType[];
+    @Input() items: ToggleButtonItemsType<any>[];
     @Input() formController: FormControl<unknown>;
     @Input() disabled: boolean;
-    @Output() handleClick = new EventEmitter<ToggleButtonItemsType>();
+    @Output() click = new EventEmitter<ToggleButtonItemsType<any>>();
 
-    onClick(item: ToggleButtonItemsType) {
+    onClick(item: ToggleButtonItemsType<any>) {
         this.formController.patchValue(item.value);
-        this.handleClick.emit(item);
+        this.click.emit(item);
     }
 }

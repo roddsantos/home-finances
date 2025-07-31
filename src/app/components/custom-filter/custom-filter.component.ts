@@ -227,7 +227,7 @@ export class CustomFilterComponent {
         }
     }
 
-    addStatus(item: ToggleButtonItemsType) {
+    addStatus(item: ToggleButtonItemsType<string>) {
         const { label, value } = item;
         let filtersFromState: FilterDisplay[] = this.getFilters();
         const hasFilter = filtersFromState.find((f) => f.identifier === "status");
@@ -243,7 +243,7 @@ export class CustomFilterComponent {
         this.getBills();
     }
 
-    addMoneyFlux(item: ToggleButtonItemsType) {
+    addMoneyFlux(item: ToggleButtonItemsType<string>) {
         const { label, value } = item;
         let filtersFromState: FilterDisplay[] = this.getFilters();
         const hasFilter = filtersFromState.find((f) => f.identifier === "moneyflux");
@@ -259,7 +259,7 @@ export class CustomFilterComponent {
         this.getBills();
     }
 
-    addType(item: ToggleButtonItemsType) {
+    addType(item: ToggleButtonItemsType<string>) {
         const { label, value } = item;
         let filtersFromState: FilterDisplay[] = this.getFilters();
         const hasFilter = filtersFromState.find((f) => f.identifier === "type");

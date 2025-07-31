@@ -89,6 +89,8 @@ export class ModalNewBill implements OnInit {
         });
     }
 
+    isBetweenAccounts = new FormControl<boolean>(false);
+
     billForm = new FormGroup({
         name: new FormControl<string>("", {
             validators: [Validators.required, Validators.maxLength(100)],
@@ -180,6 +182,7 @@ export class ModalNewBill implements OnInit {
             bank2: this.billForm.get("bank2")?.value || null,
             isPayment: this.billForm.get("isPayment")!.value,
             company: this.billForm.get("company")?.value || null,
+            isBetweenAccounts: this.isBetweenAccounts.value,
         };
     }
 

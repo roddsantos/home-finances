@@ -1,11 +1,4 @@
-import {
-    Component,
-    EventEmitter,
-    inject,
-    Injectable,
-    Input,
-    Output,
-} from "@angular/core";
+import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
 import {
     FormControl,
     FormGroup,
@@ -25,6 +18,9 @@ import { MatIconModule } from "@angular/material/icon";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { BankBillForm, ErrorsBillForm } from "src/app/core/types/forms";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
+import { ToggleButtonComponent } from "src/app/components/toggle-buttons/toggle-buttons.component";
+import { BANK_TYPES } from "src/utils/constants/bills";
+import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
 
 @Component({
     selector: "template-banks",
@@ -41,6 +37,7 @@ import { MatButtonToggleModule } from "@angular/material/button-toggle";
         MatCheckboxModule,
         MatIconModule,
         MatButtonToggleModule,
+        ToggleButtonComponent,
     ],
     exportAs: "templateBanks",
 })
@@ -59,6 +56,8 @@ export class BankTemplateNewBill {
 
     errorMessage = { bank1: NO_BANK, sameBank: SAME_BANK };
 
+    banksMode = BANK_TYPES;
+
     bankForm = new FormGroup({
         bank1: new FormControl<Bank | null>(null, {
             nonNullable: false,
@@ -71,13 +70,17 @@ export class BankTemplateNewBill {
         company: new FormControl<Company | null>(null, {
             nonNullable: false,
         }),
+        isBetweenAccounts: new FormControl<boolean>(false),
     });
 
     ngOnInit() {
         this.bankForm.patchValue({ ...this.bankData });
     }
 
-    enableArrow() {
-        return this.bankForm.value.bank1 && this.bankForm.value.bank2;
+    handleChange(item: ToggleButtonItemsType<boolean>) {
+        if (!item.value) {
+            this.bankForm.controls.bank2.patchValue(null);
+            this.setBankData.emit({ ...this.bankForm.getRawValue(), bank2: null });
+        }
     }
 }

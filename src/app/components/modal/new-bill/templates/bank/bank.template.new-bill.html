@@ -3,6 +3,13 @@
     <p class="step-desc">bank info for the income/outcome of the money</p>
     <form [formGroup]="bankForm" class="form-container">
         <mat-form-field class="new-bill-field" appearance="outline">
+            <mat-icon
+                class="material-symbols-outlined"
+                matPrefix
+                aria-hidden="false"
+                aria-label="store icon"
+                fontIcon="store"
+            ></mat-icon>
             <mat-label>company</mat-label>
             <mat-select formControlName="company">
                 <mat-option
@@ -14,9 +21,25 @@
                 <mat-option [value]="c">{{ c.name }}</mat-option>
                 }
             </mat-select>
+            <mat-hint>not required</mat-hint>
         </mat-form-field>
         <div class="new-bill-field">
+            <toggle-button
+                class="toggle"
+                [items]="banksMode"
+                [formController]="bankForm.controls.isBetweenAccounts"
+                (click)="handleChange($event)"
+            />
+        </div>
+        <div class="new-bill-field">
             <mat-form-field class="new-bill-field half" appearance="outline">
+                <mat-icon
+                    class="material-symbols-outlined"
+                    matPrefix
+                    aria-hidden="false"
+                    aria-label="store icon"
+                    fontIcon="account_balance"
+                ></mat-icon>
                 <mat-label>bank 1</mat-label>
                 <mat-select formControlName="bank1">
                     <mat-option
@@ -35,14 +58,18 @@
                 <mat-error>{{errorMessage.sameBank}}</mat-error>
                 }
             </mat-form-field>
-            <mat-icon
-                *ngIf="enableArrow()"
-                class="app-icon arrow"
-                aria-hidden="false"
-                aria-label="Example home icon"
-                [fontIcon]="bankForm.value.isPayment ? 'arrow_forward': 'arrow_back'"
-            ></mat-icon>
-            <mat-form-field class="new-bill-field half" appearance="outline">
+            <mat-form-field
+                *ngIf="bankForm.get('isBetweenAccounts')?.value"
+                class="new-bill-field half"
+                appearance="outline"
+            >
+                <mat-icon
+                    class="material-symbols-outlined"
+                    matPrefix
+                    aria-hidden="false"
+                    aria-label="account balance icon"
+                    fontIcon="account_balance"
+                ></mat-icon>
                 <mat-label>bank 2</mat-label>
                 <mat-select formControlName="bank2">
                     <mat-option
