@@ -14,6 +14,10 @@
     grid-template-columns: repeat(3, auto);
 }
 
+.button-primary.extended + .button-primary.extended {
+    margin-left: 0.5rem;
+}
+
 .bank-container {
     display: grid;
     grid-template-areas:

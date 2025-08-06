@@ -16,6 +16,7 @@ import { BankState } from "src/app/core/subjects/subjects.bank";
 import { Dialog } from "@angular/cdk/dialog";
 import { ModalNewBank } from "src/app/components/modal/new-bank/new-bank.modal";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
+import { ModalNewSaving } from "src/app/components/modal/new-saving/new-saving.modal";
 
 @Component({
     selector: "page-banks",
@@ -77,9 +78,14 @@ export class PageBanks {
         this.getBanks(true);
     }
 
-    onCreate() {
+    onCreateBank() {
         let options = {};
         this.dialog.open(ModalNewBank, options);
+    }
+
+    onCreateSaving() {
+        let options = {};
+        this.dialog.open(ModalNewSaving, options);
     }
 
     onEdit(bank: any) {
