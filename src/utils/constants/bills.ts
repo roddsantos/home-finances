@@ -4,7 +4,7 @@ import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-butt
 export const TYPE_ITEMS: ToggleButtonItemsType<string>[] = [
     { label: "all", value: "all" },
     { label: "money", value: "money" },
-    { label: "credit", value: "money" },
+    { label: "credit", value: "companyCredit" },
     { label: "credit card", value: "creditCard" },
 ];
 
