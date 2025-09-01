@@ -37,9 +37,11 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { provideNativeDateAdapter } from "@angular/material/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { DIALOG_DATA } from "@angular/cdk/dialog";
-import { EditBillModalType } from "src/app/core/types/modal";
 import { CardComponent } from "../../card/card.component";
 import { ToggleButtonComponent } from "../../toggle-buttons/toggle-buttons.component";
+import { CustomTabs } from "../../tabs/tabs.component";
+import { EDIT_BILLS_TABS } from "src/utils/constants/bills";
+import { CustomTabType } from "src/app/core/types/components/tabs";
 
 @Component({
     selector: "modal-new-bill",
@@ -64,6 +66,7 @@ import { ToggleButtonComponent } from "../../toggle-buttons/toggle-buttons.compo
         MatCheckboxModule,
         CardComponent,
         ToggleButtonComponent,
+        CustomTabs,
     ],
 })
 export class ModalEditBill {
@@ -82,6 +85,7 @@ export class ModalEditBill {
     @ViewChild("type") type: ElementRef;
 
     public booleanForm = BOOLEAN_FORM;
+    public billTabs: CustomTabType[] = [];
 
     billForm = new FormGroup({
         name: new FormControl<string>("", {
@@ -141,7 +145,6 @@ export class ModalEditBill {
     });
 
     ngOnInit() {
-        console.log("DATA: ", this.data);
         this.billForm.patchValue({
             name: this.data.name,
             description: this.data.description,
@@ -154,6 +157,7 @@ export class ModalEditBill {
             isPayment: this.data.isPayment,
             isRefund: this.data.isRefund,
         });
+        this.billTabs = EDIT_BILLS_TABS[this.data.type];
         if (this.data.settled && this.data.type !== "money")
             this.billForm.get("total")?.disable();
         this.modalState.changeFooter({

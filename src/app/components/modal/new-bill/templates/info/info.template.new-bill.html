@@ -65,7 +65,11 @@
                 <mat-error>{{errorMessage.category}}</mat-error>
                 }
             </mat-form-field>
-            <mat-form-field class="new-bill-field half" appearance="outline">
+            <mat-form-field
+                *ngIf="info.type === 'money'"
+                class="new-bill-field half"
+                appearance="outline"
+            >
                 <mat-icon
                     class="material-symbols-outlined"
                     matPrefix

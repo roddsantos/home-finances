@@ -16,12 +16,14 @@ import { MatInputModule } from "@angular/material/input";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import {
     INVALID_PARCEL,
+    NO_BILL_VALUE,
     NO_COMPANY,
     UNNECESSARY_BANK,
     UNNECESSARY_CC,
 } from "src/utils/constants/forms";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { BankBillForm, CompanyBillForm, ErrorsBillForm } from "src/app/core/types/forms";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
     selector: "template-companies",
@@ -33,6 +35,7 @@ import { BankBillForm, CompanyBillForm, ErrorsBillForm } from "src/app/core/type
         FormsModule,
         ReactiveFormsModule,
         MatOption,
+        MatIconModule,
         CommonModule,
         MatSelectModule,
         MatInputModule,
@@ -64,6 +67,10 @@ export class CompanyTemplateNewBill {
         creditcard: new FormControl<CreditCard | null>(null, {
             nonNullable: false,
         }),
+        totalParcel: new FormControl<number>(0, {
+            nonNullable: true,
+            validators: [Validators.required, Validators.min(0.01)],
+        }),
         taxes: new FormControl<number>(0, { nonNullable: true }),
         parcels: new FormControl<number>(1, {
             nonNullable: true,
@@ -77,6 +84,7 @@ export class CompanyTemplateNewBill {
         noBank: UNNECESSARY_BANK,
         noCC: UNNECESSARY_CC,
         parcels: INVALID_PARCEL,
+        total: NO_BILL_VALUE,
     };
 
     toggleError(type: "cc" | "bank") {

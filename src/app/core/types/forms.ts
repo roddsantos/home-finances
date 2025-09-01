@@ -15,6 +15,7 @@ export type InfoBillForm = {
     description: string;
     total: number;
     category: Category | null;
+    type: PaymentTypes | null;
 };
 
 export type CheckBillForm = {
@@ -35,7 +36,7 @@ export type CompanyBillForm = {
     company: Company | null;
     bank1: Bank | null;
     creditcard: CreditCard | null;
-    taxes: number;
+    totalParcel: number;
     parcels: number;
     delta: number;
 };
