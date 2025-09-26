@@ -4,7 +4,12 @@
         "es2021": true,
         "node": true
     },
-    "extends": ["plugin:react/recommended", "google", "prettier", "plugin:prettier/recommended"],
+    "extends": [
+        "plugin:react/recommended",
+        "google",
+        "prettier",
+        "plugin:prettier/recommended"
+    ],
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -20,6 +25,7 @@
         "no-unused-labels": "warn",
         "no-unused-expressions": "warn",
         "no-unused-vars": ["warn", { "argsIgnorePattern": "next" }],
+        "unused-imports/no-unused-imports": "warn",
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "react/jsx-indent": ["error", 4],
         "import/no-named-as-default": 0,
