@@ -1,4 +1,4 @@
-export type ToggleButtonItemsType = {
-    value: string;
+export type ToggleButtonItemsType<T> = {
+    value: T;
     label: string;
 };

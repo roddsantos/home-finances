@@ -18,11 +18,9 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
-import { ServiceCompany } from "src/app/services/company.service";
 import { ModalState } from "src/app/core/subjects/subjects.modal";
-import { CompanyState } from "src/app/core/subjects/subjects.company";
-import { Category, Company } from "src/app/core/types/objects";
-import { CategoryObject, CompanyObject } from "src/app/core/types/services";
+import { Category } from "src/app/core/types/objects";
+import { CategoryObject } from "src/app/core/types/services";
 import { NO_DESCRIPTION, NO_NAME } from "src/utils/constants/forms";
 import { ServiceCategory } from "src/app/services/category.service";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
@@ -30,8 +28,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { IconSelection } from "../icon-selection/icon-selection-modal";
 import { Dialog, DIALOG_DATA } from "@angular/cdk/dialog";
 import { MatButtonModule } from "@angular/material/button";
-import { EditCategoryModalType } from "src/app/core/types/modal";
-import { mergeMap } from "rxjs";
+import { mergeMap, Subscription } from "rxjs";
 
 export interface DialogData {
     username: string;
@@ -88,6 +85,8 @@ export class ModalNewCategory implements OnInit {
         description: NO_DESCRIPTION,
         icon: "you must enter an icon",
     };
+    public iconSubscriber: Subscription;
+
     @Output() submit = new EventEmitter<String>();
     @Output() onClose = new EventEmitter<void>();
 
@@ -147,14 +146,11 @@ export class ModalNewCategory implements OnInit {
     }
 
     openDialog(): void {
-        this.dialog
+        this.iconSubscriber = this.dialog
             .open<string>(IconSelection, {
                 data: {
                     header: "choose icon",
-                    size: "md",
                 },
-                hasBackdrop: true,
-                backdropClass: "modal-backdrop",
             })
             .closed.subscribe((res) => {
                 this.categoryForm.patchValue({ icon: res });
@@ -164,5 +160,9 @@ export class ModalNewCategory implements OnInit {
     ngOnInit() {
         this.modalState.changeSubmitFooter(this.data ? "edit" : "OK", "cancel");
         this.modalState.changeHeader(this.data ? "edit category" : "new category");
+    }
+
+    ngOnDestroy() {
+        this.iconSubscriber.unsubscribe();
     }
 }

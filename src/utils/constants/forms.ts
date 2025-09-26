@@ -18,7 +18,7 @@ export const YEAR_OUT_OF_RANGE = "year must be between 2023 and 2090";
 
 export const INVALID_TOTAL = "invalid total value";
 
-export const BOOLEAN_FORM: ToggleButtonItemsType[] = [
+export const BOOLEAN_FORM: ToggleButtonItemsType<string>[] = [
     { label: "yes", value: "true" },
     { label: "no", value: "false" },
 ];

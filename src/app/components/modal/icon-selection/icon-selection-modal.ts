@@ -3,16 +3,12 @@ import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Output, ViewChild } from "@angular/core";
 import { MATERIAL_ICONS } from "src/utils/constants/icons";
 import { ModalComponent } from "../modal.component";
-import {
-    MatFormField,
-    MatFormFieldControl,
-    MatLabel,
-} from "@angular/material/form-field";
+import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { FormsModule } from "@angular/forms";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { removeDiacritics } from "src/utils/validators";
-import { BehaviorSubject, debounceTime, distinctUntilChanged } from "rxjs";
+import { BehaviorSubject, debounceTime, distinctUntilChanged, Subscription } from "rxjs";
 
 @Component({
     selector: "icon-selection",
@@ -38,22 +34,28 @@ export class IconSelection {
     selectedIcon: IconType | null = null;
     searchTerm$ = new BehaviorSubject<string>("");
 
+    public iconSubscriber: Subscription;
+
     constructor() {
-        this.searchTerm$.pipe(debounceTime(300), distinctUntilChanged()).subscribe({
-            next: (value) => {
-                if (value === "") this.filteredIcons = MATERIAL_ICONS;
-                else {
-                    this.filteredIcons = this.icons.filter((icon) => {
-                        const filteredTags = icon.tags.filter((tag) =>
-                            removeDiacritics(tag).includes(removeDiacritics(value))
-                        );
-                        const filterName = removeDiacritics(icon.name).includes(value);
-                        if (filteredTags.length > 0 || filterName) return true;
-                        return false;
-                    });
-                }
-            },
-        });
+        this.iconSubscriber = this.searchTerm$
+            .pipe(debounceTime(300), distinctUntilChanged())
+            .subscribe({
+                next: (value) => {
+                    if (value === "") this.filteredIcons = MATERIAL_ICONS;
+                    else {
+                        this.filteredIcons = this.icons.filter((icon) => {
+                            const filteredTags = icon.tags.filter((tag) =>
+                                removeDiacritics(tag).includes(removeDiacritics(value))
+                            );
+                            const filterName = removeDiacritics(icon.name).includes(
+                                value
+                            );
+                            if (filteredTags.length > 0 || filterName) return true;
+                            return false;
+                        });
+                    }
+                },
+            });
     }
 
     onSubmit() {
@@ -70,5 +72,9 @@ export class IconSelection {
     onType(e: Event) {
         const term = (<HTMLTextAreaElement>e.target).value;
         this.searchTerm$.next(term);
+    }
+
+    ngOnDestroy() {
+        this.iconSubscriber.unsubscribe();
     }
 }

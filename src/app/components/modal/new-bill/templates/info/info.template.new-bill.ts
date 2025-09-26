@@ -4,11 +4,9 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angula
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
-import { MatOption, MatSelectModule } from "@angular/material/select";
-import { distinctUntilChanged } from "rxjs";
+import { MatSelectModule } from "@angular/material/select";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { ErrorsBillForm, InfoBillForm } from "src/app/core/types/forms";
-import { PaymentTypes } from "src/app/core/types/general";
 import { Category } from "src/app/core/types/objects";
 import {
     NEGATIVE_TOTAL,
@@ -16,7 +14,6 @@ import {
     NO_CATEGORY,
     NO_DESCRIPTION,
     NO_NAME,
-    PAYMENT_TYPES,
     YEAR_OUT_OF_RANGE,
 } from "src/utils/constants/forms";
 

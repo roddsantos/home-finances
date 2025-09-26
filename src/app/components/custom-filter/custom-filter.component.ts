@@ -20,14 +20,11 @@ import { LocalStorageService } from "src/app/services/local-storage.service";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatSelectChange, MatSelectModule } from "@angular/material/select";
+import { MatSelectModule } from "@angular/material/select";
 import { MonthType, PaymentTypes } from "src/app/core/types/general";
 import { MONTHS } from "src/utils/constants/general";
 import { MatInput, MatInputModule } from "@angular/material/input";
-import {
-    MatButtonToggleChange,
-    MatButtonToggleModule,
-} from "@angular/material/button-toggle";
+import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { ToggleButtonComponent } from "../toggle-buttons/toggle-buttons.component";
 import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
 import { PAYMENT_ITEMS, STATUS_ITEMS, TYPE_ITEMS } from "src/utils/constants/bills";
@@ -227,10 +224,13 @@ export class CustomFilterComponent {
         }
     }
 
-    addStatus(item: ToggleButtonItemsType) {
+    addStatus(item: ToggleButtonItemsType<string>) {
         const { label, value } = item;
+        if (!label || !value) return;
+
         let filtersFromState: FilterDisplay[] = this.getFilters();
         const hasFilter = filtersFromState.find((f) => f.identifier === "status");
+
         if (hasFilter) this.filterState.removeFilter(hasFilter);
         if (value !== "all")
             this.filterState.addFilters([
@@ -240,13 +240,17 @@ export class CustomFilterComponent {
                     name: label,
                 },
             ]);
+
         this.getBills();
     }
 
-    addMoneyFlux(item: ToggleButtonItemsType) {
+    addMoneyFlux(item: ToggleButtonItemsType<string>) {
         const { label, value } = item;
+        if (!label || !value) return;
+
         let filtersFromState: FilterDisplay[] = this.getFilters();
         const hasFilter = filtersFromState.find((f) => f.identifier === "moneyflux");
+
         if (hasFilter) this.filterState.removeFilter(hasFilter);
         if (value !== "all")
             this.filterState.addFilters([
@@ -256,13 +260,17 @@ export class CustomFilterComponent {
                     name: label,
                 },
             ]);
+
         this.getBills();
     }
 
-    addType(item: ToggleButtonItemsType) {
+    addType(item: ToggleButtonItemsType<string>) {
         const { label, value } = item;
+        if (!label || !value) return;
+
         let filtersFromState: FilterDisplay[] = this.getFilters();
         const hasFilter = filtersFromState.find((f) => f.identifier === "type");
+
         if (hasFilter) this.filterState.removeFilter(hasFilter);
         if (value !== "all")
             this.filterState.addFilters([
@@ -272,6 +280,7 @@ export class CustomFilterComponent {
                     name: label,
                 },
             ]);
+
         this.getBills();
     }
 
@@ -315,6 +324,7 @@ export class CustomFilterComponent {
     }
 
     clearAllFiltersForms() {
+        this.termCtrl.patchValue("");
         this.monthCtrl.patchValue(null);
         this.yearCtrl.patchValue(null);
         this.minCtrl.patchValue(0);

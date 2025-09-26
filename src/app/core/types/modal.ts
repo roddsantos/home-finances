@@ -2,7 +2,7 @@ import { SizeType } from "./components";
 import { Bank, Bill, BillData, Category, Company, CreditCard } from "./objects";
 
 export type ModalDataType = {
-    header: string | false;
+    header?: string | false;
     size?: SizeType;
     data?: any;
 };

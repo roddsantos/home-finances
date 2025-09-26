@@ -49,7 +49,7 @@
                 class="status-component"
                 [items]="statusItems"
                 [formController]="statusCtrl"
-                (handleClick)="addStatus($event)"
+                (click)="addStatus($event)"
             />
         </div>
         <div class="filter-money-flux">
@@ -58,7 +58,7 @@
                 class="money-flux-component"
                 [items]="moneyFluxItems"
                 [formController]="moneyFluxCtrl"
-                (handleClick)="addMoneyFlux($event)"
+                (click)="addMoneyFlux($event)"
             />
         </div>
         <div class="filter-type">
@@ -67,7 +67,7 @@
                 class="type-component"
                 [items]="typeItems"
                 [formController]="typeCtrl"
-                (handleClick)="addType($event)"
+                (click)="addType($event)"
             />
         </div>
         <div class="filter-buttons">

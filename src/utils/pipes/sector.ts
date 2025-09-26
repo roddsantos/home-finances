@@ -10,10 +10,10 @@ export class SectorPipe implements PipeTransform {
             if (value.parcels) return "var(--bill)";
             return value.color;
         } else {
-            if (value.savings) return "bank";
-            if (value.invoice) return "credit card";
-            if (value.icon) return "category";
-            if (value.parcels) return "bill";
+            if (Object.getOwnPropertyDescriptor(value, "savings")) return "bank";
+            if (Object.getOwnPropertyDescriptor(value, "invoice")) return "credit card";
+            if (Object.getOwnPropertyDescriptor(value, "icon")) return "category";
+            if (Object.getOwnPropertyDescriptor(value, "parcels")) return "bill";
             return "company";
         }
     }

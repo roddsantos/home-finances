@@ -1,0 +1,37 @@
+.tabs-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.tabs-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.tab {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    & p {
+        margin-right: 0.25rem;
+    }
+}
+
+.tabs-limiter {
+    height: 2px;
+    width: 100%;
+    background-color: var(--primary);
+}
+
+.tab-selected {
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+}
+
+.tab-unselected {
+    cursor: pointer;
+    & mat-icon {
+        color: var(--text-1);
+    }
+}

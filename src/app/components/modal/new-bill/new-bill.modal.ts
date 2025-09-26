@@ -89,6 +89,8 @@ export class ModalNewBill implements OnInit {
         });
     }
 
+    isBetweenAccounts = new FormControl<boolean>(false);
+
     billForm = new FormGroup({
         name: new FormControl<string>("", {
             validators: [Validators.required, Validators.maxLength(100)],
@@ -139,6 +141,10 @@ export class ModalNewBill implements OnInit {
         }),
         delta: new FormControl<number>(0, { nonNullable: true }),
         isRefund: new FormControl<boolean>(false, { nonNullable: true }),
+        totalParcel: new FormControl<number>(0, {
+            nonNullable: true,
+            validators: [Validators.required, Validators.min(0.01)],
+        }),
     });
 
     months = MONTHS;
@@ -158,6 +164,7 @@ export class ModalNewBill implements OnInit {
 
     getInfoForm() {
         return {
+            type: this.billForm.get("type")?.value || null,
             name: this.billForm.get("name")?.value || "",
             description: this.billForm.get("description")?.value || "",
             total: this.billForm.get("total")?.value || 0,
@@ -171,6 +178,7 @@ export class ModalNewBill implements OnInit {
             description: this.billForm.controls.description.errors,
             total: this.billForm.controls.total.errors,
             category: this.billForm.controls.category.errors,
+            type: null,
         };
     }
 
@@ -180,6 +188,7 @@ export class ModalNewBill implements OnInit {
             bank2: this.billForm.get("bank2")?.value || null,
             isPayment: this.billForm.get("isPayment")!.value,
             company: this.billForm.get("company")?.value || null,
+            isBetweenAccounts: this.isBetweenAccounts.value,
         };
     }
 
@@ -197,9 +206,9 @@ export class ModalNewBill implements OnInit {
             company: this.billForm.get("company")?.value || null,
             bank1: this.billForm.get("bank1")?.value || null,
             creditcard: this.billForm.get("creditcard")?.value || null,
-            taxes: this.billForm.get("taxes")?.value || 0,
             parcels: this.billForm.get("parcels")?.value || 0,
             delta: this.billForm.get("delta")?.value || 0,
+            totalParcel: this.billForm.get("totalParcel")?.value || 0,
         };
     }
 
@@ -208,9 +217,9 @@ export class ModalNewBill implements OnInit {
             company: this.billForm.controls.company.errors,
             bank1: this.billForm.controls.bank1.errors,
             creditcard: this.billForm.controls.creditcard.errors,
-            taxes: this.billForm.controls.taxes.errors,
             parcels: this.billForm.controls.parcels.errors,
             delta: this.billForm.controls.delta.errors,
+            totalParcel: this.billForm.controls.totalParcel.errors,
         };
     }
 
@@ -262,7 +271,8 @@ export class ModalNewBill implements OnInit {
                     Boolean(formErrors.name.errors) ||
                     Boolean(formErrors.category.errors) ||
                     Boolean(formErrors.description.errors) ||
-                    Boolean(formErrors.total.errors)
+                    (this.billForm.get("type")?.value === "money" &&
+                        Boolean(formErrors.total.errors))
                 );
             case 3:
                 return this.billForm.value.type === "money"
@@ -361,6 +371,9 @@ export class ModalNewBill implements OnInit {
                     parcels: this.billForm.value.parcels!,
                     taxes: this.billForm.value.taxes,
                     delta: this.billForm.value.delta,
+                    total:
+                        this.billForm.value.totalParcel! * this.billForm.value.parcels! +
+                        this.billForm.value.delta!,
                 });
                 break;
             default:
