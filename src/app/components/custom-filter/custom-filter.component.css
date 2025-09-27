@@ -1,50 +1,8 @@
-.filter-icon {
-    margin: auto !important;
-    font-size: 1.5rem;
-    width: auto;
-    height: auto;
-}
-
-.margin {
-    display: flex;
-    margin: auto 20px auto 0px;
-    border-radius: 5px !important;
-}
-
-.chip-grid {
-    display: block;
-    background-color: var(--item-list);
-    border: solid 1px var(--border);
-    padding: 12px 0px 0px;
-    min-height: 100px;
-    width: 300px;
-    padding: 10px;
-    margin: auto 20px -6px auto;
-    text-align: left;
-    font-variant-caps: all-small-caps;
-    border-radius: 10px;
-}
-
-.chip-item {
-    margin-right: 6px;
-    margin-bottom: 6px;
-}
-
 .filter-main {
     display: flex;
     flex-direction: column;
-    width: 300px;
-}
-
-.filter-button-container {
-    display: flex;
-    flex-direction: row;
-    margin: 20px 0px;
-}
-
-.filter-label {
-    margin: 0px 0px 12px;
-    color: var(--title);
+    min-width: 300px;
+    width: 100%;
 }
 
 .filter-container {
@@ -76,52 +34,11 @@
     }
 }
 
-.divider-1,
-.divider-2,
-.divider-3,
-.divider-4,
-.divider-5 {
-    height: 1px;
-    width: 100%;
-    background-color: var(--secondary);
-    margin: auto;
-}
-
 .filter-term {
     grid-area: filter-term;
     & .term-input {
         margin-top: 0.25rem;
-    }
-}
-
-.filter-counter {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-    height: max-content;
-    border-radius: var(--border-radius);
-    & .counter {
-        display: flex;
-        width: 1.5rem;
-        height: 1.5rem;
-        margin: auto 0.4rem auto auto;
-        border-radius: 50%;
-        background-color: var(--third);
-        &.binary {
-            border: 1px solid var(--secondary);
-            & p {
-                color: var(--text-1);
-                margin: auto;
-            }
-        }
-        & p {
-            color: var(--text-3);
-            margin: auto;
-        }
-    }
-    & p {
-        margin: auto auto auto 5px;
+        width: 100%;
     }
 }
 
@@ -212,8 +129,24 @@
     }
 }
 
+.divider-1,
+.divider-2,
+.divider-3,
+.divider-4,
+.divider-5 {
+    height: 1px;
+    width: 100%;
+    background-color: var(--secondary);
+    margin: auto;
+}
+
 .filter-list {
     grid-area: filter-list;
     display: inline-flex;
     flex-wrap: wrap;
+}
+
+.chip-item {
+    margin-right: 6px;
+    margin-bottom: 6px;
 }

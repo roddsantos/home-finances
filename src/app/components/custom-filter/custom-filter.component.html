@@ -6,7 +6,7 @@
         ]"
     >
         <div class="filter-term">
-            <h6 class="term-label">term</h6>
+            <h6>term</h6>
             <mat-form-field class="term-input" appearance="outline">
                 <input
                     placeholder="bill title"
@@ -15,6 +15,7 @@
                     [formControl]="termCtrl"
                     matInput
                 />
+                <mat-hint>press 'enter' to search</mat-hint>
             </mat-form-field>
         </div>
         <div class="filter-date">
@@ -41,6 +42,7 @@
                     type="number"
                     [formControl]="yearCtrl"
                 />
+                <mat-hint>press 'enter' to search</mat-hint>
             </mat-form-field>
         </div>
         <div class="filter-status">
