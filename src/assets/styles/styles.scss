@@ -17,11 +17,11 @@
 
 :root {
     @include mat.all-component-themes(app-theme.$app-light-theme);
-    --input-unit: 1.25rem;
-    --input-position: 1.2rem;
-    --input-font: 0.75rem;
+    --input-unit: 1.5rem;
+    --input-position: 1.5rem;
+    --input-font: 1rem;
 
-    --font-1: ReemKufi;
+    --font-1: Open-Sans;
     --font-2: Commissioner;
 
     --text-gen: 0.8rem;

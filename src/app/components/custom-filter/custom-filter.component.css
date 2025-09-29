@@ -44,30 +44,12 @@
 
 .filter-date {
     display: grid;
-    row-gap: 3px;
-    column-gap: 5px;
-    grid-template-areas: "month-label month-label year-label" "month-input slash year-input";
-    grid-template-columns: repeat(3, min-content);
     grid-area: filter-date;
-    & .month-label {
-        grid-area: month-label;
-        color: var(--text-1);
-    }
-    & .month-input {
-        grid-area: month-input;
-        width: 100px;
-    }
-    & .year-label {
-        grid-area: year-label;
-        color: var(--text-1);
-    }
-    & .year-input {
-        grid-area: year-input;
-        width: 100px;
-    }
-    & .slash {
-        margin: 8px auto auto;
-        font-size: 1.25rem;
+    height: fit-content;
+    row-gap: 6px;
+    grid-template-areas: "date-label" "date-component";
+    & .date-component {
+        margin-top: 0.25rem;
     }
 }
 

@@ -35,6 +35,7 @@ import {
 } from "@angular/material/datepicker";
 import { MatNativeDateModule, provideNativeDateAdapter } from "@angular/material/core";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
+import { Subscription } from "rxjs";
 
 @Component({
     selector: "dialog-custom-filter",
@@ -79,7 +80,7 @@ export class DialogCustomList implements OnInit {
     @ViewChild("company") company: MatSelect;
     @ViewChild("bank") bank: MatSelect;
     @ViewChild("month") month: MatSelect;
-    @ViewChild("year") year: MatSelect;
+    @ViewChild("year") year: MatInput;
     @ViewChild("min") min: ElementRef;
     @ViewChild("max") max: ElementRef;
     @ViewChild("date1") date1: MatInput;
@@ -92,7 +93,7 @@ export class DialogCustomList implements OnInit {
     compCtrl = new FormControl<string>("");
     bkCtrl = new FormControl<string>("");
     monthCtrl = new FormControl<string>("");
-    yCtrl = new FormControl<number>(new Date().getFullYear(), {
+    yearCtrl = new FormControl<number>(new Date().getFullYear(), {
         validators: [Validators.min(2023), Validators.max(2080)],
         nonNullable: true,
     });
@@ -105,12 +106,16 @@ export class DialogCustomList implements OnInit {
     endDateCtrl = new FormControl<Date | null>(null);
     selectedFilters: FilterDisplay[] = [];
 
+    public filterSubscription: Subscription;
+
     ngOnInit() {
         this.modalState.changeSubmitFooter("OK", "cancel");
         this.modalState.changeHeader("add filters");
 
-        this.filterState.filters$.subscribe({
-            next: (filters) => (this.selectedFilters = [...filters]),
+        this.filterSubscription = this.filterState.filters$.subscribe({
+            next: (filters) => {
+                this.selectedFilters = [...filters];
+            },
             error: () => (this.selectedFilters = []),
         });
     }
@@ -163,17 +168,18 @@ export class DialogCustomList implements OnInit {
     addYear(event: any) {
         let value: string | number | null = (event.target as HTMLInputElement).value;
         value = value === "" ? null : parseFloat(value);
-        if (value) {
-            const hasFilter = this.selectedFilters.find((f) => f.id === value);
-            if (!hasFilter) {
-                this.selectedFilters.push({
-                    id: value,
-                    identifier: "year",
-                    name: value,
-                });
-                this.year.value = "";
-            }
-        }
+
+        if (!value) return;
+
+        const hasFilter = [...this.selectedFilters].find((f) => f.id === value);
+        if (hasFilter) return;
+
+        this.selectedFilters.push({
+            id: value,
+            identifier: "year",
+            name: value,
+        });
+        this.year.value = "";
     }
 
     addMonth(event: any) {
@@ -258,5 +264,9 @@ export class DialogCustomList implements OnInit {
                 this.billState.changeStatus("error", "error fetching bills");
             },
         });
+    }
+
+    ngOnDestroy() {
+        this.filterSubscription.unsubscribe();
     }
 }

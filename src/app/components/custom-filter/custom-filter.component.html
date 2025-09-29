@@ -9,7 +9,6 @@
             <h6>term</h6>
             <mat-form-field class="term-input" appearance="outline">
                 <input
-                    placeholder="bill title"
                     (keyup.enter)="addTerm($event)"
                     maxlength="50"
                     [formControl]="termCtrl"
@@ -19,31 +18,13 @@
             </mat-form-field>
         </div>
         <div class="filter-date">
-            <h6 class="month-label">month</h6>
-            <mat-form-field class="month-input" appearance="outline">
-                <mat-select
-                    placeholder="month"
-                    #month
-                    (selectionChange)="addMonth($event)"
-                    [formControl]="monthCtrl"
-                >
-                    @for (m of months; track m) {
-                    <mat-option [value]="m">{{ m.short }}</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>
-            <h6 class="year-label">year</h6>
-            <mat-form-field class="year-input" appearance="outline">
-                <input
-                    placeholder="year"
-                    (keyup.enter)="addYear($event)"
-                    matInput
-                    #year
-                    type="number"
-                    [formControl]="yearCtrl"
-                />
-                <mat-hint>press 'enter' to search</mat-hint>
-            </mat-form-field>
+            <h6 class="date-label">date span</h6>
+            <toggle-button
+                class="date-component"
+                [items]="monthItems"
+                [formController]="dateCtrl"
+                (click)="addDateSpan($event)"
+            />
         </div>
         <div class="filter-status">
             <h6 class="status-label">bill status</h6>

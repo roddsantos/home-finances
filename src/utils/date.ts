@@ -35,3 +35,13 @@ export function getMonthAndYear(param: Entry1, type: DateType) {
                 : `${MONTHS[month!].name}/${year}`;
     }
 }
+
+export function getMonthAndYearIntegers(monthDelta: number = 0) {
+    const thisMonth = new Date().getMonth();
+    const thisYear = new Date().getFullYear();
+
+    const month = new Date(thisYear, thisMonth + monthDelta, 1).getMonth();
+    const year = new Date(thisYear, thisMonth + monthDelta, 1).getFullYear();
+
+    return { month, year };
+}
