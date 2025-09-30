@@ -7,6 +7,7 @@ import {
     SubjectExpensesType,
     SubjectSavingsType,
 } from "../types/subjects/home.subjects.types";
+import { DateSubjectType } from "../types/subjects/general.subjects.type";
 
 @Injectable({
     providedIn: "root",
@@ -30,10 +31,16 @@ export class HomeState {
     });
     private _recentBills$ = new BehaviorSubject<(Bill & BillData)[]>([]);
 
+    private _date$ = new BehaviorSubject<DateSubjectType>({
+        month: new Date().getMonth(),
+        year: new Date().getFullYear(),
+    });
+
     public readonly expenses$ = this._expenses$.asObservable();
     public readonly savings$ = this._savings$.asObservable();
     public readonly invoices$ = this._invoices$.asObservable();
     public readonly recentBills$ = this._recentBills$.asObservable();
+    public readonly date$ = this._date$.asObservable();
 
     public updateExpenses(expenses: SubjectExpensesType) {
         this._expenses$.next(expenses);
@@ -49,5 +56,9 @@ export class HomeState {
 
     public updateRecentBills(bills: (Bill & BillData)[]) {
         this._recentBills$.next(bills);
+    }
+
+    public updateDate(date: DateSubjectType) {
+        this._date$.next(date);
     }
 }

@@ -5,6 +5,11 @@
     }
 }
 
+.home-filter {
+    display: flex;
+    margin: 1rem 0px;
+}
+
 .home-container {
     display: grid;
     grid-template-areas:
@@ -192,30 +197,22 @@
     width: fit-content;
     border-radius: var(--border-radius);
     padding: 0.4rem;
-    opacity: 0.5;
     & .icon-trending {
-        color: var(--text-3);
+        color: var(--text-1);
         font-size: 1rem;
         height: 1rem;
         width: 1rem;
     }
     h6 {
+        color: var(--text-1);
         font-size: calc(1 * var(--text-gen));
         font-weight: 800;
     }
     &.green {
-        background-color: rgb(from var(--success) r g b / 0.2);
-        & h6,
-        .icon-trending {
-            color: var(--success);
-        }
+        background-color: var(--success);
     }
     &.red {
-        background-color: rgb(from var(--error) r g b / 0.2);
-        & h6,
-        .icon-trending {
-            color: var(--error);
-        }
+        background-color: var(--error);
     }
 }
 
