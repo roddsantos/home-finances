@@ -94,7 +94,7 @@
                         ? chip.identifier + ":"
                         : ""
                 }}
-                {{ chip.name }}
+                {{ chip.identifier === "name" ? '"' + chip.name + '"' : chip.name }}
                 <button matChipRemove [attr.aria-label]="'remove ' + chip.name">
                     <mat-icon>cancel</mat-icon>
                 </button>
