@@ -40,6 +40,11 @@ p {
 
 .reset-button {
     margin: 10px 0px 0px auto;
+    & mat-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        font-size: 1.5rem;
+    }
 }
 
 .credit-card-field {

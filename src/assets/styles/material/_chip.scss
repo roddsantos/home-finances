@@ -93,7 +93,8 @@
             color: #ffffff !important;
         }
     }
-    &.status {
+    &.status,
+    &.moneyflux {
         &.binary {
             background-color: var(--background) !important;
             border: solid 3px var(--default) !important;

@@ -2,11 +2,19 @@
     border-style: solid;
     border-width: var(--border-width);
     border-radius: var(--border-radius);
+    background-color: var(--bh);
+    border-color: var(--bh);
     padding: 10px 15px;
     position: relative;
     z-index: 3;
     height: 100%;
     width: 100%;
+    &.binary {
+        background-color: var(--primary);
+    }
+    &.border {
+        border-color: var(--border-color);
+    }
 }
 
 .card-shadow {
@@ -20,6 +28,15 @@
 
 .card-content {
     display: flex;
+    height: calc(100% - 70px);
+    margin-top: 0px;
+    &.no-divisor {
+        height: calc(100% - 58px);
+        margin-top: 10px;
+    }
+    &.hide-header {
+        height: 100%;
+    }
 }
 
 .card-divisor {

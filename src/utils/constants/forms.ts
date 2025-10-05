@@ -18,9 +18,14 @@ export const YEAR_OUT_OF_RANGE = "year must be between 2023 and 2090";
 
 export const INVALID_TOTAL = "invalid total value";
 
-export const BOOLEAN_FORM: ToggleButtonItemsType<string>[] = [
-    { label: "yes", value: "true" },
-    { label: "no", value: "false" },
+export const BOOLEAN_FORM: ToggleButtonItemsType<boolean>[] = [
+    { label: "yes", value: true },
+    { label: "no", value: false },
+];
+
+export const MONEY_FLOW_FORM: ToggleButtonItemsType<boolean>[] = [
+    { label: "outcome", value: true },
+    { label: "income", value: false },
 ];
 
 export const PAYMENT_TYPES: PaymentTypesObject[] = [
