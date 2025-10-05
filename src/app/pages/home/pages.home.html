@@ -1,5 +1,12 @@
 <div class="home">
     <h1 class="page-title">{{"Welcome, " + (userState.user$| async)?.name + " :)"}}</h1>
+
+    <toggle-button
+        class="home-filter"
+        [items]="dateFilters"
+        [formController]="dateCtrl"
+        (click)="onChangeFilter($event)"
+    />
     <div class="home-container">
         <!-- CURRENT DATE -->
         <card-component
@@ -9,15 +16,15 @@
             [backgroundColor]="thirdColor"
         >
             <div class="col" [style.width]="'100%'">
-                <h4>{{(date | date :'MMM')?.toLowerCase()}}</h4>
-                <h1 class="day" [style.left]="date.getDate() < 10 ? '46%': '40%'">
-                    {{date.getDate()}}
+                <h4>{{ months[dateCtrl.getRawValue()!.month].short }}</h4>
+                <h1 class="day" [style.left]="todaysDate.getDate() < 10 ? '46%': '40%'">
+                    {{ todaysDate.getDate() }}
                 </h1>
                 <mat-icon
                     class="material-symbols-rounded icon"
                     fontIcon="calendar_today"
                 ></mat-icon>
-                <h4>{{(date | date :'EEEE')?.toLowerCase()}}</h4>
+                <h4>{{ (todaysDate | date :'EEEE')?.toLowerCase() }}</h4>
             </div>
         </card-component>
         <!-- EXPENSES -->
@@ -175,8 +182,8 @@
                 <h3
                     [ngClass]="[(homeState.savings$ | async)!.totalBanks > 0 ? 'positive' : 'negative']"
                 >
-                    {{((homeState.savings$ | async)!.totalSavingsPreview -
-                    (homeState.expenses$ | async)!.sumOfBills) | currency: 'R$ '}}
+                    {{(homeState.savings$ | async)!.totalSavingsPreview | currency: 'R$
+                    '}}
                 </h3>
                 <p>month savings preview</p>
             </div>

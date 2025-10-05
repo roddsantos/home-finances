@@ -5,6 +5,7 @@ import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
+import { isValuesEqual } from "src/utils/validators";
 
 @Injectable({
     providedIn: "root",
@@ -18,12 +19,16 @@ import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-butt
 })
 export class ToggleButtonComponent {
     @Input() items: ToggleButtonItemsType<any>[];
-    @Input() formController: FormControl<unknown>;
+    @Input() formController: FormControl<unknown> = new FormControl<any>(null);
     @Input() disabled: boolean;
     @Output() click = new EventEmitter<ToggleButtonItemsType<any>>();
 
+    isEqual(item: ToggleButtonItemsType<any>) {
+        return isValuesEqual(this.formController.getRawValue(), item.value);
+    }
+
     onClick(item: ToggleButtonItemsType<any>) {
-        this.formController.patchValue(item.value);
+        if (this.formController) this.formController.patchValue(item.value);
         this.click.emit(item);
     }
 }

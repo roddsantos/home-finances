@@ -12,6 +12,10 @@
     height: max-content;
 }
 
+.template-banks-main {
+    padding: var(--padding-gen) 0px;
+}
+
 .app-icon {
     margin: 18px auto auto;
 }

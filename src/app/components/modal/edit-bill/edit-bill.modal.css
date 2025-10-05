@@ -1,3 +1,7 @@
+.main-container {
+    height: 200px;
+}
+
 .new-bill-container {
     display: flex;
     flex-direction: column;
@@ -7,12 +11,14 @@
 
 .new-bill-field {
     width: 48%;
+    margin-bottom: 0.5rem;
 }
 
 .full {
-    display: grid;
+    display: inline-block;
     gap: 0.75rem;
     width: 100%;
+    padding: var(--padding-gen) 0px;
 }
 
 .new-bill-container-split {
@@ -25,8 +31,10 @@
 .new-bill-toggle {
     display: flex;
     flex-direction: column;
+    margin-bottom: 1rem;
     & p {
         color: var(--text-1);
+        margin-bottom: 0.5rem;
     }
 }
 

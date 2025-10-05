@@ -97,7 +97,7 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <!-- min max -->
+            <!-- min value total -->
             <div class="quarter">
                 <h6 class="input">min total</h6>
                 <mat-form-field class="input" appearance="outline">
@@ -127,6 +127,37 @@
                     @if (maxCtrl.invalid) {
                     <mat-error>invalid max value</mat-error>
                     }
+                </mat-form-field>
+            </div>
+            <!-- month -->
+            <div class="quarter">
+                <h6 class="input">month</h6>
+                <mat-form-field class="input" appearance="outline">
+                    <mat-select
+                        placeholder="month"
+                        #month
+                        (selectionChange)="addMonth($event)"
+                        [formControl]="monthCtrl"
+                    >
+                        @for (m of months; track m) {
+                        <mat-option [value]="m">{{ m.short }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <!-- year -->
+            <div class="quarter">
+                <h6 class="input">year</h6>
+                <mat-form-field class="input" appearance="outline">
+                    <input
+                        placeholder="year"
+                        (keyup.enter)="addYear($event)"
+                        matInput
+                        #year
+                        type="number"
+                        [formControl]="yearCtrl"
+                    />
+                    <mat-hint>press 'enter' to set year</mat-hint>
                 </mat-form-field>
             </div>
             <!-- start date -->

@@ -21,6 +21,7 @@ import { CompanyTemplateEditBill } from "./templates/company/company.template.ed
 import { CreditCardTemplateEditBill } from "./templates/credit-card/credit-card.template.edit-bill";
 import {
     BOOLEAN_FORM,
+    MONEY_FLOW_FORM,
     NEGATIVE_TOTAL,
     NO_BILL_VALUE,
     NO_CATEGORY,
@@ -85,7 +86,9 @@ export class ModalEditBill {
     @ViewChild("type") type: ElementRef;
 
     public booleanForm = BOOLEAN_FORM;
+    public moneyFlowForm = MONEY_FLOW_FORM;
     public billTabs: CustomTabType[] = [];
+    public tab = 0;
 
     billForm = new FormGroup({
         name: new FormControl<string>("", {
@@ -179,6 +182,10 @@ export class ModalEditBill {
         category: NO_CATEGORY,
         year: YEAR_OUT_OF_RANGE,
     };
+
+    onChangeTab(event: CustomTabType) {
+        this.tab = event.index;
+    }
 
     onDisableButton() {
         switch (this.data.type) {

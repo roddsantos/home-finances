@@ -1,14 +1,11 @@
 <div
     id="card-{{ id }}"
-    class="card"
-    [style.backgroundColor]="
-        actualTheme === 'binary' ? '#000000' : backgroundColor || backgroundHighlighter
-    "
-    [style.borderColor]="
-        border || actualTheme === 'binary'
-            ? secondary
-            : backgroundColor || backgroundHighlighter
-    "
+    [ngClass]="[
+        'card',
+        actualTheme === 'binary' ? 'binary' : '',
+        border || actualTheme === 'binary' ? 'border' : ''
+    ]"
+    [style.backgroundColor]="backgroundColor"
 >
     <div class="card-header" *ngIf="!hideHeader" [style.height]="'50px'">
         <div class="card-data">
@@ -46,11 +43,11 @@
     </div>
     <div class="card-divisor" *ngIf="!noDivisor && !hideHeader"></div>
     <div
-        class="card-content"
-        [style.height]="
-            hideHeader ? '100%' : 'calc(100% - ' + (noDivisor ? '58px' : '70px') + ')'
-        "
-        [style.marginTop]="noDivisor ? '10px' : '0px'"
+        [ngClass]="[
+            'card-content',
+            hideHeader ? 'hide-header' : '',
+            noDivisor ? 'no-divisor' : ''
+        ]"
     >
         <ng-content></ng-content>
     </div>
@@ -62,9 +59,7 @@
     [style.width]="cardWidth + 'px'"
     [style.bottom]="cardHeight - 10 + 'px'"
     [style.backgroundColor]="
-        border
-            ? 'transparent'
-            : (backgroundColor || backgroundHighlighter | color : 'darker')
+        border ? 'transparent' : (backgroundHighlighter | color : 'darker')
     "
-    [style.borderColor]="backgroundColor || backgroundHighlighter | color : 'darker'"
+    [style.borderColor]="backgroundHighlighter | color : 'darker'"
 ></div>

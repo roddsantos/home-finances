@@ -5,10 +5,11 @@
     justify-content: space-between;
     height: 56px;
     margin-bottom: 26px;
+    gap: 1rem;
 }
 
 .number-input {
-    width: 31%;
+    width: 100%;
 }
 
 .template-companies-container {
@@ -17,10 +18,5 @@
     justify-content: space-between;
     width: 100%;
     height: max-content;
-}
-
-.template-data-field {
-    width: 48%;
-    margin-bottom: 10px;
-    padding: 0px;
+    padding: var(--padding-gen) 0px;
 }

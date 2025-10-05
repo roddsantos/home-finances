@@ -34,3 +34,29 @@ export const removeDiacritics = (str: string) => {
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "");
 };
+
+export function isValuesEqual(item1: any, item2: any) {
+    if (typeof item1 === "object" && typeof item2 === "object")
+        return isObjectsEqual(item1, item2);
+    return item1 == item2;
+}
+
+export function isObjectsEqual(object1: any, object2: any) {
+    const object1Keys = Object.keys(object1);
+    const object2Keys = Object.keys(object2);
+
+    if (object1Keys.length !== object2Keys.length) return false;
+
+    let hadDiffKeyOrValue = false;
+
+    for (let key of object1Keys) {
+        if (
+            !(object2Keys.find((key2) => key === key2) && object2[key] === object1[key])
+        ) {
+            hadDiffKeyOrValue = true;
+            break;
+        }
+    }
+
+    return !hadDiffKeyOrValue;
+}
