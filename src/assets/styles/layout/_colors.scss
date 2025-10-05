@@ -1,0 +1,130 @@
+$text3: var(--text-3);
+$text1: var(--text-1);
+$custom-purple: #7a3fb5;
+$custom-blue: #527fb6;
+$custom-warn: #ff5722;
+
+$custom-brand-purple: (
+    50: var(--primary),
+    100: var(--primary),
+    200: var(--primary),
+    300: var(--primary),
+    400: var(--primary),
+    500: var(--primary),
+    600: var(--primary),
+    700: var(--primary),
+    800: var(--primary),
+    900: var(--primary),
+    contrast: (
+        50: $text3,
+        100: $text3,
+        200: $text3,
+        300: $text3,
+        400: $text3,
+        500: $text3,
+        600: $text3,
+        700: $text3,
+        800: $text3,
+        900: $text3,
+    ),
+);
+
+$custom-brand-blue: (
+    50: var(--secondary),
+    100: var(--secondary),
+    200: var(--secondary),
+    300: var(--secondary),
+    400: var(--secondary),
+    500: var(--secondary),
+    600: var(--secondary),
+    700: var(--secondary),
+    800: var(--secondary),
+    900: var(--secondary),
+    contrast: (
+        50: $text3,
+        100: $text3,
+        200: $text3,
+        300: $text3,
+        400: $text3,
+        500: $text3,
+        600: $text3,
+        700: $text3,
+        800: $text3,
+        900: $text3,
+    ),
+);
+
+$custom-brand-warn: (
+    50: var(--third),
+    100: var(--third),
+    200: var(--third),
+    300: var(--third),
+    400: var(--third),
+    500: var(--third),
+    600: var(--third),
+    700: var(--third),
+    800: var(--third),
+    900: var(--third),
+    contrast: (
+        50: $text1,
+        100: $text1,
+        200: $text1,
+        300: $text1,
+        400: $text1,
+        500: $text1,
+        600: $text1,
+        700: $text1,
+        800: $text1,
+        900: $text1,
+    ),
+);
+
+$custom-brand-black: (
+    50: #757575,
+    100: #555555,
+    200: #444444,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #000000,
+    contrast: (
+        50: $text3,
+        100: $text3,
+        200: $text3,
+        300: $text3,
+        400: $text3,
+        500: $text3,
+        600: $text3,
+        700: $text3,
+        800: $text3,
+        900: $text3,
+    ),
+);
+
+$custom-brand-white: (
+    50: #ffffff,
+    100: #ffffff,
+    200: #ffffff,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #dfdfdf,
+    800: #cacaca,
+    900: #aaaaaa,
+    contrast: (
+        50: $text3,
+        100: $text3,
+        200: $text3,
+        300: $text3,
+        400: $text3,
+        500: $text3,
+        600: $text3,
+        700: $text3,
+        800: $text3,
+        900: $text3,
+    ),
+);

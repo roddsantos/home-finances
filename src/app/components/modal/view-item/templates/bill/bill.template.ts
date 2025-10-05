@@ -1,0 +1,31 @@
+import { CommonModule } from "@angular/common";
+import { Component, Input } from "@angular/core";
+import { MatIconModule } from "@angular/material/icon";
+import { Bill, BillData } from "src/app/core/types/objects";
+import { MONTHS } from "src/utils/constants/general";
+import { BillsPipe } from "src/utils/pipes/bills";
+import { CardComponent } from "../../../../card/card.component";
+
+@Component({
+    selector: "template-view-bill",
+    templateUrl: "./bill.template.html",
+    styleUrls: ["./bill.template.css", "../../view-item.modal.css"],
+    standalone: true,
+    imports: [CommonModule, MatIconModule, BillsPipe, CardComponent],
+})
+export class TemplateBill {
+    @Input() bill: Bill & BillData;
+    public months = MONTHS;
+    public style = getComputedStyle(document.body);
+    public errorColor = this.style.getPropertyValue("--error");
+    public successColor = this.style.getPropertyValue("--success");
+    public warningColor = this.style.getPropertyValue("--warning");
+    public dateLeft: string = "settled";
+
+    ngOnInit() {
+        if (this.bill.settled) this.dateLeft = "settled";
+        else if (new Date(this.bill.due).getTime() - new Date().getTime() > 0)
+            this.dateLeft = "close";
+        else this.dateLeft = "late";
+    }
+}

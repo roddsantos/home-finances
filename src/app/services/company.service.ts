@@ -1,0 +1,35 @@
+import { inject, Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { COMPANY } from "src/utils/constants/services";
+import { CompanyObject } from "src/app/core/types/services";
+import { UserState } from "src/app/core/subjects/subjects.user";
+import { mergeMap } from "rxjs";
+import { Company } from "src/app/core/types/objects";
+
+@Injectable({
+    providedIn: "root",
+})
+export class ServiceCompany {
+    private http = inject(HttpClient);
+    private user = inject(UserState);
+
+    getCompanies() {
+        return this.user.user$.pipe(
+            mergeMap((user) => this.http.get<Company[]>(COMPANY + `/${user!.id}`))
+        );
+    }
+
+    createCompany(data: CompanyObject) {
+        return this.user.user$.pipe(
+            mergeMap((user) => this.http.post(COMPANY, { ...data, userId: user!.id }))
+        );
+    }
+
+    deleteCompany(id: string) {
+        return this.http.delete(COMPANY + `/${id}`);
+    }
+
+    updateCompany(data: CompanyObject & { id: string }) {
+        return this.http.patch(COMPANY, data);
+    }
+}

@@ -1,0 +1,53 @@
+<div class="credit-card">
+    <div class="day-invoice-container">
+        <h5>best day</h5>
+        <p>{{creditCard.day}}</p>
+    </div>
+    <div class="day-due-container">
+        <h5>due day</h5>
+        <p>{{creditCard.due}}</p>
+    </div>
+    <div class="month-year-container">
+        <h5>month/year related</h5>
+        <p>{{months[creditCard.month].short + '/' + creditCard.year}}</p>
+    </div>
+    <div class="flag">
+        <h5>flag</h5>
+        <img
+            class="flag-icon"
+            *ngIf="creditCard.flag && creditCard.flag !== 'other'"
+            [src]="'assets/images/'+creditCard.flag+'.svg'"
+        />
+    </div>
+    <div class="invoice">
+        <h5>invoice</h5>
+        <div class="row">
+            <h1>{{creditCard.invoice | currency: "R$ "}}</h1>
+            <div
+                *ngIf="(creditCard | creditCard : 'status') !== 'current'"
+                class="status"
+                [style.backgroundColor]="(creditCard | creditCard : 'status') === 'paid' ? successColor : errorColor"
+            >
+                {{creditCard | creditCard : 'status'}}
+            </div>
+        </div>
+    </div>
+
+    <div class="limit-container">
+        <h5>limit</h5>
+        <div class="numbers">
+            <h2>{{creditCard.limitLeft | currency: "R$ "}}/</h2>
+            <h2 class="limit">{{creditCard.limit | currency: "R$ "}}</h2>
+        </div>
+    </div>
+    <div
+        class="progress-container"
+        [style.borderColor]="theme === 'binary' ? secondaryColor : bhColor"
+    >
+        <div
+            class="bar"
+            [style.width]="(creditCard.limitLeft / creditCard.limit) * 100 + '%'"
+            [style.backgroundColor]="theme === 'binary' ? secondaryColor : primaryColor"
+        ></div>
+    </div>
+</div>

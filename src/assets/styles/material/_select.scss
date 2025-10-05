@@ -1,0 +1,46 @@
+.mdc-text-field--outlined {
+    & .mat-mdc-select {
+        height: calc(1.4 * var(--input-unit)) !important;
+        & .mat-mdc-select-trigger {
+            height: calc(1.4 * var(--input-unit)) !important;
+            & .mat-mdc-select-arrow-wrapper .mat-mdc-select-arrow {
+                color: var(--text-1) !important;
+            }
+            & .mat-mdc-select-value {
+                font-family: var(--font-1) !important;
+                font-size: var(--input-font) !important;
+                color: var(--text-1) !important;
+                & .mat-mdc-select-placeholder {
+                    font-size: var(--input-font) !important;
+                    color: var(--text-1) !important;
+                }
+            }
+        }
+    }
+}
+
+.mat-mdc-select-panel {
+    background-color: var(--background) !important;
+    border: solid var(--border-width) var(--secondary);
+    border-radius: var(--border-radius);
+
+    & mat-option {
+        color: var(--text-2);
+        font-family: var(--font-1) !important;
+    }
+
+    & .mat-mdc-option-active .mdc-list-item__primary-text {
+        color: var(--text-1) !important;
+    }
+}
+
+.selected-trigger {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    & .icon {
+        font-size: 1rem;
+        height: 1rem;
+        margin: auto 0px;
+    }
+}

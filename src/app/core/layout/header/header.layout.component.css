@@ -1,0 +1,118 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    grid-template-areas: "header-search header-action header-notifications";
+    grid-template-columns: 70% 25% 5%;
+    width: calc(100% - 22.25rem);
+    height: 90px;
+    align-items: center;
+    padding: 0px;
+    position: fixed;
+    top: 0px;
+    z-index: 10;
+    background-color: var(--background);
+}
+
+.header-search {
+    margin: auto auto auto 0px;
+    grid-area: header-search;
+    width: 40%;
+
+    & .mat-mdc-form-field-subscript-wrapper {
+        display: none !important;
+    }
+    & .mat-mdc-text-field-wrapper {
+        border-color: var(--secondary) !important;
+    }
+    & .header-clear-search {
+        cursor: pointer;
+    }
+}
+
+.header-menu {
+    display: none;
+    @media screen and (max-width: 899px) {
+        display: flex;
+    }
+}
+
+.header-notifications {
+    grid-area: header-notifications;
+    margin: auto 0px auto 10px;
+    position: relative;
+    border: 0px;
+    height: min-content;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    font-size: 1.5rem;
+    & .icon {
+        margin: auto;
+        color: var(--third);
+    }
+}
+
+.header-action {
+    display: flex;
+    margin: auto 0px auto auto;
+    grid-area: header-action;
+    gap: 1rem;
+    & .button {
+        gap: 0.25rem;
+    }
+}
+
+.header-input {
+    &.mat-mdc-form-field-input-control::placeholder {
+        color: var(--text-1) !important;
+    }
+    & .mat-mdc-form-field-has-icon-prefix.mat-mdc-text-field-wrapper {
+        background-color: var(--primary) !important;
+        color: var(--text-1);
+    }
+}
+
+.indicator {
+    grid-area: indicator;
+    height: inherit;
+    width: 10px;
+    margin-right: 10px;
+    &.credit-card {
+        background-color: var(--error);
+    }
+    &.category {
+        background-color: var(--info);
+    }
+    &.bank {
+        background-color: var(--success);
+    }
+    &.company {
+        background-color: var(--default);
+    }
+    &.bill {
+        background-color: var(--warning);
+    }
+}
+
+.name {
+    grid-area: name;
+    font-weight: bold;
+}
+
+::ng-deep .header-autocomplete {
+    background-color: var(--background) !important;
+    & .header-option {
+        padding: 4px 16px;
+        background-color: var(--bh) !important;
+        & span {
+            display: grid;
+            width: 100%;
+            grid-template-areas: "indicator name" "indicator description";
+            grid-template-columns: 5% 95%;
+            row-gap: 3px;
+        }
+    }
+}

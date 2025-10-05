@@ -1,0 +1,35 @@
+import { inject, Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { BANK } from "src/utils/constants/services";
+import { BankObject, SumAndCountData } from "src/app/core/types/services";
+import { UserState } from "src/app/core/subjects/subjects.user";
+import { mergeMap } from "rxjs";
+import { Bank } from "src/app/core/types/objects";
+
+@Injectable({
+    providedIn: "root",
+})
+export class ServiceBank {
+    private http = inject(HttpClient);
+    private user = inject(UserState);
+
+    getBanks() {
+        return this.user.user$.pipe(
+            mergeMap((user) => this.http.get<Bank[]>(BANK + `/${user?.id}`))
+        );
+    }
+
+    createBank(data: Omit<BankObject, "userId">) {
+        return this.user.user$.pipe(
+            mergeMap((user) => this.http.post(BANK, { ...data, userId: user!.id }))
+        );
+    }
+
+    deleteBank(id: string) {
+        return this.http.delete(BANK + `/${id}`);
+    }
+
+    updateBank(data: Omit<BankObject, "userId"> & { id: string }) {
+        return this.http.patch(BANK, data);
+    }
+}

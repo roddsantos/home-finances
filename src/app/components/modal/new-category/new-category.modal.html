@@ -1,0 +1,48 @@
+<modal-component
+    [disabled]="categoryForm.invalid"
+    (actionPrimary)="onSubmit()"
+    (actionSecondary)="modalComponent.onClose()"
+    [bodyTemplate]="newCompany"
+></modal-component>
+
+<ng-template #newCompany>
+    <form [formGroup]="categoryForm">
+        <div class="new-bank-container">
+            <mat-form-field class="new-bank-field" appearance="outline">
+                <mat-label>name</mat-label>
+                <input maxlength="100" required matInput formControlName="name" />
+                @if (categoryForm.controls.name.errors?.["required"]) {
+                <mat-error>{{errorMessage.name}}</mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field class="new-bank-field" appearance="outline">
+                <mat-label>description</mat-label>
+                <input maxlength="100" matInput formControlName="description" />
+                @if (categoryForm.controls.description.errors?.["required"]) {
+                <mat-error>{{errorMessage.description}}</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field class="color-picker" appearance="outline">
+                <mat-label>color</mat-label>
+                <input formControlName="color" matInput type="color" />
+            </mat-form-field>
+            <button
+                aria-label="create new bill button"
+                mat-button
+                color="primary"
+                class="button-primary margin"
+                (click)="openDialog()"
+            >
+                {{categoryForm.get("icon")?.value || 'choose icon'}}
+            </button>
+            <mat-icon
+                class="category-icon material-icons"
+                aria-hidden="false"
+                aria-label="Example home icon"
+                [fontIcon]="categoryForm.get('icon')?.value || ''"
+            ></mat-icon>
+        </div>
+    </form>
+</ng-template>

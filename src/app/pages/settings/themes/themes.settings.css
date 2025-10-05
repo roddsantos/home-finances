@@ -1,0 +1,39 @@
+.themes {
+    grid-template-columns: repeat(4, 23%);
+    width: 100%;
+    @media screen and (max-width: 1366px) {
+        grid-template-columns: repeat(3, 30%);
+    }
+    @media screen and (max-width: 900px) {
+        grid-template-columns: repeat(2, 45%);
+    }
+    @media screen and (max-width: 600px) {
+        grid-template-columns: repeat(1, 100%);
+    }
+}
+
+.theme-container {
+    padding: 10px;
+    border-radius: var(--border-radius);
+    background-color: var(--bh);
+    min-height: 100px;
+    cursor: pointer;
+    &.selected {
+        border-style: solid;
+        border-width: 2px;
+        border-color: var(--secondary);
+    }
+}
+
+.theme-pallete {
+    display: flex;
+    flex-direction: row;
+    height: 20px;
+    width: 100%;
+    margin-top: 0.5rem;
+    border-radius: var(--border-radius);
+    & .pallete-color {
+        width: 25%;
+        height: 100%;
+    }
+}

@@ -1,0 +1,34 @@
+<modal-component [bodyTemplate]="eventsList"></modal-component>
+
+<ng-template #eventsList>
+    <div class="events-list-container">
+        <div class="events-list">
+            <div
+                *ngFor="let event of data.events"
+                class="events-list-item"
+                (click)="onClickEvent(event)"
+            >
+                <div [ngClass]="['color', event.sector]" class="color"></div>
+                <div class="title-container">
+                    <h2
+                        class="title"
+                        [style.textDecorationColor]="!isBill(event) ? event.color:'transparent'"
+                    >
+                        {{event.name}}
+                    </h2>
+                    <p class="sector">{{ (event | sector) }}</p>
+                </div>
+                <div class="description-container">
+                    <p>{{event.description}}</p>
+                </div>
+                <div class="value-container">
+                    <h5>{{isBill(event) ? 'bill value' : 'invoice value'}}</h5>
+                    <p>
+                        {{(isBill(event) ? event.totalParcel : event.invoice) | currency :
+                        "R$"}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

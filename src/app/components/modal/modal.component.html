@@ -1,0 +1,44 @@
+<div [ngClass]="['modal-container', size, hideHeader ? 'no-header' : '']">
+    <div mat-dialog-title class="modal-header" *ngIf="!hideHeader">
+        <h3>{{ (modalState.header$ | async) || data?.header }}</h3>
+    </div>
+    <mat-icon
+        class="modal-close-icon"
+        aria-hidden="false"
+        aria-label="Example home icon"
+        fontIcon="close"
+        (click)="dialogRef.close()"
+    ></mat-icon>
+    <div class="modal-body">
+        <ng-container *ngTemplateOutlet="bodyTemplate || defaultBody"> </ng-container>
+        <ng-template #defaultBody></ng-template>
+    </div>
+    <div class="modal-footer">
+        <button
+            *ngIf="this.actionSecondary.observed"
+            mat-button
+            class="button-secondary"
+            (click)="this.onSecondary()"
+        >
+            {{ (modalState.footer$ | async)?.alertLabel }}
+        </button>
+        <button
+            *ngIf="this.actionPrimary.observed"
+            [disabled]="disableButton"
+            mat-button
+            class="button-primary add-margin-left"
+            (click)="this.onPrimary()"
+            cdkFocusInitial
+        >
+            {{ (modalState.footer$ | async)?.submitLabel }}
+        </button>
+        <button
+            *ngIf="!this.actionPrimary.observed && !this.actionSecondary.observed"
+            mat-button
+            class="modal-button-close"
+            (click)="dialogRef.close()"
+        >
+            close
+        </button>
+    </div>
+</div>

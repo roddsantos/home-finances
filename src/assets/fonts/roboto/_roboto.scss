@@ -1,0 +1,71 @@
+@font-face {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: local("Roboto-Light"), local("Roboto-Light.ttf"),
+        url("../../../assets/fonts/roboto/Roboto-Light.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: italic;
+    font-weight: 300;
+    font-display: swap;
+    src: local("Roboto-LightItalic"), local("Roboto-LightItalic.ttf"),
+        url("../../../assets/fonts/roboto/Roboto-LightItalic.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: local("Roboto-Italic"), local("Roboto-Italic.ttf"),
+        url("../../../assets/fonts/roboto/Roboto-Italic.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local("Roboto-Regular"), local("Roboto-Regular.ttf"),
+        url("../../../assets/fonts/roboto/Roboto-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: local("Roboto-Bold"), local("Roboto-Bold.ttf"),
+        url("../../../assets/fonts/roboto/Roboto-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: italic;
+    font-weight: 600;
+    font-display: swap;
+    src: local("Roboto-BoldItalic"), local("Roboto-BoldItalic.ttf"),
+        url("../../../assets/fonts/roboto/Roboto-BoldItalic.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: local("Roboto-Black"), local("Roboto-Black.ttf"),
+        url("../../../assets/fonts/roboto/Roboto-Black.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: italic;
+    font-weight: 800;
+    font-display: swap;
+    src: local("Roboto-BlackItalic"), local("Roboto-BlackItalic.ttf"),
+        url("../../../assets/fonts/roboto/Roboto-BlackItalic.ttf") format("truetype");
+}

@@ -1,0 +1,32 @@
+<div
+    [ngClass]="[
+        'buttons-container',
+        'animate',
+        'blur',
+        transparent ? 'transparent' : '',
+        vertical ? 'vertical' : ''
+    ]"
+>
+    <button
+        *ngFor="let a of actions"
+        (click)="a.action(data)"
+        [matTooltip]="a.name"
+        matTooltipPosition="above"
+        class="icon-button"
+        mat-icon-button
+        aria-label="action company button"
+        [style.display]="
+            !a.hidden
+                ? 'flex'
+                : !a.hidden(data) || a.hidden === undefined
+                ? 'flex'
+                : 'none'
+        "
+    >
+        <mat-icon
+            class="material-symbols-outlined icon"
+            [fontIcon]="a.icon"
+            [style.color]="a.color"
+        ></mat-icon>
+    </button>
+</div>

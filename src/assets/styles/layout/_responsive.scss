@@ -1,0 +1,8 @@
+.mobile {
+    @media screen and (max-width: 600px) {
+        display: flex !important;
+    }
+    @media screen and (min-width: 600px) {
+        display: none !important;
+    }
+}

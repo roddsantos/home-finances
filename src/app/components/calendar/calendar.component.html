@@ -1,0 +1,56 @@
+<div class="calendar">
+    <div class="calendar-weekdays">
+        <div
+            [ngClass]="{
+                weekday: true,
+                workday: !(weekday.order === 0 || weekday.order === 6),
+                dayoff: weekday.order === 0 || weekday.order === 6,
+                binary: (generalState.theme$ | async) === 'binary'
+            }"
+            *ngFor="let weekday of weekdays"
+        >
+            <p>{{ weekday.short }}</p>
+        </div>
+    </div>
+    <div class="calendar-dates">
+        <div
+            *ngFor="let date of dates"
+            [ngClass]="{
+                date: true,
+                'this-month': date.thisMonth,
+                today: date.day === today,
+                'last-month': !date.thisMonth,
+                bills: date.events.count > 0
+            }"
+            (click)="onDateClick(date)"
+            [matTooltip]="
+                date.events.count > 0
+                    ? date.events.count +
+                      (date.events.count === 1 ? 'bill' : ' bills') +
+                      ' \(R$ ' +
+                      date.events.total +
+                      ')'
+                    : ''
+            "
+            [matTooltipPosition]="'above'"
+        >
+            <p>
+                {{ date.day }}
+            </p>
+            <mat-icon
+                *ngIf="date.events.count > 0"
+                [ngClass]="{
+                    'material-symbols-outlined': true,
+                    icon: true,
+                    yellow: date.events.count <= 4,
+                    red: date.events.count > 4
+                }"
+                [fontIcon]="
+                    date.events.count <= 9
+                        ? 'filter_' + date.events.count
+                        : 'filter_9_plus'
+                "
+            ></mat-icon>
+        </div>
+    </div>
+</div>

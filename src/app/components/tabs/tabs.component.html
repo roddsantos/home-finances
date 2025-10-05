@@ -1,0 +1,23 @@
+<div class="tabs-main">
+    <div class="tabs-container">
+        <button
+            [ngClass]="[
+                tabItem.index === currentTab
+                    ? 'button-primary tab-selected'
+                    : 'button-text tab-unselected'
+            ]"
+            *ngFor="let tabItem of tabs"
+            (click)="handleChangeTab(tabItem)"
+        >
+            <div class="tab">
+                <p>{{ tabItem.title }}</p>
+                <mat-icon
+                    class="material-symbols-outlined"
+                    *ngFor="let icon of tabItem.icons"
+                    [fontIcon]="icon"
+                ></mat-icon>
+            </div>
+        </button>
+    </div>
+    <div class="tabs-limiter"></div>
+</div>

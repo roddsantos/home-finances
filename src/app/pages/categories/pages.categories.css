@@ -1,0 +1,95 @@
+.category {
+    width: 100%;
+}
+
+.category-li {
+    list-style: none;
+}
+
+.category-infos {
+    width: 100%;
+}
+
+.category-grid {
+    grid-template-columns: repeat(4, auto);
+    @media screen and (max-width: 1366px) {
+        grid-template-columns: repeat(3, auto);
+    }
+    @media screen and (max-width: 900px) {
+        grid-template-columns: repeat(2, auto);
+    }
+    @media screen and (max-width: 600px) {
+        grid-template-columns: repeat(1, auto);
+    }
+}
+
+.category-container {
+    display: grid;
+    grid-template-areas:
+        "category-color category-title category-buttons"
+        "category-description category-description category-icon";
+    grid-template-columns: 1fr 12fr 3fr;
+    grid-template-rows: repeat(2, auto);
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
+    flex-direction: row;
+    min-height: 120px;
+    @media screen and (max-width: 1366px) {
+        grid-template-areas:
+            "category-color category-title category-title"
+            "category-description category-description category-description"
+            "category-icon category-icon category-buttons";
+        grid-template-columns: 1fr 12fr 3fr;
+        row-gap: 0.5rem;
+        grid-template-rows: repeat(3, auto);
+    }
+
+    &.binary {
+        border: solid var(--border-width) var(--secondary);
+    }
+}
+
+.category-title {
+    grid-area: category-title;
+    font-weight: bold;
+    width: 100%;
+    margin: auto 10px auto 0px;
+}
+
+.category-description {
+    grid-area: category-description;
+    font-weight: normal;
+    font-size: 14px;
+    color: var(--text-2);
+    margin: auto 0px;
+    width: 100%;
+}
+
+.category-color {
+    width: 10px;
+    height: 100%;
+    margin: auto;
+}
+
+.category-buttons {
+    grid-area: category-buttons;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto 0px auto auto;
+    @media screen and (max-width: 1366px) {
+        margin: auto 0px;
+    }
+}
+
+.secondary-text {
+    font-size: 14px;
+}
+
+.category-icon {
+    margin: auto 0px auto auto;
+    color: var(--text-1);
+    font-size: 2rem;
+    width: max-content;
+    height: max-content;
+}

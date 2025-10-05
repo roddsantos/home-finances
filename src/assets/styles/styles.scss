@@ -1,0 +1,107 @@
+@use "src/assets/styles/layout/theme.scss" as app-theme;
+@use "@angular/material" as mat;
+@import "../styles/components/buttons";
+@import "../styles/components/containers";
+@import "../styles/general/fonts";
+@import "../styles/general/page";
+@import "../styles/layout/colors";
+@import "../styles/layout/responsive";
+@import "../styles/layout/theme";
+@import "../styles/material/datepicker";
+@import "../styles/material/chip";
+@import "../styles/material/select";
+@import "../styles/material/snackbar";
+@import "../styles/material/tabs";
+@import "../styles/material/textfield";
+@import "../styles/material/toggle";
+
+:root {
+    @include mat.all-component-themes(app-theme.$app-light-theme);
+    --input-unit: 1.5rem;
+    --input-position: 1.5rem;
+    --input-font: 1rem;
+
+    --font-1: Open-Sans;
+    --font-2: Commissioner;
+
+    --text-gen: 0.8rem;
+    --padding-gen: 0.75rem;
+
+    --border-radius: 0.5rem;
+    --border-width: 1px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    &::-webkit-scrollbar {
+        width: 15px;
+        border-radius: 3px;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: var(--background);
+        border: solid 1px var(--border-color);
+        border-radius: 3px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: var(--secondary);
+        height: auto;
+        margin: 1px;
+        border-radius: 3px;
+    }
+}
+
+body {
+    min-height: 100dvh;
+    width: 100dvw;
+    background-color: var(--background);
+    font-family: var(--font-2);
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    max-height: 100dvh;
+    width: calc(100dvw + 20px);
+    padding: 80px 50px 40px;
+    max-width: 1000px;
+    margin: 0px auto 0px -20px;
+    background-color: var(--background);
+}
+
+.modal-backdrop {
+    position: absolute;
+    z-index: 3;
+    background-color: rgb(0, 0, 0, 0.5);
+    width: 100dvw;
+    height: 100dvh;
+    align-items: center;
+    justify-content: center;
+    left: 0px;
+    top: 0px;
+}
+
+.mat-mdc-form-field-error {
+    color: var(--error) !important;
+    caret-color: var(--error) !important;
+    font-size: var(--input-font);
+}
+
+.tab-container {
+    width: 100%;
+    min-height: 500px;
+}
+
+.binary {
+    & .material-symbols-outlined {
+        color: var(--secondary);
+    }
+    --border-width: 2px;
+}
+
+.material-symbols-outlined,
+.material-symbols-rounded,
+.material-icons-outlined {
+    color: var(--text-1);
+}

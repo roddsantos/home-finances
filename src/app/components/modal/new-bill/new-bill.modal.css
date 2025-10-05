@@ -1,0 +1,49 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & h1 {
+        padding: 10px 0px 20px;
+        color: var(--text-1);
+    }
+}
+
+.new-bill-field {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 0.75rem;
+}
+
+.app-icon {
+    color: var(--primary);
+    height: auto;
+    font-size: 30px;
+    cursor: pointer;
+    &.arrow {
+        margin: 12px auto 0px;
+    }
+}
+
+.half {
+    width: 47.5%;
+}
+
+.third {
+    width: 31%;
+}
+
+.step-title {
+    margin: auto auto 0rem 0px;
+}
+
+.step-desc {
+    margin: auto auto 1rem 0px;
+}

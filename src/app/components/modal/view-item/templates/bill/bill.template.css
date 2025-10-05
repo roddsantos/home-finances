@@ -1,0 +1,83 @@
+.bill {
+    display: grid;
+    grid-template-areas:
+        "bill-value"
+        "bill-tags"
+        "section-data";
+    grid-template-columns: 1fr;
+    row-gap: 1rem;
+}
+
+.settled,
+.income {
+    & h6,
+    mat-icon {
+        color: var(--success) !important;
+    }
+    background-color: rgb(from var(--success) r g b / 0.25);
+    border-color: rgb(from var(--success) r g b / 0.25);
+    gap: 0.25rem;
+}
+/* .close {
+    color: var(--warning);
+    background-color: var(--warning);
+} */
+.late,
+.outcome {
+    & h6,
+    mat-icon {
+        color: var(--error) !important;
+    }
+    background-color: rgb(from var(--error) r g b / 0.25);
+    border-color: rgb(from var(--error) r g b / 0.25);
+    gap: 0.25rem;
+}
+
+.section-data {
+    grid-area: section-data;
+}
+
+.bill-tags {
+    grid-area: bill-tags;
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+}
+
+.bill-value {
+    grid-area: bill-value;
+    width: 100%;
+}
+
+.conditional-container {
+    grid-area: conditional-container;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    width: 100%;
+    & .company-bill {
+        grid-area: company-bill;
+        width: 33%;
+    }
+    & .credit-card-bill {
+        grid-area: credit-card-bill;
+        width: 33%;
+    }
+    & .bank-bill {
+        grid-area: bank-bill;
+        width: 33%;
+        align-items: center;
+        & .banks {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            & mat-icon {
+                width: auto;
+                height: auto;
+            }
+        }
+    }
+    & .category-bill {
+        grid-area: category-bill;
+    }
+}

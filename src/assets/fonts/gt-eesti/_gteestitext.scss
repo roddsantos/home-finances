@@ -1,0 +1,70 @@
+@font-face {
+    font-family: "GT-Eesti-Text";
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: local("GT-Eesti-Text-Bold-Trial"), local("GT-Eesti-Text-Bold-Trial.otf"),
+        url("../../../assets/fonts/gt-eesti/GT-Eesti-Text-Bold-Trial.otf")
+            format("opentype");
+}
+
+@font-face {
+    font-family: "GT-Eesti-Text";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: local("GT-Eesti-Text-Medium-Trial"), local("GT-Eesti-Text-Medium-Trial.otf"),
+        url("../../../assets/fonts/gt-eesti/GT-Eesti-Text-Medium-Trial.otf")
+            format("opentype");
+}
+
+@font-face {
+    font-family: "GT-Eesti-Text";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: local("GT-Eesti-Text-Regular-Trial"), local("GT-Eesti-Text-Regular-Trial.otf"),
+        url("../../../assets/fonts/gt-eesti/GT-Eesti-Text-Regular-Trial.otf")
+            format("opentype");
+}
+
+@font-face {
+    font-family: "GT-Eesti-Text";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: local("GT-Eesti-Text-Book-Trial"), local("GT-Eesti-Text-Book-Trial.otf"),
+        url("../../../assets/fonts/gt-eesti/GT-Eesti-Text-Book-Trial.otf")
+            format("opentype");
+}
+
+@font-face {
+    font-family: "GT-Eesti-Text";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local("GT-Eesti-Text-Light-Trial"), local("GT-Eesti-Text-Light-Trial.otf"),
+        url("../../../assets/fonts/gt-eesti/GT-Eesti-Text-Light-Trial.otf")
+            format("opentype");
+}
+
+@font-face {
+    font-family: "GT-Eesti-Text";
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: local("GT-Eesti-Text-Thin-Trial"), local("GT-Eesti-Text-Thin-Trial.otf"),
+        url("../../../assets/fonts/gt-eesti/GT-Eesti-Text-Thin-Trial.otf")
+            format("opentype");
+}
+
+@font-face {
+    font-family: "GT-Eesti-Text";
+    font-style: normal;
+    font-weight: 200;
+    font-display: swap;
+    src: local("GT-Eesti-Text-UltraLight-Trial"),
+        local("GT-Eesti-Text-UltraLight-Trial.otf"),
+        url("../../../assets/fonts/gt-eesti/GT-Eesti-Text-UltraLight-Trial.otf")
+            format("opentype");
+}

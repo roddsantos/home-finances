@@ -1,0 +1,22 @@
+<div class="tab-container">
+    <feedback-container
+        *ngIf="(catState.categories$ | async)?.length === 0"
+        [info]="(catState.status$ | async)!"
+    ></feedback-container>
+    <li *ngFor="let category of catState.categories$ | async">
+        <div class="item-list">
+            <mat-icon
+                class="icon-type"
+                aria-hidden="false"
+                aria-label="Example home icon"
+                fontIcon="{{category.icon}}"
+                [style.color]="category.color"
+            ></mat-icon>
+            <div class="cat-item-text">
+                <p class="title">{{category.name}}</p>
+                <p class="description">{{category.description}}</p>
+            </div>
+            <actions class="icons-buttons" [actions]="actions"></actions>
+        </div>
+    </li>
+</div>

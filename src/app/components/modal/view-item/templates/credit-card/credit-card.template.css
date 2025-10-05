@@ -1,0 +1,77 @@
+.credit-card {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-areas:
+        "day-invoice-container day-due-container month-year-container flag"
+        "limit-container limit-container limit-container limit-container"
+        "progress-container progress-container progress-container progress-container"
+        "invoice invoice invoice invoice";
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    row-gap: 0.5rem;
+    & .invoice,
+    .limit-left-container,
+    .month-year-container,
+    .day-due-container,
+    .day-invoice-container {
+        & h5 {
+            color: var(--text-2);
+        }
+        & h2,
+        p {
+            color: var(--text-1);
+            font-weight: bold;
+        }
+    }
+    & .flag {
+        & img {
+            width: 50px;
+            margin: 0px 0px auto;
+            text-align: center;
+        }
+    }
+    & .invoice {
+        grid-area: invoice;
+        width: 100%;
+        & h1 {
+            font-family: var(--text-2);
+        }
+        & .row {
+            display: flex;
+            flex-direction: row;
+        }
+        & .status {
+            width: max-content;
+            height: max-content;
+            border-radius: var(--border-radius);
+            margin: auto 0px auto 1rem;
+            color: var(--text-3);
+            padding: 4px 8px;
+        }
+    }
+    & .progress-container {
+        grid-area: progress-container;
+        width: 100%;
+        height: 20px;
+        background-color: var(--background);
+        border-style: solid;
+        border-width: var(--border-width);
+        border-radius: 0.5rem;
+        padding: 4px;
+        & .bar {
+            height: 100%;
+            border-radius: 0.45rem;
+        }
+    }
+    & .limit-container {
+        grid-area: limit-container;
+        & h5 {
+            color: var(--text-2);
+        }
+        & .limit {
+            color: var(--text-2);
+        }
+        & .numbers {
+            display: flex;
+        }
+    }
+}

@@ -1,0 +1,102 @@
+import { Dialog } from "@angular/cdk/dialog";
+import { CommonModule } from "@angular/common";
+import { Component, inject } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { MatIconModule } from "@angular/material/icon";
+import { CustomFilterComponent } from "src/app/components/custom-filter/custom-filter.component";
+import { ModalNewBill } from "src/app/components/modal/new-bill/new-bill.modal";
+import { BillState } from "src/app/core/subjects/subjects.bill";
+import { Bill } from "src/app/core/types/objects";
+import { BankListTemplateMonthly } from "./templates/bank/bank.template.bills";
+import { CreditCardTemplateMonthly } from "./templates/credit-card/credit-card.template.bills";
+import { ServiceTemplateMonthly } from "./templates/service/service.template.bills";
+import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
+import { ServiceBill } from "src/app/services/bill.service";
+import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { PaginationTemplate } from "./templates/pagination/pagination.template.bills";
+import { LocalStorageService } from "src/app/services/local-storage.service";
+import { GeneralState } from "src/app/core/subjects/subjects.general";
+import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
+import { GeneralService } from "src/app/services/general.service";
+import { CardComponent } from "../../components/card/card.component";
+
+@Component({
+    selector: "page-bills",
+    templateUrl: "./pages.bills.html",
+    styleUrls: ["./pages.bills.css"],
+    standalone: true,
+    imports: [
+        CustomFilterComponent,
+        MatExpansionModule,
+        CommonModule,
+        MatIconModule,
+        MatButtonModule,
+        BankListTemplateMonthly,
+        CreditCardTemplateMonthly,
+        ServiceTemplateMonthly,
+        FeedbackContainerComponent,
+        PaginationTemplate,
+        MatTooltipModule,
+        CardComponent,
+    ],
+})
+export class PageBills {
+    public billState = inject(BillState);
+    public dialog = inject(Dialog);
+    public billService = inject(ServiceBill);
+    public snack = inject(CustomSnackbarComponent);
+    public generalState = inject(GeneralState);
+    public generalService = inject(GeneralService);
+    public storage = inject(LocalStorageService);
+
+    titleItems: Partial<keyof Bill>[] = ["name", "updatedAt"];
+    detailsItems: Partial<keyof Bill>[] = ["description", "total"];
+    isLineTheme: string = "";
+
+    ngOnInit() {
+        this.billState.setAction(() => this.onReload());
+        this.generalState.theme$.subscribe({
+            next: (theme) => (this.isLineTheme = theme === "binary" ? "binary" : ""),
+        });
+    }
+
+    trackByFn(index: number, item: any) {
+        return item.id;
+    }
+
+    openFilterContainer() {
+        this.generalState.changeFilterContainer(true);
+        this.storage.setFilterContainer(true);
+    }
+
+    getBills() {
+        this.billService.getBills().subscribe({
+            next: (bills) => {
+                this.billState.setBills(bills);
+            },
+            error: () => {
+                this.snack.openSnackBar("error fetching bills", "error");
+                this.billState.changeStatus("error", "error fetching bills");
+            },
+        });
+    }
+
+    openDetails(bill: Bill) {
+        const option = {
+            data: bill,
+        };
+        this.dialog.open(ModalViewItem, option);
+    }
+
+    onReload() {
+        this.billState.changeStatus("loading", "loading");
+        this.getBills();
+    }
+
+    openModal() {
+        let options = {};
+        this.dialog.open(ModalNewBill, options);
+    }
+}

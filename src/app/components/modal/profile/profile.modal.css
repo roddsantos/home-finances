@@ -1,0 +1,39 @@
+.profile-body {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.profile-username:focus {
+  outline: none;
+}
+
+.button-enter {
+  background-color: blueviolet;
+}
+
+.text-label {
+  margin: auto auto 10px;
+  font: normal 14px Roboto;
+}
+
+.text-name {
+  margin: 10px auto auto;
+  font: normal 18px Roboto;
+}
+
+.button-container {
+  width: 120px;
+  height: 40px;
+  background-color: blueviolet;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: auto;
+  display: flex;
+}
+
+.button-text {
+  font: normal 20px Roboto;
+  margin: auto;
+  color: white;
+}

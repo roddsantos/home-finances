@@ -1,0 +1,202 @@
+.cc {
+    width: 90%;
+}
+
+.cc-li {
+    list-style: none;
+    display: grid;
+    grid-template-areas: "cc-container" "cc-highlighter";
+}
+
+.cc-infos {
+    width: 100%;
+}
+
+.cc-grid {
+    grid-template-columns: repeat(3, auto);
+    @media screen and (max-width: 900px) {
+        grid-template-columns: repeat(2, auto);
+    }
+    @media screen and (max-width: 600px) {
+        grid-template-columns: repeat(1, auto);
+    }
+}
+
+.cc-container {
+    display: grid;
+    grid-template-areas:
+        "cc-color cc-title-container cc-title-container cc-buttons"
+        "cc-tags cc-tags cc-tags cc-tags"
+        "cc-description cc-description cc-description cc-description"
+        "cc-invoice cc-invoice cc-invoice cc-flag";
+    grid-template-columns: 5% 45% 25% 25%;
+    min-height: 200px;
+    &.binary {
+        border: solid var(--border-width) var(--secondary);
+    }
+    @media screen and (max-width: 1366px) {
+        grid-template-areas:
+            "cc-color cc-title-container cc-title-container cc-title-container"
+            "cc-tags cc-tags cc-tags cc-tags"
+            "cc-description cc-description cc-description cc-description"
+            "cc-invoice cc-invoice cc-invoice cc-flag"
+            "cc-buttons cc-buttons cc-buttons cc-buttons";
+        row-gap: 0.25rem;
+    }
+}
+
+.cc-highlighter {
+    display: none;
+    width: 95%;
+    height: 10px;
+    margin: 0px auto;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.cc-tags {
+    grid-area: cc-tags;
+    display: flex;
+}
+
+.cc-month {
+    grid-area: cc-month;
+    background-color: var(--bh);
+    width: max-content;
+    margin: auto 0px auto;
+}
+
+.cc-status {
+    grid-area: cc-status;
+    margin: auto 0px auto 1rem;
+    &.paid {
+        background-color: rgb(from var(--success) r g b / 0.2);
+        & p {
+            color: var(--success);
+        }
+    }
+    &.pending {
+        background-color: rgb(from var(--error) r g b / 0.2);
+        & p {
+            color: var(--error);
+        }
+    }
+}
+
+.cc-color {
+    width: 10px;
+    height: 100%;
+    margin: auto auto auto 0px;
+}
+
+.cc-limit {
+    grid-area: cc-limit;
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    color: var(--primary);
+    font: normal 12px Helvetica;
+    margin: auto 10px;
+}
+
+.cc-title-container {
+    grid-area: cc-title-container;
+    display: flex;
+    flex-direction: row;
+    font-weight: bold;
+    width: 100%;
+    margin: auto 10px auto 0px;
+}
+
+.cc-flag {
+    grid-area: cc-flag;
+    width: 60px;
+    margin: auto 0px auto auto;
+    text-align: center;
+}
+
+.cc-description {
+    grid-area: cc-description;
+    font-weight: normal;
+    font-size: 14px;
+    color: var(--text-2);
+    margin: auto 0px;
+    width: 50%;
+}
+
+.cc-color-container {
+    width: 10px;
+    height: 40px;
+    position: relative;
+    right: -45px;
+    top: 0px;
+    margin-left: auto;
+}
+
+.cc-invoice {
+    grid-area: cc-invoice;
+    font-weight: bold;
+    font-size: 2rem;
+    margin: auto 10px auto 0px;
+    & .limit {
+        display: flex;
+        flex-direction: row;
+        & .total {
+            margin: auto 0px;
+            color: var(--text-2);
+            font-size: 1rem;
+            font-weight: normal;
+        }
+    }
+
+    @media screen and (max-width: 1366px) {
+        & .limit {
+            display: flex;
+            flex-direction: column;
+            & .left {
+                font-size: 1.25rem;
+            }
+        }
+    }
+}
+
+.secondary-text {
+    font-size: 14px;
+}
+
+.cc-button-container {
+    display: flex;
+    flex-direction: row;
+    margin: 0px 0px 20px auto;
+    height: auto;
+}
+
+.cc-buttons {
+    grid-area: cc-buttons;
+    display: flex;
+    margin-left: auto;
+    margin-right: 4px;
+}
+
+.cc-progress-container {
+    grid-area: cc-progress-container;
+    width: 100%;
+    height: 20px;
+    background-color: var(--background);
+    border-style: solid;
+    border-width: var(--border-width);
+    border-radius: 0.5rem;
+    padding: 4px;
+    & .bar {
+        height: 100%;
+        border-radius: 0.45rem;
+    }
+}
+
+.item-list:hover .icons-buttons {
+    display: flex;
+    right: 80px;
+}
+
+.icons-buttons {
+    display: none;
+}

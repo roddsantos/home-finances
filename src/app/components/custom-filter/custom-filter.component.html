@@ -1,0 +1,105 @@
+<div class="filter-main" *ngIf="generalState.filterContainer$ | async">
+    <div
+        [ngClass]="[
+            'filter-container',
+            (generalState.theme$ | async) === 'binary' ? 'binary' : ''
+        ]"
+    >
+        <div class="filter-term">
+            <h6>term</h6>
+            <mat-form-field class="term-input" appearance="outline">
+                <input
+                    (keyup.enter)="addTerm($event)"
+                    maxlength="50"
+                    [formControl]="termCtrl"
+                    matInput
+                />
+                <mat-hint>press 'enter' to search</mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="filter-date">
+            <h6 class="date-label">date span</h6>
+            <toggle-button
+                class="date-component"
+                [items]="monthItems"
+                [formController]="dateCtrl"
+                (click)="addDateSpan($event)"
+            />
+        </div>
+        <div class="filter-status">
+            <h6 class="status-label">bill status</h6>
+            <toggle-button
+                class="status-component"
+                [items]="statusItems"
+                [formController]="statusCtrl"
+                (click)="addStatus($event)"
+            />
+        </div>
+        <div class="filter-money-flux">
+            <h6 class="money-flux-label">bill payment</h6>
+            <toggle-button
+                class="money-flux-component"
+                [items]="moneyFluxItems"
+                [formController]="moneyFluxCtrl"
+                (click)="addMoneyFlux($event)"
+            />
+        </div>
+        <div class="filter-type">
+            <h6 class="type-label">bill type</h6>
+            <toggle-button
+                class="type-component"
+                [items]="typeItems"
+                [formController]="typeCtrl"
+                (click)="addType($event)"
+            />
+        </div>
+        <div class="filter-buttons">
+            <button
+                aria-label="open filter selector"
+                matTooltip="more filters"
+                matTooltipPosition="above"
+                mat-button
+                [ngClass]="['button-primary']"
+                (click)="openDialog()"
+            >
+                <mat-icon class="icon material-symbols-outlined">add</mat-icon>
+                <mat-icon class="icon material-symbols-outlined">filter_alt</mat-icon>
+            </button>
+            <button
+                *ngIf="(filterState.filters$ | async)!.length > 0"
+                aria-label="remove filters button"
+                matTooltip="remove all filters"
+                matTooltipPosition="above"
+                mat-button
+                [ngClass]="['button-secondary', 'remove']"
+                (click)="removeFilter()"
+            >
+                <mat-icon class="icon material-symbols-outlined">delete</mat-icon>
+                <mat-icon class="icon material-symbols-outlined">filter_alt</mat-icon>
+            </button>
+        </div>
+        <div class="divider-1"></div>
+        <div class="divider-2"></div>
+        <div class="divider-3"></div>
+        <div class="divider-4"></div>
+        <div *ngIf="(filterState.filters$ | async)!.length > 0" class="divider-5"></div>
+        <div *ngIf="(filterState.filters$ | async)!.length > 0" class="filter-list">
+            @for (chip of filterState.filters$ | async; track chip; let i = $index) {
+            <mat-chip-row
+                [ngClass]="[chip.identifier, 'chip-item', generalState.theme$ | async]"
+                (removed)="removeFilter(chip)"
+            >
+                {{
+                    chip.identifier === "min" || chip.identifier === "max"
+                        ? chip.identifier + ":"
+                        : ""
+                }}
+                {{ chip.identifier === "name" ? '"' + chip.name + '"' : chip.name }}
+                <button matChipRemove [attr.aria-label]="'remove ' + chip.name">
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </mat-chip-row>
+            }
+        </div>
+    </div>
+</div>

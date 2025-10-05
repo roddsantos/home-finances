@@ -1,0 +1,135 @@
+<div class="dashboard">
+    <h1 class="page-title">dashboard</h1>
+    <div class="dashboard-container">
+        <card-component
+            id="dashboard-month-span"
+            class="dashboard-month-span"
+            [title]="'monthly bills' "
+            [description]="'last ' + ((this.dashboardState.monthSpan$ | async) === 1 ? 'this month' : (this.dashboardState.monthSpan$ | async) + ' months')"
+            [border]="true"
+        >
+            <div class="content">
+                <canvas id="bills-per-month" class="bills-per-month"></canvas>
+            </div>
+        </card-component>
+        <card-component
+            id="dashboard-categories"
+            class="dashboard-categories"
+            [title]="'top category bills'"
+            [description]="month.name.toLowerCase()"
+            [border]="true"
+        >
+            <div class="container">
+                <canvas height="" id="categories-chart" class="chart"></canvas>
+                <div class="others">
+                    <p>other categories:</p>
+                    <h5>
+                        {{ ((dashboardState.categoriesSummary$ |
+                        async)?.otherCategories?.total) | currency: "R$ " }}
+                    </h5>
+                    <p>in</p>
+                    <h5>
+                        {{ (dashboardState.categoriesSummary$ |
+                        async)?.otherCategories?.count }}
+                    </h5>
+                    <p>bills</p>
+                </div>
+            </div>
+        </card-component>
+        <card-component
+            id="dashboard-calendar"
+            class="dashboard-calendar"
+            [title]="'bill calendar'"
+            [border]="true"
+        >
+            <calendar-component class="calendar" [monthBills]="monthBills" />
+        </card-component>
+        <card-component
+            id="dashboard-money"
+            class="dashboard-money"
+            [title]="'money overview'"
+            [description]="month.name.toLowerCase()"
+            [border]="true"
+        >
+            <div class="dashboard-money">
+                <div class="money-container" [style.flexDirection]="'row'">
+                    <!-- <canvas id="savings-income-chart" class="chart"></canvas> -->
+                    <div class="money-item">
+                        <div
+                            class="icon-container"
+                            [style.transform]="'scale(' + moneyReserve.scaleIncome + ')'"
+                            [style.color]="'black'"
+                        >
+                            <mat-icon
+                                class="material-symbols-rounded icon"
+                                fontIcon="savings"
+                                [style.color]="'var(--success)'"
+                            ></mat-icon>
+                            <mat-icon
+                                class="material-symbols-filled icon-right"
+                                fontIcon="arrow_circle_down"
+                                [style.color]="'var(--success)'"
+                            ></mat-icon>
+                        </div>
+                        <h5>
+                            {{ (dashboardState.savings$ | async)?.totalIncome | currency:
+                            'R$ ' }}
+                        </h5>
+                        <h6>income</h6>
+                    </div>
+                    <div class="money-item">
+                        <div
+                            class="icon-container"
+                            [style.transform]="'scale(' + moneyReserve.scaleSavings + ')'"
+                        >
+                            <mat-icon
+                                class="material-symbols-rounded icon"
+                                fontIcon="savings"
+                                [style.color]="'var(--info)'"
+                            ></mat-icon>
+                            <mat-icon
+                                class="material-symbols-rounded icon-right"
+                                fontIcon="calendar_month"
+                                [style.color]="'var(--info)'"
+                            ></mat-icon>
+                        </div>
+                        <h5>
+                            {{ (dashboardState.savings$ | async)?.totalSavings | currency:
+                            'R$ ' }}
+                        </h5>
+                        <h6>from last month</h6>
+                    </div>
+                </div>
+                <div class="container">
+                    <canvas height="" id="money-chart" class="chart"
+                        >{{savingsChart}}</canvas
+                    >
+                    <div class="legend">
+                        <div
+                            *ngFor="let item of savingsLabels; index as i"
+                            class="container"
+                        >
+                            <div
+                                [style.backgroundColor]="savingsColors[i]"
+                                class="indicator"
+                            ></div>
+                            <p class="label">{{ item }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <canvas id="piggy-banks-progression"></canvas>
+                </div>
+            </div>
+        </card-component>
+        <card-component
+            id="dashboard-credit-cards"
+            class="dashboard-credit-cards"
+            [title]="'credit cards'"
+            [description]="'last 5 months'"
+            [border]="true"
+        >
+            <canvas id="credit-cards-chart" class="credit-cards-chart"></canvas>
+        </card-component>
+    </div>
+</div>

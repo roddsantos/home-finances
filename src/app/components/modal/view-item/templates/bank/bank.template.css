@@ -1,0 +1,33 @@
+.bank {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-areas:
+        "day-invoice-container day-due-container month-year-container"
+        "flag limit-container limit-left-container";
+    grid-template-columns: 1fr 2fr 2fr;
+    row-gap: 1rem;
+}
+
+.savings-container {
+    width: 100%;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    & p {
+        margin: auto 0px;
+    }
+}
+
+.saving-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--bh);
+    border-radius: var(--border-radius);
+    padding: var(--padding-gen);
+    width: 24%;
+    &.more {
+        cursor: pointer;
+        width: max-content;
+    }
+}

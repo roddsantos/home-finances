@@ -1,0 +1,14 @@
+.cat-item-text {
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+    width: 100%;
+}
+
+.icon-type {
+    font-size: 24px;
+    height: auto;
+    width: 35px;
+    margin: auto 20px;
+    color: blueviolet;
+}

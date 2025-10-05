@@ -1,0 +1,33 @@
+.mdc-tab {
+    min-height: 50px;
+    min-width: 25px !important;
+    padding: 5px;
+    background-color: transparent;
+    color: var(--title);
+    font-weight: 700;
+
+    &.mat-mdc-tab.mdc-tab--active {
+        &:focus {
+            & .mdc-tab__text-label {
+                color: var(--title);
+            }
+        }
+        & .mdc-tab__text-label {
+            color: var(--title);
+            &.mat-mdc-focus-indicator {
+                color: var(--title);
+            }
+        }
+    }
+    & .mdc-tab-indicator__content.mdc-tab-indicator__content--underline {
+        border-color: var(--secondary) !important;
+    }
+}
+
+.mdc-tab-indicator--active {
+    min-width: 25px !important;
+    padding: 5px;
+    background-color: var(--secondary);
+    color: var(--title);
+    font-weight: 700;
+}

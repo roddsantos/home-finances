@@ -1,0 +1,31 @@
+<modal-component
+    [disabled]="companyForm.invalid"
+    (actionPrimary)="onSubmit()"
+    (actionSecondary)="modalComponent.onClose()"
+    [bodyTemplate]="newCompany"
+></modal-component>
+
+<ng-template #newCompany>
+    <form [formGroup]="companyForm">
+        <div class="new-bank-container">
+            <mat-form-field class="new-bank-field" appearance="outline">
+                <mat-label>name</mat-label>
+                <input maxlength="100" required matInput formControlName="name" />
+                @if (companyForm.controls.name.errors?.["required"]) {
+                <mat-error>{{errorMessage.name}}</mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field class="new-bank-field" appearance="outline">
+                <mat-label>description</mat-label>
+                <input maxlength="100" matInput formControlName="description" />
+                @if (companyForm.controls.description.errors?.["required"]) {
+                <mat-error>{{errorMessage.description}}</mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field class="color-picker" appearance="outline">
+                <mat-label>color</mat-label>
+                <input formControlName="color" matInput type="color" />
+            </mat-form-field>
+        </div>
+    </form>
+</ng-template>

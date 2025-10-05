@@ -1,0 +1,35 @@
+@font-face {
+    font-family: "ReemKufi";
+    font-style: bold;
+    font-weight: 800;
+    font-display: swap;
+    src: local("ReemKufi-Bold"), local("ReemKufi-Bold.ttf"),
+        url("../../../assets/fonts/reem-kufi/ReemKufi-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "ReemKufi";
+    font-style: bold;
+    font-weight: 600;
+    font-display: swap;
+    src: local("ReemKufi-SemiBold"), local("ReemKufi-SemiBold.ttf"),
+        url("../../../assets/fonts/reem-kufi/ReemKufi-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "ReemKufi";
+    font-style: bold;
+    font-weight: 500;
+    font-display: swap;
+    src: local("ReemKufi-Medium"), local("ReemKufi-Medium.ttf"),
+        url("../../../assets/fonts/reem-kufi/ReemKufi-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "ReemKufi";
+    font-style: bold;
+    font-weight: 400;
+    font-display: swap;
+    src: local("ReemKufi-Regular"), local("ReemKufi-Regular.ttf"),
+        url("../../../assets/fonts/reem-kufi/ReemKufi-Regular.ttf") format("truetype");
+}

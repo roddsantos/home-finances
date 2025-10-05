@@ -1,0 +1,48 @@
+<mat-drawer-container [hasBackdrop]="innerWidth < 900" class="drawer-main">
+    <mat-drawer
+        [ngClass]="{
+            'drawer-container': true,
+            binary: (generalState.theme$ | async) === 'binary'
+        }"
+        #drawer
+        [mode]="innerWidth >= 900 ? 'side' : 'side'"
+        [opened]="true"
+    >
+        <div
+            [ngClass]="{
+                home: true,
+            }"
+            (click)="onChangeRoute('/')"
+        >
+            <mat-icon
+                [ngClass]="{
+                    'home-icon': true,
+                    'material-symbols-rounded': '/' !== (generalState.page$ | async),
+                    binary: (generalState.theme$ | async) === 'binary'
+                }"
+                aria-hidden="false"
+                aria-label="Example home icon"
+                fontIcon="home"
+            ></mat-icon>
+            <span
+                [ngClass]="{
+                    'home-title': true,
+                    binary: (generalState.theme$ | async) === 'binary'
+                }"
+                >finances</span
+            >
+        </div>
+        <item-layout-component
+            class="item"
+            *ngFor="let item of items"
+            [item]="item"
+            (onClick)="onChangeRoute($event)"
+        />
+    </mat-drawer>
+    <mat-drawer-content class="drawer-content">
+        <header-layout />
+        <div class="page-content">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

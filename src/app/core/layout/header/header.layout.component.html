@@ -1,0 +1,89 @@
+<div class="header">
+    <button class="header-menu" mat-icon-button aria-label="action company button">
+        <mat-icon
+            [ngClass]="{
+                    'material-symbols-outlined': true,
+                    'app-icon': true,
+                }"
+            aria-hidden="false"
+            aria-label="Example menu icon"
+            fontIcon="menu"
+        ></mat-icon>
+    </button>
+    <mat-form-field
+        [ngClass]="['header-search', screen?.page || '']"
+        appearance="outline"
+    >
+        <mat-icon
+            matPrefix
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="search"
+        ></mat-icon>
+        <input
+            class="header-input"
+            placeholder="search in the application"
+            (input)="onTypeSearch($event)"
+            [value]="search$ | async"
+            maxlength="100"
+            required
+            matInput
+            [matAutocomplete]="auto"
+        />
+        <mat-autocomplete
+            id="header-autocomplete"
+            class="header-autocomplete"
+            [displayWith]="getOptionName"
+            #auto="matAutocomplete"
+        >
+            @for (option of filteredOptions; track option) {
+            <mat-option
+                class="header-option"
+                (onSelectionChange)="onSelect(option)"
+                [value]="option"
+            >
+                <div [ngClass]="['indicator', option | sector]"></div>
+                <p class="name">
+                    {{
+                        option["name"] +
+                            " - " +
+                            (option | sector) +
+                            (option.sector === "bill" && option.type !== "money"
+                                ? " (" + (option.parcel + 1) + "/" + option.parcels + ")"
+                                : "")
+                    }}
+                </p>
+                <p class="description">{{ option["description"] }}</p>
+            </mat-option>
+            }
+        </mat-autocomplete>
+        <mat-icon
+            *ngIf="(search$ | async)?.length"
+            (click)="onClearSearch()"
+            matSuffix
+            class="header-clear-search"
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="close"
+        ></mat-icon>
+    </mat-form-field>
+    <!-- TO DO  -->
+    <!-- <div class="header-action">
+        <button
+            *ngFor="let action of screen?.actions"
+            mat-button
+            class="button-primary button"
+            aria-label="action company button"
+            (click)="openModal(action)"
+        >
+            <mat-icon
+                *ngFor="let icon of action.icons"
+                matPrefix
+                aria-hidden="false"
+                aria-label="Add icon"
+                [fontIcon]="icon"
+            ></mat-icon>
+            <p>{{ action.title }}</p>
+        </button>
+    </div> -->
+</div>

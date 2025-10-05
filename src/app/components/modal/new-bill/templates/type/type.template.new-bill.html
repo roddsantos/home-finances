@@ -1,0 +1,19 @@
+<div class="modal-content">
+    <h3 class="step-title">bill type</h3>
+    <p class="step-desc">choose the bill type based on the payment mode</p>
+    <div class="type-list">
+        <div
+            (click)="handleType(t.id)"
+            [ngClass]="['type-container', type === t.id ? 'selected' : '']"
+            class="type-container"
+            *ngFor="let t of typeList"
+        >
+            <mat-icon
+                fontIcon="{{t.icon}}"
+                class="type-icon material-symbols-outlined"
+            ></mat-icon>
+            <h4 class="type-name">{{t.name}}</h4>
+            <p class="type-description">{{t.description}}</p>
+        </div>
+    </div>
+</div>

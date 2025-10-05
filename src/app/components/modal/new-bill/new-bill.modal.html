@@ -1,0 +1,51 @@
+<modal-component
+    [disabled]="onDisableButton()"
+    (actionPrimary)="step !== 4 ? onNextStep() : onSubmit()"
+    (actionSecondary)="step !== 1 ? onPreviousStep() : modalComponent.onClose()"
+    [bodyTemplate]="newBill"
+></modal-component>
+
+<ng-template #newBill>
+    <form [formGroup]="billForm">
+        <ng-container *ngIf="step === 1">
+            <type-template
+                [type]="billForm.getRawValue().type"
+                (setType)="setType($event)"
+            />
+        </ng-container>
+        <ng-container *ngIf="step === 2">
+            <info-template
+                [info]="getInfoForm()"
+                [infoErrors]="getErrorInfoForm()"
+                (setInfo)="onPatch($event)"
+            />
+        </ng-container>
+        <ng-container *ngIf="step === 3 && billForm.value.type === 'money'">
+            <template-banks
+                [bankData]="getBankForm()"
+                [bankDataErrors]="getErrorBankForm()"
+                (setBankData)="onPatch($event)"
+            />
+        </ng-container>
+        <ng-container *ngIf="step === 3 && billForm.value.type === 'companyCredit'">
+            <template-companies
+                [compData]="getCompanyForm()"
+                [compDataErrors]="getErrorCompanyForm()"
+                (setCompData)="onPatch($event)"
+            />
+        </ng-container>
+        <ng-container *ngIf="step === 3 && billForm.value.type === 'creditCard'">
+            <template-credit-card
+                [creditCardData]="getCreditCardForm()"
+                [creditCardDataErrors]="getErrorCreditCardForm()"
+                (setCreditCardData)="onPatch($event)"
+            />
+        </ng-container>
+        <ng-container *ngIf="step === 4">
+            <template-config
+                [configData]="getConfigForm()"
+                (setConfigData)="onPatch($event)"
+            />
+        </ng-container>
+    </form>
+</ng-template>

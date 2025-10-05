@@ -1,0 +1,239 @@
+<modal-component
+    (actionPrimary)="onSubmit()"
+    [bodyTemplate]="listDialog"
+></modal-component>
+
+<ng-template #listDialog>
+    <form>
+        <div class="add-filter-container">
+            <!-- categories -->
+            <div class="data-field">
+                <h6>category</h6>
+                <mat-form-field class="input" appearance="outline">
+                    <mat-select
+                        #category
+                        [formControl]="catCtrl"
+                        (selectionChange)="addFilter($event, 'category')"
+                    >
+                        <mat-option
+                            *ngIf="(catState.categories$ | async)!.length === 0"
+                            [disabled]="true"
+                            >no companies</mat-option
+                        >
+                        <mat-option
+                            *ngIf="(catState.categories$ | async)!.length > 0"
+                            [value]="null"
+                            >none</mat-option
+                        >
+                        @for (m of (catState.categories$ | async); track m) {
+                        <mat-option [value]="m">{{ m.name }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <!-- credit cards -->
+            <div class="data-field">
+                <h6>credit cards</h6>
+                <mat-form-field class="input" [formControl]="ccCrtl" appearance="outline">
+                    <mat-select
+                        #creditcard
+                        (selectionChange)="addFilter($event, 'creditcard')"
+                    >
+                        <mat-option
+                            *ngIf="(ccState.creditCards$ | async)!.length === 0"
+                            [disabled]="true"
+                            >no credit cards</mat-option
+                        >
+                        <mat-option
+                            *ngIf="(compState.company$ | async)!.length > 0"
+                            [value]="null"
+                            >none</mat-option
+                        >
+                        @for (cc of (ccState.creditCards$ | async); track cc) {
+                        <mat-option [value]="cc">{{ cc.name }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <!-- banks -->
+            <div class="data-field">
+                <h6>banks</h6>
+                <mat-form-field class="input" [formControl]="bkCtrl" appearance="outline">
+                    <mat-select #bank (selectionChange)="addFilter($event, 'bank')">
+                        <mat-option
+                            *ngIf="(bankState.banks$ | async)!.length === 0"
+                            [disabled]="true"
+                            >no banks</mat-option
+                        >
+                        <mat-option
+                            *ngIf="(bankState.banks$ | async)!.length > 0"
+                            [value]="null"
+                            >none</mat-option
+                        >
+                        @for (b of (bankState.banks$ | async); track b) {
+                        <mat-option [value]="b">{{ b.name }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <!-- companies -->
+            <div class="data-field">
+                <h6>companies</h6>
+                <mat-form-field class="input" appearance="outline">
+                    <mat-select #company (selectionChange)="addFilter($event, 'company')">
+                        <mat-option
+                            *ngIf="(compState.company$ | async)!.length === 0"
+                            [disabled]="true"
+                            >no companies</mat-option
+                        >
+                        <mat-option
+                            *ngIf="(compState.company$ | async)!.length > 0"
+                            [value]="null"
+                            >none</mat-option
+                        >
+                        @for (c of (compState.company$ | async); track c) {
+                        <mat-option [value]="c">{{ c.name }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <!-- min value total -->
+            <div class="quarter">
+                <h6 class="input">min total</h6>
+                <mat-form-field class="input" appearance="outline">
+                    <input
+                        (keydown.enter)="addLimit($event, 'min')"
+                        matInput
+                        #min
+                        type="number"
+                        [formControl]="minCtrl"
+                    />
+                    @if (minCtrl.invalid) {
+                    <mat-error>invalid min value</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <!-- max value total -->
+            <div class="quarter">
+                <h6 class="input">max total</h6>
+                <mat-form-field class="input" appearance="outline">
+                    <input
+                        (keydown.enter)="addLimit($event, 'max')"
+                        matInput
+                        #max
+                        type="number"
+                        [formControl]="maxCtrl"
+                    />
+                    @if (maxCtrl.invalid) {
+                    <mat-error>invalid max value</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <!-- month -->
+            <div class="quarter">
+                <h6 class="input">month</h6>
+                <mat-form-field class="input" appearance="outline">
+                    <mat-select
+                        placeholder="month"
+                        #month
+                        (selectionChange)="addMonth($event)"
+                        [formControl]="monthCtrl"
+                    >
+                        @for (m of months; track m) {
+                        <mat-option [value]="m">{{ m.short }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <!-- year -->
+            <div class="quarter">
+                <h6 class="input">year</h6>
+                <mat-form-field class="input" appearance="outline">
+                    <input
+                        placeholder="year"
+                        (keyup.enter)="addYear($event)"
+                        matInput
+                        #year
+                        type="number"
+                        [formControl]="yearCtrl"
+                    />
+                    <mat-hint>press 'enter' to set year</mat-hint>
+                </mat-form-field>
+            </div>
+            <!-- start date -->
+            <div class="data-field">
+                <h6>from start date</h6>
+                <mat-form-field class="input" appearance="outline">
+                    <input
+                        [matDatepicker]="picker1"
+                        (dateChange)="addDate($event, true)"
+                        matInput
+                        #date1
+                        [formControl]="startDateCtrl"
+                    />
+                    <mat-hint class="hint">MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="picker1"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <!-- end date -->
+            <div class="data-field">
+                <h6>until end date</h6>
+                <mat-form-field class="input" appearance="outline">
+                    <input
+                        (dateChange)="addDate($event, false)"
+                        [matDatepicker]="picker2"
+                        matInput
+                        #date2
+                        [formControl]="endDateCtrl"
+                    />
+                    <mat-hint class="hint">MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="picker2"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="filters-container">
+                @for (chip of selectedFilters; track chip; let i = $index) {
+                <mat-chip-row
+                    [ngClass]="[
+                        chip.identifier,
+                        'chip-item',
+                        generalState.theme$ | async
+                    ]"
+                    (removed)="removeFilter(i)"
+                >
+                    {{
+                        chip.identifier === "min" || chip.identifier === "max"
+                            ? chip.identifier + ":"
+                            : ""
+                    }}
+                    {{ chip.name }}
+                    <button matChipRemove [attr.aria-label]="'remove ' + chip.name">
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                </mat-chip-row>
+                }
+            </div>
+            <button
+                [disabled]="selectedFilters.length === 0"
+                mat-button
+                class="button-primary reset-button"
+                (click)="removeAllFilters()"
+            >
+                <mat-icon
+                    class="material-symbols-outlined"
+                    aria-hidden="false"
+                    aria-label="remove icon"
+                    fontIcon="delete_sweep"
+                ></mat-icon>
+                <p>remove all filters</p>
+            </button>
+        </div>
+    </form>
+</ng-template>

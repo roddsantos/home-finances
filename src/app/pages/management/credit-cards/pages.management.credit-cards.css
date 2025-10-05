@@ -1,0 +1,15 @@
+.cc-item-text {
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+    width: 75%;
+}
+
+.cc-limit {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    color: var(--primary);
+    font: normal 12px Helvetica;
+    margin: auto 10px;
+}

@@ -1,0 +1,105 @@
+<div class="bill">
+    <div class="bill-tags">
+        <div [ngClass]="['payment', 'tag', bill.isPayment ? 'outcome' : 'income']">
+            <mat-icon
+                class="material-symbols-outlined"
+                aria-hidden="false"
+                aria-label="icon"
+                [fontIcon]="bill.isPayment ? 'arrow_circle_up' : 'arrow_circle_down'"
+            ></mat-icon>
+            <h6>{{ bill | bills : 'flux' }}</h6>
+        </div>
+        <div [ngClass]="['paid-bill', 'tag', bill.settled ? 'settled' : 'late']">
+            <mat-icon
+                class="material-symbols-outlined"
+                aria-hidden="false"
+                aria-label="icon"
+                [fontIcon]="bill.settled ? 'check' : 'close'"
+            ></mat-icon>
+            <h6>{{ bill | bills : 'settled' }}</h6>
+        </div>
+    </div>
+    <card-component class="section-data" [hideHeader]="true">
+        <div class="conditional-container info-card">
+            <div class="bank-bill lvi label-value" *ngIf="bill.bank1">
+                <mat-icon
+                    class="material-symbols-outlined"
+                    aria-hidden="false"
+                    aria-label="icon"
+                    fontIcon="savings"
+                ></mat-icon>
+                <p>transaction bank</p>
+                <div class="banks">
+                    <h5
+                        class="color-decorator"
+                        [style.textDecorationColor]="bill.bank1.color"
+                    >
+                        {{bill.bank1.name}}
+                    </h5>
+                    <mat-icon
+                        *ngIf="bill.bank2"
+                        class="selection-icon"
+                        aria-hidden="false"
+                        aria-label="icon"
+                        [style.color]="bill.isRefund ? successColor : warningColor"
+                        [fontIcon]="bill.isPayment ? 'arrow_forward' : 'arrow_back'"
+                    ></mat-icon>
+                    <h5
+                        class="color-decorator"
+                        [style.textDecorationColor]="bill.bank2.color"
+                        *ngIf="bill.bank2"
+                    >
+                        {{bill.bank2.name}}
+                    </h5>
+                </div>
+            </div>
+            <div class="company-bill lvi label-value" *ngIf="bill.company">
+                <p>company</p>
+                <mat-icon
+                    class="material-symbols-outlined"
+                    aria-hidden="false"
+                    aria-label="icon"
+                    fontIcon="store"
+                ></mat-icon>
+                <h5
+                    class="color-decorator"
+                    [style.textDecorationColor]="bill.company.color"
+                >
+                    {{bill.company.name}}
+                </h5>
+            </div>
+            <div class="credit-card-bill lvi label-value" *ngIf="bill.creditCard">
+                <p>credit card</p>
+                <mat-icon
+                    class="material-symbols-outlined"
+                    aria-hidden="false"
+                    aria-label="icon"
+                    fontIcon="credit-card"
+                ></mat-icon>
+                <h5>{{bill.creditCard.name}}</h5>
+            </div>
+            <div class="category-bill lvi label-value">
+                <p>category</p>
+                <mat-icon
+                    class="material-icons-outlined"
+                    aria-hidden="false"
+                    aria-label="icon"
+                    [fontIcon]="bill.category.icon"
+                ></mat-icon>
+                <h5
+                    class="color-decorator"
+                    [style.textDecorationColor]="bill.category.color"
+                >
+                    {{bill.category.name}}
+                </h5>
+            </div>
+        </div>
+    </card-component>
+    <div class="bill-value">
+        <h5>
+            {{ bill.parcels + "x " + "(" + (bill.parcel + 1) + "/" + bill.parcels + ")" }}
+        </h5>
+        <h1>{{ bill.totalParcel | currency : "R$ " }}</h1>
+        <p>{{ "total " + (bill.total | currency : "R$ ") }}</p>
+    </div>
+</div>

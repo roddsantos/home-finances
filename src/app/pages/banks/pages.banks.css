@@ -1,0 +1,102 @@
+.bank {
+    width: 100%;
+}
+
+.bank-li {
+    list-style: none;
+}
+
+.bank-infos {
+    width: 100%;
+}
+
+.bank-grid {
+    grid-template-columns: repeat(3, auto);
+}
+
+.button-primary.extended + .button-primary.extended {
+    margin-left: 0.5rem;
+}
+
+.bank-container {
+    display: grid;
+    grid-template-areas:
+        "bank-color bank-title bank-buttons"
+        "bank-description bank-description bank-description"
+        "bank-savings bank-savings bank-savings";
+    grid-template-columns: 1fr 14fr 5fr;
+    grid-template-rows: repeat(3, auto);
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
+    min-height: 150px;
+    @media screen and (max-width: 900px) {
+        grid-template-areas:
+            "bank-color bank-title"
+            "bank-description bank-description"
+            "bank-savings bank-savings"
+            "bank-buttons bank-buttons";
+        grid-template-columns: 5% 95%;
+        grid-template-rows: repeat(4, auto);
+    }
+    &.binary {
+        border: solid var(--border-width) var(--secondary);
+    }
+}
+
+.bank-title {
+    grid-area: bank-title;
+    font-weight: bold;
+    width: 100%;
+    margin: auto 0px 0px 1rem;
+
+    @media screen and (max-width: 1366px) {
+        margin: auto 10px auto 0px;
+    }
+}
+
+.bank-description {
+    grid-area: bank-description;
+    font-weight: normal;
+    font-size: 14px;
+    color: var(--text-2);
+    margin: auto 0px;
+    width: 50%;
+}
+
+.bank-color {
+    grid-area: bank-color;
+    width: 10px;
+    height: 100%;
+    margin: auto auto 0px;
+}
+
+.bank-savings {
+    grid-area: bank-savings;
+    font-weight: bold;
+    font-size: 30px;
+    gap: 0.5rem;
+    @media screen and (max-width: 1366px) {
+        margin: auto 10px auto 0px;
+    }
+}
+
+.bank-buttons {
+    grid-area: bank-buttons;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+}
+
+.secondary-text {
+    font-size: 14px;
+}
+
+.piggybank {
+    & .bank-title .piggy {
+        color: var(--success);
+    }
+    & .bank-savings h3 {
+        color: var(--success);
+    }
+}

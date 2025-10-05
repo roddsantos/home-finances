@@ -1,0 +1,182 @@
+.button-primary {
+    display: flex;
+    width: max-content;
+    border-radius: var(--border-radius) !important;
+    background-color: var(--primary) !important;
+    color: var(--text-3) !important;
+    border: solid var(--border-width) var(--border-color) !important;
+    padding: 0.5rem 0.8rem !important;
+    font-weight: bold !important;
+    font-family: var(--font-1) !important;
+    &.mat-mdc-button:not(:disabled) {
+        border-radius: var(--border-radius) !important;
+        background-color: var(--primary) !important;
+        color: var(--text-3) !important;
+        border: solid var(--border-width) var(--border-color) !important;
+        padding: 0.5rem 0.8rem !important;
+    }
+
+    & p,
+    span {
+        color: var(--text-3) !important;
+        font-weight: bold !important;
+        font-family: var(--font-1) !important;
+    }
+
+    &:disabled {
+        color: var(--text-1) !important;
+        background-color: var(--disabled) !important;
+        border: solid var(--border-width) var(--disabled) !important;
+        border-radius: var(--border-radius) !important;
+        padding: 0.5rem 0.8rem !important;
+        cursor: not-allowed;
+        & mat-icon {
+            color: var(--text-1) !important;
+        }
+    }
+
+    & .spinner {
+        width: 1.5rem !important;
+        height: fit-content !important;
+    }
+    & mat-icon {
+        color: var(--text-3) !important;
+        margin: 0px !important;
+    }
+}
+
+.button-secondary {
+    width: max-content;
+    border-radius: var(--border-radius);
+    background-color: var(--secondary);
+    border: solid var(--border-width) var(--secondary) !important;
+    padding: 0.5rem 0.8rem !important;
+    color: var(--text-1) !important;
+    font-weight: bold !important;
+    font-family: var(--font-1) !important;
+
+    &.mat-mdc-button:not(:disabled) {
+        border-radius: var(--border-radius);
+        background-color: transparent;
+        padding: 0.5rem 0.8rem !important;
+    }
+
+    & p,
+    span {
+        color: var(--text-1) !important;
+        font-weight: bold !important;
+        font-family: var(--font-1) !important;
+    }
+    & mat-icon {
+        margin: 0px !important;
+    }
+}
+
+.button-outlined {
+    width: max-content;
+    height: max-content;
+    border-radius: var(--border-radius);
+    background-color: transparent;
+    color: var(--text-1) !important;
+    border: solid var(--border-width) var(--border-color);
+    padding: 0.5rem 0.8rem !important;
+    font-weight: bold !important;
+    font-family: var(--font-1) !important;
+
+    &.mat-mdc-button:not(:disabled) {
+        border-radius: var(--border-radius);
+        background-color: transparent;
+        color: var(--text-1) !important;
+        border: solid var(--border-width) var(--border-color);
+        padding: 0.5rem 0.8rem !important;
+    }
+
+    & p,
+    span {
+        color: var(--text-1) !important;
+        font-weight: bold !important;
+        font-family: var(--font-1) !important;
+    }
+
+    &:disabled {
+        color: var(--text-1) !important;
+        background-color: var(--disabled) !important;
+        border-radius: var(--border-radius) !important;
+        padding: 0.5rem 0.8rem !important;
+    }
+
+    & .spinner {
+        width: 1.5rem !important;
+        height: fit-content;
+    }
+    & mat-icon {
+        color: var(--text-3);
+        margin: 0px !important;
+    }
+}
+
+.button-text {
+    width: max-content;
+    height: max-content;
+    border-radius: var(--border-radius);
+    background-color: transparent;
+    color: var(--text-1) !important;
+    border: none;
+    padding: 0.5rem 0.8rem !important;
+    font-weight: bold !important;
+    font-family: var(--font-1) !important;
+
+    &.mat-mdc-button:not(:disabled) {
+        border-radius: var(--border-radius);
+        background-color: transparent;
+        color: var(--text-1) !important;
+        border: none;
+        padding: 0.5rem 0.8rem !important;
+    }
+
+    & p,
+    span {
+        color: var(--text-1) !important;
+        font-weight: bold !important;
+        font-family: var(--font-1) !important;
+    }
+
+    &:disabled {
+        color: var(--text-1) !important;
+        background-color: var(--disabled) !important;
+        border-radius: var(--border-radius) !important;
+        padding: 0.5rem 0.8rem !important;
+    }
+
+    & .spinner {
+        width: 1.5rem !important;
+        height: fit-content;
+    }
+    & mat-icon {
+        color: var(--text-3);
+        margin: 0px !important;
+    }
+}
+
+.button-primary,
+.button-secondary,
+.button-outlined .extended {
+    height: max-content !important;
+    & div {
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 0.2rem;
+    }
+    & p {
+        text-align: left;
+    }
+}
+
+.mat-mdc-icon-button.mat-mdc-button-base {
+    padding: 6px !important;
+    --mdc-icon-button-state-layer-size: 32px !important;
+    & .mat-mdc-button-touch-target {
+        width: 32px !important;
+        height: 32px !important;
+    }
+}

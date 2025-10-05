@@ -1,0 +1,65 @@
+<div
+    id="card-{{ id }}"
+    [ngClass]="[
+        'card',
+        actualTheme === 'binary' ? 'binary' : '',
+        border || actualTheme === 'binary' ? 'border' : ''
+    ]"
+    [style.backgroundColor]="backgroundColor"
+>
+    <div class="card-header" *ngIf="!hideHeader" [style.height]="'50px'">
+        <div class="card-data">
+            <h3 *ngIf="title">
+                {{ title }}
+            </h3>
+            <p *ngIf="description">{{ description }}</p>
+        </div>
+        <div class="card-actions" *ngIf="actions">
+            <button
+                *ngFor="let a of actions"
+                (click)="a.action()"
+                [matTooltip]="a.tooltip"
+                matTooltipPosition="above"
+                class="icon-button"
+                mat-icon-button
+                aria-label="action page button"
+            >
+                @if (isString(a.icon)) {
+                <mat-icon
+                    class="material-symbols-outlined icon"
+                    [fontIcon]="a.icon"
+                ></mat-icon>
+                } @if(!isString(a.icon)) {
+                <div class="card-multiple-icons">
+                    <mat-icon
+                        *ngFor="let icon of a.icon"
+                        class="material-symbols-outlined icon"
+                        [fontIcon]="icon"
+                    ></mat-icon>
+                </div>
+                }
+            </button>
+        </div>
+    </div>
+    <div class="card-divisor" *ngIf="!noDivisor && !hideHeader"></div>
+    <div
+        [ngClass]="[
+            'card-content',
+            hideHeader ? 'hide-header' : '',
+            noDivisor ? 'no-divisor' : ''
+        ]"
+    >
+        <ng-content></ng-content>
+    </div>
+</div>
+<div
+    *ngIf="options?.shadow"
+    class="card-shadow"
+    [style.height]="cardHeight + 'px'"
+    [style.width]="cardWidth + 'px'"
+    [style.bottom]="cardHeight - 10 + 'px'"
+    [style.backgroundColor]="
+        border ? 'transparent' : (backgroundHighlighter | color : 'darker')
+    "
+    [style.borderColor]="backgroundHighlighter | color : 'darker'"
+></div>

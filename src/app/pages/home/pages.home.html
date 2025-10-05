@@ -1,0 +1,192 @@
+<div class="home">
+    <h1 class="page-title">{{"Welcome, " + (userState.user$| async)?.name + " :)"}}</h1>
+
+    <toggle-button
+        class="home-filter"
+        [items]="dateFilters"
+        [formController]="dateCtrl"
+        (click)="onChangeFilter($event)"
+    />
+    <div class="home-container">
+        <!-- CURRENT DATE -->
+        <card-component
+            id="hd"
+            class="hd"
+            [hideHeader]="true"
+            [backgroundColor]="thirdColor"
+        >
+            <div class="col" [style.width]="'100%'">
+                <h4>{{ months[dateCtrl.getRawValue()!.month].short }}</h4>
+                <h1 class="day" [style.left]="todaysDate.getDate() < 10 ? '46%': '40%'">
+                    {{ todaysDate.getDate() }}
+                </h1>
+                <mat-icon
+                    class="material-symbols-rounded icon"
+                    fontIcon="calendar_today"
+                ></mat-icon>
+                <h4>{{ (todaysDate | date :'EEEE')?.toLowerCase() }}</h4>
+            </div>
+        </card-component>
+        <!-- EXPENSES -->
+        <card-component id="hte" class="hte" [noDivisor]="true" [hideHeader]="true">
+            <div class="col" [style.margin]="'auto 0px'">
+                <div class="icon-container transparent">
+                    <mat-icon
+                        class="material-symbols-rounded icon"
+                        fontIcon="receipt_long"
+                    ></mat-icon>
+                </div>
+                <h3>{{(homeState.expenses$ | async)?.sumOfBills| currency: 'R$ '}}</h3>
+                <p [style.marginTop]="'0.5rem'">
+                    {{"total in " + (homeState.expenses$ | async)?.numberOfBills + '
+                    bills'}}
+                </p>
+                <div
+                    [ngClass]="['home-delta', (homeState.expenses$ | async)!.delta > 0 ? 'red' : 'green']"
+                >
+                    <div class="row">
+                        <mat-icon
+                            class="material-symbols-outlined icon-trending"
+                            [fontIcon]="(homeState.expenses$ | async)!.delta > 0 ? 'trending_up' : 'trending_down'"
+                        ></mat-icon>
+                        <h6>
+                            {{((homeState.expenses$ | async)!.delta.toFixed(2)) + "%" }}
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </card-component>
+        <!-- TOTAL PAID -->
+        <card-component id="htp" class="htp" [noDivisor]="true" [hideHeader]="true">
+            <div class="col" [style.margin]="'auto 0px'">
+                <div class="icon-container transparent">
+                    <mat-icon
+                        class="material-symbols-rounded icon"
+                        fontIcon="price_check"
+                    ></mat-icon>
+                </div>
+                <p>{{"paid expenses"}}</p>
+                <div class="row">
+                    <h3>{{(homeState.expenses$ | async)?.paidBills| currency: 'R$ '}}</h3>
+                </div>
+            </div>
+        </card-component>
+        <!-- CREDIT CARD INVOICES -->
+        <card-component id="hcc" class="hcc" [hideHeader]="true">
+            <div class="col" [style.margin]="'auto 0px'">
+                <div class="icon-container transparent">
+                    <mat-icon
+                        class="material-symbols-rounded icon"
+                        fontIcon="credit_card"
+                    ></mat-icon>
+                </div>
+                <h3>{{(homeState.invoices$ | async)?.total || 0 | currency: 'R$ '}}</h3>
+                <p>{{"in " + (homeState.invoices$ | async)?.count + " credit cards"}}</p>
+            </div>
+        </card-component>
+        <!-- DAILY BILLS QUANTITY -->
+        <card-component [actions]="actions" id="hbq" class="hbq" [hideHeader]="true">
+            <div class="col" [style.margin]="'auto 0px'">
+                <div class="icon-container transparent">
+                    <mat-icon
+                        class="material-symbols-outlined icon"
+                        fontIcon="shopping_cart"
+                    ></mat-icon>
+                </div>
+                <h1 class="day">{{todayBills.length}}</h1>
+                <p class="label">bills today</p>
+            </div>
+        </card-component>
+        <!-- RECENT BILLS -->
+        <card-component [actions]="actions" id="hr" class="hr" title="recent bills">
+            <div class="col">
+                <div
+                    *ngFor="let bill of (homeState.recentBills$ | async)"
+                    class="list-item"
+                    (click)="openBill(bill)"
+                >
+                    <div
+                        class="category"
+                        [style.borderColor]="theme === 'binary' ? secondaryColor : primaryColor"
+                        [matTooltip]="bill.category.name"
+                        matTooltipPosition="above"
+                    >
+                        <mat-icon
+                            class="material-icons-outlined icon"
+                            [fontIcon]="bill.category.icon"
+                        ></mat-icon>
+                    </div>
+                    <p class="name">{{ bill.name }}</p>
+                    <p class="type">{{ bill | bills: 'type' }}</p>
+                    <p class="updated-at">{{ bill.updatedAt| date: 'medium' }}</p>
+                    <p *ngIf="bill.type !== 'money'" class="parcel">
+                        {{ bill | bills: 'parcels' }}
+                    </p>
+                </div>
+            </div>
+        </card-component>
+        <!-- TOTAL SAVINGS -->
+        <card-component id="hsl" class="hsl" [noDivisor]="true" [hideHeader]="true">
+            <div class="col" [style.margin]="'auto 0px'">
+                <div class="icon-container transparent">
+                    <mat-icon
+                        class="material-symbols-outlined icon"
+                        fontIcon="savings"
+                    ></mat-icon>
+                </div>
+                <h3
+                    [ngClass]="[(homeState.savings$ | async)!.totalBanks > 0 ? 'positive' : 'negative']"
+                >
+                    {{(homeState.savings$ | async)?.totalBanks | currency: 'R$ '}}
+                </h3>
+                <p>
+                    {{"total left in " + (homeState.savings$ | async)?.countBanks + "
+                    banks"}}
+                </p>
+            </div>
+        </card-component>
+        <!-- TOTAL INCOME SAVINGS -->
+        <card-component id="hsi" class="hsi" [noDivisor]="true" [hideHeader]="true">
+            <div class="col" [style.margin]="'auto 0px'">
+                <div class="icon-container transparent">
+                    <mat-icon
+                        class="material-symbols-rounded icon"
+                        fontIcon="savings"
+                    ></mat-icon>
+                    <mat-icon
+                        class="material-symbols-filled icon-right"
+                        fontIcon="arrow_circle_down"
+                    ></mat-icon>
+                </div>
+                <div class="row">
+                    <h3>
+                        {{(homeState.savings$ | async)?.totalIncome| currency: 'R$ '}}
+                    </h3>
+                </div>
+                <p>{{"total income"}}</p>
+            </div>
+        </card-component>
+        <!-- BANK SAVINGS -->
+        <card-component id="hs" class="hs" title="savings" [hideHeader]="true">
+            <div class="col" [style.margin]="'auto 0px'">
+                <div class="icon-container transparent">
+                    <mat-icon
+                        class="material-symbols-rounded icon"
+                        fontIcon="savings"
+                    ></mat-icon>
+                    <mat-icon
+                        class="material-symbols-rounded icon-right"
+                        fontIcon="calendar_month"
+                    ></mat-icon>
+                </div>
+                <h3
+                    [ngClass]="[(homeState.savings$ | async)!.totalBanks > 0 ? 'positive' : 'negative']"
+                >
+                    {{(homeState.savings$ | async)!.totalSavingsPreview | currency: 'R$
+                    '}}
+                </h3>
+                <p>month savings preview</p>
+            </div>
+        </card-component>
+    </div>
+</div>
