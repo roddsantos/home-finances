@@ -55,15 +55,49 @@
     <aside class="bill-aside">
         <div class="bill-infos">
             <card-component [hideHeader]="true" class="count">
-                <div class="container">
-                    <h5>{{ (billState.billsPagination$ | async)?.count }}</h5>
-                    <p>bills</p>
+                <div class="column">
+                    <div class="column">
+                        <h5>{{ (billState.billsPagination$ | async)!.count }}</h5>
+                        <p>bills</p>
+                    </div>
+                    <div class="row">
+                        <mat-icon class="material-symbols-outlined red"
+                            >arrow_circle_down</mat-icon
+                        >
+                        <p>{{ ((billState.billsMetadata$ | async)!.outcomeCount) }}</p>
+                        <mat-icon class="material-symbols-outlined green"
+                            >arrow_circle_up</mat-icon
+                        >
+                        <p>{{ (billState.billsMetadata$ | async)!.incomeCount }}</p>
+                    </div>
                 </div>
             </card-component>
             <card-component [hideHeader]="true" class="total">
-                <div class="container">
-                    <h5>{{ (billState.billsTotal$ | async) | currency : 'R$ ' }}</h5>
-                    <p>total</p>
+                <div class="column">
+                    <div class="row">
+                        <mat-icon class="material-symbols-outlined red"
+                            >arrow_circle_up</mat-icon
+                        >
+                        <div class="column">
+                            <h5>
+                                {{ (billState.billsMetadata$ | async)!.outcomeTotal |
+                                currency : 'R$ ' }}
+                            </h5>
+                            <p>total outcome</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <mat-icon class="material-symbols-outlined green"
+                            >arrow_circle_down</mat-icon
+                        >
+                        <div class="column">
+                            <h5>
+                                {{ (billState.billsMetadata$ | async)!.incomeTotal |
+                                currency : 'R$ ' }}
+                            </h5>
+                            <p>total income</p>
+                        </div>
+                    </div>
                 </div>
             </card-component>
         </div>

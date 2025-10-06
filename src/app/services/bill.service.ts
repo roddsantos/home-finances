@@ -4,8 +4,6 @@ import {
     BillObjectCompanyUpdate,
     BillObjectCredtCard,
     BillObjectCredtCardUpdate,
-    FetchPaginatedData,
-    SumAndCountData,
 } from "src/app/core/types/services";
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
@@ -15,8 +13,8 @@ import { UserState } from "src/app/core/subjects/subjects.user";
 import { mergeMap, zip } from "rxjs";
 import { CustomFilterState } from "../components/custom-filter/custom-filter.subjects.component";
 import { BillState } from "src/app/core/subjects/subjects.bill";
-import { Bill, BillData } from "src/app/core/types/objects";
 import { FilterDisplay } from "src/app/core/types/components";
+import { BillsMetadataType } from "../core/types/pages/bills";
 
 @Injectable({
     providedIn: "root",
@@ -34,7 +32,7 @@ export class ServiceBill {
             this.user.user$,
         ]).pipe(
             mergeMap(([filters, pagination, user]) =>
-                this.http.get<FetchPaginatedData<Bill & BillData>>(BILL, {
+                this.http.get<BillsMetadataType>(BILL, {
                     params: {
                         data: filtersArray
                             ? JSON.stringify(filtersArray)
