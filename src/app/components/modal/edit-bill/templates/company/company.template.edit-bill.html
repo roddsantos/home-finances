@@ -8,9 +8,11 @@
             >
                 <mat-label>company</mat-label>
                 <mat-select formControlName="company">
-                    @for (c of (companies.company$ | async); track c.id) {
-                    <mat-option [value]="c.id">{{ c.name }}</mat-option>
-                    }
+                    <mat-option
+                        *ngFor="let c of (companies.company$ | async)"
+                        [value]="c.id"
+                        >{{ c.name }}</mat-option
+                    >
                 </mat-select>
                 @if (compForm.controls.company.invalid) {
                 <mat-error>{{errorMessage.company}}</mat-error>

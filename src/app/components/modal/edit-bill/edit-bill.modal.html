@@ -172,8 +172,8 @@
             </div>
         </div>
     </form>
-    <div *ngIf="tab === 1" class="main-container">
-        <card-component *ngIf="type.value ==='money'" [hideHeader]="true">
+    <div [ngClass]="['type-container', tab === 1 ? 'selected' : '']">
+        <card-component class="card" *ngIf="type.value ==='money'" [hideHeader]="true">
             <template-edit-banks
                 [style.width]="'100%'"
                 #banks="templateEditBanks"
