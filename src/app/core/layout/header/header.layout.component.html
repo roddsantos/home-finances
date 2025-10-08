@@ -37,23 +37,35 @@
             #auto="matAutocomplete"
         >
             @for (option of filteredOptions; track option) {
+            <div class="sector" *ngIf="option.data.length > 0">
+                <mat-icon class="material-symbols-outlined icon">{{
+                    option.data[0] | sector : "icon"
+                }}</mat-icon>
+                <h5>{{ option.type }}</h5>
+            </div>
+
             <mat-option
+                *ngFor="let item of option.data"
                 class="header-option"
-                (onSelectionChange)="onSelect(option)"
-                [value]="option"
+                (onSelectionChange)="onSelect(item, $event)"
+                [value]="item"
             >
-                <div [ngClass]="['indicator', option | sector]"></div>
-                <p class="name">
+                <div
+                    [style.backgroundColor]="item.color || 'var(--bill)'"
+                    [ngClass]="['indicator', item | sector]"
+                ></div>
+                <h5 class="name">
                     {{
-                        option["name"] +
-                            " - " +
-                            (option | sector) +
-                            (option.sector === "bill" && option.type !== "money"
-                                ? " (" + (option.parcel + 1) + "/" + option.parcels + ")"
+                        item["name"] +
+                            (item.parcels
+                                ? " - " + (item.due | date : "mediumDate")
+                                : "") +
+                            (item.parcels && item.type !== "money"
+                                ? " - parcel " + (item | bills : "parcels")
                                 : "")
                     }}
-                </p>
-                <p class="description">{{ option["description"] }}</p>
+                </h5>
+                <p class="description">{{ item.description }}</p>
             </mat-option>
             }
         </mat-autocomplete>
