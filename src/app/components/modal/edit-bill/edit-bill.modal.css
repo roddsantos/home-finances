@@ -2,6 +2,16 @@
     height: 200px;
 }
 
+.type-container {
+    display: none;
+    &.selected {
+        display: flex;
+        & .card {
+            width: 100%;
+        }
+    }
+}
+
 .new-bill-container {
     display: flex;
     flex-direction: column;

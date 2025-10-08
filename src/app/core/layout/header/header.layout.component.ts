@@ -4,13 +4,7 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatButtonModule, MatIconButton } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
-import {
-    BehaviorSubject,
-    debounceTime,
-    distinctUntilChanged,
-    Observable,
-    Subscription,
-} from "rxjs";
+import { BehaviorSubject, debounceTime, distinctUntilChanged, Subscription } from "rxjs";
 import { ServiceBill } from "src/app/services/bill.service";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
@@ -31,6 +25,11 @@ import { ModalNewCategory } from "src/app/components/modal/new-category/new-cate
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 import { GeneralState } from "../../subjects/subjects.general";
 import { ModalNewSaving } from "src/app/components/modal/new-saving/new-saving.modal";
+import { FormControl } from "@angular/forms";
+import { MatOptionSelectionChange } from "@angular/material/core";
+import { SearchResultsArrayType } from "../../types/components/header";
+import { Bank, Bill, Category, Company, CreditCard } from "../../types/objects";
+import { BillsPipe } from "src/utils/pipes/bills";
 
 @Component({
     standalone: true,
@@ -45,6 +44,7 @@ import { ModalNewSaving } from "src/app/components/modal/new-saving/new-saving.m
         MatAutocompleteModule,
         MatButtonModule,
         MatIconButton,
+        BillsPipe,
     ],
     providers: [PagePipe],
 })
@@ -60,12 +60,13 @@ export class HeaderLayoutComponent {
     public pagePipe = inject(PagePipe);
 
     public search$ = new BehaviorSubject<string>("");
+    public searchCtrl = new FormControl<string>("");
     public actualPage: string;
     public screen: RouteItemType | undefined;
     public style = getComputedStyle(document.body);
     public primaryColor = this.style.getPropertyValue("--secondary");
     public backgroundColor = this.style.getPropertyValue("--background");
-    public filteredOptions: any[] = [];
+    public filteredOptions: SearchResultsArrayType[] = [];
 
     public page$: Subscription;
     public creditCard$: Subscription;
@@ -79,6 +80,7 @@ export class HeaderLayoutComponent {
             .pipe(debounceTime(300), distinctUntilChanged())
             .subscribe((value) => {
                 if (value.length > 1) {
+                    this.filteredOptions = [];
                     this.creditCardSubscriber(value);
                     this.categoriesSubscriber(value);
                     this.banksSubscriber(value);
@@ -91,13 +93,15 @@ export class HeaderLayoutComponent {
     creditCardSubscriber(term: string) {
         this.creditCard$ = this.creditCards.creditCards$.subscribe({
             next: (ccs) => {
-                this.filteredOptions = [
-                    ...(term === "" || term.length < 2
+                const isTermValid = term === "" || term.length < 2;
+                this.filteredOptions.push({
+                    type: "credit cards",
+                    data: (isTermValid
                         ? []
                         : ccs.filter((cc) =>
                               removeDiacritics(cc.name).includes(removeDiacritics(term))
-                          )),
-                ];
+                          )) as CreditCard[],
+                });
             },
         });
     }
@@ -105,14 +109,15 @@ export class HeaderLayoutComponent {
     categoriesSubscriber(term: string) {
         this.categories$ = this.categories.categories$.subscribe({
             next: (cats) => {
-                this.filteredOptions = [
-                    ...this.filteredOptions,
-                    ...(term === "" || term.length < 2
+                const isTermValid = term === "" || term.length < 2;
+                this.filteredOptions.push({
+                    type: "categories",
+                    data: (isTermValid
                         ? []
                         : cats.filter((cat) =>
                               removeDiacritics(cat.name).includes(removeDiacritics(term))
-                          )),
-                ];
+                          )) as Category[],
+                });
             },
         });
     }
@@ -120,14 +125,15 @@ export class HeaderLayoutComponent {
     banksSubscriber(term: string) {
         this.banks$ = this.banks.banks$.subscribe({
             next: (banks) => {
-                this.filteredOptions = [
-                    ...this.filteredOptions,
-                    ...(term === "" || term.length < 2
+                const isTermValid = term === "" || term.length < 2;
+                this.filteredOptions.push({
+                    type: "banks",
+                    data: (isTermValid
                         ? []
                         : banks.filter((bank) =>
                               removeDiacritics(bank.name).includes(removeDiacritics(term))
-                          )),
-                ];
+                          )) as Bank[],
+                });
             },
         });
     }
@@ -135,16 +141,15 @@ export class HeaderLayoutComponent {
     companySubscriber(term: string) {
         this.company$ = this.companies.company$.subscribe({
             next: (companies) => {
-                this.filteredOptions = [
-                    ...this.filteredOptions,
-                    ...(term === "" || term.length < 2
+                const isTermValid = term === "" || term.length < 2;
+                this.filteredOptions.push({
+                    type: "companies",
+                    data: (isTermValid
                         ? []
-                        : companies.filter((company) =>
-                              removeDiacritics(company.name).includes(
-                                  removeDiacritics(term)
-                              )
-                          )),
-                ];
+                        : companies.filter((comp) =>
+                              removeDiacritics(comp.name).includes(removeDiacritics(term))
+                          )) as Company[],
+                });
             },
         });
     }
@@ -162,10 +167,17 @@ export class HeaderLayoutComponent {
             .pipe(debounceTime(300), distinctUntilChanged())
             .subscribe({
                 next: (bills) => {
-                    this.filteredOptions = [
-                        ...this.filteredOptions,
-                        ...(term === "" || term.length < 2 ? [] : bills.data),
-                    ];
+                    const isTermValid = term === "" || term.length < 2;
+                    this.filteredOptions.push({
+                        type: "bills",
+                        data: (isTermValid
+                            ? []
+                            : bills.data.filter((bill) =>
+                                  removeDiacritics(bill.name).includes(
+                                      removeDiacritics(term)
+                                  )
+                              )) as Bill[],
+                    });
                 },
             });
     }
@@ -188,9 +200,11 @@ export class HeaderLayoutComponent {
 
     onClearSearch() {
         this.search$.next("");
+        this.filteredOptions = [];
     }
 
-    onSelect(item: any) {
+    onSelect(item: any, event: MatOptionSelectionChange) {
+        if (!event.isUserInput) return;
         const option = {
             data: item,
         };

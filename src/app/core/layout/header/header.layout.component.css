@@ -104,8 +104,16 @@
 
 ::ng-deep .header-autocomplete {
     background-color: var(--background) !important;
+    & .sector {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        padding: 0.5rem;
+    }
     & .header-option {
         padding: 4px 16px;
+        margin-bottom: 0.25rem;
+        border-radius: var(--border-radius);
         background-color: var(--bh) !important;
         & span {
             display: grid;
