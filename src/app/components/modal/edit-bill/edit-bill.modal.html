@@ -172,8 +172,13 @@
             </div>
         </div>
     </form>
-    <div [ngClass]="['type-container', tab === 1 ? 'selected' : '']">
-        <card-component class="card" *ngIf="type.value ==='money'" [hideHeader]="true">
+    <div [ngClass]="['main-container', 'type-container', tab === 1 ? 'selected' : '']">
+        <card-component
+            [style.width]="'100%'"
+            class="card"
+            *ngIf="type.value ==='money'"
+            [hideHeader]="true"
+        >
             <template-edit-banks
                 [style.width]="'100%'"
                 #banks="templateEditBanks"
@@ -181,16 +186,23 @@
                 #bankTemplate
             ></template-edit-banks
         ></card-component>
-        <card-component *ngIf="type.value ==='companyCredit'" [hideHeader]="true">
+        <card-component
+            [style.width]="'100%'"
+            *ngIf="type.value ==='companyCredit'"
+            [hideHeader]="true"
+        >
             <template-edit-companies
                 [style.width]="'100%'"
                 [bill]="data"
                 #companyTemplate
             ></template-edit-companies>
         </card-component>
-        <card-component *ngIf="type.value ==='creditCard'" [hideHeader]="true">
+        <card-component
+            [style.width]="'100%'"
+            *ngIf="type.value ==='creditCard'"
+            [hideHeader]="true"
+        >
             <template-edit-credit-card
-                [style.width]="'100%'"
                 [bill]="data"
                 #ccTemplate
             ></template-edit-credit-card

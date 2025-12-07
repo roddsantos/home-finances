@@ -11,7 +11,7 @@
 }
 
 .bank-grid {
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(3, 32%);
 }
 
 .button-primary.extended + .button-primary.extended {

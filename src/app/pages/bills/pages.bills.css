@@ -190,12 +190,6 @@
 
 .date-container {
     grid-area: date-container;
-    display: flex;
-    align-items: center;
-    width: max-content;
-    height: fit-content;
-    margin: auto 0px;
-    padding: 6px;
     border-radius: var(--border-radius);
     font-size: 0.75rem;
     & p {

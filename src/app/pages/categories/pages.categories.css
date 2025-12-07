@@ -11,7 +11,7 @@
 }
 
 .category-grid {
-    grid-template-columns: repeat(4, auto);
+    grid-template-columns: repeat(5, 18%);
     @media screen and (max-width: 1366px) {
         grid-template-columns: repeat(3, auto);
     }
@@ -30,6 +30,7 @@
         "category-description category-description category-icon";
     grid-template-columns: 1fr 12fr 3fr;
     grid-template-rows: repeat(2, auto);
+    gap: 0.4rem;
     column-gap: 0.5rem;
     row-gap: 0.5rem;
     flex-direction: row;

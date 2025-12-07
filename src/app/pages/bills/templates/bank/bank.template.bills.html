@@ -2,7 +2,7 @@
     [ngClass]="['bill-container-item', general.billsLayout$ | async]"
     (click)="openDetails(data, $event)"
 >
-    <div [ngClass]="['date-container', dateLeft, isLineTheme]">
+    <div [ngClass]="['date-container', 'tag', dateLeft, isLineTheme]">
         <mat-icon
             class="material-symbols-outlined date-icon"
             aria-hidden="false"

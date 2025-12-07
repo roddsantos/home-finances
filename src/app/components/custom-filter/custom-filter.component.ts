@@ -318,6 +318,7 @@ export class CustomFilterComponent {
     }
 
     getBills() {
+        this.billState.setPage(1);
         this.billService.getBills().subscribe({
             next: (bills) => {
                 this.billState.setBills(bills);
