@@ -33,7 +33,7 @@
     </div>
     <div
         matTooltip="recurrent bill"
-        [ngClass]="['recurrent-container','tag', isLineTheme]"
+        [ngClass]="['recurrent-container','tag', isLineTheme, data.isRecurrent ? 'recurrent' : '']"
     >
         <mat-icon
             class="material-symbols-outlined"

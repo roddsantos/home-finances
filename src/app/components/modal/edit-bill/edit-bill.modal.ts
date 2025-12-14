@@ -232,6 +232,7 @@ export class ModalEditBill {
             paid: billFormValue.paid!,
             groupId: this.data.groupId,
             isPayment: billFormValue.isPayment,
+            isRecurrent: billFormValue.isRecurrent,
             id: this.data.id,
         };
         var observer;
@@ -251,7 +252,6 @@ export class ModalEditBill {
                 const creditCardFormValue = this.creditCardTemplate.ccForm.getRawValue();
                 observer = this.billService.updateBillCreditCard({
                     ...defaultData,
-                    isRecurrent: creditCardFormValue.isRecurrent!,
                     creditCardId: creditCardFormValue.creditCard!.id,
                     companyId: creditCardFormValue.company?.id,
                     parcels: creditCardFormValue.parcels!,

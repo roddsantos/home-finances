@@ -255,12 +255,16 @@
 }
 
 .recurrent-container {
+    display: none;
     grid-area: recurrent-container;
     height: 30px;
     border-color: var(--info);
     background-color: var(--info);
     & mat-icon {
         color: var(--text-1);
+    }
+    &.recurrent {
+        display: flex;
     }
 }
 
