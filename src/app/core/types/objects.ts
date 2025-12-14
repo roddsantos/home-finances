@@ -86,7 +86,7 @@ export type Bill = {
     bank2Id: string;
     isPayment: boolean;
     creditCardId: string;
-    isRefund: boolean;
+    isRecurrent: boolean;
     userId: string;
     updatedAt: string;
     createdAt: string;

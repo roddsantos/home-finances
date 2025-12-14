@@ -41,7 +41,7 @@
                         class="selection-icon"
                         aria-hidden="false"
                         aria-label="icon"
-                        [style.color]="bill.isRefund ? successColor : warningColor"
+                        [style.color]="bill.isRecurrent ? successColor : warningColor"
                         [fontIcon]="bill.isPayment ? 'arrow_forward' : 'arrow_back'"
                     ></mat-icon>
                     <h5

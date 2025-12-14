@@ -22,7 +22,7 @@ export type CheckBillForm = {
     settled: boolean;
     due: Date;
     paid: Date;
-    isRefund: boolean;
+    isRecurrent: boolean;
 };
 
 export type BankBillForm = {
@@ -51,7 +51,7 @@ export type CreditCardForm = {
 
 export type ConfigForm = {
     isPayment: boolean;
-    isRefund: boolean;
+    isRecurrent: boolean;
     settled: boolean;
     due: Date | null;
     paid: Date | null;

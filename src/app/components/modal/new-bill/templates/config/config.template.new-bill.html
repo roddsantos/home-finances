@@ -3,29 +3,33 @@
     <p class="step-desc">config of the date and money flow</p>
     <form [formGroup]="configForm" class="form-container">
         <ng-container *ngIf="configData.type === 'money'">
-            <p>money flow</p>
-            <mat-button-toggle-group
-                formControlName="isPayment"
-                name="moneyy flow"
-                aria-label="Font Style"
-                class="margin"
-            >
-                <mat-button-toggle [value]="true">outcome</mat-button-toggle>
-                <mat-button-toggle [value]="false">income</mat-button-toggle>
-            </mat-button-toggle-group></ng-container
-        >
-        <ng-container *ngIf="configData.type === 'creditCard'">
-            <p>is refund?</p>
-            <mat-button-toggle-group
-                formControlName="isRefund"
-                name="refund"
-                aria-label="Font Style"
-                class="margin"
-            >
-                <mat-button-toggle [value]="true">yes</mat-button-toggle>
-                <mat-button-toggle [value]="false">no</mat-button-toggle>
-            </mat-button-toggle-group></ng-container
-        >
+            <div class="row">
+                <div>
+                    <p>money flow</p>
+                    <mat-button-toggle-group
+                        formControlName="isPayment"
+                        name="moneyy flow"
+                        aria-label="Font Style"
+                        class="margin"
+                    >
+                        <mat-button-toggle [value]="true">outcome</mat-button-toggle>
+                        <mat-button-toggle [value]="false">income</mat-button-toggle>
+                    </mat-button-toggle-group>
+                </div>
+                <div>
+                    <p>is recurrent bill?</p>
+                    <mat-button-toggle-group
+                        formControlName="isRecurrent"
+                        name="recurrent"
+                        aria-label="Font Style"
+                        class="margin"
+                    >
+                        <mat-button-toggle [value]="true">yes</mat-button-toggle>
+                        <mat-button-toggle [value]="false">no</mat-button-toggle>
+                    </mat-button-toggle-group>
+                </div>
+            </div>
+        </ng-container>
         <p>payment processed?</p>
         <mat-button-toggle-group
             formControlName="settled"

@@ -106,7 +106,7 @@ export class CreditCardTemplateMonthly {
                 parcels: this.data.parcels,
                 taxes: this.data.taxes,
                 delta: this.data.delta,
-                isRefund: this.data.isRefund,
+                isRecurrent: this.data.isRecurrent,
                 totalParcel: this.data.totalParcel,
                 parcel: this.data.parcel,
                 groupId: this.data.groupId,

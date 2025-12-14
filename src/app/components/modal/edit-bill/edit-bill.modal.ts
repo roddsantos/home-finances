@@ -128,7 +128,7 @@ export class ModalEditBill {
                 validators: [Validators.required],
             }
         ),
-        isRefund: new FormControl<boolean>(
+        isRecurrent: new FormControl<boolean>(
             { value: true, disabled: this.data.settled },
             {
                 nonNullable: true,
@@ -158,7 +158,7 @@ export class ModalEditBill {
             type: this.data.type as PaymentTypes,
             category: this.data.category,
             isPayment: this.data.isPayment,
-            isRefund: this.data.isRefund,
+            isRecurrent: this.data.isRecurrent,
         });
         this.billTabs = EDIT_BILLS_TABS[this.data.type];
         if (this.data.settled && this.data.type !== "money")
@@ -251,7 +251,7 @@ export class ModalEditBill {
                 const creditCardFormValue = this.creditCardTemplate.ccForm.getRawValue();
                 observer = this.billService.updateBillCreditCard({
                     ...defaultData,
-                    isRefund: creditCardFormValue.isRefund!,
+                    isRecurrent: creditCardFormValue.isRecurrent!,
                     creditCardId: creditCardFormValue.creditCard!.id,
                     companyId: creditCardFormValue.company?.id,
                     parcels: creditCardFormValue.parcels!,

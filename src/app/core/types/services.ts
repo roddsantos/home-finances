@@ -79,7 +79,7 @@ export type BillObjectCredtCard = {
     parcels: number;
     taxes?: number;
     delta?: number;
-    isRefund: boolean;
+    isRecurrent: boolean;
 };
 
 export type BillObjectCredtCardUpdate = {
