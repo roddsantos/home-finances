@@ -110,10 +110,10 @@
                             </div>
                             <div
                                 class="new-bill-toggle new-bill-field"
-                                *ngIf="data.type === 'creditCard'"
+                                *ngIf="data.type === 'money'"
                             >
                                 <p [ngClass]="['label', data.settled ? 'disabled'  : '']">
-                                    is refund
+                                    is recurrent
                                 </p>
                                 <toggle-button
                                     [items]="booleanForm"

@@ -12,13 +12,20 @@ import { Bill, BillData } from "src/app/core/types/objects";
 import { MatIconModule } from "@angular/material/icon";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 @Component({
     selector: "credit-card-list-template",
     templateUrl: "./credit-card.template.bills.html",
     styleUrls: ["../../pages.bills.css", "./credit-card.template.bills.css"],
     standalone: true,
-    imports: [CommonModule, MatExpansionModule, ActionsComponent, MatIconModule],
+    imports: [
+        CommonModule,
+        MatExpansionModule,
+        ActionsComponent,
+        MatIconModule,
+        MatTooltipModule,
+    ],
 })
 export class CreditCardTemplateMonthly {
     public dialog = inject(Dialog);

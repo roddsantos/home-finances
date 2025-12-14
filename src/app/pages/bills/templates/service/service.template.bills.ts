@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { Component, inject, Input } from "@angular/core";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatIconModule } from "@angular/material/icon";
+import { MatTooltipModule } from "@angular/material/tooltip";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { ModalEditBill } from "src/app/components/modal/edit-bill/edit-bill.modal";
@@ -18,7 +19,13 @@ import { ServiceBill } from "src/app/services/bill.service";
     templateUrl: "./service.template.bills.html",
     styleUrls: ["../../pages.bills.css", "./service.template.bills.css"],
     standalone: true,
-    imports: [CommonModule, MatExpansionModule, ActionsComponent, MatIconModule],
+    imports: [
+        CommonModule,
+        MatExpansionModule,
+        ActionsComponent,
+        MatIconModule,
+        MatTooltipModule,
+    ],
 })
 export class ServiceTemplateMonthly {
     public billsState = inject(BillState);
