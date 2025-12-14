@@ -18,6 +18,19 @@
             ></mat-icon>
             <h6>{{ bill | bills : 'settled' }}</h6>
         </div>
+        <div
+            *ngIf="bill.isRecurrent"
+            matTooltip="will appear next month after settled"
+            [ngClass]="['recurrent','tag']"
+        >
+            <mat-icon
+                class="material-symbols-outlined"
+                aria-hidden="false"
+                aria-label="icon"
+                fontIcon="cycle"
+            ></mat-icon>
+            <h6>recurrent bill</h6>
+        </div>
     </div>
     <card-component class="section-data" [hideHeader]="true">
         <div class="conditional-container info-card">

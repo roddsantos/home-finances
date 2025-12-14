@@ -67,7 +67,10 @@
                         </div>
                         <div class="value-container">
                             <div class="parcel"><p>$</p></div>
-                            <h6 class="value">{{item.total | currency: "R$ "}}</h6>
+                            <h6 class="value">
+                                {{(item.type === 'money' ? item.total : item.totalParcel)
+                                | currency: "R$ "}}
+                            </h6>
                         </div>
                         <actions
                             class="bill-buttons"
