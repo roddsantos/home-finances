@@ -1,63 +1,37 @@
-<div
-    [ngClass]="['bill-container-item', general.billsLayout$ | async]"
-    (click)="openDetails(data, $event)"
->
-    <div class="bill-tags">
-        <div
-            [matTooltip]="data.isPayment ? 'outcome' : 'income'"
-            [ngClass]="['tag', 'flow-container', data.isPayment ? 'outcome' : 'income']"
-        >
-            <mat-icon
-                class="material-symbols-outlined type-icon"
-                aria-hidden="false"
-                aria-label="icon"
-                [fontIcon]="data.isPayment ? 'arrow_circle_up' : 'arrow_circle_down'"
-            ></mat-icon>
-        </div>
-        <div
-            matTooltip="company"
-            [ngClass]="['type-container', 'tag','company', isLineTheme]"
-        >
-            <mat-icon
-                class="material-symbols-outlined type-icon"
-                aria-hidden="false"
-                aria-label="icon"
-                fontIcon="store"
-            ></mat-icon>
-            <p class="type-name">{{data.company?.name}}</p>
-        </div>
-        <div
-            matTooltip="category"
-            [ngClass]="['category-container','tag','company', isLineTheme]"
-        >
-            <mat-icon
-                class="material-icons-outlined category-icon"
-                aria-hidden="false"
-                aria-label="icon"
-                [fontIcon]="data.category.icon"
-            ></mat-icon>
-            <p class="category-name">{{data.category.name}}</p>
-        </div>
-    </div>
-    <h6 class="title">{{ data.name }}</h6>
-    <p class="description">{{ data.description }}</p>
-    <div [ngClass]="['date-container', 'tag', 'outlined', dateLeft, isLineTheme]">
+<div class="bill-tags">
+    <div
+        [matTooltip]="data.isPayment ? 'outcome' : 'income'"
+        [ngClass]="['tag', 'flow-container', data.isPayment ? 'outcome' : 'income']"
+    >
         <mat-icon
-            class="material-symbols-outlined date-icon"
+            class="material-symbols-outlined type-icon"
             aria-hidden="false"
             aria-label="icon"
-            fontIcon="event"
+            [fontIcon]="data.isPayment ? 'arrow_circle_up' : 'arrow_circle_down'"
         ></mat-icon>
-        <p>{{(data.settled ? data.paid : data.due) | date: "mediumDate"}}</p>
     </div>
-    <actions
-        class="bill-buttons"
-        [transparent]="false"
-        [data]="data"
-        [actions]="actions"
-    ></actions>
-    <div class="value-container">
-        <div class="parcel"><p>{{data.parcel + 1}}</p></div>
-        <h6 class="value">{{data.totalParcel | currency: "R$ "}}</h6>
+    <div
+        matTooltip="company"
+        [ngClass]="['type-container', 'tag','company', isLineTheme]"
+    >
+        <mat-icon
+            class="material-symbols-outlined type-icon"
+            aria-hidden="false"
+            aria-label="icon"
+            fontIcon="store"
+        ></mat-icon>
+        <p class="type-name">{{data.company?.name}}</p>
+    </div>
+    <div
+        matTooltip="category"
+        [ngClass]="['category-container','tag','company', isLineTheme]"
+    >
+        <mat-icon
+            class="material-icons-outlined category-icon"
+            aria-hidden="false"
+            aria-label="icon"
+            [fontIcon]="data.category.icon"
+        ></mat-icon>
+        <p class="category-name">{{data.category.name}}</p>
     </div>
 </div>

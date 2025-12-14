@@ -44,12 +44,10 @@
                             [data]="item"
                         ></bank-list-template>
                         <credit-card-list-template
-                            [ngClass]="['bill-item', isLineTheme]"
                             *ngIf="item.type === 'creditCard'"
                             [data]="item"
                         ></credit-card-list-template>
                         <service-list-template
-                            [ngClass]="['bill-item', isLineTheme]"
                             *ngIf="item.type === 'companyCredit'"
                             [data]="item"
                         ></service-list-template>
