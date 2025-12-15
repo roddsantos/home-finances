@@ -55,7 +55,7 @@ export class CreditCardTemplateEditBill {
             validators: [Validators.required, Validators.min(1)],
         }),
         delta: new FormControl<number>(0, { nonNullable: true }),
-        isRefund: new FormControl<boolean>(false, { nonNullable: true }),
+        isRecurrent: new FormControl<boolean>(false, { nonNullable: true }),
     });
 
     errorMessage = {
@@ -70,7 +70,7 @@ export class CreditCardTemplateEditBill {
             taxes: this.bill.taxes,
             parcels: this.bill.parcels,
             delta: this.bill.delta,
-            isRefund: this.bill.isRefund,
+            isRecurrent: this.bill.isRecurrent,
         });
         if (this.bill.settled) {
             this.ccForm.controls["creditCard"].disable();

@@ -140,7 +140,7 @@ export class ModalNewBill implements OnInit {
             validators: [Validators.required, Validators.min(1)],
         }),
         delta: new FormControl<number>(0, { nonNullable: true }),
-        isRefund: new FormControl<boolean>(false, { nonNullable: true }),
+        isRecurrent: new FormControl<boolean>(false, { nonNullable: true }),
         totalParcel: new FormControl<number>(0, {
             nonNullable: true,
             validators: [Validators.required, Validators.min(0.01)],
@@ -226,7 +226,7 @@ export class ModalNewBill implements OnInit {
     getCreditCardForm() {
         return {
             company: this.billForm.get("company")?.value || null,
-            bank1: this.billForm.get("isRefund")!.value,
+            bank1: this.billForm.get("isRecurrent")!.value,
             creditcard: this.billForm.get("creditcard")?.value || null,
             taxes: this.billForm.get("taxes")?.value || 0,
             parcels: this.billForm.get("parcels")?.value || 0,
@@ -237,7 +237,7 @@ export class ModalNewBill implements OnInit {
     getErrorCreditCardForm() {
         return {
             company: this.billForm.controls.company.errors,
-            isRefund: this.billForm.controls.isRefund.errors,
+            isRecurrent: this.billForm.controls.isRecurrent.errors,
             creditcard: this.billForm.controls.creditcard.errors,
             taxes: this.billForm.controls.taxes.errors,
             parcels: this.billForm.controls.parcels.errors,
@@ -248,7 +248,7 @@ export class ModalNewBill implements OnInit {
     getConfigForm() {
         return {
             isPayment: this.billForm.get("isPayment")!.value,
-            isRefund: this.billForm.get("isRefund")!.value,
+            isRecurrent: this.billForm.get("isRecurrent")!.value,
             settled: this.billForm.get("settled")!.value,
             due: this.billForm.get("due")!.value,
             paid: this.billForm.get("paid")?.value || null,
@@ -354,7 +354,7 @@ export class ModalNewBill implements OnInit {
             case "creditCard":
                 observer = this.billService.createBillCreditCard({
                     ...defaultData,
-                    isRefund: this.billForm.value.isRefund!,
+                    isRecurrent: this.billForm.value.isRecurrent!,
                     creditCardId: this.billForm.value.creditcard!.id,
                     companyId: this.billForm.value.company?.id,
                     parcels: this.billForm.value.parcels!,

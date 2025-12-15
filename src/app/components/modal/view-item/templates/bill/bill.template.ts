@@ -5,13 +5,14 @@ import { Bill, BillData } from "src/app/core/types/objects";
 import { MONTHS } from "src/utils/constants/general";
 import { BillsPipe } from "src/utils/pipes/bills";
 import { CardComponent } from "../../../../card/card.component";
+import { MatTooltip } from "@angular/material/tooltip";
 
 @Component({
     selector: "template-view-bill",
     templateUrl: "./bill.template.html",
     styleUrls: ["./bill.template.css", "../../view-item.modal.css"],
     standalone: true,
-    imports: [CommonModule, MatIconModule, BillsPipe, CardComponent],
+    imports: [CommonModule, MatIconModule, BillsPipe, CardComponent, MatTooltip],
 })
 export class TemplateBill {
     @Input() bill: Bill & BillData;

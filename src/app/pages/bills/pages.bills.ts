@@ -21,6 +21,9 @@ import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 import { GeneralService } from "src/app/services/general.service";
 import { CardComponent } from "../../components/card/card.component";
+import { ModalEditBill } from "src/app/components/modal/edit-bill/edit-bill.modal";
+import { ActionItem } from "src/app/core/types/components";
+import { ActionsComponent } from "src/app/components/actions/actions.component";
 
 @Component({
     selector: "page-bills",
@@ -40,6 +43,7 @@ import { CardComponent } from "../../components/card/card.component";
         PaginationTemplate,
         MatTooltipModule,
         CardComponent,
+        ActionsComponent,
     ],
 })
 export class PageBills {
@@ -54,6 +58,28 @@ export class PageBills {
     titleItems: Partial<keyof Bill>[] = ["name", "updatedAt"];
     detailsItems: Partial<keyof Bill>[] = ["description", "total"];
     isLineTheme: string = "";
+    dateLeft: string = "settled";
+
+    actions: ActionItem[] = [
+        {
+            name: "",
+            icon: "edit",
+            action: (data: Bill) => this.onEdit(data),
+            color: "#00328f",
+        },
+        {
+            name: "",
+            icon: "delete",
+            action: (data: Bill) => this.onDelete(data),
+            color: "#8f0000",
+        },
+        {
+            name: "",
+            icon: "check_circle",
+            action: (data) => this.onCheck(data),
+            color: "#008f18",
+        },
+    ];
 
     ngOnInit() {
         this.billState.setAction(() => this.onReload());
@@ -83,11 +109,14 @@ export class PageBills {
         });
     }
 
-    openDetails(bill: Bill) {
-        const option = {
-            data: bill,
-        };
-        this.dialog.open(ModalViewItem, option);
+    openDetails(bill: Bill, e: any) {
+        const className = e.target.className;
+        if (className !== "mat-mdc-button-touch-target") {
+            const option = {
+                data: bill,
+            };
+            this.dialog.open(ModalViewItem, option);
+        }
     }
 
     onReload() {
@@ -98,5 +127,44 @@ export class PageBills {
     openModal() {
         let options = {};
         this.dialog.open(ModalNewBill, options);
+    }
+
+    onEdit(data: Bill) {
+        this.dialog.open(ModalEditBill, {
+            data,
+        });
+    }
+
+    onDelete(data: Bill) {
+        console.log("DELETE");
+    }
+
+    onCheck(data: Bill) {
+        this.billService
+            .updateBillBank({
+                ...data,
+                due: new Date(data.due),
+                paid: new Date(),
+                settled: true,
+            })
+            .subscribe({
+                next: () => {
+                    this.billService.getBills().subscribe({
+                        next: (bills) => {
+                            this.billState.setBills(bills);
+                        },
+                    });
+                    this.snack.openSnackBar("bill successfully updated", "success");
+                },
+                error: () => {
+                    this.snack.openSnackBar("error updating bill", "error");
+                },
+            });
+    }
+
+    getDateStatus(data: Bill) {
+        if (data.settled) return "settled";
+        else if (new Date(data.due).getTime() - new Date().getTime() > 0) return "close";
+        else return "late";
     }
 }

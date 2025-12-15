@@ -254,9 +254,22 @@
     }
 }
 
+.recurrent-container {
+    display: none;
+    grid-area: recurrent-container;
+    height: 30px;
+    border-color: var(--info);
+    background-color: var(--info);
+    & mat-icon {
+        color: var(--text-1);
+    }
+    &.recurrent {
+        display: flex;
+    }
+}
+
 .type-container {
     grid-area: type-container;
-    margin: 0px 0.5rem;
     & .type-icon {
         color: var(--text-1);
     }
@@ -284,7 +297,6 @@
 
 .category-container {
     grid-area: category-category;
-    margin: 0px 0rem;
     & .category-icon {
         color: var(--text-1);
     }
@@ -330,6 +342,7 @@
 
 .bill-tags {
     grid-area: bill-tags;
+    gap: 0.5rem;
     display: flex;
     flex-direction: row;
     margin: auto 0px;

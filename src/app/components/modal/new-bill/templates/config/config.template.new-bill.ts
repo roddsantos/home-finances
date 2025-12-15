@@ -52,7 +52,7 @@ export class ConfigTemplate {
         isPayment: new FormControl<boolean>(true, {
             nonNullable: true,
         }),
-        isRefund: new FormControl<boolean>(false, {
+        isRecurrent: new FormControl<boolean>(false, {
             nonNullable: true,
         }),
         settled: new FormControl<boolean>(true, { nonNullable: true }),

@@ -7,6 +7,12 @@ p {
     margin-bottom: 1.25rem;
 }
 
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
 .hint {
     color: var(--text-1);
     font-size: 1rem;

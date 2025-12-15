@@ -33,21 +33,52 @@
                     let-i="index"
                     [ngForTrackBy]="trackByFn"
                 >
-                    <bank-list-template
-                        [ngClass]="['bill-item', isLineTheme]"
-                        *ngIf="item.type === 'money'"
-                        [data]="item"
-                    ></bank-list-template>
-                    <credit-card-list-template
-                        [ngClass]="['bill-item', isLineTheme]"
-                        *ngIf="item.type === 'creditCard'"
-                        [data]="item"
-                    ></credit-card-list-template>
-                    <service-list-template
-                        [ngClass]="['bill-item', isLineTheme]"
-                        *ngIf="item.type === 'companyCredit'"
-                        [data]="item"
-                    ></service-list-template>
+                    <div
+                        [ngClass]="['bill-container-item', 'bill-item', isLineTheme, generalState.billsLayout$ | async]"
+                        (click)="openDetails(item, $event)"
+                    >
+                        <h6 class="title">{{ item.name }}</h6>
+                        <p class="description">{{ item.description }}</p>
+                        <bank-list-template
+                            *ngIf="item.type === 'money'"
+                            [data]="item"
+                        ></bank-list-template>
+                        <credit-card-list-template
+                            *ngIf="item.type === 'creditCard'"
+                            [data]="item"
+                        ></credit-card-list-template>
+                        <service-list-template
+                            *ngIf="item.type === 'companyCredit'"
+                            [data]="item"
+                        ></service-list-template>
+                        <div
+                            [ngClass]="['date-container', 'tag', getDateStatus(item), isLineTheme]"
+                        >
+                            <mat-icon
+                                class="material-symbols-outlined date-icon"
+                                aria-hidden="false"
+                                aria-label="icon"
+                                fontIcon="event"
+                            ></mat-icon>
+                            <p>
+                                {{(item.settled ? item.paid : item.due) | date:
+                                "mediumDate"}}
+                            </p>
+                        </div>
+                        <div class="value-container">
+                            <div class="parcel"><p>$</p></div>
+                            <h6 class="value">
+                                {{(item.type === 'money' ? item.total : item.totalParcel)
+                                | currency: "R$ "}}
+                            </h6>
+                        </div>
+                        <actions
+                            class="bill-buttons"
+                            [transparent]="false"
+                            [data]="item"
+                            [actions]="actions"
+                        ></actions>
+                    </div>
                 </ng-template>
             </div>
         </div>

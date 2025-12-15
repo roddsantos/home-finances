@@ -33,6 +33,16 @@
     gap: 0.25rem;
 }
 
+.recurrent {
+    & h6,
+    mat-icon {
+        color: var(--info) !important;
+    }
+    background-color: rgb(from var(--info) r g b / 0.25);
+    border-color: rgb(from var(--info) r g b / 0.25);
+    gap: 0.25rem;
+}
+
 .section-data {
     grid-area: section-data;
 }
