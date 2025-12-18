@@ -34,10 +34,11 @@ import { GeneralService } from "src/app/services/general.service";
 export class CalendarComponent implements OnChanges, OnDestroy {
     public filterState = inject(CustomFilterState);
     public dashboardState = inject(DashboardState);
-    public generalState = inject(GeneralState);
-    public billState = inject(BillState);
 
     private generalService = inject(GeneralService);
+    public generalState = inject(GeneralState);
+
+    public billState = inject(BillState);
     private billsService = inject(ServiceBill);
 
     private snack = inject(CustomSnackbarComponent);
@@ -123,7 +124,7 @@ export class CalendarComponent implements OnChanges, OnDestroy {
                 this.generalService.navigateTo("/bills");
             },
             error: () => {
-                this.snack.openSnackBar("error fetching bills", "error");
+                this.generalService.errorSnackbar("error fetching bills");
                 this.billState.changeStatus("error", "error fetching bills");
             },
         });

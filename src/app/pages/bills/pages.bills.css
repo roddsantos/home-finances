@@ -223,7 +223,7 @@
         border: 2px solid var(--text-1);
         border-radius: var(--border-radius);
         height: 25px;
-        padding: 0px 5px;
+        padding: 0rem 0.5rem;
         display: flex;
         & p {
             margin: auto;

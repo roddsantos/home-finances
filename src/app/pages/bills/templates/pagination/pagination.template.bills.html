@@ -1,6 +1,6 @@
 <div class="margin-right">
     <div
-        class="input-page-container pad outlined"
+        class="button-secondary pad"
         [matTooltip]="'page '+(billsState.billsPagination$ | async)?.page"
         matTooltipPosition="above"
     >
@@ -13,8 +13,22 @@
         <h5>{{(billsState.billsPagination$ | async)?.page}}</h5>
     </div>
     <button
+        aria-label="next page"
+        [disabled]="page === 1"
+        (click)="onFirstPage()"
+        [ngClass]="['button-primary', 'pad']"
+        mat-button
+    >
+        <mat-icon
+            class="material-symbols-outlined icon-page"
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="keyboard_double_arrow_left"
+        ></mat-icon>
+    </button>
+    <button
         aria-label="previous page"
-        [disabled]="disablePrevious()"
+        [disabled]="page === 1"
         (click)="onPreviousPage()"
         [ngClass]="['button-primary', 'pad']"
         mat-button
@@ -56,6 +70,20 @@
             aria-hidden="false"
             aria-label="Example home icon"
             fontIcon="arrow_forward"
+        ></mat-icon>
+    </button>
+    <button
+        aria-label="next page"
+        [disabled]="disableNext()"
+        (click)="onLastPage()"
+        [ngClass]="['button-primary', 'pad']"
+        mat-button
+    >
+        <mat-icon
+            class="material-symbols-outlined icon-page"
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="keyboard_double_arrow_right"
         ></mat-icon>
     </button>
 </div>

@@ -34,7 +34,3 @@
     background-color: var(--background);
     color: var(--secondary);
 }
-
-.next-page {
-    border-radius: var(--border-radius);
-}

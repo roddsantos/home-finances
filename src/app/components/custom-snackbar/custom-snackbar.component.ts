@@ -1,5 +1,4 @@
 import { Component, inject, Injectable } from "@angular/core";
-import { NgClass } from "@angular/common";
 import { SnackbarData, SnackbarVariant } from "src/app/core/types/components";
 import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 
@@ -11,7 +10,7 @@ import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
     templateUrl: "./custom-snackbar.component.html",
     styleUrls: ["./custom-snackbar.component.css"],
     standalone: true,
-    imports: [NgClass],
+    imports: [],
 })
 export class CustomSnackbarComponent {
     private _snackBar = inject(MatSnackBar);

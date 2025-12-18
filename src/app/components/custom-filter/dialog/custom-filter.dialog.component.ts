@@ -27,15 +27,10 @@ import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ServiceBill } from "src/app/services/bill.service";
 import { MatButtonToggle, MatButtonToggleModule } from "@angular/material/button-toggle";
 import { BillState } from "src/app/core/subjects/subjects.bill";
-import { Bill, BillData } from "src/app/core/types/objects";
-import {
-    MatDatepickerInput,
-    MatDatepickerInputEvent,
-    MatDatepickerModule,
-} from "@angular/material/datepicker";
+import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule, provideNativeDateAdapter } from "@angular/material/core";
-import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { Subscription } from "rxjs";
+import { GeneralComponent } from "../../general/general.component";
 
 @Component({
     selector: "dialog-custom-filter",
@@ -61,18 +56,18 @@ import { Subscription } from "rxjs";
     ],
     providers: [provideNativeDateAdapter()],
 })
-export class DialogCustomList implements OnInit {
+export class DialogCustomList extends GeneralComponent implements OnInit {
+    public filterState = inject(CustomFilterState);
+
     public modalState = inject(ModalState);
+
     public catState = inject(CategoryState);
     public ccState = inject(CreditCardState);
     public compState = inject(CompanyState);
     public bankState = inject(BankState);
-    public filterState = inject(CustomFilterState);
+
     public billService = inject(ServiceBill);
     public billState = inject(BillState);
-    public snack = inject(CustomSnackbarComponent);
-    public localStorage = inject(LocalStorageService);
-    public generalState = inject(GeneralState);
 
     @ViewChild(ModalComponent) modalComponent: ModalComponent;
     @ViewChild("category") category: MatSelect;
@@ -151,9 +146,13 @@ export class DialogCustomList implements OnInit {
             );
             if (hasFilter) {
                 if (identifier === hasFilter.identifier)
-                    this.snack.openSnackBar("only one " + identifier + " value allowed");
+                    this.generalService.warningSnackbar(
+                        "only one " + identifier + " value allowed"
+                    );
                 else if ((hasFilter.name as number) !== value)
-                    this.snack.openSnackBar(identifier + " value not allowed");
+                    this.generalService.warningSnackbar(
+                        identifier + " value not allowed"
+                    );
             } else {
                 this.selectedFilters.push({
                     id: value,
@@ -226,7 +225,6 @@ export class DialogCustomList implements OnInit {
             identifier: start ? "date1" : "date2",
             name: date.toLocaleDateString("en-GB"),
         });
-        // else this[start ? "date1" : "date2"].value = dateFound;
     }
 
     removeFilter(index: number) {
@@ -245,9 +243,8 @@ export class DialogCustomList implements OnInit {
         countYears = this.selectedFilters.filter((f) => f.identifier === "year").length;
         countMonths = this.selectedFilters.filter((f) => f.identifier === "month").length;
         if (countYears === 0 && countMonths > 0) {
-            this.snack.openSnackBar(
-                "you need at least one year when filtering months",
-                "warning"
+            this.generalService.warningSnackbar(
+                "you need at least one year when filtering months"
             );
             return;
         }
@@ -260,7 +257,7 @@ export class DialogCustomList implements OnInit {
                 this.modalComponent.onClose();
             },
             error: () => {
-                this.snack.openSnackBar("error fetching bills", "error");
+                this.generalService.errorSnackbar("error fetching bills");
                 this.billState.changeStatus("error", "error fetching bills");
             },
         });
