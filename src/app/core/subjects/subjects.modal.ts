@@ -92,5 +92,10 @@ export class ModalState {
         this._size$.next("md");
         this._disabled$.next(true);
         this._data$.next(false);
+        this.changeFooter({
+            type: "submit",
+            submitLabel: "ok",
+            alertLabel: "cancel",
+        });
     }
 }

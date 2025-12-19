@@ -1,12 +1,4 @@
-import {
-    Component,
-    OnInit,
-    Output,
-    EventEmitter,
-    inject,
-    ViewChild,
-    Inject,
-} from "@angular/core";
+import { Component, inject, Inject } from "@angular/core";
 import { ModalComponent } from "../modal.component";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
 import {
@@ -17,8 +9,6 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
-import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
-import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { MatSelectModule } from "@angular/material/select";
 import { CreditCardObject } from "src/app/core/types/services";
 import { CreditCard } from "src/app/core/types/objects";
@@ -26,10 +16,9 @@ import { MonthType } from "src/app/core/types/general";
 import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { MONTHS } from "src/utils/constants/general";
-import { NO_DESCRIPTION, NO_NAME } from "src/utils/constants/forms";
+import { CREDIT_CARD_FORM, GENERAL_FORM } from "src/utils/constants/forms";
 import { CommonModule } from "@angular/common";
 import { DIALOG_DATA } from "@angular/cdk/dialog";
-import { EditCreditCardModalType } from "src/app/core/types/modal";
 import { mergeMap } from "rxjs";
 
 @Component({
@@ -49,16 +38,24 @@ import { mergeMap } from "rxjs";
         MatSelectModule,
     ],
 })
-export class ModalNewCreditCard implements OnInit {
-    public modalState = inject(ModalState);
-    public ccApi = inject(ServiceCreditCard);
-    public ccState = inject(CreditCardState);
-    public snack = inject(CustomSnackbarComponent);
-    @ViewChild(ModalComponent) modalComponent: any;
+export class ModalNewCreditCard extends ModalComponent {
+    public creditCardService = inject(ServiceCreditCard);
+    public creditCardState = inject(CreditCardState);
 
-    constructor(@Inject(DIALOG_DATA) public data: CreditCard) {}
+    constructor(@Inject(DIALOG_DATA) public data: CreditCard) {
+        super();
+    }
 
-    months = MONTHS;
+    public months = MONTHS;
+    public errorMessage = {
+        name: GENERAL_FORM.noName,
+        description: GENERAL_FORM.noDescription,
+        year: GENERAL_FORM.yearOutOfRange,
+        limit: CREDIT_CARD_FORM.invalidLimit,
+        day: CREDIT_CARD_FORM.invalidClosingDay,
+        due: CREDIT_CARD_FORM.invalidDueDay,
+        flag: CREDIT_CARD_FORM.noFlag,
+    };
 
     creditCardForm = new FormGroup({
         name: new FormControl<string>(this.data?.name || "", {
@@ -101,74 +98,62 @@ export class ModalNewCreditCard implements OnInit {
         isClosed: new FormControl<boolean>(this.data?.isClosed || false),
     });
 
-    errorMessage = {
-        name: NO_NAME,
-        description: NO_DESCRIPTION,
-        savings: "you must enter the savings",
-        limit: "limit must be greater than zero",
-        year: "year should be between 2023 asn 2090",
-        day: "closing day needs to be a valid number",
-        due: "due day needs to be a valid number",
-        flag: "flag must be picked",
-    };
-    @Output() submit = new EventEmitter<String>();
-    @Output() onClose = new EventEmitter<void>();
-
     ngOnInit() {
         this.modalState.changeSubmitFooter(this.data ? "edit" : "OK", "cancel");
         this.modalState.changeHeader(this.data ? "edit credit card" : "new credit card");
     }
 
+    handleClose() {
+        this.onClose();
+    }
+
     onUpdate() {
         if (!this.creditCardForm.invalid) {
-            this.ccApi
+            this.creditCardService
                 .updateCreditCard({
                     ...(this.creditCardForm.value as Omit<CreditCardObject, "month">),
                     month: this.creditCardForm.value.month!.order,
                     id: this.data.id,
                 })
-                .pipe(mergeMap(() => this.ccApi.getCreditCards({})))
+                .pipe(mergeMap(() => this.creditCardService.getCreditCards({})))
                 .subscribe({
                     next: (cc) => {
-                        this.ccState.setCreditCards(cc as CreditCard[]);
-                        this.ccState.changeStatus(
+                        this.creditCardState.setCreditCards(cc as CreditCard[]);
+                        this.creditCardState.changeStatus(
                             (cc as CreditCard[]).length === 0 ? "empty" : "none",
                             "no credit cards"
                         );
-                        this.snack.openSnackBar(
-                            "credit card successfully updated",
-                            "success"
+                        this.generalService.successSnackbar(
+                            "credit card successfully updated"
                         );
-                        this.modalComponent.onClose();
+                        this.onClose();
                     },
                     error: () => {
-                        this.snack.openSnackBar("error updating credit card", "error");
+                        this.generalService.errorSnackbar("error updating credit card");
                     },
                 });
         }
     }
 
     onCreate() {
-        if (!this.creditCardForm.invalid) {
-            this.ccApi
-                .createCreditCard({
-                    ...this.creditCardForm.value,
-                    month: this.creditCardForm.value.month!.order,
-                } as CreditCardObject)
-                .subscribe({
-                    next: (data) => {
-                        this.ccState.addCreditCard(data as CreditCard);
-                        this.snack.openSnackBar(
-                            "credit card successfully created",
-                            "success"
-                        );
-                        this.modalComponent.onClose();
-                    },
-                    error: () => {
-                        this.snack.openSnackBar("error creating credit card", "error");
-                    },
-                });
-        } else this.onClose.emit();
+        if (this.creditCardForm.invalid) return;
+        this.creditCardService
+            .createCreditCard({
+                ...this.creditCardForm.value,
+                month: this.creditCardForm.value.month!.order,
+            } as CreditCardObject)
+            .subscribe({
+                next: (data) => {
+                    this.creditCardState.addCreditCard(data as CreditCard);
+                    this.generalService.successSnackbar(
+                        "credit card successfully created"
+                    );
+                    this.onClose();
+                },
+                error: () => {
+                    this.generalService.errorSnackbar("error creating credit card");
+                },
+            });
     }
 
     onSubmit() {

@@ -13,7 +13,7 @@ import { Bank, Bill, BillData, Company } from "src/app/core/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
-import { NO_BANK } from "src/utils/constants/forms";
+import { BANK_FORM } from "src/utils/constants/forms";
 import { MatIconModule } from "@angular/material/icon";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 
@@ -67,7 +67,7 @@ export class BankTemplateEditBill {
         return this.bankForm.value.bank1 && this.bankForm.value.bank2;
     }
 
-    errorMessage = NO_BANK;
+    errorMessage = BANK_FORM.noBank;
 
     compareBanks(b1: Bank, b2: Bank): boolean {
         return b1.id === b2.id;

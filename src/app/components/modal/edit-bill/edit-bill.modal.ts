@@ -11,7 +11,6 @@ import {
 import { MatInputModule } from "@angular/material/input";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
-import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { Bill, BillData, Category } from "src/app/core/types/objects";
 import { BankTemplateEditBill } from "./templates/bank/bank.template.edit-bill";
@@ -21,13 +20,9 @@ import { CompanyTemplateEditBill } from "./templates/company/company.template.ed
 import { CreditCardTemplateEditBill } from "./templates/credit-card/credit-card.template.edit-bill";
 import {
     BOOLEAN_FORM,
+    CATEGORY_FORM,
+    GENERAL_FORM,
     MONEY_FLOW_FORM,
-    NEGATIVE_TOTAL,
-    NO_BILL_VALUE,
-    NO_CATEGORY,
-    NO_DESCRIPTION,
-    NO_NAME,
-    YEAR_OUT_OF_RANGE,
 } from "src/utils/constants/forms";
 import { ServiceBill } from "src/app/services/bill.service";
 import { PaymentTypes } from "src/app/core/types/general";
@@ -70,25 +65,26 @@ import { CustomTabType } from "src/app/core/types/components/tabs";
         CustomTabs,
     ],
 })
-export class ModalEditBill {
-    public modalState = inject(ModalState);
+export class ModalEditBill extends ModalComponent {
     public billState = inject(BillState);
     public billService = inject(ServiceBill);
     public catState = inject(CategoryState);
     public snack = inject(CustomSnackbarComponent);
 
-    constructor(@Inject(DIALOG_DATA) public data: Bill & BillData) {}
-
-    @ViewChild(ModalComponent) modalComponent: ModalComponent;
-    @ViewChild(BankTemplateEditBill) bankTemplate: BankTemplateEditBill;
-    @ViewChild(CompanyTemplateEditBill) companyTemplate: CompanyTemplateEditBill;
+    constructor(@Inject(DIALOG_DATA) public data: Bill & BillData) {
+        super();
+    }
+    @ViewChild("bankTemplate") bankTemplate: BankTemplateEditBill;
+    @ViewChild("companyTemplate") companyTemplate: CompanyTemplateEditBill;
     @ViewChild("ccTemplate") creditCardTemplate: CreditCardTemplateEditBill;
     @ViewChild("type") type: ElementRef;
 
     public booleanForm = BOOLEAN_FORM;
     public moneyFlowForm = MONEY_FLOW_FORM;
-    public billTabs: CustomTabType[] = [];
+    public billTabs = EDIT_BILLS_TABS;
+    public months = MONTHS;
     public tab = 0;
+    public inputType: string = "";
 
     billForm = new FormGroup({
         name: new FormControl<string>("", {
@@ -160,7 +156,6 @@ export class ModalEditBill {
             isPayment: this.data.isPayment,
             isRecurrent: this.data.isRecurrent,
         });
-        this.billTabs = EDIT_BILLS_TABS[this.data.type];
         if (this.data.settled && this.data.type !== "money")
             this.billForm.get("total")?.disable();
         this.modalState.changeFooter({
@@ -168,19 +163,14 @@ export class ModalEditBill {
             submitLabel: "update",
             alertLabel: "cancel",
         });
-        this.modalState.changeHeader("edit bill");
     }
-    months = MONTHS;
-    inputType: string = "";
-    isInvalid: boolean = true;
 
     errorMessage = {
-        name: NO_NAME,
-        description: NO_DESCRIPTION,
-        total: NO_BILL_VALUE,
-        negativeValue: NEGATIVE_TOTAL,
-        category: NO_CATEGORY,
-        year: YEAR_OUT_OF_RANGE,
+        name: GENERAL_FORM.noName,
+        description: GENERAL_FORM.noDescription,
+        total: GENERAL_FORM.invalidTotal,
+        category: CATEGORY_FORM.noCategory,
+        year: GENERAL_FORM.yearOutOfRange,
     };
 
     onChangeTab(event: CustomTabType) {
@@ -282,13 +272,17 @@ export class ModalEditBill {
                 this.billService.getBills().subscribe({
                     next: (bills) => this.billState.setBills(bills),
                 });
-                this.snack.openSnackBar("bill successfully updated", "success");
-                this.modalComponent.onClose();
+                this.generalService.successSnackbar("bill successfully updated");
+                this.onClose();
             },
             error: () => {
-                this.snack.openSnackBar("error updating bill", "error");
+                this.generalService.errorSnackbar("error updating bill");
             },
         });
+    }
+
+    handleClose() {
+        this.onClose();
     }
 
     onChangeType($event: PaymentTypes) {

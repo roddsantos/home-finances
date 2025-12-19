@@ -14,13 +14,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { MatInputModule } from "@angular/material/input";
 import { BankState } from "src/app/core/subjects/subjects.bank";
-import {
-    INVALID_PARCEL,
-    NO_BILL_VALUE,
-    NO_COMPANY,
-    UNNECESSARY_BANK,
-    UNNECESSARY_CC,
-} from "src/utils/constants/forms";
+import { COMPANY_FORM, GENERAL_FORM } from "src/utils/constants/forms";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { BankBillForm, CompanyBillForm, ErrorsBillForm } from "src/app/core/types/forms";
 import { MatIconModule } from "@angular/material/icon";
@@ -80,11 +74,11 @@ export class CompanyTemplateNewBill {
     });
 
     errorMessage = {
-        company: NO_COMPANY,
-        noBank: UNNECESSARY_BANK,
-        noCC: UNNECESSARY_CC,
-        parcels: INVALID_PARCEL,
-        total: NO_BILL_VALUE,
+        company: COMPANY_FORM.noCompany,
+        noBank: COMPANY_FORM.unnecessaryBank,
+        noCC: COMPANY_FORM.unnecessaryBank,
+        parcels: COMPANY_FORM.invalidParcels,
+        total: GENERAL_FORM.invalidTotal,
     };
 
     toggleError(type: "cc" | "bank") {

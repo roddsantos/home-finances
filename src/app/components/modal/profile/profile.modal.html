@@ -1,4 +1,5 @@
 <modal-component
+    header="user profile"
     (actionPrimary)="onActionPrimary()"
     (actionSecondary)="onActionSecondary()"
     [bodyTemplate]="(userState.user$ | async) !== null ? loggedBody : profileBody"

@@ -20,7 +20,7 @@
     height: max-content;
 
     &.selected {
-        border: solid 1px var(--border);
+        border: solid 1px var(--text-2);
         border-radius: 5px;
     }
 }

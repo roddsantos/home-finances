@@ -1,7 +1,7 @@
 <modal-component
     [disabled]="creditCardForm.invalid"
     (actionPrimary)="onSubmit()"
-    (actionSecondary)="modalComponent.onClose()"
+    (actionSecondary)="handleClose()"
     [bodyTemplate]="newCreditCard"
 ></modal-component>
 
@@ -34,7 +34,7 @@
                     <mat-label>limit</mat-label>
                     <input matInput type="number" formControlName="limit" />
                     @if (creditCardForm.controls.limit.errors?.["required"]) {
-                    <mat-error>{{errorMessage.savings}}</mat-error>
+                    <mat-error>{{errorMessage.limit}}</mat-error>
                     }
                 </mat-form-field>
                 <mat-form-field class="third" appearance="outline">

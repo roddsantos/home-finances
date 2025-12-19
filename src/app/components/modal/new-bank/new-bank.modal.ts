@@ -1,12 +1,4 @@
-import {
-    Component,
-    OnInit,
-    Output,
-    EventEmitter,
-    inject,
-    ViewChild,
-    Inject,
-} from "@angular/core";
+import { Component, inject, ViewChild, Inject } from "@angular/core";
 import { ModalComponent } from "../modal.component";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
 import {
@@ -20,13 +12,12 @@ import { MatInputModule } from "@angular/material/input";
 import { ServiceBank } from "src/app/services/bank.service";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
-import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { BankObject } from "src/app/core/types/services";
 import { Bank } from "src/app/core/types/objects";
 import { DIALOG_DATA } from "@angular/cdk/dialog";
-import { EditBankModalType } from "src/app/core/types/modal";
 import { mergeMap } from "rxjs";
 import { CommonModule } from "@angular/common";
+import { BANK_FORM, GENERAL_FORM } from "src/utils/constants/forms";
 
 @Component({
     selector: "modal-new-bank",
@@ -43,14 +34,13 @@ import { CommonModule } from "@angular/common";
         CommonModule,
     ],
 })
-export class ModalNewBank implements OnInit {
-    public modalState = inject(ModalState);
-    public bankApi = inject(ServiceBank);
+export class ModalNewBank extends ModalComponent {
+    public bankService = inject(ServiceBank);
     public bankState = inject(BankState);
-    public snack = inject(CustomSnackbarComponent);
-    @ViewChild(ModalComponent) modalComponent: any;
 
-    constructor(@Inject(DIALOG_DATA) public data: Bank) {}
+    constructor(@Inject(DIALOG_DATA) public data: Bank) {
+        super();
+    }
 
     bankForm = new FormGroup({
         name: new FormControl<string>(this.data?.name || "", {
@@ -70,61 +60,60 @@ export class ModalNewBank implements OnInit {
     });
 
     errorMessage = {
-        name: "you must enter a name",
-        description: "you must enter a description",
-        savings: "you must enter the savings",
+        name: GENERAL_FORM.noName,
+        description: GENERAL_FORM.noDescription,
+        savings: BANK_FORM.noSavings,
     };
-    @Output() submit = new EventEmitter<String>();
-    @Output() onClose = new EventEmitter<void>();
 
     ngOnInit() {
         this.modalState.changeSubmitFooter(this.data ? "edit" : "create bank", "cancel");
-        this.modalState.changeHeader(this.data ? "edit bank" : "new bank");
         this.bankForm.controls.savings.disable();
     }
 
     onUpdate() {
-        if (!this.bankForm.invalid) {
-            this.bankApi
-                .updateBank({
-                    ...(this.bankForm.value as BankObject),
-                    id: this.data.id,
-                })
-                .pipe(mergeMap(() => this.bankApi.getBanks()))
-                .subscribe({
-                    next: (banks) => {
-                        this.bankState.setBanks(banks as Bank[]);
-                        this.bankState.changeStatus(
-                            (banks as Bank[]).length === 0 ? "empty" : "none",
-                            "no banks"
-                        );
-                        this.snack.openSnackBar("bank successfully updated", "success");
-                        this.modalComponent.onClose();
-                    },
-                    error: () => {
-                        this.snack.openSnackBar("error updating bank", "error");
-                    },
-                });
-        }
+        if (this.bankForm.invalid) return;
+        this.bankService
+            .updateBank({
+                ...(this.bankForm.value as BankObject),
+                id: this.data.id,
+            })
+            .pipe(mergeMap(() => this.bankService.getBanks()))
+            .subscribe({
+                next: (banks) => {
+                    this.bankState.setBanks(banks as Bank[]);
+                    this.bankState.changeStatus(
+                        (banks as Bank[]).length === 0 ? "empty" : "none",
+                        "no banks"
+                    );
+                    this.generalService.successSnackbar("bank successfully updated");
+                    this.onClose();
+                },
+                error: () => {
+                    this.generalService.errorSnackbar("error updating bank");
+                },
+            });
     }
 
     onCreate() {
-        if (!this.bankForm.invalid) {
-            this.bankApi
-                .createBank({
-                    ...(this.bankForm.getRawValue() as Omit<BankObject, "userId">),
-                })
-                .subscribe({
-                    next: (data) => {
-                        this.bankState.addBank(data as Bank);
-                        this.snack.openSnackBar("bank successfully created", "success");
-                        this.modalComponent.onClose();
-                    },
-                    error: () => {
-                        this.snack.openSnackBar("error creating bank", "error");
-                    },
-                });
-        } else this.onClose.emit();
+        if (this.bankForm.invalid) return;
+        this.bankService
+            .createBank({
+                ...(this.bankForm.getRawValue() as Omit<BankObject, "userId">),
+            })
+            .subscribe({
+                next: (data) => {
+                    this.bankState.addBank(data as Bank);
+                    this.generalService.successSnackbar("bank successfully created");
+                    this.onClose();
+                },
+                error: () => {
+                    this.generalService.errorSnackbar("error creating bank");
+                },
+            });
+    }
+
+    handleClose() {
+        this.onClose();
     }
 
     onSubmit() {

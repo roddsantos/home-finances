@@ -5,12 +5,6 @@ import { CommonModule } from "@angular/common";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { MatInputModule } from "@angular/material/input";
 import { BankState } from "src/app/core/subjects/subjects.bank";
-import {
-    INVALID_PARCEL,
-    NO_COMPANY,
-    UNNECESSARY_BANK,
-    UNNECESSARY_CC,
-} from "src/utils/constants/forms";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { ConfigForm } from "src/app/core/types/forms";
 import {
@@ -59,13 +53,6 @@ export class ConfigTemplate {
         due: new FormControl<Date>(new Date(), { nonNullable: false }),
         paid: new FormControl<Date | null>(null, { nonNullable: false }),
     });
-
-    errorMessage = {
-        company: NO_COMPANY,
-        noBank: UNNECESSARY_BANK,
-        noCC: UNNECESSARY_CC,
-        parcels: INVALID_PARCEL,
-    };
 
     settledChange(event: MatButtonToggleChange) {
         if (!event.value) {
