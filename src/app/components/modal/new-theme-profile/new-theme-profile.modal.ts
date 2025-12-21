@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ModalComponent } from "../modal.component";
 import { MatExpansionModule } from "@angular/material/expansion";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { ColorThemeType, FontProfileType } from "src/app/core/types/pages/profiles";
 import {
     COLOR_THEMES,
@@ -9,17 +9,33 @@ import {
     DEFAULT_COLORS,
     DEFAULT_TEXT_COLORS,
 } from "src/utils/constants/colors";
+import { ToggleButtonComponent } from "../../toggle-buttons/toggle-buttons.component";
+import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
+import { CommonModule } from "@angular/common";
 
 @Component({
-    selector: "new-profile-modal",
-    templateUrl: "./new-profile.modal.html",
-    imports: [ModalComponent, MatExpansionModule],
+    selector: "new-theme-profile",
+    templateUrl: "./new-theme-profile.modal.html",
+    imports: [
+        CommonModule,
+        ModalComponent,
+        MatExpansionModule,
+        ReactiveFormsModule,
+        ToggleButtonComponent,
+    ],
     standalone: true,
 })
-export class ModalNewProfile extends ModalComponent {
+export class ModalNewThemeProfile extends ModalComponent {
     constructor() {
         super();
     }
+
+    public themes: ToggleButtonItemsType<string>[] = Object.keys(COLOR_THEMES).map(
+        (theme) => ({
+            value: theme,
+            label: theme,
+        })
+    );
 
     public profileForm = new FormGroup({
         title: new FormControl<string>("", {

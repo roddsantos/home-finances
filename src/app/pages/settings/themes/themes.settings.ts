@@ -8,6 +8,8 @@ import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ThemeObjectType, ThemeType } from "src/app/core/types/general";
 import { THEMES } from "src/utils/constants/general";
 import { Router } from "@angular/router";
+import { Dialog } from "@angular/cdk/dialog";
+import { ModalNewThemeProfile } from "src/app/components/modal/new-theme-profile/new-theme-profile.modal";
 
 @Component({
     selector: "themes-settings",
@@ -17,6 +19,7 @@ import { Router } from "@angular/router";
     imports: [CommonModule, CardComponent, MatButtonModule, MatIconModule],
 })
 export class ThemeSettingsComponent implements OnInit {
+    public dialog = inject(Dialog);
     public selectedTheme: ThemeType;
     public router = inject(Router);
 
@@ -44,5 +47,9 @@ export class ThemeSettingsComponent implements OnInit {
         document.body.className = "";
         document.body.className = theme.id === "default" ? "" : theme.id;
         this.storage.setTheme(theme.id);
+    }
+
+    onNewProfileTheme() {
+        this.dialog.open(ModalNewThemeProfile, {});
     }
 }

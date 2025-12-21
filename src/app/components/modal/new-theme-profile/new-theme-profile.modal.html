@@ -1,0 +1,15 @@
+<modal-component
+    header="new profile"
+    [bodyTemplate]="newProfile"
+    (actionSecondary)="handleClose()"
+></modal-component>
+
+<ng-template #newProfile>
+    <form [formGroup]="profileForm">
+        <h5 [ngClass]="['label', ]">theme</h5>
+        <toggle-button
+            [items]="themes"
+            [formController]="profileForm.controls['theme']"
+        />
+    </form>
+</ng-template>
