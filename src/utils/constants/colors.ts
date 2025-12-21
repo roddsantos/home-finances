@@ -1,3 +1,5 @@
+import { ColorThemeType } from "src/app/core/types/pages/profiles";
+
 export const COLOR_STATUS = {
     dark: {
         error: "#aa0000",
@@ -6,7 +8,7 @@ export const COLOR_STATUS = {
         success: "#008817",
         default: "#3a3a3a",
     },
-    mid: {
+    default: {
         error: "#da3131",
         warning: "#dba134",
         info: "#326bd3",
@@ -20,6 +22,12 @@ export const COLOR_STATUS = {
         success: "#7eff94",
         default: "#bdbdbd",
     },
+};
+
+export const COLOR_THEMES = {
+    dark: "dark" as ColorThemeType,
+    default: "default" as ColorThemeType,
+    light: "light" as ColorThemeType,
 };
 
 export const DEFAULT_COLORS = {
@@ -43,4 +51,17 @@ export const DEFAULT_TEXT_COLORS = {
     blue: "#0000ff",
     purple: "#8800aa",
     navy: "#007c9bff",
+};
+
+export const DEFAULT_BACKGROUND_COLORS = {
+    grey: "#2b2b2b",
+    blueWhite: "#ccccff",
+    redWhite: "#ffcccc",
+    greenWhite: "#caffca",
+    yellow: "#ffffb5ff",
+    cyan: "#bbffffff",
+    magenta: "#ffbfffff",
+    brown: "#ffcfb7ff",
+    purple: "#f3c4ffff",
+    white: "#ffffff",
 };
