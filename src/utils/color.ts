@@ -71,6 +71,7 @@ export const toColorObject = (rgbOrHex: string): ColorObject => {
 
 const black: ColorObject = { r: 0, g: 0, b: 0, a: -1 };
 const white: ColorObject = { r: 255, g: 255, b: 255, a: -1 };
+
 export const tint = (
     ratio: number,
     inputColor: string,
@@ -191,6 +192,7 @@ export function currentPallete() {
     const secondary = style.getPropertyValue("--secondary");
     const third = style.getPropertyValue("--third");
 
+    const background = style.getPropertyValue("--background");
     const bh = style.getPropertyValue("--bh");
     const info = style.getPropertyValue("--info");
     const warning = style.getPropertyValue("--warning");
@@ -208,6 +210,7 @@ export function currentPallete() {
         primary,
         secondary,
         third,
+        background,
         bh,
         info,
         warning,
