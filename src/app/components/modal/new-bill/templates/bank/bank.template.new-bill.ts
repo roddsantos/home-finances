@@ -13,7 +13,7 @@ import { Bank, Company } from "src/app/core/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
-import { NO_BANK, SAME_BANK } from "src/utils/constants/forms";
+import { BANK_FORM } from "src/utils/constants/forms";
 import { MatIconModule } from "@angular/material/icon";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { BankBillForm, ErrorsBillForm } from "src/app/core/types/forms";
@@ -54,7 +54,10 @@ export class BankTemplateNewBill {
     @Input() bankDataErrors: ErrorsBillForm<BankBillForm>;
     @Output() setBankData = new EventEmitter<Partial<BankBillForm>>();
 
-    errorMessage = { bank1: NO_BANK, sameBank: SAME_BANK };
+    errorMessage = {
+        bank1: BANK_FORM.noBank,
+        sameBank: BANK_FORM.sameBanks,
+    };
 
     banksMode = BANK_TYPES;
 

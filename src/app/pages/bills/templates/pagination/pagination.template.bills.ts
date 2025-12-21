@@ -6,6 +6,7 @@ import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/cust
 import { ServiceBill } from "src/app/services/bill.service";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { Subscription } from "rxjs";
 
 @Component({
     selector: "pagination-template",
@@ -18,6 +19,22 @@ export class PaginationTemplate {
     public billsState = inject(BillState);
     public billService = inject(ServiceBill);
     public snack = inject(CustomSnackbarComponent);
+
+    limit = 10;
+    count = 0;
+    page = 1;
+
+    billsPagination$: Subscription;
+
+    ngOnInit() {
+        this.billsPagination$ = this.billsState.billsPagination$.subscribe({
+            next: (pagination) => {
+                this.page = pagination.page;
+                this.limit = pagination.limit;
+                this.count = pagination.count;
+            },
+        });
+    }
 
     getBills() {
         this.billService.getBills().subscribe({
@@ -32,59 +49,41 @@ export class PaginationTemplate {
     }
 
     setLimitList() {
-        let limit = 10;
-        let count = 0;
-        let page = 1;
-        this.billsState.billsPagination$.subscribe({
-            next: (pagination) => {
-                page = pagination.page;
-                limit = pagination.limit;
-                count = pagination.count;
-            },
-        });
-        switch (limit) {
+        switch (this.limit) {
             case 10:
                 this.billsState.setLimit(20);
-                limit = 20;
+                this.limit = 20;
                 break;
             case 20:
                 this.billsState.setLimit(5);
-                limit = 5;
+                this.limit = 5;
                 break;
             default:
                 this.billsState.setLimit(10);
-                limit = 10;
+                this.limit = 10;
                 break;
         }
-        if (page > Math.ceil(count / limit))
-            this.billsState.setPage(Math.ceil(count / limit));
+        if (this.page > Math.ceil(this.count / this.limit))
+            this.billsState.setPage(Math.ceil(this.count / this.limit));
         this.getBills();
     }
 
-    disablePrevious() {
-        let status: boolean = false;
-        this.billsState.billsPagination$.subscribe({
-            next: (pagination) => {
-                status = pagination.page === 1;
-            },
-        });
-        return status;
-    }
-
     disableNext() {
-        let status: boolean = false;
-        this.billsState.billsPagination$.subscribe({
-            next: (pagination) => {
-                status =
-                    pagination.page === Math.ceil(pagination.count / pagination.limit) ||
-                    pagination.count === 0;
-            },
-        });
-        return status;
+        return this.page === Math.ceil(this.count / this.limit);
     }
 
     onNextPage() {
         this.billsState.autoPage(true);
+        this.getBills();
+    }
+
+    onFirstPage() {
+        this.billsState.setPage(1);
+        this.getBills();
+    }
+
+    onLastPage() {
+        this.billsState.setPage(Math.ceil(this.count / this.limit));
         this.getBills();
     }
 

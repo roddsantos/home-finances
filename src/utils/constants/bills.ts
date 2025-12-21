@@ -45,26 +45,25 @@ export const BANK_TYPES: ToggleButtonItemsType<boolean>[] = [
     { label: "between accounts", value: true },
 ];
 
-const EDIT_MONEY_BILLS_TABS: CustomTabType[] = [
+export const EDIT_BILLS_TABS: CustomTabType[] = [
     { title: "main info", icons: ["info"], index: 0 },
-    { title: "bank info", icons: ["account_balance"], index: 1 },
+    { title: "payment info", icons: ["account_balance"], index: 1 },
     { title: "configs", icons: ["build"], index: 2 },
 ];
 
-const EDIT_CREDIT_CARD_BILLS_TABS: CustomTabType[] = [
-    { title: "main info", icons: ["info"], index: 0 },
-    { title: "bank info", icons: ["credit_card"], index: 1 },
-    { title: "configs", icons: ["build"], index: 2 },
-];
-
-const EDIT_COMPANY_BILLS_TABS: CustomTabType[] = [
-    { title: "main info", icons: ["info"], index: 0 },
-    { title: "bank info", icons: ["store"], index: 1 },
-    { title: "configs", icons: ["build"], index: 2 },
-];
-
-export const EDIT_BILLS_TABS = {
-    money: EDIT_MONEY_BILLS_TABS,
-    creditCard: EDIT_CREDIT_CARD_BILLS_TABS,
-    companyCredit: EDIT_COMPANY_BILLS_TABS,
+export const FILTER_TO_ICON = {
+    name: "signature",
+    category: "category",
+    company: "store",
+    creditcard: "credit_card",
+    year: "calendar_month",
+    month: "calendar_month",
+    bank: "account_balance",
+    type: "wallet",
+    status: "paid",
+    moneyflux: "payment_arrow_down",
+    min: "receipt",
+    max: "receipt",
+    date1: "date_range",
+    date2: "date_range",
 };

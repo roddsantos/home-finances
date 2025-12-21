@@ -25,14 +25,7 @@ import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { CommonModule } from "@angular/common";
 import { CompanyTemplateNewBill } from "./templates/company/company.template.new-bill";
 import { CreditCardTemplateNewBill } from "./templates/credit-card/credit-card.template.new-bill";
-import {
-    NEGATIVE_TOTAL,
-    NO_BILL_VALUE,
-    NO_CATEGORY,
-    NO_DESCRIPTION,
-    NO_NAME,
-    YEAR_OUT_OF_RANGE,
-} from "src/utils/constants/forms";
+import { CATEGORY_FORM, GENERAL_FORM } from "src/utils/constants/forms";
 import { ServiceBill } from "src/app/services/bill.service";
 import { MonthType, PaymentTypes, RequiredKeys } from "src/app/core/types/general";
 import { MONTHS } from "src/utils/constants/general";
@@ -70,13 +63,13 @@ import { ConfigTemplate } from "./templates/config/config.template.new-bill";
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModalNewBill implements OnInit {
-    public modalState = inject(ModalState);
+export class ModalNewBill extends ModalComponent {
+    constructor() {
+        super();
+    }
     public billState = inject(BillState);
     public billService = inject(ServiceBill);
     public catState = inject(CategoryState);
-    public snack = inject(CustomSnackbarComponent);
-    @ViewChild(ModalComponent) modalComponent: ModalComponent;
 
     step: number = 1;
 
@@ -151,15 +144,12 @@ export class ModalNewBill implements OnInit {
     inputType: string = "";
     isInvalid: boolean = true;
 
-    constructor() {}
-
     errorMessage = {
-        name: NO_NAME,
-        description: NO_DESCRIPTION,
-        total: NO_BILL_VALUE,
-        negativeValue: NEGATIVE_TOTAL,
-        category: NO_CATEGORY,
-        year: YEAR_OUT_OF_RANGE,
+        name: GENERAL_FORM.noName,
+        description: GENERAL_FORM.noDescription,
+        total: GENERAL_FORM.invalidTotal,
+        category: CATEGORY_FORM.noCategory,
+        year: GENERAL_FORM.yearOutOfRange,
     };
 
     getInfoForm() {
@@ -384,13 +374,17 @@ export class ModalNewBill implements OnInit {
                 this.billService.getBills().subscribe({
                     next: (bills) => this.billState.setBills(bills),
                 });
-                this.snack.openSnackBar("bill successfully created", "success");
-                this.modalComponent.onClose();
+                this.generalService.successSnackbar("bill successfully created");
+                this.handleClose();
             },
             error: () => {
-                this.snack.openSnackBar("error creating bill", "error");
+                this.generalService.errorSnackbar("error creating bill");
             },
         });
+    }
+
+    handleClose() {
+        this.onClose();
     }
 
     onChangeType($event: PaymentTypes) {

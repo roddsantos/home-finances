@@ -11,14 +11,10 @@ import { RouterModule } from "@angular/router";
 import { ModalProfile } from "src/app/components/modal/profile/profile.modal";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ModalComponent } from "src/app/components/modal/modal.component";
-import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
-import { Dialog } from "@angular/cdk/dialog";
-import { Overlay } from "@angular/cdk/overlay";
 import { ServiceBill } from "src/app/services/bill.service";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { ServiceBank } from "src/app/services/bank.service";
-import { UserState } from "src/app/core/subjects/subjects.user";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { ServiceCompany } from "src/app/services/company.service";
@@ -27,12 +23,8 @@ import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { ServiceCategory } from "src/app/services/category.service";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
-import { CustomFilterState } from "src/app/components/custom-filter/custom-filter.subjects.component";
 import { CommonModule } from "@angular/common";
-import { MatTooltipModule } from "@angular/material/tooltip";
-import { MatMenuModule } from "@angular/material/menu";
-import { MatButtonModule } from "@angular/material/button";
-import { RouteItemType, RoutesType, ThemeType } from "src/app/core/types/general";
+import { RouteItemType, RoutesType } from "src/app/core/types/general";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { ItemLayoutComponent } from "./item/item.layout.component";
@@ -46,13 +38,9 @@ import { GeneralService } from "src/app/services/general.service";
     templateUrl: "./layout.component.html",
     styleUrls: ["./layout.component.css", "./item/item.layout.component.css"],
     imports: [
-        MatToolbarModule,
         MatIconModule,
         RouterModule,
         CommonModule,
-        MatTooltipModule,
-        MatMenuModule,
-        MatButtonModule,
         MatSidenavModule,
         ItemLayoutComponent,
         HeaderLayoutComponent,
@@ -63,22 +51,18 @@ export class LayoutComponent implements OnChanges {
     @ViewChild(ModalProfile) profile: any;
     @Input() theme: string | null;
 
-    public generalState = inject(GeneralState);
-
     constructor() {}
 
-    public storage = inject(LocalStorageService);
-    public dialog = inject(Dialog);
-    public overlay = inject(Overlay);
-    private snack = inject(CustomSnackbarComponent);
-    public filtersState = inject(CustomFilterState);
+    public generalState = inject(GeneralState);
     private generalService = inject(GeneralService);
+
+    public storage = inject(LocalStorageService);
+    private snack = inject(CustomSnackbarComponent);
 
     public billApi = inject(ServiceBill);
     public billState = inject(BillState);
 
     public bankApi = inject(ServiceBank);
-    public userState = inject(UserState);
     public bankState = inject(BankState);
 
     public compApi = inject(ServiceCompany);
@@ -89,11 +73,9 @@ export class LayoutComponent implements OnChanges {
 
     public catApi = inject(ServiceCategory);
     public catState = inject(CategoryState);
-    public innerWidth: number;
 
-    themeUsed: string | null;
-    public style = getComputedStyle(document.body);
-    public thirdColor = this.style.getPropertyValue("--third");
+    public innerWidth: number;
+    public themeUsed: string | null;
 
     onChangeRoute(route: RoutesType) {
         this.generalService.navigateTo(route);
@@ -101,7 +83,7 @@ export class LayoutComponent implements OnChanges {
 
     items: RouteItemType[] = ROUTES;
 
-    @HostListener("window:resize", ["$event"])
+    @HostListener("window:resize", [])
     onResize() {
         this.innerWidth = window.innerWidth;
     }
@@ -127,7 +109,9 @@ export class LayoutComponent implements OnChanges {
 
         this.bankApi.getBanks().subscribe({
             next: (banks) => {
-                this.bankState.setBanks(banks);
+                this.bankState.setBanks(
+                    banks.sort((bank1, bank2) => (bank1.name > bank2.name ? 1 : -1))
+                );
                 this.bankState.changeVariant(banks.length > 0 ? "none" : "empty");
             },
             error: () => this.bankState.changeStatus("http", "error fetching banks"),
@@ -145,7 +129,9 @@ export class LayoutComponent implements OnChanges {
 
         this.compApi.getCompanies().subscribe({
             next: (comps) => {
-                this.compState.setCompanies(comps);
+                this.compState.setCompanies(
+                    comps.sort((comp1, comp2) => (comp1.name > comp2.name ? 1 : -1))
+                );
                 this.compState.changeVariant(comps.length > 0 ? "none" : "empty");
             },
             error: () => this.compState.changeStatus("http", "error fetching companies"),
@@ -158,20 +144,6 @@ export class LayoutComponent implements OnChanges {
             },
             error: () => this.ccState.changeStatus("http", "error fetching credit cards"),
         });
-    }
-
-    openProfile(): void {
-        const dialogRef = this.dialog.open<string>(ModalProfile, {
-            data: {
-                header: "perfil",
-                username: "a",
-                size: "sm",
-            },
-            hasBackdrop: true,
-            backdropClass: "modal-backdrop",
-        });
-
-        dialogRef.closed.subscribe();
     }
 
     onLogout() {

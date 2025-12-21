@@ -1,7 +1,7 @@
 <modal-component
     [disabled]="bankForm.invalid"
     (actionPrimary)="onSubmit()"
-    (actionSecondary)="modalComponent.onClose()"
+    (actionSecondary)="handleClose()"
     [bodyTemplate]="newBank"
 ></modal-component>
 

@@ -28,16 +28,17 @@
                 (click)="openDetails(bank, $event)"
             >
                 <div class="bank-color" [style.backgroundColor]="bank.color"></div>
-                <h2 class="bank-title">
-                    {{bank.name}}
-                    <mat-icon
-                        *ngIf="bank.isPiggyBank"
-                        class="material-symbols-outlined piggy"
-                        aria-hidden="false"
-                        aria-label="icon"
-                        fontIcon="savings"
-                    ></mat-icon>
-                </h2>
+                <div class="bank-title">
+                    <h2>{{bank.name}}</h2>
+                    <div class="tag piggy-bank" *ngIf="bank.isPiggyBank">
+                        <mat-icon
+                            class="material-symbols-outlined piggy"
+                            aria-hidden="false"
+                            aria-label="icon"
+                            fontIcon="savings"
+                        ></mat-icon>
+                    </div>
+                </div>
                 <p class="bank-description">{{bank.description}}</p>
                 <div class="bank-savings">
                     <p class="secondary-text">savings</p>

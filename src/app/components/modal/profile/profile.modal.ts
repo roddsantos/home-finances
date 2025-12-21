@@ -31,20 +31,13 @@ export interface DialogData {
     imports: [MatFormField, MatInputModule, ModalComponent, FormsModule, AsyncPipe],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModalProfile implements OnInit {
+export class ModalProfile extends ModalComponent {
     private storage = inject(LocalStorageService);
     private userService = inject(UserService);
-    public modalState = inject(ModalState);
     public userState = inject(UserState);
-    private snack = inject(CustomSnackbarComponent);
-
-    @ViewChild(ModalComponent) modalComponent: ModalComponent;
 
     username: string = "";
     textString: string;
-
-    @Output() submit = new EventEmitter<string>();
-    @Output() logoutClose = new EventEmitter<void>();
 
     ngOnInit() {
         this.userState.user$.subscribe({
@@ -54,7 +47,6 @@ export class ModalProfile implements OnInit {
                     user ? "logout" : "cancel"
                 ),
         });
-        this.modalState.changeHeader("user profile");
     }
 
     onActionPrimary() {
@@ -79,18 +71,18 @@ export class ModalProfile implements OnInit {
             next: (user) => {
                 this.userState.setUser(user as User);
                 this.storage.setUser(user);
-                this.snack.openSnackBar("login successful", "success");
+                this.generalService.successSnackbar("login successful");
                 this.modalState.changeSubmitFooter("OK", "logout");
             },
             error: () => {
-                this.snack.openSnackBar("login error, try again", "error");
+                this.generalService.errorSnackbar("login error, try again");
                 this.modalState.changeSubmitFooter("login", "cancel");
             },
         });
     }
 
     onCloseModal() {
-        this.modalComponent.onClose();
+        this.onClose();
     }
 
     onLogout() {

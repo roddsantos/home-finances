@@ -16,6 +16,9 @@
     & p {
         margin: auto 0px;
     }
+    & h1 {
+        width: max-content;
+    }
 }
 
 .saving-item {
@@ -30,4 +33,11 @@
         cursor: pointer;
         width: max-content;
     }
+}
+
+.month-savings {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem !important;
 }

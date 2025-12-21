@@ -42,6 +42,16 @@ export function isValuesEqual(item1: any, item2: any) {
 }
 
 export function isObjectsEqual(object1: any, object2: any) {
+    if (object1 === null) {
+        if (object2 === null) return true;
+        return false;
+    }
+
+    if (object2 === null) {
+        if (object1 === null) return true;
+        return false;
+    }
+
     const object1Keys = Object.keys(object1);
     const object2Keys = Object.keys(object2);
 

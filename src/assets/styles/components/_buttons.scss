@@ -46,6 +46,7 @@
 }
 
 .button-secondary {
+    display: flex;
     width: max-content;
     border-radius: var(--border-radius);
     background-color: var(--secondary);

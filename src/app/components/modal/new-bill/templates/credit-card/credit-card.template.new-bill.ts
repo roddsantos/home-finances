@@ -15,7 +15,7 @@ import { MatInputModule } from "@angular/material/input";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { MatCheckboxModule } from "@angular/material/checkbox";
-import { INVALID_PARCEL, NO_CREDIT_CARD } from "src/utils/constants/forms";
+import { CREDIT_CARD_FORM } from "src/utils/constants/forms";
 import { CreditCardForm, ErrorsBillForm } from "src/app/core/types/forms";
 
 @Component({
@@ -65,7 +65,7 @@ export class CreditCardTemplateNewBill {
     });
 
     errorMessage = {
-        creditCard: NO_CREDIT_CARD,
-        parcels: INVALID_PARCEL,
+        creditCard: CREDIT_CARD_FORM.noCreditCard,
+        parcels: CREDIT_CARD_FORM.invalidParcels,
     };
 }

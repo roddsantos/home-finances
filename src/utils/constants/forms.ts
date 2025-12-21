@@ -1,22 +1,39 @@
 import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
 import { PaymentTypesObject } from "src/app/core/types/general";
 
-export const NO_BANK = "you must select a bank";
-export const NO_CREDIT_CARD = "you must select a credit card";
-export const NO_COMPANY = "you must select a company";
-export const NO_CATEGORY = "you must select a category";
-export const NO_BILL_VALUE = "you must enter a valid bill value";
-export const NEGATIVE_TOTAL = "total can't be negative when both banks choosed";
-export const INVALID_PARCEL = "invalid number of parcels";
-export const UNNECESSARY_BANK = "bank not allowed when credit card is selected";
-export const UNNECESSARY_CC = "credit card not allowed when bank is selected";
-export const SAME_BANK = "banks cannot be the same";
+export const GENERAL_FORM = {
+    noName: "you must enter a name",
+    noDescription: "you must enter a description",
+    yearOutOfRange: "year must be between 2023 and 2090",
+    invalidTotal: "invalid total value",
+};
 
-export const NO_NAME = "you must enter a name";
-export const NO_DESCRIPTION = "you must enter a description";
-export const YEAR_OUT_OF_RANGE = "year must be between 2023 and 2090";
+export const COMPANY_FORM = {
+    noCompany: "you must select a company",
+    unnecessaryCreditCard: "credit card not allowed when bank is selected",
+    unnecessaryBank: "bank not allowed when credit card is selected",
+    invalidParcels: "invalid number of parcels",
+};
 
-export const INVALID_TOTAL = "invalid total value";
+export const CATEGORY_FORM = {
+    noCategory: "you must select a category",
+    noIcon: "you must enter an icon",
+};
+
+export const BANK_FORM = {
+    noBank: "you must select a bank",
+    noSavings: "you must enter a valid saving number",
+    sameBanks: "banks cannot be the same",
+};
+
+export const CREDIT_CARD_FORM = {
+    noCreditCard: "you must select a credit card",
+    invalidClosingDay: "closing day needs to be a valid number",
+    invalidDueDay: "due day needs to be a valid number",
+    invalidParcels: "invalid number of parcels",
+    noFlag: "flag must be picked",
+    invalidLimit: "limit must be greater than zero",
+};
 
 export const BOOLEAN_FORM: ToggleButtonItemsType<boolean>[] = [
     { label: "yes", value: true },

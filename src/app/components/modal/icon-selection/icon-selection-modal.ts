@@ -1,6 +1,6 @@
 import { IconType } from "src/app/core/types/components";
 import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, Output, ViewChild } from "@angular/core";
+import { Component, EventEmitter, Inject, Output } from "@angular/core";
 import { MATERIAL_ICONS } from "src/utils/constants/icons";
 import { ModalComponent } from "../modal.component";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
@@ -9,6 +9,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { removeDiacritics } from "src/utils/validators";
 import { BehaviorSubject, debounceTime, distinctUntilChanged, Subscription } from "rxjs";
+import { DIALOG_DATA } from "@angular/cdk/dialog";
 
 @Component({
     selector: "icon-selection",
@@ -25,10 +26,8 @@ import { BehaviorSubject, debounceTime, distinctUntilChanged, Subscription } fro
         MatIconModule,
     ],
 })
-export class IconSelection {
-    @ViewChild(ModalComponent) modalComponent: ModalComponent;
+export class IconSelection extends ModalComponent {
     @Output() selected = new EventEmitter<IconType>();
-    @Output() onClose = new EventEmitter<string>();
     icons: IconType[] = MATERIAL_ICONS;
     filteredIcons: IconType[] = MATERIAL_ICONS;
     selectedIcon: IconType | null = null;
@@ -36,7 +35,8 @@ export class IconSelection {
 
     public iconSubscriber: Subscription;
 
-    constructor() {
+    constructor(@Inject(DIALOG_DATA) public data: string) {
+        super();
         this.iconSubscriber = this.searchTerm$
             .pipe(debounceTime(300), distinctUntilChanged())
             .subscribe({
@@ -58,10 +58,14 @@ export class IconSelection {
             });
     }
 
+    ngOnInit() {
+        this.selectedIcon = this.icons.find((icon) => icon.name === this.data) || null;
+    }
+
     onSubmit() {
         if (this.selectedIcon) {
             this.selected.emit(this.selectedIcon);
-            this.modalComponent.onClose(this.selectedIcon.name);
+            this.onClose(this.selectedIcon.name);
         }
     }
 

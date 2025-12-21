@@ -31,6 +31,7 @@ import {
     ToggleButtonItemsType,
 } from "src/app/core/types/components/toggle-buttons";
 import {
+    FILTER_TO_ICON,
     MONTH_ITEMS,
     PAYMENT_ITEMS,
     STATUS_ITEMS,
@@ -38,6 +39,7 @@ import {
 } from "src/utils/constants/bills";
 import { getMonthAndYearIntegers } from "src/utils/date";
 import { isObjectsEqual } from "src/utils/validators";
+import { GeneralService } from "src/app/services/general.service";
 
 @Injectable({
     providedIn: "root",
@@ -69,6 +71,7 @@ export class CustomFilterComponent {
     public billService = inject(ServiceBill);
     public billState = inject(BillState);
     public generalState = inject(GeneralState);
+    private generalService = inject(GeneralService);
     public storage = inject(LocalStorageService);
     public snack = inject(CustomSnackbarComponent);
     @ViewChild("year") year: MatInput;
@@ -106,6 +109,7 @@ export class CustomFilterComponent {
     public style = getComputedStyle(document.body);
     public primaryColor = this.style.getPropertyValue("--primary");
     public secondaryColor = this.style.getPropertyValue("--secondary");
+    public filterToIcon = FILTER_TO_ICON;
 
     ngOnInit() {
         const filters: FilterDisplay[] = this.storage.getFilters();
@@ -324,7 +328,7 @@ export class CustomFilterComponent {
                 this.billState.setBills(bills);
             },
             error: () => {
-                this.snack.openSnackBar("error fetching bills", "error");
+                this.generalService.errorSnackbar("error fetching bills");
                 this.billState.changeStatus("error", "error fetching bills");
             },
         });
@@ -342,9 +346,8 @@ export class CustomFilterComponent {
             });
         }
         if (countYears === 1 && countMonths > 0) {
-            this.snack.openSnackBar(
-                "you need at least one year when filtering months",
-                "warning"
+            this.generalService.warningSnackbar(
+                "you need at least one year when filtering months"
             );
             return;
         }

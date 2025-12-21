@@ -9,7 +9,7 @@ import {
 import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { MonthType } from "src/app/core/types/general";
 import { Bank } from "src/app/core/types/objects";
-import { INVALID_TOTAL, NO_BANK, YEAR_OUT_OF_RANGE } from "src/utils/constants/forms";
+import { BANK_FORM, GENERAL_FORM } from "src/utils/constants/forms";
 import { MONTHS } from "src/utils/constants/general";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { ModalComponent } from "../modal.component";
@@ -39,12 +39,10 @@ import { ServiceSaving } from "src/app/services/saving.service";
     templateUrl: "./new-saving.modal.html",
     styleUrl: "./new-saving.modal.css",
 })
-export class ModalNewSaving implements OnInit {
-    public modalState = inject(ModalState);
+export class ModalNewSaving extends ModalComponent {
     public savingsService = inject(ServiceSaving);
-    public snack = inject(CustomSnackbarComponent);
     public banks = inject(BankState);
-    @ViewChild(ModalComponent) modalComponent: any;
+
     public months = MONTHS;
 
     savingsForm = new FormGroup({
@@ -72,9 +70,9 @@ export class ModalNewSaving implements OnInit {
     });
 
     errorMessage = {
-        bank: NO_BANK,
-        total: INVALID_TOTAL,
-        year: YEAR_OUT_OF_RANGE,
+        bank: BANK_FORM.noBank,
+        total: GENERAL_FORM.invalidTotal,
+        year: GENERAL_FORM.yearOutOfRange,
     };
 
     ngOnInit() {
@@ -88,26 +86,29 @@ export class ModalNewSaving implements OnInit {
         this.modalState.changeSubmitFooter("save", "cancel");
     }
 
+    handleClose() {
+        this.onClose();
+    }
+
     onCreate() {
-        if (!this.savingsForm.invalid) {
-            this.savingsService
-                .createSaving({
-                    total: this.savingsForm.value.total!,
-                    year: this.savingsForm.value.year!,
-                    month: this.savingsForm.value.month!.order,
-                    type: this.savingsForm.value.type!,
-                    bankId: this.savingsForm.value.bank!.id,
-                })
-                .subscribe({
-                    next: () => {
-                        this.snack.openSnackBar("saving successfully set!", "success");
-                        this.modalComponent.onClose();
-                    },
-                    error: (err) => {
-                        this.snack.openSnackBar(err.error.message, "error");
-                    },
-                });
-        }
+        if (this.savingsForm.invalid) return;
+        this.savingsService
+            .createSaving({
+                total: this.savingsForm.value.total!,
+                year: this.savingsForm.value.year!,
+                month: this.savingsForm.value.month!.order,
+                type: this.savingsForm.value.type!,
+                bankId: this.savingsForm.value.bank!.id,
+            })
+            .subscribe({
+                next: () => {
+                    this.generalService.successSnackbar("saving successfully set!");
+                    this.onClose();
+                },
+                error: (err) => {
+                    this.generalService.errorSnackbar(err.error.message);
+                },
+            });
     }
 
     enableTotal(bank: Bank) {

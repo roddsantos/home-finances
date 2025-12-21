@@ -1,13 +1,4 @@
-import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
-import {
-    Component,
-    OnInit,
-    Output,
-    EventEmitter,
-    inject,
-    ViewChild,
-    Inject,
-} from "@angular/core";
+import { Component, OnInit, inject, Inject } from "@angular/core";
 import { ModalComponent } from "../modal.component";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
 import {
@@ -18,10 +9,9 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
-import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { Category } from "src/app/core/types/objects";
 import { CategoryObject } from "src/app/core/types/services";
-import { NO_DESCRIPTION, NO_NAME } from "src/utils/constants/forms";
+import { CATEGORY_FORM, GENERAL_FORM } from "src/utils/constants/forms";
 import { ServiceCategory } from "src/app/services/category.service";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { MatIconModule } from "@angular/material/icon";
@@ -29,10 +19,6 @@ import { IconSelection } from "../icon-selection/icon-selection-modal";
 import { Dialog, DIALOG_DATA } from "@angular/cdk/dialog";
 import { MatButtonModule } from "@angular/material/button";
 import { mergeMap, Subscription } from "rxjs";
-
-export interface DialogData {
-    username: string;
-}
 
 @Component({
     selector: "modal-new-category",
@@ -51,16 +37,15 @@ export interface DialogData {
         MatButtonModule,
     ],
 })
-export class ModalNewCategory implements OnInit {
+export class ModalNewCategory extends ModalComponent implements OnInit {
     public catApi = inject(ServiceCategory);
-    public modalState = inject(ModalState);
     public catState = inject(CategoryState);
-    public snack = inject(CustomSnackbarComponent);
-    public dialog = inject(Dialog);
-    @ViewChild(ModalComponent) modalComponent: any;
-    @ViewChild(IconSelection) iconSelection: IconSelection;
 
-    constructor(@Inject(DIALOG_DATA) public data: Category) {}
+    public dialog = inject(Dialog);
+
+    constructor(@Inject(DIALOG_DATA) public data: Category) {
+        super();
+    }
 
     categoryForm = new FormGroup({
         name: new FormControl<string>(this.data?.name || "", {
@@ -80,64 +65,57 @@ export class ModalNewCategory implements OnInit {
         }),
     });
 
-    errorMessage = {
-        name: NO_NAME,
-        description: NO_DESCRIPTION,
-        icon: "you must enter an icon",
-    };
     public iconSubscriber: Subscription;
+    public errorMessage = {
+        name: GENERAL_FORM.noName,
+        description: GENERAL_FORM.noDescription,
+        icon: CATEGORY_FORM.noIcon,
+    };
 
-    @Output() submit = new EventEmitter<String>();
-    @Output() onClose = new EventEmitter<void>();
+    ngOnInit() {
+        this.modalState.changeSubmitFooter(this.data ? "edit" : "OK", "cancel");
+    }
 
     onUpdate() {
-        if (!this.categoryForm.invalid) {
-            this.catApi
-                .updateCategory({
-                    ...(this.categoryForm.value as CategoryObject),
-                    id: this.data.id,
-                })
-                .pipe(mergeMap(() => this.catApi.getCategories()))
-                .subscribe({
-                    next: (categories) => {
-                        this.catState.setCategory(categories as Category[]);
-                        this.catState.changeStatus(
-                            (categories as Category[]).length === 0 ? "empty" : "none",
-                            "no categories"
-                        );
-                        this.snack.openSnackBar(
-                            "category successfully updated",
-                            "success"
-                        );
-                        this.modalComponent.onClose();
-                    },
-                    error: () => {
-                        this.snack.openSnackBar("error updating category", "error");
-                    },
-                });
-        }
+        if (this.categoryForm.invalid) return;
+        this.catApi
+            .updateCategory({
+                ...(this.categoryForm.value as CategoryObject),
+                id: this.data.id,
+            })
+            .pipe(mergeMap(() => this.catApi.getCategories()))
+            .subscribe({
+                next: (categories) => {
+                    this.catState.setCategory(categories as Category[]);
+                    this.catState.changeStatus(
+                        (categories as Category[]).length === 0 ? "empty" : "none",
+                        "no categories"
+                    );
+                    this.generalService.successSnackbar("category successfully updated");
+                    this.onClose();
+                },
+                error: () => {
+                    this.generalService.errorSnackbar("error updating category");
+                },
+            });
     }
 
     onCreate() {
-        if (!this.categoryForm.invalid) {
-            this.catApi
-                .createCategory({
-                    ...(this.categoryForm.value as CategoryObject),
-                })
-                .subscribe({
-                    next: (categories) => {
-                        this.catState.setCategory(categories as Category[]);
-                        this.snack.openSnackBar(
-                            "category successfully created",
-                            "success"
-                        );
-                        this.modalComponent.onClose();
-                    },
-                    error: (err) => {
-                        this.snack.openSnackBar(err.error.message, "error");
-                    },
-                });
-        } else this.onClose.emit();
+        if (this.categoryForm.invalid) return;
+        this.catApi
+            .createCategory({
+                ...(this.categoryForm.value as CategoryObject),
+            })
+            .subscribe({
+                next: (categories) => {
+                    this.catState.setCategory(categories as Category[]);
+                    this.generalService.successSnackbar("category successfully created");
+                    this.onClose();
+                },
+                error: (err) => {
+                    this.generalService.errorSnackbar(err.error.message);
+                },
+            });
     }
 
     onSubmit() {
@@ -148,18 +126,17 @@ export class ModalNewCategory implements OnInit {
     openDialog(): void {
         this.iconSubscriber = this.dialog
             .open<string>(IconSelection, {
-                data: {
-                    header: "choose icon",
-                },
+                data: this.categoryForm.value.icon,
             })
             .closed.subscribe((res) => {
-                this.categoryForm.patchValue({ icon: res });
+                this.categoryForm.patchValue({
+                    icon: res || this.categoryForm.value.icon,
+                });
             });
     }
 
-    ngOnInit() {
-        this.modalState.changeSubmitFooter(this.data ? "edit" : "OK", "cancel");
-        this.modalState.changeHeader(this.data ? "edit category" : "new category");
+    handleClose() {
+        this.onClose();
     }
 
     ngOnDestroy() {

@@ -1,8 +1,9 @@
 <modal-component
     size="md"
+    header="edit bill"
     [disabled]="onDisableButton()"
     (actionPrimary)="onSubmit()"
-    (actionSecondary)="modalComponent.onClose()"
+    (actionSecondary)="handleClose()"
     [bodyTemplate]="editBill"
 ></modal-component>
 
@@ -181,7 +182,6 @@
         >
             <template-edit-banks
                 [style.width]="'100%'"
-                #banks="templateEditBanks"
                 [bill]="data"
                 #bankTemplate
             ></template-edit-banks

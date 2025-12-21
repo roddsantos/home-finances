@@ -8,14 +8,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { ErrorsBillForm, InfoBillForm } from "src/app/core/types/forms";
 import { Category } from "src/app/core/types/objects";
-import {
-    NEGATIVE_TOTAL,
-    NO_BILL_VALUE,
-    NO_CATEGORY,
-    NO_DESCRIPTION,
-    NO_NAME,
-    YEAR_OUT_OF_RANGE,
-} from "src/utils/constants/forms";
+import { CATEGORY_FORM, GENERAL_FORM } from "src/utils/constants/forms";
 
 @Component({
     selector: "info-template",
@@ -44,12 +37,11 @@ export class InfoTemplate {
     public catState = inject(CategoryState);
 
     errorMessage = {
-        name: NO_NAME,
-        description: NO_DESCRIPTION,
-        total: NO_BILL_VALUE,
-        negativeValue: NEGATIVE_TOTAL,
-        category: NO_CATEGORY,
-        year: YEAR_OUT_OF_RANGE,
+        name: GENERAL_FORM.noName,
+        description: GENERAL_FORM.noDescription,
+        total: GENERAL_FORM.invalidTotal,
+        category: CATEGORY_FORM.noCategory,
+        year: GENERAL_FORM.yearOutOfRange,
     };
 
     infoForm = new FormGroup({

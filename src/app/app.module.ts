@@ -10,6 +10,7 @@ import { ModalComponent } from "./components/modal/modal.component";
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { PageLogin } from "./pages/login/login.page";
+import { GeneralComponent } from "./components/general/general.component";
 
 @NgModule({
     declarations: [AppComponent],

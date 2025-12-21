@@ -1,13 +1,5 @@
 import { CustomSnackbarComponent } from "./../../custom-snackbar/custom-snackbar.component";
-import {
-    Component,
-    OnInit,
-    Output,
-    EventEmitter,
-    inject,
-    ViewChild,
-    Inject,
-} from "@angular/core";
+import { Component, inject, Inject } from "@angular/core";
 import { ModalComponent } from "../modal.component";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
 import {
@@ -19,13 +11,11 @@ import {
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { ServiceCompany } from "src/app/services/company.service";
-import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { Company } from "src/app/core/types/objects";
 import { CompanyObject } from "src/app/core/types/services";
-import { NO_DESCRIPTION, NO_NAME } from "src/utils/constants/forms";
+import { GENERAL_FORM } from "src/utils/constants/forms";
 import { DIALOG_DATA } from "@angular/cdk/dialog";
-import { EditCompanyModalType } from "src/app/core/types/modal";
 import { mergeMap } from "rxjs";
 
 export interface DialogData {
@@ -47,14 +37,13 @@ export interface DialogData {
         ReactiveFormsModule,
     ],
 })
-export class ModalNewCompany implements OnInit {
+export class ModalNewCompany extends ModalComponent {
     public companyApi = inject(ServiceCompany);
-    public modalState = inject(ModalState);
     public compState = inject(CompanyState);
-    public snack = inject(CustomSnackbarComponent);
-    @ViewChild(ModalComponent) modalComponent: any;
 
-    constructor(@Inject(DIALOG_DATA) public data: Company) {}
+    constructor(@Inject(DIALOG_DATA) public data: Company) {
+        super();
+    }
 
     companyForm = new FormGroup({
         name: new FormControl<string>(this.data?.name || "", {
@@ -71,69 +60,62 @@ export class ModalNewCompany implements OnInit {
     });
 
     errorMessage = {
-        name: NO_NAME,
-        description: NO_DESCRIPTION,
+        name: GENERAL_FORM.noName,
+        description: GENERAL_FORM.noDescription,
     };
-    @Output() submit = new EventEmitter<String>();
-    @Output() onClose = new EventEmitter<void>();
+
+    ngOnInit() {
+        this.modalState.changeSubmitFooter(this.data ? "edit" : "OK", "cancel");
+    }
+
+    handleClose() {
+        this.onClose();
+    }
 
     onUpdate() {
-        if (!this.companyForm.invalid) {
-            this.companyApi
-                .updateCompany({
-                    ...(this.companyForm.value as CompanyObject),
-                    id: this.data.id,
-                })
-                .pipe(mergeMap(() => this.companyApi.getCompanies()))
-                .subscribe({
-                    next: (companies) => {
-                        this.compState.setCompanies(companies as Company[]);
-                        this.compState.changeStatus(
-                            (companies as Company[]).length === 0 ? "empty" : "none",
-                            "no companies"
-                        );
-                        this.snack.openSnackBar(
-                            "company successfully updated",
-                            "success"
-                        );
-                        this.modalComponent.onClose();
-                    },
-                    error: () => {
-                        this.snack.openSnackBar("error updating company", "error");
-                    },
-                });
-        }
+        if (this.companyForm.invalid) return;
+        this.companyApi
+            .updateCompany({
+                ...(this.companyForm.value as CompanyObject),
+                id: this.data.id,
+            })
+            .pipe(mergeMap(() => this.companyApi.getCompanies()))
+            .subscribe({
+                next: (companies) => {
+                    this.compState.setCompanies(companies as Company[]);
+                    this.compState.changeStatus(
+                        (companies as Company[]).length === 0 ? "empty" : "none",
+                        "no companies"
+                    );
+                    this.generalService.successSnackbar("company successfully updated");
+                    this.onClose();
+                },
+                error: () => {
+                    this.generalService.errorSnackbar("error updating company");
+                },
+            });
     }
 
     onCreate() {
-        if (!this.companyForm.invalid) {
-            this.companyApi
-                .createCompany({
-                    ...(this.companyForm.value as CompanyObject),
-                })
-                .subscribe({
-                    next: (companies) => {
-                        this.compState.setCompanies(companies as Company[]);
-                        this.snack.openSnackBar(
-                            "company successfully created",
-                            "success"
-                        );
-                        this.modalComponent.onClose();
-                    },
-                    error: () => {
-                        this.snack.openSnackBar("error creating company", "error");
-                    },
-                });
-        } else this.onClose.emit();
+        if (this.companyForm.invalid) return;
+        this.companyApi
+            .createCompany({
+                ...(this.companyForm.value as CompanyObject),
+            })
+            .subscribe({
+                next: (companies) => {
+                    this.compState.setCompanies(companies as Company[]);
+                    this.generalService.successSnackbar("company successfully created");
+                    this.onClose();
+                },
+                error: () => {
+                    this.generalService.errorSnackbar("error creating company");
+                },
+            });
     }
 
     onSubmit() {
         if (this.data) this.onUpdate();
         else this.onCreate();
-    }
-
-    ngOnInit() {
-        this.modalState.changeSubmitFooter(this.data ? "edit" : "OK", "cancel");
-        this.modalState.changeHeader(this.data ? "edit company" : "new company");
     }
 }

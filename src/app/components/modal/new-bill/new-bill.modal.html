@@ -1,7 +1,8 @@
 <modal-component
     [disabled]="onDisableButton()"
+    header="new bill"
     (actionPrimary)="step !== 4 ? onNextStep() : onSubmit()"
-    (actionSecondary)="step !== 1 ? onPreviousStep() : modalComponent.onClose()"
+    (actionSecondary)="step !== 1 ? onPreviousStep() : handleClose()"
     [bodyTemplate]="newBill"
 ></modal-component>
 

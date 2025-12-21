@@ -1,7 +1,7 @@
 <modal-component
     [disabled]="savingsForm.invalid"
     (actionPrimary)="onCreate()"
-    (actionSecondary)="modalComponent.onClose()"
+    (actionSecondary)="handleClose()"
     [bodyTemplate]="newSaving"
 ></modal-component>
 

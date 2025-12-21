@@ -10,7 +10,13 @@
         <h1>{{bank.savings | currency: "R$ "}}</h1>
     </div>
 </div>
-<div>
+<div class="month-savings label-value">
+    <mat-icon
+        class="material-symbols-outlined"
+        aria-hidden="false"
+        aria-label="icon"
+        fontIcon="savings"
+    ></mat-icon>
     <p>month savings</p>
-    <savings-template [bank]="bank" />
 </div>
+<savings-template [bank]="bank" />

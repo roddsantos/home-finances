@@ -1,28 +1,28 @@
 import { ThemeObjectType } from "src/app/core/types/general";
 
 export const MONTHS = [
-    { name: "January", order: 0, short: "jan" },
-    { name: "February", order: 1, short: "feb" },
-    { name: "March", order: 2, short: "mar" },
-    { name: "April", order: 3, short: "apr" },
-    { name: "May", order: 4, short: "may" },
-    { name: "June", order: 5, short: "jun" },
-    { name: "July", order: 6, short: "jul" },
-    { name: "August", order: 7, short: "aug" },
-    { name: "September", order: 8, short: "sep" },
-    { name: "October", order: 9, short: "out" },
-    { name: "November", order: 10, short: "nov" },
-    { name: "December", order: 11, short: "dec" },
+    { name: "january", order: 0, short: "jan" },
+    { name: "february", order: 1, short: "feb" },
+    { name: "march", order: 2, short: "mar" },
+    { name: "april", order: 3, short: "apr" },
+    { name: "may", order: 4, short: "may" },
+    { name: "june", order: 5, short: "jun" },
+    { name: "july", order: 6, short: "jul" },
+    { name: "august", order: 7, short: "aug" },
+    { name: "september", order: 8, short: "sep" },
+    { name: "october", order: 9, short: "out" },
+    { name: "november", order: 10, short: "nov" },
+    { name: "december", order: 11, short: "dec" },
 ];
 
 export const WEEKDAYS = [
-    { name: "Sunday", order: 0, short: "sun" },
-    { name: "Monday", order: 1, short: "mon" },
-    { name: "Tuesday", order: 2, short: "tue" },
-    { name: "Wednesday", order: 3, short: "wed" },
-    { name: "Thursday", order: 4, short: "thu" },
-    { name: "Friday", order: 5, short: "fri" },
-    { name: "Saturday", order: 6, short: "sat" },
+    { name: "sunday", order: 0, short: "sun" },
+    { name: "monday", order: 1, short: "mon" },
+    { name: "tuesday", order: 2, short: "tue" },
+    { name: "wednesday", order: 3, short: "wed" },
+    { name: "thursday", order: 4, short: "thu" },
+    { name: "friday", order: 5, short: "fri" },
+    { name: "saturday", order: 6, short: "sat" },
 ];
 
 export const THEMES: ThemeObjectType[] = [

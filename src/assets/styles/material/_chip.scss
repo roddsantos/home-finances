@@ -2,19 +2,23 @@
     border-radius: 10px !important;
     /* border: solid 1px #ffffff; */
     & .mdc-evolution-chip__text-label {
+        display: flex;
+        align-items: center;
         font-size: var(--input-font) !important;
         & .typebill.creditcard {
             color: #ffffff !important;
         }
     }
     &.category {
+        border: solid var(--border-width) var(--category) !important;
+        background-color: rgb(from var(--category) r g b / 0.25) !important;
         &.binary {
             background-color: var(--background) !important;
             border: solid 3px var(--category) !important;
         }
-        background-color: var(--category) !important;
         & .mdc-evolution-chip__text-label {
             color: var(--text-1) !important;
+            font-size: 1rem;
             font-family: var(--font-1) !important;
         }
         & .mdc-evolution-chip__icon--trailing {
@@ -22,13 +26,15 @@
         }
     }
     &.company {
+        border: solid var(--border-width) var(--company) !important;
+        background-color: rgb(from var(--company) r g b / 0.25) !important;
         &.binary {
             background-color: var(--background) !important;
             border: solid 3px var(--company) !important;
         }
-        background-color: var(--company) !important;
         & .mdc-evolution-chip__text-label {
             color: var(--text-1) !important;
+            font-size: 1rem;
             font-family: var(--font-1) !important;
         }
         & .mdc-evolution-chip__icon--trailing {
@@ -36,14 +42,16 @@
         }
     }
     &.creditcard {
+        border: solid var(--border-width) var(--credit-card) !important;
+        background-color: rgb(from var(--credit-card) r g b / 0.25) !important;
         &.binary {
             background-color: var(--background) !important;
             border: solid 3px var(--credit-card) !important;
             color: var(--text-1);
         }
-        background-color: var(--credit-card) !important;
         & .mdc-evolution-chip__text-label {
             color: #ffffff !important;
+            font-size: 1rem;
             font-family: var(--font-1) !important;
         }
         & .mdc-evolution-chip__icon--trailing {
@@ -52,14 +60,16 @@
     }
     &.year,
     &.month {
+        border: solid var(--border-width) var(--bill) !important;
+        background-color: rgb(from var(--bill) r g b / 0.25) !important;
         &.binary {
             background-color: var(--background) !important;
             border: solid 3px var(--bill) !important;
             color: var(--text-1);
         }
-        background-color: var(--bill) !important;
         & .mdc-evolution-chip__text-label {
             color: var(--title) !important;
+            font-size: 1rem;
             font-family: var(--font-1) !important;
         }
         & .mdc-evolution-chip__icon--trailing {
@@ -67,12 +77,14 @@
         }
     }
     &.bank {
+        border: solid var(--border-width) var(--bank) !important;
+        background-color: rgb(from var(--bank) r g b / 0.25) !important;
         &.binary {
             background-color: var(--background) !important;
             border: solid 3px var(--bank) !important;
         }
-        background-color: var(--bank) !important;
         & .mdc-evolution-chip__text-label {
+            font-size: 1rem;
             color: #ffffff !important;
         }
         & .mdc-evolution-chip__icon--trailing {
@@ -80,13 +92,15 @@
         }
     }
     &.type {
+        border: solid var(--border-width) var(--success) !important;
+        background-color: rgb(from var(--success) r g b / 0.25) !important;
         &.binary {
             background-color: var(--background) !important;
             border: solid 3px var(--success) !important;
         }
-        background-color: var(--success) !important;
         & .mdc-evolution-chip__text-label {
             color: #ffffff !important;
+            font-size: 1rem;
             font-family: var(--font-1) !important;
         }
         & .mdc-evolution-chip__icon--trailing {
@@ -95,13 +109,15 @@
     }
     &.status,
     &.moneyflux {
+        border: solid var(--border-width) var(--default) !important;
+        background-color: rgb(from var(--default) r g b / 0.25) !important;
         &.binary {
             background-color: var(--background) !important;
             border: solid 3px var(--default) !important;
         }
-        background-color: var(--default) !important;
         & .mdc-evolution-chip__text-label {
             color: #ffffff !important;
+            font-size: 1rem;
             font-family: var(--font-1) !important;
         }
         & .mdc-evolution-chip__icon--trailing {
@@ -112,13 +128,15 @@
     &.max,
     &.date1,
     &.date2 {
+        border: solid var(--border-width) var(--default) !important;
+        background-color: rgb(from var(--default) r g b / 0.25) !important;
         &.binary {
             background-color: var(--background) !important;
             border: solid 3px var(--default) !important;
         }
-        background-color: var(--default) !important;
         & .mdc-evolution-chip__text-label {
             color: #ffffff !important;
+            font-size: 1rem;
             font-family: var(--font-1) !important;
         }
         & .mdc-evolution-chip__icon--trailing {

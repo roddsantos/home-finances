@@ -7,6 +7,7 @@ import {
     TemplateRef,
     OnChanges,
     SimpleChanges,
+    inject,
 } from "@angular/core";
 import { MatIcon } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
@@ -15,6 +16,7 @@ import { DIALOG_DATA, DialogRef } from "@angular/cdk/dialog";
 import { AsyncPipe, CommonModule, NgTemplateOutlet } from "@angular/common";
 import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { SizeType } from "src/app/core/types/components";
+import { GeneralComponent } from "../general/general.component";
 
 @Component({
     selector: "modal-component",
@@ -23,22 +25,25 @@ import { SizeType } from "src/app/core/types/components";
     standalone: true,
     imports: [CommonModule, MatIcon, NgTemplateOutlet, MatButtonModule, AsyncPipe],
 })
-export class ModalComponent implements OnChanges {
-    constructor(
-        public dialogRef: DialogRef,
-        public modalState: ModalState,
-        @Inject(DIALOG_DATA) public data: ModalDataType
-    ) {}
+export class ModalComponent extends GeneralComponent implements OnChanges {
+    constructor() {
+        super();
+    }
+
+    public modalState = inject(ModalState);
+    public dialogRef = inject(DialogRef);
 
     @Input() bodyTemplate!: TemplateRef<any>;
     @Input() disabled: boolean;
     @Input() hideHeader: boolean = false;
     @Input() size: SizeType = "md";
+    @Input() header: string = "";
     @Output() actionSecondary = new EventEmitter<void>();
     @Output() actionPrimary = new EventEmitter<Object>();
-    disableButton = false;
 
-    ngOnInit() {
+    public disableButton = false;
+
+    ngAfterViewInit() {
         this.disableButton = this.disabled;
     }
 

@@ -64,7 +64,7 @@ export class CardComponent {
         return typeof icon === "string";
     }
 
-    @HostListener("window:resize", ["$event"])
+    @HostListener("window:resize", [])
     onResize() {
         if (this.shadow) {
             this.cardHeight =

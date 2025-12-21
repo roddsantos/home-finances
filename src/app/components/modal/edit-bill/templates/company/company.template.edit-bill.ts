@@ -14,12 +14,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { MatInputModule } from "@angular/material/input";
 import { BankState } from "src/app/core/subjects/subjects.bank";
-import {
-    INVALID_PARCEL,
-    NO_COMPANY,
-    UNNECESSARY_BANK,
-    UNNECESSARY_CC,
-} from "src/utils/constants/forms";
+import { BANK_FORM, COMPANY_FORM } from "src/utils/constants/forms";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 
 @Component({
@@ -65,10 +60,10 @@ export class CompanyTemplateEditBill {
     });
 
     errorMessage = {
-        company: NO_COMPANY,
-        noBank: UNNECESSARY_BANK,
-        noCC: UNNECESSARY_CC,
-        parcels: INVALID_PARCEL,
+        company: COMPANY_FORM.noCompany,
+        noBank: BANK_FORM.noBank,
+        noCC: COMPANY_FORM.unnecessaryCreditCard,
+        parcels: COMPANY_FORM.invalidParcels,
     };
 
     ngOnInit() {

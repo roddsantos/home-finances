@@ -1,7 +1,8 @@
 <modal-component
     [disabled]="categoryForm.invalid"
+    [header]="data ? 'edit category' : 'new category'"
     (actionPrimary)="onSubmit()"
-    (actionSecondary)="modalComponent.onClose()"
+    (actionSecondary)="handleClose()"
     [bodyTemplate]="newCompany"
 ></modal-component>
 
