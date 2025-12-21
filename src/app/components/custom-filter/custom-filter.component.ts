@@ -31,6 +31,7 @@ import {
     ToggleButtonItemsType,
 } from "src/app/core/types/components/toggle-buttons";
 import {
+    FILTER_TO_ICON,
     MONTH_ITEMS,
     PAYMENT_ITEMS,
     STATUS_ITEMS,
@@ -108,6 +109,7 @@ export class CustomFilterComponent {
     public style = getComputedStyle(document.body);
     public primaryColor = this.style.getPropertyValue("--primary");
     public secondaryColor = this.style.getPropertyValue("--secondary");
+    public filterToIcon = FILTER_TO_ICON;
 
     ngOnInit() {
         const filters: FilterDisplay[] = this.storage.getFilters();

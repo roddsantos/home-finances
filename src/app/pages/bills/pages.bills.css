@@ -297,26 +297,25 @@
 
 .category-container {
     grid-area: category-category;
-    & .category-icon {
-        color: var(--text-1);
-    }
     &.credit-card {
         border-color: var(--credit-card);
-        background-color: var(--credit-card);
+        background-color: rgb(from var(--credit-card) r g b / 0.25);
     }
     &.bank {
         border-color: var(--bank);
-        background-color: var(--bank);
+        background-color: rgb(from var(--bank) r g b / 0.25);
     }
     &.company {
         border-color: var(--company);
-        background-color: var(--company);
+        background-color: rgb(from var(--company) r g b / 0.25);
     }
     & .category-icon {
-        font-size: 1rem;
+        font-size: 1.1rem;
         height: auto;
+        color: var(--text-1);
     }
     & .category-name {
+        margin: auto;
         color: var(--text-1);
         font-size: 0.75rem;
     }

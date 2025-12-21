@@ -89,14 +89,20 @@
                 [ngClass]="[chip.identifier, 'chip-item', generalState.theme$ | async]"
                 (removed)="removeFilter(chip)"
             >
-                {{
-                    chip.identifier === "min" || chip.identifier === "max"
-                        ? chip.identifier + ":"
-                        : ""
-                }}
-                {{ chip.identifier === "name" ? '"' + chip.name + '"' : chip.name }}
+                <mat-icon
+                    class="icon material-symbols-outlined"
+                    [fontIcon]="filterToIcon[chip.identifier]"
+                ></mat-icon>
+                <p>
+                    {{
+                        chip.identifier === "min" || chip.identifier === "max"
+                            ? chip.identifier + ":"
+                            : ""
+                    }}
+                    {{ chip.identifier === "name" ? '"' + chip.name + '"' : chip.name }}
+                </p>
                 <button matChipRemove [attr.aria-label]="'remove ' + chip.name">
-                    <mat-icon>cancel</mat-icon>
+                    <mat-icon class="remove">cancel</mat-icon>
                 </button>
             </mat-chip-row>
             }

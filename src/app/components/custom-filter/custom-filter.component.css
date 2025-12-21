@@ -129,6 +129,16 @@
 }
 
 .chip-item {
+    display: flex;
     margin-right: 6px;
     margin-bottom: 6px;
+    & .icon {
+        font-size: 1rem;
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.25rem;
+    }
+    & .remove {
+        color: var(--text-1);
+    }
 }

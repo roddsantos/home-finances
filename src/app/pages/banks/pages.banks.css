@@ -45,12 +45,19 @@
 
 .bank-title {
     grid-area: bank-title;
+    display: flex;
     font-weight: bold;
     width: 100%;
     margin: auto 0px 0px 1rem;
 
     @media screen and (max-width: 1366px) {
         margin: auto 10px auto 0px;
+    }
+
+    & .piggy-bank {
+        margin-left: 1rem;
+        background-color: var(--success);
+        border-color: var(--success);
     }
 }
 
@@ -94,7 +101,7 @@
 
 .piggybank {
     & .bank-title .piggy {
-        color: var(--success);
+        color: var(--background);
     }
     & .bank-savings h3 {
         color: var(--success);

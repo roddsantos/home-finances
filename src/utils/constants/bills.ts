@@ -50,3 +50,20 @@ export const EDIT_BILLS_TABS: CustomTabType[] = [
     { title: "payment info", icons: ["account_balance"], index: 1 },
     { title: "configs", icons: ["build"], index: 2 },
 ];
+
+export const FILTER_TO_ICON = {
+    name: "signature",
+    category: "category",
+    company: "store",
+    creditcard: "credit_card",
+    year: "calendar_month",
+    month: "calendar_month",
+    bank: "account_balance",
+    type: "wallet",
+    status: "paid",
+    moneyflux: "payment_arrow_down",
+    min: "receipt",
+    max: "receipt",
+    date1: "date_range",
+    date2: "date_range",
+};
