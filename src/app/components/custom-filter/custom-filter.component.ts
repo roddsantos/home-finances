@@ -274,7 +274,7 @@ export class CustomFilterComponent {
                 {
                     id: value,
                     identifier: "status",
-                    name: label,
+                    name: label as string,
                 },
             ]);
 
@@ -294,7 +294,7 @@ export class CustomFilterComponent {
                 {
                     id: value,
                     identifier: "moneyflux",
-                    name: label,
+                    name: label as string,
                 },
             ]);
 
@@ -314,7 +314,7 @@ export class CustomFilterComponent {
                 {
                     id: value,
                     identifier: "type",
-                    name: label,
+                    name: label as string,
                 },
             ]);
 

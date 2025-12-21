@@ -1,14 +1,18 @@
+<h5 class="label" *ngIf="label.length > 0">{{ label }}</h5>
 <div class="group" #status [formControl]="formController" ngDefaultControl>
     <button
         *ngFor="let item of items"
         (click)="onClick(item)"
-        [ngClass]="[isEqual(item) ? 'button-primary' : 'button-outlined']"
+        [ngClass]="[getSelectedClass(item)]"
         [value]="item"
         [disabled]="disabled"
     >
-        <mat-icon *ngIf="isEqual(item)" class="icon material-symbols-outlined"
-            >check
+        <mat-icon
+            [style.color]="item.icon ? item.icon.color + '!important' : ''"
+            *ngIf="item.icon || isEqual(item)"
+            class="icon material-symbols-outlined"
+            >{{ item.icon ? item.icon.name : "check" }}
         </mat-icon>
-        {{ item.label }}
+        <p>{{ item.label }}</p>
     </button>
 </div>

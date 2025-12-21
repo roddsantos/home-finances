@@ -1,11 +1,7 @@
 .button-primary {
-    display: flex;
-    width: max-content;
-    border-radius: var(--border-radius) !important;
     background-color: var(--primary) !important;
     color: var(--text-3) !important;
     border: solid var(--border-width) var(--border-color) !important;
-    padding: 0.5rem 0.8rem !important;
     font-weight: bold !important;
     font-family: var(--font-1) !important;
     &.mat-mdc-button:not(:disabled) {
@@ -13,7 +9,6 @@
         background-color: var(--primary) !important;
         color: var(--text-3) !important;
         border: solid var(--border-width) var(--border-color) !important;
-        padding: 0.5rem 0.8rem !important;
     }
 
     & p,
@@ -28,7 +23,6 @@
         background-color: var(--disabled) !important;
         border: solid var(--border-width) var(--disabled) !important;
         border-radius: var(--border-radius) !important;
-        padding: 0.5rem 0.8rem !important;
         cursor: not-allowed;
         & mat-icon {
             color: var(--text-1) !important;
@@ -46,20 +40,14 @@
 }
 
 .button-secondary {
-    display: flex;
-    width: max-content;
-    border-radius: var(--border-radius);
     background-color: var(--secondary);
     border: solid var(--border-width) var(--secondary) !important;
-    padding: 0.5rem 0.8rem !important;
     color: var(--text-1) !important;
     font-weight: bold !important;
     font-family: var(--font-1) !important;
-
     &.mat-mdc-button:not(:disabled) {
         border-radius: var(--border-radius);
         background-color: transparent;
-        padding: 0.5rem 0.8rem !important;
     }
 
     & p,
@@ -74,22 +62,17 @@
 }
 
 .button-outlined {
-    width: max-content;
-    height: max-content;
-    border-radius: var(--border-radius);
     background-color: transparent;
     color: var(--text-1) !important;
     border: solid var(--border-width) var(--border-color);
-    padding: 0.5rem 0.8rem !important;
     font-weight: bold !important;
     font-family: var(--font-1) !important;
-
+    cursor: pointer;
     &.mat-mdc-button:not(:disabled) {
         border-radius: var(--border-radius);
         background-color: transparent;
         color: var(--text-1) !important;
         border: solid var(--border-width) var(--border-color);
-        padding: 0.5rem 0.8rem !important;
     }
 
     & p,
@@ -103,7 +86,6 @@
         color: var(--text-1) !important;
         background-color: var(--disabled) !important;
         border-radius: var(--border-radius) !important;
-        padding: 0.5rem 0.8rem !important;
     }
 
     & .spinner {
@@ -117,13 +99,9 @@
 }
 
 .button-text {
-    width: max-content;
-    height: max-content;
-    border-radius: var(--border-radius);
     background-color: transparent;
     color: var(--text-1) !important;
     border: none;
-    padding: 0.5rem 0.8rem !important;
     font-weight: bold !important;
     font-family: var(--font-1) !important;
 
@@ -132,7 +110,6 @@
         background-color: transparent;
         color: var(--text-1) !important;
         border: none;
-        padding: 0.5rem 0.8rem !important;
     }
 
     & p,
@@ -146,7 +123,6 @@
         color: var(--text-1) !important;
         background-color: var(--disabled) !important;
         border-radius: var(--border-radius) !important;
-        padding: 0.5rem 0.8rem !important;
     }
 
     & .spinner {
@@ -157,19 +133,31 @@
         color: var(--text-3);
         margin: 0px !important;
     }
+    &.selected {
+        text-decoration: underline var(--text-1);
+        text-decoration-thickness: 0.3rem;
+    }
 }
 
 .button-primary,
 .button-secondary,
-.button-outlined .extended {
+.button-outlined,
+.button-text {
+    display: flex;
+    width: max-content;
+    border-radius: var(--border-radius) !important;
     height: max-content !important;
-    & div {
-        display: flex;
-        justify-content: flex-start;
-        margin-bottom: 0.2rem;
-    }
-    & p {
-        text-align: left;
+    padding: 0.5rem 0.8rem !important;
+    cursor: pointer;
+    &.extended {
+        & div {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 0.2rem;
+        }
+        & p {
+            text-align: left;
+        }
     }
 }
 

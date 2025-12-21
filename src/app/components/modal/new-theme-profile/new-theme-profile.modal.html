@@ -5,11 +5,27 @@
 ></modal-component>
 
 <ng-template #newProfile>
-    <form [formGroup]="profileForm">
-        <h5 [ngClass]="['label', ]">theme</h5>
+    <form [formGroup]="profileForm" class="form">
         <toggle-button
+            label="theme"
             [items]="themes"
             [formController]="profileForm.controls['theme']"
         />
+        <card-component [hideHeader]="true">
+            <toggle-button
+                label="primary color"
+                variant="outlined"
+                [items]="primaryColors"
+                [formController]="profileForm.controls['primary']"
+            />
+        </card-component>
+        <card-component [hideHeader]="true">
+            <toggle-button
+                label="secondary color"
+                variant="outlined"
+                [items]="primaryColors"
+                [formController]="profileForm.controls['secondary']"
+            />
+        </card-component>
     </form>
 </ng-template>

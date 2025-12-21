@@ -37,7 +37,6 @@ export type ThemeObjectType = {
     description: string;
     "--primary": string;
     "--secondary": string;
-    "--third": string;
     "--background": string;
     "--bh": string;
     "--text-1": string;

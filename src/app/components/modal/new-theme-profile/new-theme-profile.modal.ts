@@ -12,16 +12,19 @@ import {
 import { ToggleButtonComponent } from "../../toggle-buttons/toggle-buttons.component";
 import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
 import { CommonModule } from "@angular/common";
+import { CardComponent } from "../../card/card.component";
 
 @Component({
     selector: "new-theme-profile",
     templateUrl: "./new-theme-profile.modal.html",
+    styleUrl: "./new-theme-profile.modal.css",
     imports: [
         CommonModule,
         ModalComponent,
         MatExpansionModule,
         ReactiveFormsModule,
         ToggleButtonComponent,
+        CardComponent,
     ],
     standalone: true,
 })
@@ -36,6 +39,19 @@ export class ModalNewThemeProfile extends ModalComponent {
             label: theme,
         })
     );
+
+    public x = DEFAULT_COLORS["blue"];
+
+    public primaryColors: ToggleButtonItemsType<string>[] = Object.keys(
+        DEFAULT_COLORS
+    ).map((color) => ({
+        value: DEFAULT_COLORS[color as keyof typeof DEFAULT_COLORS],
+        label: color,
+        icon: {
+            name: "colors",
+            color: DEFAULT_COLORS[color as keyof typeof DEFAULT_COLORS],
+        },
+    }));
 
     public profileForm = new FormGroup({
         title: new FormControl<string>("", {
@@ -55,10 +71,6 @@ export class ModalNewThemeProfile extends ModalComponent {
             nonNullable: true,
         }),
         secondary: new FormControl<string>(DEFAULT_COLORS.black, {
-            validators: [Validators.required, Validators.maxLength(20)],
-            nonNullable: true,
-        }),
-        third: new FormControl<string>(DEFAULT_COLORS.black, {
             validators: [Validators.required, Validators.maxLength(20)],
             nonNullable: true,
         }),
@@ -87,6 +99,8 @@ export class ModalNewThemeProfile extends ModalComponent {
             nonNullable: true,
         }),
     });
+
+    onChangeTheme() {}
 
     handleClose() {
         this.onClose();

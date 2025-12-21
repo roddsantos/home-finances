@@ -190,7 +190,6 @@ export function currentPallete() {
 
     const primary = style.getPropertyValue("--primary");
     const secondary = style.getPropertyValue("--secondary");
-    const third = style.getPropertyValue("--third");
 
     const background = style.getPropertyValue("--background");
     const bh = style.getPropertyValue("--bh");
@@ -209,7 +208,6 @@ export function currentPallete() {
     return {
         primary,
         secondary,
-        third,
         background,
         bh,
         info,

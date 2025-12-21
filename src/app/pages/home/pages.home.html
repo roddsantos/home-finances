@@ -13,7 +13,7 @@
             id="hd"
             class="hd"
             [hideHeader]="true"
-            [backgroundColor]="thirdColor"
+            [backgroundColor]="'var(--secondary)'"
         >
             <div class="col" [style.width]="'100%'">
                 <h4>{{ months[dateCtrl.getRawValue()!.month].short }}</h4>
@@ -107,7 +107,7 @@
                 >
                     <div
                         class="category"
-                        [style.borderColor]="theme === 'binary' ? secondaryColor : primaryColor"
+                        [style.borderColor]="theme === 'binary' ? 'var(--secondary)' : 'var(--primary)'"
                         [matTooltip]="bill.category.name"
                         matTooltipPosition="above"
                     >

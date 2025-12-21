@@ -58,12 +58,6 @@ export class PageHome {
 
     public todayBills: (Bill & BillData)[] = [];
     public theme = "default";
-    public style = getComputedStyle(document.body);
-    public primaryColor = this.style.getPropertyValue("--primary");
-    public secondaryColor = this.style.getPropertyValue("--secondary");
-    public thirdColor = this.style.getPropertyValue("--third");
-    public text1Color = this.style.getPropertyValue("--text-1");
-    public text3Color = this.style.getPropertyValue("--text-3");
 
     public todaysDate = new Date();
     public dateSubscriber: Subscription;

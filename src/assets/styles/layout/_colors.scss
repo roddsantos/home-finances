@@ -55,16 +55,16 @@ $custom-brand-blue: (
 );
 
 $custom-brand-warn: (
-    50: var(--third),
-    100: var(--third),
-    200: var(--third),
-    300: var(--third),
-    400: var(--third),
-    500: var(--third),
-    600: var(--third),
-    700: var(--third),
-    800: var(--third),
-    900: var(--third),
+    50: var(--error),
+    100: var(--error),
+    200: var(--error),
+    300: var(--error),
+    400: var(--error),
+    500: var(--error),
+    600: var(--error),
+    700: var(--error),
+    800: var(--error),
+    900: var(--error),
     contrast: (
         50: $text1,
         100: $text1,

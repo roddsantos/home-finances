@@ -5,7 +5,6 @@ export type ProfileType = {
     theme: ColorThemeType;
     primary: string;
     secondary: string;
-    third: string;
     background: string;
     text1: string;
     text2: string;
