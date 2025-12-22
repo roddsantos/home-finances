@@ -5,13 +5,12 @@ import { MatIconModule } from "@angular/material/icon";
 import { CardComponent } from "src/app/components/card/card.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
-import { ThemeObjectType } from "src/app/core/types/general";
-import { THEMES } from "src/utils/constants/general";
 import { Router } from "@angular/router";
 import { Dialog } from "@angular/cdk/dialog";
 import { ModalNewThemeProfile } from "src/app/components/modal/new-theme-profile/new-theme-profile.modal";
 import { ProfileThemeType } from "src/app/core/types/pages/profiles";
 import { BINARY_THEME, DEFAULT_THEME, RED_AND_BLACK } from "src/utils/constants/colors";
+import { ThemeService } from "src/app/services/theme.service";
 
 @Component({
     selector: "themes-settings",
@@ -26,6 +25,7 @@ export class ThemeSettingsComponent implements OnInit {
     public router = inject(Router);
 
     public generalState = inject(GeneralState);
+    private themeService = inject(ThemeService);
     public storage = inject(LocalStorageService);
     public themes = [BINARY_THEME, RED_AND_BLACK, DEFAULT_THEME];
 
@@ -39,17 +39,7 @@ export class ThemeSettingsComponent implements OnInit {
     }
 
     clickedTheme(theme: ProfileThemeType) {
-        this.generalState.changeThemeObject(theme);
-        // Object.keys(theme).forEach((key) => {
-        //     document.documentElement.style.setProperty(
-        //         key,
-        //         theme[key as keyof ThemeObjectType]
-        //     );
-        // });
-        document.body.className = "";
-        document.body.className = theme.id === "default" ? "" : theme.id;
-        console.log(theme);
-        this.storage.setTheme(theme.id);
+        this.themeService.setTheme(theme);
     }
 
     onNewProfileTheme() {

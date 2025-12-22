@@ -6,17 +6,15 @@ import { ServiceCategory } from "./services/category.service";
 import { CustomFilterState } from "./components/custom-filter/custom-filter.subjects.component";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { UserService } from "./services/user.service";
-import { THEMES } from "src/utils/constants/general";
-import { PageLogin } from "./pages/login/login.page";
 import { ProfileThemeType } from "./core/types/pages/profiles";
 import {
     BINARY_THEME,
     COLOR_STATUS,
-    DEFAULT_COLORS,
     DEFAULT_THEME,
     FIELD_TO_PROPERTY,
     RED_AND_BLACK,
 } from "src/utils/constants/colors";
+import { ThemeService } from "./services/theme.service";
 
 @Component({
     selector: "app-root",
@@ -32,6 +30,7 @@ export class AppComponent {
     public catService = inject(ServiceCategory);
     public filterState = inject(CustomFilterState);
     public userService = inject(UserService);
+    public themeService = inject(ThemeService);
 
     title = "bills-app";
     theme = this.storage.getTheme();
@@ -84,11 +83,7 @@ export class AppComponent {
             const selectedTheme = [BINARY_THEME, RED_AND_BLACK, DEFAULT_THEME].find(
                 (th) => th.id === theme
             );
-            this.generalState.changeTheme("red-and-black");
-            this.generalState.changeThemeObject(selectedTheme!);
-            this.setupTheme(selectedTheme!);
-            document.body.className = "";
-            document.body.className = theme === "default" ? "" : theme;
+            this.themeService.setTheme(selectedTheme!);
         }
 
         // GET BILLS LAYOUT
