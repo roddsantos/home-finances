@@ -1,8 +1,8 @@
-export type ProfileType = {
+export type ProfileThemeType = {
     id: string;
+    theme: ColorThemeType;
     title: string;
     description: string;
-    theme: ColorThemeType;
     primary: string;
     secondary: string;
     background: string;
@@ -10,7 +10,8 @@ export type ProfileType = {
     text2: string;
     borderRadius: number;
     borderWidth: number;
-    font: FontProfileType;
+    font1: FontProfileType;
+    font2: FontProfileType;
 };
 
 export type ColorThemeType = "dark" | "default" | "light";

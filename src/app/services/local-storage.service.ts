@@ -1,6 +1,5 @@
 import { inject, Injectable } from "@angular/core";
 import { User } from "src/app/core/types/objects";
-import { ThemeType } from "src/app/core/types/general";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { BillsLayoutType } from "../core/types/subjects";
 
@@ -45,7 +44,7 @@ export class LocalStorageService {
         localStorage.removeItem("filters");
     }
 
-    setTheme(theme: ThemeType) {
+    setTheme(theme: string) {
         localStorage.setItem("theme", theme);
         this.generalState.changeTheme(theme);
     }

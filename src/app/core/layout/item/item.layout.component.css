@@ -21,10 +21,13 @@
 }
 
 .item-selected {
-    color: var(--text-3);
+    color: var(--text-2);
     background-color: var(--primary);
-    border: solid var(--border-width) var(--primary);
     border-radius: var(--border-radius);
+    border: none;
+    &.binary {
+        border: solid var(--border-width) var(--secondary);
+    }
 }
 
 .item-icon {
@@ -57,7 +60,7 @@
         background-color: var(--primary);
         border-radius: var(--border-radius);
         & p {
-            color: var(--text-3);
+            color: var(--text-2);
         }
         &.selected {
             display: flex;
@@ -66,7 +69,7 @@
 }
 
 .icon-selected {
-    color: var(--text-3);
+    color: var(--text-2);
 }
 
 .top {

@@ -16,18 +16,9 @@
             <h4>{{th.title}}</h4>
             <p>{{th.description}}</p>
             <div class="theme-pallete">
-                <div
-                    class="pallete-color"
-                    [style.backgroundColor]="th['--primary']"
-                ></div>
-                <div
-                    class="pallete-color"
-                    [style.backgroundColor]="th['--secondary']"
-                ></div>
-                <div
-                    class="pallete-color"
-                    [style.backgroundColor]="th['--background']"
-                ></div>
+                <div class="pallete-color" [style.backgroundColor]="th.primary"></div>
+                <div class="pallete-color" [style.backgroundColor]="th.secondary"></div>
+                <div class="pallete-color" [style.backgroundColor]="th.background"></div>
             </div>
         </div>
         <button (click)="onNewProfileTheme()" mat-button class="button-primary update">

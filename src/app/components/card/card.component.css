@@ -3,7 +3,7 @@
     border-width: var(--border-width);
     border-radius: var(--border-radius);
     background-color: var(--bh);
-    border-color: var(--bh);
+    border-color: var(--border-color);
     padding: 10px 15px;
     position: relative;
     z-index: 3;

@@ -1,4 +1,4 @@
-import { ColorThemeType } from "src/app/core/types/pages/profiles";
+import { ColorThemeType, ProfileThemeType } from "src/app/core/types/pages/profiles";
 
 export const COLOR_STATUS = {
     dark: {
@@ -64,4 +64,68 @@ export const DEFAULT_BACKGROUND_COLORS = {
     brown: "#ffcfb7ff",
     purple: "#f3c4ffff",
     white: "#ffffff",
+};
+
+export const DEFAULT_THEME: ProfileThemeType = {
+    id: "default",
+    theme: "default",
+    title: "default",
+    description: "the default theme of the application",
+    primary: "#4cafc4",
+    secondary: "#da8cc1",
+    background: "#fff5e9",
+    text1: "#000d55",
+    text2: "#d5d6f1",
+    borderWidth: 1,
+    borderRadius: 10,
+    font1: "Open-Sans",
+    font2: "Commissioner",
+};
+
+export const BINARY_THEME: ProfileThemeType = {
+    id: "binary",
+    theme: "dark",
+    title: "black and white",
+    description: "black and white themed",
+    primary: "#000000",
+    secondary: "#ffffff",
+    background: "#000000",
+    text1: "#ffffff",
+    text2: "#ffffff",
+    borderWidth: 1,
+    borderRadius: 10,
+    font1: "Open-Sans",
+    font2: "Open-Sans",
+};
+
+export const RED_AND_BLACK: ProfileThemeType = {
+    id: "red-and-black",
+    theme: "dark",
+    title: "red and black",
+    description: "him",
+    primary: "#a82828",
+    secondary: "#a82828",
+    background: "#000000ff",
+    text1: "#d5d6f1",
+    text2: "#c0c0c0ff",
+    borderWidth: 1,
+    borderRadius: 10,
+    font1: "Open-Sans",
+    font2: "Commissioner",
+};
+
+export const FIELD_TO_PROPERTY = {
+    id: "--profile-id",
+    theme: "--profile-theme",
+    title: "--profile-title",
+    description: "--profile-description",
+    primary: "--primary",
+    secondary: "--secondary",
+    background: "--background",
+    text1: "--text-1",
+    text2: "--text-2",
+    borderWidth: "--border-width",
+    borderRadius: "--border-radius",
+    font1: "--font-1",
+    font2: "--font-2",
 };

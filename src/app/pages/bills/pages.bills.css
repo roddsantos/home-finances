@@ -52,7 +52,7 @@
     height: fit-content;
     background-color: var(--bh);
     border-radius: var(--border-radius);
-    border: var(--border-width) solid var(--bh);
+    border: var(--border-width) solid var(--border-color);
     &.binary {
         border: var(--border-width) solid var(--secondary);
     }

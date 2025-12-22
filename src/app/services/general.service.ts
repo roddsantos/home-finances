@@ -1,5 +1,5 @@
 import { inject, Injectable } from "@angular/core";
-import { RoutesType, ThemeType } from "src/app/core/types/general";
+import { RoutesType } from "src/app/core/types/general";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { Router } from "@angular/router";
 import { ComponentType } from "@angular/cdk/portal";
@@ -20,7 +20,7 @@ export class GeneralService {
         this.router.navigate([route]);
     }
 
-    setTheme(theme: ThemeType) {
+    setTheme(theme: string) {
         this.generalState.changeTheme(theme);
         localStorage.setItem("theme", theme);
     }

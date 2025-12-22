@@ -82,7 +82,7 @@
     border-bottom: solid var(--border-width) var(--border-color);
     border-radius: 5px 5px 0px 0px;
     & h3 {
-        color: var(--text-3);
+        color: var(--text-2);
         margin: auto auto auto 0px;
     }
 }
@@ -91,7 +91,7 @@
     position: absolute;
     top: 1rem;
     right: 1rem;
-    color: var(--text-3);
+    color: var(--text-2);
     cursor: pointer;
     z-index: 4;
 }

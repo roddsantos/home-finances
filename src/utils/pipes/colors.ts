@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 export class ColorPipe implements PipeTransform {
     private style = getComputedStyle(document.body);
     public text1 = this.style.getPropertyValue("--text-1");
-    public text3 = this.style.getPropertyValue("--text-3");
+    public text3 = this.style.getPropertyValue("--text-2");
 
     transform(value: string, format: string): string {
         const formatStringLength = format.length;

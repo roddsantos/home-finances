@@ -2,7 +2,6 @@ import { CommonModule } from "@angular/common";
 import { Component, HostListener, inject, Input } from "@angular/core";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
-import { ThemeType } from "src/app/core/types/general";
 import { ColorPipe } from "src/utils/pipes/colors";
 import { CardActionType, CardOptionsType } from "src/app/core/types/components";
 import { MatTooltip } from "@angular/material/tooltip";
@@ -31,7 +30,7 @@ export class CardComponent {
     @Input() hideHeader?: boolean;
     @Input() options?: CardOptionsType;
 
-    public actualTheme: ThemeType;
+    public actualTheme: string;
     public cardHeight: number;
     public cardWidth: number;
 
@@ -43,7 +42,7 @@ export class CardComponent {
     ngOnInit() {
         this.general.theme$.subscribe({
             next: (theme) => {
-                this.actualTheme = theme as ThemeType;
+                this.actualTheme = theme;
                 this.style = getComputedStyle(document.body);
                 this.background = this.style.getPropertyValue("--background");
                 this.backgroundHighlighter = this.style.getPropertyValue("--bh");

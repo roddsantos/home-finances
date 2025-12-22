@@ -5,10 +5,18 @@ import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { ServiceCategory } from "./services/category.service";
 import { CustomFilterState } from "./components/custom-filter/custom-filter.subjects.component";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
-import { ThemeObjectType, ThemeType } from "src/app/core/types/general";
 import { UserService } from "./services/user.service";
 import { THEMES } from "src/utils/constants/general";
 import { PageLogin } from "./pages/login/login.page";
+import { ProfileThemeType } from "./core/types/pages/profiles";
+import {
+    BINARY_THEME,
+    COLOR_STATUS,
+    DEFAULT_COLORS,
+    DEFAULT_THEME,
+    FIELD_TO_PROPERTY,
+    RED_AND_BLACK,
+} from "src/utils/constants/colors";
 
 @Component({
     selector: "app-root",
@@ -28,6 +36,38 @@ export class AppComponent {
     title = "bills-app";
     theme = this.storage.getTheme();
 
+    setupTheme(profileTheme: ProfileThemeType) {
+        const { primary, secondary, theme, borderWidth, borderRadius } = profileTheme;
+
+        Object.keys(FIELD_TO_PROPERTY).map((field) => {
+            const property = FIELD_TO_PROPERTY[field as keyof typeof FIELD_TO_PROPERTY];
+
+            document.documentElement.style.setProperty(
+                property,
+                // @ts-ignore
+                profileTheme[field]
+            );
+        });
+        Object.keys(COLOR_STATUS[theme]).map((field) => {
+            // @ts-ignore
+            const value = COLOR_STATUS[theme][field as keyof typeof COLOR_STATUS];
+            document.documentElement.style.setProperty("--" + field, value);
+        });
+        document.documentElement.style.setProperty(
+            "--bh",
+            "rgb(from var(--background) calc(r - 10) calc(g - 10) calc(b - 10))"
+        );
+        document.documentElement.style.setProperty(
+            "--border-color",
+            this.theme === "binary" ? secondary : primary
+        );
+        document.documentElement.style.setProperty("--border-width", `${borderWidth}px`);
+        document.documentElement.style.setProperty(
+            "--border-radius",
+            `${borderRadius}px`
+        );
+    }
+
     ngOnInit() {
         // GET USER INFO
         const user = this.storage.getUser();
@@ -41,15 +81,12 @@ export class AppComponent {
         // GET THEME
         const theme = this.storage.getTheme();
         if (theme) {
-            const selectedTheme = THEMES.find((th) => th.id === theme);
-            this.generalState.changeTheme((theme || "default") as ThemeType);
+            const selectedTheme = [BINARY_THEME, RED_AND_BLACK, DEFAULT_THEME].find(
+                (th) => th.id === theme
+            );
+            this.generalState.changeTheme("red-and-black");
             this.generalState.changeThemeObject(selectedTheme!);
-            Object.keys(selectedTheme!).forEach((key) => {
-                document.documentElement.style.setProperty(
-                    key,
-                    selectedTheme![key as keyof ThemeObjectType]
-                );
-            });
+            this.setupTheme(selectedTheme!);
             document.body.className = "";
             document.body.className = theme === "default" ? "" : theme;
         }

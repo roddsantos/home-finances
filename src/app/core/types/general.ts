@@ -29,11 +29,9 @@ export type OptionalKeys<T> = {
     [K in keyof T]-?: {} extends Pick<T, K> ? K : never;
 }[keyof T];
 
-export type ThemeType = "default" | "dark" | "binary" | "pastel" | "dark-grey" | "blues";
-
 export type ThemeObjectType = {
     title: string;
-    id: ThemeType;
+    id: string;
     description: string;
     "--primary": string;
     "--secondary": string;
@@ -41,9 +39,9 @@ export type ThemeObjectType = {
     "--bh": string;
     "--text-1": string;
     "--text-2": string;
-    "--text-3": string;
     "--border-color": string;
-    "--disabled": string;
+    "--border-width": number;
+    "--border-radius": number;
     "--error": string;
     "--warning": string;
     "--info": string;
@@ -54,6 +52,7 @@ export type ThemeObjectType = {
     "--company": string;
     "--category": string;
     "--bill": string;
+    "--disabled": string;
 };
 
 export type RoutesType =

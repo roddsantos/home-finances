@@ -3,13 +3,9 @@
     [ngClass]="{
         'item-container': true,
         'item-selected': item.page === (generalState.page$ | async),
-        top: item.page === '/settings'
+        top: item.page === '/settings',
+        binary: 'binary' === (generalState.theme$ | async)
     }"
-    [style.borderColor]="
-        'binary' === (generalState.theme$ | async)
-            ? (generalState.themeObject$ | async)!['--secondary']
-            : 'transparent'
-    "
     (click)="onClickItem(page)"
 >
     <mat-icon

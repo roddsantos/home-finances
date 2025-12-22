@@ -173,7 +173,7 @@ export const tint = (
 export function contrastText(color: string) {
     const style = getComputedStyle(document.body);
     const text1 = style.getPropertyValue("--text-1");
-    const text3 = style.getPropertyValue("--text-3");
+    const text3 = style.getPropertyValue("--text-2");
 
     const treatedString = color.split("#")[1];
     if (!treatedString) return color;
@@ -200,7 +200,7 @@ export function currentPallete() {
 
     const text1 = style.getPropertyValue("--text-1");
     const text2 = style.getPropertyValue("--text-2");
-    const text3 = style.getPropertyValue("--text-3");
+    const text3 = style.getPropertyValue("--text-2");
 
     const font1 = style.getPropertyValue("--font-1");
     const font2 = style.getPropertyValue("--font-2");

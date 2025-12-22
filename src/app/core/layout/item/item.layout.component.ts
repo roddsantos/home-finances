@@ -43,7 +43,7 @@ export class ItemLayoutComponent {
     public secondaryColor = this.style.getPropertyValue("--secondary");
     public primaryColor = this.style.getPropertyValue("--primary");
     public text1Color = this.style.getPropertyValue("--text-1");
-    public text3Color = this.style.getPropertyValue("--text-3");
+    public text3Color = this.style.getPropertyValue("--text-2");
 
     constructor() {
         this.generalState.theme$.subscribe({
