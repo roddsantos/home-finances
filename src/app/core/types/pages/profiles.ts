@@ -17,3 +17,8 @@ export type ProfileThemeType = {
 export type ColorThemeType = "dark" | "default" | "light";
 
 export type FontProfileType = "Open-Sans" | "Commissioner" | "Roboto" | "GT-Eesti-Text";
+
+export type UpdateProfileControlType<T> = {
+    field: string;
+    value: T;
+};

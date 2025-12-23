@@ -23,7 +23,7 @@
                 class="date-component"
                 [items]="monthItems"
                 [formController]="dateCtrl"
-                (click)="addDateSpan($event)"
+                (onClick)="addDateSpan($event)"
             />
         </div>
         <div class="filter-status">
@@ -32,7 +32,7 @@
                 class="status-component"
                 [items]="statusItems"
                 [formController]="statusCtrl"
-                (click)="addStatus($event)"
+                (onClick)="addStatus($event)"
             />
         </div>
         <div class="filter-money-flux">
@@ -41,7 +41,7 @@
                 class="money-flux-component"
                 [items]="moneyFluxItems"
                 [formController]="moneyFluxCtrl"
-                (click)="addMoneyFlux($event)"
+                (onClick)="addMoneyFlux($event)"
             />
         </div>
         <div class="filter-type">
@@ -50,7 +50,7 @@
                 class="type-component"
                 [items]="typeItems"
                 [formController]="typeCtrl"
-                (click)="addType($event)"
+                (onClick)="addType($event)"
             />
         </div>
         <div class="filter-buttons">

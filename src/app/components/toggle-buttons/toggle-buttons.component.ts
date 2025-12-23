@@ -26,7 +26,7 @@ export class ToggleButtonComponent {
     @Input() items: ToggleButtonItemsType<any>[];
     @Input() formController: FormControl<unknown> = new FormControl<any>(null);
     @Input() disabled: boolean;
-    @Output() click = new EventEmitter<ToggleButtonItemsType<any>>();
+    @Output() onClick = new EventEmitter<ToggleButtonItemsType<any>>();
 
     isEqual(item: ToggleButtonItemsType<any>) {
         return isValuesEqual(this.formController.getRawValue(), item.value);
@@ -44,8 +44,8 @@ export class ToggleButtonComponent {
         }
     }
 
-    onClick(item: ToggleButtonItemsType<any>) {
+    handleClick(item: ToggleButtonItemsType<any>) {
         if (this.formController) this.formController.patchValue(item.value);
-        this.click.emit(item);
+        this.onClick.emit(item);
     }
 }

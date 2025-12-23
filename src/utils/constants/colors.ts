@@ -1,7 +1,7 @@
 import { ColorThemeType, ProfileThemeType } from "src/app/core/types/pages/profiles";
 
 export const COLOR_STATUS = {
-    dark: {
+    light: {
         error: "#aa0000",
         warning: "#b97900",
         info: "#003caa",
@@ -15,7 +15,7 @@ export const COLOR_STATUS = {
         success: "#29c944",
         default: "#7c7c7c",
     },
-    light: {
+    dark: {
         error: "#ff8888",
         warning: "#ffd689",
         info: "#84afff",
@@ -31,17 +31,45 @@ export const COLOR_THEMES = {
 };
 
 export const DEFAULT_COLORS = {
-    black: "#000000",
-    red: "#ff0000",
-    green: "#00ff00",
-    blue: "#0000ff",
-    yellow: "#ffff00",
-    cyan: "#00ffff",
-    magenta: "#ff00ff",
-    brown: "#773311",
-    purple: "#8800aa",
-    grey: "#777777",
-    white: "#ffffff",
+    dark: {
+        black: "#000000",
+        red: "#690000",
+        green: "#006800",
+        blue: "#00007e",
+        yellow: "#888800",
+        cyan: "#007c7c",
+        magenta: "#7a007a",
+        brown: "#581d00",
+        purple: "#410052",
+        grey: "#494949",
+        white: "#ffffff",
+    },
+    default: {
+        black: "#000000",
+        red: "#ff0000",
+        green: "#00ff00",
+        blue: "#0000ff",
+        yellow: "#ffff00",
+        cyan: "#00ffff",
+        magenta: "#ff00ff",
+        brown: "#773311",
+        purple: "#8800aa",
+        grey: "#777777",
+        white: "#ffffff",
+    },
+    light: {
+        black: "#757575",
+        red: "#ff4747",
+        green: "#6dff6d",
+        blue: "#6767ff",
+        yellow: "#ffff77",
+        cyan: "#96ffff",
+        magenta: "#ff96ff",
+        brown: "#a56b4e",
+        purple: "#9f58b1",
+        grey: "#b1b1b1",
+        white: "#ffffff",
+    },
 };
 
 export const DEFAULT_TEXT_COLORS = {

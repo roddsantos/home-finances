@@ -2,17 +2,20 @@ import { Component } from "@angular/core";
 import { ModalComponent } from "../modal.component";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { ColorThemeType, FontProfileType } from "src/app/core/types/pages/profiles";
+import {
+    ColorThemeType,
+    FontProfileType,
+    UpdateProfileControlType,
+} from "src/app/core/types/pages/profiles";
 import {
     COLOR_THEMES,
     DEFAULT_BACKGROUND_COLORS,
     DEFAULT_COLORS,
     DEFAULT_TEXT_COLORS,
 } from "src/utils/constants/colors";
-import { ToggleButtonComponent } from "../../toggle-buttons/toggle-buttons.component";
 import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
 import { CommonModule } from "@angular/common";
-import { CardComponent } from "../../card/card.component";
+import { StepOneNewProfileTheme } from "./step-one/step-one";
 
 @Component({
     selector: "new-theme-profile",
@@ -23,8 +26,7 @@ import { CardComponent } from "../../card/card.component";
         ModalComponent,
         MatExpansionModule,
         ReactiveFormsModule,
-        ToggleButtonComponent,
-        CardComponent,
+        StepOneNewProfileTheme,
     ],
     standalone: true,
 })
@@ -33,6 +35,8 @@ export class ModalNewThemeProfile extends ModalComponent {
         super();
     }
 
+    public step = 1;
+
     public themes: ToggleButtonItemsType<string>[] = Object.keys(COLOR_THEMES).map(
         (theme) => ({
             value: theme,
@@ -40,16 +44,14 @@ export class ModalNewThemeProfile extends ModalComponent {
         })
     );
 
-    public x = DEFAULT_COLORS["blue"];
-
     public primaryColors: ToggleButtonItemsType<string>[] = Object.keys(
-        DEFAULT_COLORS
+        DEFAULT_COLORS.default
     ).map((color) => ({
-        value: DEFAULT_COLORS[color as keyof typeof DEFAULT_COLORS],
+        value: DEFAULT_COLORS.default[color as keyof typeof DEFAULT_COLORS.default],
         label: color,
         icon: {
             name: "colors",
-            color: DEFAULT_COLORS[color as keyof typeof DEFAULT_COLORS],
+            color: DEFAULT_COLORS.default[color as keyof typeof DEFAULT_COLORS.default],
         },
     }));
 
@@ -66,11 +68,11 @@ export class ModalNewThemeProfile extends ModalComponent {
             validators: [Validators.required, Validators.maxLength(20)],
             nonNullable: true,
         }),
-        primary: new FormControl<string>(DEFAULT_COLORS.red, {
+        primary: new FormControl<string>(DEFAULT_COLORS.default.red, {
             validators: [Validators.required, Validators.maxLength(20)],
             nonNullable: true,
         }),
-        secondary: new FormControl<string>(DEFAULT_COLORS.black, {
+        secondary: new FormControl<string>(DEFAULT_COLORS.default.black, {
             validators: [Validators.required, Validators.maxLength(20)],
             nonNullable: true,
         }),
@@ -100,9 +102,28 @@ export class ModalNewThemeProfile extends ModalComponent {
         }),
     });
 
-    onChangeTheme() {}
+    onChangeTheme(theme: string) {
+        this.primaryColors = Object.keys(
+            DEFAULT_COLORS[theme as keyof typeof DEFAULT_COLORS]
+        ).map((color) => ({
+            value: DEFAULT_COLORS[theme as keyof typeof DEFAULT_COLORS][
+                color as keyof typeof DEFAULT_COLORS.default
+            ],
+            label: color,
+            icon: {
+                name: "colors",
+                color: DEFAULT_COLORS[theme as keyof typeof DEFAULT_COLORS][
+                    color as keyof typeof DEFAULT_COLORS.default
+                ],
+            },
+        }));
+    }
 
     handleClose() {
         this.onClose();
+    }
+
+    handleStepOneClick(event: UpdateProfileControlType<string>) {
+        console.log(event, this.profileForm.getRawValue());
     }
 }

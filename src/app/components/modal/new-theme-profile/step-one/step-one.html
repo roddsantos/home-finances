@@ -1,0 +1,26 @@
+<div class="form">
+    <toggle-button
+        label="theme"
+        [items]="themes"
+        [formController]="themeControl"
+        (onClick)="handleThemeClick($event)"
+    />
+    <card-component [hideHeader]="true">
+        <toggle-button
+            label="primary color"
+            variant="outlined"
+            [items]="defaultColors"
+            [formController]="primaryControl"
+            (onClick)="handlePrimaryClick($event)"
+        />
+    </card-component>
+    <card-component [hideHeader]="true">
+        <toggle-button
+            label="secondary color"
+            variant="outlined"
+            [items]="defaultColors"
+            [formController]="secondaryControl"
+            (onClick)="handleSecondaryClick($event)"
+        />
+    </card-component>
+</div>

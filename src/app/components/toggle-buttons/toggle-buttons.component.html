@@ -2,7 +2,7 @@
 <div class="group" #status [formControl]="formController" ngDefaultControl>
     <button
         *ngFor="let item of items"
-        (click)="onClick(item)"
+        (click)="handleClick(item)"
         [ngClass]="[getSelectedClass(item)]"
         [value]="item"
         [disabled]="disabled"

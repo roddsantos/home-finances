@@ -6,26 +6,13 @@
 
 <ng-template #newProfile>
     <form [formGroup]="profileForm" class="form">
-        <toggle-button
-            label="theme"
-            [items]="themes"
-            [formController]="profileForm.controls['theme']"
-        />
-        <card-component [hideHeader]="true">
-            <toggle-button
-                label="primary color"
-                variant="outlined"
-                [items]="primaryColors"
-                [formController]="profileForm.controls['primary']"
+        <ng-container *ngIf="step === 1">
+            <step-one
+                [themeControl]="profileForm.controls['theme']"
+                [primaryControl]="profileForm.controls['primary']"
+                [secondaryControl]="profileForm.controls['secondary']"
+                (onClick)="handleStepOneClick($event)"
             />
-        </card-component>
-        <card-component [hideHeader]="true">
-            <toggle-button
-                label="secondary color"
-                variant="outlined"
-                [items]="primaryColors"
-                [formController]="profileForm.controls['secondary']"
-            />
-        </card-component>
+        </ng-container>
     </form>
 </ng-template>
