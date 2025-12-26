@@ -173,7 +173,7 @@ export const tint = (
 export function contrastText(color: string) {
     const style = getComputedStyle(document.body);
     const text1 = style.getPropertyValue("--text-1");
-    const text3 = style.getPropertyValue("--text-2");
+    const text2 = style.getPropertyValue("--text-2");
 
     const treatedString = color.split("#")[1];
     if (!treatedString) return color;
@@ -182,7 +182,9 @@ export function contrastText(color: string) {
     let g = parseInt(treatedString.substring(2, 4), 16); // hexToG - max 149,685
     let b = parseInt(treatedString.substring(4, 6), 16); // hexToB - max 29,07
 
-    return r * 0.299 + g * 0.587 + b * 0.114 > 186 ? text1 : text3;
+    return r * 0.299 + g * 0.587 + b * 0.114 > 160
+        ? "var(--text-1) !important"
+        : "var(--text-2) !important";
 }
 
 export function currentPallete() {
@@ -220,4 +222,49 @@ export function currentPallete() {
         font1,
         font2,
     };
+}
+
+export function getBackgroundColor(id: string) {
+    const { background } = currentPallete();
+
+    const element = document.getElementById(id);
+    if (!element) return background;
+
+    const elementStyle = window.getComputedStyle(element);
+    const backgroundElementStyle = elementStyle.getPropertyValue("background-color");
+    if (backgroundElementStyle !== "transparent")
+        return rgbToHex(backgroundElementStyle) || backgroundElementStyle;
+
+    let parentElement = element.parentElement;
+    if (!parentElement) return background;
+
+    while (parentElement && parentElement !== document.documentElement) {
+        const computedStyle = window.getComputedStyle(parentElement);
+        const backgroundColor = computedStyle.getPropertyValue("background-color");
+
+        if (backgroundColor && backgroundColor !== "transparent") {
+            return rgbToHex(backgroundColor) || backgroundColor;
+        }
+
+        parentElement = parentElement.parentElement;
+    }
+    return background;
+}
+
+export function rgbToHex(rgbString: string) {
+    const match = rgbString.match(/\d+/g);
+
+    if (!match || match.length < 3) {
+        return null;
+    }
+
+    const hex = match
+        .map((component) => {
+            const num = +component;
+            const hexVal = num.toString(16);
+            return hexVal.padStart(2, "0");
+        })
+        .join("");
+
+    return `#${hex}`;
 }

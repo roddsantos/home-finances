@@ -207,7 +207,7 @@
     }
     &.settled {
         border: var(--border-width) solid var(--success);
-        background-color: rgb(from var(--error) r g b / 0.25);
+        background-color: rgb(from var(--success) r g b / 0.25);
     }
     &.close {
         border: var(--border-width) solid var(--warning);

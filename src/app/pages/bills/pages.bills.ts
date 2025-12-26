@@ -24,6 +24,7 @@ import { CardComponent } from "../../components/card/card.component";
 import { ModalEditBill } from "src/app/components/modal/edit-bill/edit-bill.modal";
 import { ActionItem } from "src/app/core/types/components";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
+import { CustonButton } from "src/app/components/button/custom-button.component";
 
 @Component({
     selector: "page-bills",
@@ -44,6 +45,7 @@ import { ActionsComponent } from "src/app/components/actions/actions.component";
         MatTooltipModule,
         CardComponent,
         ActionsComponent,
+        CustonButton,
     ],
 })
 export class PageBills {

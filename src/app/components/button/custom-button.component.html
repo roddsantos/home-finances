@@ -1,0 +1,9 @@
+<button
+    [id]="'custom-button-' + id"
+    (click)="handleClick()"
+    [ngClass]="['button-' + variant, extended ? 'extended' : '', textColor, classes]"
+    [style.color]="setTextColor()"
+    mat-button
+>
+    <ng-content></ng-content>
+</button>

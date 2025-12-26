@@ -1,31 +1,30 @@
 .button-primary {
     background-color: var(--primary) !important;
-    color: var(--text-2) !important;
+    color: var(--text-2);
     border: solid var(--border-width) var(--border-color) !important;
     font-weight: bold !important;
     font-family: var(--font-1) !important;
     &.mat-mdc-button:not(:disabled) {
         border-radius: var(--border-radius) !important;
         background-color: var(--primary) !important;
-        color: var(--text-2) !important;
         border: solid var(--border-width) var(--border-color) !important;
     }
 
     & p,
     span {
-        color: var(--text-2) !important;
+        color: var(--text-2);
         font-weight: bold !important;
         font-family: var(--font-1) !important;
     }
 
     &:disabled {
-        color: var(--text-1) !important;
+        color: var(--text-1);
         background-color: var(--disabled) !important;
         border: solid var(--border-width) var(--disabled) !important;
         border-radius: var(--border-radius) !important;
         cursor: not-allowed;
         & mat-icon {
-            color: var(--text-1) !important;
+            color: var(--text-1);
         }
     }
 
@@ -34,7 +33,7 @@
         height: fit-content !important;
     }
     & mat-icon {
-        color: var(--text-2) !important;
+        color: var(--text-2);
         margin: 0px !important;
     }
 }
@@ -42,7 +41,7 @@
 .button-secondary {
     background-color: var(--secondary);
     border: solid var(--border-width) var(--secondary) !important;
-    color: var(--text-1) !important;
+    color: var(--text-1);
     font-weight: bold !important;
     font-family: var(--font-1) !important;
     &.mat-mdc-button:not(:disabled) {
@@ -52,7 +51,7 @@
 
     & p,
     span {
-        color: var(--text-1) !important;
+        color: var(--text-1);
         font-weight: bold !important;
         font-family: var(--font-1) !important;
     }
@@ -63,7 +62,7 @@
 
 .button-outlined {
     background-color: transparent;
-    color: var(--text-1) !important;
+    color: var(--text-1);
     border: solid var(--border-width) var(--border-color);
     font-weight: bold !important;
     font-family: var(--font-1) !important;
@@ -71,19 +70,19 @@
     &.mat-mdc-button:not(:disabled) {
         border-radius: var(--border-radius);
         background-color: transparent;
-        color: var(--text-1) !important;
+        color: var(--text-1);
         border: solid var(--border-width) var(--border-color);
     }
 
     & p,
     span {
-        color: var(--text-1) !important;
+        color: var(--text-1);
         font-weight: bold !important;
         font-family: var(--font-1) !important;
     }
 
     &:disabled {
-        color: var(--text-1) !important;
+        color: var(--text-1);
         background-color: var(--disabled) !important;
         border-radius: var(--border-radius) !important;
     }
@@ -100,7 +99,7 @@
 
 .button-text {
     background-color: transparent;
-    color: var(--text-1) !important;
+    color: var(--text-1);
     border: none;
     font-weight: bold !important;
     font-family: var(--font-1) !important;
@@ -108,19 +107,19 @@
     &.mat-mdc-button:not(:disabled) {
         border-radius: var(--border-radius);
         background-color: transparent;
-        color: var(--text-1) !important;
+        color: var(--text-1);
         border: none;
     }
 
     & p,
     span {
-        color: var(--text-1) !important;
+        color: var(--text-1);
         font-weight: bold !important;
         font-family: var(--font-1) !important;
     }
 
     &:disabled {
-        color: var(--text-1) !important;
+        color: var(--text-1);
         background-color: var(--disabled) !important;
         border-radius: var(--border-radius) !important;
     }

@@ -2,13 +2,13 @@
     <div class="page-header">
         <h1 [style.marginBottom]="'0px'">bills</h1>
         <div class="bill-header">
-            <button (click)="openModal()" class="button-primary extended" mat-button>
+            <btn (onClick)="openModal()" extended variant="primary">
                 <div>
                     <mat-icon class="material-symbols-outlined">add</mat-icon>
                     <mat-icon class="material-symbols-outlined">receipt_long</mat-icon>
                 </div>
-                <p>new bill</p>
-            </button>
+                <p>new bill</p></btn
+            >
             <pagination-template
                 class="bill-pagination"
                 [style.margin]="'auto 0px auto 1rem'"

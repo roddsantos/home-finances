@@ -1,0 +1,13 @@
+.text-1 {
+    & .mdc-button__label p,
+    .mdc-button__label mat-icon {
+        color: var(--text-1);
+    }
+}
+
+.text-2 {
+    & .mdc-button__label p,
+    .mdc-button__label mat-icon {
+        color: var(--text-2);
+    }
+}
