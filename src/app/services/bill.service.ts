@@ -15,6 +15,7 @@ import { CustomFilterState } from "../components/custom-filter/custom-filter.sub
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { FilterDisplay } from "src/app/core/types/components";
 import { BillsMetadataType } from "../core/types/pages/bills";
+import { PaymentTypes } from "../core/types/general";
 
 @Injectable({
     providedIn: "root",
@@ -72,6 +73,23 @@ export class ServiceBill {
         );
     }
 
+    updateBill(data: any, type: PaymentTypes) {
+        switch (type) {
+            case "money":
+                return this.updateBillBank(
+                    data as BillObject & BillObjectBank & { id: string }
+                );
+            case "companyCredit":
+                return this.updateBillCompany(
+                    data as BillObject & BillObjectCredtCard & BillObjectCredtCardUpdate
+                );
+            case "creditCard":
+                return this.updateBillCreditCard(
+                    data as BillObject & BillObjectCredtCard & BillObjectCredtCardUpdate
+                );
+        }
+    }
+
     updateBillBank(data: BillObject & BillObjectBank & { id: string }) {
         return this.user.user$.pipe(
             mergeMap((user) =>
@@ -104,9 +122,5 @@ export class ServiceBill {
         return this.user.user$.pipe(
             mergeMap((user) => this.http.delete(BILL + `${user!.id}`))
         );
-    }
-
-    updateBill(data: Omit<BillObject, "userId"> & { id: string }) {
-        return this.http.put(BILL, data);
     }
 }

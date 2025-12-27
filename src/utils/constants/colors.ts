@@ -9,24 +9,24 @@ import {
 export const COLOR_STATUS = {
     light: {
         error: "#aa0000",
-        warning: "#b97900",
         info: "#003caa",
-        success: "#008817",
+        warning: "#b97900",
         default: "#3a3a3a",
+        success: "#008817",
     },
     default: {
         error: "#da3131",
-        warning: "#dba134",
         info: "#326bd3",
-        success: "#29c944",
+        warning: "#dba134",
         default: "#7c7c7c",
+        success: "#29c944",
     },
     dark: {
         error: "#ff8888",
-        warning: "#ffd689",
         info: "#84afff",
-        success: "#7eff94",
+        warning: "#ffd689",
         default: "#bdbdbd",
+        success: "#7eff94",
     },
 };
 

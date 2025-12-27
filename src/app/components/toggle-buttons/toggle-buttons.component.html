@@ -4,7 +4,6 @@
         *ngFor="let item of items"
         (click)="handleClick(item)"
         [ngClass]="[getSelectedClass(item)]"
-        [value]="item"
         [disabled]="disabled"
     >
         <mat-icon

@@ -348,7 +348,7 @@
 
 .description {
     grid-area: description;
-    color: var(--text-2);
+    color: var(--text-1);
     margin: auto 0px;
 }
 

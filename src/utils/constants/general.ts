@@ -1,5 +1,13 @@
 import { ThemeObjectType } from "src/app/core/types/general";
 
+export const SECTORS = {
+    bill: "bill",
+    bank: "bank",
+    company: "company",
+    creditCard: "credit-card",
+    category: "category",
+};
+
 export const MONTHS = [
     { name: "january", order: 0, short: "jan" },
     { name: "february", order: 1, short: "feb" },

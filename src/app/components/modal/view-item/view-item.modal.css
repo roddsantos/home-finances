@@ -27,7 +27,7 @@
     }
     > p,
     mat-icon {
-        color: var(--text-2);
+        color: var(--secondary);
     }
 }
 

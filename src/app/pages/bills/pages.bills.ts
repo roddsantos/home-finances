@@ -143,12 +143,15 @@ export class PageBills {
 
     onCheck(data: Bill) {
         this.billService
-            .updateBillBank({
-                ...data,
-                due: new Date(data.due),
-                paid: new Date(),
-                settled: true,
-            })
+            .updateBill(
+                {
+                    ...data,
+                    due: new Date(data.due),
+                    paid: new Date(),
+                    settled: true,
+                },
+                data.type
+            )
             .subscribe({
                 next: () => {
                     this.billService.getBills().subscribe({

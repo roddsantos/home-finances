@@ -3,7 +3,6 @@ import {
     MonthYearToggleType,
     ToggleButtonItemsType,
 } from "src/app/core/types/components/toggle-buttons";
-import { MONTHS } from "./general";
 import { getMonthAndYearIntegers } from "../date";
 
 export const TYPE_ITEMS: ToggleButtonItemsType<string>[] = [

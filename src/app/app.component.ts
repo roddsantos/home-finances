@@ -35,38 +35,6 @@ export class AppComponent {
     title = "bills-app";
     theme = this.storage.getTheme();
 
-    setupTheme(profileTheme: ProfileThemeType) {
-        const { primary, secondary, theme, borderWidth, borderRadius } = profileTheme;
-
-        Object.keys(FIELD_TO_PROPERTY).map((field) => {
-            const property = FIELD_TO_PROPERTY[field as keyof typeof FIELD_TO_PROPERTY];
-
-            document.documentElement.style.setProperty(
-                property,
-                // @ts-ignore
-                profileTheme[field]
-            );
-        });
-        Object.keys(COLOR_STATUS[theme]).map((field) => {
-            // @ts-ignore
-            const value = COLOR_STATUS[theme][field as keyof typeof COLOR_STATUS];
-            document.documentElement.style.setProperty("--" + field, value);
-        });
-        document.documentElement.style.setProperty(
-            "--bh",
-            "rgb(from var(--background) calc(r - 10) calc(g - 10) calc(b - 10))"
-        );
-        document.documentElement.style.setProperty(
-            "--border-color",
-            this.theme === "binary" ? secondary : primary
-        );
-        document.documentElement.style.setProperty("--border-width", `${borderWidth}px`);
-        document.documentElement.style.setProperty(
-            "--border-radius",
-            `${borderRadius}px`
-        );
-    }
-
     ngOnInit() {
         // GET USER INFO
         const user = this.storage.getUser();

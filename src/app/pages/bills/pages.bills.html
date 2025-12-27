@@ -70,8 +70,8 @@
                                 <p>{{ item.type === 'money' ? '$' : item.parcel + 1 }}</p>
                             </div>
                             <h6 class="value">
-                                {{(item.type === 'money' ? item.total : item.totalParcel)
-                                | currency: "R$ "}}
+                                {{(item.type === 'money' ? item.total : (item.totalParcel
+                                + item.delta + item.taxes)) | currency: "R$ "}}
                             </h6>
                         </div>
                         <actions

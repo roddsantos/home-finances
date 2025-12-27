@@ -1,10 +1,9 @@
-import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { UserState } from "../core/subjects/subjects.user";
 import { GeneralService } from "./general.service";
-import { ProfileThemeType } from "../core/types/pages/profiles";
+import { ColorThemeType, ProfileThemeType } from "../core/types/pages/profiles";
 import { LocalStorageService } from "./local-storage.service";
 import { COLOR_STATUS, FIELD_TO_PROPERTY } from "src/utils/constants/colors";
+import { SECTORS } from "src/utils/constants/general";
 
 @Injectable({
     providedIn: "root",
@@ -12,23 +11,39 @@ import { COLOR_STATUS, FIELD_TO_PROPERTY } from "src/utils/constants/colors";
 export class ThemeService extends GeneralService {
     public localStorageService = inject(LocalStorageService);
 
-    setupTheme(profileTheme: ProfileThemeType) {
-        const { id, primary, secondary, theme, borderWidth, borderRadius } = profileTheme;
+    setStatusColors(theme: ColorThemeType) {
+        Object.keys(COLOR_STATUS[theme]).forEach((key) => {
+            // @ts-ignore
+            const color = COLOR_STATUS[theme][key as keyof typeof COLOR_STATUS];
+            document.documentElement.style.setProperty(`--${key}`, color);
+        });
+    }
 
+    setSectorsColors(theme: ColorThemeType) {
+        const sectorsArray = Object.keys(SECTORS).map(
+            (key) => SECTORS[key as keyof typeof SECTORS]
+        );
+
+        Object.keys(COLOR_STATUS[theme]).forEach((key, index) => {
+            // @ts-ignore
+            const color = COLOR_STATUS[theme][key as keyof typeof COLOR_STATUS];
+            document.documentElement.style.setProperty(`--${sectorsArray[index]}`, color);
+        });
+    }
+
+    setProperties(profileTheme: ProfileThemeType) {
         Object.keys(FIELD_TO_PROPERTY).map((field) => {
             const property = FIELD_TO_PROPERTY[field as keyof typeof FIELD_TO_PROPERTY];
-
             document.documentElement.style.setProperty(
                 property,
                 // @ts-ignore
                 profileTheme[field]
             );
         });
-        Object.keys(COLOR_STATUS[theme]).map((field) => {
-            // @ts-ignore
-            const value = COLOR_STATUS[theme][field as keyof typeof COLOR_STATUS];
-            document.documentElement.style.setProperty("--" + field, value);
-        });
+    }
+
+    setOtherVars(profileTheme: ProfileThemeType) {
+        const { id, primary, secondary, borderWidth, borderRadius } = profileTheme;
         document.documentElement.style.setProperty(
             "--bh",
             "rgb(from var(--background) calc(r - 10) calc(g - 10) calc(b - 10))"
@@ -42,6 +57,15 @@ export class ThemeService extends GeneralService {
             "--border-radius",
             `${borderRadius}px`
         );
+    }
+
+    setupTheme(profileTheme: ProfileThemeType) {
+        const { theme } = profileTheme;
+
+        this.setProperties(profileTheme);
+        this.setStatusColors(theme);
+        this.setSectorsColors(theme);
+        this.setOtherVars(profileTheme);
     }
 
     setTheme(theme: ProfileThemeType) {
