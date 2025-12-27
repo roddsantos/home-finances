@@ -5,6 +5,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angula
 import {
     ColorThemeType,
     FontProfileType,
+    GeneralMeasureType,
     UpdateProfileControlType,
 } from "src/app/core/types/pages/profiles";
 import {
@@ -12,10 +13,13 @@ import {
     DEFAULT_BACKGROUND_COLORS,
     DEFAULT_COLORS,
     DEFAULT_TEXT_COLORS,
+    GENERAL_MEASURES,
+    THEME_FONTS,
 } from "src/utils/constants/colors";
 import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
 import { CommonModule } from "@angular/common";
 import { StepOneNewProfileTheme } from "./step-one/step-one";
+import { StepTwoNewProfileTheme } from "./step-two/step-two";
 
 @Component({
     selector: "new-theme-profile",
@@ -27,6 +31,7 @@ import { StepOneNewProfileTheme } from "./step-one/step-one";
         MatExpansionModule,
         ReactiveFormsModule,
         StepOneNewProfileTheme,
+        StepTwoNewProfileTheme,
     ],
     standalone: true,
 })
@@ -44,86 +49,102 @@ export class ModalNewThemeProfile extends ModalComponent {
         })
     );
 
-    public primaryColors: ToggleButtonItemsType<string>[] = Object.keys(
-        DEFAULT_COLORS.default
-    ).map((color) => ({
-        value: DEFAULT_COLORS.default[color as keyof typeof DEFAULT_COLORS.default],
-        label: color,
-        icon: {
-            name: "colors",
-            color: DEFAULT_COLORS.default[color as keyof typeof DEFAULT_COLORS.default],
-        },
-    }));
-
     public profileForm = new FormGroup({
         title: new FormControl<string>("", {
-            validators: [Validators.required, Validators.maxLength(50)],
+            validators: [
+                Validators.required,
+                Validators.minLength(2),
+                Validators.maxLength(50),
+            ],
             nonNullable: true,
         }),
         description: new FormControl<string>("", {
-            validators: [Validators.required, Validators.maxLength(50)],
+            validators: [
+                Validators.required,
+                Validators.minLength(2),
+                Validators.maxLength(50),
+            ],
             nonNullable: true,
         }),
         theme: new FormControl<ColorThemeType>(COLOR_THEMES.default, {
-            validators: [Validators.required, Validators.maxLength(20)],
+            validators: [Validators.required],
             nonNullable: true,
         }),
-        primary: new FormControl<string>(DEFAULT_COLORS.default.red, {
-            validators: [Validators.required, Validators.maxLength(20)],
+        primary: new FormControl<string>(DEFAULT_COLORS.default.red.label, {
+            validators: [Validators.required],
             nonNullable: true,
         }),
-        secondary: new FormControl<string>(DEFAULT_COLORS.default.black, {
-            validators: [Validators.required, Validators.maxLength(20)],
+        secondary: new FormControl<string>(DEFAULT_COLORS.default.black.label, {
+            validators: [Validators.required],
             nonNullable: true,
         }),
         background: new FormControl<string>(DEFAULT_BACKGROUND_COLORS.grey, {
-            validators: [Validators.required, Validators.maxLength(20)],
+            validators: [Validators.required],
             nonNullable: true,
         }),
         text1: new FormControl<string>(DEFAULT_TEXT_COLORS.white, {
-            validators: [Validators.required, Validators.maxLength(20)],
+            validators: [Validators.required],
             nonNullable: true,
         }),
         text2: new FormControl<string>(DEFAULT_TEXT_COLORS.blue, {
-            validators: [Validators.required, Validators.maxLength(20)],
+            validators: [Validators.required],
             nonNullable: true,
         }),
         borderRadius: new FormControl<number>(5, {
             validators: [Validators.required, Validators.max(20), Validators.min(0)],
             nonNullable: true,
         }),
-        borderWidth: new FormControl<number>(1, {
-            validators: [Validators.required, Validators.max(5), Validators.min(0)],
+        borderWidth: new FormControl<GeneralMeasureType>(GENERAL_MEASURES[0].value, {
+            validators: [Validators.required],
             nonNullable: true,
         }),
-        font: new FormControl<FontProfileType>("Roboto", {
-            validators: [Validators.required, Validators.maxLength(20)],
+        font: new FormControl<FontProfileType>(THEME_FONTS.roboto, {
+            validators: [Validators.required],
+            nonNullable: true,
+        }),
+        inputSize: new FormControl<GeneralMeasureType>(GENERAL_MEASURES[0].value, {
+            validators: [Validators.required],
+            nonNullable: true,
+        }),
+        padding: new FormControl<GeneralMeasureType>(GENERAL_MEASURES[0].value, {
+            validators: [Validators.required],
             nonNullable: true,
         }),
     });
 
-    onChangeTheme(theme: string) {
-        this.primaryColors = Object.keys(
-            DEFAULT_COLORS[theme as keyof typeof DEFAULT_COLORS]
-        ).map((color) => ({
-            value: DEFAULT_COLORS[theme as keyof typeof DEFAULT_COLORS][
-                color as keyof typeof DEFAULT_COLORS.default
-            ],
-            label: color,
-            icon: {
-                name: "colors",
-                color: DEFAULT_COLORS[theme as keyof typeof DEFAULT_COLORS][
-                    color as keyof typeof DEFAULT_COLORS.default
-                ],
-            },
-        }));
+    ngOnInit() {
+        this.modalState.changeFooter({
+            type: "submit",
+            submitLabel: "advance",
+            alertLabel: "cancel",
+        });
     }
 
     handleClose() {
         this.onClose();
     }
 
+    handleNextStep() {
+        if (!this.stepOneInvalid()) this.step = 2;
+    }
+
     handleStepOneClick(event: UpdateProfileControlType<string>) {
         console.log(event, this.profileForm.getRawValue());
+    }
+
+    stepOneInvalid() {
+        const isNameInvalid = this.profileForm.get("title")!.status === "INVALID";
+        const isDescInvalid = this.profileForm.get("description")!.status === "INVALID";
+
+        return isNameInvalid || isDescInvalid;
+    }
+
+    onDisableButton() {
+        switch (this.step) {
+            case 1:
+                return this.stepOneInvalid();
+            default:
+                return true;
+        }
     }
 }

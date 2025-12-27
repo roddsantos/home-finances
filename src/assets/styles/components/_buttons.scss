@@ -143,6 +143,7 @@
 .button-outlined,
 .button-text {
     display: flex;
+    align-items: center;
     width: max-content;
     border-radius: var(--border-radius) !important;
     height: max-content !important;

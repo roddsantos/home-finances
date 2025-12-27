@@ -22,3 +22,10 @@ export type UpdateProfileControlType<T> = {
     field: string;
     value: T;
 };
+
+export type ColorType = {
+    label: string;
+    value: string;
+};
+
+export type GeneralMeasureType = "minimum" | "default" | "large";

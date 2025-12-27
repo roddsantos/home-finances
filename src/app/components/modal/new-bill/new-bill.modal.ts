@@ -1,10 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    inject,
-    OnInit,
-    ViewChild,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { ModalComponent } from "../modal.component";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import {
@@ -16,8 +10,6 @@ import {
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { BillState } from "src/app/core/subjects/subjects.bill";
-import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
-import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { Bank, Category, Company, CreditCard } from "src/app/core/types/objects";
 import { BankTemplateNewBill } from "./templates/bank/bank.template.new-bill";
@@ -27,7 +19,7 @@ import { CompanyTemplateNewBill } from "./templates/company/company.template.new
 import { CreditCardTemplateNewBill } from "./templates/credit-card/credit-card.template.new-bill";
 import { CATEGORY_FORM, GENERAL_FORM } from "src/utils/constants/forms";
 import { ServiceBill } from "src/app/services/bill.service";
-import { MonthType, PaymentTypes, RequiredKeys } from "src/app/core/types/general";
+import { MonthType, PaymentTypes } from "src/app/core/types/general";
 import { MONTHS } from "src/utils/constants/general";
 import { MatSelectChange, MatSelectModule } from "@angular/material/select";
 import { MatDatepickerModule } from "@angular/material/datepicker";

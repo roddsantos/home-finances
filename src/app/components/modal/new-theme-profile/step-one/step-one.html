@@ -1,4 +1,34 @@
 <div class="form">
+    <div class="info">
+        <mat-form-field appearance="outline">
+            <mat-icon
+                class="material-symbols-outlined"
+                matPrefix
+                aria-hidden="false"
+                aria-label="title icon"
+                fontIcon="subheader"
+            ></mat-icon>
+            <mat-label>title</mat-label>
+            <input [formControl]="title" maxlength="100" required matInput />
+            @if (title.status === 'INVALID') {
+            <mat-error>{{errorMessages.name}}</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field class="new-bill-field" appearance="outline">
+            <mat-icon
+                class="material-symbols-outlined"
+                matPrefix
+                aria-hidden="false"
+                aria-label="title icon"
+                fontIcon="subtitles"
+            ></mat-icon>
+            <mat-label>description</mat-label>
+            <input [formControl]="description" maxlength="100" matInput />
+            @if (description.status === 'INVALID') {
+            <mat-error>{{errorMessages.description}}</mat-error>
+            }
+        </mat-form-field>
+    </div>
     <toggle-button
         label="theme"
         [items]="themes"
@@ -11,7 +41,6 @@
             variant="outlined"
             [items]="defaultColors"
             [formController]="primaryControl"
-            (onClick)="handlePrimaryClick($event)"
         />
     </card-component>
     <card-component [hideHeader]="true">
@@ -20,7 +49,6 @@
             variant="outlined"
             [items]="defaultColors"
             [formController]="secondaryControl"
-            (onClick)="handleSecondaryClick($event)"
         />
     </card-component>
 </div>

@@ -1,16 +1,30 @@
 <modal-component
     header="new profile"
     [bodyTemplate]="newProfile"
+    (actionPrimary)="handleNextStep()"
     (actionSecondary)="handleClose()"
+    [disabled]="onDisableButton()"
 ></modal-component>
 
 <ng-template #newProfile>
     <form [formGroup]="profileForm" class="form">
         <ng-container *ngIf="step === 1">
             <step-one
+                [title]="profileForm.controls['title']"
+                [description]="profileForm.controls['description']"
                 [themeControl]="profileForm.controls['theme']"
                 [primaryControl]="profileForm.controls['primary']"
                 [secondaryControl]="profileForm.controls['secondary']"
+                (onClick)="handleStepOneClick($event)"
+            />
+        </ng-container>
+        <ng-container *ngIf="step === 2">
+            <step-two
+                [borderRadius]="profileForm.controls['borderRadius']"
+                [borderWidth]="profileForm.controls['borderWidth']"
+                [font]="profileForm.controls['font']"
+                [padding]="profileForm.controls['padding']"
+                [inputSize]="profileForm.controls['inputSize']"
                 (onClick)="handleStepOneClick($event)"
             />
         </ng-container>

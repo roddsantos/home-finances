@@ -1,0 +1,16 @@
+<div class="form">
+    <card-component [hideHeader]="true">
+        <div class="font">
+            <h5 [style.fontFamily]="font.value">font</h5>
+            <toggle-button variant="outlined" [items]="fonts" [formController]="font" />
+        </div>
+    </card-component>
+    <card-component [hideHeader]="true">
+        <toggle-button
+            label="secondary color"
+            variant="outlined"
+            [items]="paddingMeasures"
+            [formController]="padding"
+        />
+    </card-component>
+</div>

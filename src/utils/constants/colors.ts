@@ -1,4 +1,10 @@
-import { ColorThemeType, ProfileThemeType } from "src/app/core/types/pages/profiles";
+import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
+import {
+    ColorThemeType,
+    FontProfileType,
+    GeneralMeasureType,
+    ProfileThemeType,
+} from "src/app/core/types/pages/profiles";
 
 export const COLOR_STATUS = {
     light: {
@@ -30,45 +36,166 @@ export const COLOR_THEMES = {
     light: "light" as ColorThemeType,
 };
 
+export const GENERAL_MEASURES: ToggleButtonItemsType<GeneralMeasureType>[] = [
+    {
+        label: "minimum",
+        value: "minimum",
+    },
+    {
+        label: "default",
+        value: "default",
+    },
+    {
+        label: "large",
+        value: "large",
+    },
+];
+
+export const THEME_FONTS = {
+    opensans: "Open-Sans" as FontProfileType,
+    commissioner: "Commissioner" as FontProfileType,
+    roboto: "Roboto" as FontProfileType,
+    gteestitext: "GT-Eesti-Text" as FontProfileType,
+};
+
 export const DEFAULT_COLORS = {
     dark: {
-        black: "#000000",
-        red: "#690000",
-        green: "#006800",
-        blue: "#00007e",
-        yellow: "#888800",
-        cyan: "#007c7c",
-        magenta: "#7a007a",
-        brown: "#581d00",
-        purple: "#410052",
-        grey: "#494949",
-        white: "#ffffff",
+        black: {
+            label: "black",
+            value: "#000000",
+        },
+        red: {
+            label: "red",
+            value: "#690000",
+        },
+        green: {
+            label: "green",
+            value: "#006800",
+        },
+        blue: {
+            label: "blue",
+            value: "#00007e",
+        },
+        yellow: {
+            label: "yellow",
+            value: "#888800",
+        },
+        cyan: {
+            label: "cyan",
+            value: "#007c7c",
+        },
+        magenta: {
+            label: "magenta",
+            value: "#7a007a",
+        },
+        brown: {
+            label: "brown",
+            value: "#581d00",
+        },
+        purple: {
+            label: "purple",
+            value: "#410052",
+        },
+        grey: {
+            label: "grey",
+            value: "#494949",
+        },
+        white: {
+            label: "white",
+            value: "#ffffff",
+        },
     },
     default: {
-        black: "#000000",
-        red: "#ff3a3a",
-        green: "#43ff43",
-        blue: "#5959ff",
-        yellow: "#ffff57",
-        cyan: "#4fffff",
-        magenta: "#ff4bff",
-        brown: "#794429",
-        purple: "#9337aa",
-        grey: "#777777",
-        white: "#ffffff",
+        black: {
+            label: "black",
+            value: "#000000",
+        },
+        red: {
+            label: "red",
+            value: "#ff3a3a",
+        },
+        green: {
+            label: "green",
+            value: "#43ff43",
+        },
+        blue: {
+            label: "blue",
+            value: "#5959ff",
+        },
+        yellow: {
+            label: "yellow",
+            value: "#ffff57",
+        },
+        cyan: {
+            label: "cyan",
+            value: "#4fffff",
+        },
+        magenta: {
+            label: "magenta",
+            value: "#ff4bff",
+        },
+        brown: {
+            label: "brown",
+            value: "#794429",
+        },
+        purple: {
+            label: "purple",
+            value: "#9337aa",
+        },
+        grey: {
+            label: "grey",
+            value: "#777777",
+        },
+        white: {
+            label: "white",
+            value: "#ffffff",
+        },
     },
     light: {
-        black: "#757575",
-        red: "#ff9b9b",
-        green: "#9dff9d",
-        blue: "#a6a6ff",
-        yellow: "#ffffa9",
-        cyan: "#afffff",
-        magenta: "#ffb0ff",
-        brown: "#a58473",
-        purple: "#a77bb3",
-        grey: "#b1b1b1",
-        white: "#ffffff",
+        black: {
+            label: "black",
+            value: "#757575",
+        },
+        red: {
+            label: "red",
+            value: "#ff9b9b",
+        },
+        green: {
+            label: "green",
+            value: "#9dff9d",
+        },
+        blue: {
+            label: "blue",
+            value: "#a6a6ff",
+        },
+        yellow: {
+            label: "yellow",
+            value: "#ffffa9",
+        },
+        cyan: {
+            label: "cyan",
+            value: "#afffff",
+        },
+        magenta: {
+            label: "magenta",
+            value: "#ffb0ff",
+        },
+        brown: {
+            label: "brown",
+            value: "#a58473",
+        },
+        purple: {
+            label: "purple",
+            value: "#a77bb3",
+        },
+        grey: {
+            label: "grey",
+            value: "#b1b1b1",
+        },
+        white: {
+            label: "white",
+            value: "#ffffff",
+        },
     },
 };
 
