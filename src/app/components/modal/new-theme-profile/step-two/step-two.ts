@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { CardComponent } from "src/app/components/card/card.component";
 import { ToggleButtonComponent } from "src/app/components/toggle-buttons/toggle-buttons.component";
 import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
@@ -9,21 +9,30 @@ import {
     UpdateProfileControlType,
 } from "src/app/core/types/pages/profiles";
 import {
-    COLOR_THEMES,
     DEFAULT_COLORS,
     GENERAL_MEASURES,
     THEME_FONTS,
 } from "src/utils/constants/colors";
-import { ModalNewThemeProfile } from "../new-theme-profile.modal";
-import { getPadding } from "src/utils/theme";
+import { getBorderWidthIcon, getInputSizeIcon, getPaddingIcon } from "src/utils/theme";
 import { ModalComponent } from "../../modal.component";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { GENERAL_FORM } from "src/utils/constants/forms";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
 
 @Component({
     selector: "step-two",
     standalone: true,
     templateUrl: "./step-two.html",
     styleUrls: ["./step-two.css", "../new-theme-profile.modal.css"],
-    imports: [ToggleButtonComponent, CardComponent],
+    imports: [
+        ToggleButtonComponent,
+        CardComponent,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatInputModule,
+    ],
 })
 export class StepTwoNewProfileTheme extends ModalComponent {
     @Input() borderRadius: FormControl<number>;
@@ -33,6 +42,8 @@ export class StepTwoNewProfileTheme extends ModalComponent {
     @Input() padding: FormControl<GeneralMeasureType>;
 
     @Output() onClick = new EventEmitter<UpdateProfileControlType<string>>();
+
+    public invalidError = GENERAL_FORM.invalidValue + " (between 0 and 20)";
 
     public defaultColors: ToggleButtonItemsType<string>[] = Object.keys(
         DEFAULT_COLORS.default
@@ -60,7 +71,33 @@ export class StepTwoNewProfileTheme extends ModalComponent {
 
     public paddingMeasures: ToggleButtonItemsType<string>[] = GENERAL_MEASURES.map(
         (measure) => {
-            const iconName = getPadding(measure.value);
+            const iconName = getPaddingIcon(measure.value);
+            return {
+                ...measure,
+                icon: {
+                    color: "var(--text-1)",
+                    name: iconName,
+                },
+            };
+        }
+    );
+
+    public inputSizeMeasures: ToggleButtonItemsType<string>[] = GENERAL_MEASURES.map(
+        (measure) => {
+            const iconName = getInputSizeIcon(measure.value);
+            return {
+                ...measure,
+                icon: {
+                    color: "var(--text-1)",
+                    name: iconName,
+                },
+            };
+        }
+    );
+
+    public borderWidthMeasures: ToggleButtonItemsType<string>[] = GENERAL_MEASURES.map(
+        (measure) => {
+            const iconName = getBorderWidthIcon(measure.value);
             return {
                 ...measure,
                 icon: {

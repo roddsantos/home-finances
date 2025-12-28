@@ -94,7 +94,7 @@ export class ModalNewThemeProfile extends ModalComponent {
             validators: [Validators.required, Validators.max(20), Validators.min(0)],
             nonNullable: true,
         }),
-        borderWidth: new FormControl<GeneralMeasureType>(GENERAL_MEASURES[0].value, {
+        borderWidth: new FormControl<GeneralMeasureType>(GENERAL_MEASURES[1].value, {
             validators: [Validators.required],
             nonNullable: true,
         }),
@@ -102,11 +102,11 @@ export class ModalNewThemeProfile extends ModalComponent {
             validators: [Validators.required],
             nonNullable: true,
         }),
-        inputSize: new FormControl<GeneralMeasureType>(GENERAL_MEASURES[0].value, {
+        inputSize: new FormControl<GeneralMeasureType>(GENERAL_MEASURES[1].value, {
             validators: [Validators.required],
             nonNullable: true,
         }),
-        padding: new FormControl<GeneralMeasureType>(GENERAL_MEASURES[0].value, {
+        padding: new FormControl<GeneralMeasureType>(GENERAL_MEASURES[1].value, {
             validators: [Validators.required],
             nonNullable: true,
         }),
@@ -124,11 +124,29 @@ export class ModalNewThemeProfile extends ModalComponent {
         this.onClose();
     }
 
+    handlePreviousStep() {
+        this.step = this.step - 1;
+        this.modalState.changeFooter({
+            type: "submit",
+            submitLabel: this.step === 3 ? "create" : "advance",
+            alertLabel: this.step === 1 ? "cancel" : "back",
+        });
+    }
+
     handleNextStep() {
-        if (!this.stepOneInvalid()) this.step = 2;
+        this.step = this.step + 1;
+        this.modalState.changeFooter({
+            type: "submit",
+            submitLabel: this.step === 3 ? "create" : "advance",
+            alertLabel: this.step === 1 ? "cancel" : "back",
+        });
     }
 
     handleStepOneClick(event: UpdateProfileControlType<string>) {
+        console.log(event, this.profileForm.getRawValue());
+    }
+
+    handleStepTwoClick(event: UpdateProfileControlType<string>) {
         console.log(event, this.profileForm.getRawValue());
     }
 
@@ -139,10 +157,16 @@ export class ModalNewThemeProfile extends ModalComponent {
         return isNameInvalid || isDescInvalid;
     }
 
+    stepTwoInvalid() {
+        return this.profileForm.get("borderRadius")!.status === "INVALID";
+    }
+
     onDisableButton() {
         switch (this.step) {
             case 1:
                 return this.stepOneInvalid();
+            case 2:
+                return this.stepTwoInvalid();
             default:
                 return true;
         }
