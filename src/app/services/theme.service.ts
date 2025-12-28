@@ -4,12 +4,20 @@ import { ColorThemeType, ProfileThemeType } from "../core/types/pages/profiles";
 import { LocalStorageService } from "./local-storage.service";
 import { COLOR_STATUS, FIELD_TO_PROPERTY } from "src/utils/constants/colors";
 import { SECTORS } from "src/utils/constants/general";
+import { mergeMap } from "rxjs";
+import { THEME } from "src/utils/constants/services";
 
 @Injectable({
     providedIn: "root",
 })
 export class ThemeService extends GeneralService {
     public localStorageService = inject(LocalStorageService);
+
+    getThemes() {
+        return this.user.user$.pipe(
+            mergeMap((user) => this.http.get<ProfileThemeType[]>(THEME + `/${user?.id}`))
+        );
+    }
 
     setStatusColors(theme: ColorThemeType) {
         Object.keys(COLOR_STATUS[theme]).forEach((key) => {

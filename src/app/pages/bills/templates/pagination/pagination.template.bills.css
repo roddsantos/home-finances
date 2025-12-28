@@ -1,6 +1,5 @@
 .margin-right {
-    display: flex;
-    justify-content: end;
+    display: flex-end;
 }
 
 .pad {

@@ -6,15 +6,9 @@ import { ServiceCategory } from "./services/category.service";
 import { CustomFilterState } from "./components/custom-filter/custom-filter.subjects.component";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { UserService } from "./services/user.service";
-import { ProfileThemeType } from "./core/types/pages/profiles";
-import {
-    BINARY_THEME,
-    COLOR_STATUS,
-    DEFAULT_THEME,
-    FIELD_TO_PROPERTY,
-    RED_AND_BLACK,
-} from "src/utils/constants/colors";
+import { BINARY_THEME, DEFAULT_THEME, RED_AND_BLACK } from "src/utils/constants/colors";
 import { ThemeService } from "./services/theme.service";
+import { ThemeState } from "./core/subjects/subjects.theme";
 
 @Component({
     selector: "app-root",
@@ -31,6 +25,7 @@ export class AppComponent {
     public filterState = inject(CustomFilterState);
     public userService = inject(UserService);
     public themeService = inject(ThemeService);
+    public themeState = inject(ThemeState);
 
     title = "bills-app";
     theme = this.storage.getTheme();
@@ -46,6 +41,11 @@ export class AppComponent {
         else this.filterState.setFilters([]);
 
         // GET THEME
+        this.themeService.getThemes().subscribe({
+            next: (themes) => {
+                this.themeState.setThemeList(themes);
+            },
+        });
         const theme = this.storage.getTheme();
         if (theme) {
             const selectedTheme = [BINARY_THEME, RED_AND_BLACK, DEFAULT_THEME].find(

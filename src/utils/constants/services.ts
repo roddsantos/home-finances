@@ -22,3 +22,5 @@ export const DASHBOARD = URL + "/dashboard";
 export const HOME = URL + "/home/";
 
 export const SAVINGS = URL + "/savings";
+
+export const THEME = URL + "/theme";
