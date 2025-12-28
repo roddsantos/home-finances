@@ -20,6 +20,7 @@ import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-butt
 import { CommonModule } from "@angular/common";
 import { StepOneNewProfileTheme } from "./step-one/step-one";
 import { StepTwoNewProfileTheme } from "./step-two/step-two";
+import { StepThreeNewProfileTheme } from "./step-three/step-three";
 
 @Component({
     selector: "new-theme-profile",
@@ -32,6 +33,7 @@ import { StepTwoNewProfileTheme } from "./step-two/step-two";
         ReactiveFormsModule,
         StepOneNewProfileTheme,
         StepTwoNewProfileTheme,
+        StepThreeNewProfileTheme,
     ],
     standalone: true,
 })
@@ -78,15 +80,15 @@ export class ModalNewThemeProfile extends ModalComponent {
             validators: [Validators.required],
             nonNullable: true,
         }),
-        background: new FormControl<string>(DEFAULT_BACKGROUND_COLORS.grey, {
+        background: new FormControl<string>(DEFAULT_BACKGROUND_COLORS.dark.base.label, {
             validators: [Validators.required],
             nonNullable: true,
         }),
-        text1: new FormControl<string>(DEFAULT_TEXT_COLORS.white, {
+        text1: new FormControl<string>(DEFAULT_TEXT_COLORS.light.base.label, {
             validators: [Validators.required],
             nonNullable: true,
         }),
-        text2: new FormControl<string>(DEFAULT_TEXT_COLORS.blue, {
+        text2: new FormControl<string>(DEFAULT_TEXT_COLORS.dark.base.label, {
             validators: [Validators.required],
             nonNullable: true,
         }),
@@ -125,21 +127,27 @@ export class ModalNewThemeProfile extends ModalComponent {
     }
 
     handlePreviousStep() {
-        this.step = this.step - 1;
-        this.modalState.changeFooter({
-            type: "submit",
-            submitLabel: this.step === 3 ? "create" : "advance",
-            alertLabel: this.step === 1 ? "cancel" : "back",
-        });
+        if (this.step === 1) this.handleClose();
+        else {
+            this.step = this.step - 1;
+            this.modalState.changeFooter({
+                type: "submit",
+                submitLabel: this.step === 3 ? "create" : "advance",
+                alertLabel: this.step === 1 ? "cancel" : "back",
+            });
+        }
     }
 
     handleNextStep() {
-        this.step = this.step + 1;
-        this.modalState.changeFooter({
-            type: "submit",
-            submitLabel: this.step === 3 ? "create" : "advance",
-            alertLabel: this.step === 1 ? "cancel" : "back",
-        });
+        if (this.step === 3) this.onSubmit();
+        else {
+            this.step = this.step + 1;
+            this.modalState.changeFooter({
+                type: "submit",
+                submitLabel: this.step === 3 ? "create" : "advance",
+                alertLabel: this.step === 1 ? "cancel" : "back",
+            });
+        }
     }
 
     handleStepOneClick(event: UpdateProfileControlType<string>) {
@@ -157,7 +165,7 @@ export class ModalNewThemeProfile extends ModalComponent {
         return isNameInvalid || isDescInvalid;
     }
 
-    stepTwoInvalid() {
+    stepThreeInvalid() {
         return this.profileForm.get("borderRadius")!.status === "INVALID";
     }
 
@@ -166,9 +174,15 @@ export class ModalNewThemeProfile extends ModalComponent {
             case 1:
                 return this.stepOneInvalid();
             case 2:
-                return this.stepTwoInvalid();
+                return false;
+            case 3:
+                return this.stepThreeInvalid();
             default:
                 return true;
         }
+    }
+
+    onSubmit() {
+        this.onClose();
     }
 }

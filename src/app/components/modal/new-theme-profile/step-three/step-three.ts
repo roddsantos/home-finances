@@ -4,12 +4,12 @@ import { CardComponent } from "src/app/components/card/card.component";
 import { ToggleButtonComponent } from "src/app/components/toggle-buttons/toggle-buttons.component";
 import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
 import {
-    ColorThemeType,
+    FontProfileType,
+    GeneralMeasureType,
     UpdateProfileControlType,
 } from "src/app/core/types/pages/profiles";
 import {
-    DEFAULT_BACKGROUND_COLORS,
-    DEFAULT_TEXT_COLORS,
+    DEFAULT_COLORS,
     GENERAL_MEASURES,
     THEME_FONTS,
 } from "src/utils/constants/colors";
@@ -21,10 +21,10 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 
 @Component({
-    selector: "step-two",
+    selector: "step-three",
     standalone: true,
-    templateUrl: "./step-two.html",
-    styleUrls: ["./step-two.css", "../new-theme-profile.modal.css"],
+    templateUrl: "./step-three.html",
+    styleUrls: ["./step-three.css", "../new-theme-profile.modal.css"],
     imports: [
         ToggleButtonComponent,
         CardComponent,
@@ -34,19 +34,31 @@ import { MatInputModule } from "@angular/material/input";
         MatInputModule,
     ],
 })
-export class StepTwoNewProfileTheme extends ModalComponent {
-    @Input() background: FormControl<string>;
-    @Input() text1: FormControl<string>;
-    @Input() text2: FormControl<string>;
-    @Input() themeControl: FormControl<ColorThemeType>;
+export class StepThreeNewProfileTheme extends ModalComponent {
+    @Input() borderRadius: FormControl<number>;
+    @Input() borderWidth: FormControl<GeneralMeasureType>;
+    @Input() inputSize: FormControl<GeneralMeasureType>;
+    @Input() font: FormControl<FontProfileType>;
+    @Input() padding: FormControl<GeneralMeasureType>;
 
     @Output() onClick = new EventEmitter<UpdateProfileControlType<string>>();
 
     public invalidError = GENERAL_FORM.invalidValue + " (between 0 and 20)";
-    public theme: ColorThemeType = "default";
-    public text1Colors: ToggleButtonItemsType<string>[] = [];
-    public text2Colors: ToggleButtonItemsType<string>[] = [];
-    public backgroundColors: ToggleButtonItemsType<string>[] = [];
+
+    public defaultColors: ToggleButtonItemsType<string>[] = Object.keys(
+        DEFAULT_COLORS.default
+    ).map((color) => {
+        const colorKey = color as keyof typeof DEFAULT_COLORS.default;
+
+        return {
+            value: colorKey,
+            label: DEFAULT_COLORS.default[colorKey].label,
+            icon: {
+                name: "colors",
+                color: DEFAULT_COLORS.default[colorKey].value,
+            },
+        };
+    });
     public fonts: ToggleButtonItemsType<string>[] = Object.keys(THEME_FONTS).map(
         (key) => {
             const fontKey = key as keyof typeof THEME_FONTS;
@@ -96,76 +108,20 @@ export class StepTwoNewProfileTheme extends ModalComponent {
         }
     );
 
-    getText1Theme() {
-        switch (this.theme) {
-            case "light":
-                return "light";
-            default:
-                return "dark";
-        }
-    }
+    handleThemeClick(item: ToggleButtonItemsType<string>) {
+        const themeKey = item.value as keyof typeof DEFAULT_COLORS;
 
-    getText2Theme() {
-        switch (this.theme) {
-            case "light":
-                return "dark";
-            default:
-                return "light";
-        }
-    }
+        this.defaultColors = Object.keys(DEFAULT_COLORS[themeKey]).map((color) => {
+            const colorKey = color as keyof typeof DEFAULT_COLORS.default;
 
-    setText1Colors() {
-        const textTheme = this.getText1Theme();
-        this.text1Colors = Object.keys(DEFAULT_TEXT_COLORS[textTheme]).map((color) => {
-            const colorKey = color as keyof typeof DEFAULT_TEXT_COLORS.default;
             return {
                 value: colorKey,
-                label: DEFAULT_TEXT_COLORS[textTheme][colorKey].label,
+                label: DEFAULT_COLORS[themeKey][colorKey].label,
                 icon: {
                     name: "colors",
-                    color: DEFAULT_TEXT_COLORS[textTheme][colorKey].value,
+                    color: DEFAULT_COLORS[themeKey][colorKey].value,
                 },
             };
         });
-    }
-
-    setText2Colors() {
-        const textTheme = this.getText2Theme();
-        this.text2Colors = Object.keys(DEFAULT_TEXT_COLORS[textTheme]).map((color) => {
-            const colorKey = color as keyof typeof DEFAULT_TEXT_COLORS.default;
-            return {
-                value: colorKey,
-                label: DEFAULT_TEXT_COLORS[textTheme][colorKey].label,
-                icon: {
-                    name: "colors",
-                    color: DEFAULT_TEXT_COLORS[textTheme][colorKey].value,
-                },
-            };
-        });
-    }
-
-    setBackgroundColors() {
-        const bcTheme = this.getText1Theme();
-        this.backgroundColors = Object.keys(DEFAULT_BACKGROUND_COLORS[bcTheme]).map(
-            (color) => {
-                const colorKey = color as keyof typeof DEFAULT_BACKGROUND_COLORS.dark;
-                return {
-                    value: colorKey,
-                    label: DEFAULT_BACKGROUND_COLORS[bcTheme][colorKey].label,
-                    icon: {
-                        name: "colors",
-                        color: DEFAULT_BACKGROUND_COLORS[bcTheme][colorKey].value,
-                    },
-                };
-            }
-        );
-    }
-
-    ngOnInit() {
-        this.theme = this.themeControl.value;
-
-        this.setText1Colors();
-        this.setText2Colors();
-        this.setBackgroundColors();
     }
 }

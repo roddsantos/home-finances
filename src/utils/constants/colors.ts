@@ -112,27 +112,27 @@ export const DEFAULT_COLORS = {
         },
         red: {
             label: "red",
-            value: "#ff3a3a",
+            value: "#dd2c2c",
         },
         green: {
             label: "green",
-            value: "#43ff43",
+            value: "#4ea14e",
         },
         blue: {
             label: "blue",
-            value: "#5959ff",
+            value: "#4c4cda",
         },
         yellow: {
             label: "yellow",
-            value: "#ffff57",
+            value: "#86862e",
         },
         cyan: {
             label: "cyan",
-            value: "#4fffff",
+            value: "#2f9e9e",
         },
         magenta: {
             label: "magenta",
-            value: "#ff4bff",
+            value: "#c03bc0",
         },
         brown: {
             label: "brown",
@@ -200,25 +200,175 @@ export const DEFAULT_COLORS = {
 };
 
 export const DEFAULT_TEXT_COLORS = {
-    black: "#000000",
-    grey: "#666666",
-    white: "#ffffff",
-    blue: "#0000ff",
-    purple: "#8800aa",
-    navy: "#007c9bff",
+    light: {
+        base: {
+            label: "base",
+            value: "#000000",
+        },
+        grey: {
+            label: "grey",
+            value: "#2e2e2e",
+        },
+        purple: {
+            label: "purple",
+            value: "#2e003a",
+        },
+        navy: {
+            label: "navy",
+            value: "#002630",
+        },
+        blue: {
+            label: "blue",
+            value: "#000038",
+        },
+        red: {
+            label: "red",
+            value: "#360000",
+        },
+        green: {
+            label: "green",
+            value: "#002c02",
+        },
+    },
+    default: {
+        base: {
+            label: "base",
+            value: "#000000",
+        },
+        grey: {
+            label: "grey",
+            value: "#464646",
+        },
+        purple: {
+            label: "purple",
+            value: "#690083",
+        },
+        navy: {
+            label: "navy",
+            value: "#006680",
+        },
+        blue: {
+            label: "blue",
+            value: "#000080",
+        },
+        red: {
+            label: "red",
+            value: "#8a0000",
+        },
+        green: {
+            label: "green",
+            value: "#008507",
+        },
+    },
+    dark: {
+        base: {
+            label: "base",
+            value: "#ffffff",
+        },
+        grey: {
+            label: "grey",
+            value: "#dfdfdf",
+        },
+        purple: {
+            label: "purple",
+            value: "#ea97ff",
+        },
+        navy: {
+            label: "navy",
+            value: "#78e4ff",
+        },
+        blue: {
+            label: "blue",
+            value: "#8787ff",
+        },
+        red: {
+            label: "red",
+            value: "#ff8989",
+        },
+        green: {
+            label: "green",
+            value: "#94ff99",
+        },
+    },
 };
 
 export const DEFAULT_BACKGROUND_COLORS = {
-    grey: "#2b2b2b",
-    blueWhite: "#ccccff",
-    redWhite: "#ffcccc",
-    greenWhite: "#caffca",
-    yellow: "#ffffb5ff",
-    cyan: "#bbffffff",
-    magenta: "#ffbfffff",
-    brown: "#ffcfb7ff",
-    purple: "#f3c4ffff",
-    white: "#ffffff",
+    light: {
+        base: {
+            label: "base",
+            value: "#fafafa",
+        },
+        blue: {
+            label: "blue",
+            value: "#ccccff",
+        },
+        red: {
+            label: "red",
+            value: "#ffcccc",
+        },
+        green: {
+            label: "green",
+            value: "#caffca",
+        },
+        yellow: {
+            label: "yellow",
+            value: "#ffffb5",
+        },
+        cyan: {
+            label: "cyan",
+            value: "#bbffff",
+        },
+        magenta: {
+            label: "magenta",
+            value: "#ffbfff",
+        },
+        brown: {
+            label: "brown",
+            value: "#ffcfb7",
+        },
+        purple: {
+            label: "purple",
+            value: "#dbc4ff",
+        },
+    },
+    dark: {
+        base: {
+            label: "base",
+            value: "#2c2c2c",
+        },
+        blue: {
+            label: "blue",
+            value: "#101061",
+        },
+        red: {
+            label: "red",
+            value: "#630c0c",
+        },
+        green: {
+            label: "green",
+            value: "#174717",
+        },
+        yellow: {
+            label: "yellow",
+            value: "#69690f",
+        },
+        cyan: {
+            label: "cyan",
+            value: "#0b3a3a",
+        },
+        magenta: {
+            label: "magenta",
+            value: "#3f093f",
+        },
+        brown: {
+            label: "brown",
+            value: "#3a1909",
+        },
+        purple: {
+            label: "purple",
+            value: "#23094d",
+        },
+    },
 };
 
 export const DEFAULT_THEME: ProfileThemeType = {

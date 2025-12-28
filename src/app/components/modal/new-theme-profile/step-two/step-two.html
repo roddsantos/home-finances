@@ -1,50 +1,26 @@
 <div class="form">
     <card-component [hideHeader]="true">
-        <div class="font">
-            <h5 [style.fontFamily]="font.value">font</h5>
-            <toggle-button variant="outlined" [items]="fonts" [formController]="font" />
-        </div>
-    </card-component>
-    <card-component [hideHeader]="true">
         <toggle-button
-            label="padding"
+            label="main text"
             variant="outlined"
-            [items]="paddingMeasures"
-            [formController]="padding"
+            [items]="text1Colors"
+            [formController]="text1"
         />
     </card-component>
     <card-component [hideHeader]="true">
         <toggle-button
-            label="input size"
+            label="secondary text"
             variant="outlined"
-            [items]="inputSizeMeasures"
-            [formController]="inputSize"
+            [items]="text2Colors"
+            [formController]="text2"
         />
     </card-component>
     <card-component [hideHeader]="true">
         <toggle-button
-            label="border width"
+            label="background"
             variant="outlined"
-            [items]="borderWidthMeasures"
-            [formController]="borderWidth"
+            [items]="backgroundColors"
+            [formController]="background"
         />
-    </card-component>
-    <card-component [hideHeader]="true">
-        <div class="input">
-            <h5 [style.fontFamily]="font.value">border radius</h5>
-            <mat-form-field appearance="outline">
-                <mat-icon
-                    class="material-symbols-outlined"
-                    matPrefix
-                    aria-hidden="false"
-                    aria-label="title icon"
-                    fontIcon="rounded_corner"
-                ></mat-icon>
-                <input [formControl]="borderRadius" matInput type="number" />
-                @if (borderRadius.status === 'INVALID') {
-                <mat-error>{{invalidError}}</mat-error>
-                }
-            </mat-form-field>
-        </div>
     </card-component>
 </div>
