@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { User } from "src/app/core/types/objects";
 import { BillsLayoutType } from "../core/types/subjects";
+import { ProfileThemeType } from "../core/types/pages/profiles";
 
 @Injectable({
     providedIn: "root",
@@ -41,13 +42,18 @@ export class LocalStorageService {
         localStorage.removeItem("filters");
     }
 
-    setTheme(theme: string) {
-        localStorage.setItem("theme", theme);
+    setTheme(theme: ProfileThemeType) {
+        let str = JSON.stringify(theme);
+        localStorage.setItem("theme", str);
     }
 
     getTheme() {
-        let theme = localStorage.getItem("theme");
-        return theme;
+        try {
+            let theme = localStorage.getItem("theme");
+            return theme ? JSON.parse(theme) : null;
+        } catch (error) {
+            return null;
+        }
     }
 
     removeTheme() {

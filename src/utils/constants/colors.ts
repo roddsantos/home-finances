@@ -59,14 +59,14 @@ export const THEME_FONTS = {
 };
 
 export const DEFAULT_COLORS = {
-    dark: {
+    light: {
         black: {
             label: "black",
             value: "#000000",
         },
         red: {
             label: "red",
-            value: "#690000",
+            value: "#9c0000",
         },
         green: {
             label: "green",
@@ -151,7 +151,7 @@ export const DEFAULT_COLORS = {
             value: "#ffffff",
         },
     },
-    light: {
+    dark: {
         black: {
             label: "black",
             value: "#757575",
@@ -300,35 +300,35 @@ export const DEFAULT_BACKGROUND_COLORS = {
         },
         blue: {
             label: "blue",
-            value: "#ccccff",
+            value: "#dbdbff",
         },
         red: {
             label: "red",
-            value: "#ffcccc",
+            value: "#ffdede",
         },
         green: {
             label: "green",
-            value: "#caffca",
+            value: "#daffda",
         },
         yellow: {
             label: "yellow",
-            value: "#ffffb5",
+            value: "#ffffdc",
         },
         cyan: {
             label: "cyan",
-            value: "#bbffff",
+            value: "#ddffff",
         },
         magenta: {
             label: "magenta",
-            value: "#ffbfff",
+            value: "#ffdcff",
         },
         brown: {
             label: "brown",
-            value: "#ffcfb7",
+            value: "#ffe8dc",
         },
         purple: {
             label: "purple",
-            value: "#dbc4ff",
+            value: "#efe5ff",
         },
     },
     dark: {
@@ -376,13 +376,15 @@ export const DEFAULT_THEME: ProfileThemeType = {
     theme: "default",
     title: "default",
     description: "the default theme of the application",
-    primary: "#00B2A9",
-    secondary: "#FF8200",
-    background: "#ffe9efff",
-    text1: "#000000",
-    text2: "#e2e2ff",
-    borderWidth: 1,
+    primary: "cyan",
+    secondary: "magenta",
+    background: "yellow",
+    text1: "base",
+    text2: "base",
+    borderWidth: "default",
     borderRadius: 10,
+    inputSize: "default",
+    padding: "default",
     font1: "Open-Sans",
     font2: "Commissioner",
 };
@@ -392,13 +394,15 @@ export const BINARY_THEME: ProfileThemeType = {
     theme: "dark",
     title: "black and white",
     description: "black and white themed",
-    primary: "#000000",
-    secondary: "#ffffff",
-    background: "#000000",
-    text1: "#ffffff",
-    text2: "#ffffff",
-    borderWidth: 1,
+    primary: "black",
+    secondary: "white",
+    background: "base",
+    text1: "base",
+    text2: "base",
+    borderWidth: "large",
     borderRadius: 10,
+    inputSize: "default",
+    padding: "default",
     font1: "Open-Sans",
     font2: "Open-Sans",
 };
@@ -408,13 +412,15 @@ export const RED_AND_BLACK: ProfileThemeType = {
     theme: "dark",
     title: "red and black",
     description: "him",
-    primary: "#a82828",
-    secondary: "#a82828",
-    background: "#000000ff",
-    text1: "#d5d6f1",
-    text2: "#c0c0c0ff",
-    borderWidth: 1,
+    primary: "red",
+    secondary: "black",
+    background: "base",
+    text1: "base",
+    text2: "base",
+    borderWidth: "default",
     borderRadius: 10,
+    inputSize: "default",
+    padding: "default",
     font1: "Open-Sans",
     font2: "Commissioner",
 };
@@ -429,8 +435,6 @@ export const FIELD_TO_PROPERTY = {
     background: "--background",
     text1: "--text-1",
     text2: "--text-2",
-    borderWidth: "--border-width",
-    borderRadius: "--border-radius",
     font1: "--font-1",
     font2: "--font-2",
 };

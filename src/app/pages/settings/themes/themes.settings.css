@@ -1,3 +1,9 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
 .themes {
     grid-template-columns: repeat(4, 23%);
     width: 100%;

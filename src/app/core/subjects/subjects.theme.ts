@@ -21,4 +21,11 @@ export class ThemeState {
 
         this._themes$.next(themes);
     }
+
+    addTheme(theme: ProfileThemeType) {
+        const themes = this._themes$.getValue();
+        themes.splice(0, 0, theme);
+
+        this._themes$.next(themes);
+    }
 }

@@ -1,3 +1,10 @@
+.main {
+    & .mdc-button__label {
+        display: flex;
+        align-items: center;
+    }
+}
+
 .text-1 {
     & .mdc-button__label p,
     .mdc-button__label mat-icon {

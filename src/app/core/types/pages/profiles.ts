@@ -9,10 +9,14 @@ export type ProfileThemeType = {
     text1: string;
     text2: string;
     borderRadius: number;
-    borderWidth: number;
+    borderWidth: GeneralMeasureType;
     font1: FontProfileType;
     font2: FontProfileType;
+    inputSize: GeneralMeasureType;
+    padding: GeneralMeasureType;
 };
+
+export type ThemeBodyType = Omit<ProfileThemeType, "id">;
 
 export type ColorThemeType = "dark" | "default" | "light";
 

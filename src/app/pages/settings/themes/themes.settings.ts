@@ -9,15 +9,16 @@ import { Router } from "@angular/router";
 import { Dialog } from "@angular/cdk/dialog";
 import { ModalNewThemeProfile } from "src/app/components/modal/new-theme-profile/new-theme-profile.modal";
 import { ProfileThemeType } from "src/app/core/types/pages/profiles";
-import { BINARY_THEME, DEFAULT_THEME, RED_AND_BLACK } from "src/utils/constants/colors";
 import { ThemeService } from "src/app/services/theme.service";
+import { CustonButton } from "src/app/components/button/custom-button.component";
+import { ThemeState } from "src/app/core/subjects/subjects.theme";
 
 @Component({
     selector: "themes-settings",
     templateUrl: "./themes.settings.html",
     styleUrls: ["./themes.settings.css"],
     standalone: true,
-    imports: [CommonModule, CardComponent, MatButtonModule, MatIconModule],
+    imports: [CommonModule, CardComponent, MatButtonModule, MatIconModule, CustonButton],
 })
 export class ThemeSettingsComponent implements OnInit {
     public dialog = inject(Dialog);
@@ -26,19 +27,22 @@ export class ThemeSettingsComponent implements OnInit {
 
     public generalState = inject(GeneralState);
     private themeService = inject(ThemeService);
+    public themeState = inject(ThemeState);
     public storage = inject(LocalStorageService);
-    public themes = [BINARY_THEME, RED_AND_BLACK, DEFAULT_THEME];
 
     private style = getComputedStyle(document.body);
     public secondaryColor = this.style.getPropertyValue("--secondary");
 
     ngOnInit() {
         this.generalState.theme$.subscribe({
-            next: (theme) => (this.selectedTheme = theme),
+            next: (theme) => {
+                this.selectedTheme = theme;
+            },
         });
     }
 
     clickedTheme(theme: ProfileThemeType) {
+        this.selectedTheme = theme.id;
         this.themeService.setTheme(theme);
     }
 

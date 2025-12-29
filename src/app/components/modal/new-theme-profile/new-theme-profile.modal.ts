@@ -6,6 +6,7 @@ import {
     ColorThemeType,
     FontProfileType,
     GeneralMeasureType,
+    ThemeBodyType,
     UpdateProfileControlType,
 } from "src/app/core/types/pages/profiles";
 import {
@@ -21,6 +22,8 @@ import { CommonModule } from "@angular/common";
 import { StepOneNewProfileTheme } from "./step-one/step-one";
 import { StepTwoNewProfileTheme } from "./step-two/step-two";
 import { StepThreeNewProfileTheme } from "./step-three/step-three";
+import { ThemeService } from "src/app/services/theme.service";
+import { ThemeState } from "src/app/core/subjects/subjects.theme";
 
 @Component({
     selector: "new-theme-profile",
@@ -38,7 +41,7 @@ import { StepThreeNewProfileTheme } from "./step-three/step-three";
     standalone: true,
 })
 export class ModalNewThemeProfile extends ModalComponent {
-    constructor() {
+    constructor(private themeService: ThemeService, private themeState: ThemeState) {
         super();
     }
 
@@ -100,7 +103,11 @@ export class ModalNewThemeProfile extends ModalComponent {
             validators: [Validators.required],
             nonNullable: true,
         }),
-        font: new FormControl<FontProfileType>(THEME_FONTS.roboto, {
+        font1: new FormControl<FontProfileType>(THEME_FONTS.roboto, {
+            validators: [Validators.required],
+            nonNullable: true,
+        }),
+        font2: new FormControl<FontProfileType>(THEME_FONTS.commissioner, {
             validators: [Validators.required],
             nonNullable: true,
         }),
@@ -183,6 +190,17 @@ export class ModalNewThemeProfile extends ModalComponent {
     }
 
     onSubmit() {
-        this.onClose();
+        this.themeService
+            .createTheme(this.profileForm.getRawValue() as unknown as ThemeBodyType)
+            .subscribe({
+                next: (theme) => {
+                    this.themeState.addTheme(theme);
+                    this.generalService.successSnackbar("Theme created successfully");
+                    this.onClose();
+                },
+                error: () => {
+                    this.generalService.errorSnackbar("Error creating theme");
+                },
+            });
     }
 }

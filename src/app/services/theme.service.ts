@@ -1,8 +1,19 @@
 import { inject, Injectable } from "@angular/core";
 import { GeneralService } from "./general.service";
-import { ColorThemeType, ProfileThemeType } from "../core/types/pages/profiles";
+import {
+    ColorThemeType,
+    GeneralMeasureType,
+    ProfileThemeType,
+    ThemeBodyType,
+} from "../core/types/pages/profiles";
 import { LocalStorageService } from "./local-storage.service";
-import { COLOR_STATUS, FIELD_TO_PROPERTY } from "src/utils/constants/colors";
+import {
+    COLOR_STATUS,
+    DEFAULT_BACKGROUND_COLORS,
+    DEFAULT_COLORS,
+    DEFAULT_TEXT_COLORS,
+    FIELD_TO_PROPERTY,
+} from "src/utils/constants/colors";
 import { SECTORS } from "src/utils/constants/general";
 import { mergeMap } from "rxjs";
 import { THEME } from "src/utils/constants/services";
@@ -17,6 +28,114 @@ export class ThemeService extends GeneralService {
         return this.user.user$.pipe(
             mergeMap((user) => this.http.get<ProfileThemeType[]>(THEME + `/${user?.id}`))
         );
+    }
+
+    createTheme(data: ThemeBodyType) {
+        return this.user.user$.pipe(
+            mergeMap((user) =>
+                this.http.post<ProfileThemeType>(THEME, {
+                    ...data,
+                    userId: user?.id,
+                })
+            )
+        );
+    }
+
+    setTheme(theme: ProfileThemeType) {
+        const { id } = theme;
+        this.setupTheme(theme);
+        document.body.className = "";
+        document.body.className = id;
+        this.generalState.changeThemeObject(theme);
+        this.generalState.changeTheme(id);
+        this.localStorageService.setTheme(theme);
+    }
+
+    getBorderWidth(borderWidth: GeneralMeasureType) {
+        switch (borderWidth) {
+            case "default":
+                return "1.5px";
+            case "large":
+                return "2px";
+            case "minimum":
+                return "1px";
+        }
+    }
+
+    getPadding(padding: GeneralMeasureType) {
+        switch (padding) {
+            case "default":
+                return "0.75rem";
+            case "large":
+                return "1.25rem";
+            case "minimum":
+                return "0.5rem";
+        }
+    }
+
+    getInputSize(inputSize: GeneralMeasureType) {
+        switch (inputSize) {
+            case "default":
+                return {
+                    unit: "1.5rem",
+                    position: "1.5rem",
+                    font: "1rem",
+                };
+            case "large":
+                return {
+                    unit: "2rem",
+                    position: "2rem",
+                    font: "1.5rem",
+                };
+            case "minimum":
+                return {
+                    unit: "1.2rem",
+                    position: "0.85rem",
+                    font: "0.75rem",
+                };
+        }
+    }
+
+    getText1Theme(theme: ColorThemeType) {
+        switch (theme) {
+            case "dark":
+                return "dark";
+            default:
+                return "light";
+        }
+    }
+
+    getText2Theme(theme: ColorThemeType) {
+        switch (theme) {
+            case "light":
+                return "dark";
+            default:
+                return "light";
+        }
+    }
+
+    setColor(value: string, theme: ColorThemeType, key: string) {
+        const color = DEFAULT_COLORS[theme][value as keyof typeof DEFAULT_COLORS.default];
+        document.documentElement.style.setProperty(`--${key}`, color.value);
+    }
+
+    setTextColor(value: string, theme: ColorThemeType, key: string) {
+        const themeVariant =
+            theme === "dark" ? this.getText1Theme(theme) : this.getText2Theme(theme);
+        const color =
+            DEFAULT_TEXT_COLORS[themeVariant][
+                value as keyof typeof DEFAULT_TEXT_COLORS.light
+            ];
+        document.documentElement.style.setProperty(`--${key}`, color.value);
+    }
+
+    setBackground(value: string, theme: ColorThemeType, key: string) {
+        const themeVariant = this.getText1Theme(theme);
+        const color =
+            DEFAULT_BACKGROUND_COLORS[themeVariant][
+                value as keyof typeof DEFAULT_BACKGROUND_COLORS.light
+            ];
+        document.documentElement.style.setProperty(`--${key}`, color.value);
     }
 
     setStatusColors(theme: ColorThemeType) {
@@ -50,8 +169,30 @@ export class ThemeService extends GeneralService {
         });
     }
 
+    setPadding(padding: GeneralMeasureType) {
+        const value = this.getPadding(padding);
+        document.documentElement.style.setProperty("--padding-gen", value);
+    }
+
+    setInputSize(inputSize: GeneralMeasureType) {
+        const value = this.getInputSize(inputSize);
+        document.documentElement.style.setProperty("--input-unit", value.unit);
+        document.documentElement.style.setProperty("--input-position", value.position);
+        document.documentElement.style.setProperty("--input-font", value.font);
+    }
+
+    setBorder(borderWidth: GeneralMeasureType, borderRadius: number) {
+        const width = this.getBorderWidth(borderWidth);
+        document.documentElement.style.setProperty("--border-width", width);
+        document.documentElement.style.setProperty(
+            "--border-radius",
+            `${borderRadius}px`
+        );
+    }
+
     setOtherVars(profileTheme: ProfileThemeType) {
-        const { id, primary, secondary, borderWidth, borderRadius } = profileTheme;
+        const { id, primary, secondary } = profileTheme;
+
         document.documentElement.style.setProperty(
             "--bh",
             "rgb(from var(--background) calc(r - 10) calc(g - 10) calc(b - 10))"
@@ -60,30 +201,34 @@ export class ThemeService extends GeneralService {
             "--border-color",
             id === "binary" ? secondary : primary
         );
-        document.documentElement.style.setProperty("--border-width", `${borderWidth}px`);
-        document.documentElement.style.setProperty(
-            "--border-radius",
-            `${borderRadius}px`
-        );
     }
 
     setupTheme(profileTheme: ProfileThemeType) {
-        const { theme } = profileTheme;
+        const {
+            theme,
+            inputSize,
+            padding,
+            borderWidth,
+            borderRadius,
+            primary,
+            secondary,
+            background,
+            text1,
+            text2,
+        } = profileTheme;
 
         this.setProperties(profileTheme);
         this.setStatusColors(theme);
         this.setSectorsColors(theme);
         this.setOtherVars(profileTheme);
-    }
-
-    setTheme(theme: ProfileThemeType) {
-        const { id } = theme;
-        this.setupTheme(theme);
-        document.body.className = "";
-        document.body.className = id === "default" ? "" : id;
-        this.generalState.changeThemeObject(theme);
-        this.generalState.changeTheme(id);
-        this.localStorageService.setTheme(id);
+        this.setBorder(borderWidth, borderRadius);
+        this.setPadding(padding);
+        this.setInputSize(inputSize);
+        this.setColor(primary, theme, "primary");
+        this.setColor(secondary, theme, "secondary");
+        this.setBackground(background, theme, "background");
+        this.setTextColor(text1, theme, "text-1");
+        this.setTextColor(text2, theme, "text-2");
     }
 
     removeTheme() {

@@ -98,10 +98,10 @@ export class StepTwoNewProfileTheme extends ModalComponent {
 
     getText1Theme() {
         switch (this.theme) {
-            case "light":
-                return "light";
-            default:
+            case "dark":
                 return "dark";
+            default:
+                return "light";
         }
     }
 

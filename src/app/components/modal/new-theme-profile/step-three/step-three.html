@@ -1,8 +1,14 @@
 <div class="form">
     <card-component [hideHeader]="true">
         <div class="font">
-            <h5 [style.fontFamily]="font.value">font</h5>
-            <toggle-button variant="outlined" [items]="fonts" [formController]="font" />
+            <h5 [style.fontFamily]="font1.value">font 1</h5>
+            <toggle-button variant="outlined" [items]="fonts" [formController]="font1" />
+        </div>
+    </card-component>
+    <card-component [hideHeader]="true">
+        <div class="font">
+            <h5 [style.fontFamily]="font2.value">font 2</h5>
+            <toggle-button variant="outlined" [items]="fonts" [formController]="font2" />
         </div>
     </card-component>
     <card-component [hideHeader]="true">
@@ -31,7 +37,7 @@
     </card-component>
     <card-component [hideHeader]="true">
         <div class="input">
-            <h5 [style.fontFamily]="font.value">border radius</h5>
+            <h5>border radius</h5>
             <mat-form-field appearance="outline">
                 <mat-icon
                     class="material-symbols-outlined"

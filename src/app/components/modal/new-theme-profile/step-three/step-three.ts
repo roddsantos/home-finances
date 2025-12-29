@@ -38,7 +38,8 @@ export class StepThreeNewProfileTheme extends ModalComponent {
     @Input() borderRadius: FormControl<number>;
     @Input() borderWidth: FormControl<GeneralMeasureType>;
     @Input() inputSize: FormControl<GeneralMeasureType>;
-    @Input() font: FormControl<FontProfileType>;
+    @Input() font1: FormControl<FontProfileType>;
+    @Input() font2: FormControl<FontProfileType>;
     @Input() padding: FormControl<GeneralMeasureType>;
 
     @Output() onClick = new EventEmitter<UpdateProfileControlType<string>>();

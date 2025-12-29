@@ -3,31 +3,39 @@
     title="themes"
     description="choose a theme for the application"
 >
-    <div class="themes grid">
-        <div
-            class="theme-container"
-            *ngFor="let th of themes"
-            (click)="clickedTheme(th)"
-            [ngClass]="{
+    <div class="main">
+        <div class="themes grid">
+            <div
+                class="theme-container"
+                *ngFor="let th of (themeState.themes$ | async)"
+                (click)="clickedTheme(th)"
+                [ngClass]="{
                   'theme-container': true,
                   selected: selectedTheme === th.id
                 }"
-        >
-            <h4>{{th.title}}</h4>
-            <p>{{th.description}}</p>
-            <div class="theme-pallete">
-                <div class="pallete-color" [style.backgroundColor]="th.primary"></div>
-                <div class="pallete-color" [style.backgroundColor]="th.secondary"></div>
-                <div class="pallete-color" [style.backgroundColor]="th.background"></div>
+            >
+                <h4>{{th.title}}</h4>
+                <p>{{th.description}}</p>
+                <div class="theme-pallete">
+                    <div class="pallete-color" [style.backgroundColor]="th.primary"></div>
+                    <div
+                        class="pallete-color"
+                        [style.backgroundColor]="th.secondary"
+                    ></div>
+                    <div
+                        class="pallete-color"
+                        [style.backgroundColor]="th.background"
+                    ></div>
+                </div>
             </div>
         </div>
-        <button (click)="onNewProfileTheme()" mat-button class="button-primary update">
+        <btn variant="primary" (click)="onNewProfileTheme()">
             <mat-icon
                 aria-hidden="false"
                 aria-label="Example home icon"
-                fontIcon="save"
+                fontIcon="add"
             ></mat-icon>
-            <p>update</p>
-        </button>
+            <p>create</p>
+        </btn>
     </div>
 </card-component>

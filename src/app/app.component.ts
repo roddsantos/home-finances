@@ -9,6 +9,7 @@ import { UserService } from "./services/user.service";
 import { BINARY_THEME, DEFAULT_THEME, RED_AND_BLACK } from "src/utils/constants/colors";
 import { ThemeService } from "./services/theme.service";
 import { ThemeState } from "./core/subjects/subjects.theme";
+import { ProfileThemeType } from "./core/types/pages/profiles";
 
 @Component({
     selector: "app-root",
@@ -29,6 +30,7 @@ export class AppComponent {
 
     title = "bills-app";
     theme = this.storage.getTheme();
+    public allThemes: ProfileThemeType[] = [];
 
     ngOnInit() {
         // GET USER INFO
@@ -41,18 +43,26 @@ export class AppComponent {
         else this.filterState.setFilters([]);
 
         // GET THEME
+        const theme = this.storage.getTheme();
+        if (!theme) this.themeService.setTheme(DEFAULT_THEME);
+        else this.themeService.setTheme(theme);
         this.themeService.getThemes().subscribe({
             next: (themes) => {
-                this.themeState.setThemeList(themes);
+                this.themeState.setThemeList([
+                    ...themes,
+                    DEFAULT_THEME,
+                    RED_AND_BLACK,
+                    BINARY_THEME,
+                ]);
+            },
+            error: () => {
+                this.themeState.setThemeList([
+                    DEFAULT_THEME,
+                    RED_AND_BLACK,
+                    BINARY_THEME,
+                ]);
             },
         });
-        const theme = this.storage.getTheme();
-        if (theme) {
-            const selectedTheme = [BINARY_THEME, RED_AND_BLACK, DEFAULT_THEME].find(
-                (th) => th.id === theme
-            );
-            this.themeService.setTheme(selectedTheme!);
-        }
 
         // GET BILLS LAYOUT
         const billsView = this.storage.getBillsLayout();
