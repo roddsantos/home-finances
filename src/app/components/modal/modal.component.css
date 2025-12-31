@@ -97,6 +97,8 @@
 }
 
 .modal-footer {
+    display: flex;
+    gap: 1rem;
     margin: 20px 0px 0px auto;
 }
 

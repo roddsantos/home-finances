@@ -19,24 +19,22 @@
             variant="secondary"
             (onClick)="this.onSecondary()"
         >
-            <h5>{{ (modalState.footer$ | async)?.alertLabel }}</h5>
+            <p>{{ (modalState.footer$ | async)?.alertLabel }}</p>
         </btn>
-        <button
+        <btn
             *ngIf="this.actionPrimary.observed"
             [disabled]="disableButton"
-            mat-button
-            class="button-primary add-margin-left"
-            (click)="this.onPrimary()"
-            cdkFocusInitial
+            (onClick)="this.onPrimary()"
+            variant="primary"
         >
-            {{ (modalState.footer$ | async)?.submitLabel }}
-        </button>
+            <p>{{ (modalState.footer$ | async)?.submitLabel }}</p>
+        </btn>
         <btn
             *ngIf="!this.actionPrimary.observed && !this.actionSecondary.observed"
             variant="secondary"
             (onClick)="dialogRef.close()"
         >
-            <h5>{{ (modalState.footer$ | async)?.alertLabel }}</h5>
+            <p>{{ (modalState.footer$ | async)?.alertLabel }}</p>
         </btn>
     </div>
 </div>

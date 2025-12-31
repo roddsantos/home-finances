@@ -1,5 +1,12 @@
 import { CommonModule } from "@angular/common";
-import { booleanAttribute, Component, EventEmitter, Input, Output } from "@angular/core";
+import {
+    booleanAttribute,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    Output,
+} from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { ButtonVariantsType } from "src/app/core/types/components/button";
 import { contrastText, getBackgroundColor } from "src/utils/color";
@@ -12,29 +19,27 @@ import { contrastText, getBackgroundColor } from "src/utils/color";
     standalone: true,
 })
 export class CustonButton {
+    constructor(private cdRef: ChangeDetectorRef) {}
     @Input() classes: string = "";
     @Input() variant: ButtonVariantsType = "primary";
-    @Input({ transform: booleanAttribute }) extended: boolean = true;
+    @Input({ transform: booleanAttribute }) extended: boolean = false;
     @Input() disabled: boolean = false;
     @Output() onClick = new EventEmitter<any>();
 
-    public id = Math.floor(Math.random() * 1001);
-    public textColor = "text-1";
+    public id = Math.floor(Math.random() * 100001);
 
-    ngAfterViewInit() {
-        const textColorString = this.setTextColor();
-        if (textColorString === "var(--text-1) !important") {
-            this.textColor = "text-1";
-        } else this.textColor = "text-2";
+    ngAfterViewChecked(): void {
+        this.cdRef.detectChanges();
     }
 
     handleClick() {
         this.onClick.emit();
     }
 
-    setTextColor() {
+    getTextClass() {
         const backgroundColor = getBackgroundColor("custom-button-" + this.id);
-
-        return contrastText(backgroundColor);
+        const textColorString = contrastText(backgroundColor);
+        if (textColorString === "var(--text-1) !important") return "text-1";
+        return "text-2";
     }
 }
