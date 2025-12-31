@@ -91,7 +91,7 @@
 .filter-buttons {
     grid-area: filter-buttons;
     display: flex;
-    flex-direction: row;
+    gap: 0.5rem;
     & .icon {
         width: max-content;
         font-size: 1.25rem;

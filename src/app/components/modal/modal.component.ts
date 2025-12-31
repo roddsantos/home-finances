@@ -3,7 +3,6 @@ import {
     Input,
     Output,
     EventEmitter,
-    Inject,
     TemplateRef,
     OnChanges,
     SimpleChanges,
@@ -11,19 +10,26 @@ import {
 } from "@angular/core";
 import { MatIcon } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
-import { ModalDataType } from "src/app/core/types/modal";
-import { DIALOG_DATA, DialogRef } from "@angular/cdk/dialog";
+import { DialogRef } from "@angular/cdk/dialog";
 import { AsyncPipe, CommonModule, NgTemplateOutlet } from "@angular/common";
 import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { SizeType } from "src/app/core/types/components";
 import { GeneralComponent } from "../general/general.component";
+import { CustonButton } from "../button/custom-button.component";
 
 @Component({
     selector: "modal-component",
     templateUrl: "./modal.component.html",
     styleUrls: ["./modal.component.css"],
     standalone: true,
-    imports: [CommonModule, MatIcon, NgTemplateOutlet, MatButtonModule, AsyncPipe],
+    imports: [
+        CommonModule,
+        MatIcon,
+        NgTemplateOutlet,
+        MatButtonModule,
+        AsyncPipe,
+        CustonButton,
+    ],
 })
 export class ModalComponent extends GeneralComponent implements OnChanges {
     constructor() {

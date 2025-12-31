@@ -14,14 +14,13 @@
         <ng-template #defaultBody></ng-template>
     </div>
     <div class="modal-footer">
-        <button
+        <btn
             *ngIf="this.actionSecondary.observed"
-            mat-button
-            class="button-secondary"
-            (click)="this.onSecondary()"
+            variant="secondary"
+            (onClick)="this.onSecondary()"
         >
-            {{ (modalState.footer$ | async)?.alertLabel }}
-        </button>
+            <h5>{{ (modalState.footer$ | async)?.alertLabel }}</h5>
+        </btn>
         <button
             *ngIf="this.actionPrimary.observed"
             [disabled]="disableButton"
@@ -32,13 +31,12 @@
         >
             {{ (modalState.footer$ | async)?.submitLabel }}
         </button>
-        <button
+        <btn
             *ngIf="!this.actionPrimary.observed && !this.actionSecondary.observed"
-            mat-button
-            class="modal-button-close"
-            (click)="dialogRef.close()"
+            variant="secondary"
+            (onClick)="dialogRef.close()"
         >
-            close
-        </button>
+            <h5>{{ (modalState.footer$ | async)?.alertLabel }}</h5>
+        </btn>
     </div>
 </div>

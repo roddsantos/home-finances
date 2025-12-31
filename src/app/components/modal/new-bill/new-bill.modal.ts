@@ -321,6 +321,7 @@ export class ModalNewBill extends ModalComponent {
             total: this.billForm.value.total!,
             type: this.billForm.value.type!,
             categoryId: this.billForm.value.category!.id,
+            isRecurrent: this.billForm.value.isRecurrent!,
         };
         var observer;
         switch (this.billForm.value.type) {
@@ -336,7 +337,6 @@ export class ModalNewBill extends ModalComponent {
             case "creditCard":
                 observer = this.billService.createBillCreditCard({
                     ...defaultData,
-                    isRecurrent: this.billForm.value.isRecurrent!,
                     creditCardId: this.billForm.value.creditcard!.id,
                     companyId: this.billForm.value.company?.id,
                     parcels: this.billForm.value.parcels!,

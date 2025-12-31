@@ -54,9 +54,9 @@ export class ThemeService extends GeneralService {
     getBorderWidth(borderWidth: GeneralMeasureType) {
         switch (borderWidth) {
             case "default":
-                return "1.5px";
-            case "large":
                 return "2px";
+            case "large":
+                return "3px";
             case "minimum":
                 return "1px";
         }
@@ -105,12 +105,12 @@ export class ThemeService extends GeneralService {
         }
     }
 
-    getText2Theme(theme: ColorThemeType) {
+    getInverseTextColor(theme: ColorThemeType) {
         switch (theme) {
-            case "light":
-                return "dark";
-            default:
+            case "dark":
                 return "light";
+            default:
+                return "dark";
         }
     }
 
@@ -120,8 +120,7 @@ export class ThemeService extends GeneralService {
     }
 
     setTextColor(value: string, theme: ColorThemeType, key: string) {
-        const themeVariant =
-            theme === "dark" ? this.getText1Theme(theme) : this.getText2Theme(theme);
+        const themeVariant = key === "text-2" ? this.getInverseTextColor(theme) : theme;
         const color =
             DEFAULT_TEXT_COLORS[themeVariant][
                 value as keyof typeof DEFAULT_TEXT_COLORS.light

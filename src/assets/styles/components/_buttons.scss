@@ -46,7 +46,7 @@
     font-family: var(--font-1) !important;
     &.mat-mdc-button:not(:disabled) {
         border-radius: var(--border-radius);
-        background-color: transparent;
+        background-color: var(--secondary);
     }
 
     & p,
@@ -146,6 +146,7 @@
     align-items: center;
     width: max-content;
     border-radius: var(--border-radius) !important;
+    min-height: 47px;
     height: max-content !important;
     padding: 0.5rem 0.8rem !important;
     cursor: pointer;

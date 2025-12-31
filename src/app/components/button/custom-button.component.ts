@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { booleanAttribute, Component, EventEmitter, Input, Output } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { ButtonVariantsType } from "src/app/core/types/components/button";
-import { contrastText, currentPallete, getBackgroundColor } from "src/utils/color";
+import { contrastText, getBackgroundColor } from "src/utils/color";
 
 @Component({
     selector: "btn",
@@ -15,6 +15,7 @@ export class CustonButton {
     @Input() classes: string = "";
     @Input() variant: ButtonVariantsType = "primary";
     @Input({ transform: booleanAttribute }) extended: boolean = true;
+    @Input() disabled: boolean = false;
     @Output() onClick = new EventEmitter<any>();
 
     public id = Math.floor(Math.random() * 1001);
