@@ -1,10 +1,11 @@
 <h5 class="label" *ngIf="label.length > 0">{{ label }}</h5>
 <div class="group" #status [formControl]="formController" ngDefaultControl>
-    <button
+    <btn
         *ngFor="let item of items"
-        (click)="handleClick(item)"
-        [ngClass]="[getSelectedClass(item)]"
+        (onClick)="handleClick(item)"
         [disabled]="disabled"
+        [variant]="getVariant(item)"
+        [classes]="getClasses(item)"
     >
         <mat-icon
             [style.color]="item.icon ? item.icon.color + '!important' : ''"
@@ -13,5 +14,13 @@
             >{{ item.icon ? item.icon.name : "check" }}
         </mat-icon>
         <p>{{ item.label }}</p>
-    </button>
+    </btn>
+    <!-- <button
+        *ngFor="let item of items"
+        (click)="handleClick(item)"
+        [ngClass]="[getSelectedClass(item)]"
+        [disabled]="disabled"
+    >
+
+    </button> -->
 </div>

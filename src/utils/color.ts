@@ -171,10 +171,6 @@ export const tint = (
  * @returns {string} The contrast color
  */
 export function contrastText(color: string) {
-    const style = getComputedStyle(document.body);
-    const text1 = style.getPropertyValue("--text-1");
-    const text2 = style.getPropertyValue("--text-2");
-
     const treatedString = color.split("#")[1];
     if (!treatedString) return color;
 
@@ -232,8 +228,13 @@ export function getBackgroundColor(id: string) {
 
     const elementStyle = window.getComputedStyle(element);
     const backgroundElementStyle = elementStyle.getPropertyValue("background-color");
-    if (backgroundElementStyle !== "transparent")
+
+    if (
+        backgroundElementStyle !== "transparent" &&
+        backgroundElementStyle !== "rgba(0, 0, 0, 0)"
+    ) {
         return rgbToHex(backgroundElementStyle) || backgroundElementStyle;
+    }
 
     let parentElement = element.parentElement;
     if (!parentElement) return background;
@@ -242,7 +243,11 @@ export function getBackgroundColor(id: string) {
         const computedStyle = window.getComputedStyle(parentElement);
         const backgroundColor = computedStyle.getPropertyValue("background-color");
 
-        if (backgroundColor && backgroundColor !== "transparent") {
+        if (
+            backgroundColor &&
+            backgroundColor !== "transparent" &&
+            backgroundElementStyle !== "rgba(0, 0, 0, 0)"
+        ) {
             return rgbToHex(backgroundColor) || backgroundColor;
         }
 

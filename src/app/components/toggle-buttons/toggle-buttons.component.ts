@@ -2,13 +2,13 @@ import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Injectable, Input, Output } from "@angular/core";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
-import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import {
     StyleToggleType,
     ToggleButtonItemsType,
 } from "src/app/core/types/components/toggle-buttons";
 import { isValuesEqual } from "src/utils/validators";
+import { CustonButton } from "../button/custom-button.component";
 
 @Injectable({
     providedIn: "root",
@@ -18,7 +18,13 @@ import { isValuesEqual } from "src/utils/validators";
     templateUrl: "./toggle-buttons.component.html",
     styleUrls: ["./toggle-buttons.component.css"],
     standalone: true,
-    imports: [CommonModule, MatIconModule, MatButtonToggleModule, ReactiveFormsModule],
+    imports: [
+        CommonModule,
+        MatIconModule,
+        MatButtonToggleModule,
+        ReactiveFormsModule,
+        CustonButton,
+    ],
 })
 export class ToggleButtonComponent {
     @Input() label: string = "";
@@ -32,16 +38,22 @@ export class ToggleButtonComponent {
         return isValuesEqual(this.formController.getRawValue(), item.value);
     }
 
-    getSelectedClass(item: ToggleButtonItemsType<any>) {
+    getVariant(item: ToggleButtonItemsType<any>) {
         const isSelected = isValuesEqual(this.formController.getRawValue(), item.value);
         switch (this.variant) {
             case "outlined":
-                return isSelected ? "button-outlined" : "button-text";
+                return isSelected ? "outlined" : "text";
             case "text":
-                return isSelected ? "button-text selected" : "button-text";
+                return "text";
             default:
-                return isSelected ? "button-primary" : "button-outlined";
+                return isSelected ? "primary" : "outlined";
         }
+    }
+
+    getClasses(item: ToggleButtonItemsType<any>) {
+        const isSelected = isValuesEqual(this.formController.getRawValue(), item.value);
+        if (this.variant === "text" && isSelected) return "selected";
+        return "";
     }
 
     handleClick(item: ToggleButtonItemsType<any>) {
