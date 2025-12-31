@@ -198,7 +198,7 @@ export class ThemeService extends GeneralService {
         );
         document.documentElement.style.setProperty(
             "--border-color",
-            id === "binary" ? secondary : primary
+            id === "binary" ? "var(--secondary)" : "var(--primary)"
         );
     }
 

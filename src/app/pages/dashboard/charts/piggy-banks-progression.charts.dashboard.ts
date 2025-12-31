@@ -1,10 +1,20 @@
-import { currentPallete, tint } from "src/utils/color";
+import { currentPallete, getThemeVars, tint } from "src/utils/color";
 import { Chart } from "chart.js/auto";
 import { Context } from "chartjs-plugin-datalabels";
 import { PiggyBanksProgressionType } from "src/app/core/types/subjects/dashboard.subjects";
 import { MONTHS } from "src/utils/constants/general";
 
 const pallete = currentPallete();
+const themeProfile = getThemeVars(true);
+
+const borderRadiusToTension = () => {
+    const borderRadius = themeProfile.borderRadius as number;
+    if (borderRadius === 0) return 0;
+    if (borderRadius < 5) return 0.1;
+    if (borderRadius < 10) return 0.2;
+    if (borderRadius < 15) return 0.3;
+    return 0.4;
+};
 
 const lineOptions: any = (datasets: any[]) => {
     const layout = { autoPadding: true, padding: { top: 0, right: 40, left: 40 } };
@@ -55,8 +65,8 @@ export function piggyBanksProgressionChart(
             datasets: piggyBanksProgression.map((pb, i) => ({
                 label: pb.bank,
                 data: pb.progression.map((bm) => bm.savedValue),
-                tension: 0.3,
-                backgroundColor: theme === "binary" ? "transparent" : tint(0.3, pb.color),
+                tension: borderRadiusToTension(),
+                backgroundColor: theme === "binary" ? "transparent" : tint(0.5, pb.color),
                 borderColor: pb.color,
                 fill: true,
             })),

@@ -1,8 +1,9 @@
 import { DashboardSavingsType } from "src/app/core/types/subjects/dashboard.subjects";
-import { currentPallete } from "src/utils/color";
+import { currentPallete, getThemeVars } from "src/utils/color";
 import { Chart } from "chart.js/auto";
 
 const pallete = currentPallete();
+const themeProfile = getThemeVars(true);
 const ARC = 120;
 
 const doughnutOptions: any = {
@@ -43,7 +44,7 @@ export function savingsChart(savings: DashboardSavingsType, theme: string) {
                         theme === "binary"
                             ? [pallete.warning, pallete.error, pallete.info]
                             : "transparency",
-                    borderRadius: 20,
+                    borderRadius: themeProfile.borderRadius as number,
                 },
             ],
         },

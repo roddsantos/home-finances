@@ -1,9 +1,10 @@
 import { CategoriesSummaryType } from "src/app/core/types/services/dashboard.services.types";
-import { currentPallete } from "src/utils/color";
+import { currentPallete, getThemeVars } from "src/utils/color";
 import { Chart } from "chart.js/auto";
 import ChartDataLabels, { Context } from "chartjs-plugin-datalabels";
 
 const pallete = currentPallete();
+const themeProfile = getThemeVars(true);
 
 const barOptions: any = (summary: CategoriesSummaryType) => {
     const layout = { padding: { top: 10 } };
@@ -51,8 +52,8 @@ export const categoriesChart = (summary: CategoriesSummaryType, theme: string) =
                     label: "",
                     data: summary.topCategories.map((tc) => tc.total),
                     spacing: 1,
-                    borderWidth: 3,
-                    borderRadius: 10,
+                    borderWidth: themeProfile.borderWidth as number,
+                    borderRadius: themeProfile.borderRadius as number,
                     borderColor:
                         theme === "binary"
                             ? summary.topCategories.map((tc) => tc.category!.color)

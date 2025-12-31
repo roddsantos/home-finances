@@ -183,6 +183,18 @@ export function contrastText(color: string) {
         : "var(--text-2) !important";
 }
 
+export function getThemeVars(asNumbers: boolean = false) {
+    const style = getComputedStyle(document.body);
+
+    const borderRadius = style.getPropertyValue("--border-radius");
+    const borderWidth = style.getPropertyValue("--border-width");
+
+    return {
+        borderRadius: asNumbers ? parseInt(borderRadius) : borderRadius,
+        borderWidth: asNumbers ? parseInt(borderWidth) : borderWidth,
+    };
+}
+
 export function currentPallete() {
     const style = getComputedStyle(document.body);
 
@@ -191,6 +203,7 @@ export function currentPallete() {
 
     const background = style.getPropertyValue("--background");
     const bh = style.getPropertyValue("--bh");
+    const borderColor = style.getPropertyValue("--border-color");
     const info = style.getPropertyValue("--info");
     const warning = style.getPropertyValue("--warning");
     const error = style.getPropertyValue("--error");
@@ -207,6 +220,7 @@ export function currentPallete() {
         primary,
         secondary,
         background,
+        borderColor,
         bh,
         info,
         warning,
