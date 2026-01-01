@@ -1,16 +1,16 @@
 import { CommonModule } from "@angular/common";
 import { Component, Input } from "@angular/core";
-import { MatButton } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { FeedbackInfo } from "src/app/core/types/components";
+import { CustonButton } from "../button/custom-button.component";
 
 @Component({
     selector: "feedback-container",
     templateUrl: "./feedback-container.component.html",
     styleUrls: ["./feedback-container.component.css"],
     standalone: true,
-    imports: [CommonModule, MatIconModule, MatButton, MatProgressSpinnerModule],
+    imports: [CommonModule, MatIconModule, MatProgressSpinnerModule, CustonButton],
 })
 export class FeedbackContainerComponent {
     @Input() info: FeedbackInfo = {

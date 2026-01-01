@@ -271,7 +271,7 @@ export const DEFAULT_TEXT_COLORS = {
         },
         purple: {
             label: "purple",
-            value: "#ea97ff",
+            value: "#efafff",
         },
         navy: {
             label: "navy",
@@ -279,15 +279,15 @@ export const DEFAULT_TEXT_COLORS = {
         },
         blue: {
             label: "blue",
-            value: "#8787ff",
+            value: "#9e9eff",
         },
         red: {
             label: "red",
-            value: "#ff8989",
+            value: "#ffa2a2",
         },
         green: {
             label: "green",
-            value: "#94ff99",
+            value: "#abffaf",
         },
     },
 };
