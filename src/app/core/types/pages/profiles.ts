@@ -33,3 +33,8 @@ export type ColorType = {
 };
 
 export type GeneralMeasureType = "minimum" | "default" | "large";
+
+export type ModalDataProfileTheme = {
+    selected: boolean;
+    theme: ProfileThemeType;
+};

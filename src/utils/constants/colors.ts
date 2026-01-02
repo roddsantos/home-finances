@@ -80,6 +80,10 @@ export const DEFAULT_COLORS = {
             label: "yellow",
             value: "#888800",
         },
+        orange: {
+            label: "orange",
+            value: "#913a00",
+        },
         cyan: {
             label: "cyan",
             value: "#007c7c",
@@ -126,6 +130,10 @@ export const DEFAULT_COLORS = {
             label: "yellow",
             value: "#86862e",
         },
+        orange: {
+            label: "orange",
+            value: "#9e6036",
+        },
         cyan: {
             label: "cyan",
             value: "#2f9e9e",
@@ -171,6 +179,10 @@ export const DEFAULT_COLORS = {
         yellow: {
             label: "yellow",
             value: "#ffffa9",
+        },
+        orange: {
+            label: "orange",
+            value: "#ffc7a2",
         },
         cyan: {
             label: "cyan",
@@ -314,6 +326,10 @@ export const DEFAULT_BACKGROUND_COLORS = {
             label: "yellow",
             value: "#ffffdc",
         },
+        orange: {
+            label: "orange",
+            value: "#ffefe4",
+        },
         cyan: {
             label: "cyan",
             value: "#ddffff",
@@ -338,35 +354,39 @@ export const DEFAULT_BACKGROUND_COLORS = {
         },
         blue: {
             label: "blue",
-            value: "#04042e",
+            value: "#000022",
         },
         red: {
             label: "red",
-            value: "#350505",
+            value: "#250000",
         },
         green: {
             label: "green",
-            value: "#042c04",
+            value: "#001800",
         },
         yellow: {
             label: "yellow",
-            value: "#3b3b03",
+            value: "#242400",
+        },
+        orange: {
+            label: "orange",
+            value: "#301300",
         },
         cyan: {
             label: "cyan",
-            value: "#0a3636",
+            value: "#002222",
         },
         magenta: {
             label: "magenta",
-            value: "#3a043a",
+            value: "#250025",
         },
         brown: {
             label: "brown",
-            value: "#381605",
+            value: "#250c00",
         },
         purple: {
             label: "purple",
-            value: "#1a053b",
+            value: "#100029",
         },
     },
 };
@@ -376,9 +396,9 @@ export const DEFAULT_THEME: ProfileThemeType = {
     theme: "default",
     title: "default",
     description: "the default theme of the application",
-    primary: "cyan",
-    secondary: "magenta",
-    background: "yellow",
+    primary: "blue",
+    secondary: "blue",
+    background: "base",
     text1: "base",
     text2: "base",
     borderWidth: "default",

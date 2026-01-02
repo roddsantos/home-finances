@@ -55,34 +55,29 @@
                 </div>
             </div>
         </form>
-
-        <button
+        <btn
+            variant="primary"
             *ngIf="!((profileForm.valueChanges | async)! | user: 'compare')"
-            (click)="onUpdate()"
-            mat-button
-            class="button-primary update"
+            (onClick)="onUpdate()"
         >
             <mat-icon
                 aria-hidden="false"
-                aria-label="Example home icon"
+                aria-label="update profile info button"
                 fontIcon="save"
             ></mat-icon>
             <p>update</p>
-        </button>
-        <button
-            (click)="onLogout()"
+        </btn>
+        <btn
+            variant="secondary"
             [disabled]="!((profileForm.valueChanges | async)! | user: 'compare')"
-            mat-button
-            class="button-secondary logout"
-            [style.opacity]="!((profileForm.valueChanges | async)! | user: 'compare') ? 0.4 : 1"
-            [style.backgroundColor]="(errorColor | color:'33')"
+            (onClick)="onLogout()"
         >
             <mat-icon
                 aria-hidden="false"
-                aria-label="Example home icon"
+                aria-label="logout button"
                 fontIcon="logout"
             ></mat-icon>
-            <p>logout</p>
-        </button>
+            <p>logout</p></btn
+        >
     </div>
 </card-component>

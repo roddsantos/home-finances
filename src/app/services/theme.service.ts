@@ -41,6 +41,17 @@ export class ThemeService extends GeneralService {
         );
     }
 
+    updateTheme(data: ProfileThemeType) {
+        return this.user.user$.pipe(
+            mergeMap((user) =>
+                this.http.patch<ProfileThemeType>(THEME, {
+                    ...data,
+                    userId: user?.id,
+                })
+            )
+        );
+    }
+
     setTheme(theme: ProfileThemeType) {
         const { id } = theme;
         this.setupTheme(theme);

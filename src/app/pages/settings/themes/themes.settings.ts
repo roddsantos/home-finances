@@ -13,6 +13,8 @@ import { ThemeService } from "src/app/services/theme.service";
 import { CustonButton } from "src/app/components/button/custom-button.component";
 import { ThemeState } from "src/app/core/subjects/subjects.theme";
 import { MatTooltip } from "@angular/material/tooltip";
+import { ActionsComponent } from "src/app/components/actions/actions.component";
+import { ActionItem } from "src/app/core/types/components";
 
 @Component({
     selector: "themes-settings",
@@ -26,6 +28,7 @@ import { MatTooltip } from "@angular/material/tooltip";
         MatIconModule,
         CustonButton,
         MatTooltip,
+        ActionsComponent,
     ],
 })
 export class ThemeSettingsComponent implements OnInit {
@@ -41,6 +44,21 @@ export class ThemeSettingsComponent implements OnInit {
     private style = getComputedStyle(document.body);
     public secondaryColor = this.style.getPropertyValue("--secondary");
 
+    actions: ActionItem[] = [
+        {
+            name: "",
+            icon: "edit",
+            action: (data: ProfileThemeType) => this.onEdit(data),
+            color: "var(--info)",
+        },
+        {
+            name: "",
+            icon: "delete",
+            action: (data: ProfileThemeType) => this.onDelete(data),
+            color: "var(--error)",
+        },
+    ];
+
     ngOnInit() {
         this.generalState.theme$.subscribe({
             next: (theme) => {
@@ -55,6 +73,18 @@ export class ThemeSettingsComponent implements OnInit {
     }
 
     onNewProfileTheme() {
-        this.dialog.open(ModalNewThemeProfile, {});
+        this.dialog.open(ModalNewThemeProfile, {
+            data: {},
+        });
+    }
+
+    onEdit(theme: ProfileThemeType) {
+        this.dialog.open(ModalNewThemeProfile, {
+            data: { theme, selected: this.selectedTheme === theme.id },
+        });
+    }
+
+    onDelete(data: ProfileThemeType) {
+        console.log("to do");
     }
 }

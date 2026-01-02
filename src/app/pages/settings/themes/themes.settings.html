@@ -33,6 +33,13 @@
                         [style.backgroundColor]="th.background"
                     ></div>
                 </div>
+                <actions
+                    *ngIf="th.id !== 'default' && th.id !== 'binary' && th.id !== 'red-and-black'"
+                    class="bill-buttons"
+                    [transparent]="false"
+                    [data]="th"
+                    [actions]="actions"
+                ></actions>
             </div>
         </div>
         <btn variant="primary" (click)="onNewProfileTheme()">

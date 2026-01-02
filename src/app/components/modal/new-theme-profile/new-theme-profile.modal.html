@@ -1,5 +1,5 @@
 <modal-component
-    header="new profile"
+    [header]="data.theme ? 'update theme' : 'new theme'"
     [bodyTemplate]="newProfile"
     (actionPrimary)="handleNextStep()"
     (actionSecondary)="handlePreviousStep()"

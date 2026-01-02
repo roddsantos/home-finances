@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import { ModalComponent } from "../modal.component";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
@@ -6,6 +6,8 @@ import {
     ColorThemeType,
     FontProfileType,
     GeneralMeasureType,
+    ModalDataProfileTheme,
+    ProfileThemeType,
     ThemeBodyType,
     UpdateProfileControlType,
 } from "src/app/core/types/pages/profiles";
@@ -24,6 +26,7 @@ import { StepTwoNewProfileTheme } from "./step-two/step-two";
 import { StepThreeNewProfileTheme } from "./step-three/step-three";
 import { ThemeService } from "src/app/services/theme.service";
 import { ThemeState } from "src/app/core/subjects/subjects.theme";
+import { DIALOG_DATA } from "@angular/cdk/dialog";
 
 @Component({
     selector: "new-theme-profile",
@@ -41,7 +44,11 @@ import { ThemeState } from "src/app/core/subjects/subjects.theme";
     standalone: true,
 })
 export class ModalNewThemeProfile extends ModalComponent {
-    constructor(private themeService: ThemeService, private themeState: ThemeState) {
+    constructor(
+        @Inject(DIALOG_DATA) public data: ModalDataProfileTheme,
+        private themeService: ThemeService,
+        private themeState: ThemeState
+    ) {
         super();
     }
 
@@ -55,7 +62,7 @@ export class ModalNewThemeProfile extends ModalComponent {
     );
 
     public profileForm = new FormGroup({
-        title: new FormControl<string>("", {
+        title: new FormControl<string>(this.data.theme?.title || "", {
             validators: [
                 Validators.required,
                 Validators.minLength(2),
@@ -63,7 +70,7 @@ export class ModalNewThemeProfile extends ModalComponent {
             ],
             nonNullable: true,
         }),
-        description: new FormControl<string>("", {
+        description: new FormControl<string>(this.data.theme?.description || "", {
             validators: [
                 Validators.required,
                 Validators.minLength(2),
@@ -71,54 +78,87 @@ export class ModalNewThemeProfile extends ModalComponent {
             ],
             nonNullable: true,
         }),
-        theme: new FormControl<ColorThemeType>(COLOR_THEMES.default, {
-            validators: [Validators.required],
-            nonNullable: true,
-        }),
-        primary: new FormControl<string>(DEFAULT_COLORS.default.red.label, {
-            validators: [Validators.required],
-            nonNullable: true,
-        }),
-        secondary: new FormControl<string>(DEFAULT_COLORS.default.black.label, {
-            validators: [Validators.required],
-            nonNullable: true,
-        }),
-        background: new FormControl<string>(DEFAULT_BACKGROUND_COLORS.dark.base.label, {
-            validators: [Validators.required],
-            nonNullable: true,
-        }),
-        text1: new FormControl<string>(DEFAULT_TEXT_COLORS.light.base.label, {
-            validators: [Validators.required],
-            nonNullable: true,
-        }),
-        text2: new FormControl<string>(DEFAULT_TEXT_COLORS.dark.base.label, {
-            validators: [Validators.required],
-            nonNullable: true,
-        }),
-        borderRadius: new FormControl<number>(5, {
+        theme: new FormControl<ColorThemeType>(
+            this.data.theme?.theme || COLOR_THEMES.default,
+            {
+                validators: [Validators.required],
+                nonNullable: true,
+            }
+        ),
+        primary: new FormControl<string>(
+            this.data.theme?.primary || DEFAULT_COLORS.default.red.label,
+            {
+                validators: [Validators.required],
+                nonNullable: true,
+            }
+        ),
+        secondary: new FormControl<string>(
+            this.data.theme?.secondary || DEFAULT_COLORS.default.black.label,
+            {
+                validators: [Validators.required],
+                nonNullable: true,
+            }
+        ),
+        background: new FormControl<string>(
+            this.data.theme?.background || DEFAULT_BACKGROUND_COLORS.dark.base.label,
+            {
+                validators: [Validators.required],
+                nonNullable: true,
+            }
+        ),
+        text1: new FormControl<string>(
+            this.data.theme?.text1 || DEFAULT_TEXT_COLORS.light.base.label,
+            {
+                validators: [Validators.required],
+                nonNullable: true,
+            }
+        ),
+        text2: new FormControl<string>(
+            this.data.theme?.text2 || DEFAULT_TEXT_COLORS.dark.base.label,
+            {
+                validators: [Validators.required],
+                nonNullable: true,
+            }
+        ),
+        borderRadius: new FormControl<number>(this.data.theme?.borderRadius || 5, {
             validators: [Validators.required, Validators.max(20), Validators.min(0)],
             nonNullable: true,
         }),
-        borderWidth: new FormControl<GeneralMeasureType>(GENERAL_MEASURES[1].value, {
-            validators: [Validators.required],
-            nonNullable: true,
-        }),
-        font1: new FormControl<FontProfileType>(THEME_FONTS.roboto, {
-            validators: [Validators.required],
-            nonNullable: true,
-        }),
-        font2: new FormControl<FontProfileType>(THEME_FONTS.commissioner, {
-            validators: [Validators.required],
-            nonNullable: true,
-        }),
-        inputSize: new FormControl<GeneralMeasureType>(GENERAL_MEASURES[1].value, {
-            validators: [Validators.required],
-            nonNullable: true,
-        }),
-        padding: new FormControl<GeneralMeasureType>(GENERAL_MEASURES[1].value, {
-            validators: [Validators.required],
-            nonNullable: true,
-        }),
+        borderWidth: new FormControl<GeneralMeasureType>(
+            this.data.theme?.borderWidth || GENERAL_MEASURES[1].value,
+            {
+                validators: [Validators.required],
+                nonNullable: true,
+            }
+        ),
+        font1: new FormControl<FontProfileType>(
+            this.data.theme?.font1 || THEME_FONTS.roboto,
+            {
+                validators: [Validators.required],
+                nonNullable: true,
+            }
+        ),
+        font2: new FormControl<FontProfileType>(
+            this.data.theme?.font2 || THEME_FONTS.commissioner,
+            {
+                validators: [Validators.required],
+                nonNullable: true,
+            }
+        ),
+        inputSize: new FormControl<GeneralMeasureType>(
+            this.data.theme?.inputSize || GENERAL_MEASURES[1].value,
+            {
+                validators: [Validators.required],
+                nonNullable: true,
+            }
+        ),
+        padding: new FormControl<GeneralMeasureType>(
+            this.data.theme?.padding || GENERAL_MEASURES[1].value,
+            {
+                validators: [Validators.required],
+                nonNullable: true,
+            }
+        ),
     });
 
     ngOnInit() {
@@ -151,7 +191,8 @@ export class ModalNewThemeProfile extends ModalComponent {
             this.step = this.step + 1;
             this.modalState.changeFooter({
                 type: "submit",
-                submitLabel: this.step === 3 ? "create" : "advance",
+                submitLabel:
+                    this.step === 3 ? (this.data.theme ? "update" : "create") : "advance",
                 alertLabel: this.step === 1 ? "cancel" : "back",
             });
         }
@@ -189,18 +230,45 @@ export class ModalNewThemeProfile extends ModalComponent {
         }
     }
 
-    onSubmit() {
+    onCreate() {
         this.themeService
             .createTheme(this.profileForm.getRawValue() as unknown as ThemeBodyType)
             .subscribe({
                 next: (theme) => {
                     this.themeState.addTheme(theme);
-                    this.generalService.successSnackbar("Theme created successfully");
+                    this.generalService.successSnackbar("theme created successfully");
                     this.onClose();
                 },
                 error: () => {
-                    this.generalService.errorSnackbar("Error creating theme");
+                    this.generalService.errorSnackbar("error creating theme");
                 },
             });
+    }
+
+    onUpdate() {
+        const data: ProfileThemeType = {
+            ...this.profileForm.getRawValue(),
+            id: this.data.theme.id,
+        };
+        this.themeService.updateTheme(data).subscribe({
+            next: (theme) => {
+                console.log(theme);
+                this.themeState.updateTheme(theme);
+
+                if (this.data.selected) this.themeService.setTheme(theme);
+
+                this.generalService.successSnackbar("theme updated successfully");
+                this.onClose();
+            },
+            error: () => {
+                this.generalService.errorSnackbar("error updating theme");
+            },
+        });
+    }
+
+    onSubmit() {
+        if (this.profileForm.invalid) return;
+        if (this.data.theme) this.onUpdate();
+        else this.onCreate();
     }
 }
