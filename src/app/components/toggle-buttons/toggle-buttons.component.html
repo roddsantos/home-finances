@@ -1,4 +1,4 @@
-<h5 class="label" *ngIf="label.length > 0">{{ label }}</h5>
+<p class="label" *ngIf="label.length > 0">{{ label }}</p>
 <div class="group" #status [formControl]="formController" ngDefaultControl>
     <btn
         *ngFor="let item of items"

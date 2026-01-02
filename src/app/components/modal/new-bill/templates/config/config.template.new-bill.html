@@ -4,43 +4,26 @@
     <form [formGroup]="configForm" class="form-container">
         <ng-container *ngIf="configData.type === 'money'">
             <div class="row">
-                <div>
-                    <p>money flow</p>
-                    <mat-button-toggle-group
-                        formControlName="isPayment"
-                        name="moneyy flow"
-                        aria-label="Font Style"
-                        class="margin"
-                    >
-                        <mat-button-toggle [value]="true">outcome</mat-button-toggle>
-                        <mat-button-toggle [value]="false">income</mat-button-toggle>
-                    </mat-button-toggle-group>
-                </div>
-                <div>
-                    <p>is recurrent bill?</p>
-                    <mat-button-toggle-group
-                        formControlName="isRecurrent"
-                        name="recurrent"
-                        aria-label="Font Style"
-                        class="margin"
-                    >
-                        <mat-button-toggle [value]="true">yes</mat-button-toggle>
-                        <mat-button-toggle [value]="false">no</mat-button-toggle>
-                    </mat-button-toggle-group>
-                </div>
+                <toggle-button
+                    label="it is an outcome or an income?"
+                    [items]="moneyFlowItems"
+                    [formController]="configForm.controls['isPayment']"
+                ></toggle-button>
+                <toggle-button
+                    label="is recurrent bill?"
+                    [items]="booleanItems"
+                    [formController]="configForm.controls['isRecurrent']"
+                    class="margin"
+                ></toggle-button>
             </div>
         </ng-container>
-        <p>payment processed?</p>
-        <mat-button-toggle-group
-            formControlName="settled"
-            name="settled"
-            aria-label="Font Style"
+        <toggle-button
+            label="payment processed?"
+            [items]="booleanItems"
+            [formController]="configForm.controls['settled']"
             class="margin"
-            (change)="settledChange($event)"
-        >
-            <mat-button-toggle [value]="true">yes</mat-button-toggle>
-            <mat-button-toggle [value]="false">no</mat-button-toggle>
-        </mat-button-toggle-group>
+            (onClick)="settledChange($event)"
+        ></toggle-button>
         <div class="new-bill-field">
             <ng-container *ngIf="configForm.value.settled">
                 <mat-form-field class="half" appearance="outline" color="primary">
@@ -66,10 +49,10 @@
         </div>
 
         <div class="new-bill-field" *ngIf="configData.type === 'companyCredit'">
-            <p>
+            <h6>
                 bills created this month will start to appear next month, to appear this
                 month, choose a date in a previous month
-            </p>
+            </h6>
         </div>
     </form>
 </div>

@@ -334,39 +334,39 @@ export const DEFAULT_BACKGROUND_COLORS = {
     dark: {
         base: {
             label: "base",
-            value: "#2c2c2c",
+            value: "#131313",
         },
         blue: {
             label: "blue",
-            value: "#101061",
+            value: "#04042e",
         },
         red: {
             label: "red",
-            value: "#630c0c",
+            value: "#350505",
         },
         green: {
             label: "green",
-            value: "#174717",
+            value: "#042c04",
         },
         yellow: {
             label: "yellow",
-            value: "#69690f",
+            value: "#3b3b03",
         },
         cyan: {
             label: "cyan",
-            value: "#0b3a3a",
+            value: "#0a3636",
         },
         magenta: {
             label: "magenta",
-            value: "#3f093f",
+            value: "#3a043a",
         },
         brown: {
             label: "brown",
-            value: "#3a1909",
+            value: "#381605",
         },
         purple: {
             label: "purple",
-            value: "#23094d",
+            value: "#1a053b",
         },
     },
 };

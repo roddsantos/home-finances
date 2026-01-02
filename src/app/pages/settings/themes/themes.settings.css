@@ -7,6 +7,7 @@
 .themes {
     grid-template-columns: repeat(4, 23%);
     width: 100%;
+    margin-bottom: 1rem;
     @media screen and (max-width: 1366px) {
         grid-template-columns: repeat(3, 30%);
     }
@@ -37,9 +38,10 @@
     height: 20px;
     width: 100%;
     margin-top: 0.5rem;
-    border-radius: var(--border-radius);
     & .pallete-color {
-        width: 25%;
+        width: 33%;
         height: 100%;
+        border: solid var(--border-width) var(--border-color);
+        border-radius: var(--border-radius);
     }
 }

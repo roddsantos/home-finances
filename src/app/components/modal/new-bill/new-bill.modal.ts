@@ -110,7 +110,7 @@ export class ModalNewBill extends ModalComponent {
             validators: [Validators.required],
         }),
         bank2: new FormControl<Bank | null>(null, { nonNullable: false }),
-        isPayment: new FormControl<boolean>(false, {
+        isPayment: new FormControl<boolean>(true, {
             nonNullable: true,
         }),
         company: new FormControl<Company | null>(null, {

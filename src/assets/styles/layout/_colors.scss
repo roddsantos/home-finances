@@ -1,10 +1,10 @@
-$text3: var(--text-2);
+$text2: var(--text-2);
 $text1: var(--text-1);
-$custom-purple: #7a3fb5;
-$custom-blue: #527fb6;
-$custom-warn: #ff5722;
+$custom-primary: var(--primary);
+$custom-secondary: var(--secondary);
+$custom-warn: var(--error);
 
-$custom-brand-purple: (
+$custom-brand-primary: (
     50: var(--primary),
     100: var(--primary),
     200: var(--primary),
@@ -16,20 +16,20 @@ $custom-brand-purple: (
     800: var(--primary),
     900: var(--primary),
     contrast: (
-        50: $text3,
-        100: $text3,
-        200: $text3,
-        300: $text3,
-        400: $text3,
-        500: $text3,
-        600: $text3,
-        700: $text3,
-        800: $text3,
-        900: $text3,
+        50: $text2,
+        100: $text2,
+        200: $text2,
+        300: $text2,
+        400: $text2,
+        500: $text2,
+        600: $text2,
+        700: $text2,
+        800: $text2,
+        900: $text2,
     ),
 );
 
-$custom-brand-blue: (
+$custom-brand-secondary: (
     50: var(--secondary),
     100: var(--secondary),
     200: var(--secondary),
@@ -41,16 +41,16 @@ $custom-brand-blue: (
     800: var(--secondary),
     900: var(--secondary),
     contrast: (
-        50: $text3,
-        100: $text3,
-        200: $text3,
-        300: $text3,
-        400: $text3,
-        500: $text3,
-        600: $text3,
-        700: $text3,
-        800: $text3,
-        900: $text3,
+        50: $text2,
+        100: $text2,
+        200: $text2,
+        300: $text2,
+        400: $text2,
+        500: $text2,
+        600: $text2,
+        700: $text2,
+        800: $text2,
+        900: $text2,
     ),
 );
 
@@ -91,16 +91,16 @@ $custom-brand-black: (
     800: #000000,
     900: #000000,
     contrast: (
-        50: $text3,
-        100: $text3,
-        200: $text3,
-        300: $text3,
-        400: $text3,
-        500: $text3,
-        600: $text3,
-        700: $text3,
-        800: $text3,
-        900: $text3,
+        50: $text2,
+        100: $text2,
+        200: $text2,
+        300: $text2,
+        400: $text2,
+        500: $text2,
+        600: $text2,
+        700: $text2,
+        800: $text2,
+        900: $text2,
     ),
 );
 
@@ -116,15 +116,15 @@ $custom-brand-white: (
     800: #cacaca,
     900: #aaaaaa,
     contrast: (
-        50: $text3,
-        100: $text3,
-        200: $text3,
-        300: $text3,
-        400: $text3,
-        500: $text3,
-        600: $text3,
-        700: $text3,
-        800: $text3,
-        900: $text3,
+        50: $text2,
+        100: $text2,
+        200: $text2,
+        300: $text2,
+        400: $text2,
+        500: $text2,
+        600: $text2,
+        700: $text2,
+        800: $text2,
+        900: $text2,
     ),
 );

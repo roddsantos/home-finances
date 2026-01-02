@@ -16,21 +16,18 @@ import {
 } from "@angular/forms";
 import { MatInput, MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatButton } from "@angular/material/button";
 import { CustomFilterState } from "../custom-filter.subjects.component";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import { MONTHS } from "src/utils/constants/general";
-import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
-import { LocalStorageService } from "src/app/services/local-storage.service";
 import { ServiceBill } from "src/app/services/bill.service";
 import { MatButtonToggle, MatButtonToggleModule } from "@angular/material/button-toggle";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule, provideNativeDateAdapter } from "@angular/material/core";
 import { Subscription } from "rxjs";
-import { GeneralComponent } from "../../general/general.component";
+import { CustonButton } from "../../button/custom-button.component";
 
 @Component({
     selector: "dialog-custom-filter",
@@ -40,7 +37,6 @@ import { GeneralComponent } from "../../general/general.component";
     imports: [
         CommonModule,
         MatInputModule,
-        MatButton,
         ModalComponent,
         MatSelectModule,
         MatAutocompleteModule,
@@ -53,13 +49,12 @@ import { GeneralComponent } from "../../general/general.component";
         MatButtonToggleModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        CustonButton,
     ],
     providers: [provideNativeDateAdapter()],
 })
-export class DialogCustomList extends GeneralComponent implements OnInit {
+export class DialogCustomList extends ModalComponent implements OnInit {
     public filterState = inject(CustomFilterState);
-
-    public modalState = inject(ModalState);
 
     public catState = inject(CategoryState);
     public ccState = inject(CreditCardState);
@@ -105,7 +100,6 @@ export class DialogCustomList extends GeneralComponent implements OnInit {
 
     ngOnInit() {
         this.modalState.changeSubmitFooter("OK", "cancel");
-        this.modalState.changeHeader("add filters");
 
         this.filterSubscription = this.filterState.filters$.subscribe({
             next: (filters) => {
@@ -261,6 +255,10 @@ export class DialogCustomList extends GeneralComponent implements OnInit {
                 this.billState.changeStatus("error", "error fetching bills");
             },
         });
+    }
+
+    handleClose() {
+        this.onClose();
     }
 
     ngOnDestroy() {

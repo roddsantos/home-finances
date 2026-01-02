@@ -12,13 +12,21 @@ import { ProfileThemeType } from "src/app/core/types/pages/profiles";
 import { ThemeService } from "src/app/services/theme.service";
 import { CustonButton } from "src/app/components/button/custom-button.component";
 import { ThemeState } from "src/app/core/subjects/subjects.theme";
+import { MatTooltip } from "@angular/material/tooltip";
 
 @Component({
     selector: "themes-settings",
     templateUrl: "./themes.settings.html",
     styleUrls: ["./themes.settings.css"],
     standalone: true,
-    imports: [CommonModule, CardComponent, MatButtonModule, MatIconModule, CustonButton],
+    imports: [
+        CommonModule,
+        CardComponent,
+        MatButtonModule,
+        MatIconModule,
+        CustonButton,
+        MatTooltip,
+    ],
 })
 export class ThemeSettingsComponent implements OnInit {
     public dialog = inject(Dialog);

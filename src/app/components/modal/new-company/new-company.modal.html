@@ -1,4 +1,5 @@
 <modal-component
+    [header]="data ? 'edit company' : 'new company'"
     [disabled]="companyForm.invalid"
     (actionPrimary)="onSubmit()"
     (actionSecondary)="handleClose()"

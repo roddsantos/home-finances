@@ -80,7 +80,7 @@
     padding: 0px 20px;
     background-color: var(--primary);
     border-bottom: solid var(--border-width) var(--border-color);
-    border-radius: 5px 5px 0px 0px;
+    border-radius: var(--border-radius) var(--border-radius) 0px 0px;
     & h3 {
         color: var(--text-2);
         margin: auto auto auto 0px;

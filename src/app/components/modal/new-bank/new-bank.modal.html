@@ -1,4 +1,5 @@
 <modal-component
+    [header]="data ? 'edit bank' : 'new bank'"
     [disabled]="bankForm.invalid"
     (actionPrimary)="onSubmit()"
     (actionSecondary)="handleClose()"

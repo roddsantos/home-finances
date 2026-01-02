@@ -37,6 +37,7 @@ export class CustonButton {
     }
 
     getTextClass() {
+        if (this.disabled) return "text-1";
         const backgroundColor = getBackgroundColor("custom-button-" + this.id);
         const textColorString = contrastText(backgroundColor);
         if (textColorString === "var(--text-1) !important") return "text-1";

@@ -7,3 +7,16 @@
         }
     }
 }
+
+.mat-datepicker-content {
+    .mat-calendar-body-cell.mat-calendar-body-active {
+        span {
+            color: var(--text-2);
+        }
+    }
+    .mat-calendar-body-cell {
+        span {
+            color: var(--text-1);
+        }
+    }
+}
