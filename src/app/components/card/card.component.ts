@@ -2,7 +2,6 @@ import { CommonModule } from "@angular/common";
 import { Component, HostListener, inject, Input } from "@angular/core";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
-import { ColorPipe } from "src/utils/pipes/colors";
 import { CardActionType, CardOptionsType } from "src/app/core/types/components";
 import { MatTooltip } from "@angular/material/tooltip";
 import { MatIconModule } from "@angular/material/icon";
@@ -13,7 +12,7 @@ import { MatButtonModule } from "@angular/material/button";
     selector: "card-component",
     templateUrl: "./card.component.html",
     styleUrls: ["./card.component.css"],
-    imports: [CommonModule, MatTooltip, MatIconModule, MatButtonModule, ColorPipe],
+    imports: [CommonModule, MatTooltip, MatIconModule, MatButtonModule],
 })
 export class CardComponent {
     public storage = inject(LocalStorageService);
@@ -30,26 +29,12 @@ export class CardComponent {
     @Input() hideHeader?: boolean;
     @Input() options?: CardOptionsType;
 
-    public actualTheme: string;
     public cardHeight: number;
     public cardWidth: number;
 
     public style: CSSStyleDeclaration;
-    public background: string;
-    public backgroundHighlighter: string;
-    public secondary: string;
 
-    ngOnInit() {
-        this.general.theme$.subscribe({
-            next: (theme) => {
-                this.actualTheme = theme;
-                this.style = getComputedStyle(document.body);
-                this.background = this.style.getPropertyValue("--background");
-                this.backgroundHighlighter = this.style.getPropertyValue("--bh");
-                this.secondary = this.style.getPropertyValue("--secondary");
-            },
-        });
-    }
+    ngOnInit() {}
 
     ngAfterViewInit() {
         if (this.shadow) {

@@ -201,15 +201,17 @@ export class ThemeService extends GeneralService {
     }
 
     setOtherVars(profileTheme: ProfileThemeType) {
-        const { id, primary, secondary } = profileTheme;
+        const { id } = profileTheme;
 
         document.documentElement.style.setProperty(
             "--bh",
-            "rgb(from var(--background) calc(r - 10) calc(g - 10) calc(b - 10))"
+            id === "binary"
+                ? "var(--background)"
+                : "rgb(from var(--background) calc(r - 10) calc(g - 10) calc(b - 10))"
         );
         document.documentElement.style.setProperty(
             "--border-color",
-            id === "binary" ? "var(--secondary)" : "var(--primary)"
+            id === "binary" ? "var(--text-1)" : "var(--primary)"
         );
     }
 

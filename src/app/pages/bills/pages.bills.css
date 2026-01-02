@@ -53,9 +53,6 @@
     background-color: var(--bh);
     border-radius: var(--border-radius);
     border: var(--border-width) solid var(--border-color);
-    &.binary {
-        border: var(--border-width) solid var(--secondary);
-    }
 }
 
 .bill-color-container {
@@ -69,10 +66,6 @@
     border-bottom: 12px solid transparent;
     border-right: 12px solid transparent;
     box-shadow: 2px 0px 1px 0px rgba(0, 0, 0, 0.2);
-}
-
-.binary {
-    background-color: transparent !important;
 }
 
 .bill-aside {
@@ -358,4 +351,10 @@
     display: flex;
     flex-direction: row;
     margin: auto 0px;
+}
+
+.binary {
+    & .category-container {
+        background-color: transparent !important;
+    }
 }

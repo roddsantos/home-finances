@@ -38,9 +38,6 @@
         row-gap: 0.5rem;
         grid-template-rows: repeat(3, auto);
     }
-    &.binary {
-        border: solid var(--border-width) var(--secondary);
-    }
 }
 
 .company-title {

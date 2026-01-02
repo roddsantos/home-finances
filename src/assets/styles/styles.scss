@@ -89,9 +89,20 @@ body {
 
 .binary {
     & .material-symbols-outlined {
-        color: var(--secondary);
+        color: var(--text-1);
     }
-    --border-width: 2px;
+    .bill-aside {
+        & .filter-container {
+            border: var(--border-width) solid var(--text-1) !important;
+        }
+    }
+    .category-container,
+    .type-container,
+    .date-container,
+    .recurrent-container,
+    .flow-container {
+        background-color: transparent !important;
+    }
 }
 
 .material-symbols-outlined,

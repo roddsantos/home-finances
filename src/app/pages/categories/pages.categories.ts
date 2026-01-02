@@ -103,17 +103,4 @@ export class PageCategories {
             this.dialog.open(ModalViewItem, option);
         }
     }
-
-    getColorContrast(color: string) {
-        var expectedColor = color;
-        this.generalState.theme$.subscribe({
-            next: (theme) => {
-                if (theme === "binary") expectedColor = "#000000";
-            },
-        });
-        let r = parseInt(expectedColor.substring(0, 2), 16); // hexToR - max 76,245
-        let g = parseInt(expectedColor.substring(2, 4), 16); // hexToG - max 149,685
-        let b = parseInt(expectedColor.substring(4, 6), 16); // hexToB - max 29,07
-        return r * 0.299 + g * 0.587 + b * 0.114 > 186 ? "#000000" : "#ffffff"; // max 255
-    }
 }

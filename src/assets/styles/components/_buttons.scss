@@ -185,3 +185,10 @@
         height: 32px !important;
     }
 }
+
+.binary .button-primary,
+.binary .button-secondary {
+    &.mat-mdc-button:not(:disabled) {
+        background-color: transparent !important;
+    }
+}

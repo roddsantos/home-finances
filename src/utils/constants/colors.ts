@@ -415,7 +415,7 @@ export const BINARY_THEME: ProfileThemeType = {
     title: "black and white",
     description: "black and white themed",
     primary: "black",
-    secondary: "white",
+    secondary: "black",
     background: "base",
     text1: "base",
     text2: "base",
@@ -424,7 +424,7 @@ export const BINARY_THEME: ProfileThemeType = {
     inputSize: "default",
     padding: "default",
     font1: "Open-Sans",
-    font2: "Open-Sans",
+    font2: "Commissioner",
 };
 
 export const RED_AND_BLACK: ProfileThemeType = {

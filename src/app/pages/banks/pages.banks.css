@@ -38,9 +38,6 @@
         grid-template-columns: 5% 95%;
         grid-template-rows: repeat(4, auto);
     }
-    &.binary {
-        border: solid var(--border-width) var(--secondary);
-    }
 }
 
 .bank-title {

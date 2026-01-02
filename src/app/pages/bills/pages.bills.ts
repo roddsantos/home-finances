@@ -85,9 +85,6 @@ export class PageBills {
 
     ngOnInit() {
         this.billState.setAction(() => this.onReload());
-        this.generalState.theme$.subscribe({
-            next: (theme) => (this.isLineTheme = theme === "binary" ? "binary" : ""),
-        });
     }
 
     trackByFn(index: number, item: any) {

@@ -25,9 +25,6 @@
     background-color: var(--primary);
     border-radius: var(--border-radius);
     border: none;
-    &.binary {
-        border: solid var(--border-width) var(--secondary);
-    }
 }
 
 .item-icon {
@@ -74,4 +71,15 @@
 
 .top {
     margin-top: 80px;
+}
+
+.binary {
+    & .item-container.item-selected {
+        background-color: transparent !important;
+        border: solid var(--border-width) var(--text-1);
+    }
+    & .item-selected {
+        color: var(--text-1);
+        background-color: transparent;
+    }
 }

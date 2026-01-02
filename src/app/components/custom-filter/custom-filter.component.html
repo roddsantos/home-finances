@@ -1,10 +1,5 @@
 <div class="filter-main" *ngIf="generalState.filterContainer$ | async">
-    <div
-        [ngClass]="[
-            'filter-container',
-            (generalState.theme$ | async) === 'binary' ? 'binary' : ''
-        ]"
-    >
+    <div [ngClass]="['filter-container']">
         <div class="filter-term">
             <h6>term</h6>
             <mat-form-field class="term-input" appearance="outline">

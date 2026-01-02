@@ -45,13 +45,7 @@ export class ItemLayoutComponent {
     public text1Color = this.style.getPropertyValue("--text-1");
     public text3Color = this.style.getPropertyValue("--text-2");
 
-    constructor() {
-        this.generalState.theme$.subscribe({
-            next: (t) => {
-                this.isLineThemed = t !== "binary";
-            },
-        });
-    }
+    constructor() {}
 
     ngOnInit() {
         this.page = this.item.page;
