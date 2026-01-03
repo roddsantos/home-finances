@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {
     FormControl,
     FormGroup,
@@ -16,12 +16,12 @@ import { CardComponent } from "src/app/components/card/card.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { UserService } from "src/app/services/user.service";
 import { UserState } from "src/app/core/subjects/subjects.user";
-import { ColorPipe } from "src/utils/pipes/colors";
 import { UserPipe } from "src/utils/pipes/user";
 import { UserObject } from "src/app/core/types/services";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { Router } from "@angular/router";
 import { GeneralService } from "src/app/services/general.service";
+import { CustonButton } from "src/app/components/button/custom-button.component";
 
 @Component({
     selector: "profile-settings",
@@ -30,7 +30,6 @@ import { GeneralService } from "src/app/services/general.service";
     standalone: true,
     imports: [
         CommonModule,
-        ColorPipe,
         CardComponent,
         ReactiveFormsModule,
         FormsModule,
@@ -39,6 +38,7 @@ import { GeneralService } from "src/app/services/general.service";
         MatInputModule,
         MatIconModule,
         MatButtonModule,
+        CustonButton,
     ],
 })
 export class ProfileSettingsComponent {

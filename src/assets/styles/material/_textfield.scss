@@ -12,18 +12,18 @@
 
     & .mdc-notched-outline__leading {
         height: calc(2 * var(--input-unit)) !important;
-        border-color: var(--text-2) !important;
+        border-color: var(--text-1) !important;
         border-radius: var(--border-radius) 0px 0px var(--border-radius) !important;
     }
     & .mdc-notched-outline__notch {
         border-left: none !important;
         height: calc(2 * var(--input-unit)) !important;
-        border-color: var(--text-2) !important;
+        border-color: var(--text-1) !important;
         border-radius: 0px !important;
     }
     & .mdc-notched-outline__trailing {
         height: calc(2 * var(--input-unit)) !important;
-        border-color: var(--text-2) !important;
+        border-color: var(--text-1) !important;
         border-radius: 0px var(--border-radius) var(--border-radius) 0px !important;
     }
     & .mdc-text-field--focused {

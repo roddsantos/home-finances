@@ -9,6 +9,7 @@
 >
     <button
         *ngFor="let a of actions"
+        [id]="a.icon"
         (click)="a.action(data)"
         [matTooltip]="a.name"
         matTooltipPosition="above"

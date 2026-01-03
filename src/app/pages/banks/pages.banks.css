@@ -38,9 +38,6 @@
         grid-template-columns: 5% 95%;
         grid-template-rows: repeat(4, auto);
     }
-    &.binary {
-        border: solid var(--border-width) var(--secondary);
-    }
 }
 
 .bank-title {
@@ -65,7 +62,7 @@
     grid-area: bank-description;
     font-weight: normal;
     font-size: 14px;
-    color: var(--text-2);
+    color: var(--text-1);
     margin: auto 0px;
     width: 50%;
 }

@@ -1,8 +1,8 @@
-<div class="margin-right">
-    <div
-        class="button-secondary pad"
-        [matTooltip]="'page '+(billsState.billsPagination$ | async)?.page"
+<div class="main">
+    <btn
         matTooltipPosition="above"
+        [matTooltip]="'page '+(billsState.billsPagination$ | async)?.page"
+        variant="secondary"
     >
         <mat-icon
             aria-hidden="false"
@@ -11,43 +11,43 @@
             class="material-symbols-outlined"
         ></mat-icon>
         <h5>{{(billsState.billsPagination$ | async)?.page}}</h5>
-    </div>
-    <button
-        aria-label="next page"
+    </btn>
+    <btn
+        matTooltipPosition="above"
+        aria-label="first page"
+        matTooltip="first page"
+        variant="primary"
+        (onClick)="onFirstPage()"
         [disabled]="page === 1"
-        (click)="onFirstPage()"
-        [ngClass]="['button-primary', 'pad']"
-        mat-button
     >
         <mat-icon
             class="material-symbols-outlined icon-page"
             aria-hidden="false"
             aria-label="Example home icon"
-            fontIcon="keyboard_double_arrow_left"
-        ></mat-icon>
-    </button>
-    <button
+            fontIcon="first_page"
+        ></mat-icon
+    ></btn>
+    <btn
+        matTooltipPosition="above"
         aria-label="previous page"
+        matTooltip="previous page"
+        variant="primary"
         [disabled]="page === 1"
-        (click)="onPreviousPage()"
-        [ngClass]="['button-primary', 'pad']"
-        mat-button
-    >
-        <mat-icon
+        (onClick)="onPreviousPage()"
+        ><mat-icon
             class="icon-page"
             aria-hidden="false"
             aria-label="Example home icon"
             fontIcon="arrow_back"
-        ></mat-icon>
-    </button>
-    <button
-        [matTooltip]="'number of items: '+(billsState.billsPagination$ | async)?.limit"
-        matTooltipPosition="above"
-        aria-label="toggle number of items per page"
-        (click)="setLimitList()"
-        [ngClass]="['button-primary', 'pad']"
-        mat-button
+        ></mat-icon
+    ></btn>
+    <btn
+        variant="primary"
         [disabled]="(billsState.bills$ | async)?.length === 0"
+        (onClick)="setLimitList()"
+        aria-label="toggle number of items per page"
+        [matTooltip]="'items per page: '+(billsState.billsPagination$ | async)?.limit"
+        matTooltipPosition="above"
     >
         <mat-icon
             class="icon-page material-symbols-outlined"
@@ -55,15 +55,16 @@
             aria-label="Example home icon"
             fontIcon="reorder"
         ></mat-icon>
-        {{(billsState.billsPagination$ | async)?.limit}}
-    </button>
+        <h5>{{(billsState.billsPagination$ | async)?.limit}}</h5>
+    </btn>
     <!-- <div class="input-page-container pad"></div> -->
-    <button
+    <btn
+        matTooltipPosition="above"
         aria-label="next page"
+        matTooltip="next page"
+        variant="primary"
         [disabled]="disableNext()"
-        (click)="onNextPage()"
-        [ngClass]="['button-primary', 'pad', 'next-page']"
-        mat-button
+        (onClick)="onNextPage()"
     >
         <mat-icon
             class="icon-page"
@@ -71,19 +72,20 @@
             aria-label="Example home icon"
             fontIcon="arrow_forward"
         ></mat-icon>
-    </button>
-    <button
-        aria-label="next page"
+    </btn>
+    <btn
+        aria-label="last page"
+        matTooltipPosition="above"
+        matTooltip="last page"
         [disabled]="disableNext()"
-        (click)="onLastPage()"
-        [ngClass]="['button-primary', 'pad']"
-        mat-button
+        (onClick)="onLastPage()"
+        variant="primary"
     >
         <mat-icon
             class="material-symbols-outlined icon-page"
             aria-hidden="false"
             aria-label="Example home icon"
-            fontIcon="keyboard_double_arrow_right"
+            fontIcon="last_page"
         ></mat-icon>
-    </button>
+    </btn>
 </div>

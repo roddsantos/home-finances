@@ -1,4 +1,5 @@
 <modal-component
+    header="new saving"
     [disabled]="savingsForm.invalid"
     (actionPrimary)="onCreate()"
     (actionSecondary)="handleClose()"
@@ -45,16 +46,13 @@
             </div>
 
             <p>use actual bank saving value?</p>
-            <mat-button-toggle-group
-                formControlName="bankValue"
-                aria-label="Font Style"
+            <toggle-button
                 class="full"
-                [style.marginBottom]="'20px'"
-                (change)="useBankSaving($event)"
-            >
-                <mat-button-toggle [value]="true">yes</mat-button-toggle>
-                <mat-button-toggle [value]="false">no</mat-button-toggle>
-            </mat-button-toggle-group>
+                aria-label="use bank value selector"
+                [items]="bankValueItems"
+                [formController]="savingsForm.controls['bankValue']"
+                (onClick)="useBankSaving($event)"
+            ></toggle-button>
 
             <mat-form-field class="half" appearance="outline">
                 <mat-label>total</mat-label>

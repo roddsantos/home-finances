@@ -15,7 +15,6 @@ import { CustomFilterState } from "../custom-filter/custom-filter.subjects.compo
 import { Router } from "@angular/router";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { ServiceBill } from "src/app/services/bill.service";
-import { CustomSnackbarComponent } from "../custom-snackbar/custom-snackbar.component";
 import { DashboardState } from "src/app/core/subjects/subjects.dashboard";
 import { Subscription } from "rxjs";
 import { Dialog } from "@angular/cdk/dialog";
@@ -40,8 +39,6 @@ export class CalendarComponent implements OnChanges, OnDestroy {
 
     public billState = inject(BillState);
     private billsService = inject(ServiceBill);
-
-    private snack = inject(CustomSnackbarComponent);
     public dialog = inject(Dialog);
 
     @Input() monthBills: MonthBillsType[];

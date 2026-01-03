@@ -5,10 +5,11 @@ import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { ServiceCategory } from "./services/category.service";
 import { CustomFilterState } from "./components/custom-filter/custom-filter.subjects.component";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
-import { ThemeObjectType, ThemeType } from "src/app/core/types/general";
 import { UserService } from "./services/user.service";
-import { THEMES } from "src/utils/constants/general";
-import { PageLogin } from "./pages/login/login.page";
+import { BINARY_THEME, DEFAULT_THEME, RED_AND_BLACK } from "src/utils/constants/colors";
+import { ThemeService } from "./services/theme.service";
+import { ThemeState } from "./core/subjects/subjects.theme";
+import { ProfileThemeType } from "./core/types/pages/profiles";
 
 @Component({
     selector: "app-root",
@@ -24,9 +25,12 @@ export class AppComponent {
     public catService = inject(ServiceCategory);
     public filterState = inject(CustomFilterState);
     public userService = inject(UserService);
+    public themeService = inject(ThemeService);
+    public themeState = inject(ThemeState);
 
     title = "bills-app";
     theme = this.storage.getTheme();
+    public allThemes: ProfileThemeType[] = [];
 
     ngOnInit() {
         // GET USER INFO
@@ -40,19 +44,25 @@ export class AppComponent {
 
         // GET THEME
         const theme = this.storage.getTheme();
-        if (theme) {
-            const selectedTheme = THEMES.find((th) => th.id === theme);
-            this.generalState.changeTheme((theme || "default") as ThemeType);
-            this.generalState.changeThemeObject(selectedTheme!);
-            Object.keys(selectedTheme!).forEach((key) => {
-                document.documentElement.style.setProperty(
-                    key,
-                    selectedTheme![key as keyof ThemeObjectType]
-                );
-            });
-            document.body.className = "";
-            document.body.className = theme === "default" ? "" : theme;
-        }
+        if (!theme) this.themeService.setTheme(DEFAULT_THEME);
+        else this.themeService.setTheme(theme);
+        this.themeService.getThemes().subscribe({
+            next: (themes) => {
+                this.themeState.setThemeList([
+                    ...themes,
+                    DEFAULT_THEME,
+                    RED_AND_BLACK,
+                    BINARY_THEME,
+                ]);
+            },
+            error: () => {
+                this.themeState.setThemeList([
+                    DEFAULT_THEME,
+                    RED_AND_BLACK,
+                    BINARY_THEME,
+                ]);
+            },
+        });
 
         // GET BILLS LAYOUT
         const billsView = this.storage.getBillsLayout();

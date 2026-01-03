@@ -71,7 +71,6 @@ export class ModalNewBank extends ModalComponent {
     }
 
     onUpdate() {
-        if (this.bankForm.invalid) return;
         this.bankService
             .updateBank({
                 ...(this.bankForm.value as BankObject),
@@ -95,7 +94,6 @@ export class ModalNewBank extends ModalComponent {
     }
 
     onCreate() {
-        if (this.bankForm.invalid) return;
         this.bankService
             .createBank({
                 ...(this.bankForm.getRawValue() as Omit<BankObject, "userId">),
@@ -117,6 +115,7 @@ export class ModalNewBank extends ModalComponent {
     }
 
     onSubmit() {
+        if (this.bankForm.invalid) return;
         if (this.data) this.onUpdate();
         else this.onCreate();
     }

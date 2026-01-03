@@ -3,33 +3,54 @@
     title="themes"
     description="choose a theme for the application"
 >
-    <div class="themes grid">
-        <div
-            class="theme-container"
-            *ngFor="let th of themes"
-            (click)="clickedTheme(th)"
-            [ngClass]="{
+    <div class="main">
+        <div class="themes grid">
+            <div
+                id="theme-container"
+                className="theme-container"
+                class="theme-container"
+                *ngFor="let th of (themeState.themes$ | async)"
+                (click)="clickedTheme(th, $event)"
+                [ngClass]="{
                   'theme-container': true,
                   selected: selectedTheme === th.id
                 }"
-        >
-            <h4>{{th.title}}</h4>
-            <p>{{th.description}}</p>
-            <div class="theme-pallete">
-                <div
-                    class="pallete-color"
-                    [style.backgroundColor]="th['--primary']"
-                ></div>
-                <div
-                    class="pallete-color"
-                    [style.backgroundColor]="th['--secondary']"
-                ></div>
-                <div class="pallete-color" [style.backgroundColor]="th['--third']"></div>
-                <div
-                    class="pallete-color"
-                    [style.backgroundColor]="th['--background']"
-                ></div>
+            >
+                <h4>{{th.title}}</h4>
+                <p>{{th.description}}</p>
+                <div class="theme-pallete">
+                    <div
+                        matTooltip="background color"
+                        class="pallete-color"
+                        [style.backgroundColor]="th.background"
+                    ></div>
+                    <div
+                        matTooltip="secondary color"
+                        class="pallete-color"
+                        [style.backgroundColor]="th.secondary"
+                    ></div>
+                    <div
+                        matTooltip="primary color"
+                        class="pallete-color"
+                        [style.backgroundColor]="th.primary"
+                    ></div>
+                </div>
+                <actions
+                    *ngIf="th.id !== 'default' && th.id !== 'binary' && th.id !== 'red-and-black'"
+                    class="bill-buttons"
+                    [transparent]="false"
+                    [data]="th"
+                    [actions]="actions"
+                ></actions>
             </div>
         </div>
+        <btn variant="primary" (click)="onNewProfileTheme()">
+            <mat-icon
+                aria-hidden="false"
+                aria-label="Example home icon"
+                fontIcon="add"
+            ></mat-icon>
+            <p>create</p>
+        </btn>
     </div>
 </card-component>

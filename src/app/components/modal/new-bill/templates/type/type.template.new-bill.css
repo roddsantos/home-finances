@@ -45,5 +45,5 @@
 .type-description {
     grid-area: type-description;
     margin: 0.5rem 0px auto;
-    color: var(--text-2);
+    color: var(--text-1);
 }

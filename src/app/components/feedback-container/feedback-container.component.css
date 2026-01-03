@@ -17,8 +17,8 @@
         color: var(--text-1);
     }
 
-    & .mat-icon {
-        color: var(--text-2);
+    & mat-icon {
+        color: var(--text-1);
         font-size: 100px;
         width: max-content;
         height: max-content;

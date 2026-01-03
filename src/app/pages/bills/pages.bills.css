@@ -52,10 +52,7 @@
     height: fit-content;
     background-color: var(--bh);
     border-radius: var(--border-radius);
-    border: var(--border-width) solid var(--bh);
-    &.binary {
-        border: var(--border-width) solid var(--secondary);
-    }
+    border: var(--border-width) solid var(--border-color);
 }
 
 .bill-color-container {
@@ -69,10 +66,6 @@
     border-bottom: 12px solid transparent;
     border-right: 12px solid transparent;
     box-shadow: 2px 0px 1px 0px rgba(0, 0, 0, 0.2);
-}
-
-.binary {
-    background-color: transparent !important;
 }
 
 .bill-aside {
@@ -207,7 +200,7 @@
     }
     &.settled {
         border: var(--border-width) solid var(--success);
-        background-color: rgb(from var(--error) r g b / 0.25);
+        background-color: rgb(from var(--success) r g b / 0.25);
     }
     &.close {
         border: var(--border-width) solid var(--warning);
@@ -259,8 +252,8 @@
     display: none;
     grid-area: recurrent-container;
     height: 35px;
-    border-color: var(--info);
-    background-color: rgb(from var(--info) r g b / 0.25);
+    border-color: var(--success);
+    background-color: rgb(from var(--success) r g b / 0.25);
     & mat-icon {
         color: var(--text-1);
         width: 1.25rem;
@@ -348,7 +341,7 @@
 
 .description {
     grid-area: description;
-    color: var(--text-2);
+    color: var(--text-1);
     margin: auto 0px;
 }
 
@@ -358,4 +351,10 @@
     display: flex;
     flex-direction: row;
     margin: auto 0px;
+}
+
+.binary {
+    & .category-container {
+        background-color: transparent !important;
+    }
 }

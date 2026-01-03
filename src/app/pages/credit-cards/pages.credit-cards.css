@@ -31,9 +31,6 @@
         "cc-invoice cc-invoice cc-invoice cc-flag";
     grid-template-columns: 5% 45% 25% 25%;
     min-height: 200px;
-    &.binary {
-        border: solid var(--border-width) var(--secondary);
-    }
     @media screen and (max-width: 1366px) {
         grid-template-areas:
             "cc-color cc-title-container cc-title-container cc-title-container"

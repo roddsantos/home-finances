@@ -1,4 +1,5 @@
 <modal-component
+    [header]="data ? 'edit credit card' : 'new credit card'"
     [disabled]="creditCardForm.invalid"
     (actionPrimary)="onSubmit()"
     (actionSecondary)="handleClose()"

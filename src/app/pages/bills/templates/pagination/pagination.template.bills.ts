@@ -7,13 +7,20 @@ import { ServiceBill } from "src/app/services/bill.service";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { Subscription } from "rxjs";
+import { CustonButton } from "src/app/components/button/custom-button.component";
 
 @Component({
     selector: "pagination-template",
     standalone: true,
     templateUrl: "./pagination.template.bills.html",
     styleUrls: ["./pagination.template.bills.css", "../../pages.bills.css"],
-    imports: [CommonModule, MatButtonModule, MatIconModule, MatTooltipModule],
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTooltipModule,
+        CustonButton,
+    ],
 })
 export class PaginationTemplate {
     public billsState = inject(BillState);

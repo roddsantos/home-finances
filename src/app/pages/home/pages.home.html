@@ -1,11 +1,11 @@
 <div class="home">
-    <h1 class="page-title">{{"Welcome, " + (userState.user$| async)?.name + " :)"}}</h1>
+    <h1 class="page-title">{{"welcome, " + (userState.user$| async)?.name + " :)"}}</h1>
 
     <toggle-button
         class="home-filter"
         [items]="dateFilters"
         [formController]="dateCtrl"
-        (click)="onChangeFilter($event)"
+        (onClick)="onChangeFilter($event)"
     />
     <div class="home-container">
         <!-- CURRENT DATE -->
@@ -13,7 +13,7 @@
             id="hd"
             class="hd"
             [hideHeader]="true"
-            [backgroundColor]="thirdColor"
+            [backgroundColor]="'var(--primary)'"
         >
             <div class="col" [style.width]="'100%'">
                 <h4>{{ months[dateCtrl.getRawValue()!.month].short }}</h4>
@@ -107,7 +107,7 @@
                 >
                     <div
                         class="category"
-                        [style.borderColor]="theme === 'binary' ? secondaryColor : primaryColor"
+                        [style.borderColor]="theme === 'binary' ? 'var(--secondary)' : 'var(--primary)'"
                         [matTooltip]="bill.category.name"
                         matTooltipPosition="above"
                     >

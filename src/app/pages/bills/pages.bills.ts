@@ -24,6 +24,7 @@ import { CardComponent } from "../../components/card/card.component";
 import { ModalEditBill } from "src/app/components/modal/edit-bill/edit-bill.modal";
 import { ActionItem } from "src/app/core/types/components";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
+import { CustonButton } from "src/app/components/button/custom-button.component";
 
 @Component({
     selector: "page-bills",
@@ -44,6 +45,7 @@ import { ActionsComponent } from "src/app/components/actions/actions.component";
         MatTooltipModule,
         CardComponent,
         ActionsComponent,
+        CustonButton,
     ],
 })
 export class PageBills {
@@ -83,9 +85,6 @@ export class PageBills {
 
     ngOnInit() {
         this.billState.setAction(() => this.onReload());
-        this.generalState.theme$.subscribe({
-            next: (theme) => (this.isLineTheme = theme === "binary" ? "binary" : ""),
-        });
     }
 
     trackByFn(index: number, item: any) {
@@ -141,12 +140,15 @@ export class PageBills {
 
     onCheck(data: Bill) {
         this.billService
-            .updateBillBank({
-                ...data,
-                due: new Date(data.due),
-                paid: new Date(),
-                settled: true,
-            })
+            .updateBill(
+                {
+                    ...data,
+                    due: new Date(data.due),
+                    paid: new Date(),
+                    settled: true,
+                },
+                data.type
+            )
             .subscribe({
                 next: () => {
                     this.billService.getBills().subscribe({

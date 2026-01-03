@@ -1,0 +1,26 @@
+.main {
+    & .mdc-button__label {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.wrapper.disabled {
+    cursor: not-allowed;
+}
+
+.text-1 {
+    & .mdc-button__label p,
+    .mdc-button__label mat-icon,
+    .mdc-button__label h5 {
+        color: var(--text-1) !important;
+    }
+}
+
+.text-2 {
+    & .mdc-button__label p,
+    .mdc-button__label mat-icon,
+    .mdc-button__label h5 {
+        color: var(--text-2) !important;
+    }
+}

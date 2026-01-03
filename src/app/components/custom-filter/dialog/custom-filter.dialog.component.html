@@ -1,6 +1,8 @@
 <modal-component
     (actionPrimary)="onSubmit()"
+    (actionSecondary)="handleClose()"
     [bodyTemplate]="listDialog"
+    header="add new filters"
 ></modal-component>
 
 <ng-template #listDialog>
@@ -220,11 +222,10 @@
                 </mat-chip-row>
                 }
             </div>
-            <button
+            <btn
+                variant="outlined"
+                (onClick)="removeAllFilters()"
                 [disabled]="selectedFilters.length === 0"
-                mat-button
-                class="button-primary reset-button"
-                (click)="removeAllFilters()"
             >
                 <mat-icon
                     class="material-symbols-outlined"
@@ -233,7 +234,7 @@
                     fontIcon="delete_sweep"
                 ></mat-icon>
                 <p>remove all filters</p>
-            </button>
+            </btn>
         </div>
     </form>
 </ng-template>

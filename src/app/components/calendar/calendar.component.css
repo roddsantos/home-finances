@@ -23,13 +23,18 @@
             color: var(--primary);
             border-color: var(--primary);
         }
-        &.binary {
-            color: var(--secondary);
-            border-color: var(--secondary);
-        }
         &.dayoff {
             color: var(--error);
             border-color: var(--error);
+        }
+    }
+}
+
+.binary {
+    .calendar {
+        & .weekday {
+            color: var(--text-1);
+            border-color: var(--border-color);
         }
     }
 }
@@ -56,12 +61,13 @@
             color: var(--text-1);
         }
         &.today {
-            border-color: var(--error);
+            border-color: var(--info);
+            background-color: var(--info);
             border-width: 2px;
             font-weight: bolder;
             & p,
             .icon {
-                color: var(--error);
+                color: var(--bh);
             }
         }
         &.last-month {

@@ -1,28 +1,19 @@
-import { Component, inject, OnInit, ViewChild } from "@angular/core";
-import {
-    FormControl,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from "@angular/forms";
-import { ModalState } from "src/app/core/subjects/subjects.modal";
+import { Component, inject } from "@angular/core";
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MonthType } from "src/app/core/types/general";
 import { Bank } from "src/app/core/types/objects";
-import { BANK_FORM, GENERAL_FORM } from "src/utils/constants/forms";
+import { BANK_FORM, BOOLEAN_FORM, GENERAL_FORM } from "src/utils/constants/forms";
 import { MONTHS } from "src/utils/constants/general";
-import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { ModalComponent } from "../modal.component";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import { CommonModule } from "@angular/common";
 import { MatInputModule } from "@angular/material/input";
-import {
-    MatButtonToggleChange,
-    MatButtonToggleModule,
-} from "@angular/material/button-toggle";
+import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { ServiceSaving } from "src/app/services/saving.service";
+import { ToggleButtonComponent } from "../../toggle-buttons/toggle-buttons.component";
+import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
 
 @Component({
     selector: "app-new-saving",
@@ -35,6 +26,7 @@ import { ServiceSaving } from "src/app/services/saving.service";
         ReactiveFormsModule,
         MatInputModule,
         MatButtonToggleModule,
+        ToggleButtonComponent,
     ],
     templateUrl: "./new-saving.modal.html",
     styleUrl: "./new-saving.modal.css",
@@ -74,6 +66,8 @@ export class ModalNewSaving extends ModalComponent {
         total: GENERAL_FORM.invalidTotal,
         year: GENERAL_FORM.yearOutOfRange,
     };
+
+    public bankValueItems = BOOLEAN_FORM;
 
     ngOnInit() {
         this.savingsForm.get("total")?.disable();
@@ -117,7 +111,7 @@ export class ModalNewSaving extends ModalComponent {
         this.savingsForm.get("total")?.patchValue(bank.savings);
     }
 
-    useBankSaving(willUseSaving: MatButtonToggleChange) {
+    useBankSaving(willUseSaving: ToggleButtonItemsType<string>) {
         if (willUseSaving.value) {
             this.savingsForm
                 .get("total")

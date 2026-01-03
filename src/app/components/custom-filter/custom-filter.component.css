@@ -12,7 +12,8 @@
     gap: 0.75rem;
     background-color: var(--bh);
     border-radius: var(--border-radius);
-    /* box-shadow: 2px 2px 4px 0px var(--text-3); */
+    border: solid var(--border-width) var(--bh) !important;
+    /* box-shadow: 2px 2px 4px 0px var(--text-2); */
     display: grid;
     grid-template-areas:
         "filter-term"
@@ -29,9 +30,6 @@
         "filter-list";
     grid-template-columns: 1fr;
     grid-template-rows: min-content min-content 1px min-content 1px min-content 1px min-content 1px min-content 1px max-content;
-    &.binary {
-        border: var(--border-width) solid var(--secondary);
-    }
 }
 
 .filter-term {
@@ -91,11 +89,11 @@
 .filter-buttons {
     grid-area: filter-buttons;
     display: flex;
-    flex-direction: row;
+    gap: 0.5rem;
     & .icon {
         width: max-content;
         font-size: 1.25rem;
-        color: var(--text-3);
+        color: var(--text-2);
         margin: 0px;
     }
     & p {

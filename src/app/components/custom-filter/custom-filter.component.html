@@ -1,10 +1,5 @@
 <div class="filter-main" *ngIf="generalState.filterContainer$ | async">
-    <div
-        [ngClass]="[
-            'filter-container',
-            (generalState.theme$ | async) === 'binary' ? 'binary' : ''
-        ]"
-    >
+    <div [ngClass]="['filter-container']">
         <div class="filter-term">
             <h6>term</h6>
             <mat-form-field class="term-input" appearance="outline">
@@ -23,7 +18,7 @@
                 class="date-component"
                 [items]="monthItems"
                 [formController]="dateCtrl"
-                (click)="addDateSpan($event)"
+                (onClick)="addDateSpan($event)"
             />
         </div>
         <div class="filter-status">
@@ -32,7 +27,7 @@
                 class="status-component"
                 [items]="statusItems"
                 [formController]="statusCtrl"
-                (click)="addStatus($event)"
+                (onClick)="addStatus($event)"
             />
         </div>
         <div class="filter-money-flux">
@@ -41,7 +36,7 @@
                 class="money-flux-component"
                 [items]="moneyFluxItems"
                 [formController]="moneyFluxCtrl"
-                (click)="addMoneyFlux($event)"
+                (onClick)="addMoneyFlux($event)"
             />
         </div>
         <div class="filter-type">
@@ -50,33 +45,31 @@
                 class="type-component"
                 [items]="typeItems"
                 [formController]="typeCtrl"
-                (click)="addType($event)"
+                (onClick)="addType($event)"
             />
         </div>
         <div class="filter-buttons">
-            <button
+            <btn
                 aria-label="open filter selector"
                 matTooltip="more filters"
                 matTooltipPosition="above"
-                mat-button
-                [ngClass]="['button-primary']"
-                (click)="openDialog()"
+                variant="primary"
+                (onClick)="openDialog()"
             >
                 <mat-icon class="icon material-symbols-outlined">add</mat-icon>
                 <mat-icon class="icon material-symbols-outlined">filter_alt</mat-icon>
-            </button>
-            <button
+            </btn>
+            <btn
                 *ngIf="(filterState.filters$ | async)!.length > 0"
                 aria-label="remove filters button"
                 matTooltip="remove all filters"
                 matTooltipPosition="above"
-                mat-button
-                [ngClass]="['button-secondary', 'remove']"
-                (click)="removeFilter()"
+                variant="secondary"
+                (onClick)="removeFilter()"
             >
                 <mat-icon class="icon material-symbols-outlined">delete</mat-icon>
                 <mat-icon class="icon material-symbols-outlined">filter_alt</mat-icon>
-            </button>
+            </btn>
         </div>
         <div class="divider-1"></div>
         <div class="divider-2"></div>

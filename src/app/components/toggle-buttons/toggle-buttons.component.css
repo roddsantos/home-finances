@@ -1,8 +1,13 @@
 .group {
     display: inline-flex;
+    align-items: center;
     flex-wrap: wrap;
     gap: 0.5rem;
     & button .icon {
         height: 20px;
     }
+}
+
+.label {
+    margin-bottom: 0.5rem;
 }

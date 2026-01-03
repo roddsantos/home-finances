@@ -3,18 +3,12 @@
     border-width: var(--border-width);
     border-radius: var(--border-radius);
     background-color: var(--bh);
-    border-color: var(--bh);
+    border-color: var(--border-color);
     padding: 10px 15px;
     position: relative;
     z-index: 3;
     height: 100%;
     width: 100%;
-    &.binary {
-        background-color: var(--primary);
-    }
-    &.border {
-        border-color: var(--border-color);
-    }
 }
 
 .card-shadow {

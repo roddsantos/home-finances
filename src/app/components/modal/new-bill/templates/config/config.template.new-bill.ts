@@ -7,11 +7,11 @@ import { MatInputModule } from "@angular/material/input";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { ConfigForm } from "src/app/core/types/forms";
-import {
-    MatButtonToggleChange,
-    MatButtonToggleModule,
-} from "@angular/material/button-toggle";
+import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatDatepickerModule } from "@angular/material/datepicker";
+import { BOOLEAN_FORM, MONEY_FLOW_FORM } from "src/utils/constants/forms";
+import { ToggleButtonComponent } from "src/app/components/toggle-buttons/toggle-buttons.component";
+import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
 
 @Component({
     selector: "template-config",
@@ -26,6 +26,7 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
         CommonModule,
         MatButtonToggleModule,
         MatDatepickerModule,
+        ToggleButtonComponent,
     ],
     exportAs: "templateConfig",
 })
@@ -54,7 +55,10 @@ export class ConfigTemplate {
         paid: new FormControl<Date | null>(null, { nonNullable: false }),
     });
 
-    settledChange(event: MatButtonToggleChange) {
+    public moneyFlowItems = MONEY_FLOW_FORM;
+    public booleanItems = BOOLEAN_FORM;
+
+    settledChange(event: ToggleButtonItemsType<string>) {
         if (!event.value) {
             this.setConfigData.emit({ ...this.configForm.getRawValue(), paid: null });
             this.configForm.patchValue({ paid: null });
@@ -62,6 +66,7 @@ export class ConfigTemplate {
     }
 
     ngOnInit() {
+        this.configForm.patchValue({ ...this.configData });
         if (this.configData.type === "companyCredit") {
             this.configForm.controls["paid"].patchValue(null);
             this.configForm.get("paid")?.disable();

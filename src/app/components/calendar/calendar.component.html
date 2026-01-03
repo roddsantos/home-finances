@@ -5,7 +5,6 @@
                 weekday: true,
                 workday: !(weekday.order === 0 || weekday.order === 6),
                 dayoff: weekday.order === 0 || weekday.order === 6,
-                binary: (generalState.theme$ | async) === 'binary'
             }"
             *ngFor="let weekday of weekdays"
         >

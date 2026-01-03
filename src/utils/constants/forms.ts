@@ -6,6 +6,7 @@ export const GENERAL_FORM = {
     noDescription: "you must enter a description",
     yearOutOfRange: "year must be between 2023 and 2090",
     invalidTotal: "invalid total value",
+    invalidValue: "invalid value",
 };
 
 export const COMPANY_FORM = {

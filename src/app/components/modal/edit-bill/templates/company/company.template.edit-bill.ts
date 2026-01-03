@@ -100,7 +100,6 @@ export class CompanyTemplateEditBill {
     }
 
     compareCompanies(c1: Company, c2: Company): boolean {
-        console.log("ÇLKAÇKD", c1, c2);
         return c1.id === c2.id;
     }
 }

@@ -1,0 +1,26 @@
+<div class="form">
+    <card-component [hideHeader]="true">
+        <toggle-button
+            label="main text"
+            variant="outlined"
+            [items]="text1Colors"
+            [formController]="text1"
+        />
+    </card-component>
+    <card-component [hideHeader]="true">
+        <toggle-button
+            label="secondary text"
+            variant="outlined"
+            [items]="text2Colors"
+            [formController]="text2"
+        />
+    </card-component>
+    <card-component [hideHeader]="true">
+        <toggle-button
+            label="background"
+            variant="outlined"
+            [items]="backgroundColors"
+            [formController]="background"
+        />
+    </card-component>
+</div>

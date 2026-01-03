@@ -1,15 +1,12 @@
-import { inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { User } from "src/app/core/types/objects";
-import { ThemeType } from "src/app/core/types/general";
-import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { BillsLayoutType } from "../core/types/subjects";
+import { ProfileThemeType } from "../core/types/pages/profiles";
 
 @Injectable({
     providedIn: "root",
 })
 export class LocalStorageService {
-    public generalState = inject(GeneralState);
-
     setUser(user: User) {
         let str = JSON.stringify(user);
         localStorage.setItem("user", str);
@@ -45,19 +42,22 @@ export class LocalStorageService {
         localStorage.removeItem("filters");
     }
 
-    setTheme(theme: ThemeType) {
-        localStorage.setItem("theme", theme);
-        this.generalState.changeTheme(theme);
+    setTheme(theme: ProfileThemeType) {
+        let str = JSON.stringify(theme);
+        localStorage.setItem("theme", str);
     }
 
     getTheme() {
-        let theme = localStorage.getItem("theme");
-        return theme;
+        try {
+            let theme = localStorage.getItem("theme");
+            return theme ? JSON.parse(theme) : null;
+        } catch (error) {
+            return null;
+        }
     }
 
     removeTheme() {
         localStorage.removeItem("theme");
-        this.generalState.changeTheme("default");
     }
 
     getBillsLayout() {

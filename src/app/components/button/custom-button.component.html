@@ -1,0 +1,16 @@
+<span [ngClass]="['wrapper', disabled ? 'disabled' : '']">
+    <button
+        [id]="'custom-button-' + id"
+        (click)="handleClick()"
+        [ngClass]="[
+            'main',
+            'button-' + variant,
+            extended ? 'extended' : '',
+            getTextClass(),
+            classes
+        ]"
+        [disabled]="disabled"
+        mat-button
+    >
+        <ng-content></ng-content></button
+></span>

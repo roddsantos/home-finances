@@ -27,16 +27,16 @@
             background-color: var(--primary);
             height: calc(1.8 * var(--input-unit)) !important;
             border-radius: var(--border-radius);
-            color: var(--text-3) !important;
+            color: var(--text-2) !important;
             & :disabled {
                 background-color: var(--disabled);
             }
             & .mat-button-toggle-label-content {
-                color: var(--text-3) !important;
+                color: var(--text-2) !important;
                 & .mat-pseudo-checkbox,
                 .mat-button-toggle-group-appearance-standard .mat-pseudo-checkbox {
                     --mat-standard-button-toggle-selected-state-text-color: var(
-                        --text-3
+                        --text-2
                     ) !important;
                 }
             }

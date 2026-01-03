@@ -4,73 +4,6 @@ const blueSpace = singleColorSpace;
 const greenSpace = blueSpace * singleColorSpace; // 65536
 const redSpace = greenSpace * singleColorSpace; // 16777216
 
-/* eslint-disable regex/invalid */
-// adapted to TS from https://github.com/PimpTrizkit/PJs/wiki/12.-Shade,-Blend-and-Convert-a-Web-Color-(pSBC.js)
-export const toColorObject = (rgbOrHex: string): ColorObject => {
-    const { length } = rgbOrHex;
-    const outputColor = {} as ColorObject;
-    if (length > 9) {
-        const rgbaColor = rgbOrHex.split(",");
-        const [rgbaAndRed, green, blue, alpha] = rgbaColor;
-
-        if (rgbaAndRed.slice(0, 3) !== "rgb") {
-            throw new Error("Invalid color format");
-        }
-        const red = rgbaAndRed[3] === "a" ? rgbaAndRed.slice(5) : rgbaAndRed.slice(4);
-
-        const rgbaLength = rgbaColor.length;
-        if (rgbaLength < 3 || rgbaLength > 4) {
-            return {
-                r: 255,
-                g: 255,
-                b: 255,
-                a: 255,
-            };
-        }
-        outputColor.r = parseInt(red, 10);
-        outputColor.g = parseInt(green, 10);
-        outputColor.b = parseInt(blue, 10);
-        outputColor.a = alpha ? parseFloat(alpha) : -1;
-    } else {
-        if (length === 8 || length === 6 || length < 4) {
-            throw new Error("Invalid hex color format");
-        }
-        let HexColor = rgbOrHex;
-        if (length < 6) {
-            HexColor = `#${rgbOrHex[1]}${rgbOrHex[1]}${rgbOrHex[2]}${rgbOrHex[2]}${
-                rgbOrHex[3]
-            }${rgbOrHex[3]}${length > 4 ? rgbOrHex[4] + rgbOrHex[4] : ""}`;
-        }
-        if (length === 9 || length === 5) {
-            const hexRed = parseInt(HexColor.slice(1, 3), 16);
-            outputColor.r = hexRed;
-
-            const hexGreen = parseInt(HexColor.slice(3, 5), 16);
-            outputColor.g = hexGreen;
-
-            const hexBlue = parseInt(HexColor.slice(5, 7), 16);
-            outputColor.b = hexBlue;
-
-            const hexAlpha = parseInt(HexColor.slice(7, 9), 16);
-            outputColor.a = Math.round((hexAlpha / 255) * 100) / 100;
-        } else {
-            const hexRed = parseInt(HexColor.slice(1, 3), 16);
-            outputColor.r = hexRed;
-
-            const hexGreen = parseInt(HexColor.slice(3, 5), 16);
-            outputColor.g = hexGreen;
-
-            const hexBlue = parseInt(HexColor.slice(5, 7), 16);
-            outputColor.b = hexBlue;
-
-            outputColor.a = -1;
-        }
-    }
-    return outputColor;
-};
-
-const black: ColorObject = { r: 0, g: 0, b: 0, a: -1 };
-const white: ColorObject = { r: 255, g: 255, b: 255, a: -1 };
 export const tint = (
     ratio: number,
     inputColor: string,
@@ -104,11 +37,13 @@ export const tint = (
             (toColor && toColor?.length > 9) || toColor?.includes("rgb(");
         isRGBformat = reformat ? !isToColorRgbFormat : isToColorRgbFormat;
     }
-    const formattedBaseColor = toColorObject(baseColor);
+
+    const black: ColorObject = { r: 0, g: 0, b: 0, a: -1 };
+    const white: ColorObject = { r: 255, g: 255, b: 255, a: -1 };
+    const formattedBaseColor = hexToRgb(baseColor);
     const isNegativeRatio = clampedRatio < 0;
     const toColorDefault = isNegativeRatio ? black : white;
-    const formattedToColor =
-        toColor && !reformat ? toColorObject(toColor) : toColorDefault;
+    const formattedToColor = toColor && !reformat ? hexToRgb(toColor) : toColorDefault;
     const toColorRatio = Math.abs(clampedRatio);
     const baseRatio = 1 - toColorRatio;
 
@@ -163,6 +98,66 @@ export const tint = (
         .slice(0, hasAlpha ? undefined : -2)}`;
 };
 
+function hexToRgb(hex: string): { r: number; g: number; b: number; a: number } {
+    let normalized = hex.replace("#", "");
+
+    if (normalized.length === 3) {
+        normalized =
+            normalized
+                .split("")
+                .map((c) => c + c)
+                .join("") + "ff";
+    }
+
+    // #RGBA
+    if (normalized.length === 4) {
+        normalized = normalized
+            .split("")
+            .map((c) => c + c)
+            .join("");
+    }
+
+    const bigint = parseInt(normalized, 16);
+
+    return {
+        r: (bigint >> 24) & 255,
+        g: (bigint >> 16) & 255,
+        b: (bigint >> 8) & 255,
+        a: (bigint & 255) / 255,
+    };
+}
+
+function relativeLuminance({ r, g, b }: { r: number; g: number; b: number }): number {
+    const srgb = [r, g, b].map((value) => {
+        const v = value / 255;
+        return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+
+    return 0.2126 * srgb[0] + 0.7152 * srgb[1] + 0.0722 * srgb[2];
+}
+
+function contrastRatio(l1: number, l2: number): number {
+    const brightest = Math.max(l1, l2);
+    const darkest = Math.min(l1, l2);
+
+    return (brightest + 0.05) / (darkest + 0.05);
+}
+
+export function bestContrastColor(
+    baseColor: string,
+    optionA: string,
+    optionB: string
+): string {
+    const baseLum = relativeLuminance(hexToRgb(baseColor));
+    const lumA = relativeLuminance(hexToRgb(optionA));
+    const lumB = relativeLuminance(hexToRgb(optionB));
+
+    const contrastA = contrastRatio(baseLum, lumA);
+    const contrastB = contrastRatio(baseLum, lumB);
+
+    return contrastA >= contrastB ? optionA : optionB;
+}
+
 /**
  * Function to get a contrast color between 2 available colors
  * based on the param color
@@ -170,18 +165,25 @@ export const tint = (
  * @returns {string} The contrast color
  */
 export function contrastText(color: string) {
+    const { text1, text2 } = currentPallete();
+
+    const choosedColor = bestContrastColor(color, text1, text2);
+
+    return choosedColor === text1
+        ? "var(--text-1) !important"
+        : "var(--text-2) !important";
+}
+
+export function getThemeVars(asNumbers: boolean = false) {
     const style = getComputedStyle(document.body);
-    const text1 = style.getPropertyValue("--text-1");
-    const text3 = style.getPropertyValue("--text-3");
 
-    const treatedString = color.split("#")[1];
-    if (!treatedString) return color;
+    const borderRadius = style.getPropertyValue("--border-radius");
+    const borderWidth = style.getPropertyValue("--border-width");
 
-    let r = parseInt(treatedString.substring(0, 2), 16); // hexToR - max 76,245
-    let g = parseInt(treatedString.substring(2, 4), 16); // hexToG - max 149,685
-    let b = parseInt(treatedString.substring(4, 6), 16); // hexToB - max 29,07
-
-    return r * 0.299 + g * 0.587 + b * 0.114 > 186 ? text1 : text3;
+    return {
+        borderRadius: asNumbers ? parseInt(borderRadius) : borderRadius,
+        borderWidth: asNumbers ? parseInt(borderWidth) : borderWidth,
+    };
 }
 
 export function currentPallete() {
@@ -189,9 +191,10 @@ export function currentPallete() {
 
     const primary = style.getPropertyValue("--primary");
     const secondary = style.getPropertyValue("--secondary");
-    const third = style.getPropertyValue("--third");
 
+    const background = style.getPropertyValue("--background");
     const bh = style.getPropertyValue("--bh");
+    const borderColor = style.getPropertyValue("--border-color");
     const info = style.getPropertyValue("--info");
     const warning = style.getPropertyValue("--warning");
     const error = style.getPropertyValue("--error");
@@ -199,7 +202,7 @@ export function currentPallete() {
 
     const text1 = style.getPropertyValue("--text-1");
     const text2 = style.getPropertyValue("--text-2");
-    const text3 = style.getPropertyValue("--text-3");
+    const text3 = style.getPropertyValue("--text-2");
 
     const font1 = style.getPropertyValue("--font-1");
     const font2 = style.getPropertyValue("--font-2");
@@ -207,7 +210,8 @@ export function currentPallete() {
     return {
         primary,
         secondary,
-        third,
+        background,
+        borderColor,
         bh,
         info,
         warning,
@@ -219,4 +223,58 @@ export function currentPallete() {
         font1,
         font2,
     };
+}
+
+export function getBackgroundColor(id: string) {
+    const { background } = currentPallete();
+
+    const element = document.getElementById(id);
+    if (!element) return background;
+
+    const elementStyle = window.getComputedStyle(element);
+    const backgroundElementStyle = elementStyle.getPropertyValue("background-color");
+
+    if (
+        backgroundElementStyle !== "transparent" &&
+        backgroundElementStyle !== "rgba(0, 0, 0, 0)"
+    ) {
+        return rgbToHex(backgroundElementStyle) || backgroundElementStyle;
+    }
+
+    let parentElement = element.parentElement;
+    if (!parentElement) return background;
+
+    while (parentElement && parentElement !== document.documentElement) {
+        const computedStyle = window.getComputedStyle(parentElement);
+        const backgroundColor = computedStyle.getPropertyValue("background-color");
+
+        if (
+            backgroundColor &&
+            backgroundColor !== "transparent" &&
+            backgroundElementStyle !== "rgba(0, 0, 0, 0)"
+        ) {
+            return rgbToHex(backgroundColor) || backgroundColor;
+        }
+
+        parentElement = parentElement.parentElement;
+    }
+    return background;
+}
+
+export function rgbToHex(rgbString: string) {
+    const match = rgbString.match(/\d+/g);
+
+    if (!match || match.length < 3) {
+        return null;
+    }
+
+    const hex = match
+        .map((component) => {
+            const num = +component;
+            const hexVal = num.toString(16);
+            return hexVal.padStart(2, "0");
+        })
+        .join("");
+
+    return `#${hex}`;
 }

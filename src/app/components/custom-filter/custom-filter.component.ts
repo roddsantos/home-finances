@@ -7,7 +7,6 @@ import {
 } from "src/app/core/types/components";
 import { Dialog } from "@angular/cdk/dialog";
 import { DialogCustomList } from "./dialog/custom-filter.dialog.component";
-import { MatButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
 import { CommonModule } from "@angular/common";
 import { MatExpansionModule } from "@angular/material/expansion";
@@ -40,6 +39,7 @@ import {
 import { getMonthAndYearIntegers } from "src/utils/date";
 import { isObjectsEqual } from "src/utils/validators";
 import { GeneralService } from "src/app/services/general.service";
+import { CustonButton } from "../button/custom-button.component";
 
 @Injectable({
     providedIn: "root",
@@ -50,7 +50,6 @@ import { GeneralService } from "src/app/services/general.service";
     styleUrls: ["./custom-filter.component.css"],
     standalone: true,
     imports: [
-        MatButton,
         MatIcon,
         CommonModule,
         MatChipsModule,
@@ -63,6 +62,7 @@ import { GeneralService } from "src/app/services/general.service";
         MatButtonToggleModule,
         ToggleButtonComponent,
         MatInputModule,
+        CustonButton,
     ],
 })
 export class CustomFilterComponent {
@@ -274,7 +274,7 @@ export class CustomFilterComponent {
                 {
                     id: value,
                     identifier: "status",
-                    name: label,
+                    name: label as string,
                 },
             ]);
 
@@ -294,7 +294,7 @@ export class CustomFilterComponent {
                 {
                     id: value,
                     identifier: "moneyflux",
-                    name: label,
+                    name: label as string,
                 },
             ]);
 
@@ -314,7 +314,7 @@ export class CustomFilterComponent {
                 {
                     id: value,
                     identifier: "type",
-                    name: label,
+                    name: label as string,
                 },
             ]);
 

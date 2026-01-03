@@ -1,12 +1,4 @@
-<div
-    id="card-{{ id }}"
-    [ngClass]="[
-        'card',
-        actualTheme === 'binary' ? 'binary' : '',
-        border || actualTheme === 'binary' ? 'border' : ''
-    ]"
-    [style.backgroundColor]="backgroundColor"
->
+<div id="card-{{ id }}" [ngClass]="['card']" [style.backgroundColor]="backgroundColor">
     <div class="card-header" *ngIf="!hideHeader" [style.height]="'50px'">
         <div class="card-data">
             <h3 *ngIf="title">
@@ -58,8 +50,6 @@
     [style.height]="cardHeight + 'px'"
     [style.width]="cardWidth + 'px'"
     [style.bottom]="cardHeight - 10 + 'px'"
-    [style.backgroundColor]="
-        border ? 'transparent' : (backgroundHighlighter | color : 'darker')
-    "
-    [style.borderColor]="backgroundHighlighter | color : 'darker'"
+    [style.backgroundColor]="border ? 'transparent' : 'var(--bh)'"
+    [style.borderColor]="'var(--bh)'"
 ></div>

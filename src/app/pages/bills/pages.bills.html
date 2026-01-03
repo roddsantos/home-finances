@@ -2,13 +2,13 @@
     <div class="page-header">
         <h1 [style.marginBottom]="'0px'">bills</h1>
         <div class="bill-header">
-            <button (click)="openModal()" class="button-primary extended" mat-button>
+            <btn (onClick)="openModal()" extended variant="primary">
                 <div>
                     <mat-icon class="material-symbols-outlined">add</mat-icon>
                     <mat-icon class="material-symbols-outlined">receipt_long</mat-icon>
                 </div>
                 <p>new bill</p>
-            </button>
+            </btn>
             <pagination-template
                 class="bill-pagination"
                 [style.margin]="'auto 0px auto 1rem'"
@@ -70,8 +70,8 @@
                                 <p>{{ item.type === 'money' ? '$' : item.parcel + 1 }}</p>
                             </div>
                             <h6 class="value">
-                                {{(item.type === 'money' ? item.total : item.totalParcel)
-                                | currency: "R$ "}}
+                                {{(item.type === 'money' ? item.total : (item.totalParcel
+                                + item.delta + item.taxes)) | currency: "R$ "}}
                             </h6>
                         </div>
                         <actions
