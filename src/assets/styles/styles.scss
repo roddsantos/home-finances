@@ -1,4 +1,4 @@
-@use "src/assets/styles/layout/theme.scss" as app-theme;
+@use "../styles/layout/theme.scss" as app-theme;
 @use "@angular/material" as mat;
 @import "../styles/components/buttons";
 @import "../styles/components/containers";
@@ -13,16 +13,11 @@
 @import "../styles/material/snackbar";
 @import "../styles/material/tabs";
 @import "../styles/material/textfield";
+@import "../styles/material/tooltip";
 @import "../styles/material/toggle";
 
 :root {
     @include mat.all-component-themes(app-theme.$app-light-theme);
-    --input-unit: 1.5rem;
-    --input-position: 1.5rem;
-    --input-font: 1rem;
-
-    --text-gen: 0.8rem;
-    --padding-gen: 0.75rem;
 }
 
 * {
@@ -101,6 +96,9 @@ body {
     .date-container,
     .recurrent-container,
     .flow-container {
+        background-color: transparent !important;
+    }
+    .custom-tag {
         background-color: transparent !important;
     }
 }

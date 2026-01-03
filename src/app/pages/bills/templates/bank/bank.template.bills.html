@@ -10,7 +10,7 @@
             [fontIcon]="data.isPayment ? 'arrow_circle_up' : 'arrow_circle_down'"
         ></mat-icon>
     </div>
-    <div matTooltip="bank" [ngClass]="['type-container', 'tag', 'bank', isLineTheme]">
+    <tag [id]="'tag-type-'+data.id" theme="var(--bank)" transform>
         <mat-icon
             class="material-symbols-outlined type-icon"
             aria-hidden="false"
@@ -18,7 +18,16 @@
             fontIcon="payments"
         ></mat-icon>
         <p class="type-name">{{data.bank1?.name}}</p>
-    </div>
+    </tag>
+    <!-- <div matTooltip="bank" [ngClass]="['type-container', 'tag', 'bank', isLineTheme]">
+        <mat-icon
+            class="material-symbols-outlined type-icon"
+            aria-hidden="false"
+            aria-label="icon"
+            fontIcon="payments"
+        ></mat-icon>
+        <p class="type-name">{{data.bank1?.name}}</p>
+    </div> -->
     <div
         matTooltip="category"
         [ngClass]="['category-container','tag','bank', isLineTheme]"

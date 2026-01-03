@@ -8,42 +8,42 @@ h1 {
     font-family: var(--font-1);
     font-weight: 800;
     color: var(--text-1);
-    font-size: calc(2.75 * var(--text-gen));
+    font-size: calc(2.75 * var(--font-size));
 }
 
 h2 {
     font-family: var(--font-1);
     font-weight: 800;
     color: var(--text-1);
-    font-size: calc(2.2 * var(--text-gen));
+    font-size: calc(2.2 * var(--font-size));
 }
 
 h3 {
     font-family: var(--font-1);
     font-weight: 600;
     color: var(--text-1);
-    font-size: calc(1.8 * var(--text-gen));
+    font-size: calc(1.8 * var(--font-size));
 }
 
 h4 {
     font-family: var(--font-1);
     font-weight: 600;
     color: var(--text-1);
-    font-size: calc(1.6 * var(--text-gen));
+    font-size: calc(1.6 * var(--font-size));
 }
 
 h5 {
     font-family: var(--font-2);
     font-weight: 500;
     color: var(--text-1);
-    font-size: calc(1.4 * var(--text-gen));
+    font-size: calc(1.4 * var(--font-size));
 }
 
 h6 {
     font-family: var(--font-2);
     font-weight: 500;
     color: var(--text-1);
-    font-size: calc(1.2 * var(--text-gen));
+    font-size: calc(1.2 * var(--font-size));
 }
 
 p,
@@ -51,5 +51,5 @@ mat-hint {
     font-family: var(--font-2);
     font-weight: 400;
     color: var(--text-1);
-    font-size: calc(1 * var(--text-gen));
+    font-size: calc(1 * var(--font-size));
 }

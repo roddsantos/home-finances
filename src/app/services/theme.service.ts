@@ -193,6 +193,7 @@ export class ThemeService extends GeneralService {
         document.documentElement.style.setProperty("--input-unit", value.unit);
         document.documentElement.style.setProperty("--input-position", value.position);
         document.documentElement.style.setProperty("--input-font", value.font);
+        document.documentElement.style.setProperty("--font-size", value.font);
     }
 
     setBorder(borderWidth: GeneralMeasureType, borderRadius: number) {

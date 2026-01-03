@@ -5,13 +5,20 @@ import { MatIconModule } from "@angular/material/icon";
 import { Bill, BillData } from "src/app/core/types/objects";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { CustomTag } from "src/app/components/tag/tag.component";
 
 @Component({
     selector: "bank-list-template",
     templateUrl: "./bank.template.bills.html",
     styleUrls: ["../../pages.bills.css", "./bank.template.bills.css"],
     standalone: true,
-    imports: [CommonModule, MatExpansionModule, MatIconModule, MatTooltipModule],
+    imports: [
+        CommonModule,
+        CustomTag,
+        MatExpansionModule,
+        MatIconModule,
+        MatTooltipModule,
+    ],
 })
 export class BankListTemplateMonthly {
     public general = inject(GeneralState);

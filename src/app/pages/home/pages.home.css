@@ -205,7 +205,7 @@
     }
     h6 {
         color: var(--text-1);
-        font-size: calc(1 * var(--text-gen));
+        font-size: calc(1 * var(--font-size));
         font-weight: 800;
     }
     &.green {
