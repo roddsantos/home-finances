@@ -28,4 +28,12 @@ export class ThemeState {
 
         this._themes$.next(themes);
     }
+
+    removeTheme(id: string) {
+        const themes = this._themes$.getValue();
+        const themeIndex = themes.findIndex((t) => t.id === id);
+        themes.splice(themeIndex, 1);
+
+        this._themes$.next(themes);
+    }
 }

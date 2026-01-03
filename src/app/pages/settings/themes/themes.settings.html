@@ -6,9 +6,11 @@
     <div class="main">
         <div class="themes grid">
             <div
+                id="theme-container"
+                className="theme-container"
                 class="theme-container"
                 *ngFor="let th of (themeState.themes$ | async)"
-                (click)="clickedTheme(th)"
+                (click)="clickedTheme(th, $event)"
                 [ngClass]="{
                   'theme-container': true,
                   selected: selectedTheme === th.id

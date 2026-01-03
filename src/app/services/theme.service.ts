@@ -52,6 +52,10 @@ export class ThemeService extends GeneralService {
         );
     }
 
+    deleteTheme(id: string) {
+        return this.http.delete<string>(THEME + `/${id}`);
+    }
+
     setTheme(theme: ProfileThemeType) {
         const { id } = theme;
         this.setupTheme(theme);

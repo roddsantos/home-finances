@@ -3,9 +3,6 @@ import { Component, inject, OnInit } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { CardComponent } from "src/app/components/card/card.component";
-import { LocalStorageService } from "src/app/services/local-storage.service";
-import { GeneralState } from "src/app/core/subjects/subjects.general";
-import { Router } from "@angular/router";
 import { Dialog } from "@angular/cdk/dialog";
 import { ModalNewThemeProfile } from "src/app/components/modal/new-theme-profile/new-theme-profile.modal";
 import { ProfileThemeType } from "src/app/core/types/pages/profiles";
@@ -15,6 +12,8 @@ import { ThemeState } from "src/app/core/subjects/subjects.theme";
 import { MatTooltip } from "@angular/material/tooltip";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ActionItem } from "src/app/core/types/components";
+import { ModalDialogConfirmation } from "src/app/components/modal/dialog-confirmation/dialog-confirmation.modal";
+import { GeneralComponent } from "src/app/components/general/general.component";
 
 @Component({
     selector: "themes-settings",
@@ -31,15 +30,12 @@ import { ActionItem } from "src/app/core/types/components";
         ActionsComponent,
     ],
 })
-export class ThemeSettingsComponent implements OnInit {
+export class ThemeSettingsComponent extends GeneralComponent implements OnInit {
     public dialog = inject(Dialog);
     public selectedTheme: string;
-    public router = inject(Router);
 
-    public generalState = inject(GeneralState);
     private themeService = inject(ThemeService);
     public themeState = inject(ThemeState);
-    public storage = inject(LocalStorageService);
 
     private style = getComputedStyle(document.body);
     public secondaryColor = this.style.getPropertyValue("--secondary");
@@ -54,7 +50,7 @@ export class ThemeSettingsComponent implements OnInit {
         {
             name: "",
             icon: "delete",
-            action: (data: ProfileThemeType) => this.onDelete(data),
+            action: (data: ProfileThemeType) => this.onDeleteModal(data),
             color: "var(--error)",
         },
     ];
@@ -67,9 +63,11 @@ export class ThemeSettingsComponent implements OnInit {
         });
     }
 
-    clickedTheme(theme: ProfileThemeType) {
-        this.selectedTheme = theme.id;
-        this.themeService.setTheme(theme);
+    clickedTheme(theme: ProfileThemeType, event: any) {
+        if (event.target.className !== "mat-mdc-button-touch-target") {
+            this.selectedTheme = theme.id;
+            this.themeService.setTheme(theme);
+        }
     }
 
     onNewProfileTheme() {
@@ -84,7 +82,27 @@ export class ThemeSettingsComponent implements OnInit {
         });
     }
 
+    onDeleteModal(data: ProfileThemeType) {
+        this.dialog.open(ModalDialogConfirmation, {
+            data: {
+                header: data.title,
+                title: "delete theme?",
+                description: "this action is irreversable",
+                action: () => this.onDelete(data),
+                button: "delete",
+            },
+        });
+    }
+
     onDelete(data: ProfileThemeType) {
-        console.log("to do");
+        this.themeService.deleteTheme(data.id).subscribe({
+            next: (id) => {
+                this.themeState.removeTheme(id);
+                this.generalService.successSnackbar("theme deleted successfully");
+            },
+            error: () => {
+                this.generalService.errorSnackbar("error deleting theme");
+            },
+        });
     }
 }

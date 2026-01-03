@@ -1,0 +1,14 @@
+<modal-component
+    size="sm"
+    [header]="data.header"
+    (actionPrimary)="handleAction()"
+    (actionSecondary)="handleClose()"
+    [bodyTemplate]="dialogItem"
+></modal-component>
+
+<ng-template #dialogItem>
+    <div>
+        <h4>{{ data.title }}</h4>
+        <p>{{ data.description }}</p>
+    </div>
+</ng-template>
