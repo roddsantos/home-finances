@@ -1,4 +1,3 @@
-import { Dialog } from "@angular/cdk/dialog";
 import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
@@ -16,16 +15,14 @@ import { ServiceBill } from "src/app/services/bill.service";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { PaginationTemplate } from "./templates/pagination/pagination.template.bills";
-import { LocalStorageService } from "src/app/services/local-storage.service";
-import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
-import { GeneralService } from "src/app/services/general.service";
 import { CardComponent } from "../../components/card/card.component";
 import { ModalEditBill } from "src/app/components/modal/edit-bill/edit-bill.modal";
 import { ActionItem } from "src/app/core/types/components";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { CustonButton } from "src/app/components/button/custom-button.component";
 import { CustomTag } from "src/app/components/tag/tag.component";
+import { GeneralPage } from "src/app/core/general/page.general";
 
 @Component({
     selector: "page-bills",
@@ -50,19 +47,11 @@ import { CustomTag } from "src/app/components/tag/tag.component";
         CustomTag,
     ],
 })
-export class PageBills {
+export class PageBills extends GeneralPage {
     public billState = inject(BillState);
-    public dialog = inject(Dialog);
     public billService = inject(ServiceBill);
-    public snack = inject(CustomSnackbarComponent);
-    public generalState = inject(GeneralState);
-    public generalService = inject(GeneralService);
-    public storage = inject(LocalStorageService);
 
-    titleItems: Partial<keyof Bill>[] = ["name", "updatedAt"];
-    detailsItems: Partial<keyof Bill>[] = ["description", "total"];
     isLineTheme: string = "";
-    dateLeft: string = "settled";
 
     actions: ActionItem[] = [
         {
@@ -76,12 +65,21 @@ export class PageBills {
             icon: "delete",
             action: (data: Bill) => this.onDelete(data),
             color: "#8f0000",
+            hidden: (data: Bill) => data.settled,
         },
         {
             name: "",
             icon: "check_circle",
             action: (data) => this.onCheck(data),
             color: "#008f18",
+            hidden: (data: Bill) => data.settled,
+        },
+        {
+            name: "",
+            icon: "rotate_left",
+            action: (data) => this.onReverseCheck(data),
+            color: "var(--warning)",
+            hidden: (data: Bill) => !data.settled || (data.settled && data.isRecurrent),
         },
     ];
 
@@ -95,7 +93,7 @@ export class PageBills {
 
     openFilterContainer() {
         this.generalState.changeFilterContainer(true);
-        this.storage.setFilterContainer(true);
+        this.localStorageService.setFilterContainer(true);
     }
 
     getBills() {
@@ -104,7 +102,7 @@ export class PageBills {
                 this.billState.setBills(bills);
             },
             error: () => {
-                this.snack.openSnackBar("error fetching bills", "error");
+                this.generalService.errorSnackbar("error fetching bills");
                 this.billState.changeStatus("error", "error fetching bills");
             },
         });
@@ -141,29 +139,35 @@ export class PageBills {
     }
 
     onCheck(data: Bill) {
-        this.billService
-            .updateBill(
-                {
-                    ...data,
-                    due: new Date(data.due),
-                    paid: new Date(),
-                    settled: true,
-                },
-                data.type
-            )
-            .subscribe({
-                next: () => {
-                    this.billService.getBills().subscribe({
-                        next: (bills) => {
-                            this.billState.setBills(bills);
-                        },
-                    });
-                    this.snack.openSnackBar("bill successfully updated", "success");
-                },
-                error: () => {
-                    this.snack.openSnackBar("error updating bill", "error");
-                },
-            });
+        this.billService.quickSettle(data.id).subscribe({
+            next: () => {
+                this.billService.getBills().subscribe({
+                    next: (bills) => {
+                        this.billState.setBills(bills);
+                    },
+                });
+                this.generalService.successSnackbar("bill successfully settled");
+            },
+            error: () => {
+                this.generalService.errorSnackbar("error settling bill");
+            },
+        });
+    }
+
+    onReverseCheck(data: Bill) {
+        this.billService.redoQuickSettle(data.id).subscribe({
+            next: () => {
+                this.billService.getBills().subscribe({
+                    next: (bills) => {
+                        this.billState.setBills(bills);
+                    },
+                });
+                this.generalService.successSnackbar("bill successfully reverse settled");
+            },
+            error: () => {
+                this.generalService.errorSnackbar("error reversing settle bill");
+            },
+        });
     }
 
     getDateStatus(data: Bill) {

@@ -118,6 +118,14 @@ export class ServiceBill {
         );
     }
 
+    quickSettle(id: string) {
+        return this.http.patch(BILL + "/quick-settle/" + id, {});
+    }
+
+    redoQuickSettle(id: string) {
+        return this.http.patch(BILL + "/redo-quick-settle/" + id, {});
+    }
+
     deleteBill() {
         return this.user.user$.pipe(
             mergeMap((user) => this.http.delete(BILL + `${user!.id}`))
