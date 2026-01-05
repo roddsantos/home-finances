@@ -183,28 +183,11 @@
 
 .date-container {
     grid-area: date-container;
-    border-radius: var(--border-radius);
-    height: 35px;
-    font-size: 0.75rem;
-    & p {
-        font-size: 0.75rem;
-    }
-    & .date-icon {
-        font-size: 1rem;
-        height: auto;
-        color: var(--text-1);
-    }
-    &.late {
-        border: var(--border-width) solid var(--error);
-        background-color: rgb(from var(--error) r g b / 0.25);
-    }
-    &.settled {
-        border: var(--border-width) solid var(--success);
-        background-color: rgb(from var(--success) r g b / 0.25);
-    }
-    &.close {
-        border: var(--border-width) solid var(--warning);
-        background-color: rgb(from var(--warning) r g b / 0.25);
+    width: max-content;
+    mat-icon {
+        font-size: 1.5rem !important;
+        width: 1.5rem !important;
+        height: 1.5rem !important;
     }
 }
 
@@ -238,13 +221,10 @@
 .flow-container {
     grid-area: flow-container;
     height: 35px;
-    &.outcome {
-        border-color: var(--error);
-        background-color: rgb(from var(--error) r g b / 0.25);
-    }
-    &.income {
-        border-color: var(--success);
-        background-color: rgb(from var(--success) r g b / 0.25);
+    mat-icon {
+        font-size: 1.5rem !important;
+        width: 1.5rem !important;
+        height: 1.5rem !important;
     }
 }
 
@@ -252,74 +232,27 @@
     display: none;
     grid-area: recurrent-container;
     height: 35px;
-    border-color: var(--success);
-    background-color: rgb(from var(--success) r g b / 0.25);
-    & mat-icon {
-        color: var(--text-1);
-        width: 1.25rem;
-        height: 1.25rem;
-        font-size: 1.25rem;
-    }
     &.recurrent {
         display: flex;
+    }
+    mat-icon {
+        font-size: 1.5rem !important;
+        width: 1.5rem !important;
+        height: 1.5rem !important;
     }
 }
 
 .type-container {
     grid-area: type-container;
     height: 35px;
-    & .type-icon {
-        color: var(--text-1);
-    }
-    &.credit-card {
-        border-color: var(--credit-card);
-        background-color: rgb(from var(--credit-card) r g b / 0.25);
-    }
-    &.bank {
-        border-color: var(--bank);
-        background-color: rgb(from var(--bank) r g b / 0.25);
-    }
-    &.company {
-        border-color: var(--company);
-        background-color: rgb(from var(--company) r g b / 0.25);
-    }
-    & .type-icon {
-        font-size: 1.1rem;
-        width: 1.1rem;
-        height: 1.1rem;
-        margin-right: 0.25rem;
-        color: var(--text-1);
-        height: auto;
-    }
     & .type-name {
         color: var(--text-1);
-        font-size: 0.75rem;
     }
 }
 
 .category-container {
     grid-area: category-category;
     height: 35px;
-    &.credit-card {
-        border-color: var(--credit-card);
-        background-color: rgb(from var(--credit-card) r g b / 0.25);
-    }
-    &.bank {
-        border-color: var(--bank);
-        background-color: rgb(from var(--bank) r g b / 0.25);
-    }
-    &.company {
-        border-color: var(--company);
-        background-color: rgb(from var(--company) r g b / 0.25);
-    }
-    & .category-icon {
-        font-size: 1.1rem;
-        width: 1.1rem;
-        height: 1.1rem;
-        margin-right: 0.25rem;
-        height: auto;
-        color: var(--text-1);
-    }
     & .category-name {
         margin: auto;
         color: var(--text-1);
@@ -334,6 +267,7 @@
 }
 
 .title {
+    font-weight: bold;
     grid-area: title;
     color: var(--text-1);
     margin: auto 0px;

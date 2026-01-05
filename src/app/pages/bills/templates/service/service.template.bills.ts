@@ -5,13 +5,20 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { Bill, BillData } from "src/app/core/types/objects";
+import { CustomTag } from "src/app/components/tag/tag.component";
 
 @Component({
     selector: "service-list-template",
     templateUrl: "./service.template.bills.html",
     styleUrls: ["../../pages.bills.css", "./service.template.bills.css"],
     standalone: true,
-    imports: [CommonModule, MatExpansionModule, MatIconModule, MatTooltipModule],
+    imports: [
+        CommonModule,
+        MatExpansionModule,
+        MatIconModule,
+        MatTooltipModule,
+        CustomTag,
+    ],
 })
 export class ServiceTemplateMonthly {
     public general = inject(GeneralState);

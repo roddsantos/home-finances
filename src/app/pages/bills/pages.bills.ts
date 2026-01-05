@@ -25,6 +25,7 @@ import { ModalEditBill } from "src/app/components/modal/edit-bill/edit-bill.moda
 import { ActionItem } from "src/app/core/types/components";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { CustonButton } from "src/app/components/button/custom-button.component";
+import { CustomTag } from "src/app/components/tag/tag.component";
 
 @Component({
     selector: "page-bills",
@@ -46,6 +47,7 @@ import { CustonButton } from "src/app/components/button/custom-button.component"
         CardComponent,
         ActionsComponent,
         CustonButton,
+        CustomTag,
     ],
 })
 export class PageBills {
@@ -165,8 +167,9 @@ export class PageBills {
     }
 
     getDateStatus(data: Bill) {
-        if (data.settled) return "settled";
-        else if (new Date(data.due).getTime() - new Date().getTime() > 0) return "close";
-        else return "late";
+        if (data.settled) return "var(--success)";
+        else if (new Date(data.due).getTime() - new Date().getTime() > 0)
+            return "var(--warning)";
+        else return "var(--error)";
     }
 }

@@ -12,14 +12,14 @@ export const COLOR_STATUS = {
         info: "#003caa",
         warning: "#b97900",
         default: "#3a3a3a",
-        success: "#008817",
+        success: "#008015",
     },
     default: {
         error: "#da3131",
         info: "#326bd3",
-        warning: "#dba134",
+        warning: "#aa7c26",
         default: "#7c7c7c",
-        success: "#29c944",
+        success: "#12b32d",
     },
     dark: {
         error: "#ff8888",

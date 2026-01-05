@@ -51,11 +51,15 @@
                             *ngIf="item.type === 'companyCredit'"
                             [data]="item"
                         ></service-list-template>
-                        <div
-                            [ngClass]="['date-container', 'tag', getDateStatus(item), isLineTheme]"
+                        <tag
+                            matTooltip="due date"
+                            [id]="'tag-date-'+item.id"
+                            [theme]="getDateStatus(item)"
+                            transform
+                            class="date-container"
                         >
                             <mat-icon
-                                class="material-symbols-outlined date-icon"
+                                class="material-symbols-outlined"
                                 aria-hidden="false"
                                 aria-label="icon"
                                 fontIcon="event"
@@ -64,7 +68,7 @@
                                 {{(item.settled ? item.paid : item.due) | date:
                                 "mediumDate"}}
                             </p>
-                        </div>
+                        </tag>
                         <div class="value-container">
                             <div class="parcel">
                                 <p>{{ item.type === 'money' ? '$' : item.parcel + 1 }}</p>

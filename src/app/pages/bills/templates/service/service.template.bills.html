@@ -1,37 +1,46 @@
 <div class="bill-tags">
-    <div
+    <tag
         [matTooltip]="data.isPayment ? 'outcome' : 'income'"
-        [ngClass]="['tag', 'flow-container', data.isPayment ? 'outcome' : 'income']"
+        [id]="'tag-flow-'+data.id"
+        [theme]="data.isPayment ? 'var(--error)' : 'var(--success)'"
+        transform
+        class="flow-container"
     >
         <mat-icon
-            class="material-symbols-outlined type-icon"
+            class="material-symbols-outlined"
             aria-hidden="false"
             aria-label="icon"
             [fontIcon]="data.isPayment ? 'arrow_circle_up' : 'arrow_circle_down'"
         ></mat-icon>
-    </div>
-    <div
+    </tag>
+    <tag
         matTooltip="company"
-        [ngClass]="['type-container', 'tag','company', isLineTheme]"
+        [id]="'tag-company-'+data.id"
+        theme="var(--company)"
+        transform
     >
         <mat-icon
-            class="material-symbols-outlined type-icon"
+            class="material-symbols-outlined"
             aria-hidden="false"
             aria-label="icon"
             fontIcon="store"
+            class="type-container"
         ></mat-icon>
         <p class="type-name">{{data.company?.name}}</p>
-    </div>
-    <div
+    </tag>
+    <tag
         matTooltip="category"
-        [ngClass]="['category-container','tag','company', isLineTheme]"
+        [id]="'tag-category-'+data.id"
+        theme="var(--company)"
+        transform
     >
         <mat-icon
-            class="material-icons-outlined category-icon"
+            class="material-symbols-outlined"
             aria-hidden="false"
             aria-label="icon"
             [fontIcon]="data.category.icon"
+            class="category-container"
         ></mat-icon>
         <p class="category-name">{{data.category.name}}</p>
-    </div>
+    </tag>
 </div>

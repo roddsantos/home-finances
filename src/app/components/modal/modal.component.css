@@ -70,7 +70,7 @@
 .modal-header {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: calc(100% - 1rem);
     height: 60px;
     z-index: 3;
     position: absolute;
@@ -78,9 +78,10 @@
     left: 0%;
     text-align: center;
     padding: 0px 20px;
+    margin: 0.5rem;
     background-color: var(--primary);
     border-bottom: solid var(--border-width) var(--border-color);
-    border-radius: var(--border-radius) var(--border-radius) 0px 0px;
+    border-radius: var(--border-radius) var(--border-radius);
     & h3 {
         color: var(--text-2);
         margin: auto auto auto 0px;
@@ -89,8 +90,8 @@
 
 .modal-close-icon {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 1.5rem;
+    right: 1.5rem;
     color: var(--text-2);
     cursor: pointer;
     z-index: 4;

@@ -2,9 +2,12 @@
     &.mat-mdc-snack-bar-container {
         .mdc-snackbar__surface {
             background-color: var(--error);
+            & .mat-mdc-snack-bar-label .mdc-snackbar__label {
+                color: var(--text-2);
+            }
         }
         .mdc-button__label {
-            color: white;
+            color: var(--text-2);
             font-family: var(--font-1) !important;
         }
     }
@@ -14,9 +17,12 @@
     &.mat-mdc-snack-bar-container {
         .mdc-snackbar__surface {
             background-color: var(--warning);
+            & .mat-mdc-snack-bar-label .mdc-snackbar__label {
+                color: var(--text-2);
+            }
         }
         .mdc-button__label {
-            color: white;
+            color: var(--text-2);
             font-family: var(--font-1) !important;
         }
     }
@@ -26,9 +32,12 @@
     &.mat-mdc-snack-bar-container {
         .mdc-snackbar__surface {
             background-color: var(--success);
+            & .mat-mdc-snack-bar-label .mdc-snackbar__label {
+                color: var(--text-2);
+            }
         }
         .mdc-button__label {
-            color: white;
+            color: var(--text-2);
             font-family: var(--font-1) !important;
         }
     }
@@ -38,9 +47,12 @@
     &.mat-mdc-snack-bar-container {
         .mdc-snackbar__surface {
             background-color: var(--info);
+            & .mat-mdc-snack-bar-label .mdc-snackbar__label {
+                color: var(--text-2);
+            }
         }
         .mdc-button__label {
-            color: white;
+            color: var(--text-2);
             font-family: var(--font-1) !important;
         }
     }

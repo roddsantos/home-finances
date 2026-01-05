@@ -1,48 +1,49 @@
 <div class="bill-tags">
-    <div
+    <tag
         [matTooltip]="data.isPayment ? 'outcome' : 'income'"
-        [ngClass]="['tag', 'flow-container', data.isPayment ? 'outcome' : 'income']"
+        [id]="'tag-flow-'+data.id"
+        [theme]="data.isPayment ? 'var(--error)' : 'var(--success)'"
+        transform
+        class="flow-container"
     >
         <mat-icon
-            class="material-symbols-outlined type-icon"
+            class="material-symbols-outlined"
             aria-hidden="false"
             aria-label="icon"
             [fontIcon]="data.isPayment ? 'arrow_circle_up' : 'arrow_circle_down'"
         ></mat-icon>
-    </div>
-    <tag [id]="'tag-type-'+data.id" theme="var(--bank)" transform>
+    </tag>
+    <tag matTooltip="bank" [id]="'tag-type-'+data.id" theme="var(--bank)" transform>
         <mat-icon
-            class="material-symbols-outlined type-icon"
+            class="material-symbols-outlined"
             aria-hidden="false"
             aria-label="icon"
             fontIcon="payments"
+            class="type-container"
         ></mat-icon>
         <p class="type-name">{{data.bank1?.name}}</p>
     </tag>
-    <!-- <div matTooltip="bank" [ngClass]="['type-container', 'tag', 'bank', isLineTheme]">
-        <mat-icon
-            class="material-symbols-outlined type-icon"
-            aria-hidden="false"
-            aria-label="icon"
-            fontIcon="payments"
-        ></mat-icon>
-        <p class="type-name">{{data.bank1?.name}}</p>
-    </div> -->
-    <div
+    <tag
         matTooltip="category"
-        [ngClass]="['category-container','tag','bank', isLineTheme]"
+        [id]="'tag-category-'+data.id"
+        theme="var(--bank)"
+        transform
     >
         <mat-icon
-            class="material-icons-outlined category-icon"
+            class="material-symbols-outlined"
             aria-hidden="false"
             aria-label="icon"
             [fontIcon]="data.category.icon"
+            class="category-container"
         ></mat-icon>
         <p class="category-name">{{data.category.name}}</p>
-    </div>
-    <div
+    </tag>
+    <tag
         matTooltip="recurrent bill"
-        [ngClass]="['recurrent-container','tag', isLineTheme, data.isRecurrent ? 'recurrent' : '']"
+        [id]="'tag-recurrent-'+data.id"
+        theme="var(--success)"
+        transform
+        [ngClass]="['recurrent-container',  data.isRecurrent ? 'recurrent' : '']"
     >
         <mat-icon
             class="material-symbols-outlined"
@@ -50,5 +51,5 @@
             aria-label="icon"
             fontIcon="cycle"
         ></mat-icon>
-    </div>
+    </tag>
 </div>
