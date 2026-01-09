@@ -9,13 +9,14 @@ import {
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { BankState } from "src/app/core/subjects/subjects.bank";
-import { Bank, Bill, BillData, Company } from "src/app/core/types/objects";
+import { Bank, Company } from "src/app/core/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
 import { BANK_FORM } from "src/utils/constants/forms";
 import { MatIconModule } from "@angular/material/icon";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
+import { BillDataObjectType } from "src/app/core/types/data/bills.types";
 
 @Component({
     selector: "template-edit-banks",
@@ -38,7 +39,7 @@ export class BankTemplateEditBill {
     public companies = inject(CompanyState);
     public banks = inject(BankState);
 
-    @Input() bill!: Bill & BillData;
+    @Input() bill!: BillDataObjectType;
 
     bankForm = new FormGroup({
         bank1: new FormControl<Bank | null>(null, {

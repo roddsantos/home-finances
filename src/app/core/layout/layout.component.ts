@@ -20,7 +20,7 @@ import { ServiceCompany } from "src/app/services/company.service";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
-import { ServiceCategory } from "src/app/services/category.service";
+import { CategoryService } from "src/app/services/category.service";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { CommonModule } from "@angular/common";
 import { RouteItemType, RoutesType } from "src/app/core/types/general";
@@ -69,7 +69,7 @@ export class LayoutComponent implements OnChanges {
     public ccApi = inject(ServiceCreditCard);
     public ccState = inject(CreditCardState);
 
-    public catApi = inject(ServiceCategory);
+    public catApi = inject(CategoryService);
     public catState = inject(CategoryState);
 
     public innerWidth: number;
@@ -103,16 +103,6 @@ export class LayoutComponent implements OnChanges {
                 this.snack.openSnackBar("error fetching bills", "error");
                 this.billState.changeStatus("error", "error fetching bills");
             },
-        });
-
-        this.catApi.getCategories().subscribe({
-            next: (cats) => {
-                this.catState.setCategory(
-                    cats.sort((cat1, cat2) => (cat1.name > cat2.name ? 1 : -1))
-                );
-                this.catState.changeVariant(cats.length > 0 ? "none" : "empty");
-            },
-            error: () => this.catState.changeStatus("http", "error fetching categories"),
         });
 
         this.compApi.getCompanies().subscribe({

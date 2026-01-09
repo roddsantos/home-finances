@@ -5,17 +5,18 @@ import { MatIcon } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
-import { Bank, Category, Company } from "src/app/core/types/objects";
+import { Company } from "src/app/core/types/objects";
 import { UserState } from "src/app/core/subjects//subjects.user";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ActionItem } from "src/app/core/types/components";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ROUTES } from "src/utils/route";
 import { Dialog } from "@angular/cdk/dialog";
-import { ServiceCategory } from "src/app/services/category.service";
+import { CategoryService } from "src/app/services/category.service";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { ModalNewCategory } from "src/app/components/modal/new-category/new-category.modal";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
+import { CategoryObjectType } from "src/app/core/types/data/category.types";
 
 @Component({
     selector: "page-categories",
@@ -31,7 +32,7 @@ import { ModalViewItem } from "src/app/components/modal/view-item/view-item.moda
     ],
 })
 export class PageCategories {
-    public categoryService = inject(ServiceCategory);
+    public categoryService = inject(CategoryService);
     public categoryState = inject(CategoryState);
     public userState = inject(UserState);
     public storage = inject(LocalStorageService);
@@ -52,10 +53,10 @@ export class PageCategories {
         },
     ];
 
-    getCompanies(reloaded?: boolean) {
+    getCategories(reloaded?: boolean) {
         this.categoryService.getCategories().subscribe({
             next: (categories) => {
-                this.categoryState.setCategory(categories as Category[]);
+                this.categoryState.setCategory(categories as CategoryObjectType[]);
                 this.categoryState.changeStatus(
                     (categories as Company[]).length === 0 ? "empty" : "none",
                     "no categories"
@@ -75,7 +76,7 @@ export class PageCategories {
 
     onReload() {
         this.categoryState.changeStatus("loading", "loading");
-        this.getCompanies(true);
+        this.getCategories(true);
     }
 
     onEdit(category: any) {
@@ -94,7 +95,7 @@ export class PageCategories {
         console.log("DELETE");
     }
 
-    openDetails(category: Category, e: any) {
+    openDetails(category: CategoryObjectType, e: any) {
         const className = e.target.className;
         if (className !== "mat-mdc-button-touch-target") {
             const option = {

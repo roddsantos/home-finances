@@ -1,12 +1,15 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { Bill, BillData } from "src/app/core/types/objects";
+import { BillDataObjectType } from "src/app/core/types/data/bills.types";
 
 @Pipe({
     name: "bills",
     standalone: true,
 })
 export class BillsPipe implements PipeTransform {
-    transform(value: Bill & BillData, format: "type" | "parcels" | "settled" | "flux") {
+    transform(
+        value: BillDataObjectType,
+        format: "type" | "parcels" | "settled" | "flux"
+    ) {
         if (format === "type") {
             if (value.type === "creditCard") return "credit card";
             if (value.type === "companyCredit") return "company credit";

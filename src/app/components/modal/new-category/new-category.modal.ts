@@ -9,16 +9,16 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
-import { Category } from "src/app/core/types/objects";
 import { CategoryObject } from "src/app/core/types/services";
 import { CATEGORY_FORM, GENERAL_FORM } from "src/utils/constants/forms";
-import { ServiceCategory } from "src/app/services/category.service";
+import { CategoryService } from "src/app/services/category.service";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { MatIconModule } from "@angular/material/icon";
 import { IconSelection } from "../icon-selection/icon-selection-modal";
 import { Dialog, DIALOG_DATA } from "@angular/cdk/dialog";
 import { MatButtonModule } from "@angular/material/button";
 import { mergeMap, Subscription } from "rxjs";
+import { CategoryObjectType } from "src/app/core/types/data/category.types";
 
 @Component({
     selector: "modal-new-category",
@@ -38,12 +38,12 @@ import { mergeMap, Subscription } from "rxjs";
     ],
 })
 export class ModalNewCategory extends ModalComponent implements OnInit {
-    public catApi = inject(ServiceCategory);
+    public catApi = inject(CategoryService);
     public catState = inject(CategoryState);
 
     public dialog = inject(Dialog);
 
-    constructor(@Inject(DIALOG_DATA) public data: Category) {
+    constructor(@Inject(DIALOG_DATA) public data: CategoryObjectType) {
         super();
     }
 
@@ -86,9 +86,11 @@ export class ModalNewCategory extends ModalComponent implements OnInit {
             .pipe(mergeMap(() => this.catApi.getCategories()))
             .subscribe({
                 next: (categories) => {
-                    this.catState.setCategory(categories as Category[]);
+                    this.catState.setCategory(categories as CategoryObjectType[]);
                     this.catState.changeStatus(
-                        (categories as Category[]).length === 0 ? "empty" : "none",
+                        (categories as CategoryObjectType[]).length === 0
+                            ? "empty"
+                            : "none",
                         "no categories"
                     );
                     this.generalService.successSnackbar("category successfully updated");
@@ -108,7 +110,7 @@ export class ModalNewCategory extends ModalComponent implements OnInit {
             })
             .subscribe({
                 next: (categories) => {
-                    this.catState.setCategory(categories as Category[]);
+                    this.catState.setCategory(categories as CategoryObjectType[]);
                     this.generalService.successSnackbar("category successfully created");
                     this.onClose();
                 },

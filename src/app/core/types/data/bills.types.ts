@@ -1,3 +1,6 @@
+import { CategoryObjectType } from "./category.types";
+import { Bank, Company, CreditCard } from "../objects";
+
 export type BillObjectType = {
     id: string;
     groupId: string;
@@ -24,4 +27,12 @@ export type BillObjectType = {
     createdAt: string;
     updatedAt: string;
     deletedAt: string;
+};
+
+export type BillDataObjectType = BillObjectType & {
+    category: CategoryObjectType;
+    creditCard: CreditCard | null;
+    bank1: Bank | null;
+    bank2: Bank | null;
+    company: Company | null;
 };

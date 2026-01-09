@@ -7,7 +7,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { ErrorsBillForm, InfoBillForm } from "src/app/core/types/forms";
-import { Category } from "src/app/core/types/objects";
+import { CategoryObjectType } from "src/app/core/types/data/category.types";
 import { CATEGORY_FORM, GENERAL_FORM } from "src/utils/constants/forms";
 
 @Component({
@@ -57,7 +57,7 @@ export class InfoTemplate {
             nonNullable: true,
             validators: [Validators.required, Validators.min(0.01)],
         }),
-        category: new FormControl<Category | null>(null, {
+        category: new FormControl<CategoryObjectType | null>(null, {
             nonNullable: true,
             validators: [Validators.required],
         }),

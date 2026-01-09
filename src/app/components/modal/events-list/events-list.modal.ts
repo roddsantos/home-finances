@@ -33,11 +33,11 @@ export class ModalEventsList extends ModalComponent {
         super();
     }
 
-    isBill(event: (Bill & BillData) | CreditCard): event is Bill & BillData {
-        return (event as Bill & BillData).type !== undefined;
+    isBill(event: BillDataObjectType | CreditCard): event is BillDataObjectType {
+        return (event as BillDataObjectType).type !== undefined;
     }
 
-    onClickEvent(event: (Bill & BillData) | CreditCard) {
+    onClickEvent(event: BillDataObjectType | CreditCard) {
         if (!this.isBill(event)) {
             this.generalService.navigateTo("/credit-cards");
             this.onClose();

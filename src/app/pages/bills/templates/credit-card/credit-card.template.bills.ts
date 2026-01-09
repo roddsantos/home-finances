@@ -1,10 +1,10 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, Input } from "@angular/core";
 import { MatExpansionModule } from "@angular/material/expansion";
-import { Bill, BillData } from "src/app/core/types/objects";
 import { MatIconModule } from "@angular/material/icon";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { BillDataObjectType } from "src/app/core/types/data/bills.types";
 
 @Component({
     selector: "credit-card-list-template",
@@ -15,7 +15,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 })
 export class CreditCardTemplateMonthly {
     public general = inject(GeneralState);
-    @Input() data: Bill & BillData;
+    @Input() data: BillDataObjectType;
     isLineTheme: string = "";
 
     ngOnInit() {

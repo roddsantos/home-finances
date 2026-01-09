@@ -3,12 +3,12 @@ import { inject, Injectable } from "@angular/core";
 import { LocalStorageService } from "./local-storage.service";
 import { SumAndCountData } from "../core/types/services";
 import { HOME } from "src/utils/constants/services";
-import { Bill, BillData } from "../core/types/objects";
 import {
     SubjectExpensesType,
     SubjectSavingsType,
 } from "../core/types/subjects/home.subjects.types";
 import { DateSubjectType } from "../core/types/subjects/general.subjects.type";
+import { BillDataObjectType } from "../core/types/data/bills.types";
 
 @Injectable({
     providedIn: "root",
@@ -43,7 +43,7 @@ export class HomeService {
     getRecentBills(date: DateSubjectType) {
         const params = { ...date };
         const user = this.localStorageService.getUser();
-        return this.http.get<{ bills: (Bill & BillData)[] }>(
+        return this.http.get<{ bills: BillDataObjectType[] }>(
             HOME + "recents/" + user?.id,
             { params }
         );

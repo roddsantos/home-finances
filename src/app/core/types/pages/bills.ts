@@ -1,10 +1,9 @@
-import { PaginationType } from "../components";
-import { Bill, BillData } from "../objects";
+import { BillDataObjectType } from "../data/bills.types";
 import { FetchPaginatedData } from "../services";
 
 export type BillsIncomeMetadataType = {
     income: Omit<FetchPaginatedData, "data">;
 };
 
-export type BillsMetadataType = FetchPaginatedData<Bill & BillData> &
+export type BillsMetadataType = FetchPaginatedData<BillDataObjectType> &
     BillsIncomeMetadataType;

@@ -1,32 +1,24 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
-import { MatButton, MatIconButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
-import { ServiceCategory } from "src/app/services/category.service";
+import { CategoryService } from "src/app/services/category.service";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
-import { Category } from "src/app/core/types/objects";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ActionItem } from "src/app/core/types/components";
+import { CategoryObjectType } from "src/app/core/types/data/category.types";
 
 @Component({
     selector: "management-categories",
     templateUrl: "./pages.management.categories.html",
     styleUrls: ["./pages.management.categories.css", "../pages.management.css"],
     standalone: true,
-    imports: [
-        MatIcon,
-        MatButton,
-        FeedbackContainerComponent,
-        CommonModule,
-        MatIconButton,
-        ActionsComponent,
-    ],
+    imports: [MatIcon, FeedbackContainerComponent, CommonModule, ActionsComponent],
 })
 export class CategoriesManagementComponent {
-    public typebillApi = inject(ServiceCategory);
+    public typebillApi = inject(CategoryService);
     public catState = inject(CategoryState);
     public storage = inject(LocalStorageService);
     private snack = inject(CustomSnackbarComponent);
@@ -44,9 +36,9 @@ export class CategoriesManagementComponent {
     getCategories(reloaded?: boolean) {
         this.typebillApi.getCategories().subscribe({
             next: (data) => {
-                this.catState.setCategory(data as Category[]);
+                this.catState.setCategory(data as CategoryObjectType[]);
                 this.catState.changeStatus(
-                    (data as Category[]).length === 0 ? "empty" : "none",
+                    (data as CategoryObjectType[]).length === 0 ? "empty" : "none",
                     "no categories"
                 );
             },

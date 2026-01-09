@@ -15,7 +15,6 @@ import { DashboardState } from "src/app/core/subjects/subjects.dashboard";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { UserState } from "src/app/core/subjects/subjects.user";
 import { CardActionType } from "src/app/core/types/components";
-import { Bill, BillData, Category } from "src/app/core/types/objects";
 import { CategoriesSummaryType } from "src/app/core/types/services/dashboard.services.types";
 import {
     DashboardBillsPerMonthType,
@@ -36,6 +35,8 @@ import { categoriesChart } from "./charts/category.charts.dashboard";
 import { savingsChart } from "./charts/savings.charts.dashboard";
 import { piggyBanksProgressionChart } from "./charts/piggy-banks-progression.charts.dashboard";
 import { creditCardProgressionChart } from "./charts/credit-cards-progression.charts.dashboard";
+import { CategoryObjectType } from "src/app/core/types/data/category.types";
+import { BillDataObjectType } from "src/app/core/types/data/bills.types";
 
 @Component({
     selector: "page-dashboard",
@@ -67,7 +68,7 @@ export class PageDashboard {
     public router = new Router();
     public billsPerMonthChart: Chart;
     public categoryChart: Chart;
-    public categories: Category[] = [];
+    public categories: CategoryObjectType[] = [];
     public savingsChart: Chart;
     public creditCardsChart: Chart;
 
@@ -211,7 +212,7 @@ export class PageDashboard {
         this.billsPerMonthChart.update();
     }
 
-    openBill(bill: Bill & BillData) {
+    openBill(bill: BillDataObjectType) {
         const option = {
             data: {
                 item: { ...bill, sector: "bill" },

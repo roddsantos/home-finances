@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { Category } from "src/app/core/types/objects";
 import { FeedbackInfo, FeedbackVariant } from "src/app/core/types/components";
+import { CategoryObjectType } from "../types/data/category.types";
 
 @Injectable({
     providedIn: "root",
 })
 export class CategoryState {
-    private _categories$ = new BehaviorSubject<Category[]>([]);
+    private _categories$ = new BehaviorSubject<CategoryObjectType[]>([]);
     private _status$ = new BehaviorSubject<FeedbackInfo>({
         title: "loading",
         description: "",
@@ -20,6 +20,7 @@ export class CategoryState {
     public readonly categories$ = this._categories$.asObservable();
 
     changeStatus(variant: FeedbackVariant, title: string) {
+        console.log(variant, title);
         this._status$.next({ ...this._status$.getValue(), variant, title });
         if (variant !== "none" && variant !== "loading") this._categories$.next([]);
     }
@@ -28,14 +29,18 @@ export class CategoryState {
         this._status$.next({ ...this._status$.getValue(), variant });
     }
 
-    setCategory(tb: Category[]) {
+    setCategories(categories: CategoryObjectType[]) {
+        this._categories$.next(categories);
+    }
+
+    setCategory(tb: CategoryObjectType[]) {
         if (tb.length === 0) this.changeStatus("empty", "no categories");
         else this.changeVariant("none");
 
         this._categories$.next(tb);
     }
 
-    addCategory(category: Category, index?: number) {
+    addCategory(category: CategoryObjectType, index?: number) {
         let auxCategories = [...this._categories$.getValue()];
         const existingCompany = this._categories$
             .getValue()

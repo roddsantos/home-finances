@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation, inject } from "@angular/core";
 import { LocalStorageService } from "./services/local-storage.service";
 import { UserState } from "src/app/core/subjects/subjects.user";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
-import { ServiceCategory } from "./services/category.service";
+import { CategoryService } from "./services/category.service";
 import { CustomFilterState } from "./components/custom-filter/custom-filter.subjects.component";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { UserService } from "./services/user.service";
@@ -22,7 +22,7 @@ export class AppComponent {
     public generalState = inject(GeneralState);
     public userState = inject(UserState);
     public catState = inject(CategoryState);
-    public catService = inject(ServiceCategory);
+    public catService = inject(CategoryService);
     public filterState = inject(CustomFilterState);
     public userService = inject(UserService);
     public themeService = inject(ThemeService);

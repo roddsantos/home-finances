@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { Bill, BillData } from "src/app/core/types/objects";
 import {
     FeedbackInfo,
     FeedbackVariant,
@@ -8,12 +7,13 @@ import {
 } from "src/app/core/types/components";
 import { BillsMetadataType } from "../types/pages/bills";
 import { BillsMetadataSubjectType } from "../types/subjects/bills.subjects";
+import { BillDataObjectType } from "../types/data/bills.types";
 
 @Injectable({
     providedIn: "root",
 })
 export class BillState {
-    private _bills$ = new BehaviorSubject<Array<Bill & BillData>>([]);
+    private _bills$ = new BehaviorSubject<Array<BillDataObjectType>>([]);
     private _status$ = new BehaviorSubject<FeedbackInfo>({
         title: "loading",
         description: "",
@@ -71,7 +71,7 @@ export class BillState {
         this._billsTotal$.next(bills.total || 0);
     }
 
-    addBill(bill: Array<Bill & BillData>, index?: number) {
+    addBill(bill: Array<BillDataObjectType>, index?: number) {
         let auxBills = [...this._bills$.getValue()];
         auxBills = [...bill, ...auxBills];
 

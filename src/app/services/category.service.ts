@@ -1,21 +1,20 @@
-import { inject, Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { CATEGORY } from "src/utils/constants/services";
+import { Injectable } from "@angular/core";
 import { CategoryObject } from "src/app/core/types/services";
-import { UserState } from "src/app/core/subjects/subjects.user";
-import { mergeMap } from "rxjs";
-import { Category } from "src/app/core/types/objects";
+import { mergeMap, switchMap, take } from "rxjs";
+import { GeneralService } from "./general.service";
+import { CategoryObjectType } from "src/app/core/types/data/category.types";
+import { CATEGORY } from "src/utils/constants/services";
 
 @Injectable({
     providedIn: "root",
 })
-export class ServiceCategory {
-    private user = inject(UserState);
-    private http = inject(HttpClient);
-
+export class CategoryService extends GeneralService {
     getCategories() {
         return this.user.user$.pipe(
-            mergeMap((user) => this.http.get<Category[]>(CATEGORY + `/${user!.id}`))
+            take(1),
+            switchMap((user) =>
+                this.http.get<CategoryObjectType[]>(CATEGORY + `/${user!.id}`)
+            )
         );
     }
 

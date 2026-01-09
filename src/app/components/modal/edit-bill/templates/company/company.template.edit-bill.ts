@@ -7,7 +7,7 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { Bank, Bill, BillData, Company, CreditCard } from "src/app/core/types/objects";
+import { Company } from "src/app/core/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
@@ -16,6 +16,7 @@ import { MatInputModule } from "@angular/material/input";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import { BANK_FORM, COMPANY_FORM } from "src/utils/constants/forms";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
+import { BillDataObjectType } from "src/app/core/types/data/bills.types";
 
 @Component({
     selector: "template-edit-companies",
@@ -38,7 +39,7 @@ export class CompanyTemplateEditBill {
     public banks = inject(BankState);
     public ccs = inject(CreditCardState);
 
-    @Input() bill!: Bill & BillData;
+    @Input() bill!: BillDataObjectType;
 
     compForm = new FormGroup({
         company: new FormControl<string | null>(null, {

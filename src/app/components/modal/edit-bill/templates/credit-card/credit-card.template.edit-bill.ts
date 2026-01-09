@@ -7,7 +7,7 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { Bill, BillData, Company, CreditCard } from "src/app/core/types/objects";
+import { Company, CreditCard } from "src/app/core/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
@@ -16,6 +16,7 @@ import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { CREDIT_CARD_FORM } from "src/utils/constants/forms";
+import { BillDataObjectType } from "src/app/core/types/data/bills.types";
 
 @Component({
     selector: "template-edit-credit-card",
@@ -39,7 +40,7 @@ export class CreditCardTemplateEditBill {
     public companies = inject(CompanyState);
     @ViewChild("parcels") parcels: ElementRef;
 
-    @Input() bill!: Bill & BillData;
+    @Input() bill!: BillDataObjectType;
 
     ccForm = new FormGroup({
         creditCard: new FormControl<CreditCard | null>(null, {

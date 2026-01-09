@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { concatMap, map, Subscription } from "rxjs";
-import { Bill, BillData, CreditCard } from "../core/types/objects";
+import { CreditCard } from "../core/types/objects";
 import { DASHBOARD } from "src/utils/constants/services";
 import { DashboardState } from "../core/subjects/subjects.dashboard";
 import { CreditCardDashboardType } from "../core/types/services";

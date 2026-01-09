@@ -28,8 +28,10 @@ import { ModalNewSaving } from "src/app/components/modal/new-saving/new-saving.m
 import { FormControl } from "@angular/forms";
 import { MatOptionSelectionChange } from "@angular/material/core";
 import { SearchResultsArrayType } from "../../types/components/header";
-import { Bank, Bill, Category, Company, CreditCard } from "../../types/objects";
+import { Bank, Company, CreditCard } from "../../types/objects";
 import { BillsPipe } from "src/utils/pipes/bills";
+import { CategoryObjectType } from "../../types/data/category.types";
+import { BillDataObjectType } from "../../types/data/bills.types";
 
 @Component({
     standalone: true,
@@ -116,7 +118,7 @@ export class HeaderLayoutComponent {
                         ? []
                         : cats.filter((cat) =>
                               removeDiacritics(cat.name).includes(removeDiacritics(term))
-                          )) as Category[],
+                          )) as CategoryObjectType[],
                 });
             },
         });
@@ -176,7 +178,7 @@ export class HeaderLayoutComponent {
                                   removeDiacritics(bill.name).includes(
                                       removeDiacritics(term)
                                   )
-                              )) as Bill[],
+                              )) as BillDataObjectType[],
                     });
                 },
             });

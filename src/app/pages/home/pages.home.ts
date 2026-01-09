@@ -11,7 +11,6 @@ import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { HomeState } from "src/app/core/subjects/subjects.home";
 import { UserState } from "src/app/core/subjects/subjects.user";
 import { CardActionType } from "src/app/core/types/components";
-import { Bill, BillData } from "src/app/core/types/objects";
 import { DateSubjectType } from "src/app/core/types/subjects/general.subjects.type";
 import { BankService } from "src/app/services/bank.service";
 import { ServiceBill } from "src/app/services/bill.service";
@@ -27,6 +26,7 @@ import {
     MonthYearToggleType,
     ToggleButtonItemsType,
 } from "src/app/core/types/components/toggle-buttons";
+import { BillDataObjectType } from "src/app/core/types/data/bills.types";
 
 @Component({
     selector: "page-home",
@@ -56,7 +56,7 @@ export class PageHome {
 
     public router = new Router();
 
-    public todayBills: (Bill & BillData)[] = [];
+    public todayBills: BillDataObjectType[] = [];
     public theme = "default";
 
     public todaysDate = new Date();
@@ -143,7 +143,7 @@ export class PageHome {
         this.updateValues();
     }
 
-    openBill(bill: Bill & BillData) {
+    openBill(bill: BillDataObjectType) {
         const option = {
             data: bill,
         };

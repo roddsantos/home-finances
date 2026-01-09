@@ -12,7 +12,6 @@ import { MatInputModule } from "@angular/material/input";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
-import { Bill, BillData, Category } from "src/app/core/types/objects";
 import { BankTemplateEditBill } from "./templates/bank/bank.template.edit-bill";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { CommonModule } from "@angular/common";
@@ -38,6 +37,8 @@ import { ToggleButtonComponent } from "../../toggle-buttons/toggle-buttons.compo
 import { CustomTabs } from "../../tabs/tabs.component";
 import { EDIT_BILLS_TABS } from "src/utils/constants/bills";
 import { CustomTabType } from "src/app/core/types/components/tabs";
+import { BillDataObjectType } from "src/app/core/types/data/bills.types";
+import { CategoryObjectType } from "src/app/core/types/data/category.types";
 
 @Component({
     selector: "modal-new-bill",
@@ -71,7 +72,7 @@ export class ModalEditBill extends ModalComponent {
     public catState = inject(CategoryState);
     public snack = inject(CustomSnackbarComponent);
 
-    constructor(@Inject(DIALOG_DATA) public data: Bill & BillData) {
+    constructor(@Inject(DIALOG_DATA) public data: BillDataObjectType) {
         super();
     }
     @ViewChild("bankTemplate") bankTemplate: BankTemplateEditBill;
@@ -137,7 +138,7 @@ export class ModalEditBill extends ModalComponent {
                 nonNullable: true,
             }
         ),
-        category: new FormControl<Category | null>(null, {
+        category: new FormControl<CategoryObjectType | null>(null, {
             nonNullable: true,
             validators: [Validators.required],
         }),
@@ -289,7 +290,7 @@ export class ModalEditBill extends ModalComponent {
         this.inputType = $event || "";
     }
 
-    compareCategories(c1: Category, c2: Category): boolean {
+    compareCategories(c1: CategoryObjectType, c2: CategoryObjectType): boolean {
         return c1.id === c2.id;
     }
 }
