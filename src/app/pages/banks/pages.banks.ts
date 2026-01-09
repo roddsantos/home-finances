@@ -11,7 +11,7 @@ import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ActionItem } from "src/app/core/types/components";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ROUTES } from "src/utils/route";
-import { ServiceBank } from "src/app/services/bank.service";
+import { BankService } from "src/app/services/bank.service";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import { Dialog } from "@angular/cdk/dialog";
 import { ModalNewBank } from "src/app/components/modal/new-bank/new-bank.modal";
@@ -32,7 +32,7 @@ import { ModalNewSaving } from "src/app/components/modal/new-saving/new-saving.m
     ],
 })
 export class PageBanks {
-    public bankService = inject(ServiceBank);
+    public bankService = inject(BankService);
     public bankState = inject(BankState);
     public userState = inject(UserState);
     public storage = inject(LocalStorageService);

@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
+import { APP_INITIALIZER, CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 
 import { AppComponent } from "./app.component";
@@ -10,7 +10,7 @@ import { ModalComponent } from "./components/modal/modal.component";
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { PageLogin } from "./pages/login/login.page";
-import { GeneralComponent } from "./components/general/general.component";
+import { AppService } from "./app.service";
 
 @NgModule({
     declarations: [AppComponent],
@@ -25,7 +25,14 @@ import { GeneralComponent } from "./components/general/general.component";
         ModalComponent,
         PageLogin,
     ],
-    providers: [],
+    providers: [
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (appService: AppService) => () => appService.appInitializer(),
+            deps: [AppService],
+            multi: true,
+        },
+    ],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -13,7 +13,7 @@ import { UserState } from "src/app/core/subjects/subjects.user";
 import { CardActionType } from "src/app/core/types/components";
 import { Bill, BillData } from "src/app/core/types/objects";
 import { DateSubjectType } from "src/app/core/types/subjects/general.subjects.type";
-import { ServiceBank } from "src/app/services/bank.service";
+import { BankService } from "src/app/services/bank.service";
 import { ServiceBill } from "src/app/services/bill.service";
 import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { GeneralService } from "src/app/services/general.service";
@@ -48,7 +48,7 @@ export class PageHome {
     public homeState = inject(HomeState);
     public generalState = inject(GeneralState);
     public billService = inject(ServiceBill);
-    public bankService = inject(ServiceBank);
+    public bankService = inject(BankService);
     public homeService = inject(HomeService);
     public creditCardService = inject(ServiceCreditCard);
     private generalService = inject(GeneralService);

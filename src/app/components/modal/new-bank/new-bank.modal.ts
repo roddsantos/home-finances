@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild, Inject } from "@angular/core";
+import { Component, inject, Inject } from "@angular/core";
 import { ModalComponent } from "../modal.component";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
 import {
@@ -9,9 +9,8 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
-import { ServiceBank } from "src/app/services/bank.service";
+import { BankService } from "src/app/services/bank.service";
 import { BankState } from "src/app/core/subjects/subjects.bank";
-import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 import { BankObject } from "src/app/core/types/services";
 import { Bank } from "src/app/core/types/objects";
 import { DIALOG_DATA } from "@angular/cdk/dialog";
@@ -35,7 +34,7 @@ import { BANK_FORM, GENERAL_FORM } from "src/utils/constants/forms";
     ],
 })
 export class ModalNewBank extends ModalComponent {
-    public bankService = inject(ServiceBank);
+    public bankService = inject(BankService);
     public bankState = inject(BankState);
 
     constructor(@Inject(DIALOG_DATA) public data: Bank) {

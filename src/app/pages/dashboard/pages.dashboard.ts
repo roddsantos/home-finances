@@ -23,7 +23,7 @@ import {
     MonthBillsType,
     PiggyBanksProgressionType,
 } from "src/app/core/types/subjects/dashboard.subjects";
-import { ServiceBank } from "src/app/services/bank.service";
+import { BankService } from "src/app/services/bank.service";
 import { ServiceBill } from "src/app/services/bill.service";
 import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { DashboardService } from "src/app/services/dashboard.service";
@@ -52,7 +52,7 @@ import { creditCardProgressionChart } from "./charts/credit-cards-progression.ch
 })
 export class PageDashboard {
     public billService = inject(ServiceBill);
-    public bankService = inject(ServiceBank);
+    public bankService = inject(BankService);
     public dashboardService = inject(DashboardService);
     public creditCardService = inject(ServiceCreditCard);
     private generalService = inject(GeneralService);

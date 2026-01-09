@@ -14,7 +14,6 @@ import { ModalComponent } from "src/app/components/modal/modal.component";
 import { MatIconModule } from "@angular/material/icon";
 import { ServiceBill } from "src/app/services/bill.service";
 import { BillState } from "src/app/core/subjects/subjects.bill";
-import { ServiceBank } from "src/app/services/bank.service";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { ServiceCompany } from "src/app/services/company.service";
@@ -62,7 +61,6 @@ export class LayoutComponent implements OnChanges {
     public billApi = inject(ServiceBill);
     public billState = inject(BillState);
 
-    public bankApi = inject(ServiceBank);
     public bankState = inject(BankState);
 
     public compApi = inject(ServiceCompany);
@@ -105,16 +103,6 @@ export class LayoutComponent implements OnChanges {
                 this.snack.openSnackBar("error fetching bills", "error");
                 this.billState.changeStatus("error", "error fetching bills");
             },
-        });
-
-        this.bankApi.getBanks().subscribe({
-            next: (banks) => {
-                this.bankState.setBanks(
-                    banks.sort((bank1, bank2) => (bank1.name > bank2.name ? 1 : -1))
-                );
-                this.bankState.changeVariant(banks.length > 0 ? "none" : "empty");
-            },
-            error: () => this.bankState.changeStatus("http", "error fetching banks"),
         });
 
         this.catApi.getCategories().subscribe({
