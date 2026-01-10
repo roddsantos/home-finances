@@ -7,7 +7,7 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { Bank, CreditCard } from "src/app/core/types/objects";
+import { CreditCard } from "src/app/core/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
@@ -19,6 +19,7 @@ import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { BankBillForm, CompanyBillForm, ErrorsBillForm } from "src/app/core/types/forms";
 import { MatIconModule } from "@angular/material/icon";
 import { CompanyObjectType } from "src/app/core/types/data/company.type";
+import { BankObjectType } from "src/app/core/types/data/bank.types";
 
 @Component({
     selector: "template-companies",
@@ -56,7 +57,7 @@ export class CompanyTemplateNewBill {
             nonNullable: false,
             validators: [Validators.required],
         }),
-        bank1: new FormControl<Bank | null>(null, {
+        bank1: new FormControl<BankObjectType | null>(null, {
             nonNullable: false,
         }),
         creditcard: new FormControl<CreditCard | null>(null, {

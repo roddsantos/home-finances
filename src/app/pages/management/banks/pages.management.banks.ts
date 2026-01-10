@@ -7,7 +7,7 @@ import { BankService } from "src/app/services/bank.service";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import { UserState } from "src/app/core/subjects/subjects.user";
 import { ActionItem } from "src/app/core/types/components";
-import { Bank } from "src/app/core/types/objects";
+import { BankObjectType } from "src/app/core/types/data/bank.types";
 
 @Component({
     selector: "management-banks",
@@ -35,9 +35,9 @@ export class BanksManagementComponent {
     getBanks(reloaded?: boolean) {
         this.bankApi.getBanks().subscribe({
             next: (banks) => {
-                this.bankState.setBanks(banks as Bank[]);
+                this.bankState.setBanks(banks as BankObjectType[]);
                 this.bankState.changeStatus(
-                    (banks as Bank[]).length === 0 ? "empty" : "none",
+                    (banks as BankObjectType[]).length === 0 ? "empty" : "none",
                     "no banks"
                 );
             },
@@ -57,7 +57,7 @@ export class BanksManagementComponent {
         this.getBanks(true);
     }
 
-    trackBank(index: number, bank: Bank) {
+    trackBank(index: number, bank: BankObjectType) {
         return bank.id;
     }
 

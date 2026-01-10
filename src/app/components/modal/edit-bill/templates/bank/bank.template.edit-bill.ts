@@ -9,7 +9,6 @@ import {
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { BankState } from "src/app/core/subjects/subjects.bank";
-import { Bank } from "src/app/core/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
@@ -18,6 +17,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { BillDataObjectType } from "src/app/core/types/data/bills.types";
 import { CompanyObjectType } from "src/app/core/types/data/company.type";
+import { BankObjectType } from "src/app/core/types/data/bank.types";
 
 @Component({
     selector: "template-edit-banks",
@@ -43,11 +43,11 @@ export class BankTemplateEditBill {
     @Input() bill!: BillDataObjectType;
 
     bankForm = new FormGroup({
-        bank1: new FormControl<Bank | null>(null, {
+        bank1: new FormControl<BankObjectType | null>(null, {
             nonNullable: true,
             validators: [Validators.required],
         }),
-        bank2: new FormControl<Bank | null>(null, { nonNullable: false }),
+        bank2: new FormControl<BankObjectType | null>(null, { nonNullable: false }),
         company: new FormControl<CompanyObjectType | null>(null, {
             nonNullable: false,
         }),
@@ -71,7 +71,7 @@ export class BankTemplateEditBill {
 
     errorMessage = BANK_FORM.noBank;
 
-    compareBanks(b1: Bank, b2: Bank): boolean {
+    compareBanks(b1: BankObjectType, b2: BankObjectType): boolean {
         return b1.id === b2.id;
     }
 

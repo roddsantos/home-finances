@@ -1,8 +1,9 @@
 import { AbstractControl, ValidationErrors } from "@angular/forms";
-import { Bank, CreditCard } from "./objects";
+import { CreditCard } from "./objects";
 import { PaymentTypes } from "./general";
 import { CategoryObjectType } from "./data/category.types";
 import { CompanyObjectType } from "./data/company.type";
+import { BankObjectType } from "./data/bank.types";
 
 export type ErrorsBillForm<T> = {
     [k in keyof T]: ValidationErrors | null;
@@ -28,15 +29,15 @@ export type CheckBillForm = {
 };
 
 export type BankBillForm = {
-    bank1: Bank | null;
-    bank2: Bank | null;
+    bank1: BankObjectType | null;
+    bank2: BankObjectType | null;
     isPayment: boolean;
     company: CompanyObjectType | null;
 };
 
 export type CompanyBillForm = {
     company: CompanyObjectType | null;
-    bank1: Bank | null;
+    bank1: BankObjectType | null;
     creditcard: CreditCard | null;
     totalParcel: number;
     parcels: number;

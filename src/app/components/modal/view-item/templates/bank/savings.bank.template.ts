@@ -1,8 +1,8 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, Input } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
-import { MonthType } from "src/app/core/types/general";
-import { Bank, SavingsType } from "src/app/core/types/objects";
+import { BankObjectType } from "src/app/core/types/data/bank.types";
+import { SavingsType } from "src/app/core/types/objects";
 import { ServiceSaving } from "src/app/services/saving.service";
 import { MONTHS } from "src/utils/constants/general";
 
@@ -29,7 +29,7 @@ import { MONTHS } from "src/utils/constants/general";
     imports: [CommonModule, MatIconModule],
 })
 export class SavingsBankTemplate {
-    @Input() bank: Bank;
+    @Input() bank: BankObjectType;
     public savingsService = inject(ServiceSaving);
     public page = 1;
     public savingsList: SavingsType[] = [];

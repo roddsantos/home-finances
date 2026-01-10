@@ -1,8 +1,9 @@
 import { SizeType } from "./components";
+import { BankObjectType } from "./data/bank.types";
 import { BillDataObjectType } from "./data/bills.types";
 import { CategoryObjectType } from "./data/category.types";
 import { CompanyObjectType } from "./data/company.type";
-import { Bank, CreditCard } from "./objects";
+import { CreditCard } from "./objects";
 
 export type ModalDataType = {
     header?: string | false;
@@ -24,7 +25,7 @@ export type EditBillModalType = {
 
 export type EditBankModalType = {
     header: string;
-    bank: Bank;
+    bank: BankObjectType;
     size?: SizeType;
 };
 

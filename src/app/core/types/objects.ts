@@ -1,5 +1,3 @@
-import { PaymentTypes } from "./general";
-
 export type User = {
     id: string;
     name: string;
@@ -25,19 +23,6 @@ export type CreditCard = {
     isClosed: boolean;
     userId: string;
     invoice: number;
-    updatedAt: string;
-    createdAt: string;
-    deletedAt: string | null;
-};
-
-export type Bank = {
-    id: string;
-    name: string;
-    description: string;
-    color: string;
-    savings: number;
-    userId: string;
-    isPiggyBank: boolean;
     updatedAt: string;
     createdAt: string;
     deletedAt: string | null;

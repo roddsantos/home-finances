@@ -12,11 +12,11 @@ import { MatInputModule } from "@angular/material/input";
 import { BankService } from "src/app/services/bank.service";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import { BankObject } from "src/app/core/types/services";
-import { Bank } from "src/app/core/types/objects";
 import { DIALOG_DATA } from "@angular/cdk/dialog";
 import { mergeMap } from "rxjs";
 import { CommonModule } from "@angular/common";
 import { BANK_FORM, GENERAL_FORM } from "src/utils/constants/forms";
+import { BankObjectType } from "src/app/core/types/data/bank.types";
 
 @Component({
     selector: "modal-new-bank",
@@ -37,7 +37,7 @@ export class ModalNewBank extends ModalComponent {
     public bankService = inject(BankService);
     public bankState = inject(BankState);
 
-    constructor(@Inject(DIALOG_DATA) public data: Bank) {
+    constructor(@Inject(DIALOG_DATA) public data: BankObjectType) {
         super();
     }
 
@@ -78,9 +78,9 @@ export class ModalNewBank extends ModalComponent {
             .pipe(mergeMap(() => this.bankService.getBanks()))
             .subscribe({
                 next: (banks) => {
-                    this.bankState.setBanks(banks as Bank[]);
+                    this.bankState.setBanks(banks as BankObjectType[]);
                     this.bankState.changeStatus(
-                        (banks as Bank[]).length === 0 ? "empty" : "none",
+                        (banks as BankObjectType[]).length === 0 ? "empty" : "none",
                         "no banks"
                     );
                     this.generalService.successSnackbar("bank successfully updated");
@@ -99,7 +99,7 @@ export class ModalNewBank extends ModalComponent {
             })
             .subscribe({
                 next: (data) => {
-                    this.bankState.addBank(data as Bank);
+                    this.bankState.addBank(data as BankObjectType);
                     this.generalService.successSnackbar("bank successfully created");
                     this.onClose();
                 },

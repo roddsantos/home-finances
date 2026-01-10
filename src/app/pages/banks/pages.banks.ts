@@ -5,7 +5,6 @@ import { MatIconModule } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
-import { Bank } from "src/app/core/types/objects";
 import { UserState } from "src/app/core/subjects//subjects.user";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ActionItem } from "src/app/core/types/components";
@@ -17,6 +16,7 @@ import { Dialog } from "@angular/cdk/dialog";
 import { ModalNewBank } from "src/app/components/modal/new-bank/new-bank.modal";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 import { ModalNewSaving } from "src/app/components/modal/new-saving/new-saving.modal";
+import { BankObjectType } from "src/app/core/types/data/bank.types";
 
 @Component({
     selector: "page-banks",
@@ -56,9 +56,9 @@ export class PageBanks {
     getBanks(reloaded?: boolean) {
         this.bankService.getBanks().subscribe({
             next: (banks) => {
-                this.bankState.setBanks(banks as Bank[]);
+                this.bankState.setBanks(banks as BankObjectType[]);
                 this.bankState.changeStatus(
-                    (banks as Bank[]).length === 0 ? "empty" : "none",
+                    (banks as BankObjectType[]).length === 0 ? "empty" : "none",
                     "no banks"
                 );
             },
@@ -95,7 +95,7 @@ export class PageBanks {
         this.dialog.open(ModalNewBank, options);
     }
 
-    openDetails(bank: Bank, event: any) {
+    openDetails(bank: BankObjectType, event: any) {
         const className = event.target.className;
         if (className !== "mat-mdc-button-touch-target") {
             const option = {
