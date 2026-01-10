@@ -10,13 +10,13 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
-import { ServiceCompany } from "src/app/services/company.service";
+import { CompanyService } from "src/app/services/company.service";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
-import { Company } from "src/app/core/types/objects";
 import { CompanyObject } from "src/app/core/types/services";
 import { GENERAL_FORM } from "src/utils/constants/forms";
 import { DIALOG_DATA } from "@angular/cdk/dialog";
 import { mergeMap } from "rxjs";
+import { CompanyObjectType } from "src/app/core/types/data/company.type";
 
 export interface DialogData {
     username: string;
@@ -38,10 +38,10 @@ export interface DialogData {
     ],
 })
 export class ModalNewCompany extends ModalComponent {
-    public companyApi = inject(ServiceCompany);
+    public companyApi = inject(CompanyService);
     public compState = inject(CompanyState);
 
-    constructor(@Inject(DIALOG_DATA) public data: Company) {
+    constructor(@Inject(DIALOG_DATA) public data: CompanyObjectType) {
         super();
     }
 
@@ -82,9 +82,11 @@ export class ModalNewCompany extends ModalComponent {
             .pipe(mergeMap(() => this.companyApi.getCompanies()))
             .subscribe({
                 next: (companies) => {
-                    this.compState.setCompanies(companies as Company[]);
+                    this.compState.setCompanies(companies as CompanyObjectType[]);
                     this.compState.changeStatus(
-                        (companies as Company[]).length === 0 ? "empty" : "none",
+                        (companies as CompanyObjectType[]).length === 0
+                            ? "empty"
+                            : "none",
                         "no companies"
                     );
                     this.generalService.successSnackbar("company successfully updated");
@@ -104,7 +106,7 @@ export class ModalNewCompany extends ModalComponent {
             })
             .subscribe({
                 next: (companies) => {
-                    this.compState.setCompanies(companies as Company[]);
+                    this.compState.setCompanies(companies as CompanyObjectType[]);
                     this.generalService.successSnackbar("company successfully created");
                     this.onClose();
                 },

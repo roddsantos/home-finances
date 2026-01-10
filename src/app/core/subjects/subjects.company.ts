@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { Company } from "src/app/core/types/objects";
 import { FeedbackInfo, FeedbackVariant } from "src/app/core/types/components";
+import { CompanyObjectType } from "../types/data/company.type";
 
 @Injectable({
     providedIn: "root",
 })
 export class CompanyState {
-    private _companies$ = new BehaviorSubject<Company[]>([]);
+    private _companies$ = new BehaviorSubject<CompanyObjectType[]>([]);
     private _status$ = new BehaviorSubject<FeedbackInfo>({
         title: "loading",
         description: "",
@@ -28,13 +28,13 @@ export class CompanyState {
         this._status$.next({ ...this._status$.getValue(), variant });
     }
 
-    setCompanies(companies: Company[]) {
+    setCompanies(companies: CompanyObjectType[]) {
         if (companies.length === 0) this.changeStatus("empty", "no companies");
         else this.changeVariant("none");
         this._companies$.next(companies);
     }
 
-    addCompany(company: Company, index?: number) {
+    addCompany(company: CompanyObjectType, index?: number) {
         let auxCompanies = [...this._companies$.getValue()];
         const existingCompany = this._companies$
             .getValue()

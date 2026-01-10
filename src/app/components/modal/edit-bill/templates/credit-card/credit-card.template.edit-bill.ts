@@ -7,7 +7,7 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { Company, CreditCard } from "src/app/core/types/objects";
+import { CreditCard } from "src/app/core/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
@@ -17,6 +17,7 @@ import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { CREDIT_CARD_FORM } from "src/utils/constants/forms";
 import { BillDataObjectType } from "src/app/core/types/data/bills.types";
+import { CompanyObjectType } from "src/app/core/types/data/company.type";
 
 @Component({
     selector: "template-edit-credit-card",
@@ -47,7 +48,7 @@ export class CreditCardTemplateEditBill {
             nonNullable: false,
             validators: [Validators.required],
         }),
-        company: new FormControl<Company | null>(null, {
+        company: new FormControl<CompanyObjectType | null>(null, {
             nonNullable: false,
         }),
         taxes: new FormControl<number>(0, { nonNullable: true }),
@@ -85,7 +86,7 @@ export class CreditCardTemplateEditBill {
         return cc1.id === cc2.id;
     }
 
-    compareCompanies(c1: Company, c2: Company): boolean {
+    compareCompanies(c1: CompanyObjectType, c2: CompanyObjectType): boolean {
         return c1.id === c2.id;
     }
 }

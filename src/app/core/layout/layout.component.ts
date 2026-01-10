@@ -14,14 +14,9 @@ import { ModalComponent } from "src/app/components/modal/modal.component";
 import { MatIconModule } from "@angular/material/icon";
 import { ServiceBill } from "src/app/services/bill.service";
 import { BillState } from "src/app/core/subjects/subjects.bill";
-import { BankState } from "src/app/core/subjects/subjects.bank";
-import { CompanyState } from "src/app/core/subjects/subjects.company";
-import { ServiceCompany } from "src/app/services/company.service";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { ServiceCreditCard } from "src/app/services/credit-card.service";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
-import { CategoryService } from "src/app/services/category.service";
-import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { CommonModule } from "@angular/common";
 import { RouteItemType, RoutesType } from "src/app/core/types/general";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
@@ -61,16 +56,8 @@ export class LayoutComponent implements OnChanges {
     public billApi = inject(ServiceBill);
     public billState = inject(BillState);
 
-    public bankState = inject(BankState);
-
-    public compApi = inject(ServiceCompany);
-    public compState = inject(CompanyState);
-
     public ccApi = inject(ServiceCreditCard);
     public ccState = inject(CreditCardState);
-
-    public catApi = inject(CategoryService);
-    public catState = inject(CategoryState);
 
     public innerWidth: number;
     public themeUsed: string | null;
@@ -103,16 +90,6 @@ export class LayoutComponent implements OnChanges {
                 this.snack.openSnackBar("error fetching bills", "error");
                 this.billState.changeStatus("error", "error fetching bills");
             },
-        });
-
-        this.compApi.getCompanies().subscribe({
-            next: (comps) => {
-                this.compState.setCompanies(
-                    comps.sort((comp1, comp2) => (comp1.name > comp2.name ? 1 : -1))
-                );
-                this.compState.changeVariant(comps.length > 0 ? "none" : "empty");
-            },
-            error: () => this.compState.changeStatus("http", "error fetching companies"),
         });
 
         this.ccApi.getCreditCards({}).subscribe({

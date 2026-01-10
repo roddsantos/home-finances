@@ -9,7 +9,7 @@ import {
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { BankState } from "src/app/core/subjects/subjects.bank";
-import { Bank, Company } from "src/app/core/types/objects";
+import { Bank } from "src/app/core/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
@@ -21,6 +21,7 @@ import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { ToggleButtonComponent } from "src/app/components/toggle-buttons/toggle-buttons.component";
 import { BANK_TYPES } from "src/utils/constants/bills";
 import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
+import { CompanyObjectType } from "src/app/core/types/data/company.type";
 
 @Component({
     selector: "template-banks",
@@ -70,7 +71,7 @@ export class BankTemplateNewBill {
         isPayment: new FormControl<boolean>(true, {
             nonNullable: true,
         }),
-        company: new FormControl<Company | null>(null, {
+        company: new FormControl<CompanyObjectType | null>(null, {
             nonNullable: false,
         }),
         isBetweenAccounts: new FormControl<boolean>(false),

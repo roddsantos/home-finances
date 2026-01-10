@@ -9,7 +9,7 @@ import {
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { BankState } from "src/app/core/subjects/subjects.bank";
-import { Bank, Company } from "src/app/core/types/objects";
+import { Bank } from "src/app/core/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
@@ -17,6 +17,7 @@ import { BANK_FORM } from "src/utils/constants/forms";
 import { MatIconModule } from "@angular/material/icon";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { BillDataObjectType } from "src/app/core/types/data/bills.types";
+import { CompanyObjectType } from "src/app/core/types/data/company.type";
 
 @Component({
     selector: "template-edit-banks",
@@ -47,7 +48,7 @@ export class BankTemplateEditBill {
             validators: [Validators.required],
         }),
         bank2: new FormControl<Bank | null>(null, { nonNullable: false }),
-        company: new FormControl<Company | null>(null, {
+        company: new FormControl<CompanyObjectType | null>(null, {
             nonNullable: false,
         }),
     });
@@ -74,7 +75,7 @@ export class BankTemplateEditBill {
         return b1.id === b2.id;
     }
 
-    compareCompanies(c1: Company, c2: Company): boolean {
+    compareCompanies(c1: CompanyObjectType, c2: CompanyObjectType): boolean {
         return c1.id === c2.id;
     }
 }

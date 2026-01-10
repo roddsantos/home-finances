@@ -7,7 +7,6 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { Company } from "src/app/core/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
@@ -17,6 +16,7 @@ import { BankState } from "src/app/core/subjects/subjects.bank";
 import { BANK_FORM, COMPANY_FORM } from "src/utils/constants/forms";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { BillDataObjectType } from "src/app/core/types/data/bills.types";
+import { CompanyObjectType } from "src/app/core/types/data/company.type";
 
 @Component({
     selector: "template-edit-companies",
@@ -100,7 +100,7 @@ export class CompanyTemplateEditBill {
         }
     }
 
-    compareCompanies(c1: Company, c2: Company): boolean {
+    compareCompanies(c1: CompanyObjectType, c2: CompanyObjectType): boolean {
         return c1.id === c2.id;
     }
 }

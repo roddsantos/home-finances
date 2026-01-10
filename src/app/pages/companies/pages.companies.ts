@@ -5,17 +5,17 @@ import { MatIconModule } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
-import { Company } from "src/app/core/types/objects";
 import { UserState } from "src/app/core/subjects//subjects.user";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ActionItem } from "src/app/core/types/components";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ROUTES } from "src/utils/route";
 import { Dialog } from "@angular/cdk/dialog";
-import { ServiceCompany } from "src/app/services/company.service";
+import { CompanyService } from "src/app/services/company.service";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { ModalNewCompany } from "src/app/components/modal/new-company/new-company.modal";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
+import { CompanyObjectType } from "src/app/core/types/data/company.type";
 
 @Component({
     selector: "page-companies",
@@ -31,7 +31,7 @@ import { ModalViewItem } from "src/app/components/modal/view-item/view-item.moda
     ],
 })
 export class PageCompanies {
-    public companyService = inject(ServiceCompany);
+    public companyService = inject(CompanyService);
     public companyState = inject(CompanyState);
     public userState = inject(UserState);
     public storage = inject(LocalStorageService);
@@ -55,11 +55,7 @@ export class PageCompanies {
     getCompanies(reloaded?: boolean) {
         this.companyService.getCompanies().subscribe({
             next: (companies) => {
-                this.companyState.setCompanies(companies as Company[]);
-                this.companyState.changeStatus(
-                    (companies as Company[]).length === 0 ? "empty" : "none",
-                    "no companies"
-                );
+                this.companyState.setCompanies(companies);
             },
             error: () => {
                 if (reloaded)
@@ -94,7 +90,7 @@ export class PageCompanies {
         console.log("DELETE");
     }
 
-    openDetails(company: Company, e: any) {
+    openDetails(company: CompanyObjectType, e: any) {
         const className = e.target.className;
         if (className !== "mat-mdc-button-touch-target") {
             const option = {

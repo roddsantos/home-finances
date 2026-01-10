@@ -1,18 +1,14 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
-import { MatButton, MatIconButton } from "@angular/material/button";
-import { MatIcon } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { mergeMap } from "rxjs";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
-import { CustomFilterComponent } from "src/app/components/custom-filter/custom-filter.component";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
-import { ServiceCompany } from "src/app/services/company.service";
+import { CompanyService } from "src/app/services/company.service";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { UserState } from "src/app/core/subjects/subjects.user";
 import { ActionItem } from "src/app/core/types/components";
-import { Company } from "src/app/core/types/objects";
+import { CompanyObjectType } from "src/app/core/types/data/company.type";
 
 @Component({
     selector: "management-companies",
@@ -20,18 +16,14 @@ import { Company } from "src/app/core/types/objects";
     styleUrls: ["./pages.management.companies.css", "../pages.management.css"],
     standalone: true,
     imports: [
-        MatIcon,
-        MatButton,
-        MatIconButton,
         MatTooltipModule,
         FeedbackContainerComponent,
         CommonModule,
-        CustomFilterComponent,
         ActionsComponent,
     ],
 })
 export class ManagementCompaniesComponent {
-    public compApi = inject(ServiceCompany);
+    public compApi = inject(CompanyService);
     public compState = inject(CompanyState);
     public userState = inject(UserState);
     private snack = inject(CustomSnackbarComponent);
@@ -47,13 +39,9 @@ export class ManagementCompaniesComponent {
     ];
 
     getCompanies(reloaded?: boolean) {
-        this.userState.user$.pipe(mergeMap(() => this.compApi.getCompanies())).subscribe({
+        this.compApi.getCompanies().subscribe({
             next: (comps) => {
-                this.compState.setCompanies(comps as Company[]);
-                this.compState.changeStatus(
-                    (comps as Company[]).length === 0 ? "empty" : "none",
-                    "no companies"
-                );
+                this.compState.setCompanies(comps as CompanyObjectType[]);
             },
             error: () => {
                 if (reloaded)
@@ -72,7 +60,7 @@ export class ManagementCompaniesComponent {
         this.getCompanies(true);
     }
 
-    trackCompany(index: number, company: Company) {
+    trackCompany(index: number, company: CompanyObjectType) {
         return company.id;
     }
 

@@ -10,17 +10,6 @@ export type User = {
     deletedAt: string | null;
 };
 
-export type Company = {
-    id: string;
-    name: string;
-    description: string;
-    color: string;
-    userId: string;
-    updatedAt: string;
-    createdAt: string;
-    deletedAt: string | null;
-};
-
 export type CreditCard = {
     id: string;
     name: string;

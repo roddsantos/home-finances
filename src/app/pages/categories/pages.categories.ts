@@ -5,7 +5,6 @@ import { MatIcon } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { LocalStorageService } from "src/app/services/local-storage.service";
-import { Company } from "src/app/core/types/objects";
 import { UserState } from "src/app/core/subjects//subjects.user";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ActionItem } from "src/app/core/types/components";
@@ -17,6 +16,7 @@ import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { ModalNewCategory } from "src/app/components/modal/new-category/new-category.modal";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 import { CategoryObjectType } from "src/app/core/types/data/category.types";
+import { CompanyObjectType } from "src/app/core/types/data/company.type";
 
 @Component({
     selector: "page-categories",
@@ -58,7 +58,7 @@ export class PageCategories {
             next: (categories) => {
                 this.categoryState.setCategory(categories as CategoryObjectType[]);
                 this.categoryState.changeStatus(
-                    (categories as Company[]).length === 0 ? "empty" : "none",
+                    (categories as CompanyObjectType[]).length === 0 ? "empty" : "none",
                     "no categories"
                 );
             },
