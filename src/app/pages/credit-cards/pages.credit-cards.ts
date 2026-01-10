@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
-import { ServiceCreditCard } from "src/app/services/credit-card.service";
+import { CreditCardService } from "src/app/services/credit-card.service";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 import { CreditCard } from "src/app/core/types/objects";
 import { CreditCardState } from "src/app/core/subjects//subjects.credit-card";
@@ -42,7 +42,7 @@ export class PageCreditCards {
     private snack = inject(CustomSnackbarComponent);
     public dialog = inject(Dialog);
 
-    public ccApi = inject(ServiceCreditCard);
+    public ccApi = inject(CreditCardService);
 
     public style = getComputedStyle(document.body);
     public bhColor = this.style.getPropertyValue("--bh");
@@ -77,13 +77,9 @@ export class PageCreditCards {
     ];
 
     getCreditCards(reloaded?: boolean) {
-        this.ccApi.getCreditCards({}).subscribe({
+        this.ccApi.getCreditCards().subscribe({
             next: (ccs) => {
                 this.ccState.setCreditCards(ccs as CreditCard[]);
-                this.ccState.changeStatus(
-                    (ccs as CreditCard[]).length === 0 ? "empty" : "none",
-                    "no credit cards"
-                );
             },
             error: () => {
                 if (reloaded)

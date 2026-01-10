@@ -14,7 +14,7 @@ import { CardActionType } from "src/app/core/types/components";
 import { DateSubjectType } from "src/app/core/types/subjects/general.subjects.type";
 import { BankService } from "src/app/services/bank.service";
 import { ServiceBill } from "src/app/services/bill.service";
-import { ServiceCreditCard } from "src/app/services/credit-card.service";
+import { CreditCardService } from "src/app/services/credit-card.service";
 import { GeneralService } from "src/app/services/general.service";
 import { HomeService } from "src/app/services/home.service";
 import { MONTHS } from "src/utils/constants/general";
@@ -50,7 +50,7 @@ export class PageHome {
     public billService = inject(ServiceBill);
     public bankService = inject(BankService);
     public homeService = inject(HomeService);
-    public creditCardService = inject(ServiceCreditCard);
+    public creditCardService = inject(CreditCardService);
     private generalService = inject(GeneralService);
     public dialog = inject(Dialog);
 

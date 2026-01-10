@@ -15,8 +15,6 @@ import { MatIconModule } from "@angular/material/icon";
 import { ServiceBill } from "src/app/services/bill.service";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
-import { ServiceCreditCard } from "src/app/services/credit-card.service";
-import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { CommonModule } from "@angular/common";
 import { RouteItemType, RoutesType } from "src/app/core/types/general";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
@@ -56,9 +54,6 @@ export class LayoutComponent implements OnChanges {
     public billApi = inject(ServiceBill);
     public billState = inject(BillState);
 
-    public ccApi = inject(ServiceCreditCard);
-    public ccState = inject(CreditCardState);
-
     public innerWidth: number;
     public themeUsed: string | null;
 
@@ -90,14 +85,6 @@ export class LayoutComponent implements OnChanges {
                 this.snack.openSnackBar("error fetching bills", "error");
                 this.billState.changeStatus("error", "error fetching bills");
             },
-        });
-
-        this.ccApi.getCreditCards({}).subscribe({
-            next: (ccs) => {
-                this.ccState.setCreditCards(ccs);
-                this.ccState.changeVariant(ccs.length > 0 ? "none" : "empty");
-            },
-            error: () => this.ccState.changeStatus("http", "error fetching credit cards"),
         });
     }
 

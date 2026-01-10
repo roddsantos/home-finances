@@ -24,7 +24,7 @@ import {
 } from "src/app/core/types/subjects/dashboard.subjects";
 import { BankService } from "src/app/services/bank.service";
 import { ServiceBill } from "src/app/services/bill.service";
-import { ServiceCreditCard } from "src/app/services/credit-card.service";
+import { CreditCardService } from "src/app/services/credit-card.service";
 import { DashboardService } from "src/app/services/dashboard.service";
 import { GeneralService } from "src/app/services/general.service";
 import { currentPallete } from "src/utils/color";
@@ -55,7 +55,7 @@ export class PageDashboard {
     public billService = inject(ServiceBill);
     public bankService = inject(BankService);
     public dashboardService = inject(DashboardService);
-    public creditCardService = inject(ServiceCreditCard);
+    public creditCardService = inject(CreditCardService);
     private generalService = inject(GeneralService);
 
     public userState = inject(UserState);

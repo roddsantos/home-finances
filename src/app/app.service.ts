@@ -8,6 +8,8 @@ import { CategoryService } from "./services/category.service";
 import { CategoryState } from "./core/subjects/subjects.category";
 import { CompanyService } from "./services/company.service";
 import { CompanyState } from "./core/subjects/subjects.company";
+import { CreditCardService } from "./services/credit-card.service";
+import { CreditCardState } from "./core/subjects/subjects.credit-card";
 
 @Injectable({
     providedIn: "root",
@@ -21,7 +23,9 @@ export class AppService {
         private categoryService: CategoryService,
         private categoryState: CategoryState,
         private companyService: CompanyService,
-        private companyState: CompanyState
+        private companyState: CompanyState,
+        private creditCardService: CreditCardService,
+        private creditCardState: CreditCardState
     ) {}
 
     handleError(object: any) {
@@ -41,6 +45,12 @@ export class AppService {
                         this.companyState.changeStatus(
                             "http",
                             "error fetching companies"
+                        );
+                        break;
+                    case "creditCards":
+                        this.creditCardState.changeStatus(
+                            "http",
+                            "error fetching credit cards"
                         );
                         break;
                     default:
@@ -64,12 +74,16 @@ export class AppService {
                     companies: this.companyService
                         .getCompanies()
                         .pipe(catchError(() => of(void 0))),
+                    creditCards: this.creditCardService
+                        .getCreditCards()
+                        .pipe(catchError(() => of(void 0))),
                 }).pipe(
-                    tap(({ banks, categories, companies }) => {
+                    tap(({ banks, categories, companies, creditCards }) => {
                         this.handleError({ banks, categories, companies });
                         this.bankState.setBanks(banks || []);
                         this.categoryState.setCategories(categories || []);
                         this.companyState.setCompanies(companies || []);
+                        this.creditCardState.setCreditCards(creditCards || []);
                     }),
                     map(() => void 0),
                     catchError(() => of(void 0))

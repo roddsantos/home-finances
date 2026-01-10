@@ -13,7 +13,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { CreditCardObject } from "src/app/core/types/services";
 import { CreditCard } from "src/app/core/types/objects";
 import { MonthType } from "src/app/core/types/general";
-import { ServiceCreditCard } from "src/app/services/credit-card.service";
+import { CreditCardService } from "src/app/services/credit-card.service";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { MONTHS } from "src/utils/constants/general";
 import { CREDIT_CARD_FORM, GENERAL_FORM } from "src/utils/constants/forms";
@@ -39,7 +39,7 @@ import { mergeMap } from "rxjs";
     ],
 })
 export class ModalNewCreditCard extends ModalComponent {
-    public creditCardService = inject(ServiceCreditCard);
+    public creditCardService = inject(CreditCardService);
     public creditCardState = inject(CreditCardState);
 
     constructor(@Inject(DIALOG_DATA) public data: CreditCard) {
@@ -115,7 +115,7 @@ export class ModalNewCreditCard extends ModalComponent {
                     month: this.creditCardForm.value.month!.order,
                     id: this.data.id,
                 })
-                .pipe(mergeMap(() => this.creditCardService.getCreditCards({})))
+                .pipe(mergeMap(() => this.creditCardService.getCreditCards()))
                 .subscribe({
                     next: (cc) => {
                         this.creditCardState.setCreditCards(cc as CreditCard[]);
