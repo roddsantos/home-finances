@@ -7,7 +7,7 @@ import {
     FontProfileType,
     GeneralMeasureType,
     UpdateProfileControlType,
-} from "src/app/core/types/pages/profiles";
+} from "src/app/core/types/pages/theme";
 import {
     DEFAULT_COLORS,
     GENERAL_MEASURES,

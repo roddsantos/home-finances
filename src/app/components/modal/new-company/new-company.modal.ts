@@ -38,14 +38,14 @@ export interface DialogData {
     ],
 })
 export class ModalNewCompany extends ModalComponent {
-    public companyApi = inject(CompanyService);
-    public compState = inject(CompanyState);
+    public companyService = inject(CompanyService);
+    public companyState = inject(CompanyState);
 
     constructor(@Inject(DIALOG_DATA) public data: CompanyObjectType) {
         super();
     }
 
-    companyForm = new FormGroup({
+    public companyForm = new FormGroup({
         name: new FormControl<string>(this.data?.name || "", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
@@ -59,7 +59,7 @@ export class ModalNewCompany extends ModalComponent {
         }),
     });
 
-    errorMessage = {
+    public errorMessage = {
         name: GENERAL_FORM.noName,
         description: GENERAL_FORM.noDescription,
     };
@@ -73,23 +73,18 @@ export class ModalNewCompany extends ModalComponent {
     }
 
     onUpdate() {
-        if (this.companyForm.invalid) return;
-        this.companyApi
+        const dataToUpdate = this.getFormDirtyValues(this.companyForm);
+        this.companyService
             .updateCompany({
-                ...(this.companyForm.value as CompanyObject),
+                ...dataToUpdate,
                 id: this.data.id,
             })
-            .pipe(mergeMap(() => this.companyApi.getCompanies()))
             .subscribe({
-                next: (companies) => {
-                    this.compState.setCompanies(companies as CompanyObjectType[]);
-                    this.compState.changeStatus(
-                        (companies as CompanyObjectType[]).length === 0
-                            ? "empty"
-                            : "none",
-                        "no companies"
+                next: (company) => {
+                    this.companyState.updateCompany(company);
+                    this.generalService.successSnackbar(
+                        `company [${company.name}] successfully updated`
                     );
-                    this.generalService.successSnackbar("company successfully updated");
                     this.onClose();
                 },
                 error: () => {
@@ -99,15 +94,16 @@ export class ModalNewCompany extends ModalComponent {
     }
 
     onCreate() {
-        if (this.companyForm.invalid) return;
-        this.companyApi
+        this.companyService
             .createCompany({
                 ...(this.companyForm.value as CompanyObject),
             })
             .subscribe({
-                next: (companies) => {
-                    this.compState.setCompanies(companies as CompanyObjectType[]);
-                    this.generalService.successSnackbar("company successfully created");
+                next: (company) => {
+                    this.companyState.addCompany(company);
+                    this.generalService.successSnackbar(
+                        `company [${company.name}] successfully created`
+                    );
                     this.onClose();
                 },
                 error: () => {
@@ -117,6 +113,7 @@ export class ModalNewCompany extends ModalComponent {
     }
 
     onSubmit() {
+        if (this.companyForm.invalid) return;
         if (this.data) this.onUpdate();
         else this.onCreate();
     }

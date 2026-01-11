@@ -9,7 +9,7 @@ import { UserService } from "./services/user.service";
 import { BINARY_THEME, DEFAULT_THEME, RED_AND_BLACK } from "src/utils/constants/colors";
 import { ThemeService } from "./services/theme.service";
 import { ThemeState } from "./core/subjects/subjects.theme";
-import { ProfileThemeType } from "./core/types/pages/profiles";
+import { ProfileThemeType } from "./core/types/pages/theme";
 
 @Component({
     selector: "app-root",

@@ -38,23 +38,23 @@ export class CategoryState {
 
     updateCategory(category: CategoryObjectType) {
         let auxCategories = [...this._categories$.getValue()];
-        const indexCompany = this._categories$
+        const indexCategory = this._categories$
             .getValue()
             .findIndex((c) => c.id === category.id);
 
-        if (indexCompany >= 0) auxCategories[indexCompany] = category;
+        if (indexCategory >= 0) auxCategories[indexCategory] = category;
         this._categories$.next(auxCategories);
     }
 
     addCategory(category: CategoryObjectType) {
         let auxCategories = [...this._categories$.getValue()];
 
-        const newCategoriesArray = [category, ...auxCategories].sort((cat1, cat2) => {
+        const categoriesArray = [category, ...auxCategories].sort((cat1, cat2) => {
             if (cat1.name > cat2.name) return -1;
             return 1;
         });
 
-        this._categories$.next(newCategoriesArray);
+        this._categories$.next(categoriesArray);
     }
 
     setStatus(status: FeedbackInfo) {

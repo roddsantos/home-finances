@@ -34,15 +34,25 @@ export class CompanyState {
         this._companies$.next(companies);
     }
 
-    addCompany(company: CompanyObjectType, index?: number) {
+    updateCompany(company: CompanyObjectType) {
         let auxCompanies = [...this._companies$.getValue()];
-        const existingCompany = this._companies$
+        const indexCompany = this._companies$
             .getValue()
-            .find((c) => c.id === company.id);
-        if (existingCompany && index !== undefined) auxCompanies[index] = company;
-        else auxCompanies = [company, ...auxCompanies];
+            .findIndex((c) => c.id === company.id);
 
+        if (indexCompany >= 0) auxCompanies[indexCompany] = company;
         this._companies$.next(auxCompanies);
+    }
+
+    addCompany(company: CompanyObjectType) {
+        let auxCompanies = [...this._companies$.getValue()];
+
+        const companiesArray = [company, ...auxCompanies].sort((comp1, comp2) => {
+            if (comp1.name > comp2.name) return -1;
+            return 1;
+        });
+
+        this._companies$.next(companiesArray);
     }
 
     setStatus(status: FeedbackInfo) {

@@ -5,7 +5,7 @@ import {
     GeneralMeasureType,
     ProfileThemeType,
     ThemeBodyType,
-} from "../core/types/pages/profiles";
+} from "../core/types/pages/theme";
 import { LocalStorageService } from "./local-storage.service";
 import {
     COLOR_STATUS,

@@ -4,7 +4,7 @@ import {
     FontProfileType,
     GeneralMeasureType,
     ProfileThemeType,
-} from "src/app/core/types/pages/profiles";
+} from "src/app/core/types/pages/theme";
 
 export const COLOR_STATUS = {
     light: {

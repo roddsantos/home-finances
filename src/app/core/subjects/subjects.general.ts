@@ -3,7 +3,7 @@ import { BehaviorSubject } from "rxjs";
 import { ManagerTabs, RoutesType, ThemeObjectType } from "src/app/core/types/general";
 import { THEMES } from "src/utils/constants/general";
 import { BillsLayoutType } from "../types/subjects";
-import { ProfileThemeType } from "../types/pages/profiles";
+import { ProfileThemeType } from "../types/pages/theme";
 import { DEFAULT_THEME } from "src/utils/constants/colors";
 
 @Injectable({

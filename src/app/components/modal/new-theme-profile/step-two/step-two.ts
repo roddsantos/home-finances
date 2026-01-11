@@ -3,10 +3,7 @@ import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { CardComponent } from "src/app/components/card/card.component";
 import { ToggleButtonComponent } from "src/app/components/toggle-buttons/toggle-buttons.component";
 import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
-import {
-    ColorThemeType,
-    UpdateProfileControlType,
-} from "src/app/core/types/pages/profiles";
+import { ColorThemeType, UpdateProfileControlType } from "src/app/core/types/pages/theme";
 import {
     DEFAULT_BACKGROUND_COLORS,
     DEFAULT_TEXT_COLORS,

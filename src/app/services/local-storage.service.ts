@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { User } from "src/app/core/types/objects";
 import { BillsLayoutType } from "../core/types/subjects";
-import { ProfileThemeType } from "../core/types/pages/profiles";
+import { ProfileThemeType } from "../core/types/pages/theme";
 
 @Injectable({
     providedIn: "root",

@@ -6,10 +6,7 @@ import { MatInputModule } from "@angular/material/input";
 import { CardComponent } from "src/app/components/card/card.component";
 import { ToggleButtonComponent } from "src/app/components/toggle-buttons/toggle-buttons.component";
 import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
-import {
-    ColorThemeType,
-    UpdateProfileControlType,
-} from "src/app/core/types/pages/profiles";
+import { ColorThemeType, UpdateProfileControlType } from "src/app/core/types/pages/theme";
 import { COLOR_THEMES, DEFAULT_COLORS } from "src/utils/constants/colors";
 import { GENERAL_FORM } from "src/utils/constants/forms";
 

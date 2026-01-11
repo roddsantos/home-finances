@@ -4,7 +4,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { CardComponent } from "src/app/components/card/card.component";
 import { Dialog } from "@angular/cdk/dialog";
 import { ModalNewThemeProfile } from "src/app/components/modal/new-theme-profile/new-theme-profile.modal";
-import { ProfileThemeType } from "src/app/core/types/pages/profiles";
+import { ProfileThemeType } from "src/app/core/types/pages/theme";
 import { ThemeService } from "src/app/services/theme.service";
 import { CustonButton } from "src/app/components/button/custom-button.component";
 import { ThemeState } from "src/app/core/subjects/subjects.theme";

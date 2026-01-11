@@ -10,7 +10,7 @@ import {
     ProfileThemeType,
     ThemeBodyType,
     UpdateProfileControlType,
-} from "src/app/core/types/pages/profiles";
+} from "src/app/core/types/pages/theme";
 import {
     COLOR_THEMES,
     DEFAULT_BACKGROUND_COLORS,

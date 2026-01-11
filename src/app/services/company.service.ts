@@ -2,7 +2,11 @@ import { Injectable } from "@angular/core";
 import { COMPANY } from "src/utils/constants/services";
 import { CompanyObject } from "src/app/core/types/services";
 import { mergeMap, switchMap, take } from "rxjs";
-import { CompanyObjectType } from "src/app/core/types/data/company.type";
+import {
+    CompanyCreateType,
+    CompanyObjectType,
+    CompanyUpdateType,
+} from "src/app/core/types/data/company.type";
 import { GeneralService } from "./general.service";
 
 @Injectable({
@@ -18,9 +22,11 @@ export class CompanyService extends GeneralService {
         );
     }
 
-    createCompany(data: CompanyObject) {
+    createCompany(data: CompanyCreateType) {
         return this.user.user$.pipe(
-            mergeMap((user) => this.http.post(COMPANY, { ...data, userId: user!.id }))
+            mergeMap((user) =>
+                this.http.post<CompanyObjectType>(COMPANY, { ...data, userId: user!.id })
+            )
         );
     }
 
@@ -28,7 +34,7 @@ export class CompanyService extends GeneralService {
         return this.http.delete(COMPANY + `/${id}`);
     }
 
-    updateCompany(data: CompanyObject & { id: string }) {
-        return this.http.patch(COMPANY, data);
+    updateCompany(data: CompanyUpdateType) {
+        return this.http.patch<CompanyObjectType>(COMPANY, data);
     }
 }

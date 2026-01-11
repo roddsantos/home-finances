@@ -1,4 +1,4 @@
-import { ProfileThemeType } from "./../types/pages/profiles";
+import { ProfileThemeType } from "../types/pages/theme";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 

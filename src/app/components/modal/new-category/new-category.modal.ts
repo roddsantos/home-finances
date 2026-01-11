@@ -1,13 +1,6 @@
 import { Component, OnInit, inject, Inject } from "@angular/core";
 import { ModalComponent } from "../modal.component";
-import { MatFormField, MatLabel } from "@angular/material/form-field";
-import {
-    FormControl,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from "@angular/forms";
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { CATEGORY_FORM, GENERAL_FORM } from "src/utils/constants/forms";
 import { CategoryService } from "src/app/services/category.service";
@@ -15,9 +8,9 @@ import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { MatIconModule } from "@angular/material/icon";
 import { IconSelection } from "../icon-selection/icon-selection-modal";
 import { Dialog, DIALOG_DATA } from "@angular/cdk/dialog";
-import { MatButtonModule } from "@angular/material/button";
-import { mergeMap, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
 import { CategoryObjectType } from "src/app/core/types/data/category.types";
+import { CustonButton } from "../../button/custom-button.component";
 
 @Component({
     selector: "modal-new-category",
@@ -26,14 +19,10 @@ import { CategoryObjectType } from "src/app/core/types/data/category.types";
     standalone: true,
     imports: [
         ModalComponent,
-        MatFormField,
-        FormsModule,
-        MatLabel,
         MatInputModule,
-        FormsModule,
         ReactiveFormsModule,
         MatIconModule,
-        MatButtonModule,
+        CustonButton,
     ],
 })
 export class ModalNewCategory extends ModalComponent implements OnInit {
@@ -46,7 +35,7 @@ export class ModalNewCategory extends ModalComponent implements OnInit {
         super();
     }
 
-    categoryForm = new FormGroup({
+    public categoryForm = new FormGroup({
         name: new FormControl<string>(this.data?.name || "", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
@@ -110,7 +99,7 @@ export class ModalNewCategory extends ModalComponent implements OnInit {
                     this.onClose();
                 },
                 error: (err) => {
-                    this.generalService.errorSnackbar(err.error.message);
+                    this.generalService.errorSnackbar("error creating category");
                 },
             });
     }

@@ -1,4 +1,4 @@
-import { GeneralMeasureType } from "src/app/core/types/pages/profiles";
+import { GeneralMeasureType } from "src/app/core/types/pages/theme";
 
 export function getPaddingIcon(measure: GeneralMeasureType) {
     switch (measure) {

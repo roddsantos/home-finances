@@ -29,15 +29,10 @@
                 <mat-label>color</mat-label>
                 <input formControlName="color" matInput type="color" />
             </mat-form-field>
-            <button
-                aria-label="create new bill button"
-                mat-button
-                color="primary"
-                class="button-primary margin"
-                (click)="openDialog()"
-            >
-                {{categoryForm.get("icon")?.value || 'choose icon'}}
-            </button>
+            <btn class="margin" (onClick)="openDialog()">
+                <p>{{categoryForm.get("icon")?.value || 'choose icon'}}</p>
+            </btn>
+
             <mat-icon
                 class="category-icon material-icons"
                 aria-hidden="false"

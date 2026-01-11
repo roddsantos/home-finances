@@ -8,3 +8,15 @@ export type CompanyObjectType = {
     createdAt: string;
     deletedAt: string | null;
 };
+
+export type CompanyCreateType = {
+    name: string;
+    description: string;
+    color: string;
+};
+
+export type CompanyUpdateType = Partial<
+    CompanyCreateType & {
+        id: string;
+    }
+>;
