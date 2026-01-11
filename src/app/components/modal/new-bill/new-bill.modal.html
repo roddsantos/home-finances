@@ -16,16 +16,19 @@
         </ng-container>
         <ng-container *ngIf="step === 2">
             <info-template
-                [info]="getInfoForm()"
-                [infoErrors]="getErrorInfoForm()"
-                (setInfo)="onPatch($event)"
+                [type]="billForm.get('type')!.value"
+                [nameControl]="billForm.controls['name']"
+                [descriptionControl]="billForm.controls['description']"
+                [totalControl]="billForm.controls['total']"
+                [categoryControl]="billForm.controls['category']"
             />
         </ng-container>
         <ng-container *ngIf="step === 3 && billForm.value.type === 'money'">
             <template-banks
-                [bankData]="getBankForm()"
-                [bankDataErrors]="getErrorBankForm()"
-                (setBankData)="onPatch($event)"
+                [bank1Control]="billForm.controls['bank1']"
+                [bank2Control]="billForm.controls['bank2']"
+                [isPaymentControl]="billForm.controls['isPayment']"
+                [companyControl]="billForm.controls['category']"
             />
         </ng-container>
         <ng-container *ngIf="step === 3 && billForm.value.type === 'companyCredit'">

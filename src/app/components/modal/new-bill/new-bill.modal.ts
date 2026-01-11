@@ -69,7 +69,6 @@ export class ModalNewBill extends ModalComponent {
     step: number = 1;
 
     ngOnInit() {
-        this.modalState.changeHeader("new bill");
         this.modalState.changeFooter({
             type: "submit",
             submitLabel: "advance",
@@ -92,18 +91,18 @@ export class ModalNewBill extends ModalComponent {
             nonNullable: true,
             validators: [Validators.required, Validators.min(0.01)],
         }),
+        totalParcel: new FormControl<number>(0, {
+            nonNullable: true,
+            validators: [Validators.required, Validators.min(0.01)],
+        }),
         settled: new FormControl<boolean>(true, { nonNullable: true }),
+        parcels: new FormControl<number>(1, {
+            nonNullable: true,
+            validators: [Validators.required, Validators.min(1)],
+        }),
         due: new FormControl<Date>(new Date(), { nonNullable: false }),
         paid: new FormControl<Date | null>(null, { nonNullable: false }),
         type: new FormControl<PaymentTypes | null>(null, { nonNullable: false }),
-        year: new FormControl<number>(new Date().getFullYear(), {
-            nonNullable: true,
-            validators: [Validators.min(2023), Validators.max(2090)],
-        }),
-        month: new FormControl<MonthType>(MONTHS[new Date().getMonth()], {
-            nonNullable: true,
-            validators: [Validators.required],
-        }),
         category: new FormControl<CategoryObjectType | null>(null, {
             nonNullable: true,
             validators: [Validators.required],
@@ -123,68 +122,19 @@ export class ModalNewBill extends ModalComponent {
             nonNullable: false,
         }),
         taxes: new FormControl<number>(0, { nonNullable: true }),
-        parcels: new FormControl<number>(1, {
-            nonNullable: true,
-            validators: [Validators.required, Validators.min(1)],
-        }),
         delta: new FormControl<number>(0, { nonNullable: true }),
         isRecurrent: new FormControl<boolean>(false, { nonNullable: true }),
-        totalParcel: new FormControl<number>(0, {
-            nonNullable: true,
-            validators: [Validators.required, Validators.min(0.01)],
-        }),
     });
 
-    months = MONTHS;
-    inputType: string = "";
-    isInvalid: boolean = true;
+    public months = MONTHS;
 
-    errorMessage = {
+    public errorMessage = {
         name: GENERAL_FORM.noName,
         description: GENERAL_FORM.noDescription,
         total: GENERAL_FORM.invalidTotal,
         category: CATEGORY_FORM.noCategory,
         year: GENERAL_FORM.yearOutOfRange,
     };
-
-    getInfoForm() {
-        return {
-            type: this.billForm.get("type")?.value || null,
-            name: this.billForm.get("name")?.value || "",
-            description: this.billForm.get("description")?.value || "",
-            total: this.billForm.get("total")?.value || 0,
-            category: this.billForm.get("category")?.value || null,
-        };
-    }
-
-    getErrorInfoForm() {
-        return {
-            name: this.billForm.controls.name.errors,
-            description: this.billForm.controls.description.errors,
-            total: this.billForm.controls.total.errors,
-            category: this.billForm.controls.category.errors,
-            type: null,
-        };
-    }
-
-    getBankForm() {
-        return {
-            bank1: this.billForm.get("bank1")?.value || null,
-            bank2: this.billForm.get("bank2")?.value || null,
-            isPayment: this.billForm.get("isPayment")!.value,
-            company: this.billForm.get("company")?.value || null,
-            isBetweenAccounts: this.isBetweenAccounts.value,
-        };
-    }
-
-    getErrorBankForm() {
-        return {
-            bank1: this.billForm.controls.bank1.errors,
-            bank2: this.billForm.controls.bank2.errors,
-            isPayment: this.billForm.controls.isPayment.errors,
-            company: this.billForm.controls.company.errors,
-        };
-    }
 
     getCompanyForm() {
         return {
@@ -253,11 +203,11 @@ export class ModalNewBill extends ModalComponent {
                 return !Boolean(this.billForm.get("type")?.value);
             case 2:
                 return (
-                    Boolean(formErrors.name.errors) ||
-                    Boolean(formErrors.category.errors) ||
-                    Boolean(formErrors.description.errors) ||
-                    (this.billForm.get("type")?.value === "money" &&
-                        Boolean(formErrors.total.errors))
+                    Boolean(this.billForm.get("name")?.errors) ||
+                    Boolean(this.billForm.get("description")?.errors) ||
+                    Boolean(this.billForm.get("category")?.errors) ||
+                    (this.billForm.get("type")!.value === "money" &&
+                        Boolean(this.billForm.get("total")!.errors))
                 );
             case 3:
                 return this.billForm.value.type === "money"
@@ -299,6 +249,7 @@ export class ModalNewBill extends ModalComponent {
             submitLabel: this.step === 4 ? "create" : "advance",
             alertLabel: this.step === 1 ? "cancel" : "back",
         });
+        console.log(this.billForm.getRawValue());
     }
 
     onPreviousStep() {
@@ -380,9 +331,5 @@ export class ModalNewBill extends ModalComponent {
 
     handleClose() {
         this.onClose();
-    }
-
-    onChangeType($event: PaymentTypes) {
-        this.inputType = $event || "";
     }
 }

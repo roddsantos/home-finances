@@ -31,6 +31,27 @@ export type BillObjectType = {
     deletedAt: string;
 };
 
+export type BillCreateType = {
+    name: string;
+    description: string;
+    total: number;
+    totalParcel: number;
+    settled: boolean;
+    parcels: number;
+    due: Date;
+    paid: Date | null;
+    type: string;
+    categoryId: string;
+    bank1Id: string;
+    bank2Id: string;
+    isPayment: boolean;
+    companyId: string;
+    creditCardId: string;
+    taxes: number;
+    delta: number;
+    isRecurrent: boolean;
+};
+
 export type BillDataObjectType = BillObjectType & {
     category: CategoryObjectType;
     creditCard: CreditCardObjectType | null;

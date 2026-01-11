@@ -9,6 +9,7 @@ import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { ErrorsBillForm, InfoBillForm } from "src/app/core/types/forms";
 import { CategoryObjectType } from "src/app/core/types/data/category.types";
 import { CATEGORY_FORM, GENERAL_FORM } from "src/utils/constants/forms";
+import { PaymentTypes } from "src/app/core/types/general";
 
 @Component({
     selector: "info-template",
@@ -25,18 +26,17 @@ import { CATEGORY_FORM, GENERAL_FORM } from "src/utils/constants/forms";
     ],
 })
 export class InfoTemplate {
-    constructor() {
-        this.infoForm.valueChanges.subscribe((data) => {
-            this.setInfo.emit({ ...data });
-        });
-    }
+    constructor() {}
 
-    @Input() info: InfoBillForm;
-    @Input() infoErrors: ErrorsBillForm<InfoBillForm>;
+    @Input() type: PaymentTypes | null;
+    @Input({ required: true }) nameControl: FormControl<string>;
+    @Input({ required: true }) descriptionControl: FormControl<string>;
+    @Input({ required: true }) totalControl: FormControl<number>;
+    @Input({ required: true }) categoryControl: FormControl<CategoryObjectType | null>;
     @Output() setInfo = new EventEmitter<Partial<InfoBillForm>>();
     public catState = inject(CategoryState);
 
-    errorMessage = {
+    public errorMessage = {
         name: GENERAL_FORM.noName,
         description: GENERAL_FORM.noDescription,
         total: GENERAL_FORM.invalidTotal,
@@ -44,7 +44,7 @@ export class InfoTemplate {
         year: GENERAL_FORM.yearOutOfRange,
     };
 
-    infoForm = new FormGroup({
+    public infoForm = new FormGroup({
         name: new FormControl<string>("", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
@@ -62,8 +62,4 @@ export class InfoTemplate {
             validators: [Validators.required],
         }),
     });
-
-    ngOnInit() {
-        this.infoForm.patchValue({ ...this.info });
-    }
 }

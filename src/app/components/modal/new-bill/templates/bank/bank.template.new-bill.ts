@@ -43,48 +43,27 @@ import { BankObjectType } from "src/app/core/types/data/bank.types";
     exportAs: "templateBanks",
 })
 export class BankTemplateNewBill {
-    constructor() {
-        this.bankForm.valueChanges.subscribe((data) => {
-            this.setBankData.emit({ ...data });
-        });
-    }
+    constructor() {}
     public companies = inject(CompanyState);
     public banks = inject(BankState);
 
-    @Input() bankData: BankBillForm;
-    @Input() bankDataErrors: ErrorsBillForm<BankBillForm>;
+    @Input({ required: true }) bank1Control: FormControl<BankObjectType | null>;
+    @Input({ required: true }) bank2Control: FormControl<BankObjectType | null>;
+    @Input({ required: true }) isPaymentControl: FormControl<boolean>;
+    @Input({ required: true }) companyControl: FormControl<CompanyObjectType | null>;
     @Output() setBankData = new EventEmitter<Partial<BankBillForm>>();
 
-    errorMessage = {
+    public errorMessage = {
         bank1: BANK_FORM.noBank,
         sameBank: BANK_FORM.sameBanks,
     };
 
-    banksMode = BANK_TYPES;
-
-    bankForm = new FormGroup({
-        bank1: new FormControl<BankObjectType | null>(null, {
-            nonNullable: false,
-            validators: [Validators.required],
-        }),
-        bank2: new FormControl<BankObjectType | null>(null, { nonNullable: false }),
-        isPayment: new FormControl<boolean>(true, {
-            nonNullable: true,
-        }),
-        company: new FormControl<CompanyObjectType | null>(null, {
-            nonNullable: false,
-        }),
-        isBetweenAccounts: new FormControl<boolean>(false),
-    });
-
-    ngOnInit() {
-        this.bankForm.patchValue({ ...this.bankData });
-    }
+    public banksMode = BANK_TYPES;
+    public isBetweenAccounts = new FormControl<boolean>(false);
 
     handleChange(item: ToggleButtonItemsType<boolean>) {
         if (!item.value) {
-            this.bankForm.controls.bank2.patchValue(null);
-            this.setBankData.emit({ ...this.bankForm.getRawValue(), bank2: null });
+            this.bank2Control.patchValue(null);
         }
     }
 }
