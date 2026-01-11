@@ -96,7 +96,7 @@ export class ModalNewCompany extends ModalComponent {
     onCreate() {
         this.companyService
             .createCompany({
-                ...(this.companyForm.value as CompanyObject),
+                ...this.companyForm.getRawValue(),
             })
             .subscribe({
                 next: (company) => {

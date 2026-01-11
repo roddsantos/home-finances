@@ -7,7 +7,6 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { CreditCard } from "src/app/core/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
@@ -18,6 +17,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { CREDIT_CARD_FORM } from "src/utils/constants/forms";
 import { CreditCardForm, ErrorsBillForm } from "src/app/core/types/forms";
 import { CompanyObjectType } from "src/app/core/types/data/company.type";
+import { CreditCardObjectType } from "src/app/core/types/data/credit-card.types";
 
 @Component({
     selector: "template-credit-card",
@@ -50,7 +50,7 @@ export class CreditCardTemplateNewBill {
     @Output() setCreditCardData = new EventEmitter<Partial<CreditCardForm>>();
 
     ccForm = new FormGroup({
-        creditcard: new FormControl<CreditCard | null>(null, {
+        creditcard: new FormControl<CreditCardObjectType | null>(null, {
             nonNullable: false,
             validators: [Validators.required],
         }),

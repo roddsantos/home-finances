@@ -3,7 +3,7 @@ import { BankObjectType } from "./data/bank.types";
 import { BillDataObjectType } from "./data/bills.types";
 import { CategoryObjectType } from "./data/category.types";
 import { CompanyObjectType } from "./data/company.type";
-import { CreditCard } from "./objects";
+import { CreditCardObjectType } from "./data/credit-card.types";
 
 export type ModalDataType = {
     header?: string | false;
@@ -31,7 +31,7 @@ export type EditBankModalType = {
 
 export type EditCreditCardModalType = {
     header: string;
-    creditCard: CreditCard;
+    creditCard: CreditCardObjectType;
     size?: SizeType;
 };
 
@@ -55,7 +55,7 @@ export type ViewItemModalType = {
 
 export type EventsListModalType = {
     header: string;
-    events: Array<(BillDataObjectType | CreditCard) & { sector: string }>;
+    events: Array<(BillDataObjectType | CreditCardObjectType) & { sector: string }>;
     size: SizeType;
 };
 

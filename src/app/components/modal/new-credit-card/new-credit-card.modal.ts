@@ -10,16 +10,13 @@ import {
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
-import { CreditCardObject } from "src/app/core/types/services";
-import { CreditCard } from "src/app/core/types/objects";
-import { MonthType } from "src/app/core/types/general";
 import { CreditCardService } from "src/app/services/credit-card.service";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { MONTHS } from "src/utils/constants/general";
 import { CREDIT_CARD_FORM, GENERAL_FORM } from "src/utils/constants/forms";
 import { CommonModule } from "@angular/common";
 import { DIALOG_DATA } from "@angular/cdk/dialog";
-import { mergeMap } from "rxjs";
+import { CreditCardObjectType } from "src/app/core/types/data/credit-card.types";
 
 @Component({
     selector: "modal-new-credit-card",
@@ -42,7 +39,7 @@ export class ModalNewCreditCard extends ModalComponent {
     public creditCardService = inject(CreditCardService);
     public creditCardState = inject(CreditCardState);
 
-    constructor(@Inject(DIALOG_DATA) public data: CreditCard) {
+    constructor(@Inject(DIALOG_DATA) public data: CreditCardObjectType) {
         super();
     }
 
@@ -78,29 +75,30 @@ export class ModalNewCreditCard extends ModalComponent {
             nonNullable: true,
             validators: [Validators.min(2023), Validators.required],
         }),
-        month: new FormControl<MonthType>(
-            this.data?.month ? MONTHS[this.data.month] : MONTHS[new Date().getMonth()],
-            {
-                nonNullable: true,
-                validators: [Validators.required],
-            }
-        ),
+        month: new FormControl<number>(this.data?.month || new Date().getMonth(), {
+            nonNullable: true,
+            validators: [Validators.required],
+        }),
         day: new FormControl<number>(this.data?.day || 1, {
             validators: [Validators.required, Validators.max(28), Validators.min(1)],
+            nonNullable: true,
         }),
         due: new FormControl<number>(this.data?.due || 1, {
             validators: [Validators.required, Validators.max(28), Validators.min(1)],
+            nonNullable: true,
         }),
         flag: new FormControl<string | null>(this.data?.flag || null, {
             nonNullable: true,
             validators: [Validators.required],
         }),
-        isClosed: new FormControl<boolean>(this.data?.isClosed || false),
+        isClosed: new FormControl<boolean>(this.data?.isClosed || false, {
+            nonNullable: true,
+            validators: [Validators.required],
+        }),
     });
 
     ngOnInit() {
         this.modalState.changeSubmitFooter(this.data ? "edit" : "OK", "cancel");
-        this.modalState.changeHeader(this.data ? "edit credit card" : "new credit card");
     }
 
     handleClose() {
@@ -108,45 +106,36 @@ export class ModalNewCreditCard extends ModalComponent {
     }
 
     onUpdate() {
-        if (!this.creditCardForm.invalid) {
-            this.creditCardService
-                .updateCreditCard({
-                    ...(this.creditCardForm.value as Omit<CreditCardObject, "month">),
-                    month: this.creditCardForm.value.month!.order,
-                    id: this.data.id,
-                })
-                .pipe(mergeMap(() => this.creditCardService.getCreditCards()))
-                .subscribe({
-                    next: (cc) => {
-                        this.creditCardState.setCreditCards(cc as CreditCard[]);
-                        this.creditCardState.changeStatus(
-                            (cc as CreditCard[]).length === 0 ? "empty" : "none",
-                            "no credit cards"
-                        );
-                        this.generalService.successSnackbar(
-                            "credit card successfully updated"
-                        );
-                        this.onClose();
-                    },
-                    error: () => {
-                        this.generalService.errorSnackbar("error updating credit card");
-                    },
-                });
-        }
+        const dataToUpdate = this.getFormDirtyValues(this.creditCardForm);
+        this.creditCardService
+            .updateCreditCard({
+                ...dataToUpdate,
+                id: this.data.id,
+            })
+            .subscribe({
+                next: (cc) => {
+                    this.creditCardState.updateCreditCard(cc);
+                    this.generalService.successSnackbar(
+                        `credit card [${cc.name}] successfully updated`
+                    );
+                    this.onClose();
+                },
+                error: () => {
+                    this.generalService.errorSnackbar("error updating credit card");
+                },
+            });
     }
 
     onCreate() {
-        if (this.creditCardForm.invalid) return;
         this.creditCardService
             .createCreditCard({
-                ...this.creditCardForm.value,
-                month: this.creditCardForm.value.month!.order,
-            } as CreditCardObject)
+                ...this.creditCardForm.getRawValue(),
+            })
             .subscribe({
-                next: (data) => {
-                    this.creditCardState.addCreditCard(data as CreditCard);
+                next: (creditCards) => {
+                    this.creditCardState.addCreditCard(creditCards);
                     this.generalService.successSnackbar(
-                        "credit card successfully created"
+                        `credit card [${creditCards.name}] successfully created`
                     );
                     this.onClose();
                 },
@@ -157,6 +146,7 @@ export class ModalNewCreditCard extends ModalComponent {
     }
 
     onSubmit() {
+        if (this.creditCardForm.invalid) return;
         if (this.data) this.onUpdate();
         else this.onCreate();
     }

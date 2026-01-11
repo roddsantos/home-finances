@@ -10,12 +10,15 @@
         </button>
     </div>
     <feedback-container
-        *ngIf="(ccState.creditCards$ | async)?.length === 0"
-        [info]="(ccState.status$ | async)!"
+        *ngIf="(creditCardState.creditCards$ | async)?.length === 0"
+        [info]="(creditCardState.status$ | async)!"
     ></feedback-container>
     <div class="cc-infos"></div>
     <div class="cc-grid grid">
-        <li class="cc-li" *ngFor="let creditCard of (ccState.creditCards$ | async)">
+        <li
+            class="cc-li"
+            *ngFor="let creditCard of (creditCardState.creditCards$ | async)"
+        >
             <div
                 [ngClass]="['cc-container', 'grid-item', generalState.theme$ | async]"
                 (click)="openDetails(creditCard, $event)"

@@ -1,23 +1,20 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
-import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
 import { CreditCardService } from "src/app/services/credit-card.service";
 import { LocalStorageService } from "src/app/services/local-storage.service";
-import { CreditCard } from "src/app/core/types/objects";
 import { CreditCardState } from "src/app/core/subjects//subjects.credit-card";
 import { UserState } from "src/app/core/subjects//subjects.user";
-import { zip } from "rxjs";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ActionItem } from "src/app/core/types/components";
-import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { ROUTES } from "src/utils/route";
 import { ModalNewCreditCard } from "src/app/components/modal/new-credit-card/new-credit-card.modal";
-import { Dialog } from "@angular/cdk/dialog";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 import { CreditCardPipe } from "src/utils/pipes/creditCard";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
+import { GeneralPage } from "src/app/core/general/page.general";
+import { CreditCardObjectType } from "src/app/core/types/data/credit-card.types";
 
 @Component({
     selector: "page-credit-cards",
@@ -25,24 +22,20 @@ import { MatButtonModule } from "@angular/material/button";
     styleUrls: ["./pages.credit-cards.css"],
     standalone: true,
     imports: [
-        FeedbackContainerComponent,
-        CommonModule,
         ActionsComponent,
+        CommonModule,
         CreditCardPipe,
-        MatIconModule,
+        FeedbackContainerComponent,
         MatButtonModule,
+        MatIconModule,
     ],
 })
-export class PageCreditCards {
-    public ccState = inject(CreditCardState);
-    public generalState = inject(GeneralState);
+export class PageCreditCards extends GeneralPage {
+    public creditCardState = inject(CreditCardState);
     public userState = inject(UserState);
     public storage = inject(LocalStorageService);
 
-    private snack = inject(CustomSnackbarComponent);
-    public dialog = inject(Dialog);
-
-    public ccApi = inject(CreditCardService);
+    public creditCardService = inject(CreditCardService);
 
     public style = getComputedStyle(document.body);
     public bhColor = this.style.getPropertyValue("--bh");
@@ -77,27 +70,27 @@ export class PageCreditCards {
     ];
 
     getCreditCards(reloaded?: boolean) {
-        this.ccApi.getCreditCards().subscribe({
+        this.creditCardService.getCreditCards().subscribe({
             next: (ccs) => {
-                this.ccState.setCreditCards(ccs as CreditCard[]);
+                this.creditCardState.setCreditCards(ccs);
             },
             error: () => {
                 if (reloaded)
-                    this.snack.openSnackBar("error fetching credit cards", "error");
-                this.ccState.changeStatus("error", "error fetching credit cards");
+                    this.generalService.errorSnackbar("error fetching credit cards");
+                this.creditCardState.changeStatus("error", "error fetching credit cards");
             },
         });
     }
 
     ngOnInit() {
-        this.ccState.setAction(() => this.onReload());
+        this.creditCardState.setAction(() => this.onReload());
         this.generalState.theme$.subscribe({
             next: (theme) => (this.theme = theme),
         });
     }
 
     onReload() {
-        this.ccState.changeStatus("loading", "loading");
+        this.creditCardState.changeStatus("loading", "loading");
         this.getCreditCards(true);
     }
 
@@ -106,38 +99,23 @@ export class PageCreditCards {
         this.dialog.open(ModalNewCreditCard, options);
     }
 
-    onEdit(creditCard: CreditCard) {
+    onEdit(creditCard: CreditCardObjectType) {
         let options = {
             data: creditCard,
         };
         this.dialog.open(ModalNewCreditCard, options);
     }
 
-    onFinishInvoice(creditCard: CreditCard) {
-        const updatedCreditCard: CreditCard = { ...creditCard, isClosed: true };
+    onFinishInvoice(creditCard: CreditCardObjectType) {
+        const updatedCreditCard: CreditCardObjectType = { ...creditCard, isClosed: true };
 
-        zip(
-            this.ccApi.updateCreditCard(updatedCreditCard),
-            this.ccApi.createCreditCard({
-                name: creditCard.name,
-                description: creditCard.description,
-                color: creditCard.color,
-                day: creditCard.day,
-                due: creditCard.due,
-                month: creditCard.month === 11 ? 0 : creditCard.month + 1,
-                year: creditCard.month === 11 ? creditCard.year + 1 : creditCard.year,
-                flag: creditCard.flag,
-                limit: creditCard.limit,
-                isClosed: false,
-            })
-        ).subscribe({
-            next: ([update, created]) => {
-                this.ccState.addCreditCard(updatedCreditCard as CreditCard);
-                this.ccState.addCreditCard(created as CreditCard);
-                this.snack.openSnackBar("invoice closed successfully", "success");
+        this.creditCardService.updateCreditCard(updatedCreditCard).subscribe({
+            next: (creditCard) => {
+                this.creditCardState.updateCreditCard(creditCard);
+                this.generalService.successSnackbar("invoice closed successfully");
             },
             error: () => {
-                this.snack.openSnackBar("error updating credit card", "error");
+                this.generalService.errorSnackbar("error updating credit card");
             },
         });
     }
@@ -146,7 +124,7 @@ export class PageCreditCards {
         console.log("DELETE");
     }
 
-    openDetails(creditCard: CreditCard, e: any) {
+    openDetails(creditCard: CreditCardObjectType, e: any) {
         const className = e.target.className;
         if (className !== "mat-mdc-button-touch-target") {
             const option = {

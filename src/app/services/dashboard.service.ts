@@ -1,6 +1,5 @@
 import { inject, Injectable } from "@angular/core";
 import { concatMap, map, Subscription } from "rxjs";
-import { CreditCard } from "../core/types/objects";
 import { DASHBOARD } from "src/utils/constants/services";
 import { DashboardState } from "../core/subjects/subjects.dashboard";
 import { CreditCardDashboardType } from "../core/types/services";
@@ -11,6 +10,7 @@ import {
     DashboardSavingsType,
     MonthBillsType,
 } from "../core/types/subjects/dashboard.subjects";
+import { CreditCardObjectType } from "../core/types/data/credit-card.types";
 
 @Injectable({
     providedIn: "root",
@@ -53,15 +53,18 @@ export class DashboardService extends Service {
     getCreditCards() {
         return this.userState.user$.pipe(
             concatMap((user) =>
-                this.httpClient.get<Array<CreditCard>>(DASHBOARD + "/credit-cards", {
-                    params: { userId: user!.id },
-                })
+                this.httpClient.get<Array<CreditCardObjectType>>(
+                    DASHBOARD + "/credit-cards",
+                    {
+                        params: { userId: user!.id },
+                    }
+                )
             ),
             map((creditCards) => {
                 let creditCardSets: CreditCardDashboardType = {};
                 creditCards.forEach((creditCard) => {
                     let creditCardSet: {
-                        [month: number]: CreditCard;
+                        [month: number]: CreditCardObjectType;
                     } = {};
                     creditCardSet[creditCard.month] = creditCard;
                     creditCardSets[creditCard.name] = {

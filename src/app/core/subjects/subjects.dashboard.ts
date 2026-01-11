@@ -1,5 +1,4 @@
 import { DASHBOARD_SAVINGS_INITIALIZER } from "src/utils/constants/mocks";
-import { CreditCard } from "src/app/core/types/objects";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { CreditCardDashboardType } from "src/app/core/types/services";
@@ -10,6 +9,7 @@ import {
     MonthBillsType,
 } from "src/app/core/types/subjects/dashboard.subjects";
 import { BillDataObjectType } from "../types/data/bills.types";
+import { CreditCardObjectType } from "../types/data/credit-card.types";
 
 @Injectable({
     providedIn: "root",
@@ -23,7 +23,7 @@ export class DashboardState {
     private _savings$ = new BehaviorSubject<DashboardSavingsType>({
         ...DASHBOARD_SAVINGS_INITIALIZER,
     });
-    private _creditCards$ = new BehaviorSubject<CreditCard[]>([]);
+    private _creditCards$ = new BehaviorSubject<CreditCardObjectType[]>([]);
     private _creditCardsSpan$ = new BehaviorSubject<CreditCardDashboardType>({});
     private _categoriesSummary$ = new BehaviorSubject<CategoriesSummaryType>({
         topCategories: [],
@@ -64,7 +64,7 @@ export class DashboardState {
         this._savings$.next(savings);
     }
 
-    public updateCreditCards(creditCards: CreditCard[]) {
+    public updateCreditCards(creditCards: CreditCardObjectType[]) {
         this._creditCards$.next(creditCards);
     }
 

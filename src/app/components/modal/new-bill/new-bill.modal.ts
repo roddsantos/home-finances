@@ -11,7 +11,6 @@ import {
 import { MatInputModule } from "@angular/material/input";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
-import { CreditCard } from "src/app/core/types/objects";
 import { BankTemplateNewBill } from "./templates/bank/bank.template.new-bill";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { CommonModule } from "@angular/common";
@@ -31,6 +30,7 @@ import { ConfigTemplate } from "./templates/config/config.template.new-bill";
 import { CategoryObjectType } from "src/app/core/types/data/category.types";
 import { CompanyObjectType } from "src/app/core/types/data/company.type";
 import { BankObjectType } from "src/app/core/types/data/bank.types";
+import { CreditCardObjectType } from "src/app/core/types/data/credit-card.types";
 
 @Component({
     selector: "modal-new-bill",
@@ -119,7 +119,7 @@ export class ModalNewBill extends ModalComponent {
         company: new FormControl<CompanyObjectType | null>(null, {
             nonNullable: false,
         }),
-        creditcard: new FormControl<CreditCard | null>(null, {
+        creditcard: new FormControl<CreditCardObjectType | null>(null, {
             nonNullable: false,
         }),
         taxes: new FormControl<number>(0, { nonNullable: true }),

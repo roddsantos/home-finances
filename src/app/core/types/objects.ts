@@ -8,32 +8,6 @@ export type User = {
     deletedAt: string | null;
 };
 
-export type CreditCard = {
-    id: string;
-    name: string;
-    description: string;
-    color: string;
-    limit: number;
-    limitLeft: number;
-    flag: string;
-    day: number;
-    due: number;
-    month: number;
-    year: number;
-    isClosed: boolean;
-    userId: string;
-    invoice: number;
-    updatedAt: string;
-    createdAt: string;
-    deletedAt: string | null;
-};
-
-export type CrreditCardFlag = {
-    name: string;
-    id: string;
-    icon: string;
-};
-
 export type MonthlySavingsTypes = "start";
 
 export type SavingsType = {

@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { Component, Input } from "@angular/core";
-import { CreditCard } from "src/app/core/types/objects";
+import { CreditCardObjectType } from "src/app/core/types/data/credit-card.types";
 import { MONTHS } from "src/utils/constants/general";
 import { CreditCardPipe } from "src/utils/pipes/creditCard";
 
@@ -12,7 +12,7 @@ import { CreditCardPipe } from "src/utils/pipes/creditCard";
     imports: [CommonModule, CreditCardPipe],
 })
 export class TemplateCreditCard {
-    @Input() creditCard: CreditCard;
+    @Input() creditCard: CreditCardObjectType;
     @Input() theme: string;
     public style = getComputedStyle(document.body);
     public bhColor = this.style.getPropertyValue("--bh");
