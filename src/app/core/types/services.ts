@@ -33,13 +33,6 @@ export type CategoryObject = {
     icon: string;
 };
 
-export type BankObject = {
-    name: string;
-    description: string;
-    color: string;
-    userId: string;
-};
-
 export type BillObject = {
     name: string;
     description: string;

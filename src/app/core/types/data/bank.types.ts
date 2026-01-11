@@ -10,3 +10,18 @@ export type BankObjectType = {
     createdAt: string;
     deletedAt: string | null;
 };
+
+export type BankCreateType = {
+    name: string;
+    description: string;
+    color: string;
+    savings: number;
+    isPiggyBank: boolean;
+};
+
+export type BankUpdateType = Partial<
+    BankCreateType & {
+        id: string;
+        userId: string;
+    }
+>;

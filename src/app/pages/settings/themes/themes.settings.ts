@@ -1,6 +1,5 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, OnInit } from "@angular/core";
-import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { CardComponent } from "src/app/components/card/card.component";
 import { Dialog } from "@angular/cdk/dialog";
@@ -13,7 +12,7 @@ import { MatTooltip } from "@angular/material/tooltip";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ActionItem } from "src/app/core/types/components";
 import { ModalDialogConfirmation } from "src/app/components/modal/dialog-confirmation/dialog-confirmation.modal";
-import { GeneralComponent } from "src/app/components/general/general.component";
+import { GeneralComponent } from "src/app/core/general/general.component";
 
 @Component({
     selector: "themes-settings",
@@ -21,13 +20,12 @@ import { GeneralComponent } from "src/app/components/general/general.component";
     styleUrls: ["./themes.settings.css"],
     standalone: true,
     imports: [
-        CommonModule,
-        CardComponent,
-        MatButtonModule,
-        MatIconModule,
-        CustonButton,
-        MatTooltip,
         ActionsComponent,
+        CardComponent,
+        CommonModule,
+        CustonButton,
+        MatIconModule,
+        MatTooltip,
     ],
 })
 export class ThemeSettingsComponent extends GeneralComponent implements OnInit {

@@ -1,9 +1,12 @@
 import { Injectable } from "@angular/core";
 import { BANK } from "src/utils/constants/services";
-import { BankObject } from "src/app/core/types/services";
 import { mergeMap, switchMap, take } from "rxjs";
 import { GeneralService } from "./general.service";
-import { BankObjectType } from "../core/types/data/bank.types";
+import {
+    BankCreateType,
+    BankObjectType,
+    BankUpdateType,
+} from "../core/types/data/bank.types";
 
 @Injectable({
     providedIn: "root",
@@ -16,9 +19,14 @@ export class BankService extends GeneralService {
         );
     }
 
-    createBank(data: Omit<BankObject, "userId">) {
+    createBank(data: BankCreateType) {
         return this.user.user$.pipe(
-            mergeMap((user) => this.http.post(BANK, { ...data, userId: user!.id }))
+            mergeMap((user) =>
+                this.http.post<BankObjectType>(BANK, {
+                    ...data,
+                    userId: user!.id,
+                })
+            )
         );
     }
 
@@ -26,7 +34,7 @@ export class BankService extends GeneralService {
         return this.http.delete(BANK + `/${id}`);
     }
 
-    updateBank(data: Omit<BankObject, "userId"> & { id: string }) {
-        return this.http.patch(BANK, data);
+    updateBank(data: BankUpdateType) {
+        return this.http.patch<BankObjectType>(BANK, data);
     }
 }

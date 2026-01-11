@@ -2,21 +2,16 @@ import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
-import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
-import { LocalStorageService } from "src/app/services/local-storage.service";
-import { UserState } from "src/app/core/subjects//subjects.user";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ActionItem } from "src/app/core/types/components";
-import { GeneralState } from "src/app/core/subjects/subjects.general";
-import { ROUTES } from "src/utils/route";
 import { BankService } from "src/app/services/bank.service";
 import { BankState } from "src/app/core/subjects/subjects.bank";
-import { Dialog } from "@angular/cdk/dialog";
 import { ModalNewBank } from "src/app/components/modal/new-bank/new-bank.modal";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
 import { ModalNewSaving } from "src/app/components/modal/new-saving/new-saving.modal";
 import { BankObjectType } from "src/app/core/types/data/bank.types";
+import { GeneralPage } from "src/app/core/general/page.general";
 
 @Component({
     selector: "page-banks",
@@ -24,24 +19,16 @@ import { BankObjectType } from "src/app/core/types/data/bank.types";
     styleUrls: ["./pages.banks.css"],
     standalone: true,
     imports: [
-        FeedbackContainerComponent,
-        CommonModule,
         ActionsComponent,
-        MatIconModule,
+        CommonModule,
+        FeedbackContainerComponent,
         MatButtonModule,
+        MatIconModule,
     ],
 })
-export class PageBanks {
+export class PageBanks extends GeneralPage {
     public bankService = inject(BankService);
     public bankState = inject(BankState);
-    public userState = inject(UserState);
-    public storage = inject(LocalStorageService);
-    private snack = inject(CustomSnackbarComponent);
-    public generalState = inject(GeneralState);
-    public dialog = inject(Dialog);
-
-    public actualPage = window.location.pathname;
-    public page = ROUTES.find((r) => r.page === this.actualPage);
 
     actions: ActionItem[] = [
         { name: "", icon: "edit", action: (data) => this.onEdit(data), color: "#00328f" },
@@ -56,14 +43,10 @@ export class PageBanks {
     getBanks(reloaded?: boolean) {
         this.bankService.getBanks().subscribe({
             next: (banks) => {
-                this.bankState.setBanks(banks as BankObjectType[]);
-                this.bankState.changeStatus(
-                    (banks as BankObjectType[]).length === 0 ? "empty" : "none",
-                    "no banks"
-                );
+                this.bankState.setBanks(banks);
             },
             error: () => {
-                if (reloaded) this.snack.openSnackBar("error fetching banks", "error");
+                if (reloaded) this.generalService.errorSnackbar("error fetching banks");
                 this.bankState.changeStatus("error", "error fetching banks");
             },
         });
