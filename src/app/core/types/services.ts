@@ -26,13 +26,6 @@ export type CreditCardObject = {
     isClosed: boolean;
 };
 
-export type CategoryObject = {
-    name: string;
-    description: string;
-    color: string;
-    icon: string;
-};
-
 export type BillObject = {
     name: string;
     description: string;

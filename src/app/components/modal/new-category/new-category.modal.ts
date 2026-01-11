@@ -9,7 +9,6 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
-import { CategoryObject } from "src/app/core/types/services";
 import { CATEGORY_FORM, GENERAL_FORM } from "src/utils/constants/forms";
 import { CategoryService } from "src/app/services/category.service";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
@@ -38,7 +37,7 @@ import { CategoryObjectType } from "src/app/core/types/data/category.types";
     ],
 })
 export class ModalNewCategory extends ModalComponent implements OnInit {
-    public catApi = inject(CategoryService);
+    public categoryService = inject(CategoryService);
     public catState = inject(CategoryState);
 
     public dialog = inject(Dialog);
@@ -77,23 +76,18 @@ export class ModalNewCategory extends ModalComponent implements OnInit {
     }
 
     onUpdate() {
-        if (this.categoryForm.invalid) return;
-        this.catApi
+        const dataToUpdate = this.getFormDirtyValues(this.categoryForm);
+        this.categoryService
             .updateCategory({
-                ...(this.categoryForm.value as CategoryObject),
+                ...dataToUpdate,
                 id: this.data.id,
             })
-            .pipe(mergeMap(() => this.catApi.getCategories()))
             .subscribe({
-                next: (categories) => {
-                    this.catState.setCategory(categories as CategoryObjectType[]);
-                    this.catState.changeStatus(
-                        (categories as CategoryObjectType[]).length === 0
-                            ? "empty"
-                            : "none",
-                        "no categories"
+                next: (category) => {
+                    this.catState.updateCategory(category);
+                    this.generalService.successSnackbar(
+                        `category [${category.name}] successfully updated`
                     );
-                    this.generalService.successSnackbar("category successfully updated");
                     this.onClose();
                 },
                 error: () => {
@@ -103,15 +97,16 @@ export class ModalNewCategory extends ModalComponent implements OnInit {
     }
 
     onCreate() {
-        if (this.categoryForm.invalid) return;
-        this.catApi
+        this.categoryService
             .createCategory({
-                ...(this.categoryForm.value as CategoryObject),
+                ...this.categoryForm.getRawValue(),
             })
             .subscribe({
-                next: (categories) => {
-                    this.catState.setCategory(categories as CategoryObjectType[]);
-                    this.generalService.successSnackbar("category successfully created");
+                next: (category) => {
+                    this.catState.addCategory(category);
+                    this.generalService.successSnackbar(
+                        `category [${category.name}] successfully created`
+                    );
                     this.onClose();
                 },
                 error: (err) => {
@@ -121,6 +116,7 @@ export class ModalNewCategory extends ModalComponent implements OnInit {
     }
 
     onSubmit() {
+        if (this.categoryForm.invalid) return;
         if (this.data) this.onUpdate();
         else this.onCreate();
     }

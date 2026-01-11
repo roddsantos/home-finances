@@ -1,8 +1,11 @@
 import { Injectable } from "@angular/core";
-import { CategoryObject } from "src/app/core/types/services";
 import { mergeMap, switchMap, take } from "rxjs";
 import { GeneralService } from "./general.service";
-import { CategoryObjectType } from "src/app/core/types/data/category.types";
+import {
+    CategoryCreateType,
+    CategoryObjectType,
+    CategoryUpdateType,
+} from "src/app/core/types/data/category.types";
 import { CATEGORY } from "src/utils/constants/services";
 
 @Injectable({
@@ -18,9 +21,14 @@ export class CategoryService extends GeneralService {
         );
     }
 
-    createCategory(data: CategoryObject) {
+    createCategory(data: CategoryCreateType) {
         return this.user.user$.pipe(
-            mergeMap((user) => this.http.post(CATEGORY, { ...data, userId: user!.id }))
+            mergeMap((user) =>
+                this.http.post<CategoryObjectType>(CATEGORY, {
+                    ...data,
+                    userId: user!.id,
+                })
+            )
         );
     }
 
@@ -28,7 +36,7 @@ export class CategoryService extends GeneralService {
         return this.http.delete(CATEGORY + `/${id}`);
     }
 
-    updateCategory(data: Omit<CategoryObject, "userId"> & { id: string }) {
-        return this.http.patch(CATEGORY, data);
+    updateCategory(data: CategoryUpdateType) {
+        return this.http.patch<CategoryObjectType>(CATEGORY, data);
     }
 }

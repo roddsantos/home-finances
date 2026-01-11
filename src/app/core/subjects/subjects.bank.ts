@@ -38,6 +38,7 @@ export class BankState {
     addBank(bank: BankObjectType) {
         let auxBanks = [...this._banks$.getValue()];
         const indexBank = this._banks$.getValue().findIndex((b) => b.id === bank.id);
+
         if (indexBank >= 0) auxBanks[indexBank] = bank;
         else auxBanks = [bank, ...auxBanks];
 

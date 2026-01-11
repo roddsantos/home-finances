@@ -30,25 +30,31 @@ export class CategoryState {
     }
 
     setCategories(categories: CategoryObjectType[]) {
+        if (categories.length === 0) this.changeStatus("empty", "no categories");
+        else this.changeVariant("none");
+
         this._categories$.next(categories);
     }
 
-    setCategory(tb: CategoryObjectType[]) {
-        if (tb.length === 0) this.changeStatus("empty", "no categories");
-        else this.changeVariant("none");
+    updateCategory(category: CategoryObjectType) {
+        let auxCategories = [...this._categories$.getValue()];
+        const indexCompany = this._categories$
+            .getValue()
+            .findIndex((c) => c.id === category.id);
 
-        this._categories$.next(tb);
+        if (indexCompany >= 0) auxCategories[indexCompany] = category;
+        this._categories$.next(auxCategories);
     }
 
-    addCategory(category: CategoryObjectType, index?: number) {
+    addCategory(category: CategoryObjectType) {
         let auxCategories = [...this._categories$.getValue()];
-        const existingCompany = this._categories$
-            .getValue()
-            .find((c) => c.id === category.id);
-        if (existingCompany && index !== undefined) auxCategories[index] = category;
-        else auxCategories = [category, ...auxCategories];
 
-        this._categories$.next(auxCategories);
+        const newCategoriesArray = [category, ...auxCategories].sort((cat1, cat2) => {
+            if (cat1.name > cat2.name) return -1;
+            return 1;
+        });
+
+        this._categories$.next(newCategoriesArray);
     }
 
     setStatus(status: FeedbackInfo) {
