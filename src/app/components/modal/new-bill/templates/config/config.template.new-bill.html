@@ -1,58 +1,63 @@
 <div class="modal-content">
     <h3 class="step-title">final setup</h3>
     <p class="step-desc">config of the date and money flow</p>
-    <form [formGroup]="configForm" class="form-container">
-        <ng-container *ngIf="configData.type === 'money'">
-            <div class="row">
-                <toggle-button
-                    label="it is an outcome or an income?"
-                    [items]="moneyFlowItems"
-                    [formController]="configForm.controls['isPayment']"
-                ></toggle-button>
-                <toggle-button
-                    label="is recurrent bill?"
-                    [items]="booleanItems"
-                    [formController]="configForm.controls['isRecurrent']"
-                    class="margin"
-                ></toggle-button>
-            </div>
-        </ng-container>
-        <toggle-button
-            label="payment processed?"
-            [items]="booleanItems"
-            [formController]="configForm.controls['settled']"
-            class="margin"
-            (onClick)="settledChange($event)"
-        ></toggle-button>
-        <div class="new-bill-field">
-            <ng-container *ngIf="configForm.value.settled">
-                <mat-form-field class="half" appearance="outline" color="primary">
-                    <mat-label>date of payment</mat-label>
-                    <input [matDatepicker]="picker1" matInput formControlName="paid" />
-                    <mat-hint class="hint">MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle
-                        matIconSuffix
-                        [for]="picker1"
-                    ></mat-datepicker-toggle>
-                    <mat-datepicker #picker1></mat-datepicker> </mat-form-field
-            ></ng-container>
-            <mat-form-field class="half" appearance="outline">
-                <mat-label>date due</mat-label>
-                <input [matDatepicker]="picker2" matInput formControlName="due" />
+    <ng-container *ngIf="type === 'money'">
+        <div class="row">
+            <toggle-button
+                label="it is an outcome or an income?"
+                [items]="moneyFlowItems"
+                [formController]="isPaymentControl"
+            ></toggle-button>
+            <toggle-button
+                label="is recurrent bill?"
+                [items]="booleanItems"
+                [formController]="isRecurrentControl"
+                class="margin"
+            ></toggle-button>
+        </div>
+    </ng-container>
+    <toggle-button
+        label="payment processed?"
+        [items]="booleanItems"
+        [formController]="settledControl"
+        class="margin"
+        (onClick)="settledChange($event)"
+    ></toggle-button>
+    <div class="new-bill-field">
+        <ng-container *ngIf="settledControl.value">
+            <mat-form-field class="half" appearance="outline" color="primary">
+                <mat-label>date of payment</mat-label>
+                <input
+                    [matDatepicker]="picker1"
+                    matInput
+                    [formControl]="paidControl"
+                    ngDefaultControl
+                />
                 <mat-hint class="hint">MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle
                     matIconSuffix
-                    [for]="picker2"
+                    [for]="picker1"
                 ></mat-datepicker-toggle>
-                <mat-datepicker #picker2></mat-datepicker>
-            </mat-form-field>
-        </div>
+                <mat-datepicker #picker1></mat-datepicker> </mat-form-field
+        ></ng-container>
+        <mat-form-field class="half" appearance="outline">
+            <mat-label>date due</mat-label>
+            <input
+                [matDatepicker]="picker2"
+                matInput
+                [formControl]="dueControl"
+                ngDefaultControl
+            />
+            <mat-hint class="hint">MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+    </div>
 
-        <div class="new-bill-field" *ngIf="configData.type === 'companyCredit'">
-            <h6>
-                bills created this month will start to appear next month, to appear this
-                month, choose a date in a previous month
-            </h6>
-        </div>
-    </form>
+    <div class="new-bill-field" *ngIf="type === 'companyCredit'">
+        <h6>
+            bills created this month will start to appear next month, to appear this
+            month, choose a date in a previous month
+        </h6>
+    </div>
 </div>

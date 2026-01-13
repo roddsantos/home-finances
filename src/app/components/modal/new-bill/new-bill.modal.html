@@ -10,7 +10,7 @@
     <form [formGroup]="billForm">
         <ng-container *ngIf="step === 1">
             <type-template
-                [type]="billForm.getRawValue().type"
+                [type]="billForm.get('type')!.value"
                 (setType)="setType($event)"
             />
         </ng-container>
@@ -20,35 +20,45 @@
                 [nameControl]="billForm.controls['name']"
                 [descriptionControl]="billForm.controls['description']"
                 [totalControl]="billForm.controls['total']"
-                [categoryControl]="billForm.controls['category']"
+                [categoryControl]="billForm.controls['categoryId']"
             />
         </ng-container>
         <ng-container *ngIf="step === 3 && billForm.value.type === 'money'">
             <template-banks
-                [bank1Control]="billForm.controls['bank1']"
-                [bank2Control]="billForm.controls['bank2']"
+                [bank1Control]="billForm.controls['bank1Id']"
+                [bank2Control]="billForm.controls['bank2Id']"
                 [isPaymentControl]="billForm.controls['isPayment']"
-                [companyControl]="billForm.controls['category']"
+                [companyControl]="billForm.controls['companyId']"
             />
         </ng-container>
         <ng-container *ngIf="step === 3 && billForm.value.type === 'companyCredit'">
             <template-companies
-                [compData]="getCompanyForm()"
-                [compDataErrors]="getErrorCompanyForm()"
-                (setCompData)="onPatch($event)"
+                [companyControl]="billForm.controls['companyId']"
+                [bank1Control]="billForm.controls['bank1Id']"
+                [totalParcelControl]="billForm.controls['totalParcel']"
+                [creditcardControl]="billForm.controls['creditCardId']"
+                [taxesControl]="billForm.controls['taxes']"
+                [parcelsControl]="billForm.controls['parcels']"
+                [deltaControl]="billForm.controls['delta']"
             />
         </ng-container>
         <ng-container *ngIf="step === 3 && billForm.value.type === 'creditCard'">
             <template-credit-card
-                [creditCardData]="getCreditCardForm()"
-                [creditCardDataErrors]="getErrorCreditCardForm()"
-                (setCreditCardData)="onPatch($event)"
+                [creditcardControl]="billForm.controls['creditCardId']"
+                [companyControl]="billForm.controls['companyId']"
+                [taxesControl]="billForm.controls['taxes']"
+                [parcelsControl]="billForm.controls['parcels']"
+                [deltaControl]="billForm.controls['delta']"
             />
         </ng-container>
         <ng-container *ngIf="step === 4">
             <template-config
-                [configData]="getConfigForm()"
-                (setConfigData)="onPatch($event)"
+                [type]="billForm.get('type')!.value"
+                [isPaymentControl]="billForm.controls['isPayment']"
+                [isRecurrentControl]="billForm.controls['isRecurrent']"
+                [settledControl]="billForm.controls['settled']"
+                [dueControl]="billForm.controls['due']"
+                [paidControl]="billForm.controls['paid']"
             />
         </ng-container>
     </form>

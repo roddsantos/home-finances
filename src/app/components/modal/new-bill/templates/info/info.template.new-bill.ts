@@ -1,13 +1,12 @@
 import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
-import { ErrorsBillForm, InfoBillForm } from "src/app/core/types/forms";
-import { CategoryObjectType } from "src/app/core/types/data/category.types";
+import { InfoBillForm } from "src/app/core/types/forms";
 import { CATEGORY_FORM, GENERAL_FORM } from "src/utils/constants/forms";
 import { PaymentTypes } from "src/app/core/types/general";
 
@@ -32,9 +31,14 @@ export class InfoTemplate {
     @Input({ required: true }) nameControl: FormControl<string>;
     @Input({ required: true }) descriptionControl: FormControl<string>;
     @Input({ required: true }) totalControl: FormControl<number>;
-    @Input({ required: true }) categoryControl: FormControl<CategoryObjectType | null>;
+    @Input({ required: true }) categoryControl: FormControl<string | null>;
     @Output() setInfo = new EventEmitter<Partial<InfoBillForm>>();
     public catState = inject(CategoryState);
+
+    selectedCategory(categoryId: string) {
+        const category = this.catState.getCategory(categoryId);
+        return category || null;
+    }
 
     public errorMessage = {
         name: GENERAL_FORM.noName,
@@ -43,23 +47,4 @@ export class InfoTemplate {
         category: CATEGORY_FORM.noCategory,
         year: GENERAL_FORM.yearOutOfRange,
     };
-
-    public infoForm = new FormGroup({
-        name: new FormControl<string>("", {
-            validators: [Validators.required, Validators.maxLength(100)],
-            nonNullable: true,
-        }),
-        description: new FormControl<string>("", {
-            validators: [Validators.required, Validators.maxLength(100)],
-            nonNullable: true,
-        }),
-        total: new FormControl<number>(0, {
-            nonNullable: true,
-            validators: [Validators.required, Validators.min(0.01)],
-        }),
-        category: new FormControl<CategoryObjectType | null>(null, {
-            nonNullable: true,
-            validators: [Validators.required],
-        }),
-    });
 }

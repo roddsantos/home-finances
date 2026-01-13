@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { COMPANY } from "src/utils/constants/services";
-import { CompanyObject } from "src/app/core/types/services";
 import { mergeMap, switchMap, take } from "rxjs";
 import {
     CompanyCreateType,

@@ -17,7 +17,7 @@
                 >no companies</mat-option
             >
             @for (c of (companies.company$ | async); track c) {
-            <mat-option [value]="c">{{ c.name }}</mat-option>
+            <mat-option [value]="c.id">{{ c.name }}</mat-option>
             }
         </mat-select>
         <mat-hint>not required</mat-hint>
@@ -45,13 +45,13 @@
                     >no banks</mat-option
                 >
                 @for (b1 of (banks.banks$ | async); track b1) {
-                <mat-option [value]="b1">{{ b1.name }}</mat-option>
+                <mat-option [value]="b1.id">{{ b1.name }}</mat-option>
                 }
             </mat-select>
             @if (bank1Control.errors) {
             <mat-error>{{errorMessage.bank1}}</mat-error>
-            } @if (bank1Control.value?.id === bank2Control.value?.id &&
-            bank1Control.value?.id && bank2Control.value?.id) {
+            } @if (bank1Control.value === bank2Control.value && bank1Control.value &&
+            bank2Control.value) {
             <mat-error>{{errorMessage.sameBank}}</mat-error>
             }
         </mat-form-field>
@@ -76,7 +76,7 @@
                     >none</mat-option
                 >
                 @for (b2 of (banks.banks$ | async); track b2) {
-                <mat-option [value]="b2">{{ b2.name }}</mat-option>
+                <mat-option [value]="b2.id">{{ b2.name }}</mat-option>
                 }
             </mat-select>
         </mat-form-field>

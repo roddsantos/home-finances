@@ -42,11 +42,11 @@ export type BillCreateType = {
     paid: Date | null;
     type: string;
     categoryId: string;
-    bank1Id: string;
-    bank2Id: string;
+    bank1Id: string | null;
+    bank2Id: string | null;
     isPayment: boolean;
-    companyId: string;
-    creditCardId: string;
+    companyId: string | null;
+    creditCardId: string | null;
     taxes: number;
     delta: number;
     isRecurrent: boolean;

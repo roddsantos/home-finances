@@ -64,4 +64,11 @@ export class CategoryState {
     setAction(action: () => void) {
         this._status$.next({ ...this._status$.getValue(), action });
     }
+
+    getCategory(id: string) {
+        let auxCategories = [...this._categories$.getValue()];
+        const category = auxCategories.find((category) => category.id === id);
+
+        return category;
+    }
 }

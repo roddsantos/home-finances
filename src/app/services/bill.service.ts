@@ -16,6 +16,7 @@ import { BillState } from "src/app/core/subjects/subjects.bill";
 import { FilterDisplay } from "src/app/core/types/components";
 import { BillsMetadataType } from "../core/types/pages/bills";
 import { PaymentTypes } from "../core/types/general";
+import { BillCreateType, BillObjectType } from "../core/types/data/bills.types";
 
 @Injectable({
     providedIn: "root",
@@ -49,26 +50,35 @@ export class ServiceBill {
         );
     }
 
-    createBillBank(data: BillObject & BillObjectBank) {
+    createBillBank(data: BillCreateType) {
         return this.user.user$.pipe(
             mergeMap((user) =>
-                this.http.post(BILL + "/transaction", { ...data, userId: user!.id })
+                this.http.post<BillObjectType>(BILL + "/transaction", {
+                    ...data,
+                    userId: user!.id,
+                })
             )
         );
     }
 
-    createBillCreditCard(data: BillObject & BillObjectCredtCard) {
+    createBillCreditCard(data: BillCreateType) {
         return this.user.user$.pipe(
             mergeMap((user) =>
-                this.http.post(BILL + "/cc", { ...data, userId: user!.id })
+                this.http.post<BillObjectType>(BILL + "/cc", {
+                    ...data,
+                    userId: user!.id,
+                })
             )
         );
     }
 
-    createBillCompany(data: BillObject & BillObjectCompany) {
+    createBillCompany(data: BillCreateType) {
         return this.user.user$.pipe(
             mergeMap((user) =>
-                this.http.post(BILL + "/company", { ...data, userId: user!.id })
+                this.http.post<BillObjectType>(BILL + "/company", {
+                    ...data,
+                    userId: user!.id,
+                })
             )
         );
     }

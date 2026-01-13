@@ -1,11 +1,5 @@
 import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
-import {
-    FormControl,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { BankState } from "src/app/core/subjects/subjects.bank";
@@ -15,13 +9,11 @@ import { MatSelectModule } from "@angular/material/select";
 import { BANK_FORM } from "src/utils/constants/forms";
 import { MatIconModule } from "@angular/material/icon";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
-import { BankBillForm, ErrorsBillForm } from "src/app/core/types/forms";
+import { BankBillForm } from "src/app/core/types/forms";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { ToggleButtonComponent } from "src/app/components/toggle-buttons/toggle-buttons.component";
 import { BANK_TYPES } from "src/utils/constants/bills";
 import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
-import { CompanyObjectType } from "src/app/core/types/data/company.type";
-import { BankObjectType } from "src/app/core/types/data/bank.types";
 
 @Component({
     selector: "template-banks",
@@ -47,10 +39,10 @@ export class BankTemplateNewBill {
     public companies = inject(CompanyState);
     public banks = inject(BankState);
 
-    @Input({ required: true }) bank1Control: FormControl<BankObjectType | null>;
-    @Input({ required: true }) bank2Control: FormControl<BankObjectType | null>;
+    @Input({ required: true }) bank1Control: FormControl<string | null>;
+    @Input({ required: true }) bank2Control: FormControl<string | null>;
     @Input({ required: true }) isPaymentControl: FormControl<boolean>;
-    @Input({ required: true }) companyControl: FormControl<CompanyObjectType | null>;
+    @Input({ required: true }) companyControl: FormControl<string | null>;
     @Output() setBankData = new EventEmitter<Partial<BankBillForm>>();
 
     public errorMessage = {
