@@ -52,13 +52,13 @@
             appearance="outline"
         >
             <mat-label>number parcels</mat-label>
-            <input matInput type="number" />
+            <input [value]="parcelsControl.value" matInput type="number" />
             @if (parcelsControl.invalid) {
             <mat-error>{{errorMessage.parcels}}</mat-error>
             }
         </mat-form-field>
         <mat-form-field
-            [formControl]="parcelsControl"
+            [formControl]="totalParcelControl"
             ngDefaultControl
             class="number-input third"
             appearance="outline"
@@ -71,7 +71,7 @@
                 fontIcon="attach_money"
             ></mat-icon>
             <mat-label>parcel value</mat-label>
-            <input matInput type="number" />
+            <input [value]="totalParcelControl.value" matInput type="number" />
             @if (totalParcelControl.invalid !== null) {
             <mat-error>{{errorMessage.total}}</mat-error>
             }
@@ -83,7 +83,7 @@
             appearance="outline"
         >
             <mat-label>last parcel diff</mat-label>
-            <input matInput type="number" />
+            <input [value]="deltaControl.value" matInput type="number" />
         </mat-form-field>
     </div>
 </div>

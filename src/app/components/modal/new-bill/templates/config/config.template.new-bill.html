@@ -28,12 +28,13 @@
             <mat-form-field class="half" appearance="outline" color="primary">
                 <mat-label>date of payment</mat-label>
                 <input
+                    [value]="paidControl.value"
                     [matDatepicker]="picker1"
                     matInput
                     [formControl]="paidControl"
                     ngDefaultControl
                 />
-                <mat-hint class="hint">MM/DD/YYYY</mat-hint>
+                <mat-hint class="hint">mm/dd/yyyy</mat-hint>
                 <mat-datepicker-toggle
                     matIconSuffix
                     [for]="picker1"
@@ -43,12 +44,13 @@
         <mat-form-field class="half" appearance="outline">
             <mat-label>date due</mat-label>
             <input
+                [value]="dueControl.value"
                 [matDatepicker]="picker2"
                 matInput
                 [formControl]="dueControl"
                 ngDefaultControl
             />
-            <mat-hint class="hint">MM/DD/YYYY</mat-hint>
+            <mat-hint class="hint">mm/dd/yyyy</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>

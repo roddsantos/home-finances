@@ -45,7 +45,12 @@
             appearance="outline"
         >
             <mat-label>parcels</mat-label>
-            <input matInput type="number" formControlName="parcels" />
+            <input
+                [value]="parcelsControl.value"
+                matInput
+                type="number"
+                formControlName="parcels"
+            />
             @if (parcelsControl.invalid) {
             <mat-error>{{errorMessage.parcels}}</mat-error>
             }
@@ -57,7 +62,12 @@
             appearance="outline"
         >
             <mat-label>delta</mat-label>
-            <input matInput type="number" formControlName="delta" />
+            <input
+                [value]="deltaControl.value"
+                matInput
+                type="number"
+                formControlName="delta"
+            />
         </mat-form-field>
         <mat-form-field
             [formControl]="taxesControl"
@@ -66,7 +76,12 @@
             appearance="outline"
         >
             <mat-label>taxes</mat-label>
-            <input matInput type="number" formControlName="taxes" />
+            <input
+                [value]="taxesControl.value"
+                matInput
+                type="number"
+                formControlName="taxes"
+            />
         </mat-form-field>
     </div>
 </div>

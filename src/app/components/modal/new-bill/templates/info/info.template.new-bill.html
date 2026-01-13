@@ -15,7 +15,7 @@
             fontIcon="subheader"
         ></mat-icon>
         <mat-label>title</mat-label>
-        <input maxlength="100" required matInput />
+        <input [value]="nameControl.value" maxlength="100" required matInput />
         @if (nameControl.errors) {
         <mat-error>{{errorMessage.name}}</mat-error>
         }
@@ -34,7 +34,7 @@
             fontIcon="subtitles"
         ></mat-icon>
         <mat-label>description</mat-label>
-        <input maxlength="100" matInput />
+        <input [value]="descriptionControl.value" maxlength="100" matInput />
         @if (descriptionControl.errors) {
         <mat-error>{{errorMessage.description}}</mat-error>
         }
@@ -89,7 +89,7 @@
                 fontIcon="sell"
             ></mat-icon>
             <mat-label>bill value</mat-label>
-            <input matInput type="number" />
+            <input [value]="totalControl.value" matInput type="number" />
             @if (totalControl.errors) {
             <mat-error>{{errorMessage.total}}</mat-error>
             }
