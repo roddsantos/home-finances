@@ -14,14 +14,18 @@ import { mergeMap, zip } from "rxjs";
 import { CustomFilterState } from "../components/custom-filter/custom-filter.subjects.component";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { FilterDisplay } from "src/app/core/types/components";
-import { BillsMetadataType } from "../core/types/pages/bills";
 import { PaymentTypes } from "../core/types/general";
-import { BillCreateType, BillObjectType } from "../core/types/data/bills.types";
+import {
+    BillCreateType,
+    BillObjectType,
+    BillsMetadataType,
+    BillUpdateType,
+} from "../core/types/data/bills.types";
 
 @Injectable({
     providedIn: "root",
 })
-export class ServiceBill {
+export class BillService {
     private http = inject(HttpClient);
     private user = inject(UserState);
     private filterState = inject(CustomFilterState);
@@ -83,24 +87,18 @@ export class ServiceBill {
         );
     }
 
-    updateBill(data: any, type: PaymentTypes) {
+    updateBill(data: BillUpdateType, type: PaymentTypes) {
         switch (type) {
             case "money":
-                return this.updateBillBank(
-                    data as BillObject & BillObjectBank & { id: string }
-                );
+                return this.updateBillBank(data);
             case "companyCredit":
-                return this.updateBillCompany(
-                    data as BillObject & BillObjectCredtCard & BillObjectCredtCardUpdate
-                );
+                return this.updateBillCompany(data);
             case "creditCard":
-                return this.updateBillCreditCard(
-                    data as BillObject & BillObjectCredtCard & BillObjectCredtCardUpdate
-                );
+                return this.updateBillCreditCard(data);
         }
     }
 
-    updateBillBank(data: BillObject & BillObjectBank & { id: string }) {
+    updateBillBank(data: BillUpdateType) {
         return this.user.user$.pipe(
             mergeMap((user) =>
                 this.http.patch(BILL + "/transaction", { ...data, userId: user!.id })
@@ -108,9 +106,7 @@ export class ServiceBill {
         );
     }
 
-    updateBillCreditCard(
-        data: BillObject & BillObjectCredtCard & BillObjectCredtCardUpdate
-    ) {
+    updateBillCreditCard(data: BillUpdateType) {
         return this.user.user$.pipe(
             mergeMap((user) =>
                 this.http.patch(BILL + "/cc", { ...data, userId: user!.id })
@@ -118,9 +114,7 @@ export class ServiceBill {
         );
     }
 
-    updateBillCompany(
-        data: Partial<BillObject & BillObjectCompany & BillObjectCompanyUpdate>
-    ) {
+    updateBillCompany(data: BillUpdateType) {
         return this.user.user$.pipe(
             mergeMap((user) =>
                 this.http.patch(BILL + "/company", { ...data, userId: user!.id })
@@ -136,9 +130,7 @@ export class ServiceBill {
         return this.http.patch(BILL + "/redo-quick-settle/" + id, {});
     }
 
-    deleteBill() {
-        return this.user.user$.pipe(
-            mergeMap((user) => this.http.delete(BILL + `${user!.id}`))
-        );
+    deleteBill(id: string) {
+        return this.http.delete(BILL + `/${id}`);
     }
 }

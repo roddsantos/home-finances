@@ -7,17 +7,13 @@ import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { CommonModule } from "@angular/common";
 import { CompanyTemplateNewBill } from "./templates/company/company.template.new-bill";
 import { CreditCardTemplateNewBill } from "./templates/credit-card/credit-card.template.new-bill";
-import { ServiceBill } from "src/app/services/bill.service";
+import { BillService } from "src/app/services/bill.service";
 import { PaymentTypes } from "src/app/core/types/general";
 import { MONTHS } from "src/utils/constants/general";
 import { provideNativeDateAdapter } from "@angular/material/core";
 import { TypeTemplate } from "./templates/type/type.template.new-bill";
 import { InfoTemplate } from "./templates/info/info.template.new-bill";
 import { ConfigTemplate } from "./templates/config/config.template.new-bill";
-import { CategoryObjectType } from "src/app/core/types/data/category.types";
-import { CompanyObjectType } from "src/app/core/types/data/company.type";
-import { BankObjectType } from "src/app/core/types/data/bank.types";
-import { CreditCardObjectType } from "src/app/core/types/data/credit-card.types";
 import { BillCreateType } from "src/app/core/types/data/bills.types";
 
 @Component({
@@ -43,7 +39,7 @@ export class ModalNewBill extends ModalComponent {
         super();
     }
     public billState = inject(BillState);
-    public billService = inject(ServiceBill);
+    public billService = inject(BillService);
     public catState = inject(CategoryState);
 
     public step: number = 1;

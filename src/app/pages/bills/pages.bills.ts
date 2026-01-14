@@ -10,8 +10,7 @@ import { BankListTemplateMonthly } from "./templates/bank/bank.template.bills";
 import { CreditCardTemplateMonthly } from "./templates/credit-card/credit-card.template.bills";
 import { ServiceTemplateMonthly } from "./templates/service/service.template.bills";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
-import { ServiceBill } from "src/app/services/bill.service";
-import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
+import { BillService } from "src/app/services/bill.service";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { PaginationTemplate } from "./templates/pagination/pagination.template.bills";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
@@ -49,7 +48,7 @@ import { BillDataObjectType } from "src/app/core/types/data/bills.types";
 })
 export class PageBills extends GeneralPage {
     public billState = inject(BillState);
-    public billService = inject(ServiceBill);
+    public billService = inject(BillService);
 
     isLineTheme: string = "";
 
@@ -85,7 +84,7 @@ export class PageBills extends GeneralPage {
     ];
 
     ngOnInit() {
-        this.billState.setAction(() => this.onReload());
+        this.getBills();
     }
 
     trackByFn(index: number, item: any) {

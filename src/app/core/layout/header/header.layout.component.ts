@@ -5,7 +5,6 @@ import { MatButtonModule, MatIconButton } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { BehaviorSubject, debounceTime, distinctUntilChanged, Subscription } from "rxjs";
-import { ServiceBill } from "src/app/services/bill.service";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
@@ -34,6 +33,7 @@ import { BillDataObjectType } from "../../types/data/bills.types";
 import { CompanyObjectType } from "../../types/data/company.type";
 import { BankObjectType } from "../../types/data/bank.types";
 import { CreditCardObjectType } from "../../types/data/credit-card.types";
+import { BillService } from "src/app/services/bill.service";
 
 @Component({
     standalone: true,
@@ -59,7 +59,7 @@ export class HeaderLayoutComponent {
     public banks = inject(BankState);
     public companies = inject(CompanyState);
     public generalState = inject(GeneralState);
-    public billService = inject(ServiceBill);
+    public billService = inject(BillService);
     public dialog = inject(Dialog);
     public pagePipe = inject(PagePipe);
 

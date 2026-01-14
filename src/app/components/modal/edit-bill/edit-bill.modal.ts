@@ -23,7 +23,7 @@ import {
     GENERAL_FORM,
     MONEY_FLOW_FORM,
 } from "src/utils/constants/forms";
-import { ServiceBill } from "src/app/services/bill.service";
+import { BillService } from "src/app/services/bill.service";
 import { PaymentTypes } from "src/app/core/types/general";
 import { MONTHS } from "src/utils/constants/general";
 import { MatOption } from "@angular/material/core";
@@ -68,7 +68,7 @@ import { CategoryObjectType } from "src/app/core/types/data/category.types";
 })
 export class ModalEditBill extends ModalComponent {
     public billState = inject(BillState);
-    public billService = inject(ServiceBill);
+    public billService = inject(BillService);
     public catState = inject(CategoryState);
     public snack = inject(CustomSnackbarComponent);
 
@@ -138,7 +138,7 @@ export class ModalEditBill extends ModalComponent {
                 nonNullable: true,
             }
         ),
-        category: new FormControl<CategoryObjectType | null>(null, {
+        categoryId: new FormControl<string>(this.data.categoryId, {
             nonNullable: true,
             validators: [Validators.required],
         }),
@@ -153,7 +153,7 @@ export class ModalEditBill extends ModalComponent {
             due: new Date(this.data.due),
             paid: this.data.paid ? new Date(this.data.paid) : null,
             type: this.data.type as PaymentTypes,
-            category: this.data.category,
+            categoryId: this.data.categoryId,
             isPayment: this.data.isPayment,
             isRecurrent: this.data.isRecurrent,
         });
@@ -215,7 +215,7 @@ export class ModalEditBill extends ModalComponent {
         var defaultData = {
             type: billFormValue.type!,
             name: billFormValue.name!,
-            categoryId: billFormValue.category!.id,
+            categoryId: billFormValue.categoryId,
             description: billFormValue.description!,
             settled: billFormValue.settled!,
             total: billFormValue.total!,
@@ -246,7 +246,6 @@ export class ModalEditBill extends ModalComponent {
                     creditCardId: creditCardFormValue.creditCard!.id,
                     companyId: creditCardFormValue.company?.id,
                     parcels: creditCardFormValue.parcels!,
-                    parcel: this.data.parcel,
                     totalParcel: this.data.totalParcel,
                     taxes: creditCardFormValue.taxes,
                     delta: creditCardFormValue.delta,

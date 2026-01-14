@@ -14,7 +14,7 @@ import { WEEKDAYS } from "src/utils/constants/general";
 import { CustomFilterState } from "../custom-filter/custom-filter.subjects.component";
 import { Router } from "@angular/router";
 import { BillState } from "src/app/core/subjects/subjects.bill";
-import { ServiceBill } from "src/app/services/bill.service";
+import { BillService } from "src/app/services/bill.service";
 import { DashboardState } from "src/app/core/subjects/subjects.dashboard";
 import { Subscription } from "rxjs";
 import { Dialog } from "@angular/cdk/dialog";
@@ -38,7 +38,7 @@ export class CalendarComponent implements OnChanges, OnDestroy {
     public generalState = inject(GeneralState);
 
     public billState = inject(BillState);
-    private billsService = inject(ServiceBill);
+    private billsService = inject(BillService);
     public dialog = inject(Dialog);
 
     @Input() monthBills: MonthBillsType[];

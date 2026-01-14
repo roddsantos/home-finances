@@ -10,6 +10,7 @@ import { CompanyService } from "./services/company.service";
 import { CompanyState } from "./core/subjects/subjects.company";
 import { CreditCardService } from "./services/credit-card.service";
 import { CreditCardState } from "./core/subjects/subjects.credit-card";
+import { GeneralState } from "./core/subjects/subjects.general";
 
 @Injectable({
     providedIn: "root",
@@ -25,7 +26,8 @@ export class AppService {
         private companyService: CompanyService,
         private companyState: CompanyState,
         private creditCardService: CreditCardService,
-        private creditCardState: CreditCardState
+        private creditCardState: CreditCardState,
+        private generalState: GeneralState
     ) {}
 
     handleError(object: any) {
@@ -61,6 +63,7 @@ export class AppService {
 
     appInitializer() {
         try {
+            this.generalState.changePage(window.location.pathname);
             const user = this.localStorageService.getUser();
             if (user) this.userState.setUser(user);
             else return Promise.resolve();

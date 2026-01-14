@@ -2,6 +2,7 @@ import { CategoryObjectType } from "./category.types";
 import { CompanyObjectType } from "./company.type";
 import { BankObjectType } from "./bank.types";
 import { CreditCardObjectType } from "./credit-card.types";
+import { FetchPaginatedData } from "../services";
 
 export type BillObjectType = {
     id: string;
@@ -52,6 +53,10 @@ export type BillCreateType = {
     isRecurrent: boolean;
 };
 
+export type BillUpdateType = Partial<BillCreateType> & {
+    id: string;
+};
+
 export type BillDataObjectType = BillObjectType & {
     category: CategoryObjectType;
     creditCard: CreditCardObjectType | null;
@@ -59,3 +64,13 @@ export type BillDataObjectType = BillObjectType & {
     bank2: BankObjectType | null;
     company: CompanyObjectType | null;
 };
+
+export type BillsIncomeMetadataType = {
+    income: {
+        count: number;
+        total: number;
+    };
+};
+
+export type BillsMetadataType = FetchPaginatedData<BillDataObjectType> &
+    BillsIncomeMetadataType;

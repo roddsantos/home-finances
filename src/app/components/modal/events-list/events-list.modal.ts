@@ -7,7 +7,7 @@ import { EventsListModalType } from "src/app/core/types/modal";
 import { Bill, BillData, CreditCard } from "src/app/core/types/objects";
 import { SectorPipe } from "src/utils/pipes/sector";
 import { CustomFilterState } from "../../custom-filter/custom-filter.subjects.component";
-import { ServiceBill } from "src/app/services/bill.service";
+import { BillService } from "src/app/services/bill.service";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 import { Router } from "@angular/router";
@@ -21,7 +21,7 @@ import { Router } from "@angular/router";
 })
 export class ModalEventsList extends ModalComponent {
     public filterState = inject(CustomFilterState);
-    public billService = inject(ServiceBill);
+    public billService = inject(BillService);
     public billState = inject(BillState);
     private snack = inject(CustomSnackbarComponent);
 
