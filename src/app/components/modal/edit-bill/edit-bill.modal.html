@@ -1,7 +1,7 @@
 <modal-component
-    size="md"
+    size="lg"
     header="edit bill"
-    [disabled]="onDisableButton()"
+    [disabled]="billForm.invalid"
     (actionPrimary)="onSubmit()"
     (actionSecondary)="handleClose()"
     [bodyTemplate]="editBill"
@@ -13,11 +13,7 @@
             <!-- Payment type -->
             <mat-form-field class="new-bill-field" appearance="outline">
                 <mat-label>payment type</mat-label>
-                <mat-select
-                    (selectionChange)="onSetSettled($event)"
-                    #type
-                    formControlName="type"
-                >
+                <mat-select #type formControlName="type">
                     <mat-option [value]="'money'">money</mat-option>
                     <mat-option [value]="'creditCard'">credit card</mat-option>
                     <mat-option [value]="'companyCredit'">company credit</mat-option>
@@ -57,13 +53,10 @@
                         <div class="new-bill-container-split">
                             <mat-form-field class="new-bill-field" appearance="outline">
                                 <mat-label>category</mat-label>
-                                <mat-select
-                                    [compareWith]="compareCategories"
-                                    formControlName="category"
-                                >
-                                    @for (cat of catState.categories$ | async; track
+                                <mat-select formControlName="categoryId">
+                                    @for (cat of categoryState.categories$ | async; track
                                     $index) {
-                                    <mat-option [value]="cat">{{cat.name}}</mat-option>
+                                    <mat-option [value]="cat.id">{{cat.name}}</mat-option>
                                     }
                                 </mat-select>
                                 @if (billForm.controls.categoryId.errors?.["required"]) {
@@ -182,8 +175,10 @@
         >
             <template-edit-banks
                 [style.width]="'100%'"
+                [companyIdControl]="billForm.controls['companyId']"
+                [bank1IdControl]="billForm.controls['bank1Id']"
+                [bank2IdControl]="billForm.controls['bank2Id']"
                 [bill]="data"
-                #bankTemplate
             ></template-edit-banks
         ></card-component>
         <card-component
@@ -193,8 +188,13 @@
         >
             <template-edit-companies
                 [style.width]="'100%'"
+                [companyIdControl]="billForm.controls['companyId']"
+                [bank1IdControl]="billForm.controls['bank1Id']"
+                [creditCardIdControl]="billForm.controls['creditCardId']"
+                [parcelsControl]="billForm.controls['parcels']"
+                [deltaControl]="billForm.controls['delta']"
+                [taxesControl]="billForm.controls['taxes']"
                 [bill]="data"
-                #companyTemplate
             ></template-edit-companies>
         </card-component>
         <card-component
@@ -203,8 +203,11 @@
             [hideHeader]="true"
         >
             <template-edit-credit-card
-                [bill]="data"
-                #ccTemplate
+                [creditCardIdControl]="billForm.controls['creditCardId']"
+                [companyIdControl]="billForm.controls['companyId']"
+                [parcelsControl]="billForm.controls['parcels']"
+                [deltaControl]="billForm.controls['delta']"
+                [taxesControl]="billForm.controls['taxes']"
             ></template-edit-credit-card
         ></card-component>
     </div>

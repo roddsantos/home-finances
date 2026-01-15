@@ -4,6 +4,15 @@ import { BankObjectType } from "./bank.types";
 import { CreditCardObjectType } from "./credit-card.types";
 import { FetchPaginatedData } from "../services";
 
+export type PaymentTypes = "creditCard" | "money" | "companyCredit";
+
+export type PaymentTypesObject = {
+    name: string;
+    icon: string;
+    id: PaymentTypes;
+    description: string;
+};
+
 export type BillObjectType = {
     id: string;
     groupId: string;
@@ -18,13 +27,13 @@ export type BillObjectType = {
     delta: number;
     due: Date;
     paid: Date | null;
-    type: string;
-    companyId: string;
+    type: PaymentTypes;
+    companyId: string | null;
     categoryId: string;
-    bank1Id: string;
-    bank2Id: string;
+    bank1Id: string | null;
+    bank2Id: string | null;
     isRecurrent: boolean;
-    creditCardId: string;
+    creditCardId: string | null;
     isPayment: boolean;
     userId: string;
     createdAt: string;
@@ -41,7 +50,7 @@ export type BillCreateType = {
     parcels: number;
     due: Date;
     paid: Date | null;
-    type: string;
+    type: PaymentTypes;
     categoryId: string;
     bank1Id: string | null;
     bank2Id: string | null;
@@ -53,7 +62,7 @@ export type BillCreateType = {
     isRecurrent: boolean;
 };
 
-export type BillUpdateType = Partial<BillCreateType> & {
+export type BillUpdateType = Partial<BillObjectType> & {
     id: string;
 };
 

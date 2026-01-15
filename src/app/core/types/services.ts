@@ -1,5 +1,5 @@
+import { PaymentTypes } from "./data/bills.types";
 import { CreditCardObjectType } from "./data/credit-card.types";
-import { PaymentTypes } from "./general";
 
 export type UserObject = {
     name: string;

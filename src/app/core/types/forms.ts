@@ -1,9 +1,9 @@
 import { AbstractControl, ValidationErrors } from "@angular/forms";
-import { PaymentTypes } from "./general";
 import { CategoryObjectType } from "./data/category.types";
 import { CompanyObjectType } from "./data/company.type";
 import { BankObjectType } from "./data/bank.types";
 import { CreditCardObjectType } from "./data/credit-card.types";
+import { PaymentTypes } from "./data/bills.types";
 
 export type ErrorsBillForm<T> = {
     [k in keyof T]: ValidationErrors | null;
@@ -18,7 +18,7 @@ export type InfoBillForm = {
     description: string;
     total: number;
     category: CategoryObjectType | null;
-    type: PaymentTypes | null;
+    type: PaymentTypes;
 };
 
 export type CheckBillForm = {

@@ -20,7 +20,7 @@ import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
-import { MonthType, PaymentTypes } from "src/app/core/types/general";
+import { MonthType } from "src/app/core/types/general";
 import { MONTHS } from "src/utils/constants/general";
 import { MatInput, MatInputModule } from "@angular/material/input";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
@@ -40,6 +40,7 @@ import { getMonthAndYearIntegers } from "src/utils/date";
 import { isObjectsEqual } from "src/utils/validators";
 import { GeneralService } from "src/app/services/general.service";
 import { CustonButton } from "../button/custom-button.component";
+import { PaymentTypes } from "src/app/core/types/data/bills.types";
 
 @Injectable({
     providedIn: "root",

@@ -41,41 +41,16 @@ export class BankTemplateEditBill {
     public banks = inject(BankState);
 
     @Input() bill!: BillDataObjectType;
+    @Input({ required: true }) companyIdControl: FormControl<string | null>;
+    @Input({ required: true }) bank1IdControl: FormControl<string | null>;
+    @Input({ required: true }) bank2IdControl: FormControl<string | null>;
 
-    bankForm = new FormGroup({
-        bank1: new FormControl<BankObjectType | null>(null, {
-            nonNullable: true,
-            validators: [Validators.required],
-        }),
-        bank2: new FormControl<BankObjectType | null>(null, { nonNullable: false }),
-        company: new FormControl<CompanyObjectType | null>(null, {
-            nonNullable: false,
-        }),
-    });
-
-    ngOnInit() {
-        this.bankForm.patchValue({
-            bank1: this.bill.bank1,
-            bank2: this.bill.bank2,
-            company: this.bill.company,
-        });
-        if (this.bill.settled) {
-            this.bankForm.controls["bank1"].disable();
-            this.bankForm.controls["bank2"].disable();
-        }
-    }
+    public errorMessage = {
+        bank1: BANK_FORM.noBank,
+        sameBank: BANK_FORM.sameBanks,
+    };
 
     enableArrow() {
-        return this.bankForm.value.bank1 && this.bankForm.value.bank2;
-    }
-
-    errorMessage = BANK_FORM.noBank;
-
-    compareBanks(b1: BankObjectType, b2: BankObjectType): boolean {
-        return b1.id === b2.id;
-    }
-
-    compareCompanies(c1: CompanyObjectType, c2: CompanyObjectType): boolean {
-        return c1.id === c2.id;
+        return this.bank1IdControl.value && this.bank2IdControl.value;
     }
 }

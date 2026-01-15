@@ -12,15 +12,6 @@ export type MonthType = {
 
 export type DateType = "mmYY" | "mmmmYYYY" | "mmmYY" | "ddMMyyyy";
 
-export type PaymentTypes = "creditCard" | "money" | "companyCredit";
-
-export type PaymentTypesObject = {
-    name: string;
-    icon: string;
-    id: PaymentTypes;
-    description: string;
-};
-
 export type RequiredKeys<T> = {
     [K in keyof T]-?: {} extends Pick<T, K> ? never : K;
 }[keyof T];

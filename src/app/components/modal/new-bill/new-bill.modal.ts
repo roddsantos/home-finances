@@ -8,13 +8,12 @@ import { CommonModule } from "@angular/common";
 import { CompanyTemplateNewBill } from "./templates/company/company.template.new-bill";
 import { CreditCardTemplateNewBill } from "./templates/credit-card/credit-card.template.new-bill";
 import { BillService } from "src/app/services/bill.service";
-import { PaymentTypes } from "src/app/core/types/general";
 import { MONTHS } from "src/utils/constants/general";
 import { provideNativeDateAdapter } from "@angular/material/core";
 import { TypeTemplate } from "./templates/type/type.template.new-bill";
 import { InfoTemplate } from "./templates/info/info.template.new-bill";
 import { ConfigTemplate } from "./templates/config/config.template.new-bill";
-import { BillCreateType } from "src/app/core/types/data/bills.types";
+import { BillCreateType, PaymentTypes } from "src/app/core/types/data/bills.types";
 
 @Component({
     selector: "modal-new-bill",

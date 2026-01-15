@@ -1,5 +1,5 @@
 import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
-import { PaymentTypesObject } from "src/app/core/types/general";
+import { PaymentTypesObject } from "src/app/core/types/data/bills.types";
 
 export const GENERAL_FORM = {
     noName: "you must enter a name",

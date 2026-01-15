@@ -6,9 +6,9 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
+import { PaymentTypes } from "src/app/core/types/data/bills.types";
 import { InfoBillForm } from "src/app/core/types/forms";
 import { CATEGORY_FORM, GENERAL_FORM } from "src/utils/constants/forms";
-import { PaymentTypes } from "src/app/core/types/general";
 
 @Component({
     selector: "info-template",
@@ -27,7 +27,7 @@ import { PaymentTypes } from "src/app/core/types/general";
 export class InfoTemplate {
     constructor() {}
 
-    @Input() type: PaymentTypes | null;
+    @Input() type: PaymentTypes;
     @Input({ required: true }) nameControl: FormControl<string>;
     @Input({ required: true }) descriptionControl: FormControl<string>;
     @Input({ required: true }) totalControl: FormControl<number>;

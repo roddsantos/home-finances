@@ -11,7 +11,7 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { BOOLEAN_FORM, MONEY_FLOW_FORM } from "src/utils/constants/forms";
 import { ToggleButtonComponent } from "src/app/components/toggle-buttons/toggle-buttons.component";
 import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
-import { PaymentTypes } from "src/app/core/types/general";
+import { PaymentTypes } from "src/app/core/types/data/bills.types";
 
 @Component({
     selector: "template-config",
@@ -36,7 +36,7 @@ export class ConfigTemplate {
     public banks = inject(BankState);
     public ccs = inject(CreditCardState);
 
-    @Input({ required: true }) type: PaymentTypes | null;
+    @Input({ required: true }) type: PaymentTypes;
     @Input({ required: true }) isPaymentControl: FormControl<boolean>;
     @Input({ required: true }) isRecurrentControl: FormControl<boolean>;
     @Input({ required: true }) settledControl: FormControl<boolean>;

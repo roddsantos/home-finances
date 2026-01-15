@@ -14,12 +14,12 @@ import { mergeMap, zip } from "rxjs";
 import { CustomFilterState } from "../components/custom-filter/custom-filter.subjects.component";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { FilterDisplay } from "src/app/core/types/components";
-import { PaymentTypes } from "../core/types/general";
 import {
     BillCreateType,
     BillObjectType,
     BillsMetadataType,
     BillUpdateType,
+    PaymentTypes,
 } from "../core/types/data/bills.types";
 
 @Injectable({

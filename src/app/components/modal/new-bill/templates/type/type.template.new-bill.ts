@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatIconModule } from "@angular/material/icon";
-import { PaymentTypes } from "src/app/core/types/general";
+import { PaymentTypes } from "src/app/core/types/data/bills.types";
 import { PAYMENT_TYPES } from "src/utils/constants/forms";
 
 @Component({
@@ -13,10 +13,10 @@ import { PAYMENT_TYPES } from "src/utils/constants/forms";
     imports: [CommonModule, MatIconModule, ReactiveFormsModule],
 })
 export class TypeTemplate {
-    @Input() type: PaymentTypes | null;
+    @Input() type: PaymentTypes;
     @Output() setType = new EventEmitter<PaymentTypes>();
 
-    typeList = PAYMENT_TYPES;
+    public typeList = PAYMENT_TYPES;
 
     handleType(t: PaymentTypes) {
         this.setType.emit(t);
