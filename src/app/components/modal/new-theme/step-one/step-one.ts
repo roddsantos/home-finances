@@ -14,7 +14,7 @@ import { GENERAL_FORM } from "src/utils/constants/forms";
     selector: "step-one",
     standalone: true,
     templateUrl: "./step-one.html",
-    styleUrls: ["./step-one.css", "../new-theme-profile.modal.css"],
+    styleUrls: ["./step-one.css", "../new-theme.modal.css"],
     imports: [
         ToggleButtonComponent,
         CardComponent,

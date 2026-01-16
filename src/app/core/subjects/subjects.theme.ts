@@ -1,20 +1,21 @@
-import { ProfileThemeType } from "../types/pages/theme";
+import { ThemeObjectType } from "../types/pages/theme";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
+import { ALL_ROOT_THEMES } from "src/utils/constants/colors";
 
 @Injectable({
     providedIn: "root",
 })
 export class ThemeState {
-    private _themes$ = new BehaviorSubject<ProfileThemeType[]>([]);
+    private _themes$ = new BehaviorSubject<ThemeObjectType[]>([...ALL_ROOT_THEMES]);
 
     public readonly themes$ = this._themes$.asObservable();
 
-    setThemeList(themes: ProfileThemeType[]) {
+    setThemeList(themes: ThemeObjectType[]) {
         this._themes$.next(themes);
     }
 
-    updateTheme(theme: ProfileThemeType) {
+    updateTheme(theme: ThemeObjectType) {
         const themes = this._themes$.getValue();
         const themeIndex = themes.findIndex((t) => t.id === theme.id);
         themes.splice(themeIndex, 1, theme);
@@ -22,7 +23,7 @@ export class ThemeState {
         this._themes$.next(themes);
     }
 
-    addTheme(theme: ProfileThemeType) {
+    addTheme(theme: ThemeObjectType) {
         const themes = this._themes$.getValue();
         themes.splice(0, 0, theme);
 

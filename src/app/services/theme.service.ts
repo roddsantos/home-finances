@@ -3,8 +3,9 @@ import { GeneralService } from "./general.service";
 import {
     ColorThemeType,
     GeneralMeasureType,
-    ProfileThemeType,
-    ThemeBodyType,
+    ThemeObjectType,
+    ThemeCreateType,
+    ThemeUpdateType,
 } from "../core/types/pages/theme";
 import { LocalStorageService } from "./local-storage.service";
 import {
@@ -15,7 +16,7 @@ import {
     FIELD_TO_PROPERTY,
 } from "src/utils/constants/colors";
 import { SECTORS } from "src/utils/constants/general";
-import { mergeMap } from "rxjs";
+import { mergeMap, switchMap, take } from "rxjs";
 import { THEME } from "src/utils/constants/services";
 
 @Injectable({
@@ -26,14 +27,15 @@ export class ThemeService extends GeneralService {
 
     getThemes() {
         return this.user.user$.pipe(
-            mergeMap((user) => this.http.get<ProfileThemeType[]>(THEME + `/${user?.id}`))
+            take(1),
+            switchMap((user) => this.http.get<ThemeObjectType[]>(THEME + `/${user?.id}`))
         );
     }
 
-    createTheme(data: ThemeBodyType) {
+    createTheme(data: ThemeCreateType) {
         return this.user.user$.pipe(
             mergeMap((user) =>
-                this.http.post<ProfileThemeType>(THEME, {
+                this.http.post<ThemeObjectType>(THEME, {
                     ...data,
                     userId: user?.id,
                 })
@@ -41,10 +43,10 @@ export class ThemeService extends GeneralService {
         );
     }
 
-    updateTheme(data: ProfileThemeType) {
+    updateTheme(data: ThemeUpdateType) {
         return this.user.user$.pipe(
             mergeMap((user) =>
-                this.http.patch<ProfileThemeType>(THEME, {
+                this.http.patch<ThemeObjectType>(THEME, {
                     ...data,
                     userId: user?.id,
                 })
@@ -56,7 +58,7 @@ export class ThemeService extends GeneralService {
         return this.http.delete<string>(THEME + `/${id}`);
     }
 
-    setTheme(theme: ProfileThemeType) {
+    setTheme(theme: ThemeObjectType) {
         const { id } = theme;
         this.setupTheme(theme);
         document.body.className = "";
@@ -172,7 +174,7 @@ export class ThemeService extends GeneralService {
         });
     }
 
-    setProperties(profileTheme: ProfileThemeType) {
+    setProperties(profileTheme: ThemeObjectType) {
         Object.keys(FIELD_TO_PROPERTY).map((field) => {
             const property = FIELD_TO_PROPERTY[field as keyof typeof FIELD_TO_PROPERTY];
             document.documentElement.style.setProperty(
@@ -205,7 +207,7 @@ export class ThemeService extends GeneralService {
         );
     }
 
-    setOtherVars(profileTheme: ProfileThemeType) {
+    setOtherVars(profileTheme: ThemeObjectType) {
         const { id } = profileTheme;
 
         document.documentElement.style.setProperty(
@@ -220,7 +222,7 @@ export class ThemeService extends GeneralService {
         );
     }
 
-    setupTheme(profileTheme: ProfileThemeType) {
+    setupTheme(profileTheme: ThemeObjectType) {
         const {
             theme,
             inputSize,

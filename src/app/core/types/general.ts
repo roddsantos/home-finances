@@ -19,32 +19,6 @@ export type OptionalKeys<T> = {
     [K in keyof T]-?: {} extends Pick<T, K> ? K : never;
 }[keyof T];
 
-export type ThemeObjectType = {
-    title: string;
-    id: string;
-    description: string;
-    "--primary": string;
-    "--secondary": string;
-    "--background": string;
-    "--bh": string;
-    "--text-1": string;
-    "--text-2": string;
-    "--border-color": string;
-    "--border-width": number;
-    "--border-radius": number;
-    "--error": string;
-    "--warning": string;
-    "--info": string;
-    "--success": string;
-    "--default": string;
-    "--credit-card": string;
-    "--bank": string;
-    "--company": string;
-    "--category": string;
-    "--bill": string;
-    "--disabled": string;
-};
-
 export type RoutesType =
     | "/settings"
     | "/credit-cards"

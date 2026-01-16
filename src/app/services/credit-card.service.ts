@@ -16,9 +16,7 @@ export class CreditCardService extends GeneralService {
         return this.user.user$.pipe(
             take(1),
             switchMap((user) =>
-                this.http.get<CreditCardObjectType[]>(CREDIT_CARD, {
-                    params: { userId: user!.id },
-                })
+                this.http.get<CreditCardObjectType[]>(CREDIT_CARD + `/${user!.id}`)
             )
         );
     }

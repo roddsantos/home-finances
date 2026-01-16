@@ -1,9 +1,9 @@
 import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
 import {
     ColorThemeType,
-    FontProfileType,
+    FontThemeType,
     GeneralMeasureType,
-    ProfileThemeType,
+    ThemeObjectType,
 } from "src/app/core/types/pages/theme";
 
 export const COLOR_STATUS = {
@@ -52,10 +52,10 @@ export const GENERAL_MEASURES: ToggleButtonItemsType<GeneralMeasureType>[] = [
 ];
 
 export const THEME_FONTS = {
-    opensans: "Open-Sans" as FontProfileType,
-    commissioner: "Commissioner" as FontProfileType,
-    roboto: "Roboto" as FontProfileType,
-    gteestitext: "GT-Eesti-Text" as FontProfileType,
+    opensans: "Open-Sans" as FontThemeType,
+    commissioner: "Commissioner" as FontThemeType,
+    roboto: "Roboto" as FontThemeType,
+    gteestitext: "GT-Eesti-Text" as FontThemeType,
 };
 
 export const DEFAULT_COLORS = {
@@ -391,7 +391,7 @@ export const DEFAULT_BACKGROUND_COLORS = {
     },
 };
 
-export const DEFAULT_THEME: ProfileThemeType = {
+export const DEFAULT_THEME: ThemeObjectType = {
     id: "default",
     theme: "default",
     title: "default",
@@ -407,9 +407,13 @@ export const DEFAULT_THEME: ProfileThemeType = {
     padding: "default",
     font1: "Open-Sans",
     font2: "Commissioner",
+    userId: "home-finances",
+    createdAt: "2025-01-01T08:00:00.000",
+    updatedAt: "2025-01-01T08:00:00.000",
+    deletedAt: null,
 };
 
-export const BINARY_THEME: ProfileThemeType = {
+export const BINARY_THEME: ThemeObjectType = {
     id: "binary",
     theme: "dark",
     title: "black and white",
@@ -425,9 +429,13 @@ export const BINARY_THEME: ProfileThemeType = {
     padding: "default",
     font1: "Open-Sans",
     font2: "Commissioner",
+    userId: "home-finances",
+    createdAt: "2025-01-01T08:00:00.000",
+    updatedAt: "2025-01-01T08:00:00.000",
+    deletedAt: null,
 };
 
-export const RED_AND_BLACK: ProfileThemeType = {
+export const RED_AND_BLACK: ThemeObjectType = {
     id: "red-and-black",
     theme: "dark",
     title: "red and black",
@@ -443,7 +451,13 @@ export const RED_AND_BLACK: ProfileThemeType = {
     padding: "default",
     font1: "Open-Sans",
     font2: "Commissioner",
+    userId: "home-finances",
+    createdAt: "2025-01-01T08:00:00.000",
+    updatedAt: "2025-01-01T08:00:00.000",
+    deletedAt: null,
 };
+
+export const ALL_ROOT_THEMES = [DEFAULT_THEME, BINARY_THEME, RED_AND_BLACK];
 
 export const FIELD_TO_PROPERTY = {
     id: "--profile-id",

@@ -1,9 +1,8 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { ManagerTabs, RoutesType, ThemeObjectType } from "src/app/core/types/general";
-import { THEMES } from "src/utils/constants/general";
+import { ManagerTabs, RoutesType } from "src/app/core/types/general";
 import { BillsLayoutType } from "../types/subjects";
-import { ProfileThemeType } from "../types/pages/theme";
+import { ThemeObjectType } from "../types/pages/theme";
 import { DEFAULT_THEME } from "src/utils/constants/colors";
 
 @Injectable({
@@ -12,7 +11,7 @@ import { DEFAULT_THEME } from "src/utils/constants/colors";
 export class GeneralState {
     private _managerTab$ = new BehaviorSubject<ManagerTabs>("0");
     private _theme$ = new BehaviorSubject<string>("default");
-    private _themeObject$ = new BehaviorSubject<ProfileThemeType>(DEFAULT_THEME);
+    private _themeObject$ = new BehaviorSubject<ThemeObjectType>(DEFAULT_THEME);
     private _filterContainer$ = new BehaviorSubject<boolean>(true);
     private _page$ = new BehaviorSubject<RoutesType | string>(window.location.pathname);
     private _billsLayout$ = new BehaviorSubject<BillsLayoutType>("grid");
@@ -32,7 +31,7 @@ export class GeneralState {
         this._theme$.next(theme);
     }
 
-    changeThemeObject(theme: ProfileThemeType) {
+    changeThemeObject(theme: ThemeObjectType) {
         this._themeObject$.next(theme);
     }
 

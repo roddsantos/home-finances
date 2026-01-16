@@ -20,7 +20,6 @@ export class CategoryState {
     public readonly categories$ = this._categories$.asObservable();
 
     changeStatus(variant: FeedbackVariant, title: string) {
-        console.log(variant, title);
         this._status$.next({ ...this._status$.getValue(), variant, title });
         if (variant !== "none" && variant !== "loading") this._categories$.next([]);
     }

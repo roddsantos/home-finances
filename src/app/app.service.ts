@@ -11,6 +11,9 @@ import { CompanyState } from "./core/subjects/subjects.company";
 import { CreditCardService } from "./services/credit-card.service";
 import { CreditCardState } from "./core/subjects/subjects.credit-card";
 import { GeneralState } from "./core/subjects/subjects.general";
+import { ThemeState } from "./core/subjects/subjects.theme";
+import { ThemeService } from "./services/theme.service";
+import { ALL_ROOT_THEMES, DEFAULT_THEME } from "src/utils/constants/colors";
 
 @Injectable({
     providedIn: "root",
@@ -27,7 +30,9 @@ export class AppService {
         private companyState: CompanyState,
         private creditCardService: CreditCardService,
         private creditCardState: CreditCardState,
-        private generalState: GeneralState
+        private generalState: GeneralState,
+        private themeState: ThemeState,
+        private themeService: ThemeService
     ) {}
 
     handleError(object: any) {
@@ -68,6 +73,10 @@ export class AppService {
             if (user) this.userState.setUser(user);
             else return Promise.resolve();
 
+            const theme = this.localStorageService.getTheme();
+            if (!theme) this.themeService.setTheme(DEFAULT_THEME);
+            else this.themeService.setTheme(theme);
+
             return firstValueFrom(
                 forkJoin({
                     banks: this.bankService.getBanks().pipe(catchError(() => of(void 0))),
@@ -80,13 +89,24 @@ export class AppService {
                     creditCards: this.creditCardService
                         .getCreditCards()
                         .pipe(catchError(() => of(void 0))),
+                    themes: this.themeService.getThemes().pipe(
+                        catchError(() => {
+                            this.themeState.setThemeList([...ALL_ROOT_THEMES]);
+                            return of(void 0);
+                        })
+                    ),
                 }).pipe(
-                    tap(({ banks, categories, companies, creditCards }) => {
-                        this.handleError({ banks, categories, companies });
+                    tap(({ banks, categories, companies, creditCards, themes }) => {
+                        this.handleError({ banks, categories, companies, creditCards });
                         this.bankState.setBanks(banks || []);
                         this.categoryState.setCategories(categories || []);
                         this.companyState.setCompanies(companies || []);
                         this.creditCardState.setCreditCards(creditCards || []);
+                        this.themeState.setThemeList(
+                            themes
+                                ? [...themes, ...ALL_ROOT_THEMES]
+                                : [...ALL_ROOT_THEMES]
+                        );
                     }),
                     map(() => void 0),
                     catchError(() => of(void 0))

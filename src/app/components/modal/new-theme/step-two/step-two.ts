@@ -21,7 +21,7 @@ import { MatInputModule } from "@angular/material/input";
     selector: "step-two",
     standalone: true,
     templateUrl: "./step-two.html",
-    styleUrls: ["./step-two.css", "../new-theme-profile.modal.css"],
+    styleUrls: ["./step-two.css", "../new-theme.modal.css"],
     imports: [
         ToggleButtonComponent,
         CardComponent,

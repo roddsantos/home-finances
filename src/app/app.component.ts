@@ -9,7 +9,7 @@ import { UserService } from "./services/user.service";
 import { BINARY_THEME, DEFAULT_THEME, RED_AND_BLACK } from "src/utils/constants/colors";
 import { ThemeService } from "./services/theme.service";
 import { ThemeState } from "./core/subjects/subjects.theme";
-import { ProfileThemeType } from "./core/types/pages/theme";
+import { ThemeObjectType } from "./core/types/pages/theme";
 
 @Component({
     selector: "app-root",
@@ -30,39 +30,13 @@ export class AppComponent {
 
     title = "bills-app";
     theme = this.storage.getTheme();
-    public allThemes: ProfileThemeType[] = [];
+    public allThemes: ThemeObjectType[] = [];
 
     ngOnInit() {
-        // GET USER INFO
-        const user = this.storage.getUser();
-        if (user) this.userState.setUser(user);
-
         // GET FILTERS
         const filters = this.storage.getFilters();
         if (filters) this.filterState.setFilters(filters);
         else this.filterState.setFilters([]);
-
-        // GET THEME
-        const theme = this.storage.getTheme();
-        if (!theme) this.themeService.setTheme(DEFAULT_THEME);
-        else this.themeService.setTheme(theme);
-        this.themeService.getThemes().subscribe({
-            next: (themes) => {
-                this.themeState.setThemeList([
-                    ...themes,
-                    DEFAULT_THEME,
-                    RED_AND_BLACK,
-                    BINARY_THEME,
-                ]);
-            },
-            error: () => {
-                this.themeState.setThemeList([
-                    DEFAULT_THEME,
-                    RED_AND_BLACK,
-                    BINARY_THEME,
-                ]);
-            },
-        });
 
         // GET BILLS LAYOUT
         const billsView = this.storage.getBillsLayout();
@@ -70,11 +44,12 @@ export class AppComponent {
 
         // GET FILTER CONTAINER
         const filterContainer = this.storage.getFilterContainerStatus();
-        if (filterContainer === undefined || filterContainer === null)
+        if (filterContainer === undefined || filterContainer === null) {
             this.generalState.changeFilterContainer(true);
-        else
+        } else {
             this.generalState.changeFilterContainer(
                 filterContainer === "true" ? true : false
             );
+        }
     }
 }

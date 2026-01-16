@@ -1,4 +1,4 @@
-export type ProfileThemeType = {
+export type ThemeObjectType = {
     id: string;
     theme: ColorThemeType;
     title: string;
@@ -10,17 +10,42 @@ export type ProfileThemeType = {
     text2: string;
     borderRadius: number;
     borderWidth: GeneralMeasureType;
-    font1: FontProfileType;
-    font2: FontProfileType;
+    font1: FontThemeType;
+    font2: FontThemeType;
+    inputSize: GeneralMeasureType;
+    padding: GeneralMeasureType;
+    userId: string;
+    updatedAt: string;
+    createdAt: string;
+    deletedAt: string | null;
+};
+
+export type ThemeCreateType = {
+    theme: ColorThemeType;
+    title: string;
+    description: string;
+    primary: string;
+    secondary: string;
+    background: string;
+    text1: string;
+    text2: string;
+    borderRadius: number;
+    borderWidth: GeneralMeasureType;
+    font1: FontThemeType;
+    font2: FontThemeType;
     inputSize: GeneralMeasureType;
     padding: GeneralMeasureType;
 };
 
-export type ThemeBodyType = Omit<ProfileThemeType, "id">;
+export type ThemeUpdateType = Partial<
+    ThemeObjectType & {
+        id: string;
+    }
+>;
 
 export type ColorThemeType = "dark" | "default" | "light";
 
-export type FontProfileType = "Open-Sans" | "Commissioner" | "Roboto" | "GT-Eesti-Text";
+export type FontThemeType = "Open-Sans" | "Commissioner" | "Roboto" | "GT-Eesti-Text";
 
 export type UpdateProfileControlType<T> = {
     field: string;
@@ -36,5 +61,5 @@ export type GeneralMeasureType = "minimum" | "default" | "large";
 
 export type ModalDataProfileTheme = {
     selected: boolean;
-    theme: ProfileThemeType;
+    theme: ThemeObjectType;
 };
