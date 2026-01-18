@@ -26,6 +26,8 @@ import { CustomTabs } from "../../tabs/tabs.component";
 import { EDIT_BILLS_TABS } from "src/utils/constants/bills";
 import { CustomTabType } from "src/app/core/types/components/tabs";
 import { BillDataObjectType, PaymentTypes } from "src/app/core/types/data/bills.types";
+import { BankState } from "src/app/core/subjects/subjects.bank";
+import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 
 @Component({
     selector: "modal-new-bill",
@@ -51,6 +53,8 @@ import { BillDataObjectType, PaymentTypes } from "src/app/core/types/data/bills.
 export class ModalEditBill extends ModalComponent {
     public billState = inject(BillState);
     public billService = inject(BillService);
+    public bankState = inject(BankState);
+    public creditCardState = inject(CreditCardState);
     public categoryState = inject(CategoryState);
     public snack = inject(CustomSnackbarComponent);
 
@@ -85,40 +89,34 @@ export class ModalEditBill extends ModalComponent {
             {
                 nonNullable: true,
                 validators: [Validators.required, Validators.min(0.01)],
-            }
+            },
         ),
         settled: new FormControl<boolean>(
             { value: this.data.settled, disabled: this.data.settled },
-            { nonNullable: true }
+            { nonNullable: true },
         ),
         due: new FormControl<Date>(
             { value: new Date(this.data.due), disabled: false },
-            { nonNullable: true }
+            { nonNullable: true },
         ),
         paid: new FormControl<Date | null>(
             {
                 value: this.data.paid ? new Date(this.data.paid) : null,
                 disabled: false,
             },
-            { nonNullable: false }
+            { nonNullable: false },
         ),
         isPayment: new FormControl<boolean>(
             { value: this.data.isPayment, disabled: this.data.settled },
-            {
-                nonNullable: true,
-            }
+            { nonNullable: true },
         ),
         isRecurrent: new FormControl<boolean>(
             { value: this.data.isRecurrent, disabled: this.data.settled },
-            {
-                nonNullable: true,
-            }
+            { nonNullable: true },
         ),
         type: new FormControl<PaymentTypes>(
             { value: this.data.type, disabled: true },
-            {
-                nonNullable: true,
-            }
+            { nonNullable: true },
         ),
         categoryId: new FormControl<string>(this.data.categoryId, {
             nonNullable: true,
@@ -129,27 +127,27 @@ export class ModalEditBill extends ModalComponent {
         }),
         bank1Id: new FormControl<string | null>(
             { value: this.data.bank1Id, disabled: this.data.settled },
-            { nonNullable: false }
+            { nonNullable: false },
         ),
         bank2Id: new FormControl<string | null>(
             { value: this.data.bank2Id, disabled: this.data.settled },
-            { nonNullable: false }
+            { nonNullable: false },
         ),
         creditCardId: new FormControl<string | null>(
             { value: this.data.creditCardId, disabled: this.data.settled },
-            { nonNullable: false }
+            { nonNullable: false },
         ),
         parcels: new FormControl<number>(
             { value: this.data.parcels, disabled: true },
-            { nonNullable: true }
+            { nonNullable: true },
         ),
         delta: new FormControl<number>(
             { value: this.data.delta, disabled: this.data.settled },
-            { nonNullable: true }
+            { nonNullable: true },
         ),
         taxes: new FormControl<number>(
             { value: this.data.taxes, disabled: this.data.settled },
-            { nonNullable: true }
+            { nonNullable: true },
         ),
     });
 
@@ -166,9 +164,9 @@ export class ModalEditBill extends ModalComponent {
     }
 
     onSubmit() {
-        const billFormValue = this.billForm.getRawValue();
+        const dataToUpdate = this.getFormDirtyValues(this.billForm);
         const payload = {
-            ...billFormValue,
+            ...dataToUpdate,
             id: this.data.id,
         };
         let observer;
@@ -188,9 +186,13 @@ export class ModalEditBill extends ModalComponent {
         }
 
         observer?.subscribe({
-            next: () => {
+            next: ({ banks, creditCard }) => {
+                banks.forEach((bank) => this.bankState.updateBank(bank));
+                this.creditCardState.updateCreditCard(creditCard);
                 this.billService.getBills().subscribe({
-                    next: (bills) => this.billState.setBills(bills),
+                    next: (bills) => {
+                        this.billState.setBills(bills);
+                    },
                 });
                 this.generalService.successSnackbar("bill successfully updated");
                 this.onClose();

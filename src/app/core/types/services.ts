@@ -1,4 +1,3 @@
-import { PaymentTypes } from "./data/bills.types";
 import { CreditCardObjectType } from "./data/credit-card.types";
 
 export type UserObject = {
@@ -11,72 +10,6 @@ export type CompanyObject = {
     name: string;
     description: string;
     color: string;
-};
-
-export type BillObject = {
-    name: string;
-    description: string;
-    total: number;
-    settled: boolean;
-    type: PaymentTypes;
-    categoryId: string;
-    due: Date;
-    paid: Date;
-};
-
-export type BillObjectBank = {
-    bank1Id: string;
-    bank2Id?: string;
-    companyId?: string;
-    totalParcel?: number;
-    isPayment: boolean;
-};
-
-export type BillObjectCompany = {
-    companyId: string;
-    bank1Id?: string;
-    creditCardId?: string;
-    parcels: number;
-    taxes?: number;
-    delta?: number;
-};
-
-export type BillObjectCompanyUpdate = {
-    totalParcel: number | null;
-    id: string;
-};
-
-export type BillObjectCredtCard = {
-    creditCardId: string;
-    companyId?: string;
-    parcels: number;
-    taxes?: number;
-    delta?: number;
-    isRecurrent: boolean;
-};
-
-export type BillObjectCredtCardUpdate = {
-    totalParcel: number | null;
-    parcel: number;
-    groupId: string;
-    id: string;
-};
-
-export type GetCreditCard = {
-    month?: number;
-    year?: number;
-    isClosed?: boolean;
-};
-
-export type GetBillsFilter = {
-    page: number;
-    limit: number;
-    months?: number[];
-    min?: number;
-    max?: number;
-    year?: number;
-    data?: string;
-    status?: "all" | "pending" | "settled";
 };
 
 export type FetchPaginatedData<T = any> = {

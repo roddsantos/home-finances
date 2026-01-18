@@ -1,14 +1,6 @@
-import {
-    BillObjectBank,
-    BillObjectCompany,
-    BillObjectCompanyUpdate,
-    BillObjectCredtCard,
-    BillObjectCredtCardUpdate,
-} from "src/app/core/types/services";
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BILL } from "src/utils/constants/services";
-import { BillObject } from "src/app/core/types/services";
 import { UserState } from "src/app/core/subjects/subjects.user";
 import { mergeMap, zip } from "rxjs";
 import { CustomFilterState } from "../components/custom-filter/custom-filter.subjects.component";
@@ -16,8 +8,8 @@ import { BillState } from "src/app/core/subjects/subjects.bill";
 import { FilterDisplay } from "src/app/core/types/components";
 import {
     BillCreateType,
-    BillObjectType,
     BillsMetadataType,
+    BillUpdateResponse,
     BillUpdateType,
     PaymentTypes,
 } from "../core/types/data/bills.types";
@@ -43,47 +35,47 @@ export class BillService {
                         data: filtersArray
                             ? JSON.stringify(filtersArray)
                             : filters
-                            ? JSON.stringify(filters)
-                            : "",
+                              ? JSON.stringify(filters)
+                              : "",
                         page: page || pagination.page,
                         limit: limit || pagination.limit,
                         userId: user!.id,
                     },
-                })
-            )
+                }),
+            ),
         );
     }
 
     createBillBank(data: BillCreateType) {
         return this.user.user$.pipe(
             mergeMap((user) =>
-                this.http.post<BillObjectType>(BILL + "/transaction", {
+                this.http.post<BillUpdateResponse>(BILL + "/transaction", {
                     ...data,
                     userId: user!.id,
-                })
-            )
+                }),
+            ),
         );
     }
 
     createBillCreditCard(data: BillCreateType) {
         return this.user.user$.pipe(
             mergeMap((user) =>
-                this.http.post<BillObjectType>(BILL + "/cc", {
+                this.http.post<BillUpdateResponse>(BILL + "/cc", {
                     ...data,
                     userId: user!.id,
-                })
-            )
+                }),
+            ),
         );
     }
 
     createBillCompany(data: BillCreateType) {
         return this.user.user$.pipe(
             mergeMap((user) =>
-                this.http.post<BillObjectType>(BILL + "/company", {
+                this.http.post<BillUpdateResponse>(BILL + "/company", {
                     ...data,
                     userId: user!.id,
-                })
-            )
+                }),
+            ),
         );
     }
 
@@ -101,24 +93,33 @@ export class BillService {
     updateBillBank(data: BillUpdateType) {
         return this.user.user$.pipe(
             mergeMap((user) =>
-                this.http.patch(BILL + "/transaction", { ...data, userId: user!.id })
-            )
+                this.http.patch<BillUpdateResponse>(BILL + "/transaction", {
+                    ...data,
+                    userId: user!.id,
+                }),
+            ),
         );
     }
 
     updateBillCreditCard(data: BillUpdateType) {
         return this.user.user$.pipe(
             mergeMap((user) =>
-                this.http.patch(BILL + "/cc", { ...data, userId: user!.id })
-            )
+                this.http.patch<BillUpdateResponse>(BILL + "/cc", {
+                    ...data,
+                    userId: user!.id,
+                }),
+            ),
         );
     }
 
     updateBillCompany(data: BillUpdateType) {
         return this.user.user$.pipe(
             mergeMap((user) =>
-                this.http.patch(BILL + "/company", { ...data, userId: user!.id })
-            )
+                this.http.patch<BillUpdateResponse>(BILL + "/company", {
+                    ...data,
+                    userId: user!.id,
+                }),
+            ),
         );
     }
 

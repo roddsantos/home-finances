@@ -48,12 +48,12 @@ export class CreditCardState {
     addCreditCard(cCard: CreditCardObjectType) {
         let auxCCards = [...this._creditCards$.getValue()];
 
-        const companiesArray = [cCard, ...auxCCards].sort((cc1, cc2) => {
+        const creditCardArray = [cCard, ...auxCCards].sort((cc1, cc2) => {
             if (cc1.name > cc2.name) return -1;
             return 1;
         });
 
-        this._creditCards$.next(companiesArray);
+        this._creditCards$.next(creditCardArray);
     }
 
     setStatus(status: FeedbackInfo) {

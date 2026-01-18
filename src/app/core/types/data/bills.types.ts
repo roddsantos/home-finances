@@ -83,3 +83,9 @@ export type BillsIncomeMetadataType = {
 
 export type BillsMetadataType = FetchPaginatedData<BillDataObjectType> &
     BillsIncomeMetadataType;
+
+export type BillUpdateResponse = {
+    banks: BankObjectType[];
+    creditCard: CreditCardObjectType;
+    bill: BillObjectType;
+};

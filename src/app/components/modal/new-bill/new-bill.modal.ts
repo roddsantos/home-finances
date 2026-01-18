@@ -14,6 +14,8 @@ import { TypeTemplate } from "./templates/type/type.template.new-bill";
 import { InfoTemplate } from "./templates/info/info.template.new-bill";
 import { ConfigTemplate } from "./templates/config/config.template.new-bill";
 import { BillCreateType, PaymentTypes } from "src/app/core/types/data/bills.types";
+import { BankState } from "src/app/core/subjects/subjects.bank";
+import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 
 @Component({
     selector: "modal-new-bill",
@@ -39,6 +41,8 @@ export class ModalNewBill extends ModalComponent {
     }
     public billState = inject(BillState);
     public billService = inject(BillService);
+    public bankState = inject(BankState);
+    public creditCardState = inject(CreditCardState);
     public catState = inject(CategoryState);
 
     public step: number = 1;
@@ -123,14 +127,14 @@ export class ModalNewBill extends ModalComponent {
                     ? !Boolean(this.billForm.get("bank1Id")?.value) ||
                           this.billForm.value.bank1Id === this.billForm.value.bank2Id
                     : this.billForm.value.type === "companyCredit"
-                    ? !Boolean(this.billForm.get("companyId")?.value) ||
-                      Boolean(formErrors.parcels.errors) ||
-                      (Boolean(this.billForm.get("bank1Id")?.value) &&
-                          Boolean(this.billForm.get("creditCardId")?.value)) ||
-                      (!Boolean(this.billForm.get("bank1Id")?.value) &&
-                          !Boolean(this.billForm.get("creditCardId")?.value))
-                    : !Boolean(this.billForm.value.creditCardId) ||
-                      Boolean(formErrors.parcels.errors);
+                      ? !Boolean(this.billForm.get("companyId")?.value) ||
+                        Boolean(formErrors.parcels.errors) ||
+                        (Boolean(this.billForm.get("bank1Id")?.value) &&
+                            Boolean(this.billForm.get("creditCardId")?.value)) ||
+                        (!Boolean(this.billForm.get("bank1Id")?.value) &&
+                            !Boolean(this.billForm.get("creditCardId")?.value))
+                      : !Boolean(this.billForm.value.creditCardId) ||
+                        Boolean(formErrors.parcels.errors);
             case 4:
                 return (
                     Boolean(this.billForm.get("settled")?.value) &&
@@ -187,12 +191,14 @@ export class ModalNewBill extends ModalComponent {
                 break;
         }
         observer?.subscribe({
-            next: (bill) => {
+            next: ({ bill, banks, creditCard }) => {
+                banks.forEach((bank) => this.bankState.updateBank(bank));
+                this.creditCardState.updateCreditCard(creditCard);
                 this.billService.getBills().subscribe({
                     next: (bills) => this.billState.setBills(bills),
                 });
                 this.generalService.successSnackbar(
-                    `bill [${bill.name}] successfully created`
+                    `bill [${bill.name}] successfully created`,
                 );
                 this.handleClose();
             },

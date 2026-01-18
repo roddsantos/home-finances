@@ -35,14 +35,19 @@ export class BankState {
         this._banks$.next(banks);
     }
 
-    addBank(bank: BankObjectType) {
+    updateBank(bank: BankObjectType) {
         let auxBanks = [...this._banks$.getValue()];
         const indexBank = this._banks$.getValue().findIndex((b) => b.id === bank.id);
-
         if (indexBank >= 0) auxBanks[indexBank] = bank;
-        else auxBanks = [bank, ...auxBanks];
-
         this._banks$.next(auxBanks);
+    }
+
+    addBank(bank: BankObjectType) {
+        let auxBanks = [...this._banks$.getValue()];
+
+        const banksArray = [bank, ...auxBanks];
+
+        this._banks$.next(banksArray);
     }
 
     setStatus(status: FeedbackInfo) {
