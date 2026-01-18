@@ -1,32 +1,33 @@
 import { inject, Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
 import { USER } from "src/utils/constants/services";
-import { UserObject, UserUpdateType } from "src/app/core/types/services";
-import { User } from "src/app/core/types/objects";
-import { UserState } from "../core/subjects/subjects.user";
 import { LocalStorageService } from "./local-storage.service";
+import { GeneralService } from "./general.service";
+import {
+    UserCreateType,
+    UserObjectType,
+    UserUpdateType,
+} from "../core/types/data/user.types";
 
 @Injectable({
     providedIn: "root",
 })
-export class UserService {
-    private storage = inject(LocalStorageService);
-    private http = inject(HttpClient);
+export class UserService extends GeneralService {
+    private localStorageService = inject(LocalStorageService);
 
     getUser(username: string) {
-        return this.http.get<User>(USER + `/${username}`);
+        return this.http.get<UserObjectType>(USER + `/${username}`);
     }
 
-    createUser(data: UserObject) {
-        return this.http.post(USER, data);
+    createUser(data: UserCreateType) {
+        return this.http.post<UserCreateType>(USER, data);
     }
 
     deleteUser(id: string) {
-        return this.http.delete(USER + `/${id}`);
+        return this.http.delete<string>(USER + `/${id}`);
     }
 
-    updateUser(data: UserObject) {
-        const user = this.storage.getUser();
-        return this.http.patch<UserUpdateType>(USER, { ...data, id: user?.id });
+    updateUser(data: UserUpdateType) {
+        const user = this.localStorageService.getUser();
+        return this.http.patch<UserObjectType>(USER, { ...data, id: user?.id });
     }
 }

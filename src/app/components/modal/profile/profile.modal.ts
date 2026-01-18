@@ -12,7 +12,6 @@ import { ModalComponent } from "../modal.component";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { FormsModule } from "@angular/forms";
-import { User } from "src/app/core/types/objects";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 import { UserService } from "src/app/services/user.service";
 import { ModalState } from "src/app/core/subjects/subjects.modal";
@@ -44,7 +43,7 @@ export class ModalProfile extends ModalComponent {
             next: (user) =>
                 this.modalState.changeSubmitFooter(
                     user ? "OK" : "login",
-                    user ? "logout" : "cancel"
+                    user ? "logout" : "cancel",
                 ),
         });
     }
@@ -69,7 +68,7 @@ export class ModalProfile extends ModalComponent {
     onProfileSubmit() {
         this.userService.getUser(this.username).subscribe({
             next: (user) => {
-                this.userState.setUser(user as User);
+                this.userState.setUser(user);
                 this.storage.setUser(user);
                 this.generalService.successSnackbar("login successful");
                 this.modalState.changeSubmitFooter("OK", "logout");

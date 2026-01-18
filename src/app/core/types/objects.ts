@@ -1,13 +1,3 @@
-export type User = {
-    id: string;
-    name: string;
-    surname: string;
-    username: string;
-    updatedAt: string;
-    createdAt: string;
-    deletedAt: string | null;
-};
-
 export type MonthlySavingsTypes = "start";
 
 export type SavingsType = {

@@ -28,7 +28,7 @@ export class ThemeService extends GeneralService {
     getThemes() {
         return this.user.user$.pipe(
             take(1),
-            switchMap((user) => this.http.get<ThemeObjectType[]>(THEME + `/${user?.id}`))
+            switchMap((user) => this.http.get<ThemeObjectType[]>(THEME + `/${user?.id}`)),
         );
     }
 
@@ -38,8 +38,8 @@ export class ThemeService extends GeneralService {
                 this.http.post<ThemeObjectType>(THEME, {
                     ...data,
                     userId: user?.id,
-                })
-            )
+                }),
+            ),
         );
     }
 
@@ -49,8 +49,8 @@ export class ThemeService extends GeneralService {
                 this.http.patch<ThemeObjectType>(THEME, {
                     ...data,
                     userId: user?.id,
-                })
-            )
+                }),
+            ),
         );
     }
 
@@ -73,7 +73,7 @@ export class ThemeService extends GeneralService {
             case "default":
                 return "2px";
             case "large":
-                return "3px";
+                return "5px";
             case "minimum":
                 return "1px";
         }
@@ -164,7 +164,7 @@ export class ThemeService extends GeneralService {
 
     setSectorsColors(theme: ColorThemeType) {
         const sectorsArray = Object.keys(SECTORS).map(
-            (key) => SECTORS[key as keyof typeof SECTORS]
+            (key) => SECTORS[key as keyof typeof SECTORS],
         );
 
         Object.keys(COLOR_STATUS[theme]).forEach((key, index) => {
@@ -180,7 +180,7 @@ export class ThemeService extends GeneralService {
             document.documentElement.style.setProperty(
                 property,
                 // @ts-ignore
-                profileTheme[field]
+                profileTheme[field],
             );
         });
     }
@@ -203,7 +203,7 @@ export class ThemeService extends GeneralService {
         document.documentElement.style.setProperty("--border-width", width);
         document.documentElement.style.setProperty(
             "--border-radius",
-            `${borderRadius}px`
+            `${borderRadius}px`,
         );
     }
 
@@ -214,11 +214,11 @@ export class ThemeService extends GeneralService {
             "--bh",
             id === "binary"
                 ? "var(--background)"
-                : "rgb(from var(--background) calc(r - 10) calc(g - 10) calc(b - 10))"
+                : "rgb(from var(--background) calc(r - 10) calc(g - 10) calc(b - 10))",
         );
         document.documentElement.style.setProperty(
             "--border-color",
-            id === "binary" ? "var(--text-1)" : "var(--primary)"
+            id === "binary" ? "var(--text-1)" : "var(--primary)",
         );
     }
 

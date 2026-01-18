@@ -17,11 +17,12 @@ import { LocalStorageService } from "src/app/services/local-storage.service";
 import { UserService } from "src/app/services/user.service";
 import { UserState } from "src/app/core/subjects/subjects.user";
 import { UserPipe } from "src/utils/pipes/user";
-import { UserObject } from "src/app/core/types/services";
-import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
-import { Router } from "@angular/router";
-import { GeneralService } from "src/app/services/general.service";
 import { CustonButton } from "src/app/components/button/custom-button.component";
+import { UserObjectType } from "src/app/core/types/data/user.types";
+import { GeneralComponent } from "src/app/core/general/general.component";
+import { USER_FORMS } from "src/utils/constants/forms";
+import { DEFAULT_THEME } from "src/utils/constants/colors";
+import { ThemeService } from "src/app/services/theme.service";
 
 @Component({
     selector: "profile-settings",
@@ -41,16 +42,14 @@ import { CustonButton } from "src/app/components/button/custom-button.component"
         CustonButton,
     ],
 })
-export class ProfileSettingsComponent {
+export class ProfileSettingsComponent extends GeneralComponent {
     public userState = inject(UserState);
-    public generalService = inject(GeneralService);
-    public changed: boolean = false;
-    public storage = inject(LocalStorageService);
     public userService = inject(UserService);
-    public snackBar = inject(CustomSnackbarComponent);
-    public router = inject(Router);
-    private style = getComputedStyle(document.body);
-    public errorColor = this.style.getPropertyValue("--error");
+    public localStorageService = inject(LocalStorageService);
+    public themeService = inject(ThemeService);
+
+    public storedUser: UserObjectType | null;
+    public errorMessage = USER_FORMS;
 
     public profileForm = new FormGroup({
         name: new FormControl<string>("", {
@@ -65,17 +64,15 @@ export class ProfileSettingsComponent {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
         }),
+        password: new FormControl<string>("", {
+            validators: [Validators.required, Validators.maxLength(100)],
+            nonNullable: true,
+        }),
     });
 
-    errorMessage = {
-        name: "your name can't be empty",
-        surname: "your surname can't be empty",
-        username: "your surname can't be empty",
-        usernameExists: "this username already exists",
-    };
-
     constructor() {
-        const userStored = this.storage.getUser();
+        super();
+        const userStored = this.localStorageService.getUser();
         this.profileForm.valueChanges
             .pipe(debounceTime(350), distinctUntilChanged())
             .subscribe((data) => {
@@ -93,33 +90,38 @@ export class ProfileSettingsComponent {
     }
 
     ngOnInit() {
-        const user = this.storage.getUser();
+        this.storedUser = this.localStorageService.getUser();
 
         this.profileForm.patchValue({
-            username: user?.username || "",
-            surname: user?.surname || "",
-            name: user?.name || "",
+            username: this.storedUser?.username || "",
+            surname: this.storedUser?.surname || "",
+            name: this.storedUser?.name || "",
         });
     }
 
     onLogout() {
         this.userState.removeUser();
         this.generalService.navigateTo("/login");
+        this.themeService.setTheme(DEFAULT_THEME);
     }
 
     onUpdate() {
-        const user = this.storage.getUser();
-        this.userService.updateUser(this.profileForm.value as UserObject).subscribe({
-            next: (res) => {
-                if (user) this.userState.setUser({ ...user, ...res.user });
-                this.snackBar.openSnackBar("user successfully updated", "success");
-                this.profileForm.reset({
-                    name: res.user.name,
-                    username: res.user.username,
-                    surname: res.user.surname,
-                });
-            },
-            error: () => this.snackBar.openSnackBar("error updating user", "error"),
-        });
+        this.userService
+            .updateUser({
+                ...this.profileForm.getRawValue(),
+                id: this.storedUser?.id || "",
+            })
+            .subscribe({
+                next: (user) => {
+                    this.userState.setUser(user);
+                    this.generalService.successSnackbar("user successfully updated");
+                    this.profileForm.reset({
+                        name: user.name,
+                        username: user.username,
+                        surname: user.surname,
+                    });
+                },
+                error: () => this.generalService.errorSnackbar("error updating user"),
+            });
     }
 }

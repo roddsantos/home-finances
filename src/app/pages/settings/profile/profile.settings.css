@@ -28,6 +28,7 @@
 
     & .profile-name-description {
         grid-area: profile-name-description;
+        margin-top: 0.5rem;
     }
 
     & .profile-name-input {
@@ -46,6 +47,7 @@
 
     & .profile-surname-description {
         grid-area: profile-surname-description;
+        margin-top: 0.5rem;
     }
 
     & .profile-surname-input {
@@ -64,6 +66,7 @@
 
     & .profile-username-description {
         grid-area: profile-username-description;
+        margin-top: 0.5rem;
     }
 
     & .profile-username-input {

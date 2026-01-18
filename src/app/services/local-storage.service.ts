@@ -1,20 +1,20 @@
 import { Injectable } from "@angular/core";
-import { User } from "src/app/core/types/objects";
 import { BillsLayoutType } from "../core/types/subjects";
 import { ThemeObjectType } from "../core/types/pages/theme";
+import { UserObjectType } from "../core/types/data/user.types";
 
 @Injectable({
     providedIn: "root",
 })
 export class LocalStorageService {
-    setUser(user: User) {
+    setUser(user: UserObjectType) {
         let str = JSON.stringify(user);
         localStorage.setItem("user", str);
     }
 
     getUser() {
         let user = localStorage.getItem("user");
-        return user ? (JSON.parse(user) as User) : null;
+        return user ? (JSON.parse(user) as UserObjectType) : null;
     }
 
     removeUser() {
