@@ -1,15 +1,15 @@
 import { DASHBOARD_SAVINGS_INITIALIZER } from "src/utils/constants/mocks";
-import { BillData, CreditCard } from "src/app/core/types/objects";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { Bill } from "src/app/core/types/objects";
 import { CreditCardDashboardType } from "src/app/core/types/services";
 import { CategoriesSummaryType } from "src/app/core/types/services/dashboard.services.types";
 import {
     DashboardBillsPerMonthType,
     DashboardSavingsType,
     MonthBillsType,
-} from "src/app/core/types/subjects/dashboard.subjects";
+} from "src/app/core/types/data/dashboard.types";
+import { BillDataObjectType } from "../types/data/bills.types";
+import { CreditCardObjectType } from "../types/data/credit-card.types";
 
 @Injectable({
     providedIn: "root",
@@ -18,12 +18,12 @@ export class DashboardState {
     private _month$ = new BehaviorSubject<number>(new Date().getMonth());
     private _monthSpan$ = new BehaviorSubject<number>(5);
     private _billsProgression$ = new BehaviorSubject<DashboardBillsPerMonthType[]>([]);
-    private _billsGroups$ = new BehaviorSubject<Array<Bill & BillData>[]>([]);
+    private _billsGroups$ = new BehaviorSubject<Array<BillDataObjectType>[]>([]);
     private _monthBills$ = new BehaviorSubject<MonthBillsType[]>([]);
     private _savings$ = new BehaviorSubject<DashboardSavingsType>({
         ...DASHBOARD_SAVINGS_INITIALIZER,
     });
-    private _creditCards$ = new BehaviorSubject<CreditCard[]>([]);
+    private _creditCards$ = new BehaviorSubject<CreditCardObjectType[]>([]);
     private _creditCardsSpan$ = new BehaviorSubject<CreditCardDashboardType>({});
     private _categoriesSummary$ = new BehaviorSubject<CategoriesSummaryType>({
         topCategories: [],
@@ -52,7 +52,7 @@ export class DashboardState {
         this._billsProgression$.next(billsProgression);
     }
 
-    public updateBillsGroups(billsGroups: Array<Bill & BillData>[]) {
+    public updateBillsGroups(billsGroups: Array<BillDataObjectType>[]) {
         this._billsGroups$.next(billsGroups);
     }
 
@@ -64,7 +64,7 @@ export class DashboardState {
         this._savings$.next(savings);
     }
 
-    public updateCreditCards(creditCards: CreditCard[]) {
+    public updateCreditCards(creditCards: CreditCardObjectType[]) {
         this._creditCards$.next(creditCards);
     }
 

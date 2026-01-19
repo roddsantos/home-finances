@@ -1,11 +1,11 @@
-<mat-drawer-container [hasBackdrop]="innerWidth < 900" class="drawer-main">
+<mat-drawer-container class="drawer-main">
     <mat-drawer
         [ngClass]="{
             'drawer-container': true,
             binary: (generalState.theme$ | async) === 'binary'
         }"
         #drawer
-        [mode]="innerWidth >= 900 ? 'side' : 'side'"
+        mode="side"
         [opened]="true"
     >
         <div

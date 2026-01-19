@@ -1,7 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MonthType } from "src/app/core/types/general";
-import { Bank } from "src/app/core/types/objects";
 import { BANK_FORM, BOOLEAN_FORM, GENERAL_FORM } from "src/utils/constants/forms";
 import { MONTHS } from "src/utils/constants/general";
 import { ModalComponent } from "../modal.component";
@@ -14,6 +13,7 @@ import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { ServiceSaving } from "src/app/services/saving.service";
 import { ToggleButtonComponent } from "../../toggle-buttons/toggle-buttons.component";
 import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
+import { BankObjectType } from "src/app/core/types/data/bank.types";
 
 @Component({
     selector: "app-new-saving",
@@ -54,7 +54,7 @@ export class ModalNewSaving extends ModalComponent {
             nonNullable: true,
             validators: [Validators.required],
         }),
-        bank: new FormControl<Bank | null>(null, {
+        bank: new FormControl<BankObjectType | null>(null, {
             nonNullable: true,
             validators: [Validators.required],
         }),
@@ -105,7 +105,7 @@ export class ModalNewSaving extends ModalComponent {
             });
     }
 
-    enableTotal(bank: Bank) {
+    enableTotal(bank: BankObjectType) {
         this.savingsForm.get("total")?.enable();
         this.savingsForm.get("bankValue")?.enable();
         this.savingsForm.get("total")?.patchValue(bank.savings);

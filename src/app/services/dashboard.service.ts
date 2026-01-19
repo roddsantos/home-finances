@@ -1,22 +1,21 @@
 import { inject, Injectable } from "@angular/core";
-import { concatMap, map, Subscription } from "rxjs";
-import { Bill, BillData, CreditCard } from "../core/types/objects";
+import { concatMap, map, mergeMap, Subscription } from "rxjs";
 import { DASHBOARD } from "src/utils/constants/services";
 import { DashboardState } from "../core/subjects/subjects.dashboard";
 import { CreditCardDashboardType } from "../core/types/services";
-import { Service } from "./service";
 import { CategoriesSummaryType } from "../core/types/services/dashboard.services.types";
 import {
     DashboardBillsPerMonthType,
     DashboardSavingsType,
     MonthBillsType,
-} from "../core/types/subjects/dashboard.subjects";
+} from "../core/types/data/dashboard.types";
+import { CreditCardObjectType } from "../core/types/data/credit-card.types";
+import { GeneralService } from "./general.service";
 
 @Injectable({
     providedIn: "root",
 })
-export class DashboardService extends Service {
-    private user = this.getUser();
+export class DashboardService extends GeneralService {
     private dashboardState = inject(DashboardState);
     private monthSpan: number = 4;
 
@@ -27,41 +26,57 @@ export class DashboardService extends Service {
     });
 
     getBillsProgression() {
-        return this.httpClient.get<DashboardBillsPerMonthType[]>(DASHBOARD + "/months", {
-            params: { span: this.monthSpan, userId: this.user?.id || "" },
-        });
+        return this.user.user$.pipe(
+            mergeMap((user) =>
+                this.http.get<DashboardBillsPerMonthType[]>(DASHBOARD + "/months", {
+                    params: { span: this.monthSpan, userId: user?.id || "" },
+                }),
+            ),
+        );
     }
 
     getMonthBills() {
-        return this.httpClient.get<MonthBillsType[]>(DASHBOARD + "/bills", {
-            params: { userId: this.user?.id || "" },
-        });
+        return this.user.user$.pipe(
+            mergeMap((user) =>
+                this.http.get<MonthBillsType[]>(DASHBOARD + "/bills", {
+                    params: { userId: user?.id || "" },
+                }),
+            ),
+        );
     }
 
     getSavingsInfo() {
-        return this.httpClient.get<DashboardSavingsType>(DASHBOARD + "/savings", {
-            params: { userId: this.user?.id || "" },
-        });
+        return this.user.user$.pipe(
+            mergeMap((user) =>
+                this.http.get<DashboardSavingsType>(DASHBOARD + "/savings", {
+                    params: { userId: user?.id || "" },
+                }),
+            ),
+        );
     }
 
     getTopCategories() {
-        return this.httpClient.get<CategoriesSummaryType>(DASHBOARD + "/categories", {
-            params: { userId: this.user?.id || "", categories: 5 },
-        });
+        return this.user.user$.pipe(
+            mergeMap((user) =>
+                this.http.get<CategoriesSummaryType>(DASHBOARD + "/categories", {
+                    params: { userId: user?.id || "", categories: 5 },
+                }),
+            ),
+        );
     }
 
     getCreditCards() {
-        return this.userState.user$.pipe(
+        return this.user.user$.pipe(
             concatMap((user) =>
-                this.httpClient.get<Array<CreditCard>>(DASHBOARD + "/credit-cards", {
+                this.http.get<Array<CreditCardObjectType>>(DASHBOARD + "/credit-cards", {
                     params: { userId: user!.id },
-                })
+                }),
             ),
             map((creditCards) => {
                 let creditCardSets: CreditCardDashboardType = {};
                 creditCards.forEach((creditCard) => {
                     let creditCardSet: {
-                        [month: number]: CreditCard;
+                        [month: number]: CreditCardObjectType;
                     } = {};
                     creditCardSet[creditCard.month] = creditCard;
                     creditCardSets[creditCard.name] = {
@@ -71,11 +86,10 @@ export class DashboardService extends Service {
                 });
                 this.dashboardState.updateCreditCardsSpan(creditCardSets);
                 return creditCardSets;
-            })
+            }),
         );
     }
-    override ngOnDestroy(): void {
-        this.user$.unsubscribe();
+    ngOnDestroy(): void {
         this.monthSpan$.unsubscribe();
     }
 }

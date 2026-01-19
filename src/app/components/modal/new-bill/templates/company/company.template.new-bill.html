@@ -1,71 +1,89 @@
 <div class="modal-content">
     <h3 class="step-title">company info</h3>
     <p class="step-desc">company selection and bill values</p>
-    <form [formGroup]="compForm" class="form-container">
-        <mat-form-field class="new-bill-field" appearance="outline">
-            <mat-label>company</mat-label>
-            <mat-select formControlName="company">
-                @for (c of (companies.company$ | async); track c) {
-                <mat-option [value]="c">{{ c.name }}</mat-option>
-                }
-            </mat-select>
-            @if (compForm.controls.company.invalid) {
-            <mat-error>{{errorMessage.company}}</mat-error>
+    <mat-form-field class="new-bill-field" appearance="outline">
+        <mat-label>company</mat-label>
+        <mat-select [formControl]="companyControl" ngDefaultControl>
+            @for (c of (companies.company$ | async); track c) {
+            <mat-option [value]="c.id">{{ c.name }}</mat-option>
+            }
+        </mat-select>
+        @if (companyControl.invalid) {
+        <mat-error>{{errorMessage.company}}</mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field class="new-bill-field" appearance="outline">
+        <mat-label>bank</mat-label>
+        <mat-select
+            (selectionChange)="toggleError('bank')"
+            [formControl]="bank1Control"
+            ngDefaultControl
+        >
+            <mat-option [value]="null">none</mat-option>
+            @for (b of (banks.banks$ | async); track b) {
+            <mat-option [value]="b.id">{{ b.name }}</mat-option>
+            }
+        </mat-select>
+        @if (bank1Control.getError("noBank")) {
+        <mat-error>{{errorMessage.noBank}}</mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field class="new-bill-field" appearance="outline">
+        <mat-label>credit card</mat-label>
+        <mat-select
+            (selectionChange)="toggleError('cc')"
+            [formControl]="creditcardControl"
+            ngDefaultControl
+        >
+            <mat-option [value]="null">none</mat-option>
+            @for (cc of (ccs.creditCards$ | async); track cc) {
+            <mat-option [value]="cc.id">{{ cc.name }}</mat-option>
+            }
+        </mat-select>
+        @if (creditcardControl.getError('noCC')) {
+        <mat-error>{{errorMessage.noCC}}</mat-error>
+        }
+    </mat-form-field>
+    <div class="new-bill-field">
+        <mat-form-field
+            [formControl]="parcelsControl"
+            ngDefaultControl
+            class="number-input third"
+            appearance="outline"
+        >
+            <mat-label>number parcels</mat-label>
+            <input [value]="parcelsControl.value" matInput type="number" />
+            @if (parcelsControl.invalid) {
+            <mat-error>{{errorMessage.parcels}}</mat-error>
             }
         </mat-form-field>
-        <mat-form-field class="new-bill-field" appearance="outline">
-            <mat-label>bank</mat-label>
-            <mat-select (selectionChange)="toggleError('bank')" formControlName="bank1">
-                <mat-option [value]="null">none</mat-option>
-                @for (b of (banks.banks$ | async); track b) {
-                <mat-option [value]="b">{{ b.name }}</mat-option>
-                }
-            </mat-select>
-            @if (compForm.controls.bank1.getError("noBank")) {
-            <mat-error>{{errorMessage.noBank}}</mat-error>
+        <mat-form-field
+            [formControl]="totalParcelControl"
+            ngDefaultControl
+            class="number-input third"
+            appearance="outline"
+        >
+            <mat-icon
+                class="material-symbols-outlined"
+                matPrefix
+                aria-hidden="false"
+                aria-label="title icon"
+                fontIcon="attach_money"
+            ></mat-icon>
+            <mat-label>parcel value</mat-label>
+            <input [value]="totalParcelControl.value" matInput type="number" />
+            @if (totalParcelControl.invalid !== null) {
+            <mat-error>{{errorMessage.total}}</mat-error>
             }
         </mat-form-field>
-        <mat-form-field class="new-bill-field" appearance="outline">
-            <mat-label>credit card</mat-label>
-            <mat-select
-                (selectionChange)="toggleError('cc')"
-                formControlName="creditcard"
-            >
-                <mat-option [value]="null">none</mat-option>
-                @for (cc of (ccs.creditCards$ | async); track cc) {
-                <mat-option [value]="cc">{{ cc.name }}</mat-option>
-                }
-            </mat-select>
-            @if (compForm.controls.creditcard.getError('noCC')) {
-            <mat-error>{{errorMessage.noCC}}</mat-error>
-            }
+        <mat-form-field
+            [formControl]="deltaControl"
+            ngDefaultControl
+            class="number-input"
+            appearance="outline"
+        >
+            <mat-label>last parcel diff</mat-label>
+            <input [value]="deltaControl.value" matInput type="number" />
         </mat-form-field>
-        <div class="new-bill-field">
-            <mat-form-field class="number-input third" appearance="outline">
-                <mat-label>number parcels</mat-label>
-                <input matInput type="number" formControlName="parcels" />
-                @if (compForm.controls.parcels.invalid) {
-                <mat-error>{{errorMessage.parcels}}</mat-error>
-                }
-            </mat-form-field>
-            <mat-form-field class="number-input third" appearance="outline">
-                <mat-icon
-                    class="material-symbols-outlined"
-                    matPrefix
-                    aria-hidden="false"
-                    aria-label="title icon"
-                    fontIcon="attach_money"
-                ></mat-icon>
-                <mat-label>parcel value</mat-label>
-                <input formControlName="totalParcel" matInput type="number" />
-                @if (compForm.controls.totalParcel.invalid !== null) {
-                <mat-error>{{errorMessage.total}}</mat-error>
-                }
-            </mat-form-field>
-            <mat-form-field class="number-input" appearance="outline">
-                <mat-label>last parcel diff</mat-label>
-                <input matInput type="number" formControlName="delta" />
-            </mat-form-field>
-        </div>
-    </form>
+    </div>
 </div>

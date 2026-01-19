@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { Category } from "src/app/core/types/objects";
 import { FeedbackInfo, FeedbackVariant } from "src/app/core/types/components";
+import { CategoryObjectType } from "../types/data/category.types";
 
 @Injectable({
     providedIn: "root",
 })
 export class CategoryState {
-    private _categories$ = new BehaviorSubject<Category[]>([]);
+    private _categories$ = new BehaviorSubject<CategoryObjectType[]>([]);
     private _status$ = new BehaviorSubject<FeedbackInfo>({
         title: "loading",
         description: "",
@@ -28,22 +28,32 @@ export class CategoryState {
         this._status$.next({ ...this._status$.getValue(), variant });
     }
 
-    setCategory(tb: Category[]) {
-        if (tb.length === 0) this.changeStatus("empty", "no categories");
+    setCategories(categories: CategoryObjectType[]) {
+        if (categories.length === 0) this.changeStatus("empty", "no categories");
         else this.changeVariant("none");
 
-        this._categories$.next(tb);
+        this._categories$.next(categories);
     }
 
-    addCategory(category: Category, index?: number) {
+    updateCategory(category: CategoryObjectType) {
         let auxCategories = [...this._categories$.getValue()];
-        const existingCompany = this._categories$
+        const indexCategory = this._categories$
             .getValue()
-            .find((c) => c.id === category.id);
-        if (existingCompany && index !== undefined) auxCategories[index] = category;
-        else auxCategories = [category, ...auxCategories];
+            .findIndex((c) => c.id === category.id);
 
+        if (indexCategory >= 0) auxCategories[indexCategory] = category;
         this._categories$.next(auxCategories);
+    }
+
+    addCategory(category: CategoryObjectType) {
+        let auxCategories = [...this._categories$.getValue()];
+
+        const categoriesArray = [category, ...auxCategories].sort((cat1, cat2) => {
+            if (cat1.name > cat2.name) return -1;
+            return 1;
+        });
+
+        this._categories$.next(categoriesArray);
     }
 
     setStatus(status: FeedbackInfo) {
@@ -52,5 +62,12 @@ export class CategoryState {
 
     setAction(action: () => void) {
         this._status$.next({ ...this._status$.getValue(), action });
+    }
+
+    getCategory(id: string) {
+        let auxCategories = [...this._categories$.getValue()];
+        const category = auxCategories.find((category) => category.id === id);
+
+        return category;
     }
 }

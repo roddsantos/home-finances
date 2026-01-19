@@ -3,9 +3,10 @@ import { GeneralService } from "./general.service";
 import {
     ColorThemeType,
     GeneralMeasureType,
-    ProfileThemeType,
-    ThemeBodyType,
-} from "../core/types/pages/profiles";
+    ThemeObjectType,
+    ThemeCreateType,
+    ThemeUpdateType,
+} from "../core/types/pages/theme";
 import { LocalStorageService } from "./local-storage.service";
 import {
     COLOR_STATUS,
@@ -15,7 +16,7 @@ import {
     FIELD_TO_PROPERTY,
 } from "src/utils/constants/colors";
 import { SECTORS } from "src/utils/constants/general";
-import { mergeMap } from "rxjs";
+import { mergeMap, switchMap, take } from "rxjs";
 import { THEME } from "src/utils/constants/services";
 
 @Injectable({
@@ -26,29 +27,30 @@ export class ThemeService extends GeneralService {
 
     getThemes() {
         return this.user.user$.pipe(
-            mergeMap((user) => this.http.get<ProfileThemeType[]>(THEME + `/${user?.id}`))
+            take(1),
+            switchMap((user) => this.http.get<ThemeObjectType[]>(THEME + `/${user?.id}`)),
         );
     }
 
-    createTheme(data: ThemeBodyType) {
+    createTheme(data: ThemeCreateType) {
         return this.user.user$.pipe(
             mergeMap((user) =>
-                this.http.post<ProfileThemeType>(THEME, {
+                this.http.post<ThemeObjectType>(THEME, {
                     ...data,
                     userId: user?.id,
-                })
-            )
+                }),
+            ),
         );
     }
 
-    updateTheme(data: ProfileThemeType) {
+    updateTheme(data: ThemeUpdateType) {
         return this.user.user$.pipe(
             mergeMap((user) =>
-                this.http.patch<ProfileThemeType>(THEME, {
+                this.http.patch<ThemeObjectType>(THEME, {
                     ...data,
                     userId: user?.id,
-                })
-            )
+                }),
+            ),
         );
     }
 
@@ -56,7 +58,7 @@ export class ThemeService extends GeneralService {
         return this.http.delete<string>(THEME + `/${id}`);
     }
 
-    setTheme(theme: ProfileThemeType) {
+    setTheme(theme: ThemeObjectType) {
         const { id } = theme;
         this.setupTheme(theme);
         document.body.className = "";
@@ -71,7 +73,7 @@ export class ThemeService extends GeneralService {
             case "default":
                 return "2px";
             case "large":
-                return "3px";
+                return "5px";
             case "minimum":
                 return "1px";
         }
@@ -162,7 +164,7 @@ export class ThemeService extends GeneralService {
 
     setSectorsColors(theme: ColorThemeType) {
         const sectorsArray = Object.keys(SECTORS).map(
-            (key) => SECTORS[key as keyof typeof SECTORS]
+            (key) => SECTORS[key as keyof typeof SECTORS],
         );
 
         Object.keys(COLOR_STATUS[theme]).forEach((key, index) => {
@@ -172,13 +174,13 @@ export class ThemeService extends GeneralService {
         });
     }
 
-    setProperties(profileTheme: ProfileThemeType) {
+    setProperties(profileTheme: ThemeObjectType) {
         Object.keys(FIELD_TO_PROPERTY).map((field) => {
             const property = FIELD_TO_PROPERTY[field as keyof typeof FIELD_TO_PROPERTY];
             document.documentElement.style.setProperty(
                 property,
                 // @ts-ignore
-                profileTheme[field]
+                profileTheme[field],
             );
         });
     }
@@ -201,26 +203,26 @@ export class ThemeService extends GeneralService {
         document.documentElement.style.setProperty("--border-width", width);
         document.documentElement.style.setProperty(
             "--border-radius",
-            `${borderRadius}px`
+            `${borderRadius}px`,
         );
     }
 
-    setOtherVars(profileTheme: ProfileThemeType) {
+    setOtherVars(profileTheme: ThemeObjectType) {
         const { id } = profileTheme;
 
         document.documentElement.style.setProperty(
             "--bh",
             id === "binary"
                 ? "var(--background)"
-                : "rgb(from var(--background) calc(r - 10) calc(g - 10) calc(b - 10))"
+                : "rgb(from var(--background) calc(r - 10) calc(g - 10) calc(b - 10))",
         );
         document.documentElement.style.setProperty(
             "--border-color",
-            id === "binary" ? "var(--text-1)" : "var(--primary)"
+            id === "binary" ? "var(--text-1)" : "var(--primary)",
         );
     }
 
-    setupTheme(profileTheme: ProfileThemeType) {
+    setupTheme(profileTheme: ThemeObjectType) {
         const {
             theme,
             inputSize,

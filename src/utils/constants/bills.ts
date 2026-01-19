@@ -4,6 +4,7 @@ import {
     ToggleButtonItemsType,
 } from "src/app/core/types/components/toggle-buttons";
 import { getMonthAndYearIntegers } from "../date";
+import { BillsMetadataType } from "src/app/core/types/data/bills.types";
 
 export const TYPE_ITEMS: ToggleButtonItemsType<string>[] = [
     { label: "all", value: "all" },
@@ -65,4 +66,14 @@ export const FILTER_TO_ICON = {
     max: "receipt",
     date1: "date_range",
     date2: "date_range",
+};
+
+export const DEFAULT_BILLS_RESPONSE: BillsMetadataType = {
+    data: [],
+    count: 0,
+    total: 0,
+    income: {
+        count: 0,
+        total: 0,
+    },
 };

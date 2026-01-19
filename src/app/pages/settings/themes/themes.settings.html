@@ -13,7 +13,7 @@
                 (click)="clickedTheme(th, $event)"
                 [ngClass]="{
                   'theme-container': true,
-                  selected: selectedTheme === th.id
+                  selected: (generalState.theme$ | async) === th.id
                 }"
             >
                 <h4>{{th.title}}</h4>

@@ -1,6 +1,6 @@
 <modal-component
     [header]="data ? 'edit bank' : 'new bank'"
-    [disabled]="bankForm.invalid"
+    [disabled]="bankForm.invalid || !bankForm.dirty"
     (actionPrimary)="onSubmit()"
     (actionSecondary)="handleClose()"
     [bodyTemplate]="newBank"
@@ -39,6 +39,13 @@
                     <mat-error>{{errorMessage.savings}}</mat-error>
                     }
                 </mat-form-field>
+            </div>
+            <div>
+                <toggle-button
+                    label="is a piggy bank?"
+                    [items]="booleanForm"
+                    [formController]="bankForm.controls['isPiggyBank']"
+                ></toggle-button>
             </div>
         </div>
     </form>

@@ -15,7 +15,6 @@
                 [themeControl]="profileForm.controls['theme']"
                 [primaryControl]="profileForm.controls['primary']"
                 [secondaryControl]="profileForm.controls['secondary']"
-                (onClick)="handleStepOneClick($event)"
             />
         </ng-container>
         <ng-container *ngIf="step === 2">
@@ -24,7 +23,6 @@
                 [text2]="profileForm.controls['text2']"
                 [background]="profileForm.controls['background']"
                 [themeControl]="profileForm.controls['theme']"
-                (onClick)="handleStepTwoClick($event)"
             />
         </ng-container>
         <ng-container *ngIf="step === 3">
@@ -35,7 +33,6 @@
                 [font2]="profileForm.controls['font2']"
                 [padding]="profileForm.controls['padding']"
                 [inputSize]="profileForm.controls['inputSize']"
-                (onClick)="handleStepTwoClick($event)"
             />
         </ng-container>
     </form>

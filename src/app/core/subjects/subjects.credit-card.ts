@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { CreditCard } from "src/app/core/types/objects";
 import { FeedbackInfo, FeedbackVariant } from "src/app/core/types/components";
+import { CreditCardObjectType } from "../types/data/credit-card.types";
 
 @Injectable({
     providedIn: "root",
 })
 export class CreditCardState {
-    private _creditCards$ = new BehaviorSubject<CreditCard[]>([]);
+    private _creditCards$ = new BehaviorSubject<CreditCardObjectType[]>([]);
     private _status$ = new BehaviorSubject<FeedbackInfo>({
         title: "loading",
         description: "",
@@ -28,20 +28,32 @@ export class CreditCardState {
         this._status$.next({ ...this._status$.getValue(), variant });
     }
 
-    setCreditCards(creditCards: CreditCard[]) {
+    setCreditCards(creditCards: CreditCardObjectType[]) {
         if (creditCards.length === 0) this.changeStatus("empty", "no credit cards");
         else this.changeVariant("none");
 
         this._creditCards$.next(creditCards);
     }
 
-    addCreditCard(cc: CreditCard) {
-        let auxCompanies = [...this._creditCards$.getValue()];
-        const indexCc = this._creditCards$.getValue().findIndex((c) => c.id === cc.id);
-        if (indexCc >= 0) auxCompanies[indexCc] = cc;
-        else auxCompanies = [cc, ...auxCompanies];
+    updateCreditCard(cCard: CreditCardObjectType) {
+        let auxCCards = [...this._creditCards$.getValue()];
+        const indexCCard = this._creditCards$
+            .getValue()
+            .findIndex((cc) => cc.id === cCard.id);
 
-        this._creditCards$.next(auxCompanies);
+        if (indexCCard >= 0) auxCCards[indexCCard] = cCard;
+        this._creditCards$.next(auxCCards);
+    }
+
+    addCreditCard(cCard: CreditCardObjectType) {
+        let auxCCards = [...this._creditCards$.getValue()];
+
+        const creditCardArray = [cCard, ...auxCCards].sort((cc1, cc2) => {
+            if (cc1.name > cc2.name) return -1;
+            return 1;
+        });
+
+        this._creditCards$.next(creditCardArray);
     }
 
     setStatus(status: FeedbackInfo) {

@@ -3,7 +3,7 @@ import { Component, inject } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
-import { ServiceBill } from "src/app/services/bill.service";
+import { BillService } from "src/app/services/bill.service";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { Subscription } from "rxjs";
@@ -24,7 +24,7 @@ import { CustonButton } from "src/app/components/button/custom-button.component"
 })
 export class PaginationTemplate {
     public billsState = inject(BillState);
-    public billService = inject(ServiceBill);
+    public billService = inject(BillService);
     public snack = inject(CustomSnackbarComponent);
 
     limit = 10;

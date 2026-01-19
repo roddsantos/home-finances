@@ -1,5 +1,12 @@
 import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, Injectable, Input, Output } from "@angular/core";
+import {
+    booleanAttribute,
+    Component,
+    EventEmitter,
+    Injectable,
+    Input,
+    Output,
+} from "@angular/core";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatIconModule } from "@angular/material/icon";
@@ -20,18 +27,18 @@ import { CustonButton } from "../button/custom-button.component";
     standalone: true,
     imports: [
         CommonModule,
-        MatIconModule,
-        MatButtonToggleModule,
-        ReactiveFormsModule,
         CustonButton,
+        MatButtonToggleModule,
+        MatIconModule,
+        ReactiveFormsModule,
     ],
 })
 export class ToggleButtonComponent {
     @Input() label: string = "";
     @Input() variant: StyleToggleType = "fill";
-    @Input() items: ToggleButtonItemsType<any>[];
+    @Input({ required: true }) items: ToggleButtonItemsType<any>[];
     @Input() formController: FormControl<unknown> = new FormControl<any>(null);
-    @Input() disabled: boolean;
+    @Input({ transform: booleanAttribute }) disabled: boolean = false;
     @Output() onClick = new EventEmitter<ToggleButtonItemsType<any>>();
 
     isEqual(item: ToggleButtonItemsType<any>) {

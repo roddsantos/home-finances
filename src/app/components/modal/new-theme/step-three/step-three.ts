@@ -4,10 +4,10 @@ import { CardComponent } from "src/app/components/card/card.component";
 import { ToggleButtonComponent } from "src/app/components/toggle-buttons/toggle-buttons.component";
 import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
 import {
-    FontProfileType,
+    FontThemeType,
     GeneralMeasureType,
     UpdateProfileControlType,
-} from "src/app/core/types/pages/profiles";
+} from "src/app/core/types/pages/theme";
 import {
     DEFAULT_COLORS,
     GENERAL_MEASURES,
@@ -24,7 +24,7 @@ import { MatInputModule } from "@angular/material/input";
     selector: "step-three",
     standalone: true,
     templateUrl: "./step-three.html",
-    styleUrls: ["./step-three.css", "../new-theme-profile.modal.css"],
+    styleUrls: ["./step-three.css", "../new-theme.modal.css"],
     imports: [
         ToggleButtonComponent,
         CardComponent,
@@ -38,8 +38,8 @@ export class StepThreeNewProfileTheme extends ModalComponent {
     @Input() borderRadius: FormControl<number>;
     @Input() borderWidth: FormControl<GeneralMeasureType>;
     @Input() inputSize: FormControl<GeneralMeasureType>;
-    @Input() font1: FormControl<FontProfileType>;
-    @Input() font2: FormControl<FontProfileType>;
+    @Input() font1: FormControl<FontThemeType>;
+    @Input() font2: FormControl<FontThemeType>;
     @Input() padding: FormControl<GeneralMeasureType>;
 
     @Output() onClick = new EventEmitter<UpdateProfileControlType<string>>();

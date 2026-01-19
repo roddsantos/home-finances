@@ -11,7 +11,7 @@ import { MatIcon } from "@angular/material/icon";
 import { CommonModule } from "@angular/common";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatChipsModule } from "@angular/material/chips";
-import { ServiceBill } from "src/app/services/bill.service";
+import { BillService } from "src/app/services/bill.service";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { CustomSnackbarComponent } from "../custom-snackbar/custom-snackbar.component";
@@ -20,7 +20,7 @@ import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
-import { MonthType, PaymentTypes } from "src/app/core/types/general";
+import { MonthType } from "src/app/core/types/general";
 import { MONTHS } from "src/utils/constants/general";
 import { MatInput, MatInputModule } from "@angular/material/input";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
@@ -40,6 +40,7 @@ import { getMonthAndYearIntegers } from "src/utils/date";
 import { isObjectsEqual } from "src/utils/validators";
 import { GeneralService } from "src/app/services/general.service";
 import { CustonButton } from "../button/custom-button.component";
+import { PaymentTypes } from "src/app/core/types/data/bills.types";
 
 @Injectable({
     providedIn: "root",
@@ -68,7 +69,7 @@ import { CustonButton } from "../button/custom-button.component";
 export class CustomFilterComponent {
     public dialog = inject(Dialog);
     public filterState = inject(CustomFilterState);
-    public billService = inject(ServiceBill);
+    public billService = inject(BillService);
     public billState = inject(BillState);
     public generalState = inject(GeneralState);
     private generalService = inject(GeneralService);

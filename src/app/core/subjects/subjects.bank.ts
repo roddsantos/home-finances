@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { Bank } from "src/app/core/types/objects";
 import { FeedbackInfo, FeedbackVariant } from "src/app/core/types/components";
+import { BankObjectType } from "../types/data/bank.types";
 
 @Injectable({
     providedIn: "root",
 })
 export class BankState {
-    private _banks$ = new BehaviorSubject<Bank[]>([]);
+    private _banks$ = new BehaviorSubject<BankObjectType[]>([]);
     private _status$ = new BehaviorSubject<FeedbackInfo>({
         title: "loading",
         description: "",
@@ -28,20 +28,26 @@ export class BankState {
         this._status$.next({ ...this._status$.getValue(), variant });
     }
 
-    setBanks(banks: Bank[]) {
+    setBanks(banks: BankObjectType[]) {
         if (banks.length === 0) this.changeStatus("empty", "no banks");
         else this.changeVariant("none");
 
         this._banks$.next(banks);
     }
 
-    addBank(bank: Bank, index?: number) {
+    updateBank(bank: BankObjectType) {
         let auxBanks = [...this._banks$.getValue()];
-        const existingBank = this._banks$.getValue().find((b) => b.id === bank.id);
-        if (existingBank && index !== undefined) auxBanks[index] = bank;
-        else auxBanks = [bank, ...auxBanks];
-
+        const indexBank = this._banks$.getValue().findIndex((b) => b.id === bank.id);
+        if (indexBank >= 0) auxBanks[indexBank] = bank;
         this._banks$.next(auxBanks);
+    }
+
+    addBank(bank: BankObjectType) {
+        let auxBanks = [...this._banks$.getValue()];
+
+        const banksArray = [bank, ...auxBanks];
+
+        this._banks$.next(banksArray);
     }
 
     setStatus(status: FeedbackInfo) {

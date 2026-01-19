@@ -1,90 +1,84 @@
 <div class="modal-content">
     <h3 class="step-title">bank info</h3>
     <p class="step-desc">bank info for the income/outcome of the money</p>
-    <form [formGroup]="bankForm" class="form-container">
-        <mat-form-field class="new-bill-field" appearance="outline">
+    <mat-form-field class="new-bill-field" appearance="outline">
+        <mat-icon
+            class="material-symbols-outlined"
+            matPrefix
+            aria-hidden="false"
+            aria-label="store icon"
+            fontIcon="store"
+        ></mat-icon>
+        <mat-label>company</mat-label>
+        <mat-select [formControl]="companyControl" ngDefaultControl>
+            <mat-option
+                *ngIf="(companies.company$| async)!.length === 0"
+                [disabled]="true"
+                >no companies</mat-option
+            >
+            @for (c of (companies.company$ | async); track c) {
+            <mat-option [value]="c.id">{{ c.name }}</mat-option>
+            }
+        </mat-select>
+        <mat-hint>not required</mat-hint>
+    </mat-form-field>
+    <div class="new-bill-field">
+        <toggle-button
+            class="toggle"
+            [items]="banksMode"
+            [formController]="isBetweenAccounts"
+            (onClick)="handleChange($event)"
+        />
+    </div>
+    <div class="new-bill-field">
+        <mat-form-field class="new-bill-field half" appearance="outline">
             <mat-icon
                 class="material-symbols-outlined"
                 matPrefix
                 aria-hidden="false"
                 aria-label="store icon"
-                fontIcon="store"
+                fontIcon="account_balance"
             ></mat-icon>
-            <mat-label>company</mat-label>
-            <mat-select formControlName="company">
-                <mat-option
-                    *ngIf="(companies.company$| async)!.length === 0"
-                    [disabled]="true"
-                    >no companies</mat-option
+            <mat-label>bank 1</mat-label>
+            <mat-select [formControl]="bank1Control" ngDefaultControl>
+                <mat-option *ngIf="(banks.banks$ | async)!.length === 0" [disabled]="true"
+                    >no banks</mat-option
                 >
-                @for (c of (companies.company$ | async); track c) {
-                <mat-option [value]="c">{{ c.name }}</mat-option>
+                @for (b1 of (banks.banks$ | async); track b1) {
+                <mat-option [value]="b1.id">{{ b1.name }}</mat-option>
                 }
             </mat-select>
-            <mat-hint>not required</mat-hint>
+            @if (bank1Control.errors) {
+            <mat-error>{{errorMessage.bank1}}</mat-error>
+            } @if (bank1Control.value === bank2Control.value && bank1Control.value &&
+            bank2Control.value) {
+            <mat-error>{{errorMessage.sameBank}}</mat-error>
+            }
         </mat-form-field>
-        <div class="new-bill-field">
-            <toggle-button
-                class="toggle"
-                [items]="banksMode"
-                [formController]="bankForm.controls.isBetweenAccounts"
-                (onClick)="handleChange($event)"
-            />
-        </div>
-        <div class="new-bill-field">
-            <mat-form-field class="new-bill-field half" appearance="outline">
-                <mat-icon
-                    class="material-symbols-outlined"
-                    matPrefix
-                    aria-hidden="false"
-                    aria-label="store icon"
-                    fontIcon="account_balance"
-                ></mat-icon>
-                <mat-label>bank 1</mat-label>
-                <mat-select formControlName="bank1">
-                    <mat-option
-                        *ngIf="(banks.banks$ | async)!.length === 0"
-                        [disabled]="true"
-                        >no banks</mat-option
-                    >
-                    @for (b1 of (banks.banks$ | async); track b1) {
-                    <mat-option [value]="b1">{{ b1.name }}</mat-option>
-                    }
-                </mat-select>
-                @if (bankDataErrors.bank1?.['required']) {
-                <mat-error>{{errorMessage.bank1}}</mat-error>
-                } @if (bankData.bank1?.id === bankData.bank2?.id && bankData.bank1?.id &&
-                bankData.bank2?.id) {
-                <mat-error>{{errorMessage.sameBank}}</mat-error>
+        <mat-form-field
+            *ngIf="isBetweenAccounts.value"
+            class="new-bill-field half"
+            appearance="outline"
+        >
+            <mat-icon
+                class="material-symbols-outlined"
+                matPrefix
+                aria-hidden="false"
+                aria-label="account balance icon"
+                fontIcon="account_balance"
+            ></mat-icon>
+            <mat-label>bank 2</mat-label>
+            <mat-select [formControl]="bank2Control" ngDefaultControl>
+                <mat-option *ngIf="(banks.banks$ | async)!.length === 0" [disabled]="true"
+                    >no banks</mat-option
+                >
+                <mat-option *ngIf="(banks.banks$ | async)!.length > 0" [value]="null"
+                    >none</mat-option
+                >
+                @for (b2 of (banks.banks$ | async); track b2) {
+                <mat-option [value]="b2.id">{{ b2.name }}</mat-option>
                 }
-            </mat-form-field>
-            <mat-form-field
-                *ngIf="bankForm.get('isBetweenAccounts')?.value"
-                class="new-bill-field half"
-                appearance="outline"
-            >
-                <mat-icon
-                    class="material-symbols-outlined"
-                    matPrefix
-                    aria-hidden="false"
-                    aria-label="account balance icon"
-                    fontIcon="account_balance"
-                ></mat-icon>
-                <mat-label>bank 2</mat-label>
-                <mat-select formControlName="bank2">
-                    <mat-option
-                        *ngIf="(banks.banks$ | async)!.length === 0"
-                        [disabled]="true"
-                        >no banks</mat-option
-                    >
-                    <mat-option *ngIf="(banks.banks$ | async)!.length > 0" [value]="null"
-                        >none</mat-option
-                    >
-                    @for (b2 of (banks.banks$ | async); track b2) {
-                    <mat-option [value]="b2">{{ b2.name }}</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>
-        </div>
-    </form>
+            </mat-select>
+        </mat-form-field>
+    </div>
 </div>

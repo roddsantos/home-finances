@@ -2,20 +2,15 @@ import { CommonModule } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
-import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
-import { LocalStorageService } from "src/app/services/local-storage.service";
-import { Bank, Category, Company } from "src/app/core/types/objects";
-import { UserState } from "src/app/core/subjects//subjects.user";
 import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { ActionItem } from "src/app/core/types/components";
-import { GeneralState } from "src/app/core/subjects/subjects.general";
-import { ROUTES } from "src/utils/route";
-import { Dialog } from "@angular/cdk/dialog";
-import { ServiceCategory } from "src/app/services/category.service";
+import { CategoryService } from "src/app/services/category.service";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { ModalNewCategory } from "src/app/components/modal/new-category/new-category.modal";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
+import { CategoryObjectType } from "src/app/core/types/data/category.types";
+import { GeneralPage } from "src/app/core/general/page.general";
 
 @Component({
     selector: "page-categories",
@@ -30,17 +25,9 @@ import { ModalViewItem } from "src/app/components/modal/view-item/view-item.moda
         ActionsComponent,
     ],
 })
-export class PageCategories {
-    public categoryService = inject(ServiceCategory);
+export class PageCategories extends GeneralPage {
+    public categoryService = inject(CategoryService);
     public categoryState = inject(CategoryState);
-    public userState = inject(UserState);
-    public storage = inject(LocalStorageService);
-    private snack = inject(CustomSnackbarComponent);
-    public generalState = inject(GeneralState);
-    public dialog = inject(Dialog);
-
-    public actualPage = window.location.pathname;
-    public page = ROUTES.find((r) => r.page === this.actualPage);
 
     actions: ActionItem[] = [
         { name: "", icon: "edit", action: (data) => this.onEdit(data), color: "#00328f" },
@@ -52,18 +39,14 @@ export class PageCategories {
         },
     ];
 
-    getCompanies(reloaded?: boolean) {
+    getCategories(reloaded?: boolean) {
         this.categoryService.getCategories().subscribe({
             next: (categories) => {
-                this.categoryState.setCategory(categories as Category[]);
-                this.categoryState.changeStatus(
-                    (categories as Company[]).length === 0 ? "empty" : "none",
-                    "no categories"
-                );
+                this.categoryState.setCategories(categories);
             },
             error: () => {
                 if (reloaded)
-                    this.snack.openSnackBar("error fetching categories", "error");
+                    this.generalService.errorSnackbar("error fetching categories");
                 this.categoryState.changeStatus("error", "error fetching categories");
             },
         });
@@ -75,7 +58,7 @@ export class PageCategories {
 
     onReload() {
         this.categoryState.changeStatus("loading", "loading");
-        this.getCompanies(true);
+        this.getCategories(true);
     }
 
     onEdit(category: any) {
@@ -94,7 +77,7 @@ export class PageCategories {
         console.log("DELETE");
     }
 
-    openDetails(category: Category, e: any) {
+    openDetails(category: CategoryObjectType, e: any) {
         const className = e.target.className;
         if (className !== "mat-mdc-button-touch-target") {
             const option = {

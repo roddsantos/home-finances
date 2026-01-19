@@ -7,7 +7,6 @@ import {
     Validators,
 } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { Bill, BillData, Company, CreditCard } from "src/app/core/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
@@ -16,6 +15,9 @@ import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { CREDIT_CARD_FORM } from "src/utils/constants/forms";
+import { BillDataObjectType } from "src/app/core/types/data/bills.types";
+import { CompanyObjectType } from "src/app/core/types/data/company.type";
+import { CreditCardObjectType } from "src/app/core/types/data/credit-card.types";
 
 @Component({
     selector: "template-edit-credit-card",
@@ -37,54 +39,15 @@ import { CREDIT_CARD_FORM } from "src/utils/constants/forms";
 export class CreditCardTemplateEditBill {
     public creditCards = inject(CreditCardState);
     public companies = inject(CompanyState);
-    @ViewChild("parcels") parcels: ElementRef;
 
-    @Input() bill!: Bill & BillData;
+    @Input({ required: true }) creditCardIdControl: FormControl<string | null>;
+    @Input({ required: true }) companyIdControl: FormControl<string | null>;
+    @Input({ required: true }) taxesControl: FormControl<number>;
+    @Input({ required: true }) parcelsControl: FormControl<number>;
+    @Input({ required: true }) deltaControl: FormControl<number>;
 
-    ccForm = new FormGroup({
-        creditCard: new FormControl<CreditCard | null>(null, {
-            nonNullable: false,
-            validators: [Validators.required],
-        }),
-        company: new FormControl<Company | null>(null, {
-            nonNullable: false,
-        }),
-        taxes: new FormControl<number>(0, { nonNullable: true }),
-        parcels: new FormControl<number>(1, {
-            nonNullable: true,
-            validators: [Validators.required, Validators.min(1)],
-        }),
-        delta: new FormControl<number>(0, { nonNullable: true }),
-        isRecurrent: new FormControl<boolean>(false, { nonNullable: true }),
-    });
-
-    errorMessage = {
+    public errorMessage = {
         creditCard: CREDIT_CARD_FORM.noCreditCard,
         parcels: CREDIT_CARD_FORM.invalidParcels,
     };
-
-    ngOnInit() {
-        this.ccForm.patchValue({
-            creditCard: this.bill.creditCard,
-            company: this.bill.company,
-            taxes: this.bill.taxes,
-            parcels: this.bill.parcels,
-            delta: this.bill.delta,
-            isRecurrent: this.bill.isRecurrent,
-        });
-        if (this.bill.settled) {
-            this.ccForm.controls["creditCard"].disable();
-            this.ccForm.controls["parcels"].disable();
-            this.ccForm.controls["taxes"].disable();
-            this.ccForm.controls["delta"].disable();
-        }
-    }
-
-    compareCreditCards(cc1: CreditCard, cc2: CreditCard): boolean {
-        return cc1.id === cc2.id;
-    }
-
-    compareCompanies(c1: Company, c2: Company): boolean {
-        return c1.id === c2.id;
-    }
 }

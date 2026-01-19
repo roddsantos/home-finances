@@ -1,5 +1,9 @@
 import { SizeType } from "./components";
-import { Bank, Bill, BillData, Category, Company, CreditCard } from "./objects";
+import { BankObjectType } from "./data/bank.types";
+import { BillDataObjectType } from "./data/bills.types";
+import { CategoryObjectType } from "./data/category.types";
+import { CompanyObjectType } from "./data/company.type";
+import { CreditCardObjectType } from "./data/credit-card.types";
 
 export type ModalDataType = {
     header?: string | false;
@@ -15,31 +19,31 @@ export type ProfileDialogType = {
 };
 
 export type EditBillModalType = {
-    bill: Bill & BillData;
+    bill: BillDataObjectType;
     size?: SizeType;
 };
 
 export type EditBankModalType = {
     header: string;
-    bank: Bank;
+    bank: BankObjectType;
     size?: SizeType;
 };
 
 export type EditCreditCardModalType = {
     header: string;
-    creditCard: CreditCard;
+    creditCard: CreditCardObjectType;
     size?: SizeType;
 };
 
 export type EditCompanyModalType = {
     header: string;
-    company: Company;
+    company: CompanyObjectType;
     size?: SizeType;
 };
 
 export type EditCategoryModalType = {
     header: string;
-    category: Category;
+    category: CategoryObjectType;
     size?: SizeType;
 };
 
@@ -51,7 +55,7 @@ export type ViewItemModalType = {
 
 export type EventsListModalType = {
     header: string;
-    events: Array<((Bill & BillData) | CreditCard) & { sector: string }>;
+    events: Array<(BillDataObjectType | CreditCardObjectType) & { sector: string }>;
     size: SizeType;
 };
 

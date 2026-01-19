@@ -1,7 +1,7 @@
-import { Category } from "../objects";
+import { CategoryObjectType } from "../data/category.types";
 
 export type CategorySummaryType = {
-    category: Category | null;
+    category: CategoryObjectType | null;
     total: number;
     count: number;
     key: string;

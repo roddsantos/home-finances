@@ -2,10 +2,10 @@ import { CommonModule } from "@angular/common";
 import { Component, inject, Input } from "@angular/core";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatIconModule } from "@angular/material/icon";
-import { Bill, BillData } from "src/app/core/types/objects";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { CustomTag } from "src/app/components/tag/tag.component";
+import { BillDataObjectType } from "src/app/core/types/data/bills.types";
 
 @Component({
     selector: "bank-list-template",
@@ -22,7 +22,7 @@ import { CustomTag } from "src/app/components/tag/tag.component";
 })
 export class BankListTemplateMonthly {
     public general = inject(GeneralState);
-    @Input() data: Bill & BillData;
+    @Input() data: BillDataObjectType;
     isLineTheme: string = "";
 
     ngOnInit() {

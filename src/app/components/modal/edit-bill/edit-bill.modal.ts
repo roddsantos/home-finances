@@ -1,18 +1,9 @@
-import { Component, ElementRef, Inject, inject, ViewChild } from "@angular/core";
+import { Component, Inject, inject } from "@angular/core";
 import { ModalComponent } from "../modal.component";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import {
-    FormControl,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from "@angular/forms";
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
-import { MatButtonToggleModule } from "@angular/material/button-toggle";
-import { Bill, BillData, Category } from "src/app/core/types/objects";
 import { BankTemplateEditBill } from "./templates/bank/bank.template.edit-bill";
 import { CategoryState } from "src/app/core/subjects/subjects.category";
 import { CommonModule } from "@angular/common";
@@ -24,20 +15,19 @@ import {
     GENERAL_FORM,
     MONEY_FLOW_FORM,
 } from "src/utils/constants/forms";
-import { ServiceBill } from "src/app/services/bill.service";
-import { PaymentTypes } from "src/app/core/types/general";
-import { MONTHS } from "src/utils/constants/general";
-import { MatOption } from "@angular/material/core";
-import { MatSelectChange, MatSelectModule } from "@angular/material/select";
+import { BillService } from "src/app/services/bill.service";
+import { MatSelectModule } from "@angular/material/select";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { provideNativeDateAdapter } from "@angular/material/core";
-import { MatCheckboxModule } from "@angular/material/checkbox";
 import { DIALOG_DATA } from "@angular/cdk/dialog";
 import { CardComponent } from "../../card/card.component";
 import { ToggleButtonComponent } from "../../toggle-buttons/toggle-buttons.component";
 import { CustomTabs } from "../../tabs/tabs.component";
 import { EDIT_BILLS_TABS } from "src/utils/constants/bills";
 import { CustomTabType } from "src/app/core/types/components/tabs";
+import { BillDataObjectType, PaymentTypes } from "src/app/core/types/data/bills.types";
+import { BankState } from "src/app/core/subjects/subjects.bank";
+import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 
 @Component({
     selector: "modal-new-bill",
@@ -46,20 +36,15 @@ import { CustomTabType } from "src/app/core/types/components/tabs";
     standalone: true,
     providers: [provideNativeDateAdapter()],
     imports: [
-        MatOption,
         CommonModule,
         ModalComponent,
-        MatFormFieldModule,
-        FormsModule,
         MatInputModule,
         ReactiveFormsModule,
-        MatButtonToggleModule,
         BankTemplateEditBill,
         CompanyTemplateEditBill,
         CreditCardTemplateEditBill,
         MatSelectModule,
         MatDatepickerModule,
-        MatCheckboxModule,
         CardComponent,
         ToggleButtonComponent,
         CustomTabs,
@@ -67,105 +52,22 @@ import { CustomTabType } from "src/app/core/types/components/tabs";
 })
 export class ModalEditBill extends ModalComponent {
     public billState = inject(BillState);
-    public billService = inject(ServiceBill);
-    public catState = inject(CategoryState);
+    public billService = inject(BillService);
+    public bankState = inject(BankState);
+    public creditCardState = inject(CreditCardState);
+    public categoryState = inject(CategoryState);
     public snack = inject(CustomSnackbarComponent);
 
-    constructor(@Inject(DIALOG_DATA) public data: Bill & BillData) {
+    constructor(@Inject(DIALOG_DATA) public data: BillDataObjectType) {
         super();
     }
-    @ViewChild("bankTemplate") bankTemplate: BankTemplateEditBill;
-    @ViewChild("companyTemplate") companyTemplate: CompanyTemplateEditBill;
-    @ViewChild("ccTemplate") creditCardTemplate: CreditCardTemplateEditBill;
-    @ViewChild("type") type: ElementRef;
 
     public booleanForm = BOOLEAN_FORM;
     public moneyFlowForm = MONEY_FLOW_FORM;
     public billTabs = EDIT_BILLS_TABS;
-    public months = MONTHS;
     public tab = 0;
-    public inputType: string = "";
 
-    billForm = new FormGroup({
-        name: new FormControl<string>("", {
-            validators: [Validators.required, Validators.maxLength(100)],
-            nonNullable: true,
-        }),
-        description: new FormControl<string>("", {
-            validators: [Validators.required, Validators.maxLength(100)],
-            nonNullable: true,
-        }),
-        total: new FormControl<number>(
-            { value: 0, disabled: false },
-            {
-                nonNullable: true,
-                validators: [Validators.required, Validators.min(0.01)],
-            }
-        ),
-        settled: new FormControl<boolean>(
-            { value: false, disabled: this.data.settled },
-            { nonNullable: false }
-        ),
-        due: new FormControl<Date>(
-            { value: new Date(), disabled: this.data.settled },
-            { nonNullable: true }
-        ),
-        paid: new FormControl<Date>(
-            {
-                value: new Date(),
-                disabled: this.data.settled,
-            },
-            { nonNullable: false }
-        ),
-        isPayment: new FormControl<boolean>(
-            { value: true, disabled: this.data.settled },
-            {
-                nonNullable: true,
-                validators: [Validators.required],
-            }
-        ),
-        isRecurrent: new FormControl<boolean>(
-            { value: true, disabled: this.data.settled },
-            {
-                nonNullable: true,
-                validators: [Validators.required],
-            }
-        ),
-        type: new FormControl<PaymentTypes>(
-            { value: "money" as PaymentTypes, disabled: true },
-            {
-                nonNullable: true,
-            }
-        ),
-        category: new FormControl<Category | null>(null, {
-            nonNullable: true,
-            validators: [Validators.required],
-        }),
-    });
-
-    ngOnInit() {
-        this.billForm.patchValue({
-            name: this.data.name,
-            description: this.data.description,
-            total: this.data.total,
-            settled: this.data.settled,
-            due: new Date(this.data.due),
-            paid: this.data.paid ? new Date(this.data.paid) : null,
-            type: this.data.type as PaymentTypes,
-            category: this.data.category,
-            isPayment: this.data.isPayment,
-            isRecurrent: this.data.isRecurrent,
-        });
-        if (this.data.settled && this.data.type !== "money")
-            this.billForm.get("total")?.disable();
-        this.modalState.changeFooter({
-            type: "submit",
-            submitLabel: "update",
-            alertLabel: "cancel",
-        });
-    }
-
-    errorMessage = {
+    public errorMessage = {
         name: GENERAL_FORM.noName,
         description: GENERAL_FORM.noDescription,
         total: GENERAL_FORM.invalidTotal,
@@ -173,104 +75,124 @@ export class ModalEditBill extends ModalComponent {
         year: GENERAL_FORM.yearOutOfRange,
     };
 
+    public billForm = new FormGroup({
+        name: new FormControl<string>(this.data.name, {
+            validators: [Validators.required, Validators.maxLength(100)],
+            nonNullable: true,
+        }),
+        description: new FormControl<string>(this.data.description, {
+            validators: [Validators.required, Validators.maxLength(100)],
+            nonNullable: true,
+        }),
+        total: new FormControl<number>(
+            { value: this.data.total, disabled: this.data.type !== "money" },
+            {
+                nonNullable: true,
+                validators: [Validators.required, Validators.min(0.01)],
+            },
+        ),
+        settled: new FormControl<boolean>(
+            { value: this.data.settled, disabled: this.data.settled },
+            { nonNullable: true },
+        ),
+        due: new FormControl<Date>(
+            { value: new Date(this.data.due), disabled: false },
+            { nonNullable: true },
+        ),
+        paid: new FormControl<Date | null>(
+            {
+                value: this.data.paid ? new Date(this.data.paid) : null,
+                disabled: false,
+            },
+            { nonNullable: false },
+        ),
+        isPayment: new FormControl<boolean>(
+            { value: this.data.isPayment, disabled: this.data.settled },
+            { nonNullable: true },
+        ),
+        isRecurrent: new FormControl<boolean>(
+            { value: this.data.isRecurrent, disabled: this.data.settled },
+            { nonNullable: true },
+        ),
+        type: new FormControl<PaymentTypes>(
+            { value: this.data.type, disabled: true },
+            { nonNullable: true },
+        ),
+        categoryId: new FormControl<string>(this.data.categoryId, {
+            nonNullable: true,
+            validators: [Validators.required],
+        }),
+        companyId: new FormControl<string | null>(this.data.companyId, {
+            nonNullable: false,
+        }),
+        bank1Id: new FormControl<string | null>(
+            { value: this.data.bank1Id, disabled: this.data.settled },
+            { nonNullable: false },
+        ),
+        bank2Id: new FormControl<string | null>(
+            { value: this.data.bank2Id, disabled: this.data.settled },
+            { nonNullable: false },
+        ),
+        creditCardId: new FormControl<string | null>(
+            { value: this.data.creditCardId, disabled: this.data.settled },
+            { nonNullable: false },
+        ),
+        parcels: new FormControl<number>(
+            { value: this.data.parcels, disabled: true },
+            { nonNullable: true },
+        ),
+        delta: new FormControl<number>(
+            { value: this.data.delta, disabled: this.data.settled },
+            { nonNullable: true },
+        ),
+        taxes: new FormControl<number>(
+            { value: this.data.taxes, disabled: this.data.settled },
+            { nonNullable: true },
+        ),
+    });
+
+    ngOnInit() {
+        this.modalState.changeFooter({
+            type: "submit",
+            submitLabel: "update",
+            alertLabel: "cancel",
+        });
+    }
+
     onChangeTab(event: CustomTabType) {
         this.tab = event.index;
     }
 
-    onDisableButton() {
-        switch (this.data.type) {
-            case "money":
-                return (
-                    this.billForm.invalid ||
-                    (this.bankTemplate ? this.bankTemplate.bankForm.invalid : false)
-                );
-            case "companyCredit":
-                return (
-                    this.billForm.invalid ||
-                    (this.companyTemplate ? this.companyTemplate.compForm.invalid : false)
-                );
-            case "creditCard":
-                return (
-                    this.billForm.invalid ||
-                    (this.creditCardTemplate
-                        ? this.creditCardTemplate.ccForm.invalid
-                        : false)
-                );
-            default:
-                return false;
-        }
-    }
-
-    onSetSettled(event: MatSelectChange) {
-        if (!event.value) {
-            this.billForm.patchValue({ paid: null });
-        } else {
-            this.billForm.patchValue({ paid: new Date() });
-        }
-    }
-
     onSubmit() {
-        const billFormValue = this.billForm.getRawValue();
-        var defaultData = {
-            type: billFormValue.type!,
-            name: billFormValue.name!,
-            categoryId: billFormValue.category!.id,
-            description: billFormValue.description!,
-            settled: billFormValue.settled!,
-            total: billFormValue.total!,
-            due: billFormValue.due!,
-            paid: billFormValue.paid!,
-            groupId: this.data.groupId,
-            isPayment: billFormValue.isPayment,
-            isRecurrent: billFormValue.isRecurrent,
+        const dataToUpdate = this.getFormDirtyValues(this.billForm);
+        const payload = {
+            ...dataToUpdate,
             id: this.data.id,
         };
-        var observer;
+        let observer;
 
         switch (this.data.type) {
             case "money":
-                const bankFormValue = this.bankTemplate.bankForm.getRawValue();
-                observer = this.billService.updateBillBank({
-                    ...defaultData,
-                    bank1Id: bankFormValue.bank1!.id,
-                    bank2Id: bankFormValue.bank2?.id,
-                    companyId: bankFormValue.company?.id,
-                    totalParcel: billFormValue.total!,
-                });
+                observer = this.billService.updateBillBank(payload);
                 break;
             case "creditCard":
-                const creditCardFormValue = this.creditCardTemplate.ccForm.getRawValue();
-                observer = this.billService.updateBillCreditCard({
-                    ...defaultData,
-                    creditCardId: creditCardFormValue.creditCard!.id,
-                    companyId: creditCardFormValue.company?.id,
-                    parcels: creditCardFormValue.parcels!,
-                    parcel: this.data.parcel,
-                    totalParcel: this.data.totalParcel,
-                    taxes: creditCardFormValue.taxes,
-                    delta: creditCardFormValue.delta,
-                });
+                observer = this.billService.updateBillCreditCard(payload);
                 break;
             case "companyCredit":
-                const companyFormValue = this.companyTemplate.compForm.getRawValue();
-                observer = this.billService.updateBillCompany({
-                    ...defaultData,
-                    creditCardId: companyFormValue.creditcard!,
-                    companyId: companyFormValue.company!,
-                    bank1Id: companyFormValue.bank!,
-                    parcels: companyFormValue.parcels!,
-                    taxes: companyFormValue.taxes,
-                    delta: companyFormValue.delta,
-                    totalParcel: this.data.totalParcel,
-                });
+                observer = this.billService.updateBillCompany(payload);
                 break;
             default:
                 break;
         }
+
         observer?.subscribe({
-            next: () => {
+            next: ({ banks, creditCard }) => {
+                banks.forEach((bank) => this.bankState.updateBank(bank));
+                this.creditCardState.updateCreditCard(creditCard);
                 this.billService.getBills().subscribe({
-                    next: (bills) => this.billState.setBills(bills),
+                    next: (bills) => {
+                        this.billState.setBills(bills);
+                    },
                 });
                 this.generalService.successSnackbar("bill successfully updated");
                 this.onClose();
@@ -283,13 +205,5 @@ export class ModalEditBill extends ModalComponent {
 
     handleClose() {
         this.onClose();
-    }
-
-    onChangeType($event: PaymentTypes) {
-        this.inputType = $event || "";
-    }
-
-    compareCategories(c1: Category, c2: Category): boolean {
-        return c1.id === c2.id;
     }
 }

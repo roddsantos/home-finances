@@ -47,12 +47,6 @@ const routes: Routes = [
             import("./pages/settings/settings.page").then((m) => m.PageSettings),
     },
     {
-        path: "manager",
-        canActivate: [authGuard],
-        loadComponent: () =>
-            import("./pages/management/pages.management").then((m) => m.PageManagement),
-    },
-    {
         path: "bills",
         canActivate: [authGuard],
         loadComponent: () => import("./pages/bills/pages.bills").then((m) => m.PageBills),

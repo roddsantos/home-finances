@@ -21,7 +21,7 @@ import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import { MONTHS } from "src/utils/constants/general";
-import { ServiceBill } from "src/app/services/bill.service";
+import { BillService } from "src/app/services/bill.service";
 import { MatButtonToggle, MatButtonToggleModule } from "@angular/material/button-toggle";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { MatDatepickerModule } from "@angular/material/datepicker";
@@ -61,7 +61,7 @@ export class DialogCustomList extends ModalComponent implements OnInit {
     public compState = inject(CompanyState);
     public bankState = inject(BankState);
 
-    public billService = inject(ServiceBill);
+    public billService = inject(BillService);
     public billState = inject(BillState);
 
     @ViewChild(ModalComponent) modalComponent: ModalComponent;

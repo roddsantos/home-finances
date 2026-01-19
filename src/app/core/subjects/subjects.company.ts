@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { Company } from "src/app/core/types/objects";
 import { FeedbackInfo, FeedbackVariant } from "src/app/core/types/components";
+import { CompanyObjectType } from "../types/data/company.type";
 
 @Injectable({
     providedIn: "root",
 })
 export class CompanyState {
-    private _companies$ = new BehaviorSubject<Company[]>([]);
+    private _companies$ = new BehaviorSubject<CompanyObjectType[]>([]);
     private _status$ = new BehaviorSubject<FeedbackInfo>({
         title: "loading",
         description: "",
@@ -28,21 +28,31 @@ export class CompanyState {
         this._status$.next({ ...this._status$.getValue(), variant });
     }
 
-    setCompanies(companies: Company[]) {
+    setCompanies(companies: CompanyObjectType[]) {
         if (companies.length === 0) this.changeStatus("empty", "no companies");
         else this.changeVariant("none");
         this._companies$.next(companies);
     }
 
-    addCompany(company: Company, index?: number) {
+    updateCompany(company: CompanyObjectType) {
         let auxCompanies = [...this._companies$.getValue()];
-        const existingCompany = this._companies$
+        const indexCompany = this._companies$
             .getValue()
-            .find((c) => c.id === company.id);
-        if (existingCompany && index !== undefined) auxCompanies[index] = company;
-        else auxCompanies = [company, ...auxCompanies];
+            .findIndex((c) => c.id === company.id);
 
+        if (indexCompany >= 0) auxCompanies[indexCompany] = company;
         this._companies$.next(auxCompanies);
+    }
+
+    addCompany(company: CompanyObjectType) {
+        let auxCompanies = [...this._companies$.getValue()];
+
+        const companiesArray = [company, ...auxCompanies].sort((comp1, comp2) => {
+            if (comp1.name > comp2.name) return -1;
+            return 1;
+        });
+
+        this._companies$.next(companiesArray);
     }
 
     setStatus(status: FeedbackInfo) {

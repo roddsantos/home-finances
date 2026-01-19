@@ -15,17 +15,16 @@ import { DashboardState } from "src/app/core/subjects/subjects.dashboard";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { UserState } from "src/app/core/subjects/subjects.user";
 import { CardActionType } from "src/app/core/types/components";
-import { Bill, BillData, Category } from "src/app/core/types/objects";
 import { CategoriesSummaryType } from "src/app/core/types/services/dashboard.services.types";
 import {
     DashboardBillsPerMonthType,
     DashboardSavingsType,
     MonthBillsType,
     PiggyBanksProgressionType,
-} from "src/app/core/types/subjects/dashboard.subjects";
-import { ServiceBank } from "src/app/services/bank.service";
-import { ServiceBill } from "src/app/services/bill.service";
-import { ServiceCreditCard } from "src/app/services/credit-card.service";
+} from "src/app/core/types/data/dashboard.types";
+import { BankService } from "src/app/services/bank.service";
+import { BillService } from "src/app/services/bill.service";
+import { CreditCardService } from "src/app/services/credit-card.service";
 import { DashboardService } from "src/app/services/dashboard.service";
 import { GeneralService } from "src/app/services/general.service";
 import { currentPallete } from "src/utils/color";
@@ -36,6 +35,8 @@ import { categoriesChart } from "./charts/category.charts.dashboard";
 import { savingsChart } from "./charts/savings.charts.dashboard";
 import { piggyBanksProgressionChart } from "./charts/piggy-banks-progression.charts.dashboard";
 import { creditCardProgressionChart } from "./charts/credit-cards-progression.charts.dashboard";
+import { CategoryObjectType } from "src/app/core/types/data/category.types";
+import { BillDataObjectType } from "src/app/core/types/data/bills.types";
 
 @Component({
     selector: "page-dashboard",
@@ -51,10 +52,10 @@ import { creditCardProgressionChart } from "./charts/credit-cards-progression.ch
     ],
 })
 export class PageDashboard {
-    public billService = inject(ServiceBill);
-    public bankService = inject(ServiceBank);
+    public billService = inject(BillService);
+    public bankService = inject(BankService);
     public dashboardService = inject(DashboardService);
-    public creditCardService = inject(ServiceCreditCard);
+    public creditCardService = inject(CreditCardService);
     private generalService = inject(GeneralService);
 
     public userState = inject(UserState);
@@ -67,7 +68,7 @@ export class PageDashboard {
     public router = new Router();
     public billsPerMonthChart: Chart;
     public categoryChart: Chart;
-    public categories: Category[] = [];
+    public categories: CategoryObjectType[] = [];
     public savingsChart: Chart;
     public creditCardsChart: Chart;
 
@@ -195,7 +196,7 @@ export class PageDashboard {
     setSavingsProgression(piggyBanksProgression: PiggyBanksProgressionType[]) {
         this.billsPerMonthChart = piggyBanksProgressionChart(
             piggyBanksProgression,
-            this.theme
+            this.theme,
         );
     }
 
@@ -205,13 +206,13 @@ export class PageDashboard {
 
     handleMonthSpan() {
         this.dashboardState.updateMonthSpan(
-            this.monthSpan === 5 ? 1 : this.monthSpan + 1
+            this.monthSpan === 5 ? 1 : this.monthSpan + 1,
         );
         this.fetchBillsProgression();
         this.billsPerMonthChart.update();
     }
 
-    openBill(bill: Bill & BillData) {
+    openBill(bill: BillDataObjectType) {
         const option = {
             data: {
                 item: { ...bill, sector: "bill" },

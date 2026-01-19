@@ -6,13 +6,11 @@ import { MatIconModule } from "@angular/material/icon";
 import { CustomFilterComponent } from "src/app/components/custom-filter/custom-filter.component";
 import { ModalNewBill } from "src/app/components/modal/new-bill/new-bill.modal";
 import { BillState } from "src/app/core/subjects/subjects.bill";
-import { Bill } from "src/app/core/types/objects";
 import { BankListTemplateMonthly } from "./templates/bank/bank.template.bills";
 import { CreditCardTemplateMonthly } from "./templates/credit-card/credit-card.template.bills";
 import { ServiceTemplateMonthly } from "./templates/service/service.template.bills";
 import { FeedbackContainerComponent } from "src/app/components/feedback-container/feedback-container.component";
-import { ServiceBill } from "src/app/services/bill.service";
-import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
+import { BillService } from "src/app/services/bill.service";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { PaginationTemplate } from "./templates/pagination/pagination.template.bills";
 import { ModalViewItem } from "src/app/components/modal/view-item/view-item.modal";
@@ -23,6 +21,7 @@ import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { CustonButton } from "src/app/components/button/custom-button.component";
 import { CustomTag } from "src/app/components/tag/tag.component";
 import { GeneralPage } from "src/app/core/general/page.general";
+import { BillDataObjectType } from "src/app/core/types/data/bills.types";
 
 @Component({
     selector: "page-bills",
@@ -49,7 +48,7 @@ import { GeneralPage } from "src/app/core/general/page.general";
 })
 export class PageBills extends GeneralPage {
     public billState = inject(BillState);
-    public billService = inject(ServiceBill);
+    public billService = inject(BillService);
 
     isLineTheme: string = "";
 
@@ -57,34 +56,35 @@ export class PageBills extends GeneralPage {
         {
             name: "",
             icon: "edit",
-            action: (data: Bill) => this.onEdit(data),
+            action: (data: BillDataObjectType) => this.onEdit(data),
             color: "#00328f",
         },
         {
             name: "",
             icon: "delete",
-            action: (data: Bill) => this.onDelete(data),
+            action: (data: BillDataObjectType) => this.onDelete(data),
             color: "#8f0000",
-            hidden: (data: Bill) => data.settled,
+            hidden: (data: BillDataObjectType) => data.settled,
         },
         {
             name: "",
             icon: "check_circle",
             action: (data) => this.onCheck(data),
             color: "#008f18",
-            hidden: (data: Bill) => data.settled,
+            hidden: (data: BillDataObjectType) => data.settled,
         },
         {
             name: "",
             icon: "rotate_left",
             action: (data) => this.onReverseCheck(data),
             color: "var(--warning)",
-            hidden: (data: Bill) => !data.settled || (data.settled && data.isRecurrent),
+            hidden: (data: BillDataObjectType) =>
+                !data.settled || (data.settled && data.isRecurrent),
         },
     ];
 
     ngOnInit() {
-        this.billState.setAction(() => this.onReload());
+        this.getBills();
     }
 
     trackByFn(index: number, item: any) {
@@ -108,7 +108,7 @@ export class PageBills extends GeneralPage {
         });
     }
 
-    openDetails(bill: Bill, e: any) {
+    openDetails(bill: BillDataObjectType, e: any) {
         const className = e.target.className;
         if (className !== "mat-mdc-button-touch-target") {
             const option = {
@@ -128,17 +128,17 @@ export class PageBills extends GeneralPage {
         this.dialog.open(ModalNewBill, options);
     }
 
-    onEdit(data: Bill) {
+    onEdit(data: BillDataObjectType) {
         this.dialog.open(ModalEditBill, {
             data,
         });
     }
 
-    onDelete(data: Bill) {
+    onDelete(data: BillDataObjectType) {
         console.log("DELETE");
     }
 
-    onCheck(data: Bill) {
+    onCheck(data: BillDataObjectType) {
         this.billService.quickSettle(data.id).subscribe({
             next: () => {
                 this.billService.getBills().subscribe({
@@ -154,7 +154,7 @@ export class PageBills extends GeneralPage {
         });
     }
 
-    onReverseCheck(data: Bill) {
+    onReverseCheck(data: BillDataObjectType) {
         this.billService.redoQuickSettle(data.id).subscribe({
             next: () => {
                 this.billService.getBills().subscribe({
@@ -170,7 +170,7 @@ export class PageBills extends GeneralPage {
         });
     }
 
-    getDateStatus(data: Bill) {
+    getDateStatus(data: BillDataObjectType) {
         if (data.settled) return "var(--success)";
         else if (new Date(data.due).getTime() - new Date().getTime() > 0)
             return "var(--warning)";

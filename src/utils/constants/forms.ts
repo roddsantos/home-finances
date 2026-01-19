@@ -1,5 +1,5 @@
 import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
-import { PaymentTypesObject } from "src/app/core/types/general";
+import { PaymentTypesObject } from "src/app/core/types/data/bills.types";
 
 export const GENERAL_FORM = {
     noName: "you must enter a name",
@@ -69,3 +69,10 @@ export const PAYMENT_TYPES: PaymentTypesObject[] = [
             "bill to be deduced either in a credit card or a bank account - not deduced immediatelly",
     },
 ];
+
+export const USER_FORMS = {
+    name: "name can't be empty",
+    surname: "surname can't be empty",
+    username: "username can't be empty",
+    usernameExists: "this username already exists",
+};

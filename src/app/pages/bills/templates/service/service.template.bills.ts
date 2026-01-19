@@ -4,8 +4,8 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
-import { Bill, BillData } from "src/app/core/types/objects";
 import { CustomTag } from "src/app/components/tag/tag.component";
+import { BillDataObjectType } from "src/app/core/types/data/bills.types";
 
 @Component({
     selector: "service-list-template",
@@ -22,7 +22,7 @@ import { CustomTag } from "src/app/components/tag/tag.component";
 })
 export class ServiceTemplateMonthly {
     public general = inject(GeneralState);
-    @Input() data: Bill & BillData;
+    @Input() data: BillDataObjectType;
     isLineTheme: string = "";
 
     ngOnInit() {

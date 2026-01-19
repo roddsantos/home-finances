@@ -1,13 +1,12 @@
-import { BillData } from "./../types/objects";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { SumAndCountData } from "../types/services";
-import { Bill } from "../types/objects";
 import {
     SubjectExpensesType,
     SubjectSavingsType,
 } from "../types/subjects/home.subjects.types";
 import { DateSubjectType } from "../types/subjects/general.subjects.type";
+import { BillDataObjectType } from "../types/data/bills.types";
 
 @Injectable({
     providedIn: "root",
@@ -29,7 +28,7 @@ export class HomeState {
         total: 0,
         count: 0,
     });
-    private _recentBills$ = new BehaviorSubject<(Bill & BillData)[]>([]);
+    private _recentBills$ = new BehaviorSubject<BillDataObjectType[]>([]);
 
     private _date$ = new BehaviorSubject<DateSubjectType>({
         month: new Date().getMonth(),
@@ -54,7 +53,7 @@ export class HomeState {
         this._invoices$.next(savings);
     }
 
-    public updateRecentBills(bills: (Bill & BillData)[]) {
+    public updateRecentBills(bills: BillDataObjectType[]) {
         this._recentBills$.next(bills);
     }
 

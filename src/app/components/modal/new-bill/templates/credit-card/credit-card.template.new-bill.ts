@@ -1,13 +1,6 @@
-import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
-import {
-    FormControl,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from "@angular/forms";
+import { Component, inject, Input } from "@angular/core";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { Company, CreditCard } from "src/app/core/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
@@ -16,7 +9,6 @@ import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { CREDIT_CARD_FORM } from "src/utils/constants/forms";
-import { CreditCardForm, ErrorsBillForm } from "src/app/core/types/forms";
 
 @Component({
     selector: "template-credit-card",
@@ -36,35 +28,17 @@ import { CreditCardForm, ErrorsBillForm } from "src/app/core/types/forms";
     exportAs: "templateCreditCard",
 })
 export class CreditCardTemplateNewBill {
-    constructor() {
-        this.ccForm.valueChanges.subscribe((data) => {
-            this.setCreditCardData.emit({ ...data });
-        });
-    }
+    constructor() {}
     public creditCards = inject(CreditCardState);
     public companies = inject(CompanyState);
 
-    @Input() creditCardData: CreditCardForm;
-    @Input() creditCardDataErrors: ErrorsBillForm<CreditCardForm>;
-    @Output() setCreditCardData = new EventEmitter<Partial<CreditCardForm>>();
+    @Input({ required: true }) creditcardControl: FormControl<string | null>;
+    @Input({ required: true }) companyControl: FormControl<string | null>;
+    @Input({ required: true }) taxesControl: FormControl<number>;
+    @Input({ required: true }) parcelsControl: FormControl<number>;
+    @Input({ required: true }) deltaControl: FormControl<number>;
 
-    ccForm = new FormGroup({
-        creditcard: new FormControl<CreditCard | null>(null, {
-            nonNullable: false,
-            validators: [Validators.required],
-        }),
-        company: new FormControl<Company | null>(null, {
-            nonNullable: false,
-        }),
-        taxes: new FormControl<number>(0, { nonNullable: true }),
-        parcels: new FormControl<number>(1, {
-            nonNullable: true,
-            validators: [Validators.required, Validators.min(1)],
-        }),
-        delta: new FormControl<number>(0, { nonNullable: true }),
-    });
-
-    errorMessage = {
+    public errorMessage = {
         creditCard: CREDIT_CARD_FORM.noCreditCard,
         parcels: CREDIT_CARD_FORM.invalidParcels,
     };

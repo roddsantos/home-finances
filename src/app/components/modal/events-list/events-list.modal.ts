@@ -7,7 +7,7 @@ import { EventsListModalType } from "src/app/core/types/modal";
 import { Bill, BillData, CreditCard } from "src/app/core/types/objects";
 import { SectorPipe } from "src/utils/pipes/sector";
 import { CustomFilterState } from "../../custom-filter/custom-filter.subjects.component";
-import { ServiceBill } from "src/app/services/bill.service";
+import { BillService } from "src/app/services/bill.service";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
 import { Router } from "@angular/router";
@@ -21,7 +21,7 @@ import { Router } from "@angular/router";
 })
 export class ModalEventsList extends ModalComponent {
     public filterState = inject(CustomFilterState);
-    public billService = inject(ServiceBill);
+    public billService = inject(BillService);
     public billState = inject(BillState);
     private snack = inject(CustomSnackbarComponent);
 
@@ -33,11 +33,11 @@ export class ModalEventsList extends ModalComponent {
         super();
     }
 
-    isBill(event: (Bill & BillData) | CreditCard): event is Bill & BillData {
-        return (event as Bill & BillData).type !== undefined;
+    isBill(event: BillDataObjectType | CreditCard): event is BillDataObjectType {
+        return (event as BillDataObjectType).type !== undefined;
     }
 
-    onClickEvent(event: (Bill & BillData) | CreditCard) {
+    onClickEvent(event: BillDataObjectType | CreditCard) {
         if (!this.isBill(event)) {
             this.generalService.navigateTo("/credit-cards");
             this.onClose();

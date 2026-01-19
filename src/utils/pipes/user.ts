@@ -1,5 +1,5 @@
 import { inject, Pipe, PipeTransform } from "@angular/core";
-import { User } from "src/app/core/types/objects";
+import { UserObjectType } from "src/app/core/types/data/user.types";
 import { LocalStorageService } from "src/app/services/local-storage.service";
 
 @Pipe({
@@ -8,7 +8,7 @@ import { LocalStorageService } from "src/app/services/local-storage.service";
 })
 export class UserPipe implements PipeTransform {
     private storage = inject(LocalStorageService);
-    transform(value: Partial<User>, format?: "compare") {
+    transform(value: Partial<UserObjectType>, format?: "compare") {
         if (format === "compare") {
             if (!Boolean(value)) return true;
             const user = this.storage.getUser();

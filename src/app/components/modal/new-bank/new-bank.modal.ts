@@ -1,23 +1,14 @@
-import { Component, inject, ViewChild, Inject } from "@angular/core";
+import { Component, inject, Inject } from "@angular/core";
 import { ModalComponent } from "../modal.component";
-import { MatFormField, MatLabel } from "@angular/material/form-field";
-import {
-    FormControl,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from "@angular/forms";
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
-import { ServiceBank } from "src/app/services/bank.service";
+import { BankService } from "src/app/services/bank.service";
 import { BankState } from "src/app/core/subjects/subjects.bank";
-import { CustomSnackbarComponent } from "../../custom-snackbar/custom-snackbar.component";
-import { BankObject } from "src/app/core/types/services";
-import { Bank } from "src/app/core/types/objects";
 import { DIALOG_DATA } from "@angular/cdk/dialog";
-import { mergeMap } from "rxjs";
 import { CommonModule } from "@angular/common";
-import { BANK_FORM, GENERAL_FORM } from "src/utils/constants/forms";
+import { BANK_FORM, BOOLEAN_FORM, GENERAL_FORM } from "src/utils/constants/forms";
+import { BankObjectType } from "src/app/core/types/data/bank.types";
+import { ToggleButtonComponent } from "../../toggle-buttons/toggle-buttons.component";
 
 @Component({
     selector: "modal-new-bank",
@@ -25,24 +16,22 @@ import { BANK_FORM, GENERAL_FORM } from "src/utils/constants/forms";
     styleUrls: ["./new-bank.modal.css"],
     standalone: true,
     imports: [
-        ModalComponent,
-        MatFormField,
-        FormsModule,
-        MatLabel,
-        MatInputModule,
-        ReactiveFormsModule,
         CommonModule,
+        MatInputModule,
+        ModalComponent,
+        ReactiveFormsModule,
+        ToggleButtonComponent,
     ],
 })
 export class ModalNewBank extends ModalComponent {
-    public bankService = inject(ServiceBank);
+    public bankService = inject(BankService);
     public bankState = inject(BankState);
 
-    constructor(@Inject(DIALOG_DATA) public data: Bank) {
+    constructor(@Inject(DIALOG_DATA) public data: BankObjectType) {
         super();
     }
 
-    bankForm = new FormGroup({
+    public bankForm = new FormGroup({
         name: new FormControl<string>(this.data?.name || "", {
             validators: [Validators.required, Validators.maxLength(100)],
             nonNullable: true,
@@ -57,13 +46,18 @@ export class ModalNewBank extends ModalComponent {
         savings: new FormControl<number>(this.data?.savings || 0, {
             nonNullable: true,
         }),
+        isPiggyBank: new FormControl<boolean>(this.data?.isPiggyBank || false, {
+            nonNullable: true,
+        }),
     });
 
-    errorMessage = {
+    public errorMessage = {
         name: GENERAL_FORM.noName,
         description: GENERAL_FORM.noDescription,
         savings: BANK_FORM.noSavings,
     };
+
+    public booleanForm = BOOLEAN_FORM;
 
     ngOnInit() {
         this.modalState.changeSubmitFooter(this.data ? "edit" : "create bank", "cancel");
@@ -71,20 +65,19 @@ export class ModalNewBank extends ModalComponent {
     }
 
     onUpdate() {
+        const dataToUpdate = this.getFormDirtyValues(this.bankForm);
         this.bankService
             .updateBank({
-                ...(this.bankForm.value as BankObject),
+                ...dataToUpdate,
+                userId: this.data.userId,
                 id: this.data.id,
             })
-            .pipe(mergeMap(() => this.bankService.getBanks()))
             .subscribe({
-                next: (banks) => {
-                    this.bankState.setBanks(banks as Bank[]);
-                    this.bankState.changeStatus(
-                        (banks as Bank[]).length === 0 ? "empty" : "none",
-                        "no banks"
+                next: (bank) => {
+                    this.bankState.addBank(bank);
+                    this.generalService.successSnackbar(
+                        `bank [${bank.name}] successfully updated`
                     );
-                    this.generalService.successSnackbar("bank successfully updated");
                     this.onClose();
                 },
                 error: () => {
@@ -96,12 +89,14 @@ export class ModalNewBank extends ModalComponent {
     onCreate() {
         this.bankService
             .createBank({
-                ...(this.bankForm.getRawValue() as Omit<BankObject, "userId">),
+                ...this.bankForm.getRawValue(),
             })
             .subscribe({
                 next: (data) => {
-                    this.bankState.addBank(data as Bank);
-                    this.generalService.successSnackbar("bank successfully created");
+                    this.bankState.addBank(data);
+                    this.generalService.successSnackbar(
+                        `bank [${data.name}] successfully created`
+                    );
                     this.onClose();
                 },
                 error: () => {

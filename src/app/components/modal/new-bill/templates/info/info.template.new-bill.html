@@ -1,88 +1,98 @@
 <div class="modal-content">
     <h3 class="step-title">main info</h3>
     <p class="step-desc">general info of the bill</p>
-    <form [formGroup]="infoForm" class="form-container">
-        <mat-form-field class="new-bill-field" appearance="outline">
+    <mat-form-field
+        [formControl]="nameControl"
+        ngDefaultControl
+        class="new-bill-field"
+        appearance="outline"
+    >
+        <mat-icon
+            class="material-symbols-outlined"
+            matPrefix
+            aria-hidden="false"
+            aria-label="title icon"
+            fontIcon="subheader"
+        ></mat-icon>
+        <mat-label>title</mat-label>
+        <input [value]="nameControl.value" maxlength="100" required matInput />
+        @if (nameControl.errors) {
+        <mat-error>{{errorMessage.name}}</mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field
+        [formControl]="descriptionControl"
+        ngDefaultControl
+        class="new-bill-field"
+        appearance="outline"
+    >
+        <mat-icon
+            class="material-symbols-outlined"
+            matPrefix
+            aria-hidden="false"
+            aria-label="title icon"
+            fontIcon="subtitles"
+        ></mat-icon>
+        <mat-label>description</mat-label>
+        <input [value]="descriptionControl.value" maxlength="100" matInput />
+        @if (descriptionControl.errors) {
+        <mat-error>{{errorMessage.description}}</mat-error>
+        }
+    </mat-form-field>
+    <div class="new-bill-field">
+        <mat-form-field class="new-bill-field half" appearance="outline">
             <mat-icon
                 class="material-symbols-outlined"
                 matPrefix
                 aria-hidden="false"
                 aria-label="title icon"
-                fontIcon="subheader"
+                fontIcon="category"
             ></mat-icon>
-            <mat-label>title</mat-label>
-            <input formControlName="name" maxlength="100" required matInput />
-            @if (infoErrors.name?.["required"]) {
-            <mat-error>{{errorMessage.name}}</mat-error>
+            <mat-label>category</mat-label>
+            <mat-select [formControl]="categoryControl" ngDefaultControl>
+                @for (cat of catState.categories$ | async; track $index) {
+                <mat-option [value]="cat.id">
+                    <mat-icon
+                        class="material-icons-outlined"
+                        [fontIcon]="cat.icon"
+                    ></mat-icon>
+                    <p>{{cat.name}}</p>
+                </mat-option>
+                }
+                <mat-select-trigger
+                    class="selected-trigger"
+                    *ngIf="categoryControl.value"
+                >
+                    <mat-icon
+                        class="material-icons-outlined icon"
+                        [fontIcon]="selectedCategory(categoryControl.value)?.icon || ''"
+                    ></mat-icon>
+                    <p>{{selectedCategory(categoryControl.value)?.name || ''}}</p>
+                </mat-select-trigger>
+            </mat-select>
+            @if (categoryControl.errors) {
+            <mat-error>{{errorMessage.category}}</mat-error>
             }
         </mat-form-field>
-        <mat-form-field class="new-bill-field" appearance="outline">
+        <mat-form-field
+            *ngIf="type === 'money'"
+            [formControl]="totalControl"
+            ngDefaultControl
+            class="new-bill-field half"
+            appearance="outline"
+        >
             <mat-icon
                 class="material-symbols-outlined"
                 matPrefix
                 aria-hidden="false"
                 aria-label="title icon"
-                fontIcon="subtitles"
+                fontIcon="sell"
             ></mat-icon>
-            <mat-label>description</mat-label>
-            <input formControlName="description" maxlength="100" matInput />
-            @if (infoErrors.description?.["required"]) {
-            <mat-error>{{errorMessage.description}}</mat-error>
+            <mat-label>bill value</mat-label>
+            <input [value]="totalControl.value" matInput type="number" />
+            @if (totalControl.errors) {
+            <mat-error>{{errorMessage.total}}</mat-error>
             }
         </mat-form-field>
-        <div class="new-bill-field">
-            <mat-form-field class="new-bill-field half" appearance="outline">
-                <mat-icon
-                    class="material-symbols-outlined"
-                    matPrefix
-                    aria-hidden="false"
-                    aria-label="title icon"
-                    fontIcon="category"
-                ></mat-icon>
-                <mat-label>category</mat-label>
-                <mat-select formControlName="category">
-                    @for (cat of catState.categories$ | async; track $index) {
-                    <mat-option [value]="cat" [value]="cat">
-                        <mat-icon
-                            class="material-icons-outlined"
-                            [fontIcon]="cat.icon"
-                        ></mat-icon>
-                        <p>{{cat.name}}</p>
-                    </mat-option>
-                    }
-                    <mat-select-trigger
-                        class="selected-trigger"
-                        *ngIf="infoForm.value.category"
-                    >
-                        <mat-icon
-                            class="material-icons-outlined icon"
-                            [fontIcon]="infoForm.value.category!.icon"
-                        ></mat-icon>
-                        <p>{{infoForm.value.category!.name}}</p>
-                    </mat-select-trigger>
-                </mat-select>
-                @if (infoErrors.category?.["required"]) {
-                <mat-error>{{errorMessage.category}}</mat-error>
-                }
-            </mat-form-field>
-            <mat-form-field
-                *ngIf="info.type === 'money'"
-                class="new-bill-field half"
-                appearance="outline"
-            >
-                <mat-icon
-                    class="material-symbols-outlined"
-                    matPrefix
-                    aria-hidden="false"
-                    aria-label="title icon"
-                    fontIcon="sell"
-                ></mat-icon>
-                <mat-label>bill value</mat-label>
-                <input formControlName="total" matInput type="number" />
-                @if (infoErrors.total !== null) {
-                <mat-error>{{errorMessage.total}}</mat-error>
-                }
-            </mat-form-field>
-        </div>
-    </form>
+    </div>
 </div>

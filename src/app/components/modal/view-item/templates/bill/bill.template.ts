@@ -1,11 +1,11 @@
 import { CommonModule } from "@angular/common";
 import { Component, Input } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
-import { Bill, BillData } from "src/app/core/types/objects";
 import { MONTHS } from "src/utils/constants/general";
 import { BillsPipe } from "src/utils/pipes/bills";
 import { CardComponent } from "../../../../card/card.component";
 import { MatTooltip } from "@angular/material/tooltip";
+import { BillDataObjectType } from "src/app/core/types/data/bills.types";
 
 @Component({
     selector: "template-view-bill",
@@ -15,7 +15,7 @@ import { MatTooltip } from "@angular/material/tooltip";
     imports: [CommonModule, MatIconModule, BillsPipe, CardComponent, MatTooltip],
 })
 export class TemplateBill {
-    @Input() bill: Bill & BillData;
+    @Input() bill: BillDataObjectType;
     public months = MONTHS;
     public style = getComputedStyle(document.body);
     public errorColor = this.style.getPropertyValue("--error");

@@ -4,13 +4,13 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import {
     ColorThemeType,
-    FontProfileType,
+    FontThemeType,
     GeneralMeasureType,
     ModalDataProfileTheme,
-    ProfileThemeType,
-    ThemeBodyType,
+    ThemeObjectType,
+    ThemeUpdateType,
     UpdateProfileControlType,
-} from "src/app/core/types/pages/profiles";
+} from "src/app/core/types/pages/theme";
 import {
     COLOR_THEMES,
     DEFAULT_BACKGROUND_COLORS,
@@ -30,8 +30,8 @@ import { DIALOG_DATA } from "@angular/cdk/dialog";
 
 @Component({
     selector: "new-theme-profile",
-    templateUrl: "./new-theme-profile.modal.html",
-    styleUrl: "./new-theme-profile.modal.css",
+    templateUrl: "./new-theme.modal.html",
+    styleUrl: "./new-theme.modal.css",
     imports: [
         CommonModule,
         ModalComponent,
@@ -43,7 +43,7 @@ import { DIALOG_DATA } from "@angular/cdk/dialog";
     ],
     standalone: true,
 })
-export class ModalNewThemeProfile extends ModalComponent {
+export class ModalNewTheme extends ModalComponent {
     constructor(
         @Inject(DIALOG_DATA) public data: ModalDataProfileTheme,
         private themeService: ThemeService,
@@ -131,14 +131,14 @@ export class ModalNewThemeProfile extends ModalComponent {
                 nonNullable: true,
             }
         ),
-        font1: new FormControl<FontProfileType>(
+        font1: new FormControl<FontThemeType>(
             this.data.theme?.font1 || THEME_FONTS.roboto,
             {
                 validators: [Validators.required],
                 nonNullable: true,
             }
         ),
-        font2: new FormControl<FontProfileType>(
+        font2: new FormControl<FontThemeType>(
             this.data.theme?.font2 || THEME_FONTS.commissioner,
             {
                 validators: [Validators.required],
@@ -198,14 +198,6 @@ export class ModalNewThemeProfile extends ModalComponent {
         }
     }
 
-    handleStepOneClick(event: UpdateProfileControlType<string>) {
-        console.log(event, this.profileForm.getRawValue());
-    }
-
-    handleStepTwoClick(event: UpdateProfileControlType<string>) {
-        console.log(event, this.profileForm.getRawValue());
-    }
-
     stepOneInvalid() {
         const isNameInvalid = this.profileForm.get("title")!.status === "INVALID";
         const isDescInvalid = this.profileForm.get("description")!.status === "INVALID";
@@ -231,28 +223,25 @@ export class ModalNewThemeProfile extends ModalComponent {
     }
 
     onCreate() {
-        this.themeService
-            .createTheme(this.profileForm.getRawValue() as unknown as ThemeBodyType)
-            .subscribe({
-                next: (theme) => {
-                    this.themeState.addTheme(theme);
-                    this.generalService.successSnackbar("theme created successfully");
-                    this.onClose();
-                },
-                error: () => {
-                    this.generalService.errorSnackbar("error creating theme");
-                },
-            });
+        this.themeService.createTheme(this.profileForm.getRawValue()).subscribe({
+            next: (theme) => {
+                this.themeState.addTheme(theme);
+                this.generalService.successSnackbar("theme created successfully");
+                this.onClose();
+            },
+            error: () => {
+                this.generalService.errorSnackbar("error creating theme");
+            },
+        });
     }
 
     onUpdate() {
-        const data: ProfileThemeType = {
+        const data: ThemeUpdateType = {
             ...this.profileForm.getRawValue(),
             id: this.data.theme.id,
         };
         this.themeService.updateTheme(data).subscribe({
             next: (theme) => {
-                console.log(theme);
                 this.themeState.updateTheme(theme);
 
                 if (this.data.selected) this.themeService.setTheme(theme);

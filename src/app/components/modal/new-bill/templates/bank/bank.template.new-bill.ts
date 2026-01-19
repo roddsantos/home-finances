@@ -1,22 +1,15 @@
 import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
-import {
-    FormControl,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { BankState } from "src/app/core/subjects/subjects.bank";
-import { Bank, Company } from "src/app/core/types/objects";
 import { MatOption } from "@angular/material/core";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
 import { BANK_FORM } from "src/utils/constants/forms";
 import { MatIconModule } from "@angular/material/icon";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
-import { BankBillForm, ErrorsBillForm } from "src/app/core/types/forms";
+import { BankBillForm } from "src/app/core/types/forms";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { ToggleButtonComponent } from "src/app/components/toggle-buttons/toggle-buttons.component";
 import { BANK_TYPES } from "src/utils/constants/bills";
@@ -42,48 +35,27 @@ import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-butt
     exportAs: "templateBanks",
 })
 export class BankTemplateNewBill {
-    constructor() {
-        this.bankForm.valueChanges.subscribe((data) => {
-            this.setBankData.emit({ ...data });
-        });
-    }
+    constructor() {}
     public companies = inject(CompanyState);
     public banks = inject(BankState);
 
-    @Input() bankData: BankBillForm;
-    @Input() bankDataErrors: ErrorsBillForm<BankBillForm>;
+    @Input({ required: true }) bank1Control: FormControl<string | null>;
+    @Input({ required: true }) bank2Control: FormControl<string | null>;
+    @Input({ required: true }) isPaymentControl: FormControl<boolean>;
+    @Input({ required: true }) companyControl: FormControl<string | null>;
     @Output() setBankData = new EventEmitter<Partial<BankBillForm>>();
 
-    errorMessage = {
+    public errorMessage = {
         bank1: BANK_FORM.noBank,
         sameBank: BANK_FORM.sameBanks,
     };
 
-    banksMode = BANK_TYPES;
-
-    bankForm = new FormGroup({
-        bank1: new FormControl<Bank | null>(null, {
-            nonNullable: false,
-            validators: [Validators.required],
-        }),
-        bank2: new FormControl<Bank | null>(null, { nonNullable: false }),
-        isPayment: new FormControl<boolean>(true, {
-            nonNullable: true,
-        }),
-        company: new FormControl<Company | null>(null, {
-            nonNullable: false,
-        }),
-        isBetweenAccounts: new FormControl<boolean>(false),
-    });
-
-    ngOnInit() {
-        this.bankForm.patchValue({ ...this.bankData });
-    }
+    public banksMode = BANK_TYPES;
+    public isBetweenAccounts = new FormControl<boolean>(false);
 
     handleChange(item: ToggleButtonItemsType<boolean>) {
         if (!item.value) {
-            this.bankForm.controls.bank2.patchValue(null);
-            this.setBankData.emit({ ...this.bankForm.getRawValue(), bank2: null });
+            this.bank2Control.patchValue(null);
         }
     }
 }

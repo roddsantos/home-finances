@@ -11,10 +11,10 @@ import {
 import { MatIcon } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { DialogRef } from "@angular/cdk/dialog";
-import { AsyncPipe, CommonModule, NgTemplateOutlet } from "@angular/common";
+import { CommonModule, NgTemplateOutlet } from "@angular/common";
 import { ModalState } from "src/app/core/subjects/subjects.modal";
 import { SizeType } from "src/app/core/types/components";
-import { GeneralComponent } from "../general/general.component";
+import { GeneralComponent } from "../../core/general/general.component";
 import { CustonButton } from "../button/custom-button.component";
 
 @Component({
@@ -22,14 +22,7 @@ import { CustonButton } from "../button/custom-button.component";
     templateUrl: "./modal.component.html",
     styleUrls: ["./modal.component.css"],
     standalone: true,
-    imports: [
-        CommonModule,
-        MatIcon,
-        NgTemplateOutlet,
-        MatButtonModule,
-        AsyncPipe,
-        CustonButton,
-    ],
+    imports: [CommonModule, CustonButton, MatButtonModule, MatIcon, NgTemplateOutlet],
 })
 export class ModalComponent extends GeneralComponent implements OnChanges {
     constructor() {

@@ -1,4 +1,4 @@
-import { DashboardSavingsType } from "src/app/core/types/subjects/dashboard.subjects";
+import { DashboardSavingsType } from "src/app/core/types/data/dashboard.types";
 import { currentPallete, getThemeVars } from "src/utils/color";
 import { Chart } from "chart.js/auto";
 
