@@ -21,7 +21,7 @@ import {
     DashboardSavingsType,
     MonthBillsType,
     PiggyBanksProgressionType,
-} from "src/app/core/types/subjects/dashboard.subjects";
+} from "src/app/core/types/data/dashboard.types";
 import { BankService } from "src/app/services/bank.service";
 import { BillService } from "src/app/services/bill.service";
 import { CreditCardService } from "src/app/services/credit-card.service";
@@ -196,7 +196,7 @@ export class PageDashboard {
     setSavingsProgression(piggyBanksProgression: PiggyBanksProgressionType[]) {
         this.billsPerMonthChart = piggyBanksProgressionChart(
             piggyBanksProgression,
-            this.theme
+            this.theme,
         );
     }
 
@@ -206,7 +206,7 @@ export class PageDashboard {
 
     handleMonthSpan() {
         this.dashboardState.updateMonthSpan(
-            this.monthSpan === 5 ? 1 : this.monthSpan + 1
+            this.monthSpan === 5 ? 1 : this.monthSpan + 1,
         );
         this.fetchBillsProgression();
         this.billsPerMonthChart.update();

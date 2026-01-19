@@ -8,7 +8,7 @@ import {
     DashboardBillsPerMonthType,
     DashboardSavingsType,
     MonthBillsType,
-} from "../core/types/subjects/dashboard.subjects";
+} from "../core/types/data/dashboard.types";
 import { CreditCardObjectType } from "../core/types/data/credit-card.types";
 import { GeneralService } from "./general.service";
 

@@ -1,7 +1,7 @@
 import { currentPallete, getThemeVars, tint } from "src/utils/color";
 import { Chart } from "chart.js/auto";
 import { Context } from "chartjs-plugin-datalabels";
-import { PiggyBanksProgressionType } from "src/app/core/types/subjects/dashboard.subjects";
+import { PiggyBanksProgressionType } from "src/app/core/types/data/dashboard.types";
 import { MONTHS } from "src/utils/constants/general";
 
 const pallete = currentPallete();
@@ -54,13 +54,13 @@ const lineOptions: any = (datasets: any[]) => {
 
 export function piggyBanksProgressionChart(
     piggyBanksProgression: PiggyBanksProgressionType[],
-    theme: string
+    theme: string,
 ) {
     return new Chart("piggy-banks-progression", {
         type: "line",
         data: {
             labels: piggyBanksProgression[0].progression.map(
-                (pb) => MONTHS[pb.month].short + "/" + pb.year
+                (pb) => MONTHS[pb.month].short + "/" + pb.year,
             ),
             datasets: piggyBanksProgression.map((pb, i) => ({
                 label: pb.bank,

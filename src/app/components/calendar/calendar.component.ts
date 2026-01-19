@@ -19,7 +19,7 @@ import { DashboardState } from "src/app/core/subjects/subjects.dashboard";
 import { Subscription } from "rxjs";
 import { Dialog } from "@angular/cdk/dialog";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
-import { MonthBillsType } from "src/app/core/types/subjects/dashboard.subjects";
+import { MonthBillsType } from "src/app/core/types/data/dashboard.types";
 import { MONTHBILLSTYPE_INITIALIZER } from "src/utils/constants/mocks";
 import { GeneralService } from "src/app/services/general.service";
 
@@ -86,7 +86,7 @@ export class CalendarComponent implements OnChanges, OnDestroy {
                 weekDay: new Date(
                     this.year,
                     this.month,
-                    new Date(this.year, this.month, i).getDate()
+                    new Date(this.year, this.month, i).getDate(),
                 ).getDay(),
                 thisMonth: true,
                 thisYear: true,

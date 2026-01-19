@@ -7,7 +7,7 @@ import {
     DashboardBillsPerMonthType,
     DashboardSavingsType,
     MonthBillsType,
-} from "src/app/core/types/subjects/dashboard.subjects";
+} from "src/app/core/types/data/dashboard.types";
 import { BillDataObjectType } from "../types/data/bills.types";
 import { CreditCardObjectType } from "../types/data/credit-card.types";
 

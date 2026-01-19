@@ -1,4 +1,4 @@
-import { PiggyBanksProgressionType } from "src/app/core/types/subjects/dashboard.subjects";
+import { PiggyBanksProgressionType } from "src/app/core/types/data/dashboard.types";
 import { currentPallete, getThemeVars, tint } from "src/utils/color";
 import { Chart } from "chart.js/auto";
 import { MONTHS } from "src/utils/constants/general";
@@ -63,13 +63,13 @@ const lineOptions: any = (datasets: any[]) => {
 
 export function creditCardProgressionChart(
     piggyBanksProgression: PiggyBanksProgressionType[],
-    theme: string
+    theme: string,
 ) {
     return new Chart("credit-cards-chart", {
         type: "line",
         data: {
             labels: piggyBanksProgression[0].progression.map(
-                (pb) => MONTHS[pb.month].short + "/" + pb.year
+                (pb) => MONTHS[pb.month].short + "/" + pb.year,
             ),
             datasets: piggyBanksProgression.map((pb, i) => ({
                 label: pb.bank,

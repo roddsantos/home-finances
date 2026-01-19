@@ -89,3 +89,12 @@ export type BillUpdateResponse = {
     creditCard: CreditCardObjectType;
     bill: BillObjectType;
 };
+
+export type BillsMetadataSubjectType = {
+    total: number;
+    count: number;
+    incomeTotal: number;
+    incomeCount: number;
+    outcomeTotal: number;
+    outcomeCount: number;
+};

@@ -134,7 +134,7 @@
     &.list {
         grid-template-areas: "title description bill-tags date-container value-container bill-buttons";
         grid-template-rows: repeat(1, max-content);
-        grid-template-columns: 15% 26% 24% 13% 12% 10%;
+        grid-template-columns: 15% 23% 27% 13% 12% 10%;
         column-gap: 4px;
         padding: 0.5rem 1rem;
         @media screen and (max-width: 1500px) {
@@ -256,7 +256,6 @@
     & .category-name {
         margin: auto;
         color: var(--text-1);
-        font-size: 0.75rem;
     }
 }
 

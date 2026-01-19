@@ -1,7 +1,7 @@
 import {
     DashboardSavingsType,
     MonthBillsType,
-} from "src/app/core/types/subjects/dashboard.subjects";
+} from "src/app/core/types/data/dashboard.types";
 
 export const DASHBOARD_SAVINGS_INITIALIZER: DashboardSavingsType = {
     totalIncome: 0,

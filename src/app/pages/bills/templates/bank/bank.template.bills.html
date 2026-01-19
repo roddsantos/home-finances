@@ -27,6 +27,7 @@
         matTooltip="category"
         [id]="'tag-category-'+data.id"
         theme="var(--bank)"
+        class="category-container"
         transform
     >
         <mat-icon
@@ -34,7 +35,6 @@
             aria-hidden="false"
             aria-label="icon"
             [fontIcon]="data.category.icon"
-            class="category-container"
         ></mat-icon>
         <p class="category-name">{{data.category.name}}</p>
     </tag>

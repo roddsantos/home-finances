@@ -5,8 +5,11 @@ import {
     FeedbackVariant,
     PaginationType,
 } from "src/app/core/types/components";
-import { BillsMetadataSubjectType } from "../types/subjects/bills.subjects";
-import { BillDataObjectType, BillsMetadataType } from "../types/data/bills.types";
+import {
+    BillDataObjectType,
+    BillsMetadataType,
+    BillsMetadataSubjectType,
+} from "../types/data/bills.types";
 
 @Injectable({
     providedIn: "root",

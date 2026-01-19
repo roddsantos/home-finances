@@ -1,4 +1,4 @@
-import { MonthBillsType } from "./subjects/dashboard.subjects";
+import { MonthBillsType } from "./data/dashboard.types";
 
 export type ListStatus = "data" | "empty" | "error" | "loading";
 

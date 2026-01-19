@@ -1,6 +1,6 @@
 import { Context } from "chartjs-plugin-datalabels";
 import { Chart } from "chart.js/auto";
-import { DashboardBillsPerMonthType } from "src/app/core/types/subjects/dashboard.subjects";
+import { DashboardBillsPerMonthType } from "src/app/core/types/data/dashboard.types";
 import { MONTHS } from "src/utils/constants/general";
 import { currentPallete, getThemeVars, tint } from "src/utils/color";
 
@@ -63,7 +63,7 @@ const lineOptions: any = (datasets: any[]) => {
 
 export const billsProgressionChart = (
     data: DashboardBillsPerMonthType[],
-    theme: string
+    theme: string,
 ) =>
     new Chart("bills-per-month", {
         type: "line",
