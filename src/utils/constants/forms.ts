@@ -75,4 +75,6 @@ export const USER_FORMS = {
     surname: "surname can't be empty",
     username: "username can't be empty",
     usernameExists: "this username already exists",
+    invalidPassword: "password can't be empty",
+    passwordsDontMatch: "passwords don't match",
 };

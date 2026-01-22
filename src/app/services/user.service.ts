@@ -3,6 +3,7 @@ import { USER } from "src/utils/constants/services";
 import { LocalStorageService } from "./local-storage.service";
 import { GeneralService } from "./general.service";
 import {
+    UpdatePasswordType,
     UserCreateType,
     UserObjectType,
     UserUpdateType,
@@ -18,16 +19,21 @@ export class UserService extends GeneralService {
         return this.http.get<UserObjectType>(USER + `/${username}`);
     }
 
-    createUser(data: UserCreateType) {
-        return this.http.post<UserCreateType>(USER, data);
+    createUser(payload: UserCreateType) {
+        return this.http.post<UserCreateType>(USER, payload);
     }
 
     deleteUser(id: string) {
         return this.http.delete<string>(USER + `/${id}`);
     }
 
-    updateUser(data: UserUpdateType) {
+    updateUser(payload: UserUpdateType) {
         const user = this.localStorageService.getUser();
-        return this.http.patch<UserObjectType>(USER, { ...data, id: user?.id });
+        return this.http.patch<UserObjectType>(USER, { ...payload, id: user?.id });
+    }
+
+    updatePassword(payload: UpdatePasswordType) {
+        const user = this.localStorageService.getUser();
+        return this.http.patch(USER + "/password", { ...payload, id: user?.id });
     }
 }
