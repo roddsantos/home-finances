@@ -7,6 +7,10 @@ import { UserObjectType } from "../core/types/data/user.types";
     providedIn: "root",
 })
 export class LocalStorageService {
+    getToken() {
+        return localStorage.getItem("token") || "";
+    }
+
     setUser(user: UserObjectType) {
         let str = JSON.stringify(user);
         localStorage.setItem("user", str);
