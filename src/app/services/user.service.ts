@@ -34,6 +34,9 @@ export class UserService extends GeneralService {
 
     updatePassword(payload: UpdatePasswordType) {
         const user = this.localStorageService.getUser();
-        return this.http.patch(USER + "/password", { ...payload, id: user?.id });
+        return this.http.patch(USER + "/password", {
+            newPassword: payload.newPassword,
+            id: user?.id,
+        });
     }
 }

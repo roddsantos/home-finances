@@ -23,6 +23,7 @@ import { GeneralComponent } from "src/app/core/general/general.component";
 import { USER_FORMS } from "src/utils/constants/forms";
 import { DEFAULT_THEME } from "src/utils/constants/colors";
 import { ThemeService } from "src/app/services/theme.service";
+import { ModalChangePassword } from "src/app/components/modal/change-password/change-password.modal";
 
 @Component({
     selector: "profile-settings",
@@ -123,5 +124,9 @@ export class ProfileSettingsComponent extends GeneralComponent {
                 },
                 error: () => this.generalService.errorSnackbar("error updating user"),
             });
+    }
+
+    openPasswordChangeModal() {
+        this.generalService.dialog.open(ModalChangePassword, {});
     }
 }

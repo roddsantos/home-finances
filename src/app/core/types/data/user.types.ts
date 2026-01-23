@@ -21,7 +21,6 @@ export type UserUpdateType = Partial<UserCreateType> & {
 };
 
 export type UpdatePasswordType = {
-    currentPassword: string;
     newPassword: string;
     confirmPassword: string;
 };

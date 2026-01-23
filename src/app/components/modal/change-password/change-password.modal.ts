@@ -6,13 +6,20 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angula
 import { USER_FORMS } from "src/utils/constants/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { UserService } from "src/app/services/user.service";
+import { MatInputModule } from "@angular/material/input";
 
 @Component({
     selector: "modal-change-password",
     templateUrl: "./change-password.modal.html",
     styleUrls: ["./change-password.modal.css"],
     standalone: true,
-    imports: [CommonModule, ModalComponent, ReactiveFormsModule, MatFormFieldModule],
+    imports: [
+        CommonModule,
+        ModalComponent,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+    ],
 })
 export class ModalChangePassword extends ModalComponent {
     public userService = inject(UserService);
@@ -22,16 +29,20 @@ export class ModalChangePassword extends ModalComponent {
     }
 
     public passwordForm = new FormGroup({
-        currentPassword: new FormControl<string>("", {
-            validators: [Validators.required],
-            nonNullable: true,
-        }),
         newPassword: new FormControl<string>("", {
-            validators: [Validators.required, Validators.minLength(8)],
+            validators: [
+                Validators.required,
+                Validators.minLength(8),
+                Validators.maxLength(30),
+            ],
             nonNullable: true,
         }),
         confirmPassword: new FormControl<string>("", {
-            validators: [Validators.required],
+            validators: [
+                Validators.required,
+                Validators.minLength(8),
+                Validators.maxLength(30),
+            ],
             nonNullable: true,
         }),
     });

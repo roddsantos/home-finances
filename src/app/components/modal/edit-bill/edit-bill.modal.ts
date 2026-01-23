@@ -165,9 +165,15 @@ export class ModalEditBill extends ModalComponent {
 
     onSubmit() {
         const dataToUpdate = this.getFormDirtyValues(this.billForm);
+        const totalParcel =
+            this.data.type === "money"
+                ? dataToUpdate["total"]
+                : dataToUpdate["totalParcel"];
+
         const payload = {
             ...dataToUpdate,
             id: this.data.id,
+            totalParcel,
         };
         let observer;
 
