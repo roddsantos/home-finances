@@ -13,7 +13,6 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { debounceTime, distinctUntilChanged } from "rxjs";
 import { CardComponent } from "src/app/components/card/card.component";
-import { LocalStorageService } from "src/app/services/local-storage.service";
 import { UserService } from "src/app/services/user.service";
 import { UserState } from "src/app/core/subjects/subjects.user";
 import { UserPipe } from "src/utils/pipes/user";
@@ -24,6 +23,7 @@ import { USER_FORMS } from "src/utils/constants/forms";
 import { DEFAULT_THEME } from "src/utils/constants/colors";
 import { ThemeService } from "src/app/services/theme.service";
 import { ModalChangePassword } from "src/app/components/modal/change-password/change-password.modal";
+import { AuthService } from "src/app/services/auth.service";
 
 @Component({
     selector: "profile-settings",
@@ -46,8 +46,8 @@ import { ModalChangePassword } from "src/app/components/modal/change-password/ch
 export class ProfileSettingsComponent extends GeneralComponent {
     public userState = inject(UserState);
     public userService = inject(UserService);
-    public localStorageService = inject(LocalStorageService);
     public themeService = inject(ThemeService);
+    private authService = inject(AuthService);
 
     public storedUser: UserObjectType | null;
     public errorMessage = USER_FORMS;
@@ -101,8 +101,7 @@ export class ProfileSettingsComponent extends GeneralComponent {
     }
 
     onLogout() {
-        this.userState.removeUser();
-        this.generalService.navigateTo("/login");
+        this.authService.logout();
         this.themeService.setTheme(DEFAULT_THEME);
     }
 

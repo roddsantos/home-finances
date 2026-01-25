@@ -2,18 +2,19 @@ import { inject, Injectable } from "@angular/core";
 import { RoutesType } from "src/app/core/types/general";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { Router } from "@angular/router";
-import { ComponentType } from "@angular/cdk/portal";
 import { Dialog } from "@angular/cdk/dialog";
 import { CustomSnackbarComponent } from "../components/custom-snackbar/custom-snackbar.component";
 import { HttpClient } from "@angular/common/http";
 import { UserState } from "../core/subjects/subjects.user";
+import { LocalStorageService } from "./local-storage.service";
 
 @Injectable({
     providedIn: "root",
 })
 export class GeneralService {
-    public snack = inject(CustomSnackbarComponent);
+    private snack = inject(CustomSnackbarComponent);
     public generalState = inject(GeneralState);
+    public localStorageService = inject(LocalStorageService);
     public dialog = inject(Dialog);
     private router = inject(Router);
     public http = inject(HttpClient);

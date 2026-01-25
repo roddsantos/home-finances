@@ -2,23 +2,18 @@
     <mat-drawer
         [ngClass]="{
             'drawer-container': true,
-            binary: (generalState.theme$ | async) === 'binary'
+            binary: (generalState.theme$ | async) === 'binary',
         }"
         #drawer
         mode="side"
         [opened]="true"
     >
-        <div
-            [ngClass]="{
-                home: true,
-            }"
-            (click)="onChangeRoute('/')"
-        >
+        <div class="home" (click)="onChangeRoute('/')">
             <mat-icon
                 [ngClass]="{
                     'home-icon': true,
                     'material-symbols-rounded': '/' !== (generalState.page$ | async),
-                    binary: (generalState.theme$ | async) === 'binary'
+                    binary: (generalState.theme$ | async) === 'binary',
                 }"
                 aria-hidden="false"
                 aria-label="Example home icon"
@@ -27,7 +22,7 @@
             <span
                 [ngClass]="{
                     'home-title': true,
-                    binary: (generalState.theme$ | async) === 'binary'
+                    binary: (generalState.theme$ | async) === 'binary',
                 }"
                 >finances</span
             >

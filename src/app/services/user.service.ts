@@ -1,6 +1,5 @@
-import { inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { USER } from "src/utils/constants/services";
-import { LocalStorageService } from "./local-storage.service";
 import { GeneralService } from "./general.service";
 import {
     UpdatePasswordType,
@@ -13,8 +12,6 @@ import {
     providedIn: "root",
 })
 export class UserService extends GeneralService {
-    private localStorageService = inject(LocalStorageService);
-
     getUser(username: string) {
         return this.http.get<UserObjectType>(USER + `/${username}`);
     }

@@ -1,8 +1,1 @@
-<style></style>
-
-<app-layout
-    *ngIf="(generalState.page$ | async) !== '/login'"
-    #layout
-    [theme]="theme"
-></app-layout>
-<login-page *ngIf="(generalState.page$ | async) === '/login'" />
+<router-outlet></router-outlet>

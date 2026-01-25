@@ -1,4 +1,4 @@
-import { inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { GeneralService } from "./general.service";
 import {
     ColorThemeType,
@@ -7,7 +7,6 @@ import {
     ThemeCreateType,
     ThemeUpdateType,
 } from "../core/types/pages/theme";
-import { LocalStorageService } from "./local-storage.service";
 import {
     COLOR_STATUS,
     DEFAULT_BACKGROUND_COLORS,
@@ -23,8 +22,6 @@ import { THEME } from "src/utils/constants/services";
     providedIn: "root",
 })
 export class ThemeService extends GeneralService {
-    public localStorageService = inject(LocalStorageService);
-
     getThemes() {
         return this.user.user$.pipe(
             take(1),

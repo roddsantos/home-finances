@@ -30,7 +30,7 @@ export class CustomSnackbarComponent {
         variant?: SnackbarVariant,
         actionLabel?: string,
         action?: SnackbarData["action"],
-        options?: MatSnackBarConfig<any>
+        options?: MatSnackBarConfig<any>,
     ) {
         this.snackData = {
             message,
@@ -40,8 +40,8 @@ export class CustomSnackbarComponent {
         this._snackBar
             .open(message, actionLabel, {
                 panelClass: ["snackbar-container", variant || "default"],
-                horizontalPosition: "right",
-                verticalPosition: "top",
+                horizontalPosition: "center",
+                verticalPosition: "bottom",
                 duration: 3000,
                 ...options,
             })

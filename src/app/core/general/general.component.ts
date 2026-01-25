@@ -2,6 +2,7 @@ import { Component, inject } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { GeneralService } from "src/app/services/general.service";
+import { LocalStorageService } from "src/app/services/local-storage.service";
 
 @Component({
     selector: "",
@@ -10,6 +11,7 @@ import { GeneralService } from "src/app/services/general.service";
 export class GeneralComponent {
     public generalService = inject(GeneralService);
     public generalState = inject(GeneralState);
+    public localStorageService = inject(LocalStorageService);
 
     getFormDirtyValues(form: FormGroup) {
         let dirtyValues: Record<string, any> = {};
