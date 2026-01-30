@@ -121,7 +121,7 @@ export class CustomFilterComponent {
         const hasMonth = filters.find((filter) => filter.identifier === "month");
         if (hasMonth)
             this.monthCtrl.patchValue(
-                this.months.find((month) => month.order === hasMonth?.id) || null
+                this.months.find((month) => month.order === hasMonth?.id) || null,
             );
 
         const hasYear = filters.find((filter) => filter.identifier === "year");
@@ -194,7 +194,7 @@ export class CustomFilterComponent {
         const value = event.target.value;
         let filtersFromState: FilterDisplay[] = this.getFilters();
         const filterIndex = filtersFromState.findIndex(
-            (filter) => filter.identifier === "name"
+            (filter) => filter.identifier === "name",
         );
         if (filterIndex >= 0) {
             this.filterState.removeFilter(filtersFromState[filterIndex]);
@@ -219,7 +219,7 @@ export class CustomFilterComponent {
     addMonth(monthIndex: number) {
         let filtersFromState: FilterDisplay[] = this.getFilters();
         const filterIndex = filtersFromState.findIndex(
-            (filter) => filter.identifier === "month"
+            (filter) => filter.identifier === "month",
         );
         if (filterIndex >= 0) {
             this.filterState.removeFilter(filtersFromState[filterIndex]);
@@ -237,7 +237,7 @@ export class CustomFilterComponent {
     addYear(year: number) {
         let filtersFromState: FilterDisplay[] = this.getFilters();
         const filterIndex = filtersFromState.findIndex(
-            (filter) => filter.identifier === "year"
+            (filter) => filter.identifier === "year",
         );
         if (filterIndex >= 0) {
             this.filterState.removeFilter(filtersFromState[filterIndex]);
@@ -256,8 +256,8 @@ export class CustomFilterComponent {
         const { label, value } = event;
         if (!label || !value) return;
 
-        this.addMonth(value.month);
         this.addYear(value.year);
+        this.addMonth(value.month);
 
         this.getBills();
     }
@@ -348,7 +348,7 @@ export class CustomFilterComponent {
         }
         if (countYears === 1 && countMonths > 0) {
             this.generalService.warningSnackbar(
-                "you need at least one year when filtering months"
+                "you need at least one year when filtering months",
             );
             return;
         }

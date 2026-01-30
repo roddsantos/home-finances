@@ -7,6 +7,7 @@ import { UserObjectType } from "../core/types/data/user.types";
     providedIn: "root",
 })
 export class LocalStorageService {
+    // TOKEN FUNCTIONS
     setToken(token: string) {
         localStorage.setItem("token", token);
     }
@@ -19,6 +20,7 @@ export class LocalStorageService {
         localStorage.removeItem("token");
     }
 
+    // USER FUNCTIONS
     setUser(user: UserObjectType) {
         let str = JSON.stringify(user);
         localStorage.setItem("user", str);
@@ -33,6 +35,7 @@ export class LocalStorageService {
         localStorage.removeItem("user");
     }
 
+    // FILTER CONTAINER
     getFilterContainerStatus() {
         return localStorage.getItem("filterContainer");
     }
@@ -41,6 +44,7 @@ export class LocalStorageService {
         localStorage.setItem("filterContainer", `${status}`);
     }
 
+    // FILTERS
     setFilters(filters: string) {
         localStorage.setItem("filters", filters);
     }
@@ -54,6 +58,7 @@ export class LocalStorageService {
         localStorage.removeItem("filters");
     }
 
+    // THEMES
     setTheme(theme: ThemeObjectType) {
         let str = JSON.stringify(theme);
         localStorage.setItem("theme", str);
