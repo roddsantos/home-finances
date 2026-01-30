@@ -2,6 +2,8 @@ import { environment } from "src/environments/environment";
 
 export const URL = environment.backend_url;
 
+export const AUTH = URL + "/auth";
+
 export const COMPANY = URL + "/company";
 
 export const USER = URL + "/user";

@@ -1,8 +1,8 @@
-import { inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { USER } from "src/utils/constants/services";
-import { LocalStorageService } from "./local-storage.service";
 import { GeneralService } from "./general.service";
 import {
+    UpdatePasswordType,
     UserCreateType,
     UserObjectType,
     UserUpdateType,
@@ -12,22 +12,25 @@ import {
     providedIn: "root",
 })
 export class UserService extends GeneralService {
-    private localStorageService = inject(LocalStorageService);
-
     getUser(username: string) {
         return this.http.get<UserObjectType>(USER + `/${username}`);
     }
 
-    createUser(data: UserCreateType) {
-        return this.http.post<UserCreateType>(USER, data);
+    createUser(payload: UserCreateType) {
+        return this.http.post<UserCreateType>(USER, payload);
     }
 
     deleteUser(id: string) {
         return this.http.delete<string>(USER + `/${id}`);
     }
 
-    updateUser(data: UserUpdateType) {
-        const user = this.localStorageService.getUser();
-        return this.http.patch<UserObjectType>(USER, { ...data, id: user?.id });
+    updateUser(payload: UserUpdateType) {
+        return this.http.patch<UserObjectType>(USER, { ...payload });
+    }
+
+    updatePassword(payload: UpdatePasswordType) {
+        return this.http.patch(USER + "/password", {
+            newPassword: payload.newPassword,
+        });
     }
 }

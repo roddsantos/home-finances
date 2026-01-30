@@ -8,8 +8,6 @@ import { UserObjectType } from "../types/data/user.types";
     providedIn: "root",
 })
 export class UserState {
-    private storageService = inject(LocalStorageService);
-
     private _user$ = new BehaviorSubject<UserObjectType | null>(null);
     private _status$ = new BehaviorSubject<ListStatus>("empty");
 
@@ -22,11 +20,9 @@ export class UserState {
 
     setUser(u: UserObjectType | null) {
         this._user$.next(u);
-        if (u !== null) this.storageService.setUser(u);
     }
 
     removeUser() {
         this._user$.next(null);
-        this.storageService.removeUser();
     }
 }

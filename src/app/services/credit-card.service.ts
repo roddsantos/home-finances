@@ -13,23 +13,11 @@ import {
 })
 export class CreditCardService extends GeneralService {
     getCreditCards() {
-        return this.user.user$.pipe(
-            take(1),
-            switchMap((user) =>
-                this.http.get<CreditCardObjectType[]>(CREDIT_CARD + `/${user!.id}`)
-            )
-        );
+        return this.http.get<CreditCardObjectType[]>(CREDIT_CARD);
     }
 
     createCreditCard(data: CreditCardCreateType) {
-        return this.user.user$.pipe(
-            mergeMap((user) =>
-                this.http.post<CreditCardObjectType>(CREDIT_CARD, {
-                    ...data,
-                    userId: user!.id,
-                })
-            )
-        );
+        return this.http.post<CreditCardObjectType>(CREDIT_CARD, data);
     }
 
     deleteCreditCard(id: string) {

@@ -192,8 +192,12 @@ export class ModalNewBill extends ModalComponent {
         }
         observer?.subscribe({
             next: ({ bill, banks, creditCard }) => {
-                banks.forEach((bank) => this.bankState.updateBank(bank));
-                this.creditCardState.updateCreditCard(creditCard);
+                if (banks) {
+                    banks.forEach((bank) => this.bankState.updateBank(bank));
+                }
+                if (creditCard) {
+                    this.creditCardState.updateCreditCard(creditCard);
+                }
                 this.billService.getBills().subscribe({
                     next: (bills) => this.billState.setBills(bills),
                 });

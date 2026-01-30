@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import {
     FormControl,
     FormGroup,
@@ -11,10 +11,13 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { Router } from "@angular/router";
 import { CustomSnackbarComponent } from "src/app/components/custom-snackbar/custom-snackbar.component";
-import { LocalStorageService } from "src/app/services/local-storage.service";
 import { UserService } from "src/app/services/user.service";
+import { AuthService } from "src/app/services/auth.service";
 import { UserState } from "src/app/core/subjects/subjects.user";
-import { GeneralService } from "src/app/services/general.service";
+import { MatIconModule } from "@angular/material/icon";
+import { GeneralPage } from "src/app/core/general/page.general";
+import { ThemeService } from "src/app/services/theme.service";
+import { DEFAULT_THEME } from "src/utils/constants/colors";
 
 @Component({
     selector: "login-page",
@@ -27,17 +30,33 @@ import { GeneralService } from "src/app/services/general.service";
         ReactiveFormsModule,
         MatButtonModule,
         MatInputModule,
+        MatIconModule,
     ],
 })
-export class PageLogin implements OnInit {
-    public storage = inject(LocalStorageService);
+export class PageLogin extends GeneralPage {
     public userState = inject(UserState);
     public userService = inject(UserService);
+    public authService = inject(AuthService);
+    public themeService = inject(ThemeService);
+
     public snack = inject(CustomSnackbarComponent);
-    private generalService = inject(GeneralService);
     public router = inject(Router);
 
+    public isPasswordVisible = false;
+
+    public loginGroup = new FormGroup({
+        username: new FormControl<string>("", {
+            nonNullable: true,
+            validators: [Validators.required, Validators.max(30)],
+        }),
+        password: new FormControl<string>("", {
+            nonNullable: true,
+            validators: [Validators.required, Validators.max(30)],
+        }),
+    });
+
     ngOnInit() {
+        this.themeService.setTheme(DEFAULT_THEME);
         this.userState.user$.subscribe({
             next: (user) => {
                 if (user) this.generalService.navigateTo("/");
@@ -45,26 +64,22 @@ export class PageLogin implements OnInit {
         });
     }
 
-    loginGroup = new FormGroup({
-        username: new FormControl<string>("", {
-            nonNullable: true,
-            validators: [Validators.required, Validators.max(20)],
-        }),
-        // password: new FormControl<string>("", {
-        //     validators: [Validators.required, Validators.max(20)],
-        // }),
-    });
-
     onLogout() {
-        this.storage.removeUser();
+        this.localStorageService.removeUser();
         this.userState.setUser(null);
     }
 
+    onTogglePasswordVisibility() {
+        this.isPasswordVisible = !this.isPasswordVisible;
+    }
+
     onSubmit() {
-        this.userService.getUser(this.loginGroup.value.username!).subscribe({
-            next: (user) => {
+        if (this.loginGroup.invalid) return;
+        this.authService.login(this.loginGroup.getRawValue()).subscribe({
+            next: ({ user, token }) => {
                 this.userState.setUser(user);
-                this.storage.setUser(user);
+                this.localStorageService.setUser(user);
+                this.localStorageService.setToken(token);
                 this.snack.openSnackBar("login successful", "success");
                 this.generalService.navigateTo("/");
             },

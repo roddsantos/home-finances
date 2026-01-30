@@ -55,6 +55,14 @@
                 </div>
             </div>
         </form>
+        <btn variant="primary" (onClick)="openPasswordChangeModal()">
+            <mat-icon
+                aria-hidden="false"
+                aria-label="update password button"
+                fontIcon="lock_reset"
+            ></mat-icon>
+            <p>change password</p>
+        </btn>
         <btn
             variant="primary"
             *ngIf="!((profileForm.valueChanges | async)! | user: 'compare')"

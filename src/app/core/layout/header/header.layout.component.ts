@@ -79,6 +79,7 @@ export class HeaderLayoutComponent {
     public company$: Subscription;
     public bill$: Subscription;
 
+    /*
     constructor() {
         this.search$
             .pipe(debounceTime(300), distinctUntilChanged())
@@ -185,6 +186,7 @@ export class HeaderLayoutComponent {
                 },
             });
     }
+            */
 
     ngOnInit() {
         this.actualPage = window.location.pathname;
@@ -247,10 +249,10 @@ export class HeaderLayoutComponent {
     ngOnDestroy() {
         this.search$.unsubscribe();
         this.page$.unsubscribe();
-        this.creditCard$.unsubscribe();
-        this.company$.unsubscribe();
-        this.banks$.unsubscribe();
-        this.categories$.unsubscribe();
-        this.bill$.unsubscribe();
+        // this.creditCard$.unsubscribe();
+        // this.company$.unsubscribe();
+        // this.banks$.unsubscribe();
+        // this.categories$.unsubscribe();
+        // this.bill$.unsubscribe();
     }
 }

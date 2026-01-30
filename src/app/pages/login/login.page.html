@@ -1,15 +1,25 @@
 <div class="login-page">
-    <form class="form-login" [formGroup]="loginGroup" (ngSubmit)="onSubmit()">
+    <form class="form-login" [formGroup]="loginGroup">
         <mat-form-field appearance="outline">
             <mat-label>username</mat-label>
-            <input (keydown.enter)="onSubmit()" matInput formControlName="username" />
+            <input matInput formControlName="username" />
         </mat-form-field>
-        <button
-            mat-button
-            class="button-primary"
-            type="submit"
-            [disabled]="loginGroup.invalid"
-        >
+        <mat-form-field appearance="outline">
+            <mat-label>password</mat-label>
+            <input
+                [type]="isPasswordVisible ? 'text' : 'password'"
+                (keydown.enter)="onSubmit()"
+                matInput
+                formControlName="password"
+            />
+            <mat-icon
+                class="material-symbols-outlined visibility-icon"
+                matIconSuffix
+                [fontIcon]="isPasswordVisible ? 'visibility' : 'visibility_off'"
+                (click)="onTogglePasswordVisibility()"
+            ></mat-icon>
+        </mat-form-field>
+        <button mat-button class="button-primary" type="submit" (click)="onSubmit()">
             login
         </button>
     </form>

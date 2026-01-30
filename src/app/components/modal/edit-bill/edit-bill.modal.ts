@@ -91,6 +91,13 @@ export class ModalEditBill extends ModalComponent {
                 validators: [Validators.required, Validators.min(0.01)],
             },
         ),
+        totalParcel: new FormControl<number>(
+            { value: this.data.totalParcel, disabled: false },
+            {
+                nonNullable: true,
+                validators: [Validators.required, Validators.min(0.01)],
+            },
+        ),
         settled: new FormControl<boolean>(
             { value: this.data.settled, disabled: this.data.settled },
             { nonNullable: true },
@@ -165,9 +172,15 @@ export class ModalEditBill extends ModalComponent {
 
     onSubmit() {
         const dataToUpdate = this.getFormDirtyValues(this.billForm);
+        const totalParcel =
+            this.data.type === "money"
+                ? dataToUpdate["total"]
+                : dataToUpdate["totalParcel"];
+
         const payload = {
             ...dataToUpdate,
             id: this.data.id,
+            totalParcel,
         };
         let observer;
 

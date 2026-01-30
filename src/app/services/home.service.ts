@@ -19,33 +19,27 @@ export class HomeService {
 
     getBillsInfo(date: DateSubjectType) {
         const params = { ...date };
-        const user = this.localStorageService.getUser();
-
-        return this.http.get<SubjectExpensesType>(HOME + `expenses/${user?.id}`, {
+        return this.http.get<SubjectExpensesType>(HOME + "expenses", {
             params,
         });
     }
 
     getSavingsInfo(date: DateSubjectType) {
         const params = { ...date };
-        const user = this.localStorageService.getUser();
-        return this.http.get<SubjectSavingsType>(HOME + `savings/${user?.id}`, {
+        return this.http.get<SubjectSavingsType>(HOME + "savings", {
             params,
         });
     }
 
     getCreditCardsInfo(date: DateSubjectType) {
         const params = { ...date };
-        const user = this.localStorageService.getUser();
-        return this.http.get<SumAndCountData>(HOME + `invoices/${user?.id}`, { params });
+        return this.http.get<SumAndCountData>(HOME + "invoices", { params });
     }
 
     getRecentBills(date: DateSubjectType) {
         const params = { ...date };
-        const user = this.localStorageService.getUser();
-        return this.http.get<{ bills: BillDataObjectType[] }>(
-            HOME + "recents/" + user?.id,
-            { params }
-        );
+        return this.http.get<{ bills: BillDataObjectType[] }>(HOME + "recents", {
+            params,
+        });
     }
 }

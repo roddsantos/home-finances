@@ -8,9 +8,10 @@ import { AppRoutingModule } from "./app-routing.module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ModalComponent } from "./components/modal/modal.component";
 import { CommonModule } from "@angular/common";
-import { HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { PageLogin } from "./pages/login/login.page";
 import { AppService } from "./app.service";
+import { JwtInterceptor } from "./services/jwt.service";
 
 @NgModule({
     declarations: [AppComponent],
@@ -30,6 +31,11 @@ import { AppService } from "./app.service";
             provide: APP_INITIALIZER,
             useFactory: (appService: AppService) => () => appService.appInitializer(),
             deps: [AppService],
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: JwtInterceptor,
             multi: true,
         },
     ],
