@@ -13,23 +13,11 @@ import { CATEGORY } from "src/utils/constants/services";
 })
 export class CategoryService extends GeneralService {
     getCategories() {
-        return this.user.user$.pipe(
-            take(1),
-            switchMap((user) =>
-                this.http.get<CategoryObjectType[]>(CATEGORY + `/${user!.id}`)
-            )
-        );
+        return this.http.get<CategoryObjectType[]>(CATEGORY);
     }
 
     createCategory(data: CategoryCreateType) {
-        return this.user.user$.pipe(
-            mergeMap((user) =>
-                this.http.post<CategoryObjectType>(CATEGORY, {
-                    ...data,
-                    userId: user!.id,
-                })
-            )
-        );
+        return this.http.post<CategoryObjectType>(CATEGORY, data);
     }
 
     deleteCategory(id: string) {

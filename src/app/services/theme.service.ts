@@ -23,32 +23,19 @@ import { THEME } from "src/utils/constants/services";
 })
 export class ThemeService extends GeneralService {
     getThemes() {
-        return this.user.user$.pipe(
-            take(1),
-            switchMap((user) => this.http.get<ThemeObjectType[]>(THEME + `/${user?.id}`)),
-        );
+        return this.http.get<ThemeObjectType[]>(THEME);
     }
 
     createTheme(data: ThemeCreateType) {
-        return this.user.user$.pipe(
-            mergeMap((user) =>
-                this.http.post<ThemeObjectType>(THEME, {
-                    ...data,
-                    userId: user?.id,
-                }),
-            ),
-        );
+        return this.http.post<ThemeObjectType>(THEME, {
+            ...data,
+        });
     }
 
     updateTheme(data: ThemeUpdateType) {
-        return this.user.user$.pipe(
-            mergeMap((user) =>
-                this.http.patch<ThemeObjectType>(THEME, {
-                    ...data,
-                    userId: user?.id,
-                }),
-            ),
-        );
+        return this.http.patch<ThemeObjectType>(THEME, {
+            ...data,
+        });
     }
 
     deleteTheme(id: string) {

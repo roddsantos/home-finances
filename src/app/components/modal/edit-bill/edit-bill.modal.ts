@@ -91,6 +91,13 @@ export class ModalEditBill extends ModalComponent {
                 validators: [Validators.required, Validators.min(0.01)],
             },
         ),
+        totalParcel: new FormControl<number>(
+            { value: this.data.totalParcel, disabled: false },
+            {
+                nonNullable: true,
+                validators: [Validators.required, Validators.min(0.01)],
+            },
+        ),
         settled: new FormControl<boolean>(
             { value: this.data.settled, disabled: this.data.settled },
             { nonNullable: true },
