@@ -64,7 +64,10 @@ export class ToggleButtonComponent {
     }
 
     handleClick(item: ToggleButtonItemsType<any>) {
-        if (this.formController) this.formController.patchValue(item.value);
+        if (this.formController) {
+            this.formController.markAsDirty();
+            this.formController.patchValue(item.value);
+        }
         this.onClick.emit(item);
     }
 }

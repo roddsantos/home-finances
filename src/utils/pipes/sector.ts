@@ -11,12 +11,25 @@ export class SectorPipe implements PipeTransform {
                 if (value.parcels) return "var(--bill)";
                 return value.color;
             case "icon":
-                if (Object.getOwnPropertyDescriptor(value, "savings"))
+                if (
+                    value.type === "bank" ||
+                    Object.getOwnPropertyDescriptor(value, "savings")
+                )
                     return "account_balance";
-                if (Object.getOwnPropertyDescriptor(value, "invoice"))
+                if (
+                    value.type === "credit-card" ||
+                    Object.getOwnPropertyDescriptor(value, "invoice")
+                )
                     return "credit_card";
-                if (Object.getOwnPropertyDescriptor(value, "icon")) return "category";
-                if (Object.getOwnPropertyDescriptor(value, "parcels"))
+                if (
+                    value.type === "category" ||
+                    Object.getOwnPropertyDescriptor(value, "icon")
+                )
+                    return "category";
+                if (
+                    value.type === "bill" ||
+                    Object.getOwnPropertyDescriptor(value, "parcels")
+                )
                     return "receipt_long";
                 return "store";
             default:

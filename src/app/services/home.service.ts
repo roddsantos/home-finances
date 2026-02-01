@@ -9,6 +9,7 @@ import {
 } from "../core/types/subjects/home.subjects.types";
 import { DateSubjectType } from "../core/types/subjects/general.subjects.type";
 import { BillDataObjectType } from "../core/types/data/bills.types";
+import { HomeSearchReturnItemType } from "../core/types/data/home.types";
 
 @Injectable({
     providedIn: "root",
@@ -39,6 +40,13 @@ export class HomeService {
     getRecentBills(date: DateSubjectType) {
         const params = { ...date };
         return this.http.get<{ bills: BillDataObjectType[] }>(HOME + "recents", {
+            params,
+        });
+    }
+
+    getItem(searchTerm: string) {
+        const params = { searchTerm };
+        return this.http.get<HomeSearchReturnItemType[]>(HOME + "search", {
             params,
         });
     }
