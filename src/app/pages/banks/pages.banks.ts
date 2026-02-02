@@ -12,6 +12,8 @@ import { ModalViewItem } from "src/app/components/modal/view-item/view-item.moda
 import { ModalNewSaving } from "src/app/components/modal/new-saving/new-saving.modal";
 import { BankObjectType } from "src/app/core/types/data/bank.types";
 import { GeneralPage } from "src/app/core/general/page.general";
+import { CustonButton } from "src/app/components/button/custom-button.component";
+import { ServiceSaving } from "src/app/services/saving.service";
 
 @Component({
     selector: "page-banks",
@@ -24,11 +26,13 @@ import { GeneralPage } from "src/app/core/general/page.general";
         FeedbackContainerComponent,
         MatButtonModule,
         MatIconModule,
+        CustonButton,
     ],
 })
 export class PageBanks extends GeneralPage {
     public bankService = inject(BankService);
     public bankState = inject(BankState);
+    public savingsService = inject(ServiceSaving);
 
     actions: ActionItem[] = [
         { name: "", icon: "edit", action: (data) => this.onEdit(data), color: "#00328f" },
@@ -69,6 +73,17 @@ export class PageBanks extends GeneralPage {
     onCreateSaving() {
         let options = {};
         this.dialog.open(ModalNewSaving, options);
+    }
+
+    onCreateMultipleSavings() {
+        this.savingsService.bulkSavings().subscribe({
+            next: () => {
+                this.generalService.successSnackbar(
+                    `all savings from banks were successfully updated`,
+                );
+            },
+            error: () => this.generalService.errorSnackbar("error creating savings"),
+        });
     }
 
     onEdit(bank: any) {

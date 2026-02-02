@@ -3,6 +3,10 @@
         display: flex;
         align-items: center;
     }
+    &.extended .mdc-button__label {
+        display: flex;
+        align-items: flex-start;
+    }
 }
 
 .wrapper.disabled {
