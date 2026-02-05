@@ -18,4 +18,14 @@ export class ServiceSaving extends GeneralService {
             SAVINGS + `/all?bankId=${bankId}&page=${page}`,
         );
     }
+
+    bulkSavings() {
+        const month = new Date().getMonth();
+        const year = new Date().getFullYear();
+
+        return this.http.post(SAVINGS + "/bulk", {
+            month,
+            year,
+        });
+    }
 }

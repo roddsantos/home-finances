@@ -1,20 +1,29 @@
 <div class="bank">
     <div class="page-header">
         <h1 class="page-title">banks</h1>
-        <button (click)="onCreateBank()" class="button-primary extended" mat-button>
-            <div>
-                <mat-icon class="material-symbols-outlined">add</mat-icon>
-                <mat-icon class="material-symbols-outlined">account_balance</mat-icon>
-            </div>
-            <p>new bank</p>
-        </button>
-        <button (click)="onCreateSaving()" class="button-primary extended" mat-button>
-            <div>
-                <mat-icon class="material-symbols-outlined">add</mat-icon>
-                <mat-icon class="material-symbols-outlined">savings </mat-icon>
-            </div>
-            <p>new saving</p>
-        </button>
+        <div class="buttons">
+            <btn [extended]="true" (onClick)="onCreateMultipleSavings()">
+                <div>
+                    <mat-icon class="material-symbols-outlined">add</mat-icon>
+                    <mat-icon class="material-symbols-outlined">account_balance</mat-icon>
+                </div>
+                <p>create month savings</p>
+            </btn>
+            <btn [extended]="true" (onClick)="onCreateBank()">
+                <div>
+                    <mat-icon class="material-symbols-outlined">add</mat-icon>
+                    <mat-icon class="material-symbols-outlined">account_balance</mat-icon>
+                </div>
+                <p>new bank</p>
+            </btn>
+            <btn [extended]="true" (onClick)="onCreateSaving()">
+                <div>
+                    <mat-icon class="material-symbols-outlined">add</mat-icon>
+                    <mat-icon class="material-symbols-outlined">savings </mat-icon>
+                </div>
+                <p>new saving</p>
+            </btn>
+        </div>
     </div>
     <feedback-container
         *ngIf="(bankState.banks$ | async)?.length === 0"
