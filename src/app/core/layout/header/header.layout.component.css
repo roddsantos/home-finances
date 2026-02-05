@@ -17,7 +17,7 @@
 .header-search {
     margin: auto auto auto 0px;
     grid-area: header-search;
-    width: 40%;
+    width: 500px;
 
     & .mat-mdc-form-field-subscript-wrapper {
         display: none !important;
@@ -102,6 +102,11 @@
     font-weight: bold;
 }
 
+.value {
+    grid-area: value;
+    font-weight: bold;
+}
+
 ::ng-deep .header-autocomplete {
     background-color: var(--background) !important;
     & .sector {
@@ -118,8 +123,8 @@
         & span {
             display: grid;
             width: 100%;
-            grid-template-areas: "indicator name" "indicator description";
-            grid-template-columns: 5% 95%;
+            grid-template-areas: "indicator name name" "indicator description value";
+            grid-template-columns: 5% 75% 20%;
             row-gap: 3px;
         }
     }

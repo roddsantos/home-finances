@@ -2,6 +2,7 @@ import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-butt
 import { DateSubjectType } from "src/app/core/types/subjects/general.subjects.type";
 import { getMonthAndYearIntegers } from "../date";
 import { MONTHS } from "./general";
+import { HomeSearchReturnSectionsType } from "src/app/core/types/data/home.types";
 
 export const HOME_MONTHS: ToggleButtonItemsType<DateSubjectType>[] = [
     {
@@ -33,3 +34,11 @@ export const HOME_MONTHS: ToggleButtonItemsType<DateSubjectType>[] = [
         },
     },
 ];
+
+export const HOME_SEARCH_INITIALIZER: HomeSearchReturnSectionsType = {
+    banks: [],
+    bills: [],
+    categories: [],
+    companies: [],
+    creditCards: [],
+};

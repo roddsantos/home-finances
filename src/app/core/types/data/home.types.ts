@@ -8,3 +8,11 @@ export type HomeSearchReturnItemType = {
     date: string;
     value: number;
 };
+
+export type HomeSearchReturnSectionsType = {
+    banks: HomeSearchReturnItemType[];
+    bills: HomeSearchReturnItemType[];
+    categories: HomeSearchReturnItemType[];
+    companies: HomeSearchReturnItemType[];
+    creditCards: HomeSearchReturnItemType[];
+};

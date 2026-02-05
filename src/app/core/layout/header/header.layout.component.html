@@ -2,9 +2,9 @@
     <button class="header-menu" mat-icon-button aria-label="action company button">
         <mat-icon
             [ngClass]="{
-                    'material-symbols-outlined': true,
-                    'app-icon': true,
-                }"
+                'material-symbols-outlined': true,
+                'app-icon': true,
+            }"
             aria-hidden="false"
             aria-label="Example menu icon"
             fontIcon="menu"
@@ -22,13 +22,15 @@
         ></mat-icon>
         <input
             class="header-input"
-            placeholder="search in the application"
+            placeholder="press 'enter' to search in the application"
             (input)="onTypeSearch($event)"
+            (keypress)="onSearch($event)"
             [value]="search$ | async"
             maxlength="100"
             required
             matInput
             [matAutocomplete]="auto"
+            #autoCompleteInput="matAutocompleteTrigger"
         />
         <mat-autocomplete
             id="header-autocomplete"
@@ -36,37 +38,30 @@
             [displayWith]="getOptionName"
             #auto="matAutocomplete"
         >
-            @for (option of filteredOptions; track option) {
-            <div class="sector" *ngIf="option.data.length > 0">
-                <mat-icon class="material-symbols-outlined icon">{{
-                    option.data[0] | sector : "icon"
-                }}</mat-icon>
-                <h5>{{ option.type }}</h5>
-            </div>
+            @for (section of sections; track section) {
+                <div class="sector" *ngIf="searchSections[section].length > 0">
+                    <mat-icon class="material-symbols-outlined icon">{{
+                        searchSections[section][0] | sector: "icon"
+                    }}</mat-icon>
+                    <h5>{{ searchSections[section][0] | sector }}</h5>
+                </div>
 
-            <mat-option
-                *ngFor="let item of option.data"
-                class="header-option"
-                (onSelectionChange)="onSelect(item, $event)"
-                [value]="item"
-            >
-                <div
-                    [style.backgroundColor]="item.color || 'var(--bill)'"
-                    [ngClass]="['indicator', item | sector]"
-                ></div>
-                <h5 class="name">
-                    {{
-                        item["name"] +
-                            (item.parcels
-                                ? " - " + (item.due | date : "mediumDate")
-                                : "") +
-                            (item.parcels && item.type !== "money"
-                                ? " - parcel " + (item | bills : "parcels")
-                                : "")
-                    }}
-                </h5>
-                <p class="description">{{ item.description }}</p>
-            </mat-option>
+                <mat-option
+                    *ngFor="let item of searchSections[section]"
+                    class="header-option"
+                    (onSelectionChange)="onSelect(item, $event)"
+                    [value]="item"
+                >
+                    <div
+                        [style.backgroundColor]="item | sector: 'color'"
+                        [ngClass]="['indicator', item | sector]"
+                    ></div>
+                    <h5 class="name">
+                        {{ item.title }}
+                    </h5>
+                    <p class="description">{{ item.description }}</p>
+                    <p class="value">{{ item.value | currency: "R$ " }}</p>
+                </mat-option>
             }
         </mat-autocomplete>
         <mat-icon
@@ -79,23 +74,4 @@
             fontIcon="close"
         ></mat-icon>
     </mat-form-field>
-    <!-- TO DO  -->
-    <!-- <div class="header-action">
-        <button
-            *ngFor="let action of screen?.actions"
-            mat-button
-            class="button-primary button"
-            aria-label="action company button"
-            (click)="openModal(action)"
-        >
-            <mat-icon
-                *ngFor="let icon of action.icons"
-                matPrefix
-                aria-hidden="false"
-                aria-label="Add icon"
-                [fontIcon]="icon"
-            ></mat-icon>
-            <p>{{ action.title }}</p>
-        </button>
-    </div> -->
 </div>

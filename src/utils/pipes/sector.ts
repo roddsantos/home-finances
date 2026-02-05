@@ -8,8 +8,27 @@ export class SectorPipe implements PipeTransform {
     transform(value: any, format?: "color" | "icon") {
         switch (format) {
             case "color":
-                if (value.parcels) return "var(--bill)";
-                return value.color;
+                if (
+                    value.type === "bank" ||
+                    Object.getOwnPropertyDescriptor(value, "savings")
+                )
+                    return "var(--bank)";
+                if (
+                    value.type === "credit-card" ||
+                    Object.getOwnPropertyDescriptor(value, "invoice")
+                )
+                    return "var(--credit-card)";
+                if (
+                    value.type === "category" ||
+                    Object.getOwnPropertyDescriptor(value, "icon")
+                )
+                    return "var(--category)";
+                if (
+                    value.type === "bill" ||
+                    Object.getOwnPropertyDescriptor(value, "parcels")
+                )
+                    return "var(--bill)";
+                return "var(--company)";
             case "icon":
                 if (
                     value.type === "bank" ||
@@ -33,11 +52,26 @@ export class SectorPipe implements PipeTransform {
                     return "receipt_long";
                 return "store";
             default:
-                if (Object.getOwnPropertyDescriptor(value, "savings")) return "bank";
-                if (Object.getOwnPropertyDescriptor(value, "invoice"))
+                if (
+                    value.type === "bank" ||
+                    Object.getOwnPropertyDescriptor(value, "savings")
+                )
+                    return "bank";
+                if (
+                    value.type === "credit-card" ||
+                    Object.getOwnPropertyDescriptor(value, "invoice")
+                )
                     return "credit card";
-                if (Object.getOwnPropertyDescriptor(value, "icon")) return "category";
-                if (Object.getOwnPropertyDescriptor(value, "parcels")) return "bill";
+                if (
+                    value.type === "category" ||
+                    Object.getOwnPropertyDescriptor(value, "icon")
+                )
+                    return "category";
+                if (
+                    value.type === "bill" ||
+                    Object.getOwnPropertyDescriptor(value, "parcels")
+                )
+                    return "bill";
                 return "company";
         }
     }

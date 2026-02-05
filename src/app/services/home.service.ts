@@ -9,7 +9,7 @@ import {
 } from "../core/types/subjects/home.subjects.types";
 import { DateSubjectType } from "../core/types/subjects/general.subjects.type";
 import { BillDataObjectType } from "../core/types/data/bills.types";
-import { HomeSearchReturnItemType } from "../core/types/data/home.types";
+import { HomeSearchReturnSectionsType, ItemTypes } from "../core/types/data/home.types";
 
 @Injectable({
     providedIn: "root",
@@ -44,10 +44,16 @@ export class HomeService {
         });
     }
 
-    getItem(searchTerm: string) {
+    getItems(searchTerm: string) {
         const params = { searchTerm };
-        return this.http.get<HomeSearchReturnItemType[]>(HOME + "search", {
+        return this.http.get<HomeSearchReturnSectionsType>(HOME + "search", {
             params,
+        });
+    }
+
+    getItem(id: string, type: ItemTypes) {
+        return this.http.get<HomeSearchReturnSectionsType>(HOME + "item", {
+            params: { id, type },
         });
     }
 }
