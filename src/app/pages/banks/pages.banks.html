@@ -23,6 +23,24 @@
                 </div>
                 <p>new saving</p>
             </btn>
+            <div class="bank-resumes">
+                <div class="tag resume">
+                    <mat-icon
+                        fontIcon="wallet"
+                        class="material-symbols-outlined icon"
+                    ></mat-icon>
+                    <p class="label">total banks</p>
+                    <h5 class="value">{{ onSumBanks() | currency : 'R$ ' }}</h5>
+                </div>
+                <div class="tag resume">
+                    <mat-icon
+                        fontIcon="savings"
+                        class="material-symbols-outlined icon"
+                    ></mat-icon>
+                    <p class="label">total savings</p>
+                    <h5 class="value">{{ onSumSavings() | currency : 'R$ ' }}</h5>
+                </div>
+            </div>
         </div>
     </div>
     <feedback-container

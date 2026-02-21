@@ -230,7 +230,9 @@
             ></template-edit-credit-card
         ></card-component>
     </div>
-    <p class="disclaimer" *ngIf="data.settled">
-        some fields are disabled due to the bill settled
-    </p>
+
+    <div class="tag warning-tag" *ngIf="data.settled">
+        <mat-icon fontIcon="error" class="material-symbols-outlined icon"></mat-icon>
+        <h6>some fields are disabled due to the bill settled</h6>
+    </div>
 </ng-template>

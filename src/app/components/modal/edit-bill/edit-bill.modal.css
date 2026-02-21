@@ -1,5 +1,6 @@
 .main-container {
     height: 200px;
+    margin-bottom: 0.5rem;
 }
 
 .type-container {
@@ -98,13 +99,6 @@
     color: #707070;
     width: 175px;
     position: relative;
-}
-
-.disclaimer {
-    font: normal 16px Roboto;
-    margin: 0px;
-    position: absolute;
-    color: var(--warning);
 }
 
 .label.disabled {

@@ -28,6 +28,7 @@ import { CustomTabType } from "src/app/core/types/components/tabs";
 import { BillDataObjectType, PaymentTypes } from "src/app/core/types/data/bills.types";
 import { BankState } from "src/app/core/subjects/subjects.bank";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
     selector: "modal-new-bill",
@@ -48,6 +49,7 @@ import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
         CardComponent,
         ToggleButtonComponent,
         CustomTabs,
+        MatIcon,
     ],
 })
 export class ModalEditBill extends ModalComponent {

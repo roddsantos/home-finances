@@ -109,3 +109,27 @@
         color: var(--success);
     }
 }
+
+.bank-resumes {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-left: auto;
+    height: 69.39px;
+    & .resume {
+        height: max-content;
+        display: grid;
+        grid-template-areas: "icon label" "value value";
+        grid-template-columns: 0.5fr 3.5fr;
+        grid-template-rows: 1fr 1fr;
+        & .icon {
+            grid-area: icon;
+        }
+        & .label {
+            grid-area: label;
+        }
+        & .value {
+            grid-area: value;
+        }
+    }
+}

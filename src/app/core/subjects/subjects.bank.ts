@@ -57,4 +57,24 @@ export class BankState {
     setAction(action: () => void) {
         this._status$.next({ ...this._status$.getValue(), action });
     }
+
+    getSumOfBanks() {
+        const allBanks = this._banks$.value;
+
+        const totalBanks = allBanks.reduce(
+            (acc, bank) => (bank.isPiggyBank ? acc : bank.savings + acc),
+            0,
+        );
+        return totalBanks;
+    }
+
+    getSumOfSavings() {
+        const allBanks = this._banks$.value;
+
+        const totalSavings = allBanks.reduce(
+            (acc, bank) => (!bank.isPiggyBank ? acc : bank.savings + acc),
+            0,
+        );
+        return totalSavings;
+    }
 }

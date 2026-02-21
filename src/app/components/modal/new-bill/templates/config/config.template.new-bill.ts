@@ -12,6 +12,7 @@ import { BOOLEAN_FORM, MONEY_FLOW_FORM } from "src/utils/constants/forms";
 import { ToggleButtonComponent } from "src/app/components/toggle-buttons/toggle-buttons.component";
 import { ToggleButtonItemsType } from "src/app/core/types/components/toggle-buttons";
 import { PaymentTypes } from "src/app/core/types/data/bills.types";
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
     selector: "template-config",
@@ -27,6 +28,7 @@ import { PaymentTypes } from "src/app/core/types/data/bills.types";
         MatButtonToggleModule,
         MatDatepickerModule,
         ToggleButtonComponent,
+        MatIcon,
     ],
     exportAs: "templateConfig",
 })

@@ -106,4 +106,12 @@ export class PageBanks extends GeneralPage {
     onDelete() {
         console.log("DELETE");
     }
+
+    onSumBanks() {
+        return this.bankState.getSumOfBanks();
+    }
+
+    onSumSavings() {
+        return this.bankState.getSumOfSavings();
+    }
 }

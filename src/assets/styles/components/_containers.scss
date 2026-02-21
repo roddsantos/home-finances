@@ -49,3 +49,19 @@
     border: solid var(--border-width) var(--border-color);
     cursor: pointer;
 }
+
+.warning-tag {
+    width: 100% !important;
+    text-align: start;
+    border-color: var(--warning);
+    & .icon {
+        width: 2rem;
+        height: 2rem;
+        font-size: 2rem;
+        color: var(--warning);
+    }
+    & h6 {
+        width: calc(100% - 2rem);
+        color: var(--warning);
+    }
+}

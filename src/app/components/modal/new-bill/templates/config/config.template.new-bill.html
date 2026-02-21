@@ -55,8 +55,8 @@
             <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
     </div>
-
-    <div class="new-bill-field" *ngIf="type === 'companyCredit'">
+    <div class="tag warning-tag" *ngIf="type === 'companyCredit'">
+        <mat-icon fontIcon="error" class="material-symbols-outlined icon"></mat-icon>
         <h6>
             bills created this month will start to appear next month, to appear this
             month, choose a date in a previous month
