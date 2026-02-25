@@ -1,0 +1,6 @@
+<div>
+    <div *ngFor="let pin of (billsState.pinnedBills$ | async)">
+        <p>{{ pin.name }}</p>
+        <p>{{ pin.updatedAt | date: "mediumDate" }}</p>
+    </div>
+</div>

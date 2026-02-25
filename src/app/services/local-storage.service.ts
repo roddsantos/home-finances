@@ -81,4 +81,16 @@ export class LocalStorageService {
         let billsView = localStorage.getItem("bills-view");
         return (billsView || "grid") as BillsLayoutType;
     }
+
+    setPinnedBills(ids: string[]) {
+        const stringifiedIds = JSON.stringify(ids);
+        localStorage.setItem("pinned-bills", stringifiedIds);
+    }
+
+    getPinnedBills(): string[] {
+        const pinnedBills = localStorage.getItem("pinned-bills");
+        if (pinnedBills) {
+            return JSON.parse(pinnedBills);
+        } else return [];
+    }
 }

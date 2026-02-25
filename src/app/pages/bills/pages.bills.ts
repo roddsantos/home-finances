@@ -81,6 +81,12 @@ export class PageBills extends GeneralPage {
             hidden: (data: BillDataObjectType) =>
                 !data.settled || (data.settled && data.isRecurrent),
         },
+        {
+            name: "",
+            icon: "keep",
+            action: (data) => this.onPinBill(data),
+            color: "var(--default)",
+        },
     ];
 
     ngOnInit() {
@@ -168,6 +174,18 @@ export class PageBills extends GeneralPage {
                 this.generalService.errorSnackbar("error reversing settle bill");
             },
         });
+    }
+
+    onPinBill(data: BillDataObjectType) {
+        const pinnedBills = this.localStorageService.getPinnedBills();
+        pinnedBills.unshift(data.id);
+
+        if (pinnedBills.length > 3) {
+            pinnedBills.splice(3);
+        }
+
+        this.localStorageService.setPinnedBills(pinnedBills);
+        this.billState.addPinnedBill(data);
     }
 
     getDateStatus(data: BillDataObjectType) {
