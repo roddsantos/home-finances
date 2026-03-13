@@ -9,12 +9,15 @@
 
 .page-header .bill-header {
     display: flex;
-    justify-content: space-between;
     width: 100%;
 }
 
 .bill-pagination {
     grid-area: bill-pagination;
+}
+
+.bill-pins {
+    margin: auto 0px auto auto;
 }
 
 .bill-container {
@@ -134,7 +137,7 @@
     &.list {
         grid-template-areas: "title description bill-tags date-container value-container bill-buttons";
         grid-template-rows: repeat(1, max-content);
-        grid-template-columns: 15% 23% 27% 13% 12% 10%;
+        grid-template-columns: 15% 23% 32% 13% 12% 5%;
         column-gap: 4px;
         padding: 0.5rem 1rem;
         @media screen and (max-width: 1500px) {
@@ -263,6 +266,10 @@
     grid-area: bill-buttons;
     display: flex;
     margin: auto;
+    width: 2.25rem !important;
+    & mat-icon {
+        margin: auto auto 0px 0px;
+    }
 }
 
 .title {

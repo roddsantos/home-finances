@@ -1,11 +1,11 @@
 import { inject, Injectable } from "@angular/core";
 import { BILL } from "src/utils/constants/services";
 import { switchMap, take } from "rxjs";
-import { CustomFilterState } from "../components/custom-filter/custom-filter.subjects.component";
 import { BillState } from "src/app/core/subjects/subjects.bill";
 import { FilterDisplay } from "src/app/core/types/components";
 import {
     BillCreateType,
+    BillDataObjectType,
     BillsMetadataType,
     BillUpdateResponse,
     BillUpdateType,
@@ -17,7 +17,6 @@ import { GeneralService } from "./general.service";
     providedIn: "root",
 })
 export class BillService extends GeneralService {
-    private filterState = inject(CustomFilterState);
     private billState = inject(BillState);
 
     getBills(page?: number, limit?: number, filtersArray?: FilterDisplay[]) {
@@ -38,6 +37,16 @@ export class BillService extends GeneralService {
                 }),
             ),
         );
+    }
+
+    getPinnedBills() {
+        const pinnedBills = this.localStorageService.getPinnedBills();
+
+        return this.http.get<BillDataObjectType[]>(BILL + "/pinned", {
+            params: {
+                pinnedBills,
+            },
+        });
     }
 
     createBillBank(data: BillCreateType) {

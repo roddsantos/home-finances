@@ -37,12 +37,14 @@ export class BillState {
         outcomeTotal: 0,
         outcomeCount: 0,
     });
+    private _pinnedBills$ = new BehaviorSubject<BillDataObjectType[]>([]);
 
     public readonly status$ = this._status$.asObservable();
     public readonly bills$ = this._bills$.asObservable();
     public readonly billsPagination$ = this._billsPagination$.asObservable();
     public readonly billsTotal$ = this._billsTotal$.asObservable();
     public readonly billsMetadata$ = this._billsMetadata$.asObservable();
+    public readonly pinnedBills$ = this._pinnedBills$.asObservable();
 
     changeStatus(variant: FeedbackVariant, title: string) {
         this._status$.next({ ...this._status$.getValue(), variant, title });
@@ -110,5 +112,28 @@ export class BillState {
 
     autoPage(increase: boolean) {
         this.setPage(this._billsPagination$.getValue().page + 1 * (increase ? 1 : -1));
+    }
+
+    addPinnedBill(bill: BillDataObjectType) {
+        const pinnedBills = this._pinnedBills$.value;
+        const newPinnedBills = [bill, ...pinnedBills];
+
+        if (newPinnedBills.length > 3) {
+            newPinnedBills.splice(3);
+        }
+        this._pinnedBills$.next(newPinnedBills);
+    }
+
+    setPinnedBills(bills: BillDataObjectType[]) {
+        this._pinnedBills$.next(bills);
+    }
+
+    removePinnedBill(bill: BillDataObjectType) {
+        const index = this._pinnedBills$.value.findIndex((pin) => pin.id === bill.id);
+        if (index < 0) return;
+
+        const auxPinned = [...this._pinnedBills$.value];
+        auxPinned.splice(index, 1);
+        this._pinnedBills$.next(auxPinned);
     }
 }

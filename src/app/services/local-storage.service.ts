@@ -81,4 +81,28 @@ export class LocalStorageService {
         let billsView = localStorage.getItem("bills-view");
         return (billsView || "grid") as BillsLayoutType;
     }
+
+    setPinnedBills(ids: string[]) {
+        const stringifiedIds = JSON.stringify(ids);
+        localStorage.setItem("pinned-bills", stringifiedIds);
+    }
+
+    getPinnedBills(): string[] {
+        const pinnedBills = localStorage.getItem("pinned-bills");
+        if (pinnedBills) {
+            return JSON.parse(pinnedBills);
+        } else return [];
+    }
+
+    removePinnedBill(id: string) {
+        const stringPinnedBills = localStorage.getItem("pinned-bills");
+        if (stringPinnedBills) {
+            const pinnedBills = JSON.parse(stringPinnedBills) as string[];
+            const index = pinnedBills.findIndex((pinId) => id === pinId);
+            if (index >= 0) {
+                pinnedBills.splice(index, 1);
+                this.setPinnedBills(pinnedBills);
+            }
+        }
+    }
 }

@@ -1,0 +1,37 @@
+.pinned-bills {
+    display: flex;
+    gap: 1rem;
+}
+
+.pinned-bill {
+    cursor: pointer;
+    & .custom-tag {
+        height: max-content !important;
+    }
+    & .unpin {
+        color: var(--error);
+    }
+    & .menu {
+        color: var(--info);
+    }
+    & .category {
+        margin: 0.5rem;
+        font-size: 1.5rem !important;
+        width: 1.5rem !important;
+        height: 1.5rem !important;
+    }
+    & .info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-right: 1rem;
+    }
+    & .mdc-icon-button {
+        & mat-icon {
+            font-size: 20px !important;
+            width: 20px !important;
+            height: 20px !important;
+            margin: auto auto 0px 0px;
+        }
+    }
+}
