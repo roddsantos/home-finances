@@ -79,12 +79,29 @@
                                 + item.delta + item.taxes)) | currency: "R$ "}}
                             </h6>
                         </div>
-                        <actions
+                        <button
                             class="bill-buttons"
-                            [transparent]="false"
-                            [data]="item"
-                            [actions]="actions"
-                        ></actions>
+                            mat-icon-button
+                            [matMenuTriggerFor]="menu"
+                        >
+                            <mat-icon class="material-symbols-outlined menu">
+                                more_vert
+                            </mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button
+                                mat-menu-item
+                                *ngFor="let option of options"
+                                (click)="option.action(item)"
+                            >
+                                <mat-icon
+                                    class="material-symbols-outlined"
+                                    [style.color]="option.color"
+                                    >{{ option.icon }}</mat-icon
+                                >
+                                <p>{{ option.name }}</p>
+                            </button>
+                        </mat-menu>
                     </div>
                 </ng-template>
             </div>

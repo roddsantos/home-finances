@@ -4,6 +4,7 @@
 }
 
 .pinned-bill {
+    cursor: pointer;
     & .custom-tag {
         height: max-content !important;
     }

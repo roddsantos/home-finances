@@ -17,12 +17,12 @@ import { ModalViewItem } from "src/app/components/modal/view-item/view-item.moda
 import { CardComponent } from "../../components/card/card.component";
 import { ModalEditBill } from "src/app/components/modal/edit-bill/edit-bill.modal";
 import { ActionItem } from "src/app/core/types/components";
-import { ActionsComponent } from "src/app/components/actions/actions.component";
 import { CustonButton } from "src/app/components/button/custom-button.component";
 import { CustomTag } from "src/app/components/tag/tag.component";
 import { GeneralPage } from "src/app/core/general/page.general";
 import { BillDataObjectType } from "src/app/core/types/data/bills.types";
 import { PinsBillsTemplate } from "./templates/pins/pins.template.bills.pages";
+import { MatMenuModule } from "@angular/material/menu";
 
 @Component({
     selector: "page-bills",
@@ -42,10 +42,10 @@ import { PinsBillsTemplate } from "./templates/pins/pins.template.bills.pages";
         PaginationTemplate,
         MatTooltipModule,
         CardComponent,
-        ActionsComponent,
         CustonButton,
         CustomTag,
         PinsBillsTemplate,
+        MatMenuModule,
     ],
 })
 export class PageBills extends GeneralPage {
@@ -54,29 +54,29 @@ export class PageBills extends GeneralPage {
 
     isLineTheme: string = "";
 
-    actions: ActionItem[] = [
+    options: ActionItem[] = [
         {
-            name: "",
-            icon: "edit",
-            action: (data: BillDataObjectType) => this.onEdit(data),
-            color: "#00328f",
-        },
-        {
-            name: "",
-            icon: "delete",
-            action: (data: BillDataObjectType) => this.onDelete(data),
-            color: "#8f0000",
-            hidden: (data: BillDataObjectType) => data.settled,
-        },
-        {
-            name: "",
+            name: "done",
             icon: "check_circle",
             action: (data) => this.onCheck(data),
             color: "#008f18",
             hidden: (data: BillDataObjectType) => data.settled,
         },
         {
-            name: "",
+            name: "edit",
+            icon: "edit",
+            action: (data: BillDataObjectType) => this.onEdit(data),
+            color: "#00328f",
+        },
+        {
+            name: "delete",
+            icon: "delete",
+            action: (data: BillDataObjectType) => this.onDelete(data),
+            color: "#8f0000",
+            hidden: (data: BillDataObjectType) => data.settled,
+        },
+        {
+            name: "reroll",
             icon: "rotate_left",
             action: (data) => this.onReverseCheck(data),
             color: "var(--warning)",
@@ -84,7 +84,7 @@ export class PageBills extends GeneralPage {
                 !data.settled || (data.settled && data.isRecurrent),
         },
         {
-            name: "",
+            name: "pin",
             icon: "keep",
             action: (data) => this.onPinBill(data),
             color: "var(--default)",
