@@ -127,4 +127,13 @@ export class BillState {
     setPinnedBills(bills: BillDataObjectType[]) {
         this._pinnedBills$.next(bills);
     }
+
+    removePinnedBill(bill: BillDataObjectType) {
+        const index = this._pinnedBills$.value.findIndex((pin) => pin.id === bill.id);
+        if (index < 0) return;
+
+        const auxPinned = [...this._pinnedBills$.value];
+        auxPinned.splice(index, 1);
+        this._pinnedBills$.next(auxPinned);
+    }
 }

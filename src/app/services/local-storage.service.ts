@@ -93,4 +93,16 @@ export class LocalStorageService {
             return JSON.parse(pinnedBills);
         } else return [];
     }
+
+    removePinnedBill(id: string) {
+        const stringPinnedBills = localStorage.getItem("pinned-bills");
+        if (stringPinnedBills) {
+            const pinnedBills = JSON.parse(stringPinnedBills) as string[];
+            const index = pinnedBills.findIndex((pinId) => id === pinId);
+            if (index >= 0) {
+                pinnedBills.splice(index, 1);
+                this.setPinnedBills(pinnedBills);
+            }
+        }
+    }
 }

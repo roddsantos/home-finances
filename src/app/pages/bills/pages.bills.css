@@ -9,12 +9,15 @@
 
 .page-header .bill-header {
     display: flex;
-    justify-content: space-between;
     width: 100%;
 }
 
 .bill-pagination {
     grid-area: bill-pagination;
+}
+
+.bill-pins {
+    margin: auto 0px auto auto;
 }
 
 .bill-container {

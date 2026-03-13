@@ -1,16 +1,7 @@
 import { Injectable } from "@angular/core";
-import { BankService } from "./services/bank.service";
-import { BankState } from "./core/subjects/subjects.bank";
 import { LocalStorageService } from "./services/local-storage.service";
 import { UserState } from "./core/subjects/subjects.user";
-import { CategoryService } from "./services/category.service";
-import { CategoryState } from "./core/subjects/subjects.category";
-import { CompanyService } from "./services/company.service";
-import { CompanyState } from "./core/subjects/subjects.company";
-import { CreditCardService } from "./services/credit-card.service";
-import { CreditCardState } from "./core/subjects/subjects.credit-card";
 import { GeneralState } from "./core/subjects/subjects.general";
-import { ThemeState } from "./core/subjects/subjects.theme";
 import { ThemeService } from "./services/theme.service";
 import { DEFAULT_THEME } from "src/utils/constants/colors";
 import { CustomFilterState } from "./components/custom-filter/custom-filter.subjects.component";

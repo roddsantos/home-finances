@@ -1,6 +1,39 @@
-<div>
-    <div *ngFor="let pin of (billsState.pinnedBills$ | async)">
-        <p>{{ pin.name }}</p>
-        <p>{{ pin.updatedAt | date: "mediumDate" }}</p>
-    </div>
+<div class="pinned-bills">
+    <tag
+        class="pinned-bill"
+        *ngFor="let pin of (billState.pinnedBills$ | async)"
+        [id]="pin.id"
+        (click)="openDetails(pin, $event)"
+        extended
+        variant="outlined"
+    >
+        <mat-icon
+            [matTooltip]="pin.category.name"
+            class="material-symbols-outlined category"
+        >
+            {{ pin.category.icon }}
+        </mat-icon>
+        <div class="info">
+            <p>{{ pin.name }}</p>
+            <p>{{ pin.totalParcel | currency : "R$ "}}</p>
+        </div>
+        <button (click)="onUnpin(pin)" matTooltip="unpin" mat-icon-button>
+            <mat-icon class="material-symbols-outlined unpin">keep_off</mat-icon>
+        </button>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon class="material-symbols-outlined menu">more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button
+                mat-menu-item
+                *ngFor="let option of options"
+                (click)="option.action(pin)"
+            >
+                <mat-icon class="material-symbols-outlined" [style.color]="option.color"
+                    >{{ option.icon }}</mat-icon
+                >
+                <p>{{ option.name }}</p>
+            </button>
+        </mat-menu>
+    </tag>
 </div>

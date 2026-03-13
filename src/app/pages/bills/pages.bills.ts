@@ -22,6 +22,7 @@ import { CustonButton } from "src/app/components/button/custom-button.component"
 import { CustomTag } from "src/app/components/tag/tag.component";
 import { GeneralPage } from "src/app/core/general/page.general";
 import { BillDataObjectType } from "src/app/core/types/data/bills.types";
+import { PinsBillsTemplate } from "./templates/pins/pins.template.bills.pages";
 
 @Component({
     selector: "page-bills",
@@ -44,6 +45,7 @@ import { BillDataObjectType } from "src/app/core/types/data/bills.types";
         ActionsComponent,
         CustonButton,
         CustomTag,
+        PinsBillsTemplate,
     ],
 })
 export class PageBills extends GeneralPage {
@@ -91,6 +93,11 @@ export class PageBills extends GeneralPage {
 
     ngOnInit() {
         this.getBills();
+        this.billService.getPinnedBills().subscribe({
+            next: (pinnedBills) => {
+                this.billState.setPinnedBills(pinnedBills);
+            },
+        });
     }
 
     trackByFn(index: number, item: any) {
@@ -178,6 +185,9 @@ export class PageBills extends GeneralPage {
 
     onPinBill(data: BillDataObjectType) {
         const pinnedBills = this.localStorageService.getPinnedBills();
+
+        if (pinnedBills.find((id) => id === data.id)) return;
+
         pinnedBills.unshift(data.id);
 
         if (pinnedBills.length > 3) {
