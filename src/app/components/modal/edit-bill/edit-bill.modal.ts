@@ -201,15 +201,18 @@ export class ModalEditBill extends ModalComponent {
         }
 
         observer?.subscribe({
-            next: ({ banks, creditCard }) => {
-                banks.forEach((bank) => this.bankState.updateBank(bank));
-                this.creditCardState.updateCreditCard(creditCard);
+            next: ({ banks, bill, creditCard }) => {
+                if (banks.length > 0)
+                    banks.forEach((bank) => this.bankState.updateBank(bank));
+                if (creditCard) this.creditCardState.updateCreditCard(creditCard);
                 this.billService.getBills().subscribe({
                     next: (bills) => {
                         this.billState.setBills(bills);
                     },
                 });
-                this.generalService.successSnackbar("bill successfully updated");
+                this.generalService.successSnackbar(
+                    `bill [${bill?.name}] successfully updated`,
+                );
                 this.onClose();
             },
             error: () => {

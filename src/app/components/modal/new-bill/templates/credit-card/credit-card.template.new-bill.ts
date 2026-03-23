@@ -8,7 +8,8 @@ import { MatInputModule } from "@angular/material/input";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { MatCheckboxModule } from "@angular/material/checkbox";
-import { CREDIT_CARD_FORM } from "src/utils/constants/forms";
+import { CREDIT_CARD_FORM, GENERAL_FORM } from "src/utils/constants/forms";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
     selector: "template-credit-card",
@@ -24,6 +25,7 @@ import { CREDIT_CARD_FORM } from "src/utils/constants/forms";
         MatSelectModule,
         MatInputModule,
         MatCheckboxModule,
+        MatIconModule,
     ],
     exportAs: "templateCreditCard",
 })
@@ -34,12 +36,13 @@ export class CreditCardTemplateNewBill {
 
     @Input({ required: true }) creditcardControl: FormControl<string | null>;
     @Input({ required: true }) companyControl: FormControl<string | null>;
-    @Input({ required: true }) taxesControl: FormControl<number>;
+    @Input({ required: true }) totalParcelControl: FormControl<number>;
     @Input({ required: true }) parcelsControl: FormControl<number>;
     @Input({ required: true }) deltaControl: FormControl<number>;
 
     public errorMessage = {
         creditCard: CREDIT_CARD_FORM.noCreditCard,
         parcels: CREDIT_CARD_FORM.invalidParcels,
+        total: GENERAL_FORM.invalidTotal,
     };
 }

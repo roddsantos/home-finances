@@ -15,7 +15,6 @@ import {
     FIELD_TO_PROPERTY,
 } from "src/utils/constants/colors";
 import { SECTORS } from "src/utils/constants/general";
-import { mergeMap, switchMap, take } from "rxjs";
 import { THEME } from "src/utils/constants/services";
 
 @Injectable({

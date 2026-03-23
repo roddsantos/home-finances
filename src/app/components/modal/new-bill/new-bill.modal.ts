@@ -165,7 +165,9 @@ export class ModalNewBill extends ModalComponent {
 
     onSubmit() {
         const defaultData = this.billForm.getRawValue();
-
+        const totalParcel = +defaultData.totalParcel;
+        const parcels = +defaultData.parcels;
+        const delta = +defaultData.delta;
         let observer;
         switch (this.billForm.value.type) {
             case "money":
@@ -179,13 +181,13 @@ export class ModalNewBill extends ModalComponent {
                 observer = this.billService.createBillCreditCard({
                     ...defaultData,
                     categoryId: defaultData.categoryId!,
+                    total: totalParcel * parcels,
+                    totalParcel,
+                    parcels,
+                    delta,
                 });
                 break;
             case "companyCredit":
-                const totalParcel = +defaultData.totalParcel;
-                const parcels = +defaultData.parcels;
-                const delta = +defaultData.delta;
-
                 observer = this.billService.createBillCompany({
                     ...defaultData,
                     categoryId: defaultData.categoryId!,

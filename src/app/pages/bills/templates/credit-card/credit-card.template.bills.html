@@ -1,18 +1,24 @@
 <div class="bill-tags">
-    <div
+    <tag
         [matTooltip]="data.isPayment ? 'outcome' : 'income'"
-        [ngClass]="['tag', 'flow-container', data.isPayment ? 'outcome' : 'income']"
+        [id]="'tag-flow-'+data.id"
+        [theme]="data.isPayment ? 'var(--error)' : 'var(--success)'"
+        transform
+        class="flow-container"
     >
         <mat-icon
             class="material-symbols-outlined type-icon"
             aria-hidden="false"
             aria-label="icon"
             [fontIcon]="data.isPayment ? 'arrow_circle_up' : 'arrow_circle_down'"
-        ></mat-icon>
-    </div>
-    <div
+        >
+        </mat-icon>
+    </tag>
+    <tag
+        [id]="'tag-credit-card-'+data.id"
+        theme="var(--credit-card)"
         matTooltip="credit card"
-        [ngClass]="['type-container', 'tag', 'credit-card', isLineTheme]"
+        transform
     >
         <mat-icon
             class="material-symbols-outlined type-icon"
@@ -21,10 +27,12 @@
             fontIcon="credit_card"
         ></mat-icon>
         <p class="type-name">{{data.creditCard?.name}}</p>
-    </div>
-    <div
+    </tag>
+    <tag
+        [id]="'tag-category-'+data.id"
         matTooltip="category"
-        [ngClass]="['category-container','tag','credit-card', isLineTheme]"
+        [theme]="data.category.color"
+        transform
     >
         <mat-icon
             class="material-icons-outlined category-icon"
@@ -33,5 +41,5 @@
             [fontIcon]="data.category.icon"
         ></mat-icon>
         <p class="category-name">{{data.category.name}}</p>
-    </div>
+    </tag>
 </div>

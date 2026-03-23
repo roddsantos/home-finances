@@ -26,7 +26,7 @@
     <tag
         matTooltip="category"
         [id]="'tag-category-'+data.id"
-        theme="var(--bank)"
+        [theme]="data.category.color"
         class="category-container"
         transform
     >
@@ -40,7 +40,7 @@
     <tag
         matTooltip="recurrent bill"
         [id]="'tag-recurrent-'+data.id"
-        theme="var(--success)"
+        theme="var(--info)"
         transform
         [ngClass]="['recurrent-container',  data.isRecurrent ? 'recurrent' : '']"
     >

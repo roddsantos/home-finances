@@ -13,10 +13,18 @@ import { MatSelectModule } from "@angular/material/select";
 import { CreditCardService } from "src/app/services/credit-card.service";
 import { CreditCardState } from "src/app/core/subjects/subjects.credit-card";
 import { MONTHS } from "src/utils/constants/general";
-import { CREDIT_CARD_FORM, GENERAL_FORM } from "src/utils/constants/forms";
+import {
+    BANK_FORM,
+    CATEGORY_FORM,
+    CREDIT_CARD_FORM,
+    GENERAL_FORM,
+} from "src/utils/constants/forms";
 import { CommonModule } from "@angular/common";
 import { DIALOG_DATA } from "@angular/cdk/dialog";
 import { CreditCardObjectType } from "src/app/core/types/data/credit-card.types";
+import { CategoryState } from "src/app/core/subjects/subjects.category";
+import { MatIcon } from "@angular/material/icon";
+import { BankState } from "src/app/core/subjects/subjects.bank";
 
 @Component({
     selector: "modal-new-credit-card",
@@ -33,11 +41,14 @@ import { CreditCardObjectType } from "src/app/core/types/data/credit-card.types"
         FormsModule,
         ReactiveFormsModule,
         MatSelectModule,
+        MatIcon,
     ],
 })
 export class ModalNewCreditCard extends ModalComponent {
     public creditCardService = inject(CreditCardService);
     public creditCardState = inject(CreditCardState);
+    public categoryState = inject(CategoryState);
+    public bankState = inject(BankState);
 
     constructor(@Inject(DIALOG_DATA) public data: CreditCardObjectType) {
         super();
@@ -52,6 +63,8 @@ export class ModalNewCreditCard extends ModalComponent {
         day: CREDIT_CARD_FORM.invalidClosingDay,
         due: CREDIT_CARD_FORM.invalidDueDay,
         flag: CREDIT_CARD_FORM.noFlag,
+        category: CATEGORY_FORM.noCategory,
+        bank: BANK_FORM.noBank,
     };
 
     creditCardForm = new FormGroup({
@@ -95,6 +108,14 @@ export class ModalNewCreditCard extends ModalComponent {
             nonNullable: true,
             validators: [Validators.required],
         }),
+        categoryId: new FormControl<string | null>(null, {
+            nonNullable: true,
+            validators: [Validators.required],
+        }),
+        bank1Id: new FormControl<string | null>(null, {
+            nonNullable: true,
+            validators: [Validators.required],
+        }),
     });
 
     ngOnInit() {
@@ -103,6 +124,12 @@ export class ModalNewCreditCard extends ModalComponent {
 
     handleClose() {
         this.onClose();
+    }
+
+    selectedCategory(categoryId: string | null) {
+        if (!categoryId) return null;
+        const category = this.categoryState.getCategory(categoryId);
+        return category || null;
     }
 
     onUpdate() {
@@ -116,7 +143,7 @@ export class ModalNewCreditCard extends ModalComponent {
                 next: (cc) => {
                     this.creditCardState.updateCreditCard(cc);
                     this.generalService.successSnackbar(
-                        `credit card [${cc.name}] successfully updated`
+                        `credit card [${cc.name}] successfully updated`,
                     );
                     this.onClose();
                 },
@@ -135,7 +162,7 @@ export class ModalNewCreditCard extends ModalComponent {
                 next: (creditCards) => {
                     this.creditCardState.addCreditCard(creditCards);
                     this.generalService.successSnackbar(
-                        `credit card [${creditCards.name}] successfully created`
+                        `credit card [${creditCards.name}] successfully created`,
                     );
                     this.onClose();
                 },

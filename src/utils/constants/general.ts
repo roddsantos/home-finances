@@ -1,9 +1,9 @@
 export const SECTORS = {
-    bill: "bill",
-    bank: "bank",
-    company: "company",
     creditCard: "credit-card",
     category: "category",
+    company: "company",
+    bill: "bill",
+    bank: "bank",
 };
 
 export const MONTHS = [

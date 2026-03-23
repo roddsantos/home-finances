@@ -51,7 +51,7 @@ export class StepTwoNewProfileTheme extends ModalComponent {
                 value: THEME_FONTS[fontKey],
                 label: THEME_FONTS[fontKey],
             };
-        }
+        },
     );
 
     public paddingMeasures: ToggleButtonItemsType<string>[] = GENERAL_MEASURES.map(
@@ -64,7 +64,7 @@ export class StepTwoNewProfileTheme extends ModalComponent {
                     name: iconName,
                 },
             };
-        }
+        },
     );
 
     public inputSizeMeasures: ToggleButtonItemsType<string>[] = GENERAL_MEASURES.map(
@@ -77,7 +77,7 @@ export class StepTwoNewProfileTheme extends ModalComponent {
                     name: iconName,
                 },
             };
-        }
+        },
     );
 
     public borderWidthMeasures: ToggleButtonItemsType<string>[] = GENERAL_MEASURES.map(
@@ -90,7 +90,7 @@ export class StepTwoNewProfileTheme extends ModalComponent {
                     name: iconName,
                 },
             };
-        }
+        },
     );
 
     getText1Theme() {
@@ -154,7 +154,7 @@ export class StepTwoNewProfileTheme extends ModalComponent {
                         color: DEFAULT_BACKGROUND_COLORS[bcTheme][colorKey].value,
                     },
                 };
-            }
+            },
         );
     }
 

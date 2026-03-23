@@ -3,6 +3,13 @@
     <p class="step-desc">credit card selection and bill values</p>
     <mat-form-field class="new-bill-field" appearance="outline">
         <mat-label>credit card</mat-label>
+        <mat-icon
+            class="material-symbols-outlined"
+            matPrefix
+            aria-hidden="false"
+            aria-label="credit_card icon"
+            fontIcon="credit_card"
+        ></mat-icon>
         <mat-select [formControl]="creditcardControl" ngDefaultControl>
             <mat-option
                 *ngIf="(creditCards.creditCards$ | async)!.length === 0"
@@ -21,7 +28,13 @@
         *ngIf="(companies.company$ | async)!.length > 0"
         class="new-bill-field"
         appearance="outline"
-    >
+        ><mat-icon
+            class="material-symbols-outlined"
+            matPrefix
+            aria-hidden="false"
+            aria-label="money icon"
+            fontIcon="store"
+        ></mat-icon>
         <mat-label>company</mat-label>
         <mat-select [formControl]="companyControl" ngDefaultControl>
             <mat-option
@@ -44,15 +57,36 @@
             class="third"
             appearance="outline"
         >
+            <mat-icon
+                class="material-symbols-outlined"
+                matPrefix
+                aria-hidden="false"
+                aria-label="credit_card icon"
+                fontIcon="cards_stack"
+            ></mat-icon>
             <mat-label>parcels</mat-label>
-            <input
-                [value]="parcelsControl.value"
-                matInput
-                type="number"
-                formControlName="parcels"
-            />
+            <input [value]="parcelsControl.value" matInput type="number" />
             @if (parcelsControl.invalid) {
             <mat-error>{{errorMessage.parcels}}</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field
+            [formControl]="totalParcelControl"
+            ngDefaultControl
+            class="third"
+            appearance="outline"
+        >
+            <mat-icon
+                class="material-symbols-outlined"
+                matPrefix
+                aria-hidden="false"
+                aria-label="money icon"
+                fontIcon="attach_money"
+            ></mat-icon>
+            <mat-label>parcel value</mat-label>
+            <input [value]="totalParcelControl.value" matInput type="number" />
+            @if (totalParcelControl.invalid !== null) {
+            <mat-error>{{errorMessage.total}}</mat-error>
             }
         </mat-form-field>
         <mat-form-field
@@ -61,27 +95,15 @@
             class="third"
             appearance="outline"
         >
-            <mat-label>delta</mat-label>
-            <input
-                [value]="deltaControl.value"
-                matInput
-                type="number"
-                formControlName="delta"
-            />
-        </mat-form-field>
-        <mat-form-field
-            [formControl]="taxesControl"
-            ngDefaultControl
-            class="third"
-            appearance="outline"
-        >
-            <mat-label>taxes</mat-label>
-            <input
-                [value]="taxesControl.value"
-                matInput
-                type="number"
-                formControlName="taxes"
-            />
+            <mat-icon
+                class="material-symbols-outlined"
+                matPrefix
+                aria-hidden="false"
+                aria-label="money icon"
+                fontIcon="balance"
+            ></mat-icon>
+            <mat-label>last parcel diff</mat-label>
+            <input [value]="deltaControl.value" matInput type="number" />
         </mat-form-field>
     </div>
 </div>

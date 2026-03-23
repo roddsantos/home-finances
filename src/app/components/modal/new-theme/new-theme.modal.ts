@@ -47,7 +47,7 @@ export class ModalNewTheme extends ModalComponent {
     constructor(
         @Inject(DIALOG_DATA) public data: ModalDataProfileTheme,
         private themeService: ThemeService,
-        private themeState: ThemeState
+        private themeState: ThemeState,
     ) {
         super();
     }
@@ -58,7 +58,7 @@ export class ModalNewTheme extends ModalComponent {
         (theme) => ({
             value: theme,
             label: theme,
-        })
+        }),
     );
 
     public profileForm = new FormGroup({
@@ -83,42 +83,42 @@ export class ModalNewTheme extends ModalComponent {
             {
                 validators: [Validators.required],
                 nonNullable: true,
-            }
+            },
         ),
         primary: new FormControl<string>(
             this.data.theme?.primary || DEFAULT_COLORS.default.red.label,
             {
                 validators: [Validators.required],
                 nonNullable: true,
-            }
+            },
         ),
         secondary: new FormControl<string>(
             this.data.theme?.secondary || DEFAULT_COLORS.default.black.label,
             {
                 validators: [Validators.required],
                 nonNullable: true,
-            }
+            },
         ),
         background: new FormControl<string>(
             this.data.theme?.background || DEFAULT_BACKGROUND_COLORS.dark.base.label,
             {
                 validators: [Validators.required],
                 nonNullable: true,
-            }
+            },
         ),
         text1: new FormControl<string>(
-            this.data.theme?.text1 || DEFAULT_TEXT_COLORS.light.base.label,
+            this.data.theme?.text1 || DEFAULT_TEXT_COLORS.light.black.label,
             {
                 validators: [Validators.required],
                 nonNullable: true,
-            }
+            },
         ),
         text2: new FormControl<string>(
-            this.data.theme?.text2 || DEFAULT_TEXT_COLORS.dark.base.label,
+            this.data.theme?.text2 || DEFAULT_TEXT_COLORS.dark.white.label,
             {
                 validators: [Validators.required],
                 nonNullable: true,
-            }
+            },
         ),
         borderRadius: new FormControl<number>(this.data.theme?.borderRadius || 5, {
             validators: [Validators.required, Validators.max(20), Validators.min(0)],
@@ -129,35 +129,35 @@ export class ModalNewTheme extends ModalComponent {
             {
                 validators: [Validators.required],
                 nonNullable: true,
-            }
+            },
         ),
         font1: new FormControl<FontThemeType>(
             this.data.theme?.font1 || THEME_FONTS.roboto,
             {
                 validators: [Validators.required],
                 nonNullable: true,
-            }
+            },
         ),
         font2: new FormControl<FontThemeType>(
             this.data.theme?.font2 || THEME_FONTS.commissioner,
             {
                 validators: [Validators.required],
                 nonNullable: true,
-            }
+            },
         ),
         inputSize: new FormControl<GeneralMeasureType>(
             this.data.theme?.inputSize || GENERAL_MEASURES[1].value,
             {
                 validators: [Validators.required],
                 nonNullable: true,
-            }
+            },
         ),
         padding: new FormControl<GeneralMeasureType>(
             this.data.theme?.padding || GENERAL_MEASURES[1].value,
             {
                 validators: [Validators.required],
                 nonNullable: true,
-            }
+            },
         ),
     });
 

@@ -213,8 +213,12 @@ export const DEFAULT_COLORS = {
 
 export const DEFAULT_TEXT_COLORS = {
     light: {
-        base: {
-            label: "base",
+        white: {
+            label: "white",
+            value: "#ffffff",
+        },
+        black: {
+            label: "black",
             value: "#000000",
         },
         grey: {
@@ -243,8 +247,12 @@ export const DEFAULT_TEXT_COLORS = {
         },
     },
     default: {
-        base: {
-            label: "base",
+        white: {
+            label: "white",
+            value: "#ffffff",
+        },
+        black: {
+            label: "black",
             value: "#000000",
         },
         grey: {
@@ -273,9 +281,13 @@ export const DEFAULT_TEXT_COLORS = {
         },
     },
     dark: {
-        base: {
-            label: "base",
+        white: {
+            label: "white",
             value: "#ffffff",
+        },
+        black: {
+            label: "black",
+            value: "#000000",
         },
         grey: {
             label: "grey",
