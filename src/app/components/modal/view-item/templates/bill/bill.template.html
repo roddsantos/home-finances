@@ -87,9 +87,14 @@
                     class="material-symbols-outlined"
                     aria-hidden="false"
                     aria-label="icon"
-                    fontIcon="credit-card"
+                    fontIcon="credit_card"
                 ></mat-icon>
-                <h5>{{bill.creditCard.name}}</h5>
+                <h5
+                    class="color-decorator"
+                    [style.textDecorationColor]="bill.creditCard.color"
+                >
+                    {{bill.creditCard.name}}
+                </h5>
             </div>
             <div class="category-bill lvi label-value">
                 <p>category</p>

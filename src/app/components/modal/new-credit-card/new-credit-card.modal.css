@@ -10,7 +10,7 @@
 }
 
 .third {
-    width: 31%;
+    width: calc(33.3% - 1rem);
 }
 
 .color-picker {
@@ -26,6 +26,13 @@
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 10px;
+}
+
+.credit-card-bill {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    gap: 1rem;
 }
 
 .new-credit-card-field {

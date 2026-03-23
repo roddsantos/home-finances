@@ -90,58 +90,60 @@
                 />
             </div>
         </div>
-        <mat-form-field class="new-bill-field half" appearance="outline">
-            <mat-label>category</mat-label>
-            <mat-select formControlName="categoryId">
-                @for (cat of categoryState.categories$ | async; track $index) {
-                <mat-option [value]="cat.id">
-                    <mat-icon
-                        class="material-icons-outlined"
-                        [fontIcon]="cat.icon"
-                    ></mat-icon>
-                    <p>{{cat.name}}</p>
-                </mat-option>
+        <div class="credit-card-bill">
+            <mat-form-field class="new-bill-field half" appearance="outline">
+                <mat-label>category</mat-label>
+                <mat-select formControlName="categoryId">
+                    @for (cat of categoryState.categories$ | async; track $index) {
+                    <mat-option [value]="cat.id">
+                        <mat-icon
+                            class="material-icons-outlined"
+                            [fontIcon]="cat.icon"
+                        ></mat-icon>
+                        <p>{{cat.name}}</p>
+                    </mat-option>
+                    }
+                    <mat-select-trigger
+                        class="selected-trigger"
+                        *ngIf="creditCardForm.get('categoryId')?.value"
+                    >
+                        <mat-icon
+                            class="material-icons-outlined icon"
+                            [fontIcon]="selectedCategory(creditCardForm.get('categoryId')!.value)?.icon || ''"
+                        ></mat-icon>
+                        <p>
+                            {{selectedCategory(creditCardForm.get('categoryId')!.value)?.name
+                            || ''}}
+                        </p>
+                    </mat-select-trigger>
+                </mat-select>
+                @if (creditCardForm.get('categoryId')!.errors) {
+                <mat-error>{{errorMessage.category}}</mat-error>
                 }
-                <mat-select-trigger
-                    class="selected-trigger"
-                    *ngIf="creditCardForm.get('categoryId')?.value"
-                >
-                    <mat-icon
-                        class="material-icons-outlined icon"
-                        [fontIcon]="selectedCategory(creditCardForm.get('categoryId')!.value)?.icon || ''"
-                    ></mat-icon>
-                    <p>
-                        {{selectedCategory(creditCardForm.get('categoryId')!.value)?.name
-                        || ''}}
-                    </p>
-                </mat-select-trigger>
-            </mat-select>
-            @if (creditCardForm.get('categoryId')!.errors) {
-            <mat-error>{{errorMessage.category}}</mat-error>
-            }
-        </mat-form-field>
-        <mat-form-field class="new-bill-field half" appearance="outline">
-            <mat-icon
-                class="material-symbols-outlined"
-                matPrefix
-                aria-hidden="false"
-                aria-label="store icon"
-                fontIcon="account_balance"
-            ></mat-icon>
-            <mat-label>bank 1</mat-label>
-            <mat-select formControlName="bank1Id">
-                <mat-option
-                    *ngIf="(bankState.banks$ | async)!.length === 0"
-                    [disabled]="true"
-                    >no banks</mat-option
-                >
-                @for (b1 of (bankState.banks$ | async); track b1) {
-                <mat-option [value]="b1.id">{{ b1.name }}</mat-option>
+            </mat-form-field>
+            <mat-form-field class="new-bill-field half" appearance="outline">
+                <mat-icon
+                    class="material-symbols-outlined"
+                    matPrefix
+                    aria-hidden="false"
+                    aria-label="store icon"
+                    fontIcon="account_balance"
+                ></mat-icon>
+                <mat-label>bank 1</mat-label>
+                <mat-select formControlName="bank1Id">
+                    <mat-option
+                        *ngIf="(bankState.banks$ | async)!.length === 0"
+                        [disabled]="true"
+                        >no banks</mat-option
+                    >
+                    @for (b1 of (bankState.banks$ | async); track b1) {
+                    <mat-option [value]="b1.id">{{ b1.name }}</mat-option>
+                    }
+                </mat-select>
+                @if (creditCardForm.get('bank1Id')!.errors) {
+                <mat-error>{{errorMessage.bank}}</mat-error>
                 }
-            </mat-select>
-            @if (creditCardForm.get('bank1Id')!.errors) {
-            <mat-error>{{errorMessage.bank}}</mat-error>
-            }
-        </mat-form-field>
+            </mat-form-field>
+        </div>
     </form>
 </ng-template>
