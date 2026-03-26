@@ -27,9 +27,9 @@ export class CustomFilterState {
                 },
             })
             .unsubscribe();
-
-        this._filters$.next([...actualFilters, ...filtersToAdd]);
-        this.localStorage.setFilters(JSON.stringify([...actualFilters, ...filtersToAdd]));
+        const newFilters = [...actualFilters, ...filtersToAdd];
+        this._filters$.next([...newFilters]);
+        this.localStorage.setFilters(JSON.stringify([...newFilters]));
     }
 
     removeFilter(filter: FilterDisplay) {

@@ -14,7 +14,7 @@ export class GeneralState {
     private _themeObject$ = new BehaviorSubject<ThemeObjectType>(DEFAULT_THEME);
     private _filterContainer$ = new BehaviorSubject<boolean>(true);
     private _page$ = new BehaviorSubject<RoutesType | string>(window.location.pathname);
-    private _billsLayout$ = new BehaviorSubject<BillsLayoutType>("grid");
+    private _billsLayout$ = new BehaviorSubject<BillsLayoutType>("list");
 
     public readonly managerTabs$ = this._managerTab$.asObservable();
     public readonly theme$ = this._theme$.asObservable();

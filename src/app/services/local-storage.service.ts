@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { BillsLayoutType } from "../core/types/subjects";
 import { ThemeObjectType } from "../core/types/pages/theme";
 import { UserObjectType } from "../core/types/data/user.types";
+import { DEFAULT_THEME } from "src/utils/constants/colors";
 
 @Injectable({
     providedIn: "root",
@@ -37,7 +38,7 @@ export class LocalStorageService {
 
     // FILTER CONTAINER
     getFilterContainerStatus() {
-        return localStorage.getItem("filterContainer");
+        return localStorage.getItem("filterContainer") || "true";
     }
 
     setFilterContainer(status: boolean) {
@@ -51,7 +52,7 @@ export class LocalStorageService {
 
     getFilters() {
         let filters = localStorage.getItem("filters");
-        return filters ? JSON.parse(filters) : null;
+        return filters ? JSON.parse(filters) : [];
     }
 
     removeFilters() {
@@ -67,7 +68,7 @@ export class LocalStorageService {
     getTheme() {
         try {
             let theme = localStorage.getItem("theme");
-            return theme ? JSON.parse(theme) : null;
+            return theme ? JSON.parse(theme) : DEFAULT_THEME;
         } catch (error) {
             return null;
         }
@@ -79,7 +80,7 @@ export class LocalStorageService {
 
     getBillsLayout() {
         let billsView = localStorage.getItem("bills-view");
-        return (billsView || "grid") as BillsLayoutType;
+        return (billsView || "list") as BillsLayoutType;
     }
 
     setPinnedBills(ids: string[]) {

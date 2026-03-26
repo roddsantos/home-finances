@@ -42,7 +42,9 @@
                 <mat-datepicker #picker1></mat-datepicker> </mat-form-field
         ></ng-container>
         <mat-form-field class="half" appearance="outline">
-            <mat-label>date due</mat-label>
+            <mat-label>
+                {{type === 'companyCredit' ? 'buying date' : "date due"}}
+            </mat-label>
             <input
                 [value]="dueControl.value"
                 [matDatepicker]="picker2"

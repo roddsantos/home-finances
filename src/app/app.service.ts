@@ -26,10 +26,10 @@ export class AppService {
             if (user) this.userState.setUser(user);
 
             const theme = this.localStorageService.getTheme();
-            this.themeService.setTheme(theme ?? DEFAULT_THEME);
+            this.themeService.setTheme(theme);
 
             const filters = this.localStorageService.getFilters();
-            this.filterState.setFilters(filters ?? []);
+            this.filterState.setFilters(filters);
 
             const billsView = this.localStorageService.getBillsLayout();
             this.generalState.changeBillsLayout(billsView);
