@@ -27,8 +27,8 @@
                             [value]="null"
                             >none</mat-option
                         >
-                        @for (m of (catState.categories$ | async); track m) {
-                        <mat-option [value]="m">{{ m.name }}</mat-option>
+                        @for (m of catState.categories$ | async; track m) {
+                            <mat-option [value]="m">{{ m.name }}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
@@ -51,8 +51,16 @@
                             [value]="null"
                             >none</mat-option
                         >
-                        @for (cc of (ccState.creditCards$ | async); track cc) {
-                        <mat-option [value]="cc">{{ cc.name }}</mat-option>
+                        @for (cc of ccState.creditCards$ | async; track cc) {
+                            <mat-option [value]="cc">
+                                {{
+                                    cc.name +
+                                        " - " +
+                                        months[cc.month].short +
+                                        " " +
+                                        cc.year
+                                }}
+                            </mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
@@ -72,8 +80,8 @@
                             [value]="null"
                             >none</mat-option
                         >
-                        @for (b of (bankState.banks$ | async); track b) {
-                        <mat-option [value]="b">{{ b.name }}</mat-option>
+                        @for (b of bankState.banks$ | async; track b) {
+                            <mat-option [value]="b">{{ b.name }}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
@@ -93,8 +101,8 @@
                             [value]="null"
                             >none</mat-option
                         >
-                        @for (c of (compState.company$ | async); track c) {
-                        <mat-option [value]="c">{{ c.name }}</mat-option>
+                        @for (c of compState.company$ | async; track c) {
+                            <mat-option [value]="c">{{ c.name }}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
@@ -111,7 +119,7 @@
                         [formControl]="minCtrl"
                     />
                     @if (minCtrl.invalid) {
-                    <mat-error>invalid min value</mat-error>
+                        <mat-error>invalid min value</mat-error>
                     }
                 </mat-form-field>
             </div>
@@ -127,7 +135,7 @@
                         [formControl]="maxCtrl"
                     />
                     @if (maxCtrl.invalid) {
-                    <mat-error>invalid max value</mat-error>
+                        <mat-error>invalid max value</mat-error>
                     }
                 </mat-form-field>
             </div>
@@ -142,7 +150,7 @@
                         [formControl]="monthCtrl"
                     >
                         @for (m of months; track m) {
-                        <mat-option [value]="m">{{ m.short }}</mat-option>
+                            <mat-option [value]="m">{{ m.short }}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
@@ -202,24 +210,24 @@
             </div>
             <div class="filters-container">
                 @for (chip of selectedFilters; track chip; let i = $index) {
-                <mat-chip-row
-                    [ngClass]="[
-                        chip.identifier,
-                        'chip-item',
-                        generalState.theme$ | async
-                    ]"
-                    (removed)="removeFilter(i)"
-                >
-                    {{
-                        chip.identifier === "min" || chip.identifier === "max"
-                            ? chip.identifier + ":"
-                            : ""
-                    }}
-                    {{ chip.name }}
-                    <button matChipRemove [attr.aria-label]="'remove ' + chip.name">
-                        <mat-icon>cancel</mat-icon>
-                    </button>
-                </mat-chip-row>
+                    <mat-chip-row
+                        [ngClass]="[
+                            chip.identifier,
+                            'chip-item',
+                            generalState.theme$ | async,
+                        ]"
+                        (removed)="removeFilter(i)"
+                    >
+                        {{
+                            chip.identifier === "min" || chip.identifier === "max"
+                                ? chip.identifier + ":"
+                                : ""
+                        }}
+                        {{ chip.name }}
+                        <button matChipRemove [attr.aria-label]="'remove ' + chip.name">
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </mat-chip-row>
                 }
             </div>
             <btn

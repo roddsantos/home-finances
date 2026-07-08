@@ -8,23 +8,10 @@
         "invoice invoice invoice invoice";
     grid-template-columns: 1fr 1fr 1fr 1fr;
     row-gap: 0.5rem;
-    & .invoice,
-    .limit-left-container,
-    .month-year-container,
-    .day-due-container,
-    .day-invoice-container {
-        & h5 {
-            color: var(--text-2);
-        }
-        & h2,
-        p {
-            color: var(--text-1);
-            font-weight: bold;
-        }
-    }
+
     & .flag {
         & img {
-            width: 50px;
+            width: 40px;
             margin: 0px 0px auto;
             text-align: center;
         }
@@ -33,7 +20,7 @@
         grid-area: invoice;
         width: 100%;
         & h1 {
-            font-family: var(--text-2);
+            font-family: var(--text-1);
         }
         & .row {
             display: flex;
@@ -56,6 +43,7 @@
         border-style: solid;
         border-width: var(--border-width);
         border-radius: 0.5rem;
+        border-color: var(--text-1);
         padding: 4px;
         & .bar {
             height: 100%;
@@ -64,11 +52,16 @@
     }
     & .limit-container {
         grid-area: limit-container;
+        & h2 {
+            width: max-content;
+        }
         & h5 {
-            color: var(--text-2);
+            color: var(--text-1);
         }
         & .limit {
-            color: var(--text-2);
+            color: var(--text-1);
+            margin: auto 0px;
+            width: auto;
         }
         & .numbers {
             display: flex;

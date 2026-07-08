@@ -27,4 +27,8 @@ export class CreditCardService extends GeneralService {
     updateCreditCard(data: CreditCardUpdateType) {
         return this.http.patch<CreditCardObjectType>(CREDIT_CARD, data);
     }
+
+    closeInvoice(id: string) {
+        return this.http.patch(CREDIT_CARD + `/close/${id}`, {});
+    }
 }
