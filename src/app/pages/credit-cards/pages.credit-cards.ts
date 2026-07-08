@@ -15,6 +15,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { GeneralPage } from "src/app/core/general/page.general";
 import { CreditCardObjectType } from "src/app/core/types/data/credit-card.types";
+import { MONTHS } from "src/utils/constants/general";
 
 @Component({
     selector: "page-credit-cards",
@@ -47,6 +48,7 @@ export class PageCreditCards extends GeneralPage {
     public actualPage = window.location.pathname;
     public page = ROUTES.find((r) => r.page === this.actualPage);
     public theme = "default";
+    public monthList = MONTHS;
 
     actions: ActionItem[] = [
         {
@@ -66,6 +68,12 @@ export class PageCreditCards extends GeneralPage {
             icon: "check_circle",
             action: (data) => this.onFinishInvoice(data),
             color: this.successColor,
+            hidden: (data) => {
+                const newDate = new Date();
+                return !(
+                    newDate.getMonth() > data.month && newDate.getDate() >= data.day
+                );
+            },
         },
     ];
 
@@ -107,15 +115,13 @@ export class PageCreditCards extends GeneralPage {
     }
 
     onFinishInvoice(creditCard: CreditCardObjectType) {
-        const updatedCreditCard: CreditCardObjectType = { ...creditCard, isClosed: true };
-
-        this.creditCardService.updateCreditCard(updatedCreditCard).subscribe({
-            next: (creditCard) => {
-                this.creditCardState.updateCreditCard(creditCard);
+        this.creditCardService.closeInvoice(creditCard.id).subscribe({
+            next: () => {
+                this.getCreditCards();
                 this.generalService.successSnackbar("invoice closed successfully");
             },
             error: () => {
-                this.generalService.errorSnackbar("error updating credit card");
+                this.generalService.errorSnackbar("error closing credit card invoice");
             },
         });
     }

@@ -10,6 +10,7 @@ import { CompanyState } from "src/app/core/subjects/subjects.company";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { CREDIT_CARD_FORM, GENERAL_FORM } from "src/utils/constants/forms";
 import { MatIconModule } from "@angular/material/icon";
+import { MONTHS } from "src/utils/constants/general";
 
 @Component({
     selector: "template-credit-card",
@@ -33,6 +34,7 @@ export class CreditCardTemplateNewBill {
     constructor() {}
     public creditCards = inject(CreditCardState);
     public companies = inject(CompanyState);
+    public monthList = MONTHS;
 
     @Input({ required: true }) creditcardControl: FormControl<string | null>;
     @Input({ required: true }) companyControl: FormControl<string | null>;

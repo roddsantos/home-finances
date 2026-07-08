@@ -1,15 +1,17 @@
+import { MatIconModule } from "@angular/material/icon";
 import { CommonModule } from "@angular/common";
 import { Component, Input } from "@angular/core";
 import { CreditCardObjectType } from "src/app/core/types/data/credit-card.types";
 import { MONTHS } from "src/utils/constants/general";
 import { CreditCardPipe } from "src/utils/pipes/creditCard";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 @Component({
     selector: "template-view-credit-card",
     templateUrl: "./credit-card.template.html",
-    styleUrls: ["./credit-card.template.css"],
+    styleUrls: ["./credit-card.template.css", "../../view-item.modal.css"],
     standalone: true,
-    imports: [CommonModule, CreditCardPipe],
+    imports: [CommonModule, CreditCardPipe, MatIconModule, MatTooltipModule],
 })
 export class TemplateCreditCard {
     @Input() creditCard: CreditCardObjectType;

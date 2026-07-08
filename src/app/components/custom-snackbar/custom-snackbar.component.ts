@@ -41,7 +41,7 @@ export class CustomSnackbarComponent {
             .open(message, actionLabel, {
                 panelClass: ["snackbar-container", variant || "default"],
                 horizontalPosition: "center",
-                verticalPosition: "bottom",
+                verticalPosition: "top",
                 duration: 3000,
                 ...options,
             })

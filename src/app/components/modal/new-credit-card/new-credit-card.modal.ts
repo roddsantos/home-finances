@@ -119,6 +119,10 @@ export class ModalNewCreditCard extends ModalComponent {
     });
 
     ngOnInit() {
+        if (this.data) {
+            this.creditCardForm.get("categoryId")?.clearValidators();
+            this.creditCardForm.get("bank1Id")?.clearValidators();
+        }
         this.modalState.changeSubmitFooter(this.data ? "edit" : "OK", "cancel");
     }
 

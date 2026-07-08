@@ -112,7 +112,7 @@ export class DialogCustomList extends ModalComponent implements OnInit {
     addFilter(event: MatSelectChange, identifier: AvailableDataFilters) {
         const filter = event.value;
         const hasFilterIndex = this.selectedFilters.findIndex(
-            (f) => f.identifier === identifier
+            (f) => f.identifier === identifier,
         );
         if (hasFilterIndex >= 0 || filter === null)
             this.selectedFilters.splice(hasFilterIndex, 1);
@@ -136,16 +136,16 @@ export class DialogCustomList extends ModalComponent implements OnInit {
                         (f.name as number) > value) ||
                     (identifier === "min" &&
                         f.identifier === "max" &&
-                        (f.name as number) < value)
+                        (f.name as number) < value),
             );
             if (hasFilter) {
                 if (identifier === hasFilter.identifier)
                     this.generalService.warningSnackbar(
-                        "only one " + identifier + " value allowed"
+                        "only one " + identifier + " value allowed",
                     );
                 else if ((hasFilter.name as number) !== value)
                     this.generalService.warningSnackbar(
-                        identifier + " value not allowed"
+                        identifier + " value not allowed",
                     );
             } else {
                 this.selectedFilters.push({
@@ -190,7 +190,7 @@ export class DialogCustomList extends ModalComponent implements OnInit {
     addStatus(event: MatSelectChange) {
         const value = event.value;
         const hasFilter = this.selectedFilters.findIndex(
-            (f) => f.identifier === "status"
+            (f) => f.identifier === "status",
         );
         if (hasFilter < 0) {
             this.selectedFilters.push({
@@ -211,7 +211,7 @@ export class DialogCustomList extends ModalComponent implements OnInit {
     addDate(event: any, start: boolean) {
         const date = new Date(event.value);
         const hasDateIndex = this.selectedFilters.findIndex(
-            (sf) => sf.identifier === (start ? "date1" : "date2")
+            (sf) => sf.identifier === (start ? "date1" : "date2"),
         );
         if (hasDateIndex >= 0) this.selectedFilters.splice(hasDateIndex, 1);
         this.selectedFilters.push({
@@ -238,7 +238,7 @@ export class DialogCustomList extends ModalComponent implements OnInit {
         countMonths = this.selectedFilters.filter((f) => f.identifier === "month").length;
         if (countYears === 0 && countMonths > 0) {
             this.generalService.warningSnackbar(
-                "you need at least one year when filtering months"
+                "you need at least one year when filtering months",
             );
             return;
         }

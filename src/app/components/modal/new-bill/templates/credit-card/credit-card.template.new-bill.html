@@ -17,7 +17,9 @@
                 >no credit cards</mat-option
             >
             @for (c of (creditCards.creditCards$ | async); track c) {
-            <mat-option [value]="c.id">{{ c.name }}</mat-option>
+            <mat-option [value]="c.id">
+                {{ c.name + ' - ' + monthList[c.month].short + ' ' + c.year }}
+            </mat-option>
             }
         </mat-select>
         @if (creditcardControl.invalid) {

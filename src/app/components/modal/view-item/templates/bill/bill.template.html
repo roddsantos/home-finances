@@ -114,9 +114,12 @@
         </div>
     </card-component>
     <div class="bill-value">
-        <h5>
-            {{ bill.parcels + "x " + "(" + (bill.parcel + 1) + "/" + bill.parcels + ")" }}
-        </h5>
+        <div>
+            <h5>{{ bill.parcels + "x" }}</h5>
+            <h5 *ngIf="bill.parcels > 1">
+                {{ "(" + (bill.parcel + 1) + "/" + bill.parcels + ")" }}
+            </h5>
+        </div>
         <h1>{{ bill.totalParcel | currency : "R$ " }}</h1>
         <p>{{ "total " + (bill.total | currency : "R$ ") }}</p>
     </div>

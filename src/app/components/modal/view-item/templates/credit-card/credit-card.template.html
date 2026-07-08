@@ -1,18 +1,42 @@
 <div class="credit-card">
-    <div class="day-invoice-container">
-        <h5>best day</h5>
-        <p>{{creditCard.day}}</p>
+    <div class="day-invoice-container label-value lvi">
+        <mat-icon
+            class="material-symbols-outlined"
+            aria-hidden="false"
+            aria-label="icon"
+            fontIcon="calendar_check"
+        ></mat-icon>
+        <p>best day</p>
+        <h5>{{creditCard.day}}</h5>
     </div>
-    <div class="day-due-container">
-        <h5>due day</h5>
-        <p>{{creditCard.due}}</p>
+    <div class="day-due-container label-value lvi">
+        <mat-icon
+            class="material-symbols-outlined"
+            aria-hidden="false"
+            aria-label="icon"
+            fontIcon="calendar_clock"
+        ></mat-icon>
+        <p>due day</p>
+        <h5>{{creditCard.due}}</h5>
     </div>
-    <div class="month-year-container">
-        <h5>month/year related</h5>
-        <p>{{months[creditCard.month].short + '/' + creditCard.year}}</p>
+    <div class="month-year-container label-value lvi">
+        <mat-icon
+            class="material-symbols-outlined"
+            aria-hidden="false"
+            aria-label="icon"
+            fontIcon="calendar_month"
+        ></mat-icon>
+        <p>month/year related</p>
+        <h5>{{months[creditCard.month].short + '/' + creditCard.year}}</h5>
     </div>
-    <div class="flag">
-        <h5>flag</h5>
+    <div [matTooltip]="creditCard.flag || ''" class="flag lvi">
+        <mat-icon
+            class="material-symbols-outlined"
+            aria-hidden="false"
+            aria-label="icon"
+            fontIcon="flag"
+        ></mat-icon>
+        <p>flag</p>
         <img
             class="flag-icon"
             *ngIf="creditCard.flag && creditCard.flag !== 'other'"
@@ -37,13 +61,10 @@
         <h5>limit</h5>
         <div class="numbers">
             <h2>{{creditCard.limitLeft | currency: "R$ "}}/</h2>
-            <h2 class="limit">{{creditCard.limit | currency: "R$ "}}</h2>
+            <h5 class="limit">{{creditCard.limit | currency: "R$ "}}</h5>
         </div>
     </div>
-    <div
-        class="progress-container"
-        [style.borderColor]="theme === 'binary' ? secondaryColor : bhColor"
-    >
+    <div class="progress-container">
         <div
             class="bar"
             [style.width]="(creditCard.limitLeft / creditCard.limit) * 100 + '%'"

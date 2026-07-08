@@ -65,10 +65,17 @@
                         fontIcon="price_check"
                     ></mat-icon>
                 </div>
-                <p>{{"paid expenses"}}</p>
+                <p>{{"total left to pay"}}</p>
                 <div class="row">
-                    <h3>{{(homeState.expenses$ | async)?.paidBills| currency: 'R$ '}}</h3>
+                    <h3>
+                        {{((homeState.expenses$ | async)!.sumOfBills -
+                        (homeState.expenses$ | async)!.paidBills) | currency: 'R$ '}}
+                    </h3>
                 </div>
+                <p>
+                    {{ "paid expenses: " + ((homeState.expenses$ | async)?.paidBills|
+                    currency: 'R$ ') }}
+                </p>
             </div>
         </card-component>
         <!-- CREDIT CARD INVOICES -->

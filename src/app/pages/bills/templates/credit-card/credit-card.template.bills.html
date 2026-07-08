@@ -42,4 +42,18 @@
         ></mat-icon>
         <p class="category-name">{{data.category.name}}</p>
     </tag>
+    <tag
+        matTooltip="recurrent bill"
+        [id]="'tag-recurrent-'+data.id"
+        theme="var(--info)"
+        transform
+        [ngClass]="['recurrent-container',  data.isRecurrent ? 'recurrent' : '']"
+    >
+        <mat-icon
+            class="material-symbols-outlined"
+            aria-hidden="false"
+            aria-label="icon"
+            fontIcon="cycle"
+        ></mat-icon>
+    </tag>
 </div>
