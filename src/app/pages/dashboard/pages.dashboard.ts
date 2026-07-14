@@ -30,13 +30,21 @@ import { GeneralService } from "src/app/services/general.service";
 import { currentPallete } from "src/utils/color";
 import { MONTHS } from "src/utils/constants/general";
 import { billsProgressionChart } from "./charts/bills-progression.charts.dashboard";
-import { ChartConfigType } from "src/app/core/types/pages/dashboard";
+import {
+    ChartConfigType,
+    MoneyLeftChartType,
+    PaidBillsChartType,
+} from "src/app/core/types/pages/dashboard";
 import { categoriesChart } from "./charts/category.charts.dashboard";
 import { savingsChart } from "./charts/savings.charts.dashboard";
 import { piggyBanksProgressionChart } from "./charts/piggy-banks-progression.charts.dashboard";
 import { creditCardProgressionChart } from "./charts/credit-cards-progression.charts.dashboard";
 import { CategoryObjectType } from "src/app/core/types/data/category.types";
 import { BillDataObjectType } from "src/app/core/types/data/bills.types";
+import { paidBillsChart } from "./charts/paid-bills.charts.dashboard";
+import { moneyLeftChart } from "./charts/money-left.chart.dashboard";
+import { convertToFloat } from "src/utils/parser";
+import { CreditCardDashboardType } from "src/app/core/types/services";
 
 @Component({
     selector: "page-dashboard",
@@ -71,6 +79,8 @@ export class PageDashboard {
     public categories: CategoryObjectType[] = [];
     public savingsChart: Chart;
     public creditCardsChart: Chart;
+    public paidBillsChart: Chart;
+    public moneyLeftChart: Chart;
 
     public pallete = currentPallete();
 
@@ -146,10 +156,19 @@ export class PageDashboard {
                 this.dashboardState.updateSavings(savings);
                 this.setSavingsChart(savings);
                 this.setSavingsProgression(savings.piggyBanksProgression);
-                this.setCreditCardsChart(savings.piggyBanksProgression);
+                this.setPaidBillsChart({
+                    pending: savings.totalPending,
+                    paid: savings.totalSettled,
+                });
                 const total = savings.totalIncome + savings.totalSavings;
                 const scaleIncome = savings.totalIncome / total;
                 const scaleSavings = savings.totalSavings / total;
+                this.setMoneyLeftChart({
+                    spent: convertToFloat(
+                        savings.totalIncome + savings.totalSavings - savings.totalBanks,
+                    ),
+                    savings: savings.totalBanks,
+                });
                 this.moneyReserve = {
                     scaleIncome,
                     scaleSavings,
@@ -160,11 +179,17 @@ export class PageDashboard {
     }
 
     fetchCreditCardProgression() {
-        // this.fetchCreditCardProgression$ = this.dashboardService
-        //     .getCreditCards()
-        //     .subscribe({
-        //         next: (data) => this.setCreditCardsChart(data),
-        //     });
+        this.fetchCreditCardProgression$ = this.dashboardService
+            .getCreditCards()
+            .subscribe({
+                next: (data) => {
+                    this.dashboardState.updateCreditCardsSpan(data);
+                    this.setCreditCardsChart(data);
+                },
+                error: () => {
+                    this.snack.openSnackBar("error fetching credit cards", "error");
+                },
+            });
     }
 
     ngOnInit() {
@@ -193,6 +218,14 @@ export class PageDashboard {
         this.savingsChart = savingsChart(savings, this.theme);
     }
 
+    setPaidBillsChart(data: PaidBillsChartType) {
+        this.paidBillsChart = paidBillsChart(data);
+    }
+
+    setMoneyLeftChart(data: MoneyLeftChartType) {
+        this.moneyLeftChart = moneyLeftChart(data);
+    }
+
     setSavingsProgression(piggyBanksProgression: PiggyBanksProgressionType[]) {
         this.billsPerMonthChart = piggyBanksProgressionChart(
             piggyBanksProgression,
@@ -200,7 +233,7 @@ export class PageDashboard {
         );
     }
 
-    setCreditCardsChart(data: PiggyBanksProgressionType[]) {
+    setCreditCardsChart(data: CreditCardDashboardType[]) {
         this.creditCardsChart = creditCardProgressionChart(data, this.theme);
     }
 

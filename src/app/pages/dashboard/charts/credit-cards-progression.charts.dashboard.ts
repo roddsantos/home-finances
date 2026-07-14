@@ -3,6 +3,7 @@ import { currentPallete, getThemeVars, tint } from "src/utils/color";
 import { Chart } from "chart.js/auto";
 import { MONTHS } from "src/utils/constants/general";
 import { Context } from "chartjs-plugin-datalabels";
+import { CreditCardDashboardType } from "src/app/core/types/services";
 
 const pallete = currentPallete();
 const themeProfile = getThemeVars(true);
@@ -16,7 +17,7 @@ const borderRadiusToTension = () => {
     return 0.4;
 };
 
-const lineOptions: any = (datasets: any[]) => {
+const lineOptions: any = (data: any[]) => {
     const layout = { autoPadding: true, padding: { top: 0, right: 40, left: 40 } };
     const datalabels = {
         anchor: "end",
@@ -25,24 +26,11 @@ const lineOptions: any = (datasets: any[]) => {
         font: { weight: "bold", family: pallete.font2, size: 14 },
         formatter: (v: number, context: Context) => {
             return (
-                v +
-                " R$\n" +
-                datasets[context.datasetIndex][context.dataIndex].delta +
-                "%"
+                v + " R$\n" + data[context.datasetIndex][context.dataIndex].delta + "%"
             );
         },
     };
-    const tooltip = {
-        callbacks: {
-            footer: (context: any) => {
-                return (
-                    "qty: " +
-                    datasets[context[0].datasetIndex][context[0].dataIndex].count +
-                    " bill(s)"
-                );
-            },
-        },
-    };
+
     const scales = {
         y: { display: false },
         x: { ticks: { font: { weight: "bold", size: 12 } } },
@@ -55,31 +43,28 @@ const lineOptions: any = (datasets: any[]) => {
         maintainAspectRatio: true,
         plugins: {
             datalabels,
-            tooltip,
         },
         scales,
     };
 };
 
 export function creditCardProgressionChart(
-    piggyBanksProgression: PiggyBanksProgressionType[],
+    ccData: CreditCardDashboardType[],
     theme: string,
 ) {
     return new Chart("credit-cards-chart", {
         type: "line",
         data: {
-            labels: piggyBanksProgression[0].progression.map(
-                (pb) => MONTHS[pb.month].short + "/" + pb.year,
-            ),
-            datasets: piggyBanksProgression.map((pb, i) => ({
-                label: pb.bank,
-                data: pb.progression.map((bm) => bm.savedValue),
+            labels: ccData[0].data.map((cc, i) => MONTHS[cc.month].short),
+            datasets: ccData.map((cc, i) => ({
+                label: cc.title,
+                data: cc.data.map((cc) => cc.invoice),
                 tension: borderRadiusToTension(),
-                backgroundColor: theme === "binary" ? "transparent" : tint(0.3, pb.color),
-                borderColor: pb.color,
+                backgroundColor: theme === "binary" ? "transparent" : tint(0.5, cc.color),
+                borderColor: cc.color,
                 fill: true,
             })),
         },
-        options: lineOptions(piggyBanksProgression.map((pbp) => pbp.progression)),
+        options: lineOptions(ccData.map((cc, i) => cc.data)),
     });
 }

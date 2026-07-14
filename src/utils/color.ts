@@ -11,68 +11,83 @@ export const tint = (
         toColor,
         useLinear,
         reformat,
-    }: { toColor?: string; useLinear?: boolean; reformat?: boolean } = {}
+    }: { toColor?: string; useLinear?: boolean; reformat?: boolean } = {},
 ) => {
     const { round } = Math;
+
     const clampedRatio = Math.min(Math.max(ratio, -1), 1);
+
     if (ratio < -1 || ratio > 1) {
-        // eslint-disable-next-line no-console
         console.info(
-            `Ratio should be between -1 and 1 and it is ${ratio}. It will be clamped to ${clampedRatio}`
+            `Ratio should be between -1 and 1 and it is ${ratio}. It will be clamped to ${clampedRatio}`,
         );
     }
+
     let baseColor = inputColor;
+
     if (inputColor[0] !== "r" && inputColor[0] !== "#") {
         baseColor = "#000";
-        // eslint-disable-next-line no-console
+
         console.info(
-            `Invalid input color format. "${inputColor}" should be rgb(a) or hex. It will fallback to "${baseColor}"`
+            `Invalid input color format. "${inputColor}" should be rgb(a) or hex. It will fallback to "${baseColor}"`,
         );
     }
+
     let isRGBformat = baseColor.length > 9 || baseColor.includes("rgb(");
+
     isRGBformat = reformat ? !isRGBformat : isRGBformat;
 
     if (toColor) {
-        const isToColorRgbFormat =
-            (toColor && toColor?.length > 9) || toColor?.includes("rgb(");
+        const isToColorRgbFormat = toColor.length > 9 || toColor.includes("rgb(");
+
         isRGBformat = reformat ? !isToColorRgbFormat : isToColorRgbFormat;
     }
 
     const black: ColorObject = { r: 0, g: 0, b: 0, a: -1 };
     const white: ColorObject = { r: 255, g: 255, b: 255, a: -1 };
+
     const formattedBaseColor = hexToRgb(baseColor);
-    const isNegativeRatio = clampedRatio < 0;
-    const toColorDefault = isNegativeRatio ? black : white;
-    const formattedToColor = toColor && !reformat ? hexToRgb(toColor) : toColorDefault;
+
+    const formattedToColor =
+        toColor && !reformat ? hexToRgb(toColor) : clampedRatio < 0 ? black : white;
+
     const toColorRatio = Math.abs(clampedRatio);
     const baseRatio = 1 - toColorRatio;
 
     const outputColor = {} as ColorObject;
+
     if (useLinear) {
         outputColor.r = round(
-            baseRatio * formattedBaseColor.r + toColorRatio * formattedToColor.r
+            formattedBaseColor.r * baseRatio + formattedToColor.r * toColorRatio,
         );
+
         outputColor.g = round(
-            baseRatio * formattedBaseColor.g + toColorRatio * formattedToColor.g
+            formattedBaseColor.g * baseRatio + formattedToColor.g * toColorRatio,
         );
+
         outputColor.b = round(
-            baseRatio * formattedBaseColor.b + toColorRatio * formattedToColor.b
+            formattedBaseColor.b * baseRatio + formattedToColor.b * toColorRatio,
         );
     } else {
         outputColor.r = round(
-            (baseRatio * formattedBaseColor.r ** 2 +
-                toColorRatio * formattedToColor.r ** 2) **
-                0.5
+            Math.sqrt(
+                formattedBaseColor.r ** 2 * baseRatio +
+                    formattedToColor.r ** 2 * toColorRatio,
+            ),
         );
+
         outputColor.g = round(
-            (baseRatio * formattedBaseColor.g ** 2 +
-                toColorRatio * formattedToColor.g ** 2) **
-                0.5
+            Math.sqrt(
+                formattedBaseColor.g ** 2 * baseRatio +
+                    formattedToColor.g ** 2 * toColorRatio,
+            ),
         );
+
         outputColor.b = round(
-            (baseRatio * formattedBaseColor.b ** 2 +
-                toColorRatio * formattedToColor.b ** 2) **
-                0.5
+            Math.sqrt(
+                formattedBaseColor.b ** 2 * baseRatio +
+                    formattedToColor.b ** 2 * toColorRatio,
+            ),
         );
     }
 
@@ -82,11 +97,13 @@ export const tint = (
     outputColor.a = formattedToColor.a < 0 ? formattedBaseColor.a : blendedAlpha;
 
     const hasAlpha = formattedBaseColor.a >= 0 || formattedToColor.a >= 0;
+
     if (isRGBformat) {
-        return `rgb${hasAlpha ? "a" : ""}(${outputColor.r},${outputColor.g},${
-            outputColor.b
-        }${hasAlpha ? `,${round(outputColor.a * 1000) / 1000}` : ""})`;
+        return `rgb${hasAlpha ? "a" : ""}(${outputColor.r},${outputColor.g},${outputColor.b}${
+            hasAlpha ? `,${round(outputColor.a * 1000) / 1000}` : ""
+        })`;
     }
+
     return `#${(
         outputColor.r * redSpace +
         outputColor.g * greenSpace +
@@ -94,22 +111,20 @@ export const tint = (
         (hasAlpha ? round(outputColor.a * 255) : 0)
     )
         .toString(16)
-        // If no Alpha, we remove the last 2 hex digits
-        .slice(0, hasAlpha ? undefined : -2)}`;
+        .padStart(hasAlpha ? 8 : 6, "0")
+        .slice(0, hasAlpha ? undefined : 6)}`;
 };
 
-function hexToRgb(hex: string): { r: number; g: number; b: number; a: number } {
+function hexToRgb(hex: string): ColorObject {
     let normalized = hex.replace("#", "");
 
     if (normalized.length === 3) {
-        normalized =
-            normalized
-                .split("")
-                .map((c) => c + c)
-                .join("") + "ff";
+        normalized = normalized
+            .split("")
+            .map((c) => c + c)
+            .join("");
     }
 
-    // #RGBA
     if (normalized.length === 4) {
         normalized = normalized
             .split("")
@@ -117,13 +132,22 @@ function hexToRgb(hex: string): { r: number; g: number; b: number; a: number } {
             .join("");
     }
 
-    const bigint = parseInt(normalized, 16);
+    // RRGGBB
+    if (normalized.length === 6) {
+        return {
+            r: parseInt(normalized.slice(0, 2), 16),
+            g: parseInt(normalized.slice(2, 4), 16),
+            b: parseInt(normalized.slice(4, 6), 16),
+            a: -1,
+        };
+    }
 
+    // RRGGBBAA
     return {
-        r: (bigint >> 24) & 255,
-        g: (bigint >> 16) & 255,
-        b: (bigint >> 8) & 255,
-        a: (bigint & 255) / 255,
+        r: parseInt(normalized.slice(0, 2), 16),
+        g: parseInt(normalized.slice(2, 4), 16),
+        b: parseInt(normalized.slice(4, 6), 16),
+        a: parseInt(normalized.slice(6, 8), 16) / 255,
     };
 }
 
@@ -146,7 +170,7 @@ function contrastRatio(l1: number, l2: number): number {
 export function bestContrastColor(
     baseColor: string,
     optionA: string,
-    optionB: string
+    optionB: string,
 ): string {
     const baseLum = relativeLuminance(hexToRgb(baseColor));
     const lumA = relativeLuminance(hexToRgb(optionA));
@@ -198,7 +222,7 @@ export function currentPallete() {
     const info = style.getPropertyValue("--info");
     const warning = style.getPropertyValue("--warning");
     const error = style.getPropertyValue("--error");
-    const success = style.getPropertyValue("--error");
+    const success = style.getPropertyValue("--success");
 
     const text1 = style.getPropertyValue("--text-1");
     const text2 = style.getPropertyValue("--text-2");

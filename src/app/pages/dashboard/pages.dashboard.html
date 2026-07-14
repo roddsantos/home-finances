@@ -53,51 +53,17 @@
         >
             <div class="dashboard-money">
                 <div class="money-container" [style.flexDirection]="'row'">
-                    <!-- <canvas id="savings-income-chart" class="chart"></canvas> -->
-                    <div class="money-item">
-                        <div
-                            class="icon-container"
-                            [style.transform]="'scale(' + moneyReserve.scaleIncome + ')'"
-                            [style.color]="'black'"
-                        >
-                            <mat-icon
-                                class="material-symbols-rounded icon"
-                                fontIcon="savings"
-                                [style.color]="'var(--success)'"
-                            ></mat-icon>
-                            <mat-icon
-                                class="material-symbols-filled icon-right"
-                                fontIcon="arrow_circle_down"
-                                [style.color]="'var(--success)'"
-                            ></mat-icon>
+                    <div class="paid-bills">
+                        <div>
+                            <canvas id="paid-bills" class="chart"></canvas>
                         </div>
-                        <h5>
-                            {{ (dashboardState.savings$ | async)?.totalIncome | currency:
-                            'R$ ' }}
-                        </h5>
-                        <h6>income</h6>
+                        <h5>paid bills</h5>
                     </div>
-                    <div class="money-item">
-                        <div
-                            class="icon-container"
-                            [style.transform]="'scale(' + moneyReserve.scaleSavings + ')'"
-                        >
-                            <mat-icon
-                                class="material-symbols-rounded icon"
-                                fontIcon="savings"
-                                [style.color]="'var(--info)'"
-                            ></mat-icon>
-                            <mat-icon
-                                class="material-symbols-rounded icon-right"
-                                fontIcon="calendar_month"
-                                [style.color]="'var(--info)'"
-                            ></mat-icon>
+                    <div class="money-left">
+                        <div>
+                            <canvas id="money-left" class="chart"></canvas>
                         </div>
-                        <h5>
-                            {{ (dashboardState.savings$ | async)?.totalSavings | currency:
-                            'R$ ' }}
-                        </h5>
-                        <h6>from last month</h6>
+                        <h5>money left</h5>
                     </div>
                 </div>
                 <div class="container">

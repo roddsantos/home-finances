@@ -44,7 +44,13 @@ const lineOptions: any = (datasets: any[]) => {
         },
     };
     const scales = {
-        y: { display: false },
+        y: {
+            display: false,
+            min: 0,
+            max:
+                Math.max(...datasets[0].map((v: DashboardBillsPerMonthType) => v.total)) +
+                1000,
+        },
         x: { ticks: { font: { weight: "bold", size: 12 } } },
     };
 

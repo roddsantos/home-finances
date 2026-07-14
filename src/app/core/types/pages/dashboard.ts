@@ -9,3 +9,13 @@ export type ChartConfigType = {
     color2?: string;
     color3?: string;
 };
+
+export type PaidBillsChartType = {
+    pending: number;
+    paid: number;
+};
+
+export type MoneyLeftChartType = {
+    savings: number;
+    spent: number;
+};

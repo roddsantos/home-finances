@@ -1,26 +1,21 @@
 import { currentPallete, getThemeVars, tint } from "src/utils/color";
 import { Chart } from "chart.js/auto";
 import { Context } from "chartjs-plugin-datalabels";
-import { PiggyBanksProgressionType } from "src/app/core/types/data/dashboard.types";
+import {
+    MonthPiggyBankCountsType,
+    PiggyBanksProgressionType,
+} from "src/app/core/types/data/dashboard.types";
 import { MONTHS } from "src/utils/constants/general";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 const pallete = currentPallete();
 const themeProfile = getThemeVars(true);
-
-const borderRadiusToTension = () => {
-    const borderRadius = themeProfile.borderRadius as number;
-    if (borderRadius === 0) return 0;
-    if (borderRadius < 5) return 0.1;
-    if (borderRadius < 10) return 0.2;
-    if (borderRadius < 15) return 0.3;
-    return 0.4;
-};
 
 const lineOptions: any = (datasets: any[]) => {
     const layout = { autoPadding: true, padding: { top: 0, right: 40, left: 40 } };
     const datalabels = {
         anchor: "end",
-        align: "center",
+        align: "top",
         color: pallete.text1,
         font: { weight: "bold", family: pallete.font2, size: 14 },
         formatter: (v: number, context: Context) => {
@@ -33,10 +28,24 @@ const lineOptions: any = (datasets: any[]) => {
             );
         },
     };
+
     const tooltip = { enabled: false };
     const scales = {
-        y: { display: false },
-        x: { ticks: { font: { weight: "bold", size: 12 } } },
+        y: {
+            display: false,
+            stacked: true,
+            min:
+                Math.min(
+                    ...datasets[0].map((v: MonthPiggyBankCountsType) => v.savedValue),
+                    ...datasets[1].map((v: MonthPiggyBankCountsType) => v.savedValue),
+                ) - 500,
+            max:
+                Math.max(
+                    ...datasets[0].map((v: MonthPiggyBankCountsType) => v.savedValue),
+                    ...datasets[1].map((v: MonthPiggyBankCountsType) => v.savedValue),
+                ) + 500,
+        },
+        x: { ticks: { font: { weight: "bold", size: 12 } }, stacked: true },
     };
 
     return {
@@ -56,8 +65,10 @@ export function piggyBanksProgressionChart(
     piggyBanksProgression: PiggyBanksProgressionType[],
     theme: string,
 ) {
+    Chart.register(ChartDataLabels);
     return new Chart("piggy-banks-progression", {
-        type: "line",
+        plugins: [ChartDataLabels],
+        type: "bar",
         data: {
             labels: piggyBanksProgression[0].progression.map(
                 (pb) => MONTHS[pb.month].short + "/" + pb.year,
@@ -65,10 +76,11 @@ export function piggyBanksProgressionChart(
             datasets: piggyBanksProgression.map((pb, i) => ({
                 label: pb.bank,
                 data: pb.progression.map((bm) => bm.savedValue),
-                tension: borderRadiusToTension(),
+                spacing: 1,
+                borderWidth: themeProfile.borderWidth as number,
+                borderRadius: themeProfile.borderRadius as number,
                 backgroundColor: theme === "binary" ? "transparent" : tint(0.5, pb.color),
                 borderColor: pb.color,
-                fill: true,
             })),
         },
         options: lineOptions(piggyBanksProgression.map((pbp) => pbp.progression)),
