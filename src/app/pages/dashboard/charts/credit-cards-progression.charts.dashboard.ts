@@ -21,7 +21,7 @@ const lineOptions: any = (data: any[]) => {
     const layout = { autoPadding: true, padding: { top: 0, right: 40, left: 40 } };
     const datalabels = {
         anchor: "end",
-        align: "center",
+        align: "top",
         color: pallete.text1,
         font: { weight: "bold", family: pallete.font2, size: 14 },
         formatter: (v: number, context: Context) => {
@@ -31,8 +31,13 @@ const lineOptions: any = (data: any[]) => {
         },
     };
 
+    const maxValue = Math.max(...data.flatMap((arr) => arr.map((v: any) => v.invoice)));
     const scales = {
-        y: { display: false },
+        y: {
+            display: false,
+            min: 0,
+            max: maxValue + maxValue * 0.25,
+        },
         x: { ticks: { font: { weight: "bold", size: 12 } } },
     };
 

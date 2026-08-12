@@ -93,7 +93,8 @@
                     class="color-decorator"
                     [style.textDecorationColor]="bill.creditCard.color"
                 >
-                    {{bill.creditCard.name}}
+                    {{bill.creditCard.name + " (" + (bill.creditCard.month | date : "MMM"
+                    | lowercase) + "/" + bill.creditCard.year + ")"}}
                 </h5>
             </div>
             <div class="category-bill lvi label-value">

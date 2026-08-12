@@ -30,22 +30,21 @@ const lineOptions: any = (datasets: any[]) => {
     };
 
     const tooltip = { enabled: false };
+    const minValue = Math.min(
+        ...datasets.flatMap((arr) => arr.map((v: any) => v.savedValue)),
+    );
+    const maxValue = Math.max(
+        ...datasets.flatMap((arr) => arr.map((v: any) => v.savedValue)),
+    );
+
     const scales = {
         y: {
             display: false,
-            stacked: true,
-            min:
-                Math.min(
-                    ...datasets[0].map((v: MonthPiggyBankCountsType) => v.savedValue),
-                    ...datasets[1].map((v: MonthPiggyBankCountsType) => v.savedValue),
-                ) - 500,
-            max:
-                Math.max(
-                    ...datasets[0].map((v: MonthPiggyBankCountsType) => v.savedValue),
-                    ...datasets[1].map((v: MonthPiggyBankCountsType) => v.savedValue),
-                ) + 500,
+            stacked: false,
+            min: minValue - minValue * (minValue > 0 ? 0 : -0.2),
+            max: maxValue + 500,
         },
-        x: { ticks: { font: { weight: "bold", size: 12 } }, stacked: true },
+        x: { ticks: { font: { weight: "bold", size: 12 } }, stacked: false },
     };
 
     return {

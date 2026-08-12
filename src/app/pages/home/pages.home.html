@@ -105,7 +105,7 @@
             </div>
         </card-component>
         <!-- RECENT BILLS -->
-        <card-component [actions]="actions" id="hr" class="hr" title="recent bills">
+        <card-component [actions]="actions" id="hr" class="hr" title="upcoming bills">
             <div class="col">
                 <div
                     *ngFor="let bill of (homeState.recentBills$ | async)"
@@ -125,7 +125,9 @@
                     </div>
                     <p class="name">{{ bill.name }}</p>
                     <p class="type">{{ bill | bills: 'type' }}</p>
-                    <p class="updated-at">{{ bill.updatedAt| date: 'medium' }}</p>
+                    <p class="updated-at">
+                        {{ bill.due | date: 'MMM dd, yyyy' | lowercase}}
+                    </p>
                     <p *ngIf="bill.type !== 'money'" class="parcel">
                         {{ bill | bills: 'parcels' }}
                     </p>

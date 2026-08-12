@@ -161,6 +161,10 @@ export class ModalEditBill extends ModalComponent {
     });
 
     ngOnInit() {
+        if (this.data.type === "money") {
+            this.billForm.get("totalParcel")?.setErrors(null);
+            this.billForm.get("totalParcel")?.updateValueAndValidity({ onlySelf: true });
+        }
         this.modalState.changeFooter({
             type: "submit",
             submitLabel: "update",

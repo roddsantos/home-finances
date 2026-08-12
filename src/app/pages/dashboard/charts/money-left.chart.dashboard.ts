@@ -7,9 +7,10 @@ const pallete = currentPallete();
 const themeProfile = getThemeVars(true);
 
 const doughnutOptions: any = {
-    cutout: 75,
+    cutout: 50,
+    clip: false,
     responsive: true,
-    maintainAspectRatio: false,
+    maintainAspectRatio: true,
     plugins: {
         legend: { display: true },
         datalabels: {

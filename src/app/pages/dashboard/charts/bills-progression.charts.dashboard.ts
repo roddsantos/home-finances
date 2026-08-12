@@ -43,13 +43,12 @@ const lineOptions: any = (datasets: any[]) => {
             },
         },
     };
+    const maxValue = Math.max(...datasets.flatMap((arr) => arr.map((v: any) => v.total)));
     const scales = {
         y: {
             display: false,
             min: 0,
-            max:
-                Math.max(...datasets[0].map((v: DashboardBillsPerMonthType) => v.total)) +
-                1000,
+            max: maxValue + maxValue * 0.25,
         },
         x: { ticks: { font: { weight: "bold", size: 12 } } },
     };

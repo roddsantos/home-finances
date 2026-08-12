@@ -11,7 +11,7 @@
     margin-bottom: 0.25rem;
     & .weekday {
         margin: auto;
-        padding: 0rem 0.5rem;
+        padding: 0.5rem;
         border-width: var(--border-width);
         border-style: solid;
         border-radius: var(--border-radius);
@@ -53,6 +53,10 @@
         border-width: var(--border-width);
         border-radius: var(--border-radius);
         width: 100%;
+        height: 60px;
+        @media screen and (max-height: 1200px) {
+            height: 45px;
+        }
         &.bills {
             cursor: pointer;
         }
@@ -77,9 +81,10 @@
             }
         }
         & .icon {
-            font-size: 1.25rem;
-            width: 1.25rem;
-            height: 1.25rem;
+            font-size: 2rem;
+            width: 2rem;
+            height: 2rem;
+            margin: auto;
             &.yellow {
                 color: var(--warning);
             }

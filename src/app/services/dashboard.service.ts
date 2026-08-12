@@ -41,7 +41,7 @@ export class DashboardService extends GeneralService {
 
     getTopCategories() {
         return this.http.get<CategoriesSummaryType>(DASHBOARD + "/categories", {
-            params: { categories: 5 },
+            params: { categories: 6 },
         });
     }
 
