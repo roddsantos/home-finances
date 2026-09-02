@@ -24,7 +24,7 @@ export class DashboardState {
         ...DASHBOARD_SAVINGS_INITIALIZER,
     });
     private _creditCards$ = new BehaviorSubject<CreditCardObjectType[]>([]);
-    private _creditCardsSpan$ = new BehaviorSubject<CreditCardDashboardType>({});
+    private _creditCardsSpan$ = new BehaviorSubject<CreditCardDashboardType[]>([]);
     private _categoriesSummary$ = new BehaviorSubject<CategoriesSummaryType>({
         topCategories: [],
         otherCategories: null,
@@ -68,7 +68,7 @@ export class DashboardState {
         this._creditCards$.next(creditCards);
     }
 
-    public updateCreditCardsSpan(creditCards: CreditCardDashboardType) {
+    public updateCreditCardsSpan(creditCards: CreditCardDashboardType[]) {
         this._creditCardsSpan$.next(creditCards);
     }
 

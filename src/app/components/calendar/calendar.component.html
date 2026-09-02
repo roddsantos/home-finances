@@ -19,7 +19,7 @@
                 'this-month': date.thisMonth,
                 today: date.day === today,
                 'last-month': !date.thisMonth,
-                bills: date.events.count > 0
+                bills: date.events.count > 0,
             }"
             (click)="onDateClick(date)"
             [matTooltip]="
@@ -42,7 +42,7 @@
                     'material-symbols-outlined': true,
                     icon: true,
                     yellow: date.events.count <= 4,
-                    red: date.events.count > 4
+                    red: date.events.count > 4,
                 }"
                 [fontIcon]="
                     date.events.count <= 9

@@ -41,33 +41,12 @@ export class DashboardService extends GeneralService {
 
     getTopCategories() {
         return this.http.get<CategoriesSummaryType>(DASHBOARD + "/categories", {
-            params: { categories: 5 },
+            params: { categories: 6 },
         });
     }
 
     getCreditCards() {
-        // return this.user.user$.pipe(
-        //     concatMap((user) =>
-        //         this.http.get<Array<CreditCardObjectType>>(DASHBOARD + "/credit-cards", {
-        //             params: { userId: user!.id },
-        //         }),
-        //     ),
-        //     map((creditCards) => {
-        //         let creditCardSets: CreditCardDashboardType = {};
-        //         creditCards.forEach((creditCard) => {
-        //             let creditCardSet: {
-        //                 [month: number]: CreditCardObjectType;
-        //             } = {};
-        //             creditCardSet[creditCard.month] = creditCard;
-        //             creditCardSets[creditCard.name] = {
-        //                 ...(creditCardSets[creditCard.name] || {}),
-        //                 ...creditCardSet,
-        //             };
-        //         });
-        //         this.dashboardState.updateCreditCardsSpan(creditCardSets);
-        //         return creditCardSets;
-        //     }),
-        // );
+        return this.http.get<CreditCardDashboardType[]>(DASHBOARD + "/credit-cards");
     }
     ngOnDestroy(): void {
         this.monthSpan$.unsubscribe();

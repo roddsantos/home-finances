@@ -39,7 +39,7 @@
         <card-component
             id="dashboard-calendar"
             class="dashboard-calendar"
-            [title]="'bill calendar'"
+            [title]="'calendar'"
             [border]="true"
         >
             <calendar-component class="calendar" [monthBills]="monthBills" />
@@ -53,68 +53,17 @@
         >
             <div class="dashboard-money">
                 <div class="money-container" [style.flexDirection]="'row'">
-                    <!-- <canvas id="savings-income-chart" class="chart"></canvas> -->
-                    <div class="money-item">
-                        <div
-                            class="icon-container"
-                            [style.transform]="'scale(' + moneyReserve.scaleIncome + ')'"
-                            [style.color]="'black'"
-                        >
-                            <mat-icon
-                                class="material-symbols-rounded icon"
-                                fontIcon="savings"
-                                [style.color]="'var(--success)'"
-                            ></mat-icon>
-                            <mat-icon
-                                class="material-symbols-filled icon-right"
-                                fontIcon="arrow_circle_down"
-                                [style.color]="'var(--success)'"
-                            ></mat-icon>
+                    <div class="paid-bills">
+                        <div class="content">
+                            <canvas id="paid-bills" class="chart"></canvas>
                         </div>
-                        <h5>
-                            {{ (dashboardState.savings$ | async)?.totalIncome | currency:
-                            'R$ ' }}
-                        </h5>
-                        <h6>income</h6>
+                        <h5>paid bills</h5>
                     </div>
-                    <div class="money-item">
-                        <div
-                            class="icon-container"
-                            [style.transform]="'scale(' + moneyReserve.scaleSavings + ')'"
-                        >
-                            <mat-icon
-                                class="material-symbols-rounded icon"
-                                fontIcon="savings"
-                                [style.color]="'var(--info)'"
-                            ></mat-icon>
-                            <mat-icon
-                                class="material-symbols-rounded icon-right"
-                                fontIcon="calendar_month"
-                                [style.color]="'var(--info)'"
-                            ></mat-icon>
+                    <div class="money-left">
+                        <div class="content">
+                            <canvas id="money-left" class="chart"></canvas>
                         </div>
-                        <h5>
-                            {{ (dashboardState.savings$ | async)?.totalSavings | currency:
-                            'R$ ' }}
-                        </h5>
-                        <h6>from last month</h6>
-                    </div>
-                </div>
-                <div class="container">
-                    <canvas height="" id="money-chart" class="chart"
-                        >{{savingsChart}}</canvas
-                    >
-                    <div class="legend">
-                        <div
-                            *ngFor="let item of savingsLabels; index as i"
-                            class="container"
-                        >
-                            <div
-                                [style.backgroundColor]="savingsColors[i]"
-                                class="indicator"
-                            ></div>
-                            <p class="label">{{ item }}</p>
-                        </div>
+                        <h5>money left</h5>
                     </div>
                 </div>
                 <div class="container">
@@ -129,7 +78,9 @@
             [description]="'last 5 months'"
             [border]="true"
         >
-            <canvas id="credit-cards-chart" class="credit-cards-chart"></canvas>
+            <div class="content">
+                <canvas id="credit-cards-chart" class="credit-cards-chart"></canvas>
+            </div>
         </card-component>
     </div>
 </div>

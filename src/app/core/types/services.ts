@@ -24,7 +24,12 @@ export type SumAndCountData = {
 };
 
 export type CreditCardDashboardType = {
-    [name: string]: {
-        [month: number]: CreditCardObjectType | null;
-    };
+    title: string;
+    color: string;
+    data: {
+        invoice: number;
+        delta: number;
+        month: number;
+        year: number;
+    }[];
 };

@@ -115,7 +115,6 @@ export class PinsBillsTemplate extends GeneralPage {
     }
 
     onUnpin(data: BillDataObjectType) {
-        console.log(data);
         this.billState.removePinnedBill(data);
         this.localStorageService.removePinnedBill(data.id);
     }

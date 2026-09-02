@@ -32,6 +32,12 @@ const lineOptions: any = (datasets: any[]) => {
             );
         },
     };
+    const legend = {
+        labels: {
+            color: pallete.text1,
+            font: { weight: "bold", family: pallete.font2, size: 14 },
+        },
+    };
     const tooltip = {
         callbacks: {
             footer: (context: any) => {
@@ -43,9 +49,14 @@ const lineOptions: any = (datasets: any[]) => {
             },
         },
     };
+    const maxValue = Math.max(...datasets.flatMap((arr) => arr.map((v: any) => v.total)));
     const scales = {
-        y: { display: false },
-        x: { ticks: { font: { weight: "bold", size: 12 } } },
+        y: {
+            display: false,
+            min: 0,
+            max: maxValue + maxValue * 0.25,
+        },
+        x: { ticks: { color: pallete.text1, font: { weight: "bold", size: 14 } } },
     };
 
     return {
@@ -56,6 +67,7 @@ const lineOptions: any = (datasets: any[]) => {
         plugins: {
             datalabels,
             tooltip,
+            legend,
         },
         scales,
     };

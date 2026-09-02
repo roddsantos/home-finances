@@ -17,3 +17,8 @@ export function removeFields<T>(data: T, fields: Array<keyof T>) {
     });
     return auxData;
 }
+
+export const convertToFloat = (value: number) => {
+    if (!value) return 0;
+    return parseFloat(value.toFixed(2));
+};

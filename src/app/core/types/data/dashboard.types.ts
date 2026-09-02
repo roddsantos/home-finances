@@ -4,6 +4,7 @@ export type DashboardBillsPerMonthType = {
     delta: number;
     month: number;
     year: number;
+    income: number;
 };
 
 export type MonthPiggyBankCountsType = {
