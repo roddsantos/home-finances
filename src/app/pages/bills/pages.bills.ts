@@ -199,9 +199,23 @@ export class PageBills extends GeneralPage {
     }
 
     getDateStatus(data: BillDataObjectType) {
-        if (data.settled) return "var(--success)";
+        if (data.settled) return "closed";
         else if (new Date(data.due).getTime() - new Date().getTime() > 0)
-            return "var(--warning)";
-        else return "var(--error)";
+            return "pending";
+        else return "overdue";
+    }
+
+    getColorStatus(data: BillDataObjectType) {
+        const status = this.getDateStatus(data);
+        switch (status) {
+            case "closed":
+                return "var(--success)";
+            case "pending":
+                return "var(--warning)";
+            case "overdue":
+                return "var(--error)";
+            default:
+                return "var(--default)";
+        }
     }
 }

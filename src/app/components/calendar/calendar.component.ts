@@ -22,6 +22,7 @@ import { GeneralState } from "src/app/core/subjects/subjects.general";
 import { MonthBillsType } from "src/app/core/types/data/dashboard.types";
 import { MONTHBILLSTYPE_INITIALIZER } from "src/utils/constants/mocks";
 import { GeneralService } from "src/app/services/general.service";
+import { convertToFloat } from "src/utils/parser";
 
 @Component({
     selector: "calendar-component",
@@ -59,7 +60,11 @@ export class CalendarComponent implements OnChanges, OnDestroy {
             const monthBills = changes["monthBills"].currentValue;
             const dayOfWeek = new Date(this.year, this.month, 1).getDay();
             monthBills.forEach((bill: MonthBillsType) => {
-                this.dates[bill.day + dayOfWeek - 1].events = bill;
+                this.dates[bill.day + dayOfWeek - 1].events = {
+                    count: bill.count,
+                    total: convertToFloat(bill.total),
+                    day: bill.day,
+                };
             });
         }
     }

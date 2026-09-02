@@ -47,6 +47,7 @@ const barOptions: any = (summary: CategoriesSummaryType) => {
     const layout = { padding: { top: 10 } };
     const scales = {
         y: { display: false, max: summary.topCategories[0].total * 1.1 },
+        x: { ticks: { color: pallete.text1, font: { size: 14 } } },
     };
     const tooltip = {
         callbacks: {

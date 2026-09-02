@@ -7,6 +7,7 @@ import {
 } from "src/app/core/types/data/dashboard.types";
 import { MONTHS } from "src/utils/constants/general";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import { convertToFloat } from "src/utils/parser";
 
 const pallete = currentPallete();
 const themeProfile = getThemeVars(true);
@@ -28,6 +29,12 @@ const lineOptions: any = (datasets: any[]) => {
             );
         },
     };
+    const legend = {
+        labels: {
+            color: pallete.text1,
+            font: { weight: "bold", family: pallete.font2, size: 14 },
+        },
+    };
 
     const tooltip = { enabled: false };
     const minValue = Math.min(
@@ -44,7 +51,7 @@ const lineOptions: any = (datasets: any[]) => {
             min: minValue - minValue * (minValue > 0 ? 0 : -0.2),
             max: maxValue + 500,
         },
-        x: { ticks: { font: { weight: "bold", size: 12 } }, stacked: false },
+        x: { ticks: { color: pallete.text1, font: { weight: "bold", size: 14 } } },
     };
 
     return {
@@ -55,6 +62,7 @@ const lineOptions: any = (datasets: any[]) => {
         plugins: {
             datalabels,
             tooltip,
+            legend,
         },
         scales,
     };
@@ -74,7 +82,7 @@ export function piggyBanksProgressionChart(
             ),
             datasets: piggyBanksProgression.map((pb, i) => ({
                 label: pb.bank,
-                data: pb.progression.map((bm) => bm.savedValue),
+                data: pb.progression.map((bm) => convertToFloat(bm.savedValue)),
                 spacing: 1,
                 borderWidth: themeProfile.borderWidth as number,
                 borderRadius: themeProfile.borderRadius as number,

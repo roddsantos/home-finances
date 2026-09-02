@@ -7,7 +7,7 @@ const pallete = currentPallete();
 const themeProfile = getThemeVars(true);
 
 const doughnutOptions: any = {
-    cutout: 50,
+    cutout: 75,
     clip: false,
     responsive: true,
     maintainAspectRatio: true,

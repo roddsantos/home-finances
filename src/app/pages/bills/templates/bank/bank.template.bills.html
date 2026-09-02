@@ -1,18 +1,4 @@
 <div class="bill-tags">
-    <tag
-        [matTooltip]="data.isPayment ? 'outcome' : 'income'"
-        [id]="'tag-flow-'+data.id"
-        [theme]="data.isPayment ? 'var(--error)' : 'var(--success)'"
-        transform
-        class="flow-container"
-    >
-        <mat-icon
-            class="material-symbols-outlined"
-            aria-hidden="false"
-            aria-label="icon"
-            [fontIcon]="data.isPayment ? 'arrow_circle_up' : 'arrow_circle_down'"
-        ></mat-icon>
-    </tag>
     <tag matTooltip="bank" [id]="'tag-type-'+data.id" theme="var(--bank)" transform>
         <mat-icon
             class="material-symbols-outlined"

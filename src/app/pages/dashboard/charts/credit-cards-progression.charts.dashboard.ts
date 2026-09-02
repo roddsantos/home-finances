@@ -30,6 +30,12 @@ const lineOptions: any = (data: any[]) => {
             );
         },
     };
+    const legend = {
+        labels: {
+            color: pallete.text1,
+            font: { weight: "bold", family: pallete.font2, size: 14 },
+        },
+    };
 
     const maxValue = Math.max(...data.flatMap((arr) => arr.map((v: any) => v.invoice)));
     const scales = {
@@ -38,7 +44,7 @@ const lineOptions: any = (data: any[]) => {
             min: 0,
             max: maxValue + maxValue * 0.25,
         },
-        x: { ticks: { font: { weight: "bold", size: 12 } } },
+        x: { ticks: { color: pallete.text1, font: { weight: "bold", size: 14 } } },
     };
 
     return {
@@ -48,6 +54,7 @@ const lineOptions: any = (data: any[]) => {
         maintainAspectRatio: true,
         plugins: {
             datalabels,
+            legend,
         },
         scales,
     };
